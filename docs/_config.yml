@@ -1,4 +1,7 @@
-name: iVXjs
-description: A library to make data-driven interactive web-experiences with support for video, sound, data collection, decision-trees and animations.
+title: iVXjs
+baseurl: "/" # the subpath of your site, e.g. /blog
+url: "https://influencetech.github.io/ivx-js/" # the base hostname & protocol for your site
+github_username:  influencetech
+# Build settings
+markdown: kramdown
 theme: minima
-
