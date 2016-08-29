@@ -1,3 +1,10 @@
+---
+layout: page
+title: A library to make data-driven interactive web-experiences with support for 
+video, sound, data collection, decision-trees and animations.
+id: home
+---
+
 # iVXjs 
 
 A library to make data-driven interactive web-experiences with support for 
