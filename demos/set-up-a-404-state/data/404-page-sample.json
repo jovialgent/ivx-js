@@ -1,0 +1,21 @@
+{
+    "defaultState": [{
+        "stateId": "valid-state"
+    }],
+    "pageNotFoundState" : [{
+        "stateId" : "404-state"
+    }],
+    "states": [{
+        "id": "valid-state",
+        "name": "Valid State",
+        "url": "/a-valid-state",
+        "type": "html",
+        "html" : "<h1>I am the default state!</h1><h2>I am also a valid part of the experience</h2>"
+    },{
+        "id": "404-state",
+        "name": "404 Page",
+        "url": "/404",
+        "type": "html",
+        "html" : "<h1> I am a page not found state</h1>"
+    }]
+}

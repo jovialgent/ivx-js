@@ -1,0 +1,33 @@
+{
+    "defaultState": [{
+        "stateId": "url-input-sample"
+    }],
+    "states": [{
+        "id": "url-input-sample",
+        "name": "Url Input Sample",
+        "url": "/url-input-sample",
+        "type": "input",
+        "header": {},
+        "footer": {},
+        "onEnter": [],
+        "onExit": [],
+        "onSubmit": [],
+        "form": {
+            "classes": "",
+            "submit": {}
+        },
+        "next": [],
+        "inputs": [{
+            "id": "url-input",
+            "name": "urlInput",
+            "type": "url",
+            "label": "This is an url",
+            "settings": {
+                "container": {},
+                "input": {}
+            },
+            "attributes": {},
+            "errors" : {}
+        }]
+    }]
+}

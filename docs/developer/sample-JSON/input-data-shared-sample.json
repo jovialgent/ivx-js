@@ -1,0 +1,34 @@
+{
+    "defaultState": [{
+        "stateId": "input-shared-test"
+    }],
+    "states": [{
+        "id": "input-shared-test",
+        "name": "Input Shared Data",
+        "url": "/input-shared-test",
+        "type": "input",
+        "header": {},
+        "footer": {},
+        "onEnter": [],
+        "onExit": [],
+        "onSubmit": [],
+        "form": {
+            "classes": "",
+            "submit": {}
+        },
+        "next": [],
+        "inputs": [{
+            "id": "",
+            "name": "",
+            "type": "",
+            "label": "",
+            "settings": {
+                "container": {},
+                "input": {}
+            },
+            "attributes": {},
+            "errors" : {},
+            "onChange" : []
+        }]
+    }]
+}

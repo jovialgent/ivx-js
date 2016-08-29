@@ -1,37 +1,32 @@
-# iVXjs 
+# Hello World using angular.ivx.js 
 
-A library to make data-driven interactive web-experiences with support for 
-video, sound, data collection, decision-trees and animations.
+## Overview
 
-## Note about this version
-
-iVXjs is built to be used with different rendering libraries to create the 
-experience. Currently, this repository utilizes Angular to build and render the 
-experience and this "Getting Started" will focus on that implementation. 
+The [Angular](https://angularjs.org/) distribution of iVXjs utilizes Angular's dependency 
+injection and other features to render the individual states and elements. It is very simple
+to set up 
 
 ## Getting Started
 
-### Downloading the library
-
-* Clone this repository or download zip
-* Via npm `npm install ivx-js-angular --save`
-
 ### iVXjs Angular's Dependencies
 
-The Angular iVXjs instance--iVXjs for this documentation--has the following script dependencies:
+The Angular iVX.js instance--iVXjs for this documentation--has the following script dependencies:
 
+* angular.ivx.js
 * [Angular 1.5](https://angularjs.org/)
 * [Angular UI-Router](https://github.com/angular-ui/ui-router)
 * [ngSanitize](https://docs.angularjs.org/api/ngSanitize)
 
+Once you go to their website and download you will need the _angular.ivx.js_ file from dist. 
+
 ### Setting up the html
 
-To get the iVXjs experience working, you can add the following HTML to your project:
+To get the iVX.js experience working, you can add the following HTML to your project:
 
 ```
 	<!-- Angular application for this page -->
 	<div ng-app="[MODULE-NAME]"></div>
-	<!-- Container for an iVXjs Experience -->
+	<!-- Container for an iVX.js Experience -->
 	<div id='ivx'></div>
 	<!-- iVXjs Angular Library Dependencies  -->
 	<script src='[PATH-TO-JS]/angular.min.js'></script>
@@ -91,13 +86,12 @@ Let's take a moment to explain what the above HTML is doing:
 __Angular Module__
 
 We have to add an angular module to a child element of the page so that 
-iVXjs can bootstrap itself to the correct element.
-
+iVXjs can bootstrap itself to the correct element (more on that in another tutorial)
 So, to make sure it loads properly, add your `ng-app` directive to a child node. For this example,
 replace the `[MODULE-NAME]` with the name of your app:
 
 ```
-<div ng-app="app"></div>
+<div ng-app="[MODULE-NAME]"></div>
 ```
 
 __Adding the dependency scripts__
@@ -174,9 +168,9 @@ angular
 
 __Configuration__
 
-The iVXjs init takes one argument, an object with various settings you can add to customize the experience, but for 
+The iVX.js init takes one argument, an object with various settings you can add to customize the experience, but for 
 now we will using the following config. The definition for this spec is [here](/docs/esdocs/manual/configuration.html#json). But,
-for this _Getting Started_ we will explain a little what this config is instructing iVXjs to do.
+for this _Getting Started_ we will explain a little what this config is instructing iVX.js to do.
 
 _Default State_
 
@@ -192,7 +186,8 @@ at the state "hello-world":
 _States_
 
 The states array is the list of all states in this experience. States are segments of an experience where
-a user can interact with in varied of ways. 
+a user can interact with in varied of ways. Other tutorials will go over how to set up states, so right now
+we will explain what each state object is doing for this set up.
 
 The first state in the array is an input state. The input state is a state that has input elements that typically captures
 user information and adds it to the experience.data object. In this case, the state's data is indicating that it wants 
@@ -254,6 +249,7 @@ For this state, a special note. Look at this line of the config:
 "html" : "<div class='welcome'><h1>Congratulations {{experience.name}}!</h1><h2>You made your first iVXjs Experience!</h2></div>"
 ```
 
-The `{{experience.name}}` indicates to iVXjs to replace the piece of code with the name the user 
+The `{{experience.name}}` indicates to iVX.js to replace the piece of code with the name the user 
 provided in the last state. In this case, the "User's Name" was provided in the state before and 
-now shows here.
+now shows here. More on personalizations and tokens in other parts. But, for now it shows how a developer
+can use data collected to enhance future states.

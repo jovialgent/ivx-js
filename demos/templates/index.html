@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>iVXjs Hello World</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+	.show {
+        -webkit-animation: showState 0.1s;
+        -moz-animation: showState 0.1s;
+        -o-animation: showState 0.1s;
+        animation: showState 0.1s;
+        opacity: 1;
+    }
+    
+    .hide {
+        -webkit-animation: hideState 0.1s;
+        -moz-animation: hideState 0.1s;
+        -o-animation: hideState 0.1s;
+        animation: hideState 0.1s;
+        opacity: 0;
+    }
+
+    @-webkit-keyframes hideState {
+        0% {
+            opacity: 1;
+        }
+        100% {
+            opacity: 0;
+            display: none;
+            visibility: hidden;
+        }
+    }
+    
+    @-moz-keyframes hideState {
+        0% {
+            opacity: 1;
+        }
+        100% {
+            opacity: 0;
+            display: none;
+            visibility: hidden;
+        }
+    }
+    
+    @-o-keyframes hideState {
+        0% {
+            opacity: 1;
+        }
+        100% {
+            opacity: 0;
+            display: none;
+            visibility: hidden;
+        }
+    }
+    
+    @keyframes hideState {
+        0% {
+            opacity: 1;
+        }
+        100% {
+            opacity: 0;
+            display: none;
+            visibility: hidden;
+        }
+        ;
+    }
+   
+    @-webkit-keyframes showState {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+    
+    @-moz-keyframes showState {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+    
+    @-o-keyframes showState {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+    
+    @keyframes showState {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+        ;
+    }
+</style>
+
+</head>
+
+<body ng-app="app">
+
+    <div id="ivx"></div>
+
+    <!-- Optional jQuery dependency (Must come first) -->
+    <!-- script src='https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js'></script> -->
+
+    <!-- Angular -->
+    <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js'></script>
+
+    <!-- Angular UI Router -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.0-alpha.5/angular-ui-router.js'></script>
+
+    <!-- ngSanitize -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.5.6/angular-sanitize.min.js'></script>
+
+    <!-- Angular iVXjs Library -->
+    <script src="js/lib/angular.ivx.js"></script>
+
+    <script>
+        angular
+        .module('app', ['ivx-js'])
+        .run(['iVXjs', function(iVXjs){
+            iVXjs.init({
+                config : "data/templates-demo.json"
+            });
+        }])     
+    </script>
+
+</body>
+
+</html>

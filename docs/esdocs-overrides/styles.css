@@ -1,0 +1,9 @@
+pre > code{
+	overflow-y: scroll;
+}
+
+.github-markdown img:not([src*=".svg"]){
+	display:block;
+	width:400px;
+	max-width:400px;
+}

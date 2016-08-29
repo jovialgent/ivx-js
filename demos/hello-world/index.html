@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>iVXjs Hello World</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+
+<body ng-app="app">
+
+    <div id="ivx"></div>
+
+    <!-- Optional jQuery dependency (Must come first) -->
+    <!-- script src='https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js'></script> -->
+
+    <!-- Angular -->
+    <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js'></script>
+
+    <!-- Angular UI Router -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.0-alpha.5/angular-ui-router.js'></script>
+
+    <!-- ngSanitize -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.5.6/angular-sanitize.min.js'></script>
+
+    <!-- Angular iVXjs Library -->
+    <script src="js/lib/angular.ivx.js"></script>
+
+    <script>
+        angular
+        .module('app', ['ivx-js'])
+        .run(['iVXjs', function(iVXjs){
+            iVXjs.init({
+                "config" : {
+						"defaultState": [{
+							"stateId": "hello-world"
+						}],
+						"states": [{
+							"id": "hello-world",
+							"name": "Hello World",
+							"url": "/hello-world",
+							"type": "input",
+							"header": {
+								"html" : "<h1>Welcome to iVXjs!</h1><h2>Write in your name below so we can get to know you.</h2>"
+							},
+							"footer": {
+								"html" : ""
+							},
+							"onEnter":[],
+							"onExit": [],
+							"next": [{
+								"stateId" : "welcome-screen"
+							}],
+							"onSubmit": [],
+							"inputs": [{
+								"id": "name",
+								"type": "text",
+								"name" : "name",
+								"label" : "Your Name:"           
+							}]
+						},{
+							"id" : "welcome-screen",
+							"name" : "Welcome Screent",
+							"url" : "/welcome-screen",
+							"type" : "html",
+							"html" : "<div class=\"welcome\"><h1>Congratulations {{experience.name}}!</h1><h2>You made your first iVXjs Experience!</h2></div>"
+
+						}]
+					}	
+            	});
+        	}])     
+    </script>
+
+</body>
+
+</html>

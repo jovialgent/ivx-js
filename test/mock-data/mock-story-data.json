@@ -1,0 +1,1713 @@
+{
+    "key": "tester-s-guild-lithos-test--g-kit",
+    "name": "George's Kitchen Sink Lithos Schema",
+    "storySchemaKey": "lithos-test",
+    "version": 8,
+    "schemaVersion": 4,
+    "inputs": {
+        "email": {
+            "name": "Email",
+            "description": null,
+            "source": "Contact",
+            "type": "String",
+            "display": "Email",
+            "options": [],
+            "value": "",
+            "attributes": {}
+        },
+        "name": {
+            "name": "Name",
+            "description": null,
+            "source": "Contact",
+            "type": "String",
+            "display": "TextMedium",
+            "options": [],
+            "value": "",
+            "attributes": {}
+        },
+        "colortest": {
+            "name": "Color Test",
+            "description": null,
+            "source": "Contact",
+            "type": "String",
+            "display": "Color",
+            "options": [],
+            "value": "",
+            "attributes": {}
+        },
+        "icontest": {
+            "name": "Icon Test",
+            "description": null,
+            "source": "Contact",
+            "type": "String",
+            "display": "Options",
+            "options": [
+                {
+                    "value": "fa fa-moon-o",
+                    "display": "Moon"
+                },
+                {
+                    "value": "fa fa-globe",
+                    "display": "Globe"
+                },
+                {
+                    "value": "fa fa-bug",
+                    "display": "Bug"
+                }
+            ],
+            "value": "",
+            "attributes": {}
+        },
+        "texttest": {
+            "name": "Text test",
+            "description": null,
+            "source": "Contact",
+            "type": "String",
+            "display": "TextShort",
+            "options": [],
+            "value": "",
+            "attributes": {}
+        },
+        "checkboxtest": {
+            "name": "Checkbox Test - Multiple Inputs",
+            "description": "Tests the Checkbox Input type.",
+            "source": "Experience",
+            "type": "Boolean",
+            "display": "Checkbox",
+            "options": [],
+            "value": false,
+            "attributes": {}
+        },
+        "comboboxtest": {
+            "name": "Combo Box Test - Multiple Inputs",
+            "description": "Tests the Combo Box Test input",
+            "source": "Experience",
+            "type": "String",
+            "display": "ComboBox",
+            "options": [
+                {
+                    "value": "Option 1",
+                    "display": null
+                },
+                {
+                    "value": "Option 2",
+                    "display": null
+                },
+                {
+                    "value": "Option 3",
+                    "display": null
+                }
+            ],
+            "value": "",
+            "attributes": {}
+        },
+        "datetest": {
+            "name": "Date Test - Multiple Inputs",
+            "description": "Tests the date input type.",
+            "source": "Experience",
+            "type": "DateTime",
+            "display": "Date",
+            "options": [],
+            "value": "0001-01-01T00:00:00",
+            "attributes": {}
+        },
+        "datetimetest": {
+            "name": "Date Time Test - Multiple Inputs",
+            "description": "Date/Time test input.",
+            "source": "Experience",
+            "type": "DateTime",
+            "display": "DateTime",
+            "options": [],
+            "value": "0001-01-01T00:00:00",
+            "attributes": {}
+        },
+        "emailtest": {
+            "name": "Email Test - Multiple Inputs",
+            "description": "Tests the Email input type.",
+            "source": "Experience",
+            "type": "String",
+            "display": "Email",
+            "options": [],
+            "value": "",
+            "attributes": {}
+        },
+        "numbertest": {
+            "name": "Number Test - Multiple Inputs",
+            "description": "Tests the number input type.",
+            "source": "Experience",
+            "type": "Number",
+            "display": "Number",
+            "options": [],
+            "value": 0,
+            "attributes": {
+                "min": "-10",
+                "max": "10"
+            }
+        },
+        "optionstest": {
+            "name": "Options Test - Multiple Inputs",
+            "description": "Tests the Option Input type.",
+            "source": "Experience",
+            "type": "String",
+            "display": "Options",
+            "options": [
+                {
+                    "value": "option1",
+                    "display": "Option 1"
+                },
+                {
+                    "value": "option2",
+                    "display": "Option 2"
+                },
+                {
+                    "value": "option3",
+                    "display": "Option 3"
+                }
+            ],
+            "value": "",
+            "attributes": {}
+        },
+        "telephonetest": {
+            "name": "Telephone Test - Multiple Inputs",
+            "description": "Tests the telephone input type.",
+            "source": "Experience",
+            "type": "String",
+            "display": "Telephone",
+            "options": [],
+            "value": "",
+            "attributes": {}
+        },
+        "textareatest": {
+            "name": "Text Area Test - Multiple Inputs",
+            "description": "Tests the text area input type.",
+            "source": "Experience",
+            "type": "String",
+            "display": "TextArea",
+            "options": [],
+            "value": "",
+            "attributes": {}
+        },
+        "textlargetest": {
+            "name": "Text Large Test - Multiple Inputs",
+            "description": "This tests the TextLarge input.",
+            "source": "Experience",
+            "type": "String",
+            "display": "TextLarge",
+            "options": [],
+            "value": "",
+            "attributes": {}
+        },
+        "textmediumtest": {
+            "name": "Text Medium Test - Multiple Inputs",
+            "description": "This tests the Text Medium input type.",
+            "source": "Experience",
+            "type": "String",
+            "display": "TextMedium",
+            "options": [],
+            "value": "",
+            "attributes": {}
+        },
+        "textshorttest": {
+            "name": "Text Short Test - Multiple Inputs",
+            "description": "This tests text short input type.",
+            "source": "Experience",
+            "type": "String",
+            "display": "TextShort",
+            "options": [],
+            "value": "",
+            "attributes": {}
+        },
+        "urltest": {
+            "name": "Url Test - Multiple Inputs",
+            "description": "Tests the URL input type.",
+            "source": "Experience",
+            "type": "String",
+            "display": "Url",
+            "options": [],
+            "value": "",
+            "attributes": {}
+        },
+        "checkbox_si": {
+            "name": "Checkbox - Single Input",
+            "description": null,
+            "source": "Experience",
+            "type": "Boolean",
+            "display": "Checkbox",
+            "options": [],
+            "value": false,
+            "attributes": {}
+        },
+        "checkboxtest_cta": {
+            "name": "Checkbox Test - CTA",
+            "description": null,
+            "source": "Experience",
+            "type": "Boolean",
+            "display": "Checkbox",
+            "options": [],
+            "value": false,
+            "attributes": {}
+        },
+        "comboboxtest_cta": {
+            "name": "Combo Box Test - CTA",
+            "description": null,
+            "source": "Experience",
+            "type": "String",
+            "display": "ComboBox",
+            "options": [
+                {
+                    "value": "Option 1",
+                    "display": null
+                },
+                {
+                    "value": "Option 2",
+                    "display": null
+                }
+            ],
+            "value": "",
+            "attributes": {}
+        },
+        "combobox_si": {
+            "name": "Combo Box Test - Single Input",
+            "description": null,
+            "source": "Experience",
+            "type": "String",
+            "display": "ComboBox",
+            "options": [
+                {
+                    "value": "Option 1",
+                    "display": null
+                },
+                {
+                    "value": "Option 2",
+                    "display": null
+                }
+            ],
+            "value": "",
+            "attributes": {}
+        },
+        "datetest_cta": {
+            "name": "Date Test - CTA",
+            "description": null,
+            "source": "Experience",
+            "type": "DateTime",
+            "display": "Date",
+            "options": [],
+            "value": "0001-01-01T00:00:00",
+            "attributes": {}
+        },
+        "datetest_si": {
+            "name": "Date Test - Single Input",
+            "description": null,
+            "source": "Experience",
+            "type": "DateTime",
+            "display": "Date",
+            "options": [],
+            "value": "0001-01-01T00:00:00",
+            "attributes": {}
+        },
+        "datetimetest_cta": {
+            "name": "Date Time Test - CTA",
+            "description": null,
+            "source": "Experience",
+            "type": "DateTime",
+            "display": "DateTime",
+            "options": [],
+            "value": "0001-01-01T00:00:00",
+            "attributes": {}
+        },
+        "datetimetest_si": {
+            "name": "Date Time Test - Single Input",
+            "description": null,
+            "source": "Experience",
+            "type": "DateTime",
+            "display": "DateTime",
+            "options": [],
+            "value": "0001-01-01T00:00:00",
+            "attributes": {}
+        },
+        "emailtest_cta": {
+            "name": "Email Test - CTA",
+            "description": null,
+            "source": "Experience",
+            "type": "String",
+            "display": "Email",
+            "options": [],
+            "value": "",
+            "attributes": {}
+        },
+        "emailtest_si": {
+            "name": "Email Test - Single Input",
+            "description": null,
+            "source": "Experience",
+            "type": "String",
+            "display": "Email",
+            "options": [],
+            "value": "",
+            "attributes": {}
+        },
+        "numbertest_cta": {
+            "name": "Number Test - CTA",
+            "description": null,
+            "source": "Experience",
+            "type": "Number",
+            "display": "Number",
+            "options": [],
+            "value": 0,
+            "attributes": {}
+        },
+        "numbertest_si": {
+            "name": "Number Test - Single Inpt",
+            "description": null,
+            "source": "Experience",
+            "type": "Number",
+            "display": "Number",
+            "options": [],
+            "value": 0,
+            "attributes": {}
+        },
+        "optionstest_cta": {
+            "name": "Options Test - CTA",
+            "description": null,
+            "source": "Experience",
+            "type": "String",
+            "display": "Options",
+            "options": [
+                {
+                    "value": "option 1",
+                    "display": "Option 1"
+                },
+                {
+                    "value": "option 2",
+                    "display": "Option 2"
+                },
+                {
+                    "value": "option 3",
+                    "display": "Option 3"
+                }
+            ],
+            "value": "",
+            "attributes": {}
+        },
+        "optionstest_si": {
+            "name": "Options Test - Single Input",
+            "description": null,
+            "source": "Experience",
+            "type": "String",
+            "display": "Options",
+            "options": [
+                {
+                    "value": "option 1",
+                    "display": "Option 1"
+                },
+                {
+                    "value": "option 2",
+                    "display": "Option 2"
+                },
+                {
+                    "value": "option 3",
+                    "display": "Option 3"
+                }
+            ],
+            "value": "",
+            "attributes": {}
+        },
+        "teltest_cta": {
+            "name": "Telephone Test - CTA",
+            "description": null,
+            "source": "Experience",
+            "type": "String",
+            "display": "Telephone",
+            "options": [],
+            "value": "",
+            "attributes": {}
+        },
+        "telephonetest_si": {
+            "name": "Telephone Test - Single Input",
+            "description": null,
+            "source": "Experience",
+            "type": "String",
+            "display": "Telephone",
+            "options": [],
+            "value": "",
+            "attributes": {}
+        },
+        "textareatest_cta": {
+            "name": "Text Area Test - CTA",
+            "description": null,
+            "source": "Experience",
+            "type": "String",
+            "display": "TextArea",
+            "options": [],
+            "value": "",
+            "attributes": {}
+        },
+        "textareatest_si": {
+            "name": "Text Area Test - Single Input",
+            "description": null,
+            "source": "Experience",
+            "type": "String",
+            "display": "TextArea",
+            "options": [],
+            "value": "",
+            "attributes": {}
+        },
+        "textltest_cta": {
+            "name": "Text Large Test - CTA",
+            "description": null,
+            "source": "Experience",
+            "type": "String",
+            "display": "TextLarge",
+            "options": [],
+            "value": "",
+            "attributes": {}
+        },
+        "textlargetest_si": {
+            "name": "Text Large Test - Single Input",
+            "description": null,
+            "source": "Experience",
+            "type": "String",
+            "display": "TextLarge",
+            "options": [],
+            "value": "",
+            "attributes": {}
+        },
+        "textmedtest_cta": {
+            "name": "Text Medium Test - CTA",
+            "description": null,
+            "source": "Experience",
+            "type": "String",
+            "display": "TextMedium",
+            "options": [],
+            "value": "",
+            "attributes": {}
+        },
+        "textmedtest_si": {
+            "name": "Text Medium Test - Single Input",
+            "description": null,
+            "source": "Experience",
+            "type": "String",
+            "display": "TextMedium",
+            "options": [],
+            "value": "",
+            "attributes": {}
+        },
+        "textshort_cta": {
+            "name": "Text Short Test - CTA",
+            "description": null,
+            "source": "Experience",
+            "type": "String",
+            "display": "TextShort",
+            "options": [],
+            "value": "",
+            "attributes": {}
+        },
+        "textshorttest_si": {
+            "name": "Text Short Test - Single Input",
+            "description": null,
+            "source": "Experience",
+            "type": "String",
+            "display": "TextShort",
+            "options": [],
+            "value": "",
+            "attributes": {}
+        },
+        "urltest_cta": {
+            "name": "URL Test - CTA",
+            "description": null,
+            "source": "Experience",
+            "type": "String",
+            "display": "Url",
+            "options": [],
+            "value": "",
+            "attributes": {}
+        },
+        "urltest_si": {
+            "name": "Url Test - Single Input",
+            "description": null,
+            "source": "Experience",
+            "type": "String",
+            "display": "Url",
+            "options": [],
+            "value": "",
+            "attributes": {}
+        }
+    },
+    "milestones": [
+        "Test Milestone 1",
+        "Test Milestone 2"
+    ],
+    "events": [
+        "Test Event 1"
+    ],
+    "progressMap": {
+        "new": 0,
+        "sent": 2,
+        "opened": 4,
+        "started": 6,
+        "test Milestone 1": 7,
+        "test Milestone 2": 8,
+        "completed": 100,
+        "converted": 101
+    },
+    "hasJsFile": false,
+    "hasJSONFile": true,
+    "hasCSSFile": true,
+    "persistent": false,
+    "data": {
+        "pageElements": [
+            {
+                "pane": "footer",
+                "events": [],
+                "id": "link-cta-test",
+                "type": "cta",
+                "link": {
+                    "label": "<i class='fa fa-external-link'></i><span>Link CTA Test</span>",
+                    "type": "link",
+                    "href": "http://www.google.com"
+                },
+                "$$hashKey": "object:49"
+            },
+            {
+                "id": "phone-cta-test",
+                "type": "cta",
+                "pane": "footer",
+                "link": {
+                    "label": "<i class='fa fa-phone'></i><span>Phone CTA Test</span>",
+                    "type": "phone",
+                    "href": "3035555555"
+                },
+                "events": [
+                    {
+                        "eventName": "setMilestone",
+                        "args": {
+                            "milestone": "Test Milestone 1"
+                        }
+                    }
+                ],
+                "$$hashKey": "object:50"
+            },
+            {
+                "pane": "footer",
+                "events": [],
+                "id": "email-cta-test",
+                "type": "cta",
+                "link": {
+                    "label": "<i class='fa fa-envelope'></i><span>Email CTA Test</span>",
+                    "type": "email",
+                    "href": "georgep@influence.tv"
+                },
+                "$$hashKey": "object:51"
+            },
+            {
+                "id": "function-cta-test",
+                "type": "cta",
+                "pane": "footer",
+                "link": {
+                    "label": "<i class='fa fa-flash'></i><span>Function CTA Test</span>",
+                    "type": "function"
+                },
+                "events": [
+                    {
+                        "eventName": "animatePageElement",
+                        "args": {
+                            "targetID": "form-cta-test",
+                            "animation": "animated flipInX"
+                        }
+                    }
+                ],
+                "$$hashKey": "object:52"
+            },
+            {
+                "id": "form-cta-test",
+                "type": "cta",
+                "pane": "before",
+                "link": {
+                    "label": "<span>Form CTA Test</span>",
+                    "type": "form",
+                    "inputs": [
+                        {
+                            "width": "1/2",
+                            "inputKey": "optionstest_cta",
+                            "required": true,
+                            "$$hashKey": "object:27"
+                        },
+                        {
+                            "width": "1/2",
+                            "inputKey": "checkboxtest_cta",
+                            "required": true,
+                            "$$hashKey": "object:28"
+                        }
+                    ]
+                },
+                "events": [
+                    {
+                        "eventName": "recordEvent",
+                        "args": {
+                            "customEvent": "Test Event 1"
+                        }
+                    },
+                    {
+                        "eventName": "animatePageElement",
+                        "args": {
+                            "targetID": "form-cta-test",
+                            "animation": "animated flipOutX"
+                        }
+                    }
+                ],
+                "$$hashKey": "object:20"
+            },
+            {
+                "pane": "header",
+                "events": [
+                    {
+                        "eventName": "recordEvent",
+                        "args": {
+                            "customEvent": "Test Event 1"
+                        }
+                    }
+                ],
+                "id": "image-page-element-test",
+                "type": "image",
+                "src": "http://lorempixel.com/image_output/abstract-q-c-200-200-7.jpg",
+                "alt": "Image's Alt Text",
+                "href": "http://www.influence.tv",
+                "$$hashKey": "object:10"
+            },
+            {
+                "id": "html-page-element-test",
+                "type": "html",
+                "pane": "header",
+                "html": "<h1>Test Story</h1>",
+                "$$hashKey": "object:11"
+            }
+        ],
+        "metadata": {
+            "title": "Test Story",
+            "googleid": "UA-42344575-1",
+            "cssOverride": false
+        },
+        "states": {
+            "defaultUrl": [
+                {
+                    "state": "html-state-test",
+                    "expression": {
+                        "when": "progress",
+                        "is": ">=",
+                        "value": "Completed"
+                    }
+                },
+                {
+                    "state": "video-state-test",
+                    "expression": {}
+                }
+            ],
+            "data": [
+                {
+                    "id": "video-state-test",
+                    "type": "video",
+                    "url": "/video-state-test",
+                    "next": [
+                        {
+                            "state": "text-short-test"
+                        }
+                    ],
+                    "name": "Video State Test",
+                    "editableStoryData": {},
+                    "transition": {
+                        "show": "animated bounceIn",
+                        "hide": "animated bounceOut"
+                    },
+                    "audio": {
+                        "audioPath": "",
+                        "loop": false
+                    },
+                    "onEnter": [
+                        {
+                            "eventName": "animatePageElement",
+                            "args": {
+                                "targetID": "form-cta-test",
+                                "animation": "hide"
+                            }
+                        }
+                    ],
+                    "onExit": [],
+                    "source": [
+                        {
+                            "type": "video/mp4",
+                            "source": "https://07081b5dcfd754b758a3-18223448e97861ad96d53767a0525a98.ssl.cf2.rackcdn.com/ivxuniversity/twoyous_rachel_generic.mp4"
+                        }
+                    ],
+                    "timedEvents": [
+                        {
+                            "name": "Fire Event",
+                            "eventName": "",
+                            "args": {},
+                            "events": [
+                                {
+                                    "eventName": "recordEvent",
+                                    "args": {
+                                        "customEvent": "Test Event 1"
+                                    }
+                                }
+                            ],
+                            "timeAt": 1,
+                            "fired": true
+                        },
+                        {
+                            "name": "Show Video Element",
+                            "eventName": "",
+                            "args": {},
+                            "events": [
+                                {
+                                    "eventName": "animatePageElement",
+                                    "args": {
+                                        "targetID": "video-element-test",
+                                        "animation": "animated fadeIn"
+                                    }
+                                }
+                            ],
+                            "timeAt": 1.2,
+                            "fired": true
+                        },
+                        {
+                            "name": "Hide Video Element",
+                            "eventName": "",
+                            "args": {},
+                            "events": [
+                                {
+                                    "eventName": "animatePageElement",
+                                    "args": {
+                                        "targetID": "video-element-test",
+                                        "animation": "animated fadeOut"
+                                    }
+                                }
+                            ],
+                            "timeAt": 3.5,
+                            "fired": true
+                        },
+                        {
+                            "name": "Jiggle Image Page Element",
+                            "events": [
+                                {
+                                    "eventName": "animatePageElement",
+                                    "args": {
+                                        "targetID": "image-page-element-test",
+                                        "animation": "animated jello"
+                                    }
+                                }
+                            ],
+                            "timeAt": 4,
+                            "fired": true
+                        }
+                    ],
+                    "posterImage": "https://a41b7d8ebf31ba6ff047-1b0c3314a8547bc5cd06b19673258c4f.ssl.cf2.rackcdn.com/poster-images/twoyous_rachel.jpg",
+                    "autoplay": true,
+                    "videoElements": [
+                        {
+                            "id": "video-element-test",
+                            "html": "<h1>Works</h1>",
+                            "$$hashKey": "object:78"
+                        }
+                    ]
+                },
+                {
+                    "id": "text-short-test",
+                    "type": "singleInput",
+                    "url": "/text-short-test",
+                    "next": [
+                        {
+                            "state": "text-medium-test"
+                        }
+                    ],
+                    "name": "Text Short Test",
+                    "transition": {
+                        "show": "animated bounceIn",
+                        "hide": "animated bounceOut"
+                    },
+                    "audio": {
+                        "audioPath": "",
+                        "loop": false
+                    },
+                    "onEnter": [],
+                    "onExit": [],
+                    "inputKey": "textshorttest",
+                    "displayType": "text",
+                    "required": true
+                },
+                {
+                    "id": "text-large-test",
+                    "type": "singleInput",
+                    "url": "/text-large-test",
+                    "next": [
+                        {
+                            "state": "options-test"
+                        }
+                    ],
+                    "name": "Text Large Test",
+                    "transition": {
+                        "show": "",
+                        "hide": ""
+                    },
+                    "audio": {
+                        "audioPath": "",
+                        "loop": false
+                    },
+                    "onEnter": [
+                        {
+                            "eventName": "setMilestone",
+                            "args": {
+                                "milestone": "Test Milestone 1"
+                            }
+                        }
+                    ],
+                    "onExit": [
+                        {
+                            "eventName": "animatePageElement",
+                            "args": {
+                                "targetID": "image-page-element-test",
+                                "animation": "animated wobble"
+                            }
+                        }
+                    ],
+                    "inputKey": "textlargetest",
+                    "displayType": "text",
+                    "required": false
+                },
+                {
+                    "id": "text-medium-test",
+                    "type": "singleInput",
+                    "url": "/text-medium-test",
+                    "next": [
+                        {
+                            "state": "text-large-test"
+                        }
+                    ],
+                    "name": "Text Medium Test",
+                    "transition": {
+                        "show": "",
+                        "hide": ""
+                    },
+                    "audio": {
+                        "audioPath": "",
+                        "loop": false
+                    },
+                    "onEnter": [],
+                    "onExit": [],
+                    "inputKey": "textmediumtest",
+                    "displayType": "text"
+                },
+                {
+                    "id": "options-test",
+                    "type": "singleInput",
+                    "url": "/options-test",
+                    "next": [
+                        {
+                            "state": "video-state-test",
+                            "expression": {
+                                "when": "optionstest_si",
+                                "is": "==",
+                                "value": "option 1"
+                            }
+                        },
+                        {
+                            "state": "combo-box-test"
+                        }
+                    ],
+                    "name": "Options Test",
+                    "transition": {
+                        "show": "",
+                        "hide": ""
+                    },
+                    "audio": {
+                        "audioPath": "",
+                        "loop": false
+                    },
+                    "onEnter": [],
+                    "onExit": [],
+                    "inputKey": "optionstest_si",
+                    "displayType": "buttons",
+                    "required": true
+                },
+                {
+                    "id": "combo-box-test",
+                    "type": "singleInput",
+                    "url": "/combo-box-test",
+                    "next": [
+                        {
+                            "state": "email-test"
+                        }
+                    ],
+                    "name": "Combo Box Test",
+                    "transition": {
+                        "show": "",
+                        "hide": ""
+                    },
+                    "audio": {
+                        "audioPath": "",
+                        "loop": false
+                    },
+                    "onEnter": [],
+                    "onExit": [],
+                    "inputKey": "comboboxtest",
+                    "displayType": "buttons"
+                },
+                {
+                    "id": "email-test",
+                    "type": "singleInput",
+                    "url": "/email-test",
+                    "next": [
+                        {
+                            "state": "url-test"
+                        }
+                    ],
+                    "name": "Email Test",
+                    "transition": {
+                        "show": "",
+                        "hide": ""
+                    },
+                    "audio": {
+                        "audioPath": "",
+                        "loop": false
+                    },
+                    "onEnter": [],
+                    "onExit": [],
+                    "inputKey": "email",
+                    "displayType": "text"
+                },
+                {
+                    "id": "url-test",
+                    "type": "singleInput",
+                    "url": "/url-test",
+                    "next": [
+                        {
+                            "state": "checkbox-test"
+                        }
+                    ],
+                    "name": "Url Test",
+                    "transition": {
+                        "show": "",
+                        "hide": ""
+                    },
+                    "audio": {
+                        "audioPath": "",
+                        "loop": false
+                    },
+                    "onEnter": [],
+                    "onExit": [],
+                    "inputKey": "urltest",
+                    "displayType": "text"
+                },
+                {
+                    "id": "checkbox-test",
+                    "type": "singleInput",
+                    "url": "/checkbox-test",
+                    "next": [
+                        {
+                            "state": "checkbox-test-no-button"
+                        }
+                    ],
+                    "name": "Checkbox Test",
+                    "transition": {
+                        "show": "",
+                        "hide": ""
+                    },
+                    "audio": {
+                        "audioPath": "",
+                        "loop": false
+                    },
+                    "onEnter": [],
+                    "onExit": [],
+                    "inputKey": "checkboxtest",
+                    "displayType": "buttons",
+                    "required": true
+                },
+                {
+                    "id": "checkbox-test-no-button",
+                    "type": "singleInput",
+                    "url": "/checkbox-test-no-button",
+                    "next": [
+                        {
+                            "state": "text-area-test"
+                        }
+                    ],
+                    "name": "Checkbox Test No Button",
+                    "transition": {
+                        "show": "",
+                        "hide": ""
+                    },
+                    "audio": {
+                        "audioPath": "",
+                        "loop": false
+                    },
+                    "onEnter": [],
+                    "onExit": [],
+                    "inputKey": "checkboxtest",
+                    "displayType": "checkbox"
+                },
+                {
+                    "id": "text-area-test",
+                    "type": "singleInput",
+                    "url": "/text-area-test",
+                    "next": [
+                        {
+                            "state": "date-test"
+                        }
+                    ],
+                    "name": "Text Area Test",
+                    "transition": {
+                        "show": "",
+                        "hide": ""
+                    },
+                    "audio": {
+                        "audioPath": "",
+                        "loop": false
+                    },
+                    "onEnter": [],
+                    "onExit": [],
+                    "inputKey": "textareatest",
+                    "displayType": "text"
+                },
+                {
+                    "id": "date-test",
+                    "type": "singleInput",
+                    "url": "/date-test",
+                    "next": [
+                        {
+                            "state": "date-time-test"
+                        }
+                    ],
+                    "name": "Date Test",
+                    "transition": {
+                        "show": "",
+                        "hide": ""
+                    },
+                    "audio": {
+                        "audioPath": "",
+                        "loop": false
+                    },
+                    "onEnter": [],
+                    "onExit": [],
+                    "inputKey": "datetest",
+                    "displayType": "text"
+                },
+                {
+                    "id": "date-time-test",
+                    "type": "singleInput",
+                    "url": "/date-time-test",
+                    "next": [
+                        {
+                            "state": "number-test"
+                        }
+                    ],
+                    "name": "Date Time Test",
+                    "transition": {
+                        "show": "",
+                        "hide": ""
+                    },
+                    "audio": {
+                        "audioPath": "",
+                        "loop": false
+                    },
+                    "onEnter": [],
+                    "onExit": [],
+                    "inputKey": "datetimetest",
+                    "displayType": "text"
+                },
+                {
+                    "id": "number-test",
+                    "type": "singleInput",
+                    "url": "/number-test",
+                    "next": [
+                        {
+                            "state": "number-test-text"
+                        }
+                    ],
+                    "name": "Number Test",
+                    "transition": {
+                        "show": "",
+                        "hide": ""
+                    },
+                    "audio": {
+                        "audioPath": "",
+                        "loop": false
+                    },
+                    "onEnter": [],
+                    "onExit": [],
+                    "inputKey": "numbertest",
+                    "displayType": "range"
+                },
+                {
+                    "id": "number-test-text",
+                    "type": "singleInput",
+                    "url": "/number-test-text",
+                    "next": [
+                        {
+                            "state": "telephone-test"
+                        }
+                    ],
+                    "name": "Number Test Text",
+                    "transition": {
+                        "show": "",
+                        "hide": ""
+                    },
+                    "audio": {
+                        "audioPath": "",
+                        "loop": false
+                    },
+                    "onEnter": [],
+                    "onExit": [],
+                    "inputKey": "numbertest",
+                    "displayType": "input"
+                },
+                {
+                    "id": "form-state-test",
+                    "type": "multipleInputs",
+                    "url": "/form-state-test",
+                    "next": [
+                        {
+                            "state": "html-state-test"
+                        }
+                    ],
+                    "name": "Form State Test",
+                    "transition": {
+                        "show": "animated flipInX",
+                        "hide": "animated flipOutX"
+                    },
+                    "audio": {
+                        "audioPath": "",
+                        "loop": false
+                    },
+                    "onEnter": [],
+                    "onExit": [],
+                    "inputs": [
+                        {
+                            "inputKey": "textshorttest",
+                            "required": true,
+                            "labelText": "Test Label Override",
+                            "width": "1/2"
+                        },
+                        {
+                            "inputKey": "textmediumtest",
+                            "width": "1/2"
+                        },
+                        {
+                            "inputKey": "textlargetest"
+                        },
+                        {
+                            "inputKey": "optionstest",
+                            "required": true,
+                            "width": "1/2"
+                        },
+                        {
+                            "inputKey": "comboboxtest",
+                            "required": true,
+                            "width": "1/2"
+                        },
+                        {
+                            "inputKey": "email",
+                            "width": "1/2",
+                            "required": true
+                        },
+                        {
+                            "inputKey": "urltest",
+                            "width": "1/2",
+                            "required": true
+                        },
+                        {
+                            "inputKey": "telephonetest",
+                            "width": "1/2"
+                        },
+                        {
+                            "inputKey": "numbertest",
+                            "width": "1/2"
+                        },
+                        {
+                            "inputKey": "textareatest",
+                            "required": true
+                        },
+                        {
+                            "inputKey": "datetest",
+                            "width": "1/2",
+                            "required": true
+                        },
+                        {
+                            "inputKey": "datetimetest",
+                            "width": "1/2",
+                            "required": true
+                        },
+                        {
+                            "inputKey": "checkboxtest",
+                            "required": true,
+                            "width": "1/3"
+                        }
+                    ],
+                    "submitText": "Test Submit Label Override",
+                    "headerText": "<h1>Form Title Override</h1>",
+                    "placeholder": true
+                },
+                {
+                    "id": "telephone-test",
+                    "type": "singleInput",
+                    "url": "/telephone-test",
+                    "next": [
+                        {
+                            "state": "form-state-test"
+                        }
+                    ],
+                    "name": "Telephone Test",
+                    "transition": {
+                        "show": "",
+                        "hide": ""
+                    },
+                    "audio": {
+                        "audioPath": "",
+                        "loop": false
+                    },
+                    "onEnter": [],
+                    "onExit": [],
+                    "inputKey": "telephonetest"
+                },
+                {
+                    "id": "html-state-test",
+                    "type": "html",
+                    "url": "/html-state-test",
+                    "next": [
+                        {
+                            "state": ""
+                        }
+                    ],
+                    "name": "HTML State Test",
+                    "editableStoryData": {},
+                    "transition": {
+                        "show": "animated zoomIn",
+                        "hide": "animated zoomOut"
+                    },
+                    "audio": {
+                        "audioPath": "",
+                        "loop": false
+                    },
+                    "onEnter": [
+                        {
+                            "eventName": "setCompleted",
+                            "args": {}
+                        }
+                    ],
+                    "onExit": [],
+                    "html": "<h1>HTML State Test</h1><span>Just seeing if this works</span><ul><li> Does this work </li></ul>"
+                },
+                {
+                    "id": "my-new-animation",
+                    "type": "animation",
+                    "url": "/my-new-animation",
+                    "next": [
+                        {
+                            "state": ""
+                        }
+                    ],
+                    "name": "My New Animation",
+                    "editableStoryData": {},
+                    "transition": {
+                        "show": "animated lightSpeedIn",
+                        "hide": "animated lightSpeedOut"
+                    },
+                    "audio": {
+                        "audioPath": "http://c21a7b8386ed9a02468f-07e63bba35c8c27197d9291d1fa4660f.r67.cf2.rackcdn.com/asu-winback-demo/3-want-back-intro-v3.mp3",
+                        "loop": false
+                    },
+                    "onEnter": [],
+                    "onExit": [],
+                    "timeline": [
+                        {
+                            "animationFunction": "set",
+                            "properties": {
+                                "scale": "6",
+                                "rotationZ": "135",
+                                "y": "-120"
+                            },
+                            "name": "Set Rocket",
+                            "selector": "#welcome-animation > i.fa.fa-rocket",
+                            "label": ""
+                        },
+                        {
+                            "animationFunction": "set",
+                            "properties": {
+                                "x": "100",
+                                "y": "-150"
+                            },
+                            "name": "Set 1x Star",
+                            "selector": "#stars > div > i.fa.fa-star.fa-lg"
+                        },
+                        {
+                            "animationFunction": "set",
+                            "properties": {
+                                "x": "-150",
+                                "y": "-180"
+                            },
+                            "name": "Set 2x Star",
+                            "selector": "#stars > div > i.fa.fa-star.fa-2x"
+                        },
+                        {
+                            "animationFunction": "set",
+                            "properties": {
+                                "x": "-150",
+                                "y": "-50"
+                            },
+                            "name": "Set 3x Star",
+                            "selector": "#stars > div > i.fa.fa-star.fa-3x"
+                        },
+                        {
+                            "animationFunction": "set",
+                            "properties": {
+                                "x": "150",
+                                "y": "0"
+                            },
+                            "name": "Set Star 4x",
+                            "selector": "#stars > div > i.fa.fa-star.fa-4x"
+                        },
+                        {
+                            "animationFunction": "set",
+                            "properties": {
+                                "x": "0",
+                                "y": "-320"
+                            },
+                            "name": "Move 5x Star",
+                            "selector": "#stars > div > i.fa.fa-star.fa-5x"
+                        },
+                        {
+                            "animationFunction": "set",
+                            "properties": {
+                                "visibility": "hidden"
+                            },
+                            "name": "Hide Stars",
+                            "selector": "#stars>div>i"
+                        },
+                        {
+                            "animationFunction": "set",
+                            "properties": {
+                                "y": "-300",
+                                "x": "0",
+                                "visibility": "hidden"
+                            },
+                            "name": "Set Middle Animation",
+                            "selector": "#middle-text > h1"
+                        },
+                        {
+                            "animationFunction": "set",
+                            "properties": {
+                                "opacity": "0"
+                            },
+                            "name": "hide middle list",
+                            "selector": "#middle-text > ul > li"
+                        },
+                        {
+                            "animationFunction": "set",
+                            "properties": {
+                                "x": "240",
+                                "y": "-360"
+                            },
+                            "name": "Set List",
+                            "selector": "#middle-text > ul"
+                        },
+                        {
+                            "animationFunction": "set",
+                            "properties": {
+                                "x": "150px",
+                                "y": "30"
+                            },
+                            "name": "Set Welcome Text",
+                            "selector": "#welcome-text > h1"
+                        },
+                        {
+                            "animationFunction": "to",
+                            "properties": {
+                                "y": "+=580"
+                            },
+                            "name": "Shoot Rocket",
+                            "selector": "#welcome-animation > i.fa.fa-rocket",
+                            "duration": 2,
+                            "label": "welcomeRocket"
+                        },
+                        {
+                            "animationFunction": "staggerFrom",
+                            "properties": {
+                                "rotationX": "90",
+                                "ease": "Elastic.easeOut"
+                            },
+                            "name": "Show H1 Text",
+                            "selector": "#welcome-text > h1",
+                            "duration": 0.75,
+                            "delay": 0.2,
+                            "label": "welcomeRocket+=0.4"
+                        },
+                        {
+                            "animationFunction": "staggerTo",
+                            "properties": {
+                                "scale": "0",
+                                "ease": "Back.easeIn"
+                            },
+                            "name": "Hide Welcome Title",
+                            "selector": "#welcome-text > h1",
+                            "duration": 0.5,
+                            "delay": 0.2
+                        },
+                        {
+                            "animationFunction": "set",
+                            "properties": {
+                                "visibility": "visible"
+                            },
+                            "name": "Show Stars",
+                            "selector": "#stars>div>i",
+                            "duration": 1
+                        },
+                        {
+                            "animationFunction": "staggerFrom",
+                            "properties": {
+                                "opacity": "0"
+                            },
+                            "name": "Reveal Stars",
+                            "selector": "#stars > div",
+                            "duration": 0.5,
+                            "delay": 0.1
+                        },
+                        {
+                            "animationFunction": "set",
+                            "properties": {
+                                "visibility": "visible"
+                            },
+                            "name": "Make Middle-Text H1 Visible",
+                            "selector": "#middle-text > h1"
+                        },
+                        {
+                            "animationFunction": "from",
+                            "properties": {
+                                "opacity": "0",
+                                "x": "-=50"
+                            },
+                            "name": "Show Middle Text H1",
+                            "selector": "#middle-text > h1",
+                            "duration": 0.5
+                        },
+                        {
+                            "animationFunction": "fromTo",
+                            "properties": {
+                                "to": {
+                                    "opacity": "1",
+                                    "y": "0"
+                                },
+                                "from": {
+                                    "y": "+=20"
+                                }
+                            },
+                            "name": "Show Color Name",
+                            "selector": "#middle-text > ul > li.color",
+                            "duration": 0.5,
+                            "label": "colorAnimation"
+                        },
+                        {
+                            "animationFunction": "staggerTo",
+                            "properties": {
+                                "color": "#000"
+                            },
+                            "name": "Change Star Colors",
+                            "selector": "#stars  > div > i",
+                            "duration": 0.1,
+                            "delay": 0.1,
+                            "label": "colorAnimation"
+                        },
+                        {
+                            "animationFunction": "to",
+                            "properties": {
+                                "opacity": "0",
+                                "y": "-=20"
+                            },
+                            "name": "Hide Color Text",
+                            "selector": "#middle-text > ul > li.color",
+                            "duration": 0.5
+                        },
+                        {
+                            "animationFunction": "fromTo",
+                            "properties": {
+                                "to": {
+                                    "opacity": "1",
+                                    "y": "0"
+                                },
+                                "from": {
+                                    "y": "+=20"
+                                }
+                            },
+                            "name": "Animate Class Text In",
+                            "selector": "#middle-text > ul > li.shape",
+                            "duration": 0.5,
+                            "label": "classAnimation"
+                        },
+                        {
+                            "animationFunction": "to",
+                            "properties": {
+                                "className": "fa fa-bug fa-2x"
+                            },
+                            "name": "Add Class Name to 2x",
+                            "selector": "#stars > div > i.fa.fa-star.fa-2x",
+                            "duration": 0.5,
+                            "delay": 0.1,
+                            "label": "classAnimation"
+                        },
+                        {
+                            "animationFunction": "to",
+                            "properties": {
+                                "className": "fa fa-bug"
+                            },
+                            "name": "Add class to 1x",
+                            "selector": "#stars > div > i.fa.fa-star.fa-lg",
+                            "duration": 0.5,
+                            "label": "classAnimation+=0.3"
+                        },
+                        {
+                            "animationFunction": "to",
+                            "properties": {
+                                "className": "fa fa-bug fa-3x"
+                            },
+                            "name": "Animate Custom Class 3x",
+                            "selector": "#stars > div > i.fa.fa-star.fa-3x",
+                            "duration": 0.5,
+                            "label": "classAnimation+=0.4"
+                        },
+                        {
+                            "animationFunction": "to",
+                            "properties": {
+                                "className": "fa fa-bug fa-5x"
+                            },
+                            "name": "Custom Class x5",
+                            "selector": "#stars > div > i.fa.fa-star.fa-5x",
+                            "duration": 0.5,
+                            "label": "classAnimation+=0.5"
+                        },
+                        {
+                            "animationFunction": "to",
+                            "properties": {
+                                "className": "fa fa-bug fa-4x"
+                            },
+                            "name": "Custom 4x",
+                            "selector": "#stars > div > i.fa.fa-star.fa-4x",
+                            "duration": 0.5,
+                            "label": "classAnimation+=0.6"
+                        },
+                        {
+                            "animationFunction": "to",
+                            "properties": {
+                                "opacity": "0",
+                                "y": "-=20"
+                            },
+                            "name": "Hide Class Animation Text",
+                            "selector": "#middle-text > ul > li.shape",
+                            "duration": 0.5
+                        },
+                        {
+                            "animationFunction": "fromTo",
+                            "properties": {
+                                "to": {
+                                    "opacity": "1",
+                                    "y": "0"
+                                },
+                                "from": {
+                                    "y": "+=20"
+                                }
+                            },
+                            "name": "Show Text Text",
+                            "selector": "#middle-text > ul > li.text",
+                            "duration": 0.5
+                        },
+                        {
+                            "animationFunction": "to",
+                            "properties": {
+                                "rotationY": "90"
+                            },
+                            "name": "Rotate Text Out",
+                            "selector": "#middle-text > ul > li.text",
+                            "duration": 0.5
+                        },
+                        {
+                            "animationFunction": "set",
+                            "properties": {
+                                "opacity": "1"
+                            },
+                            "name": "Set CUstom Text to visible",
+                            "selector": "#middle-text > ul > li.custom-text"
+                        },
+                        {
+                            "animationFunction": "from",
+                            "properties": {
+                                "rotationY": "90"
+                            },
+                            "name": "Rotate Custom Text In",
+                            "selector": "#middle-text > ul > li.custom-text",
+                            "duration": 0.5
+                        },
+                        {
+                            "animationFunction": "to",
+                            "properties": {
+                                "y": "-=20",
+                                "opacity": "0"
+                            },
+                            "name": "Animate Custom Text Out",
+                            "selector": "#middle-text > ul > li.custom-text",
+                            "duration": 0.5
+                        },
+                        {
+                            "animationFunction": "fromTo",
+                            "properties": {
+                                "to": {
+                                    "opacity": "1",
+                                    "y": "0"
+                                },
+                                "from": {
+                                    "y": "+=20"
+                                }
+                            },
+                            "name": "Show More Text",
+                            "selector": "#middle-text > ul > li.more",
+                            "duration": 0.5
+                        },
+                        {
+                            "animationFunction": "to",
+                            "properties": {
+                                "scale": "0"
+                            },
+                            "name": "Hide Middle Text",
+                            "selector": "#middle-text",
+                            "duration": 0.5
+                        },
+                        {
+                            "animationFunction": "staggerTo",
+                            "properties": {
+                                "rotationZ": "360",
+                                "scale": "0"
+                            },
+                            "name": "Hide Icons",
+                            "selector": "#stars > div > i",
+                            "duration": 0.5,
+                            "delay": 0.1
+                        }
+                    ],
+                    "animationElements": [
+                        {
+                            "id": "welcome-animation",
+                            "html": "<i class=\"fa fa-rocket\"></i>"
+                        },
+                        {
+                            "id": "welcome-text",
+                            "html": "<h1>Hey Swedish Taboo!</h1><h1>Are you ready for</h1><h1>animation states?</h1>"
+                        },
+                        {
+                            "id": "stars",
+                            "html": "<div><i class=\"fa fa-star fa-2x\"> </i></div><div><i class=\"fa fa-star fa-lg\"></i></div><div><i class=\"fa fa-star fa-4x\"></i></div><div><i class=\"fa fa-star fa-3x\"></i></div><div><i class=\"fa fa-star fa-5x\"></i></div>"
+                        },
+                        {
+                            "id": "middle-text",
+                            "html": "<h1>CUSTOMIZE:</h1><ul><li class=\"text\">Text</li><li class=\"color\">Color</li><li class=\"animation\">Animation</li>        <li class=\"shape\">Classes</li>        <li class=\"text\">Text</li><li class=\"custom-text\">lkh</li><li class=\"more\">And more!</li></ul>"
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}
