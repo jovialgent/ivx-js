@@ -11,10 +11,10 @@ author_profile: false
 Learn the basics of iVXjs by creating a simple application that 
 asks for a user name and displays their name in a special message!
 
-{% include base_path %}
+
 
 {: .btn .btn--inverse}
-[Hello World](tutorial.hello-world)
+[Hello World]({% include base_path %}/ivx-js/tutorial.hello-world)
 
 ## Templates
 
