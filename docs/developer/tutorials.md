@@ -11,8 +11,6 @@ author_profile: false
 Learn the basics of iVXjs by creating a simple application that 
 asks for a user name and displays their name in a special message!
 
-
-
 {: .btn .btn--inverse}
 [Hello World](https://influencetech.github.io/ivx-js/developer/tutorial.hello-world)
 

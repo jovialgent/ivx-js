@@ -12,6 +12,10 @@ As a developer, you may want to utilize templates for adding HTML to elements su
 state headers/footers and labels. To do this, you can add data that is a path to the 
 _.html_ file where you template is. 
 
+## Demo 
+
+[Templates Demo](https://github.com/influencetech/ivx-js/tree/master/demos/templates)
+
 ## HTML State Templates
 
 ### Overview 
@@ -22,7 +26,7 @@ a static web page. This will show you how to add templatesUrls into HTML states.
 
 ### Sample Data
 
-For this section of the tutorial, we will be using [html-state-sample.json]({% include base_path %}/developer/sample-json/html-state-sample.json) file.
+For this section of the tutorial, we will be using [html-state-sample.json](https://influencetech.github.io/ivx-js/developer/sample-JSON/html-state-sample.json) file.
 
 ### From JSON: HTML State's HTML
 
@@ -134,7 +138,7 @@ be able to add intricate headers and footers without bloating the JSON spec.
 
 ### Sample Data
 
-For this tutorial we will be using the [video-state-sample.json]({% include base_path %}/developer/sample-json/video-state-sample.json) file.
+For this tutorial we will be using the [video-state-sample.json](https://influencetech.github.io/ivx-js/developer/sample-JSON/video-state-sample.json) file.
 
 ### From JSON: Adding HTML to Headers/Footers
 
@@ -310,7 +314,7 @@ require a template to be able to render and behave correctly.
 
 ### Sample Data
 
-For this tutorial we will be using the [video-state-sample.json]({% include base_path %}/developer/sample-json/video-state-sample.json) file.
+For this tutorial we will be using the [video-state-sample.json](https://influencetech.github.io/ivx-js/developer/sample-JSON/video-state-sample.json) file.
 
 ### Special note about personalizations:
 
@@ -625,7 +629,7 @@ Anywhere in the JSON spec where there is either a `"label"` or `"labelHTML"`, yo
 
 ### Sample Data for Label Template Tutorial
 
-For this tutorial we will be using the [input-state-sample.json]({% include base_path %}/developer/sample-json/input-state-sample.json) file.
+For this tutorial we will be using the [input-state-sample.json](https://influencetech.github.io/ivx-js/developer/sample-JSON/input-state-sample.json) file.
 
 ### From JSON: Adding Label HTML
 

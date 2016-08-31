@@ -13,6 +13,10 @@ be able to create a seemless experience between mobile devices, this can cause s
 But, iVXjs has a built in system that can play inline iPhone video by using a iphone-inline-video.js 
 library and iVXjs's robust system for videos and personalizations.
 
+## Demo 
+
+[Inline iPhone Demo](https://github.com/influencetech/ivx-js/tree/master/demos/iphone-inline)
+
 ## Getting Started with iPhone Inline 
 
 ### Dependencies 
@@ -23,7 +27,7 @@ This feature has the following code dependencies:
 
 ### Setting up the HTML 
 
-Follow the instructions for setting up an [[angular.ivx.js](/developer/tutorial.hello-world) project but you will 
+Follow the instructions for setting up an [[angular.ivx.js](https://influencetech.github.io/ivx-js/developer/tutorial.hello-world) project but you will 
 include the following script tag to your script dependencies:
 
 ```
@@ -42,7 +46,7 @@ _Note: mp4 format is the only formatted supported for inline video._
 
 ### Sample Data 
 
-To start out, we will be using this data: [video-state-sample.json]({% include base_path %}/developer/sample-json/video-state-sample.json) file.
+To start out, we will be using this data: [video-state-sample.json](https://influencetech.github.io/ivx-js/developer/sample-JSON/video-state-sample.json) file.
 
 ### Process to add inline iPhone video 
 

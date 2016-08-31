@@ -13,6 +13,10 @@ The [Angular](https://angularjs.org/) distribution of iVXjs utilizes Angular's d
 injection and other features to render the individual states and elements. It is very simple
 to set up 
 
+## Demo 
+
+[Hello World Demo](https://github.com/influencetech/ivx-js/tree/master/demos/hello-world)
+
 ## Getting Started
 
 ### iVXjs Angular's Dependencies

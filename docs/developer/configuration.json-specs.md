@@ -30,7 +30,7 @@ This is the base structure for the configuration file.
 
 _Sample Data_
 
-[base-structure-sample.json]({% include base_path %}/developer/sample-json/base-structure-sample.json)
+[base-structure-sample.json](https://influencetech.github.io/ivx-js/developer/sample-JSON/base-structure-sample.json)
 
 _Schema_
 
@@ -165,7 +165,7 @@ All states have the following data below. Assume the specific states types have 
 
 _Sample Data_
 
-[shared-state-data-sample.json]({% include base_path %}/developer/sample-json/shared-state-data-sample.json)
+[shared-state-data-sample.json]({https://influencetech.github.io/ivx-js/developer/sample-JSON/shared-state-data-sample.json)
 
 _Schema_
 
@@ -343,7 +343,7 @@ The HTML State's data is simple and is designed to help make it easy to inject a
 
 _Sample Data_
 
-[html-state-sample.json]({% include base_path %}/developer/sample-json/html-state-sample.json)
+[html-state-sample.json](https://influencetech.github.io/ivx-js/developer/sample-JSON/html-state-sample.json)
 
 _Schema_
 
@@ -386,7 +386,7 @@ The input state's data allows the developer to create a state with a form and co
 
 _Sample Data_
 
-[input-state-sample.json]({% include base_path %}/developer/sample-json/input-state-sample.json)
+[input-state-sample.json](https://influencetech.github.io/ivx-js/developer/sample-JSON/input-state-sample.json)
 
 
 _Schema_
@@ -469,7 +469,7 @@ Settings for the navigation state with the data to set up the links for this sta
 
 _Sample Data_
 
-[navigation-state-sample.json]({% include base_path %}/developer/sample-json/navigation-state-sample.json)
+[navigation-state-sample.json](https://influencetech.github.io/ivx-js/developer/sample-JSON/navigation-state-sample.json)
 
 _Schema_
 
@@ -538,7 +538,7 @@ The Video State's data has various sections that tell iVX.js what personalizatio
 
 _Sample Data_
 
-[video-state-sample.json]({% include base_path %}/developer/sample-json/video-state-sample.json)
+[video-state-sample.json](https://influencetech.github.io/ivx-js/developer/sample-JSON/video-state-sample.json)
 
 _Schema_
 
@@ -702,7 +702,7 @@ Most inputs share attributes to record data and here are the settings that most 
 
 _Sample Data_
 
-[input-data-shared-sample.json]({% include base_path %}/developer/sample-json/input-data-shared-sample.json)
+[input-data-shared-sample.json](https://influencetech.github.io/ivx-js/developer/sample-JSON/input-data-shared-sample.json)
 
 _Schema_
 
@@ -797,7 +797,7 @@ Buttons data allows the user to create a group of buttons that set values on cli
 
 _Sample Data_
 
-[input-button-data-sample.json]({% include base_path %}/developer/sample-json/input-button-data-sample.json)
+[input-button-data-sample.json](https://influencetech.github.io/ivx-js/developer/sample-JSON/input-button-data-sample.json)
 
 _Schema_
 
@@ -875,7 +875,7 @@ Settings for the input to render a checkbox.
 
 _Sample Data_
 
-[input-checkbox-data-sample.json]({% include base_path %}/developer/sample-json/input-checkbox-data-sample.json)
+[input-checkbox-data-sample.json](https://influencetech.github.io/ivx-js/developer/sample-JSON/input-checkbox-data-sample.json)
 
 
 _Schema_
@@ -946,7 +946,7 @@ Settings for the datetime-local input type
 
 _Sample Data_
 
-[input-datetime-local-data-sample.json]({% include base_path %}/developer/sample-json/input-datetime-local-data-sample.json)
+[input-datetime-local-data-sample.json](https://influencetech.github.io/ivx-js/developer/sample-JSON/input-datetime-local-data-sample.json)
 
 _Schema_
 
@@ -992,7 +992,7 @@ Settings for this email input type
 
 _Sample Data_
 
-[input-email-data-sample.json]({% include base_path %}/developer/sample-json/input-email-data-sample.json)
+[input-email-data-sample.json](https://influencetech.github.io/ivx-js/developer/sample-JSON/sample-json/input-email-data-sample.json)
 
 
 _Schema_
@@ -1031,7 +1031,7 @@ Settings for the number input type
 
 _Sample Data_
 
-[input-number-data-sample.json]({% include base_path %}/developer/sample-json/input-number-data-sample.json)
+[input-number-data-sample.json](https://influencetech.github.io/ivx-js/developer/sample-JSON/input-number-data-sample.json)
 
 
 _Schema_
@@ -1078,7 +1078,7 @@ Settings for this select/options input
 
 _Sample Data_
 
-[input-options-data-sample.json]({% include base_path %}/developer/sample-json/input-options-data-sample.json)
+[input-options-data-sample.json](https://influencetech.github.io/ivx-js/developer/sample-JSON/input-options-data-sample.json)
 
 
 _Schema_
@@ -1135,7 +1135,7 @@ Settings to render radio buttons
 
 _Sample Data_
 
-[input-radio-data-sample.json]({% include base_path %}/developer/sample-json/input-radio-data-sample.json)
+[input-radio-data-sample.json](https://influencetech.github.io/ivx-js/developer/sample-JSON/input-radio-data-sample.json)
 
 
 _Schema_
@@ -1194,7 +1194,7 @@ Settings for the text type input
 
 _Sample Data_
 
-[input-text-data-sample.json]({% include base_path %}/developer/sample-json/input-text-data-sample.json)
+[input-text-data-sample.json](https://influencetech.github.io/ivx-js/developer/sample-JSON/input-text-data-sample.json)
 
 
 _Schema_
@@ -1237,7 +1237,7 @@ Settings for the textarea type input
 
 _Sample Data_
 
-[input-textarea-data-sample.json]({% include base_path %}/developer/sample-json/input-textarea-data-sample.json)
+[input-textarea-data-sample.json](https://influencetech.github.io/ivx-js/developer/sample-JSON/input-textarea-data-sample.json)
 
 _Schema_
 
@@ -1279,7 +1279,7 @@ Settings for this Url input type
 
 _Sample Data_
 
-[input-url-data-sample.json]({% include base_path %}/developer/sample-json/input-url-data-sample.json)
+[input-url-data-sample.json](https://influencetech.github.io/ivx-js/developer/sample-JSON/input-url-data-sample.json)
 
 
 _Schema_
@@ -1320,7 +1320,7 @@ _Sample Data_
 
 For all the following schemas, the sample data can be found here:
 
-[ivxjs-event-data-sample.json]({% include base_path %}/developer/sample-json/ivxjs-event-data-sample.json)
+[ivxjs-event-data-sample.json](https://influencetech.github.io/ivx-js/developer/sample-JSON/ivxjs-event-data-sample.json)
 
 
 ## Basic Event Structure
@@ -1619,7 +1619,7 @@ _Sample Data_
 
 For all the following schemas, the sample data can be found here:
 
-[ivxio-event-data-sample.json]({% include base_path %}/developer/sample-json/ivxio-event-data-sample.json)
+[ivxio-event-data-sample.json](https://influencetech.github.io/ivx-js/developer/sample-JSON/ivxio-event-data-sample.json)
 
 
 ## recordEvent

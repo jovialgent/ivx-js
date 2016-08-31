@@ -2,7 +2,7 @@
 layout: single
 ---
 
-# Page Not Found State Testing
+# Set Up a 404 State
 
 {% include toc %}
 
@@ -13,11 +13,15 @@ of the states url. This might be good for most cases, but sometimes as a develop
 want to navigate to a state indicating the user has led to an invalid state and recover 
 more elegantly. This tutorial will show you how to set up that state and navigate to it. 
 
+## Demo 
+
+[Set Up A 404 State Demo](https://github.com/influencetech/ivx-js/tree/master/demos/set-up-a-404-state)
+
 ## Setting up the Page Not Found State 
 
 ### Sample Data 
 
-The finished data for this tutorial can be found here: [404-page-sample.json]({% include base_path %}/developer/sample-json/404-page-sample.json)
+The finished data for this tutorial can be found here: [404-page-sample.json](https://influencetech.github.io/ivx-js/developer/sample-JSON/404-page-sample.json)
 
 ### Adding a Page Not Found to an existing experience 
 
