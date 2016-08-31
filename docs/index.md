@@ -6,7 +6,7 @@ header:
   overlay_color: "#000"
   overlay_filter: "0.5"
   overlay_image: unsplash-image-1.jpg
-  cta_label: "Get the library"
+  cta_label: "Get the code"
   cta_url: "https://github.com/influencetech/ivx-js"
   caption: "Photo credit: [**Unsplash**](https://unsplash.com)"
 excerpt: "A library to make data-driven interactive web-experiences with support for video, sound, data collection, decision-trees and animations."
