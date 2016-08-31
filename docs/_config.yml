@@ -12,7 +12,7 @@ title_separator          : "-"
 name                     : "Influence Technology"
 description              : "A library to make data-driven interactive web-experiences with support for video, sound, data collection, decision-trees and animations."
 url                      : "https://influencetech.github.io/ivx-js" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
-baseurl                  : "/ivx-js" # the subpath of your site, e.g. "/blog"
+baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : "influencetech/ivx-js" # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
 teaser                   : # filename of teaser fallback teaser image placed in /images/, .e.g. "500x300.png"
 # breadcrumbs            : false # true, false (default)
