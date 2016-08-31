@@ -20,7 +20,7 @@ Get started with templates by seeing how they are used in
 a variety of states.
 
 {: .btn .btn--inverse}
-[Templates](developer/tutorial.templates)
+[Templates]({{ site.url }}/{{ site.baseurl }}/developer/tutorial.templates)
 
 ## Set Up a 404 State
 
