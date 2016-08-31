@@ -1,0 +1,36 @@
+{
+    "defaultState": [{
+        "stateId": "date-sample-state"
+    }],
+    "states": [{
+        "id": "date-sample-state",
+        "name": "Date Sample State",
+        "url": "/date-sample-state",
+        "type": "input",
+        "header": {},
+        "footer": {},
+        "onEnter": [],
+        "onExit": [],
+        "onSubmit": [],
+        "form": {
+            "classes": "",
+            "submit": {}
+        },
+        "next": [],
+        "inputs": [{
+            "id": "date-input",
+            "name": "dateInput",
+            "type": "date",
+            "label": "",
+            "settings": {
+                "container": {},
+                "input": {}
+            },
+            "attributes": {
+                "min" : "01/01/2015",
+                "max" : "01/01/2016"
+            },
+            "errors" : {}
+        }]
+    }]
+}

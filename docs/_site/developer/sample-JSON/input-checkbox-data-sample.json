@@ -1,0 +1,33 @@
+{
+    "defaultState": [{
+        "stateId": "checkbox-sample-data"
+    }],
+    "states": [{
+        "id": "checkbox-sample-data",
+        "name": "Checkbox Sample State",
+        "url": "/checkbox-sample-data",
+        "type": "input",
+        "header": {},
+        "footer": {},
+        "onEnter": [],
+        "onExit": [],
+        "onSubmit": [],
+        "form": {
+            "classes": "",
+            "submit": {}
+        },
+        "next": [],
+        "inputs": [{
+            "id": "checkbox-input",
+            "name": "checkboxInput",
+            "type": "checkbox",
+            "label": "I Am A Checkbox",
+            "settings": {
+                "container": {},
+                "input": {}
+            },
+            "attributes": {},
+            "errors" : {}
+        }]
+    }]
+}

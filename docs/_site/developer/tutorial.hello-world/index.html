@@ -1,0 +1,497 @@
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+
+<meta charset="utf-8">
+
+
+
+<!-- begin SEO -->
+
+
+
+
+
+
+
+
+
+<title>iVXjs</title>
+
+
+
+
+
+
+
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="iVXjs">
+<meta property="og:title" content="iVXjs">
+
+
+  <link rel="canonical" href="http://localhost:4000/developer/tutorial.hello-world/">
+  <meta property="og:url" content="http://localhost:4000/developer/tutorial.hello-world/">
+
+
+
+
+
+
+
+  
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "Person",
+      "name" : "Influence Technology",
+      "url" : "http://localhost:4000",
+      "sameAs" : null
+    }
+  </script>
+
+
+
+
+
+
+<!-- end SEO -->
+
+
+<link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="iVXjs Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://localhost:4000/assets/css/main.css">
+
+<meta http-equiv="cleartype" content="on">
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use http://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+  </head>
+
+  <body>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <button><div class="navicon"></div></button>
+        <ul class="visible-links">
+          <li class="masthead__menu-item masthead__menu-item--lg"><a href="http://localhost:4000/">iVXjs</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/developer/tutorial.hello-world">Getting Started</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/developer/tutorials">Tutorials</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/developer/configuration">Configuration and Features</a></li>
+          
+        </ul>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    
+
+
+
+
+
+<div id="main" role="main">
+  
+
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    
+    
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        <h1 id="hello-world-using-angularivxjs">Hello World using angular.ivx.js</h1>
+
+<aside class="sidebar__right">
+<nav class="toc">
+    <header><h4 class="nav__title"><i class="fa fa-file-text"></i> On This Page</h4></header>
+<ul class="toc__menu" id="markdown-toc">
+  <li><a href="#hello-world-using-angularivxjs" id="markdown-toc-hello-world-using-angularivxjs">Hello World using angular.ivx.js</a>    <ul>
+      <li><a href="#overview" id="markdown-toc-overview">Overview</a></li>
+      <li><a href="#getting-started" id="markdown-toc-getting-started">Getting Started</a>        <ul>
+          <li><a href="#ivxjs-angulars-dependencies" id="markdown-toc-ivxjs-angulars-dependencies">iVXjs Angular’s Dependencies</a></li>
+          <li><a href="#setting-up-the-html" id="markdown-toc-setting-up-the-html">Setting up the html</a></li>
+        </ul>
+      </li>
+      <li><a href="#breaking-down-the-html" id="markdown-toc-breaking-down-the-html">Breaking down the html</a>        <ul>
+          <li><a href="#angular-module" id="markdown-toc-angular-module">Angular Module</a></li>
+          <li><a href="#adding-the-dependency-scripts" id="markdown-toc-adding-the-dependency-scripts">Adding the dependency scripts</a></li>
+          <li><a href="#angular-code" id="markdown-toc-angular-code">Angular Code</a></li>
+          <li><a href="#configuration" id="markdown-toc-configuration">Configuration</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+  </nav>
+</aside>
+
+<h2 id="overview">Overview</h2>
+
+<p>The <a href="https://angularjs.org/">Angular</a> distribution of iVXjs utilizes Angular’s dependency 
+injection and other features to render the individual states and elements. It is very simple
+to set up</p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<h3 id="ivxjs-angulars-dependencies">iVXjs Angular’s Dependencies</h3>
+
+<p>The Angular iVX.js instance–iVXjs for this documentation–has the following script dependencies:</p>
+
+<ul>
+  <li>angular.ivx.js</li>
+  <li><a href="https://angularjs.org/">Angular 1.5</a></li>
+  <li><a href="https://github.com/angular-ui/ui-router">Angular UI-Router</a></li>
+  <li><a href="https://docs.angularjs.org/api/ngSanitize">ngSanitize</a></li>
+</ul>
+
+<p>Once you go to their website and download you will need the <em>angular.ivx.js</em> file from dist.</p>
+
+<h3 id="setting-up-the-html">Setting up the html</h3>
+
+<p>To get the iVX.js experience working, you can add the following HTML to your project:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;!-- Angular application for this page --&gt;
+&lt;div ng-app="[MODULE-NAME]"&gt;&lt;/div&gt;
+&lt;!-- Container for an iVX.js Experience --&gt;
+&lt;div id='ivx'&gt;&lt;/div&gt;
+&lt;!-- iVXjs Angular Library Dependencies  --&gt;
+&lt;script src='[PATH-TO-JS]/angular.min.js'&gt;&lt;/script&gt;
+&lt;script src='[PATH-TO-JS]/angular-ui-router.min.js'&gt;&lt;/script&gt;
+&lt;script src='[PATH-TO-JS]/angular-sanitize.min.js'&gt;&lt;/script&gt;
+&lt;script src='[PATH-TO-JS]/angular.ivx.js'&gt;&lt;/script&gt;
+&lt;script&gt;
+ angular
+ .module('[MODULE-NAME]', ['ivx-js'])
+ .run(['iVXjs', function(iVXjs){
+ 	iVXjs.init({
+ 		"config" : {
+ 			"defaultState": [{
+ 				"stateId": "hello-world"
+ 			}],
+ 			"states": [{
+ 				"id": "hello-world",
+ 				"name": "Hello World",
+ 				"url": "/hello-world",
+ 				"type": "input",
+ 				"header": {
+ 					"html" : "&lt;h1&gt;Welcome to iVXjs!&lt;/h1&gt;&lt;h2&gt;Write in your name below so we can get to know you.&lt;/h2&gt;"
+ 				},
+ 				"footer": {
+ 					"html" : ""
+ 				},
+ 				"onEnter":[],
+ 				"onExit": [],
+ 				"next": [{
+ 					"stateId" : "welcome-screen"
+ 				}],
+ 				"onSubmit": [],
+ 				"inputs": [{
+ 					"id": "name",
+ 					"type": "text",
+ 					"name" : "name",
+ 					"label" : "Your Name:"
+ 				}]
+ 			},{
+ 				"id" : "welcome-screen",
+ 				"name" : "Welcome Screen",
+ 				"url" : "/welcome-screen",
+ 				"type" : "html",
+ 				"html" : "&lt;div class=\"welcome\"&gt;&lt;h1&gt;Congratulations !&lt;/h1&gt;&lt;h2&gt;You made your first iVXjs Experience!&lt;/h2&gt;&lt;/div&gt;"
+ 			}]
+ 		}
+ 	});
+ }]);     
+&lt;/script&gt;
+</code></pre>
+</div>
+
+<h2 id="breaking-down-the-html">Breaking down the html</h2>
+
+<p>Let’s take a moment to explain what the above HTML is doing:</p>
+
+<h3 id="angular-module">Angular Module</h3>
+
+<p>We have to add an angular module to a child element of the page so that 
+iVXjs can bootstrap itself to the correct element (more on that in another tutorial)
+So, to make sure it loads properly, add your <code class="highlighter-rouge">ng-app</code> directive to a child node. For this example,
+replace the <code class="highlighter-rouge">[MODULE-NAME]</code> with the name of your app:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;div ng-app="[MODULE-NAME]"&gt;&lt;/div&gt;
+</code></pre>
+</div>
+
+<h3 id="adding-the-dependency-scripts">Adding the dependency scripts</h3>
+
+<p>These add the scripts to the page. Just replace <code class="highlighter-rouge">[PATH-TO-JS]</code> with the
+location of these scripts relative to your page.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;script src='[PATH-TO-JS]/angular.min.js'&gt;&lt;/script&gt;	
+&lt;script src='[PATH-TO-JS]/angular-ui-router.min.js'&gt;&lt;/script&gt;
+&lt;script src='[PATH-TO-JS]/angular-sanitize.min.js'&gt;&lt;/script&gt;
+&lt;script src='[PATH-TO-JS]/angular.ivx.js'&gt;&lt;/script&gt;
+</code></pre>
+</div>
+
+<h3 id="angular-code">Angular Code</h3>
+
+<p>The actual way we begin iVXjs is by running the init function during
+the child app’s run function.</p>
+
+<p>First we will need to inject ‘ivx-js’ into your angular app:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>angular
+        .module('[MODULE-NAME]', ['ivx-js'])
+</code></pre>
+</div>
+
+<p>Next we need to tell the angular module on run to initialize by running the <code class="highlighter-rouge">iVXjs.init</code>:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>angular
+    .module('[MODULE-NAME]', ['ivx-js'])
+    .run(['iVXjs', 
+        function(iVXjs){
+        iVXjs.init({
+            config : {
+			    "defaultState": [{
+			        "stateId": "hello-world"
+			    }],
+			    "states": [{
+			        "id": "hello-world",
+			        "name": "Hello World",
+			        "url": "/hello-world",
+			        "type": "input",
+			        "header": {
+			            "html" : "&lt;h1&gt;Welcome to iVXjs!&lt;/h1&gt;&lt;h2&gt;Write in your name below so we can get to know you.&lt;/h2&gt;"
+			        },
+			        "footer": {
+			            "html" : ""
+			        },
+			        "onEnter":[],
+			        "onExit": [],
+			        "next": [{
+			            "stateId" : "welcome-screen"
+			        }],
+			        "onSubmit": [],
+			        "inputs": [{
+			            "id": "name",
+			            "type": "text",
+			            "name" : "name",
+			            "label" : "Your Name:"           
+			        }]
+			    },{
+			        "id" : "welcome-screen",
+			        "name" : "Welcome Screen",
+			        "url" : "/welcome-screen",
+			        "type" : "html",
+			        "html" : "&lt;div class=\"welcome\"&gt;&lt;h1&gt;Congratulations !&lt;/h1&gt;&lt;h2&gt;You made your first iVXjs Experience!&lt;/h2&gt;&lt;/div&gt;"
+
+			    }]
+			}
+        });
+    }])     
+</code></pre>
+</div>
+
+<h3 id="configuration">Configuration</h3>
+
+<p>The iVX.js init takes one argument, an object with various settings you can add to customize the experience, but for 
+now we will using the following config. The definition for this spec is <a href="/docs/esdocs/manual/configuration.html#json">here</a>. But,
+for this <em>Getting Started</em> we will explain a little what this config is instructing iVX.js to do.</p>
+
+<p><em>Default State</em></p>
+
+<p>The default state array tells where is the starting point for this experience. In this case, we want this experience to start 
+at the state “hello-world”:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>"defaultState": [{
+        "stateId": "hello-world"
+}]
+</code></pre>
+</div>
+
+<p><em>States</em></p>
+
+<p>The states array is the list of all states in this experience. States are segments of an experience where
+a user can interact with in varied of ways. Other tutorials will go over how to set up states, so right now
+we will explain what each state object is doing for this set up.</p>
+
+<p>The first state in the array is an input state. The input state is a state that has input elements that typically captures
+user information and adds it to the experience.data object. In this case, the state’s data is indicating that it wants 
+to make a text input that records the user’s name. So, the spec here:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="w">
+</span><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hello-world"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hello World"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/hello-world"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"input"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"header"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"html"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;h1&gt;Welcome to iVXjs!&lt;/h1&gt;&lt;h2&gt;Write in your name below so we can get to know you.&lt;/h2&gt;"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"footer"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"html"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"onEnter"</span><span class="p">:[],</span><span class="w">
+    </span><span class="nt">"onExit"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"next"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+        </span><span class="nt">"stateId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"welcome-screen"</span><span class="w">
+    </span><span class="p">}],</span><span class="w">
+    </span><span class="nt">"onSubmit"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"inputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"name"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"text"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"name"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"name"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"label"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Your Name:"</span><span class="w">           
+    </span><span class="p">}]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>Will appear like this here:</p>
+
+<p><img src="http://e8ddcf8725663d605209-8d8cc7c733bcfce1ecd11bbb8349e503.r95.cf2.rackcdn.com/tutorial/Hello-World-State.png" alt="Hellow World State" /></p>
+
+<p>The next and final state is a HTML state. The HTML state is a state where a user can put in any HTML they want and 
+have it render. The HTML state for this set up shows a congratulatory message. So, the spec is as follows:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+	</span><span class="nt">"id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"welcome-screen"</span><span class="p">,</span><span class="w">
+	</span><span class="nt">"name"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Welcome Screen"</span><span class="p">,</span><span class="w">
+	</span><span class="nt">"url"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"/welcome-screen"</span><span class="p">,</span><span class="w">
+	</span><span class="nt">"type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"html"</span><span class="p">,</span><span class="w">
+	</span><span class="nt">"html"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;div class='welcome'&gt;&lt;h1&gt;Congratulations !&lt;/h1&gt;&lt;h2&gt;You made your first iVXjs Experience!&lt;/h2&gt;&lt;/div&gt;"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+			   
+</span></code></pre>
+</div>
+
+<p>Will render:</p>
+
+<p><img src="http://e8ddcf8725663d605209-8d8cc7c733bcfce1ecd11bbb8349e503.r95.cf2.rackcdn.com/tutorial/Congratulations%20State.png" alt="Congratulations State" /></p>
+
+<p>For this state, a special note. Look at this line of the config:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>"html" : "&lt;div class='welcome'&gt;&lt;h1&gt;Congratulations !&lt;/h1&gt;&lt;h2&gt;You made your first iVXjs Experience!&lt;/h2&gt;&lt;/div&gt;"
+</code></pre>
+</div>
+
+<p>The `` indicates to iVX.js to replace the piece of code with the name the user 
+provided in the last state. In this case, the “User’s Name” was provided in the state before and 
+now shows here. More on personalizations and tokens in other parts. But, for now it shows how a developer
+can use data collected to enhance future states.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+
+
+        
+      </footer>
+
+      
+
+      
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+    
+    
+    
+    
+    <li><a href="http://localhost:4000/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2016 Influence Technology. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+      </footer>
+    </div>
+
+    <script src="http://localhost:4000/assets/js/main.min.js"></script>
+
+
+
+
+
+  </body>
+</html>
+

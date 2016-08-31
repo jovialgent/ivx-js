@@ -1,0 +1,876 @@
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+
+<meta charset="utf-8">
+
+
+
+<!-- begin SEO -->
+
+
+
+
+
+
+
+
+
+<title>iVXjs</title>
+
+
+
+
+
+
+
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="iVXjs">
+<meta property="og:title" content="iVXjs">
+
+
+  <link rel="canonical" href="http://localhost:4000/developer/usage.events/">
+  <meta property="og:url" content="http://localhost:4000/developer/usage.events/">
+
+
+
+
+
+
+
+  
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "Person",
+      "name" : "Influence Technology",
+      "url" : "http://localhost:4000",
+      "sameAs" : null
+    }
+  </script>
+
+
+
+
+
+
+<!-- end SEO -->
+
+
+<link href="http://localhost:4000/feed.xml" type="application/atom+xml" rel="alternate" title="iVXjs Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://localhost:4000/assets/css/main.css">
+
+<meta http-equiv="cleartype" content="on">
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use http://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+  </head>
+
+  <body>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <button><div class="navicon"></div></button>
+        <ul class="visible-links">
+          <li class="masthead__menu-item masthead__menu-item--lg"><a href="http://localhost:4000/">iVXjs</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/developer/tutorial.hello-world">Getting Started</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/developer/tutorials">Tutorials</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/developer/configuration">Configuration and Features</a></li>
+          
+        </ul>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    
+
+
+
+
+
+<div id="main" role="main">
+  
+
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    
+    
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        <h1 id="ivxjs-events">iVXjs Events</h1>
+
+<aside class="sidebar__right">
+<nav class="toc">
+    <header><h4 class="nav__title"><i class="fa fa-file-text"></i> On This Page</h4></header>
+<ul class="toc__menu" id="markdown-toc">
+  <li><a href="#ivxjs-events" id="markdown-toc-ivxjs-events">iVXjs Events</a></li>
+  <li><a href="#overview" id="markdown-toc-overview">Overview</a></li>
+  <li><a href="#note-about-events-documentation" id="markdown-toc-note-about-events-documentation">Note about events documentation</a></li>
+  <li><a href="#ivxjs-bus-implementations" id="markdown-toc-ivxjs-bus-implementations">iVXjs Bus Implementations</a>    <ul>
+      <li><a href="#ivxjs-bus-angular-implementation" id="markdown-toc-ivxjs-bus-angular-implementation">iVXjs Bus Angular Implementation</a></li>
+    </ul>
+  </li>
+  <li><a href="#audio-events" id="markdown-toc-audio-events">Audio Events</a>    <ul>
+      <li><a href="#ivxjsaudiocan-play" id="markdown-toc-ivxjsaudiocan-play">iVXjs:audio:can-play</a></li>
+      <li><a href="#ivxjsaudioended" id="markdown-toc-ivxjsaudioended">iVXjs:audio:ended</a></li>
+      <li><a href="#ivxjsaudiomute" id="markdown-toc-ivxjsaudiomute">iVXjs:audio:mute</a></li>
+      <li><a href="#ivxjsaudiopause" id="markdown-toc-ivxjsaudiopause">iVXjs:audio:pause</a></li>
+      <li><a href="#ivxjsaudioplay" id="markdown-toc-ivxjsaudioplay">iVXjs:audio:play</a></li>
+      <li><a href="#ivxjsaudiotime-update" id="markdown-toc-ivxjsaudiotime-update">iVXjs:audio:time-update</a></li>
+      <li><a href="#ivxjsaudiounmute" id="markdown-toc-ivxjsaudiounmute">iVXjs:audio:unmute</a></li>
+    </ul>
+  </li>
+  <li><a href="#config-events" id="markdown-toc-config-events">Config Events</a>    <ul>
+      <li><a href="#ivxjsconfignot-valid" id="markdown-toc-ivxjsconfignot-valid">iVXjs:config:not-valid</a></li>
+      <li><a href="#ivxjsconfigvalidated" id="markdown-toc-ivxjsconfigvalidated">iVXjs:config:validated</a></li>
+    </ul>
+  </li>
+  <li><a href="#http-events" id="markdown-toc-http-events">Http Events</a>    <ul>
+      <li><a href="#ivxjshttprequesterror" id="markdown-toc-ivxjshttprequesterror">iVXjs:http:request:error</a></li>
+      <li><a href="#ivxjshttprequestsuccess" id="markdown-toc-ivxjshttprequestsuccess">iVXjs:http:request:success</a></li>
+      <li><a href="#ivxjshttpresponseerror" id="markdown-toc-ivxjshttpresponseerror">iVXjs:http:response:error</a></li>
+      <li><a href="#ivxjshttpresponsesuccess" id="markdown-toc-ivxjshttpresponsesuccess">iVXjs:http:response:success</a></li>
+    </ul>
+  </li>
+  <li><a href="#logging-events" id="markdown-toc-logging-events">Logging Events</a>    <ul>
+      <li><a href="#ivxjslog" id="markdown-toc-ivxjslog">iVXjs:log</a></li>
+      <li><a href="#ivxjslogerror" id="markdown-toc-ivxjslogerror">iVXjs:log:error</a></li>
+      <li><a href="#ivxjslogtrace" id="markdown-toc-ivxjslogtrace">iVXjs:log:trace</a></li>
+      <li><a href="#ivxjslogwarn" id="markdown-toc-ivxjslogwarn">iVXjs:log:warn</a></li>
+    </ul>
+  </li>
+  <li><a href="#state-events" id="markdown-toc-state-events">State Events</a>    <ul>
+      <li><a href="#ivxjsstatechange" id="markdown-toc-ivxjsstatechange">iVXjs:state:change</a></li>
+      <li><a href="#ivxjsstatego" id="markdown-toc-ivxjsstatego">iVXjs:state:go</a></li>
+      <li><a href="#ivxjsstatenot-found" id="markdown-toc-ivxjsstatenot-found">iVXjs:state:not-found</a></li>
+    </ul>
+  </li>
+  <li><a href="#video-events" id="markdown-toc-video-events">Video Events</a>    <ul>
+      <li><a href="#ivxjsvideocan-play" id="markdown-toc-ivxjsvideocan-play">iVXjs:video:can-play</a></li>
+      <li><a href="#ivxjsvideodispose" id="markdown-toc-ivxjsvideodispose">iVXjs:video:dispose</a></li>
+      <li><a href="#ivxjsvideoended" id="markdown-toc-ivxjsvideoended">iVXjs:video:ended</a></li>
+      <li><a href="#ivxjsvideoget-duration" id="markdown-toc-ivxjsvideoget-duration">iVXjs:video:get-duration</a></li>
+      <li><a href="#ivxjsvideomute" id="markdown-toc-ivxjsvideomute">iVXjs:video:mute</a></li>
+      <li><a href="#ivxjsvideopause" id="markdown-toc-ivxjsvideopause">iVXjs:video:pause</a></li>
+      <li><a href="#ivxjsvideoplay" id="markdown-toc-ivxjsvideoplay">iVXjs:video:play</a></li>
+      <li><a href="#ivxjsvideoseek" id="markdown-toc-ivxjsvideoseek">iVXjs:video:seek</a></li>
+      <li><a href="#ivxjsvideoset-duration" id="markdown-toc-ivxjsvideoset-duration">iVXjs:video:set-duration</a></li>
+      <li><a href="#ivxjsvideoset-volume" id="markdown-toc-ivxjsvideoset-volume">iVXjs:video:set-volume</a></li>
+      <li><a href="#ivxjsvideotime-update" id="markdown-toc-ivxjsvideotime-update">iVXjs:video:time-update</a></li>
+      <li><a href="#ivxjsvideounmute" id="markdown-toc-ivxjsvideounmute">iVXjs:video:unmute</a></li>
+    </ul>
+  </li>
+  <li><a href="#angular-specific-events" id="markdown-toc-angular-specific-events">Angular Specific Events</a>    <ul>
+      <li><a href="#ivxjsangularbootstrapped" id="markdown-toc-ivxjsangularbootstrapped">iVXjs:angular:bootstrapped</a></li>
+      <li><a href="#ivxjsangulartemplate-not-found" id="markdown-toc-ivxjsangulartemplate-not-found">iVXjs:angular:template-not-found</a></li>
+      <li><a href="#ivxio-specific-events" id="markdown-toc-ivxio-specific-events">iVXio Specific Events</a></li>
+      <li><a href="#ivxjsivxioerrorevent-not-fired" id="markdown-toc-ivxjsivxioerrorevent-not-fired">iVXjs:iVXio:error:event-not-fired</a></li>
+      <li><a href="#ivxjsivxioerrorexperience" id="markdown-toc-ivxjsivxioerrorexperience">iVXjs:iVXio:error:experience</a></li>
+      <li><a href="#ivxjsivxioerrorplatform-unavailable" id="markdown-toc-ivxjsivxioerrorplatform-unavailable">iVXjs:iVXio:error:platform-unavailable</a></li>
+    </ul>
+  </li>
+</ul>
+
+  </nav>
+</aside>
+
+<h1 id="overview">Overview</h1>
+
+<p>If a developer wants to interact with an iVXjs experience, the easiest and quickest way
+is to listen and emit events on the Bus. The Bus uses nodejs’s <a href="https://nodejs.org/api/events.html">EventEmitter</a>
+and you can use it by pulling in iVXjs through the appropriate renderer.</p>
+
+<h1 id="note-about-events-documentation">Note about events documentation</h1>
+
+<p>The “payload” is all the information that is sent from the triggering event emitter. Be careful though, sometimes
+an event is fired without the information provided so be careful in using the listeners. Also, the payload is 
+documented in a <a href="http://json-schema.org/">JSON Schema Org</a> fashion, but since events can send Functions the validator will not work with JSON validators.</p>
+
+<h1 id="ivxjs-bus-implementations">iVXjs Bus Implementations</h1>
+
+<p><em>Overview</em></p>
+
+<p>Each implementation would have its own implementation of the bus. The following are the various implementations.</p>
+
+<h2 id="ivxjs-bus-angular-implementation">iVXjs Bus Angular Implementation</h2>
+
+<p><em>Snippet</em></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>angular 
+    .module('[APPNAME]')
+    .service(["ivxjs.bus", function(iVXjsBus){
+        iVXjsBus.on('EVENTNAME', function(PAYLOAD){
+
+        });
+    }]);
+</code></pre>
+</div>
+
+<h1 id="audio-events">Audio Events</h1>
+
+<p><em>Overview</em></p>
+
+<p>All events the audio module listens and fires. The payload</p>
+
+<h2 id="ivxjsaudiocan-play">iVXjs:audio:can-play</h2>
+
+<p><em>Description</em></p>
+
+<p>Indicates that the current audio file can play.</p>
+
+<p><em>Payload</em></p>
+
+<p>None</p>
+
+<h2 id="ivxjsaudioended">iVXjs:audio:ended</h2>
+
+<p><em>Description</em></p>
+
+<p>Indicates that the current audio file has ended.</p>
+
+<p><em>Payload</em></p>
+
+<p>None</p>
+
+<h2 id="ivxjsaudiomute">iVXjs:audio:mute</h2>
+
+<p><em>Description</em></p>
+
+<p>Mutes the audio</p>
+
+<p><em>Payload</em></p>
+
+<p>None</p>
+
+<h2 id="ivxjsaudiopause">iVXjs:audio:pause</h2>
+
+<p><em>Description</em></p>
+
+<p>Pauses the audio</p>
+
+<p><em>Payload</em></p>
+
+<p>None</p>
+
+<h2 id="ivxjsaudioplay">iVXjs:audio:play</h2>
+
+<p><em>Description</em></p>
+
+<p>Plays the audio</p>
+
+<p><em>Payload</em></p>
+
+<p>None</p>
+
+<h2 id="ivxjsaudiotime-update">iVXjs:audio:time-update</h2>
+
+<p><em>Description</em></p>
+
+<p>Fires whenever the audio’s object on timeupdate event is fired.</p>
+
+<p><em>Payload</em></p>
+
+<p>The current instance of this Audio class.</p>
+
+<h2 id="ivxjsaudiounmute">iVXjs:audio:unmute</h2>
+
+<p><em>Description</em></p>
+
+<p>Unmutes and sets the audio back to the original volume</p>
+
+<p><em>Payload</em></p>
+
+<p>None</p>
+
+<h1 id="config-events">Config Events</h1>
+
+<p><em>Overview</em></p>
+
+<p>The time between when the <code class="highlighter-rouge">iVXjs.init()</code> function gets called and the user sees the experience rendered is considered
+the configuration set. During this time, the following events can fire.</p>
+
+<h2 id="ivxjsconfignot-valid">iVXjs:config:not-valid</h2>
+
+<p><em>Description</em></p>
+
+<p>Fires any instance where the config isn’t valid utilizing the 
+current Validation module.</p>
+
+<p><em>Payload</em></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"valid"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"boolean"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"description"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Indicates that this validation is not valid"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"error"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"description"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Contains all the invalid parts of this configuration and a message detailing the error"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"properties"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"message"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"description"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"An auto-generated human-readable message that indicates the errors. This will always be logged to the console if the configuration is invalid"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nt">"errors"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"items"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"description"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Depending on the validation module, this will have a collection of data for each invalid piece of data in the config."</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+    </span><span class="s2">"required"</span><span class="w"> </span><span class="err">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"valid"</span><span class="p">,</span><span class="w"> </span><span class="s2">"error"</span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<h2 id="ivxjsconfigvalidated">iVXjs:config:validated</h2>
+
+<p><em>Description</em></p>
+
+<p>Fires when config settings are validated. This event triggers 
+all the rendering of the experience.</p>
+
+<p><em>Payload</em></p>
+
+<p>A valid instance of iVXjs.</p>
+
+<h1 id="http-events">Http Events</h1>
+
+<p><em>Overview</em></p>
+
+<p>Whenever there is a HTTP request, several events will be raised.</p>
+
+<h2 id="ivxjshttprequesterror">iVXjs:http:request:error</h2>
+
+<p><em>Description</em></p>
+
+<p>Fires when a request has an error</p>
+
+<p><em>Payload</em></p>
+
+<p>request - Request object sent to the server</p>
+
+<h2 id="ivxjshttprequestsuccess">iVXjs:http:request:success</h2>
+
+<p><em>Description</em></p>
+
+<p>Fires when a request is successful</p>
+
+<p><em>Payload</em></p>
+
+<p>request - Request object sent to the server</p>
+
+<h2 id="ivxjshttpresponseerror">iVXjs:http:response:error</h2>
+
+<p><em>Description</em></p>
+
+<p>Fires when there is an error in the response of the server</p>
+
+<p><em>Payload</em></p>
+
+<p>response - Response from the server</p>
+
+<h2 id="ivxjshttpresponsesuccess">iVXjs:http:response:success</h2>
+
+<p><em>Description</em></p>
+
+<p>Indicates that a response was successful</p>
+
+<p><em>Payload</em></p>
+
+<p>response - Response from the server</p>
+
+<h1 id="logging-events">Logging Events</h1>
+
+<p><em>Overview</em></p>
+
+<p>iVXjs has its own logging module that will log any information throughout the application. 
+This logging service will fire events depending on what gets logged through the module.</p>
+
+<h2 id="ivxjslog">iVXjs:log</h2>
+
+<p><em>Description</em></p>
+
+<p>Indicates that iVXjs’s Logging system has logged a message.</p>
+
+<p><em>Payload</em></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"properties"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"description"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"The message logged"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"date"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"description"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"The time this message was logged."</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<h2 id="ivxjslogerror">iVXjs:log:error</h2>
+
+<p><em>Description</em></p>
+
+<p>Indicates that an error is logged to the console.</p>
+
+<p><em>Payload</em></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"properties"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"message"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"description"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Error message logged to the console"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"description"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Type of error that was fired. Typically it is in this format: iVXjs:errorr:[TYPE]
+        },
+        "</span><span class="err">timestamp:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"date"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"description"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"The time this error was logged to the console"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<h2 id="ivxjslogtrace">iVXjs:log:trace</h2>
+
+<p><em>Description</em></p>
+
+<p>Indicates that iVXjs’s Logging system logged a stack-trace.</p>
+
+<p><em>Payload</em></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"properties"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"stack"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"description"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"The stack."</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"date"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"description"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"The time this stack was logged."</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<h2 id="ivxjslogwarn">iVXjs:log:warn</h2>
+
+<p><em>Description</em></p>
+
+<p>Indicates that iVXjs’s Logging system has logged a warning.</p>
+
+<p><em>Payload</em></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"properties"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"description"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"The warning message."</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"date"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"description"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"The time this warning was logged."</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<h1 id="state-events">State Events</h1>
+
+<p><em>Overview</em></p>
+
+<p>These events all handle interactions with states</p>
+
+<h2 id="ivxjsstatechange">iVXjs:state:change</h2>
+
+<p><em>Description</em></p>
+
+<p>Fires whenever a state has successfully changed</p>
+
+<p><em>Payload</em></p>
+
+<p>All the current information on this state.</p>
+
+<p>For Angular: The data sent will follow <a href="http://angular-ui.github.io/ui-router/site/#/api/ui.router.state.$state">ui-router’s state’s</a> current data object.</p>
+
+<h2 id="ivxjsstatego">iVXjs:state:go</h2>
+
+<p><em>Description</em></p>
+
+<p>Tells the navigation service to go to the state</p>
+
+<p><em>Payload</em></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"properties"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"stateId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"description"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="err">"The</span><span class="w"> </span><span class="err">state</span><span class="w"> </span><span class="err">id</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">navigate</span><span class="w"> </span><span class="err">to.</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<h2 id="ivxjsstatenot-found">iVXjs:state:not-found</h2>
+
+<p><em>Description</em></p>
+
+<p>Indicates that a url can’t be found</p>
+
+<p><em>Payload</em></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"url"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"description"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="err">"The</span><span class="w"> </span><span class="err">invalid</span><span class="w"> </span><span class="err">url</span><span class="w"> </span><span class="err">that</span><span class="w"> </span><span class="err">was</span><span class="w"> </span><span class="err">sent</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">navigation</span><span class="w"> </span><span class="err">service.</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<h1 id="video-events">Video Events</h1>
+
+<p><em>Overview</em></p>
+
+<p>These events are triggered while a video state is loaded or while a video is playing.</p>
+
+<h2 id="ivxjsvideocan-play">iVXjs:video:can-play</h2>
+
+<p><em>Description</em></p>
+
+<p>Indicates that this video is ready to play</p>
+
+<p><em>Payload</em></p>
+
+<p>player - current instant of this video player.</p>
+
+<p>stateData - state data where this player exists.</p>
+
+<h2 id="ivxjsvideodispose">iVXjs:video:dispose</h2>
+
+<p><em>Description</em></p>
+
+<p>Removes all events from the Bus partaining to this particular video event and 
+performs other tasks to remove this video player from the page</p>
+
+<p><em>Payload</em></p>
+
+<p>None</p>
+
+<h2 id="ivxjsvideoended">iVXjs:video:ended</h2>
+
+<p><em>Description</em></p>
+
+<p>Indicates that the current video playing has ended</p>
+
+<p><em>Payload</em></p>
+
+<p>videoClass - The current instance of this video module class</p>
+
+<h2 id="ivxjsvideoget-duration">iVXjs:video:get-duration</h2>
+
+<p><em>Description</em></p>
+
+<p>Sends a request to get the current video’s duration. <em>Note: You must listen for iVXjs:video:set-duration event to get the duration</em></p>
+
+<p><em>Payload</em></p>
+
+<p>None</p>
+
+<h2 id="ivxjsvideomute">iVXjs:video:mute</h2>
+
+<p><em>Description</em></p>
+
+<p>Mutes the current video.</p>
+
+<p><em>Payload</em></p>
+
+<p>None</p>
+
+<h2 id="ivxjsvideopause">iVXjs:video:pause</h2>
+
+<p><em>Description</em></p>
+
+<p>Pauses the current video.</p>
+
+<p><em>Payload</em></p>
+
+<p>None</p>
+
+<h2 id="ivxjsvideoplay">iVXjs:video:play</h2>
+
+<p><em>Description</em></p>
+
+<p>Plays the current video.</p>
+
+<p><em>Payload</em></p>
+
+<p>None</p>
+
+<h2 id="ivxjsvideoseek">iVXjs:video:seek</h2>
+
+<p><em>Description</em></p>
+
+<p>Sets the current video to the time in seconds</p>
+
+<p><em>Payload</em></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"number"</span><span class="p">,</span><span class="w"> 
+    </span><span class="nt">"description"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"The time to seek in seconds"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<h2 id="ivxjsvideoset-duration">iVXjs:video:set-duration</h2>
+
+<p><em>Description</em></p>
+
+<p>Used mostly to set a counter to the current video’s duration.</p>
+
+<p><em>Payload</em></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"number"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"description"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"The duration of this video in seconds."</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<h2 id="ivxjsvideoset-volume">iVXjs:video:set-volume</h2>
+
+<p><em>Description</em></p>
+
+<p>Sets the current video’s volume. Range: 0 to 1;</p>
+
+<p><em>Payload</em></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"number"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"min"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"max"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"description"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="err">"The</span><span class="w"> </span><span class="err">volume</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">set</span><span class="w"> </span><span class="err">between</span><span class="w"> </span><span class="mi">0-1</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<h2 id="ivxjsvideotime-update">iVXjs:video:time-update</h2>
+
+<p><em>Description</em></p>
+
+<p>Fires when the video triggers a timeupdate call. Used for actions 
+during videos.</p>
+
+<p><em>Payload</em></p>
+
+<p>player - current instant of this video player.</p>
+
+<p>player.currentTime - current time of this video player;</p>
+
+<p>stateData - state data where this player exists.</p>
+
+<h2 id="ivxjsvideounmute">iVXjs:video:unmute</h2>
+
+<p><em>Description</em></p>
+
+<p>Unmutes the current video and sets the volume to the last volume 
+set.</p>
+
+<p><em>Payload</em></p>
+
+<p>None</p>
+
+<h1 id="angular-specific-events">Angular Specific Events</h1>
+
+<p><em>Overview</em></p>
+
+<p>These events only fire when using the Angular implementation of iVXjs.</p>
+
+<h2 id="ivxjsangularbootstrapped">iVXjs:angular:bootstrapped</h2>
+
+<p><em>Description</em></p>
+
+<p>Indicates that the iVXjs Angular module was successfully bootstrapped to its 
+elements.</p>
+
+<p><em>Payload</em></p>
+
+<p>None</p>
+
+<h2 id="ivxjsangulartemplate-not-found">iVXjs:angular:template-not-found</h2>
+
+<p><em>Description</em></p>
+
+<p>When using the <code class="highlighter-rouge">ng-include</code> directive in Angular, sometimes a template is not found and this 
+will fire when this happens.</p>
+
+<p><em>Payload</em></p>
+
+<p>event - Error event that was fired.</p>
+
+<h2 id="ivxio-specific-events">iVXio Specific Events</h2>
+
+<p><em>Overview</em></p>
+
+<p>These events fire when using the iVXio Data Module.</p>
+
+<h2 id="ivxjsivxioerrorevent-not-fired">iVXjs:iVXio:error:event-not-fired</h2>
+
+<p><em>Description</em></p>
+
+<p>When an iVXio event was not fired due to some error, this event gets fired</p>
+
+<p><em>Payload</em></p>
+
+<p>eventArgs - Event arguments fed into the event.</p>
+
+<p>error - Error passed from the unresolved error. Should contain a message.</p>
+
+<h2 id="ivxjsivxioerrorexperience">iVXjs:iVXio:error:experience</h2>
+
+<p><em>Description</em></p>
+
+<p>Fires whenever there is an error retrieving an experience from the platform.</p>
+
+<p><em>Payload</em></p>
+
+<p>error - Error information collected when trying to recieve the data.</p>
+
+<h2 id="ivxjsivxioerrorplatform-unavailable">iVXjs:iVXio:error:platform-unavailable</h2>
+
+<p><em>Description</em></p>
+
+<p>Fires if iVXjs can’t detect the global iVX object</p>
+
+<p><em>Payload</em></p>
+
+<p>None</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+
+
+        
+      </footer>
+
+      
+
+      
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+    
+    
+    
+    
+    <li><a href="http://localhost:4000/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2016 Influence Technology. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+      </footer>
+    </div>
+
+    <script src="http://localhost:4000/assets/js/main.min.js"></script>
+
+
+
+
+
+  </body>
+</html>
+
