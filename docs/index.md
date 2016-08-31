@@ -3,7 +3,7 @@ layout: splash
 title: iVXjs
 date: 2016-03-23T11:48:41-04:00
 header:
-  overlay_color: "#000"  
+  overlay_color: "#000"
   cta_label: "Get the code"
   cta_url: "https://github.com/influencetech/ivx-js"
 excerpt: "A library to make data-driven interactive web-experiences with support for video, sound, data collection, decision-trees and animations."
@@ -26,7 +26,4 @@ developer:
 ---
 
 
-{% include feature_row id="intro" type="center" %}
-
 {% include feature_row id="developer" %}
-
