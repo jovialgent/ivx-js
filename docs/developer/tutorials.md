@@ -11,8 +11,10 @@ author_profile: false
 Learn the basics of iVXjs by creating a simple application that 
 asks for a user name and displays their name in a special message!
 
+{% include base_path %}
+
 {: .btn .btn--inverse}
-[Hello World](developer/tutorial.hello-world)
+[Hello World](tutorial.hello-world)
 
 ## Templates
 
@@ -20,7 +22,7 @@ Get started with templates by seeing how they are used in
 a variety of states.
 
 {: .btn .btn--inverse}
-[Templates]({{ site.url }}/{{ site.baseurl }}/developer/tutorial.templates)
+[Templates](developer/tutorial.templates)
 
 ## Set Up a 404 State
 
