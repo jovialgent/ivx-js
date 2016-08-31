@@ -1,6 +1,12 @@
-# Page Not Found State 
+---
+layout: single
+---
 
-__Overview__
+# Page Not Found State Testing
+
+{% include toc %}
+
+## Overview
 
 By default, an iVXjs experience will navigate to the default state if an url doesn't match any 
 of the states url. This might be good for most cases, but sometimes as a developer, you would 
@@ -11,21 +17,21 @@ more elegantly. This tutorial will show you how to set up that state and navigat
 
 ### Sample Data 
 
-The finished data for this tutorial can be found here: [404-page-sample.json](sample-json/404-page-sample.json)
+The finished data for this tutorial can be found here: [404-page-sample.json]({% include base_path %}/developer/sample-json/404-page-sample.json)
 
 ### Adding a Page Not Found to an existing experience 
 
 Let's take a simple experience and add a Page Not Found (404) state. 
 
 Here is our sample experience JSON: 
+
 ```
 {
-
     "defaultState": [{
         "stateId": "valid-state"
     }],
     "states": [{
-        "id": "valid-state",
+        "id": "valid-state-test",
         "name": "Valid State",
         "url": "/a-valid-state",
         "type": "html",
@@ -33,6 +39,7 @@ Here is our sample experience JSON:
     }]
 }
 ``` 
+
 If we loaded the experience in a browser it will look something like this: 
 
 ![Valid State](http://e8ddcf8725663d605209-8d8cc7c733bcfce1ecd11bbb8349e503.r95.cf2.rackcdn.com/tutorial/Valid-State.png)
@@ -44,6 +51,7 @@ Now, let's write give it an invalid url:
 If we navigated to the url, we will always be redirectied to the "Valid State". To change this behavior we will need to do a few things: 
 
 * Add a new array of rules to the root of the JSON called "pageNotFoundStates"
+
 ```
 {
 
@@ -61,7 +69,8 @@ If we navigated to the url, we will always be redirectied to the "Valid State". 
 }
 ```
 
-* Add a rule object the `pageNotFoundStates` array with the `stateId` you wish it to redirect to
+* Add a rule object the `pageNotFoundStates` array with the `stateId` you wish it to redirect to.
+
 ```
 {
 
@@ -82,6 +91,7 @@ If we navigated to the url, we will always be redirectied to the "Valid State". 
 ```
 
 * Add the settings for the "404-state" to the states array
+
 ```
 {
 

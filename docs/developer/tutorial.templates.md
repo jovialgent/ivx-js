@@ -1,10 +1,16 @@
-# Templates
+---
+layout: single
+---
+
+# iVXjs Templates Tutorial
+
+{% include toc %}
 
 ## Overview
 
 As a developer, you may want to utilize templates for adding HTML to elements such as 
 state headers/footers and labels. To do this, you can add data that is a path to the 
-.html file where you template is. 
+_.html_ file where you template is. 
 
 ## HTML State Templates
 
@@ -16,7 +22,7 @@ a static web page. This will show you how to add templatesUrls into HTML states.
 
 ### Sample Data
 
-For this section of the tutorial, we will be using [html-state-sample.json](sample-json/html-state-sample.json) file.
+For this section of the tutorial, we will be using [html-state-sample.json]({% include base_path %}/developer/sample-json/html-state-sample.json) file.
 
 ### From JSON: HTML State's HTML
 
@@ -66,7 +72,7 @@ So, let's move the value of `html` in the spec to its own template.
 
 * Move the value of `html` to a file called _html-state.html_ : 
 
-__html-state.html__
+_html-state.html_
 
 ```
 <h1 class="test-class">HTML State</h1>
@@ -75,7 +81,7 @@ __html-state.html__
 
 * Change the `<h2>` element to read "This came from a template.":
 
-__html-state.html__
+_html-state.html_
 
 ```
 <h1 class="test-class">HTML State</h1>
@@ -99,6 +105,7 @@ __html-state.html__
 ```
 
 * Add a new key `templateUrl` whose value is "html-state.html":
+
 ```
 {
 	"id": "html-state-test",
@@ -127,7 +134,7 @@ be able to add intricate headers and footers without bloating the JSON spec.
 
 ### Sample Data
 
-For this tutorial we will be using the [video-state-sample.json](sample-json/video-state-sample.json) file.
+For this tutorial we will be using the [video-state-sample.json]({% include base_path %}/developer/sample-json/video-state-sample.json) file.
 
 ### From JSON: Adding HTML to Headers/Footers
 
@@ -158,7 +165,9 @@ To add custom HTML to the Headers/Footers from JSON do the following:
     "cuePoints": []
 }
 ```
+
 * Add the key `"html"` with value `"<h1 class=\"class-test\">I AM FROM THE JSON</h1>"`to either the header or footer object:
+
 ```
 {
 	...
@@ -168,7 +177,9 @@ To add custom HTML to the Headers/Footers from JSON do the following:
 	...
 }
 ```
+
 * The resulting data will look like this:
+
 ```
 {
     "id": "html5-video-state-test",
@@ -197,6 +208,7 @@ To add custom HTML to the Headers/Footers from JSON do the following:
     "cuePoints": []
 }
 ```
+
 * This will render something like this:
 ![Video State Header HTML From JSON](http://e8ddcf8725663d605209-8d8cc7c733bcfce1ecd11bbb8349e503.r95.cf2.rackcdn.com/tutorial/Video-State-Header-HTML-From-JSON.png)
 
@@ -235,10 +247,10 @@ To add custom HTML to the headers/footers from a template, we will modify the ab
 }
 ```
 
-* Take the HTML from the header's `"html"` value and add it to a file called 'video-header.html' and
-replace the text to read "I AM FROM A TEMPLATE!":
+* Take the HTML from the header's `"html"` value and add it to a file called 'video-header.html' and replace the text to read "I AM FROM A TEMPLATE!":
 
-__video-header.html__
+_video-header.html_
+
 ```
 <h1 class="test-class">I AM FROM A TEMPLATE!</h1>
 ``` 
@@ -254,7 +266,9 @@ __video-header.html__
 	...
 }
 ```
+
 * The resulting video state data will look like this:
+
 ```
 {
     "id": "html5-video-state-test",
@@ -283,6 +297,7 @@ __video-header.html__
     "cuePoints": []
 }
 ```
+
 * Refresh the page, and it should look something like this:
 ![Video State Header HTML From Template](http://e8ddcf8725663d605209-8d8cc7c733bcfce1ecd11bbb8349e503.r95.cf2.rackcdn.com/tutorial/Video-State-Header-HTML-From-Template.png)
 
@@ -295,14 +310,12 @@ require a template to be able to render and behave correctly.
 
 ### Sample Data
 
-For this tutorial we will be using the [video-state-sample.json](sample-json/video-state-sample.json) file.
+For this tutorial we will be using the [video-state-sample.json]({% include base_path %}/developer/sample-json/video-state-sample.json) file.
 
 ### Special note about personalizations:
 
-Personalizations, which typically show and hide and a cuepoint, requires some CSS to allow this behavior. 
-In this tutorial, the state will add the class "hide" and on the cuepoint will add the class "show". If 
-you don't have any CSS to support these behaviors, this will not work. To support these, you can add this
-HTML:
+Personalizations, which typically show and hide and a cuepoint, requires some CSS to allow this behavior. In this tutorial, the state will add the class "hide" and on the cuepoint will add the class "show". If you don't have any CSS to support these behaviors, this will not work. To support these, you can add this HTML:
+
 ```
 <style>
 	.show {
@@ -434,6 +447,7 @@ To add custom HTML to a personalization, do the following:
     "cuePoints": []
 }
 ```
+
 * Add a personalization by adding an object to the personalizations array with keys `"id"` which is the id of 
 personalization and `"html"` which is the HTML for the personalization:
 
@@ -447,6 +461,7 @@ personalization and `"html"` which is the HTML for the personalization:
     ...
 }
 ```
+
 * Add a cuePoint data object the event "animateElement" at 2 seconds which will show your personalization:
 
 ```
@@ -463,7 +478,9 @@ personalization and `"html"` which is the HTML for the personalization:
     ...
 }
 ```
+
 * The resulting state data will look like this:
+
 ```
 {
     "id": "html5-video-state-test",
@@ -497,6 +514,7 @@ personalization and `"html"` which is the HTML for the personalization:
     }]
 }
 ```
+
 * Once you add this data, play the video and after 2 seconds, you should see something like this:
 ![Personalization From JSON](http://e8ddcf8725663d605209-8d8cc7c733bcfce1ecd11bbb8349e503.r95.cf2.rackcdn.com/tutorial/Personalization-From-JSON.png)
 
@@ -505,6 +523,7 @@ personalization and `"html"` which is the HTML for the personalization:
 Let's now use templates for personalizations. 
 
 * Here is the current state data from the above tutorial:
+
 ```
 {
     "id": "html5-video-state-test",
@@ -538,16 +557,18 @@ Let's now use templates for personalizations.
     }]
 }
 ```
+
 * To begin, move the value of the "html" from the personalization with id "personalization" and add it
 to a file called "video-personalization.html" and change the text to read "I am a personalization from a template.":
 
-__video-personalization.html__
+_video-personalization.html_
 
 ```
 <h1>I am a personalization from a template.</h1>
 ```
 
 * Replace the `"html"` in the personalization with the key `"templateUrl"` with value `"video-personalization.html"`:
+
 ```
 {
 	...
@@ -558,7 +579,9 @@ __video-personalization.html__
 	...
 }
 ```
+
 * The resulting state data will be:
+
 ```
 {
     "id": "html5-video-state-test",
@@ -592,6 +615,7 @@ __video-personalization.html__
     }]
 }
 ```
+
 * Now play the video, and after 2 seconds, the player should look something like this:
 ![Personalization From Template](http://e8ddcf8725663d605209-8d8cc7c733bcfce1ecd11bbb8349e503.r95.cf2.rackcdn.com/tutorial/Personalization-From-Template.png)
 
@@ -601,11 +625,12 @@ Anywhere in the JSON spec where there is either a `"label"` or `"labelHTML"`, yo
 
 ### Sample Data for Label Template Tutorial
 
-For this tutorial we will be using the [input-state-sample.json](sample-json/input-state-sample.json) file.
+For this tutorial we will be using the [input-state-sample.json]({% include base_path %}/developer/sample-json/input-state-sample.json) file.
 
 ### From JSON: Adding Label HTML
 
 * Here is the original input state data from the sample file:
+
 ```
 {
     "id": "input-state-test",
@@ -635,7 +660,9 @@ For this tutorial we will be using the [input-state-sample.json](sample-json/inp
     }]
 }
 ```
+
 * Find the input object with `"id"` value of `"text-input-test"` in the inputs array:
+
 ```
 {
 	...
@@ -653,6 +680,7 @@ For this tutorial we will be using the [input-state-sample.json](sample-json/inp
 	...
 }
 ```
+
 ```
 ...
 {
@@ -668,7 +696,9 @@ For this tutorial we will be using the [input-state-sample.json](sample-json/inp
 }
 ...
 ```
+
 * To add the custom html, replace `"label"` with `"labelHTML"` and its value to `"<h2>I am from the JSON</h2>"` in this input:
+
 ```
 [
 	...
@@ -686,7 +716,9 @@ For this tutorial we will be using the [input-state-sample.json](sample-json/inp
 	...
 ]
 ```
+
 * The resulting input state data should look like this:
+
 ```
 {
     "id": "input-state-test",
@@ -716,6 +748,7 @@ For this tutorial we will be using the [input-state-sample.json](sample-json/inp
     }]
 }
 ```
+
 * This should render like this:
 ![Label HTML From JSON](http://e8ddcf8725663d605209-8d8cc7c733bcfce1ecd11bbb8349e503.r95.cf2.rackcdn.com/tutorial/Label-HTML-From-JSON.png)
 
@@ -756,6 +789,7 @@ Let's now add html from a template html file for a label.
 ```
 
 * Again find the input data object in the `"inputs"` array with `"id"` equal to `"text-input-test"`:
+
 ```
 {
 	...
@@ -773,6 +807,7 @@ Let's now add html from a template html file for a label.
 	...
 }
 ```
+
 ```
 [
 	...
@@ -790,14 +825,18 @@ Let's now add html from a template html file for a label.
 	...
 ]
 ```
-* Take the value of `"labelHTML"` and add it to a file called "input-label.html" and replace the value 
-"I am from the JSON" with the value "I am from the template":
 
-__input-label.html__
+* Take the value of `"labelHTML"` and add it to a file called "input-label.html" and replace the value "I am from the JSON" with the value "I am from the template":
+
+_input-label.html_
+
 ```
 <h2>I am from the template</h2>
 ```
-* Now reaplce `"labelHTML"` with the key `"labelTemplateUrl"` whose value is `"input-label.html"`:
+
+* Now reaplce `"labelHTML"` with the key `"labelTemplateUrl"` whose value is `
+"input-label.html"`:
+
 ```
 [
 	...
@@ -815,7 +854,9 @@ __input-label.html__
 	...
 ]
 ```
+
 * The resulting data should look like this:
+
 ```
 {
     "id": "input-state-test",
@@ -845,9 +886,9 @@ __input-label.html__
     }]
 }
 ```
+
 * This should render into something like this:
 ![Label From Template](http://e8ddcf8725663d605209-8d8cc7c733bcfce1ecd11bbb8349e503.r95.cf2.rackcdn.com/tutorial/Label-HTML-From-Template.png)
-
 
 ## Things to Look Out For
 
@@ -864,6 +905,7 @@ not work with other frameworks.
 If, as a developer, you add the data key to add a template, this will always have a higher
 level of presedence over other data that adds HTML. For example, if as a developer you wrote
 your Header data object like this:
+
 ```
 {
    ...

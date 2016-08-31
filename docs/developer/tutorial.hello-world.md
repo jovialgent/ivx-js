@@ -1,4 +1,11 @@
+---
+layout: single
+
+---
+
 # Hello World using angular.ivx.js 
+
+{% include toc %}
 
 ## Overview
 
@@ -24,66 +31,65 @@ Once you go to their website and download you will need the _angular.ivx.js_ fil
 To get the iVX.js experience working, you can add the following HTML to your project:
 
 ```
-	<!-- Angular application for this page -->
-	<div ng-app="[MODULE-NAME]"></div>
-	<!-- Container for an iVX.js Experience -->
-	<div id='ivx'></div>
-	<!-- iVXjs Angular Library Dependencies  -->
-	<script src='[PATH-TO-JS]/angular.min.js'></script>
-	<script src='[PATH-TO-JS]/angular-ui-router.min.js'></script>
-	<script src='[PATH-TO-JS]/angular-sanitize.min.js'></script>
-	<script src='[PATH-TO-JS]/angular.ivx.js'></script>
-    <script>
-        angular
-        .module('[MODULE-NAME]', ['ivx-js'])
-        .run(['iVXjs', function(iVXjs){
-            iVXjs.init({
-                "config" : {
-						"defaultState": [{
-							"stateId": "hello-world"
-						}],
-						"states": [{
-							"id": "hello-world",
-							"name": "Hello World",
-							"url": "/hello-world",
-							"type": "input",
-							"header": {
-								"html" : "<h1>Welcome to iVXjs!</h1><h2>Write in your name below so we can get to know you.</h2>"
-							},
-							"footer": {
-								"html" : ""
-							},
-							"onEnter":[],
-							"onExit": [],
-							"next": [{
-								"stateId" : "welcome-screen"
-							}],
-							"onSubmit": [],
-							"inputs": [{
-								"id": "name",
-								"type": "text",
-								"name" : "name",
-								"label" : "Your Name:"           
-							}]
-						},{
-							"id" : "welcome-screen",
-							"name" : "Welcome Screent",
-							"url" : "/welcome-screen",
-							"type" : "html",
-							"html" : "<div class=\"welcome\"><h1>Congratulations {{experience.name}}!</h1><h2>You made your first iVXjs Experience!</h2></div>"
-
-						}]
-					}	
-            	});
-        	}])     
-    </script>
+<!-- Angular application for this page -->
+<div ng-app="[MODULE-NAME]"></div>
+<!-- Container for an iVX.js Experience -->
+<div id='ivx'></div>
+<!-- iVXjs Angular Library Dependencies  -->
+<script src='[PATH-TO-JS]/angular.min.js'></script>
+<script src='[PATH-TO-JS]/angular-ui-router.min.js'></script>
+<script src='[PATH-TO-JS]/angular-sanitize.min.js'></script>
+<script src='[PATH-TO-JS]/angular.ivx.js'></script>
+<script>
+ angular
+ .module('[MODULE-NAME]', ['ivx-js'])
+ .run(['iVXjs', function(iVXjs){
+ 	iVXjs.init({
+ 		"config" : {
+ 			"defaultState": [{
+ 				"stateId": "hello-world"
+ 			}],
+ 			"states": [{
+ 				"id": "hello-world",
+ 				"name": "Hello World",
+ 				"url": "/hello-world",
+ 				"type": "input",
+ 				"header": {
+ 					"html" : "<h1>Welcome to iVXjs!</h1><h2>Write in your name below so we can get to know you.</h2>"
+ 				},
+ 				"footer": {
+ 					"html" : ""
+ 				},
+ 				"onEnter":[],
+ 				"onExit": [],
+ 				"next": [{
+ 					"stateId" : "welcome-screen"
+ 				}],
+ 				"onSubmit": [],
+ 				"inputs": [{
+ 					"id": "name",
+ 					"type": "text",
+ 					"name" : "name",
+ 					"label" : "Your Name:"
+ 				}]
+ 			},{
+ 				"id" : "welcome-screen",
+ 				"name" : "Welcome Screen",
+ 				"url" : "/welcome-screen",
+ 				"type" : "html",
+ 				"html" : "<div class=\"welcome\"><h1>Congratulations {{experience.name}}!</h1><h2>You made your first iVXjs Experience!</h2></div>"
+ 			}]
+ 		}
+ 	});
+ }]);     
+</script>
 ```
 
-### Breaking down the html
+## Breaking down the html
 
 Let's take a moment to explain what the above HTML is doing:
 
-__Angular Module__
+### Angular Module
 
 We have to add an angular module to a child element of the page so that 
 iVXjs can bootstrap itself to the correct element (more on that in another tutorial)
@@ -94,7 +100,7 @@ replace the `[MODULE-NAME]` with the name of your app:
 <div ng-app="[MODULE-NAME]"></div>
 ```
 
-__Adding the dependency scripts__
+### Adding the dependency scripts
 
 These add the scripts to the page. Just replace `[PATH-TO-JS]` with the
 location of these scripts relative to your page.
@@ -106,7 +112,7 @@ location of these scripts relative to your page.
 <script src='[PATH-TO-JS]/angular.ivx.js'></script>
 ```
 
-__Angular Code__
+### Angular Code
 
 The actual way we begin iVXjs is by running the init function during
 the child app's run function.
@@ -166,7 +172,7 @@ angular
     }])     
 ```
 
-__Configuration__
+### Configuration
 
 The iVX.js init takes one argument, an object with various settings you can add to customize the experience, but for 
 now we will using the following config. The definition for this spec is [here](/docs/esdocs/manual/configuration.html#json). But,

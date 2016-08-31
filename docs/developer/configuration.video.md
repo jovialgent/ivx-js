@@ -1,6 +1,12 @@
-# Video 
+---
+layout: single
+---
 
-## Video Configuration: Overview
+# Video Configuration
+
+{% include toc %}
+
+## Overview
 
 Since the "v" in iVX.js means "video", it is important that you have all the files and any special configurations.
 
@@ -8,7 +14,7 @@ Since the "v" in iVX.js means "video", it is important that you have all the fil
 
 __Sample Data__
 
-[video-state-sample.json](sample-json/video-state-sample.json)
+[video-state-sample.json]({% include base_path %}/developer/sample-json/video-state-sample.json)
 
 ## Inline iOS Video Player
 
@@ -19,11 +25,11 @@ __Dependencies__
 
 __Sample Data__
 
-[video-inline-iphone.json](sample-json/video-inline-iphone.json)
+[video-inline-iphone.json]({% include base_path %}/developer/sample-json/video-inline-iphone.json)
 
 __Tutorial__
 
-[Inline Video for iPhone](tutorial.html#inline-video-for-iphone)
+[Inline Video for iPhone]({% include base_path %}/developer/tutorial.video.iphone-inline)
 
 ## Vimeo Video Player
 
@@ -35,7 +41,7 @@ __Dependencies__
 
 __Sample Data__ 
 
-[video-vimeo-sample.json](sample-json/video-vimeo-sample.json)
+[video-vimeo-sample.json]({% include base_path %}/developer/sample-json/video-vimeo-sample.json)
 
 ## YouTube Video Player
 
@@ -47,4 +53,4 @@ __Dependencies__
 
 __Sample Data__ 
 
-[video-youtube-sample.json](sample-json/video-youtube-sample.json)
+[video-youtube-sample.json]({% include base_path %}/developer/sample-json/video-youtube-sample.json)

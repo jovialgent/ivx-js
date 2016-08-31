@@ -1,6 +1,12 @@
-# JSON
+---
+layout: single
+---
 
-## JSON Configuration: Overview
+# iVXjs JSON Specifications
+
+{% include toc %}
+
+## Overview
 
 The core of all iVX.js experiences is the configuration JSON you feed into its init function. Without a
 proper configuration, the experience won't load and you will not be able to use any of the features in
@@ -16,17 +22,17 @@ Also, to make the schemas shorter, the schemas for each section will not be comp
 the possiblities inside, so it isn't recommended to try to use 
 these for validation purposes. 
 
-## Base Structure
+# Base Structure
 
-__Description__
+_Description_
 
 This is the base structure for the configuration file. 
 
-__Sample Data__
+_Sample Data_
 
-[base-structure-sample.json](./sample-json/base-structure-sample.json)
+[base-structure-sample.json]({% include base_path %}/developer/sample-json/base-structure-sample.json)
 
-__Schema__
+_Schema_
 
 ```
  {
@@ -145,23 +151,24 @@ __Schema__
  }
 ```
 
-## States
+# States
 
-__Description__
+_Description_
 
 State data is the most complex and varied amongst the JSON schemas. There are multiple state types and each with their own specs.
 
-### Shared State Schema
+## Shared State Schema
 
-__Description__
+_Description_
 
 All states have the following data below. Assume the specific states types have this data schema with the data schema defined in their respective schema.
 
-__Sample Data__
+_Sample Data_
 
-[shared-state-data-sample.json](./sample-json/shared-state-data-sample.json)
+[shared-state-data-sample.json]({% include base_path %}/developer/sample-json/shared-state-data-sample.json)
 
-__Schema__
+_Schema_
+
 ```
 {
 	"name" : "iVX.js Shared State Data",
@@ -327,17 +334,19 @@ __Schema__
 	}	
 }
 ```
-### HTML State Schema
 
-__Description__
+## HTML State Schema
+
+_Description_
 
 The HTML State's data is simple and is designed to help make it easy to inject any HTML into a state.
 
-__Sample Data__
+_Sample Data_
 
-[html-state-sample.json](sample-json/html-state-sample.json)
+[html-state-sample.json]({% include base_path %}/developer/sample-json/html-state-sample.json)
 
-__Schema__
+_Schema_
+
 ```
 {
 	"name" : "iVX.js HTML State Data",
@@ -369,18 +378,19 @@ __Schema__
 }
 ```
 
-### Input State Schema
+## Input State Schema
 
-__Description__
+_Description_
 
 The input state's data allows the developer to create a state with a form and collect data from inputs.
 
-__Sample Data__
+_Sample Data_
 
-[input-state-sample.json](sample-json/input-state-sample.json)
+[input-state-sample.json]({% include base_path %}/developer/sample-json/input-state-sample.json)
 
 
-__Schema__
+_Schema_
+
 ```
 {
 	"name" : "iVX.js Input State",
@@ -451,17 +461,18 @@ __Schema__
 }
 ```
 
-### Navigation State Schema
+## Navigation State Schema
 
-__Description__
+_Description_
 
 Settings for the navigation state with the data to set up the links for this state.
 
-__Sample Data__
+_Sample Data_
 
-[navigation-state-sample.json](sample-json/navigation-state-sample.json)
+[navigation-state-sample.json]({% include base_path %}/developer/sample-json/navigation-state-sample.json)
 
-__Schema__
+_Schema_
+
 ```
 {
 	"name" : "iVX.js Navigation State Schema",
@@ -519,19 +530,18 @@ __Schema__
 }
 ```
 
+## Video State Schema
 
-
-### Video State Schema
-
-__Description__ 
+_Description_ 
 
 The Video State's data has various sections that tell iVX.js what personalization html to render, cuepoints to activate and the settings for the player.
 
-__Sample Data__
+_Sample Data_
 
-[video-state-sample.json](sample-json/video-state-sample.json)
+[video-state-sample.json]({% include base_path %}/developer/sample-json/video-state-sample.json)
 
-__Schema__
+_Schema_
+
 ```
 {
 	"name" : "iVX.js Video State",
@@ -677,23 +687,25 @@ __Schema__
 	}
 }
 ```
-## Inputs
 
-__Description__
+# Inputs
+
+_Description_
 
 Inputs are standard form inputs used for gathering user information using the input state. The settings for them are varied based on the input type.
 
-### Shared Input Data
+## Shared Input Data
 
-__Description__
+_Description_
 
 Most inputs share attributes to record data and here are the settings that most inputs share. 
 
-__Sample Data__
+_Sample Data_
 
-[input-data-shared-sample.json](sample-json/input-data-shared-sample.json)
+[input-data-shared-sample.json]({% include base_path %}/developer/sample-json/input-data-shared-sample.json)
 
-__Schema__
+_Schema_
+
 ```
 {
 	"name" : "iVX.js Shared Input Data",
@@ -777,17 +789,18 @@ __Schema__
 }
 ```
 
-### Buttons
+## Buttons
 
-__Description__
+_Description_
 
 Buttons data allows the user to create a group of buttons that set values on click.
 
-__Sample Data__
+_Sample Data_
 
-[input-button-data-sample.json](sample-json/input-button-data-sample.json)
+[input-button-data-sample.json]({% include base_path %}/developer/sample-json/input-button-data-sample.json)
 
-__Schema__
+_Schema_
+
 ```
 {
 	"name" : "iVX.js Input Button Schema",
@@ -853,18 +866,20 @@ __Schema__
 	}
 }
 ```
-### Checkbox
 
-__Description__
+## Checkbox
+
+_Description_
 
 Settings for the input to render a checkbox.
 
-__Sample Data__
+_Sample Data_
 
-[input-checkbox-data-sample.json](sample-json/input-checkbox-data-sample.json)
+[input-checkbox-data-sample.json]({% include base_path %}/developer/sample-json/input-checkbox-data-sample.json)
 
 
-__Schema__
+_Schema_
+
 ```
 {
 	"name" : "iVX.js Checkbox Input",
@@ -881,18 +896,18 @@ __Schema__
 }
 ```
 
-### Date
+## Date
 
-__Description__
+_Description_
 
 Settings for the date input type
 
-__Sample Data__
+_Sample Data_
 
-[input-date-data-sample.json](sample-json/input-date-data-sample.json)
+[input-date-data-sample.json]({% include base_path %}/developer/sample-json/input-date-data-sample.json)
 
+_Schema_
 
-__Schema__
 ```
 {
 	"name" : "iVX.js Date Input",
@@ -923,19 +938,18 @@ __Schema__
 }
 ```
 
-### Datetime-Local
+## Datetime-Local
 
-__Description__
+_Description_
 
 Settings for the datetime-local input type
 
-__Sample Data__
+_Sample Data_
 
-[input-datetime-local-data-sample.json](sample-json/input-datetime-local-data-sample.json)
+[input-datetime-local-data-sample.json]({% include base_path %}/developer/sample-json/input-datetime-local-data-sample.json)
 
+_Schema_
 
-
-__Schema__
 ```
 {
 	"name" : "iVX.js Datetime-Local Input",
@@ -970,18 +984,19 @@ __Schema__
 }
 ```
 
-### Email
+## Email
 
-__Description__
+_Description_
 
 Settings for this email input type
 
-__Sample Data__
+_Sample Data_
 
-[input-email-data-sample.json](sample-json/input-email-data-sample.json)
+[input-email-data-sample.json]({% include base_path %}/developer/sample-json/input-email-data-sample.json)
 
 
-__Schema__
+_Schema_
+
 ```
 {
 	"name" : "iVX.js Email Input",
@@ -1008,18 +1023,19 @@ __Schema__
 }
 ```
 
-### Number
+## Number
 
-__Description__
+_Description_
 
 Settings for the number input type
 
-__Sample Data__
+_Sample Data_
 
-[input-number-data-sample.json](sample-json/input-number-data-sample.json)
+[input-number-data-sample.json]({% include base_path %}/developer/sample-json/input-number-data-sample.json)
 
 
-__Schema__
+_Schema_
+
 ```
 {
 	"name" : "iVX.js Number Input",
@@ -1054,18 +1070,19 @@ __Schema__
 }
 ```
 
-### Options
+## Options
 
-__Description__
+_Description_
 
 Settings for this select/options input
 
-__Sample Data__
+_Sample Data_
 
-[input-options-data-sample.json](sample-json/input-options-data-sample.json)
+[input-options-data-sample.json]({% include base_path %}/developer/sample-json/input-options-data-sample.json)
 
 
-__Schema__
+_Schema_
+
 ```
 {
 	"name" : "iVX.js Options/Select Input settings",
@@ -1110,18 +1127,18 @@ __Schema__
 }
 ```
 
-### Radio Buttons
+## Radio Buttons
 
-__Description__
+_Description_
 
 Settings to render radio buttons 
 
-__Sample Data__
+_Sample Data_
 
-[input-radio-data-sample.json](sample-json/input-radio-data-sample.json)
+[input-radio-data-sample.json]({% include base_path %}/developer/sample-json/input-radio-data-sample.json)
 
 
-__Schema__
+_Schema_
 
 ```
 {
@@ -1169,18 +1186,19 @@ __Schema__
 }
 ```
 
-### Text
+## Text
 
-__Description__
+_Description_
 
 Settings for the text type input
 
-__Sample Data__
+_Sample Data_
 
-[input-text-data-sample.json](sample-json/input-text-data-sample.json)
+[input-text-data-sample.json]({% include base_path %}/developer/sample-json/input-text-data-sample.json)
 
 
-__Schema__
+_Schema_
+
 ```
 {
 	"name" : "iVX.js Text Input",
@@ -1211,17 +1229,18 @@ __Schema__
 }
 ```
 
-### Text Area
+## Text Area
 
-__Description__
+_Description_
 
 Settings for the textarea type input
 
-__Sample Data__
+_Sample Data_
 
-[input-textarea-data-sample.json](sample-json/input-textarea-data-sample.json)
+[input-textarea-data-sample.json]({% include base_path %}/developer/sample-json/input-textarea-data-sample.json)
 
-__Schema__
+_Schema_
+
 ```
 {
 	"name" : "iVX.js Text Area Input",
@@ -1252,18 +1271,19 @@ __Schema__
 }
 ```
 
-### Url
+## Url
 
-__Description__
+_Description_
 
 Settings for this Url input type
 
-__Sample Data__
+_Sample Data_
 
-[input-url-data-sample.json](sample-json/input-url-data-sample.json)
+[input-url-data-sample.json]({% include base_path %}/developer/sample-json/input-url-data-sample.json)
 
 
-__Schema__
+_Schema_
+
 ```
 {
 	"name" : "iVX.js Url Input",
@@ -1290,26 +1310,27 @@ __Schema__
 }
 ```
 
-## Events / Actions
+# Events / Actions
 
-__Description__
+_Description_
 
 To tell iVX.js to run events in the various places in the states and inputs, the user must set up the event data in a certain way.
 
-__Sample Data__
+_Sample Data_
 
 For all the following schemas, the sample data can be found here:
 
-[ivxjs-event-data-sample.json](sample-json/ivxjs-event-data-sample.json)
+[ivxjs-event-data-sample.json]({% include base_path %}/developer/sample-json/ivxjs-event-data-sample.json)
 
 
-### Basic Event Structure
+## Basic Event Structure
 
-__Description__
+_Description_
 
 Simple structure for indicating to run an event in the various event arrays.
 
-__Schema__
+_Schema_
+
 ```
 {
 	"name" : "Basic iVX.js Event Object Settings",
@@ -1329,13 +1350,14 @@ __Schema__
 }
 ```
 
-### animateElement
+## animateElement
 
-__Description__
+_Description_
 
 Indicates to iVX.js to run the native animateElement action.
 
-__Schema__
+_Schema_
+
 ```
 {
 	"name" : "iVX.js animateElement action settings",
@@ -1368,13 +1390,14 @@ __Schema__
 	}
 }
 ```
-### goToNextState
 
-__Description__
+## goToNextState
+
+_Description_
 
 The settings that takes a set of rules and navigates to a state based on them.
 
-__Schema__
+_Schema_
 
 ```
 {
@@ -1434,13 +1457,14 @@ __Schema__
 }
 ```
 
-### goToState
+## goToState
 
-__Description__
+_Description_
 
 Settings to fire the goToState event. 
 
-__Schema__
+_Schema_
+
 ```
 {
 	"name" : "iVX.js goToState Event Settings",
@@ -1470,13 +1494,13 @@ __Schema__
 }
 ```
 
-### playAudioClip
+## playAudioClip
 
-__Description__
+_Description_
 
 Loads and plays a piece of audio. 
 
-__Schema__
+_Schema_
 
 ```
 	{
@@ -1544,14 +1568,14 @@ __Schema__
 	}
 ```
 
+## setData
 
-### setData
-
-__Description__
+_Description_
 
 The settings to raise the setData event
 
-__Schema__
+_Schema_
+
 ```
 {
 	"name" : "iVX.js setData Action Settings",
@@ -1585,26 +1609,27 @@ __Schema__
 }
 ```
 
-## iVX.io Events/Actions
+# iVX.io Events/Actions
 
-__Description__
+_Description_
 
 These are the settings specifically if the iVX.js experience is using the iVX.io data module.
 
-__Sample Data__
+_Sample Data_
 
 For all the following schemas, the sample data can be found here:
 
-[ivxio-event-data-sample.json](sample-json/ivxio-event-data-sample.json)
+[ivxio-event-data-sample.json]({% include base_path %}/developer/sample-json/ivxio-event-data-sample.json)
 
 
-### recordEvent
+## recordEvent
 
-__Description__
+_Description_
 
 Raises an iVX.io event defined by the platform
 
-__Schema__
+_Schema_
+
 ```
 {
 	"name" : "iVX.io recordEvent Action Settings",
@@ -1633,13 +1658,14 @@ __Schema__
 }
 ```
 
-### setComplete
+## setComplete
 
-__Description__
+_Description_
 
 Sets this iVX.io experience's progress to complete
 
-__Schema__
+_Schema_
+
 ```
 {
 	"name" : "iVX.io setComplete Action Settings",
@@ -1656,13 +1682,14 @@ __Schema__
 }
 ```
 
-### setConverted
+## setConverted
 
-__Description__
+_Description_
 
 Sets this iVX.io's experience progress to converted
 
-__Schema__
+_Schema_
+
 ```
 {
 	"name" : "iVX.io setConverted Action Settings",
@@ -1689,13 +1716,14 @@ __Schema__
 }
 ```
 
-### setMilestone
+## setMilestone
 
-__Description__
+_Description_
 
 Sets this iVX.io's experience to a specific milestone
 
-__Schema__
+_Schema_
+
 ```
 {
 	"name" : "iVX.io's setMilestone Action Settings",

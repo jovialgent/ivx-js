@@ -1,26 +1,32 @@
+---
+layout: single
+---
+
 # iVXjs Events
 
-## Event - Overview
+{% include toc %}
+
+# Overview
 
 If a developer wants to interact with an iVXjs experience, the easiest and quickest way
 is to listen and emit events on the Bus. The Bus uses nodejs's [EventEmitter](https://nodejs.org/api/events.html)
 and you can use it by pulling in iVXjs through the appropriate renderer. 
 
-## Note about events documentation
+# Note about events documentation
 
 The "payload" is all the information that is sent from the triggering event emitter. Be careful though, sometimes
 an event is fired without the information provided so be careful in using the listeners. Also, the payload is 
 documented in a [JSON Schema Org](http://json-schema.org/) fashion, but since events can send Functions the validator will not work with JSON validators.
 
-## iVXjs Bus Implementations 
+# iVXjs Bus Implementations 
 
-__Overview__ 
+_Overview_ 
 
 Each implementation would have its own implementation of the bus. The following are the various implementations.
 
-### iVXjs Bus Angular Implementation
+## iVXjs Bus Angular Implementation
 
-__Snippet__ 
+_Snippet_ 
 
 ```
 angular 
@@ -32,97 +38,98 @@ angular
     }]);
 ```
 
-## Audio Events
+# Audio Events
 
-__Overview__
+_Overview_
 
 All events the audio module listens and fires. The payload 
 
-### iVXjs:audio:can-play
+## iVXjs:audio:can-play
 
-__Description__
+_Description_
 
 Indicates that the current audio file can play.
 
-__Payload__
+_Payload_
 
 None
 
-### iVXjs:audio:ended
+## iVXjs:audio:ended
 
-__Description__
+_Description_
 
 Indicates that the current audio file has ended.
 
-__Payload__ 
+_Payload_ 
 
 None 
 
-### iVXjs:audio:mute
+## iVXjs:audio:mute
 
-__Description__
+_Description_
 
 Mutes the audio 
 
-__Payload__ 
+_Payload_ 
 
 None 
 
-### iVXjs:audio:pause 
+## iVXjs:audio:pause 
 
-__Description__ 
+_Description_ 
 
 Pauses the audio 
 
-__Payload__ 
+_Payload_ 
 
 None 
 
-### iVXjs:audio:play
+## iVXjs:audio:play
 
-__Description__
+_Description_
 
 Plays the audio 
 
-__Payload__ 
+_Payload_ 
 
 None 
 
-### iVXjs:audio:time-update
+## iVXjs:audio:time-update
 
-__Description__ 
+_Description_ 
 
 Fires whenever the audio's object on timeupdate event is fired.
 
-__Payload__ 
+_Payload_ 
 
 The current instance of this Audio class.
 
-### iVXjs:audio:unmute
+## iVXjs:audio:unmute
 
-__Description__
+_Description_
 
 Unmutes and sets the audio back to the original volume 
 
-__Payload__ 
+_Payload_ 
 
 None 
 
-## Config Events
+# Config Events
 
-__Overview__ 
+_Overview_ 
 
 The time between when the `iVXjs.init()` function gets called and the user sees the experience rendered is considered
 the configuration set. During this time, the following events can fire.
 
-### iVXjs:config:not-valid
+## iVXjs:config:not-valid
 
-__Description__
+_Description_
 
 Fires any instance where the config isn't valid utilizing the 
 current Validation module. 
 
-__Payload__
+_Payload_
+
 ```
 {
     "valid" : {
@@ -147,77 +154,78 @@ __Payload__
 }
 ```
 
-### iVXjs:config:validated
+## iVXjs:config:validated
 
-__Description__
+_Description_
 
 Fires when config settings are validated. This event triggers 
 all the rendering of the experience. 
 
-__Payload__
+_Payload_
 
 A valid instance of iVXjs.
 
-## Http Events 
+# Http Events 
 
-__Overview__
+_Overview_
 
 Whenever there is a HTTP request, several events will be raised. 
 
-### iVXjs:http:request:error
+## iVXjs:http:request:error
 
-__Description__ 
+_Description_ 
 
 Fires when a request has an error 
 
-__Payload__ 
+_Payload_ 
 
 request - Request object sent to the server 
 
-### iVXjs:http:request:success 
+## iVXjs:http:request:success 
 
-__Description__ 
+_Description_ 
 
 Fires when a request is successful 
 
-__Payload__ 
+_Payload_ 
 
 request - Request object sent to the server 
 
-### iVXjs:http:response:error 
+## iVXjs:http:response:error 
 
-__Description__ 
+_Description_ 
 
 Fires when there is an error in the response of the server 
 
-__Payload__ 
+_Payload_ 
 
 response - Response from the server 
 
-### iVXjs:http:response:success 
+## iVXjs:http:response:success 
 
-__Description__
+_Description_
 
 Indicates that a response was successful 
 
-__Payload__ 
+_Payload_ 
 
 response - Response from the server
 
-## Logging Events
+# Logging Events
 
-__Overview__ 
+_Overview_ 
 
 iVXjs has its own logging module that will log any information throughout the application. 
 This logging service will fire events depending on what gets logged through the module.
 
-### iVXjs:log 
+## iVXjs:log 
 
-__Description__ 
+_Description_ 
 
 Indicates that iVXjs's Logging system has logged a message. 
 
-__Payload__
+_Payload_
+
 ```
 {
     "type" : "object",
@@ -234,13 +242,14 @@ __Payload__
 }
 ```
 
-### iVXjs:log:error 
+## iVXjs:log:error 
 
-__Description__
+_Description_
 
 Indicates that an error is logged to the console. 
 
-__Payload__ 
+_Payload_ 
+
 ```
 {
     "type": "object",
@@ -261,14 +270,14 @@ __Payload__
 }
 ```
 
+## iVXjs:log:trace
 
-### iVXjs:log:trace
-
-__Description__ 
+_Description_ 
 
 Indicates that iVXjs's Logging system logged a stack-trace. 
 
-__Payload__
+_Payload_
+
 ```
 {
     "type" : "object",
@@ -285,13 +294,14 @@ __Payload__
 }
 ```
 
-### iVXjs:log:warn
+## iVXjs:log:warn
 
-__Description__ 
+_Description_ 
 
 Indicates that iVXjs's Logging system has logged a warning. 
 
-__Payload__
+_Payload_
+
 ```
 {
     "type" : "object",
@@ -308,31 +318,32 @@ __Payload__
 }
 ```
 
-## State Events 
+# State Events 
 
-__Overview__ 
+_Overview_ 
 
 These events all handle interactions with states
 
-### iVXjs:state:change
+## iVXjs:state:change
 
-__Description__
+_Description_
 
 Fires whenever a state has successfully changed
 
-__Payload__
+_Payload_
 
 All the current information on this state.  
 
 For Angular: The data sent will follow [ui-router's state's](http://angular-ui.github.io/ui-router/site/#/api/ui.router.state.$state) current data object.
 
-### iVXjs:state:go
+## iVXjs:state:go
 
-__Description__
+_Description_
 
-Tells the navigation service to go to the the state 
+Tells the navigation service to go to the state 
 
-__Payload__
+_Payload_
+
 ```
 {
     "type" : "object",
@@ -345,13 +356,14 @@ __Payload__
 }
 ```
 
-### iVXjs:state:not-found
+## iVXjs:state:not-found
 
-__Description__
+_Description_
 
 Indicates that a url can't be found 
 
-__Payload__ 
+_Payload_ 
+
 ```
 {
     "type" : "string",
@@ -360,92 +372,92 @@ __Payload__
 }
 ```
 
-## Video Events 
+# Video Events 
 
-__Overview__
+_Overview_
 
-These events are triggered by 
+These events are triggered while a video state is loaded or while a video is playing. 
 
-### iVXjs:video:can-play
+## iVXjs:video:can-play
 
-__Description__
+_Description_
 
 Indicates that this video is ready to play 
 
-__Payload__ 
+_Payload_ 
 
 player - current instant of this video player.
 
 stateData - state data where this player exists.
 
-### iVXjs:video:dispose
+## iVXjs:video:dispose
 
-__Description__ 
+_Description_ 
 
 Removes all events from the Bus partaining to this particular video event and 
 performs other tasks to remove this video player from the page 
 
-__Payload__ 
+_Payload_ 
 
 None 
 
-### iVXjs:video:ended
+## iVXjs:video:ended
 
-__Description__ 
+_Description_ 
 
 Indicates that the current video playing has ended 
 
-__Payload__ 
+_Payload_ 
 
 videoClass - The current instance of this video module class 
 
-### iVXjs:video:get-duration
+## iVXjs:video:get-duration
 
-__Description__ 
+_Description_ 
 
 Sends a request to get the current video's duration. _Note: You must listen for iVXjs:video:set-duration event to get the duration_
 
-__Payload__ 
+_Payload_ 
 
 None 
 
-### iVXjs:video:mute
+## iVXjs:video:mute
 
-__Description__ 
+_Description_ 
 
 Mutes the current video. 
 
-__Payload__
+_Payload_
 
 None 
 
-### iVXjs:video:pause
+## iVXjs:video:pause
 
-__Description__ 
+_Description_ 
 
 Pauses the current video. 
 
-__Payload__ 
+_Payload_ 
 
 None 
 
-### iVXjs:video:play 
+## iVXjs:video:play 
 
-__Description__ 
+_Description_ 
 
 Plays the current video. 
 
-__Payload__ 
+_Payload_ 
 
 None 
 
-### iVXjs:video:seek
+## iVXjs:video:seek
 
-__Description__ 
+_Description_ 
 
 Sets the current video to the time in seconds 
 
-__Payload__ 
+_Payload_ 
 
 ```
 {
@@ -454,13 +466,14 @@ __Payload__
 }
 ```
 
-### iVXjs:video:set-duration 
+## iVXjs:video:set-duration 
 
-__Description__ 
+_Description_ 
 
 Used mostly to set a counter to the current video's duration. 
 
-__Payload__ 
+_Payload_ 
+
 ```
 {
     "type" : "number",
@@ -468,13 +481,14 @@ __Payload__
 }
 ```
 
-### iVXjs:video:set-volume 
+## iVXjs:video:set-volume 
 
-__Description__ 
+_Description_ 
 
 Sets the current video's volume. Range: 0 to 1;
 
-__Payload__
+_Payload_
+
 ```
 {
     "type" : "number",
@@ -484,14 +498,14 @@ __Payload__
 }
 ```
 
-### iVXjs:video:time-update 
+## iVXjs:video:time-update 
 
-__Description__
+_Description_
 
 Fires when the video triggers a timeupdate call. Used for actions 
 during videos.
 
-__Payload__ 
+_Payload_ 
 
 player - current instant of this video player.
 
@@ -499,79 +513,79 @@ player.currentTime - current time of this video player;
 
 stateData - state data where this player exists.
 
-### iVXjs:video:unmute 
+## iVXjs:video:unmute 
 
-__Description__ 
+_Description_ 
 
 Unmutes the current video and sets the volume to the last volume 
 set. 
 
-__Payload__ 
+_Payload_ 
 
 None 
 
-## Angular Specific Events 
+# Angular Specific Events 
 
-__Overview__ 
+_Overview_ 
 
 These events only fire when using the Angular implementation of iVXjs.
 
-### iVXjs:angular:bootstrapped
+## iVXjs:angular:bootstrapped
 
-__Description__ 
+_Description_ 
 
 Indicates that the iVXjs Angular module was successfully bootstrapped to its 
 elements.
 
-__Payload__ 
+_Payload_ 
 
 None 
 
-### iVXjs:angular:template-not-found
+## iVXjs:angular:template-not-found
 
-__Description__ 
+_Description_ 
 
 When using the `ng-include` directive in Angular, sometimes a template is not found and this 
 will fire when this happens. 
 
-__Payload__ 
+_Payload_ 
 
 event - Error event that was fired. 
 
 ## iVXio Specific Events 
 
-__Overview__
+_Overview_
 
 These events fire when using the iVXio Data Module.
 
-### iVXjs:iVXio:error:event-not-fired
+## iVXjs:iVXio:error:event-not-fired
 
-__Description__ 
+_Description_ 
 
 When an iVXio event was not fired due to some error, this event gets fired 
 
-__Payload__ 
+_Payload_ 
 
 eventArgs - Event arguments fed into the event.
 
 error - Error passed from the unresolved error. Should contain a message.
 
-### iVXjs:iVXio:error:experience
+## iVXjs:iVXio:error:experience
 
-__Description__
+_Description_
 
 Fires whenever there is an error retrieving an experience from the platform.
 
-__Payload__ 
+_Payload_ 
 
 error - Error information collected when trying to recieve the data.
 
-### iVXjs:iVXio:error:platform-unavailable
+## iVXjs:iVXio:error:platform-unavailable
 
-__Description__ 
+_Description_ 
 
 Fires if iVXjs can't detect the global iVX object 
 
-__Payload__ 
+_Payload_ 
 
 None
