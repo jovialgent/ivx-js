@@ -14,7 +14,7 @@ asks for a user name and displays their name in a special message!
 
 
 {: .btn .btn--inverse}
-[Hello World](https://influencetech.github.io/ivx-js/developer/tutorial.hello-world/)
+[Hello World](https://influencetech.github.io/ivx-js/developer/tutorial.hello-world)
 
 ## Templates
 
@@ -40,4 +40,4 @@ on your page to make a seemless mobile video experience across
 multiple devices.
 
 {: .btn .btn--inverse}
-[Inline iPhone](https://influencetech.github.io/ivx-js/tutorial.video.iphone-inline)
+[Inline iPhone](https://influencetech.github.io/ivx-js/developer/tutorial.video.iphone-inline)
