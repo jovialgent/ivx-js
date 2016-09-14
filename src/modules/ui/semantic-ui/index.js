@@ -55,3 +55,17 @@ export class SemanticUI {
         }
     }
 };
+
+
+module.export = initializeSemanticUI;
+
+if (angular && angular.module('ivx-js')) {
+    angular
+        .module('ivx-js')
+        .constant('iVXjs.ui.semantic-ui', initializeSemanticUI);
+}
+
+
+function initializeSemanticUI(){
+    return SemanticUI
+}

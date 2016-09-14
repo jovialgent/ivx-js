@@ -1,15 +1,16 @@
 import {DataProcessor} from "./data/processor.js";
 import {RegisteredVideoModules} from "./video/registered-modules.js";
 import {RegisteredAudioModules} from "./audio/registered-modules.js";
-import {RegisteredValidationModules} from "./validation/registered-modules.js";
-import {RegisteredUIModules} from './ui/registered-modules.js';
-import {Modules} from './index.js';
 import {assert} from '../utilities/asserts.js';
 import ErrorEventNames from '../constants/errors.js';
 import ConfigEventNames from '../constants/iVXjs.config.events.js';
+import {iVXjsData} from "./data/ivx-js/index.js";
+import {DefaultUI} from "./ui/default/index.js";
+import {iVXjsValidation} from "./validation/ivx-js-validation/index.js";
 
 let errorEvents = new ErrorEventNames();
 let configEventNames = new ConfigEventNames();
+
 
 /**
  * Runs all proceedures to set up a valid iVXjs experience. 
@@ -31,14 +32,6 @@ export class Setup {
          * @type {object}
          */
         this.settings = settings;
-
-        /**
-         * Module settings as defined in the Modules
-         * class
-         * 
-         * @type {object}
-         */
-        this.modules = new Modules(settings).modules;
 
         /**
          * Enhances existing data for setup.
@@ -70,11 +63,14 @@ export class Setup {
 
     resolveSetupProcesses(resolve, reject) {
         let self = this;
-        let {iVXjsLog} = this;
+        let {iVXjsLog, settings} = this;
+        let {data = {}} = settings;
+        let {module : dataModule = iVXjsData} = data;
 
-        this.setupData() 
+        this.setupData(dataModule) 
             .then(
             function validateExperience(experienceData) {
+                console.dir(experienceData);
                 let validation = self.runValidation(experienceData);
 
                 if(!validation.valid){
@@ -97,10 +93,9 @@ export class Setup {
      * @return {Promise} - resolves once all validation of this data is finished.
      */
     runValidation(experienceData) {
-        let {validation : validationType = 'iVXjsValidation'} = experienceData;
-        let validationModules = new RegisteredValidationModules();
-
-        return new validationModules[validationType](experienceData);
+        let {validation : ValidationModule = iVXjsValidation} = experienceData;
+       
+        return new ValidationModule(experienceData);
     }
 
     /**
@@ -108,11 +103,11 @@ export class Setup {
      * 
      * @return {Promise} - indicates data enhancement finishes and was successful
      */
-    setupData() {
-        let moduleData = this.modules.data;
+    setupData(dataModule) {
+       
         let settings = this.settings;
 
-        return new this.DataProcessor(moduleData, settings, this.Bus, this.iVXjsLog).getData();
+        return new this.DataProcessor(dataModule, settings, this.Bus, this.iVXjsLog).getData();
     }
 
     /**
@@ -124,14 +119,11 @@ export class Setup {
      * their dependencies correctly.
      */
     setupModules(experienceData) {
-        let theseUIModules = new RegisteredUIModules();
-        let {ui = 'default'} = experienceData;
-
-        delete experienceData.data;
-        delete experienceData.validator;
+        let {settings} = this;  
+        let {ui : UI = DefaultUI} = settings;
 
         experienceData.video = new RegisteredVideoModules();
-        experienceData.ui = new theseUIModules[ui]();
+        experienceData.ui = new UI();
         experienceData.audio = new RegisteredAudioModules().html5;
 
         return experienceData;

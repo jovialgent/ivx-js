@@ -97,3 +97,16 @@ export class iVXio {
   }
 }
 
+module.export = initializeiVXIO;
+
+if (angular && angular.module('ivx-js')) {
+    angular
+        .module('ivx-js')
+        .constant('iVXjs.data.iVXio', initializeiVXIO);
+}
+
+function initializeiVXIO(settings) {
+    settings.module = iVXio;
+
+    return settings;
+};

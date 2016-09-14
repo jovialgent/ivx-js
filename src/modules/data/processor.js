@@ -1,5 +1,3 @@
-import { RegisteredDataModules } from './registered-modules.js';
-
 /**
  * Enhances the data to run an experience as defined in the data module's 
  * settings.
@@ -13,7 +11,7 @@ export class DataProcessor {
      * @param {object} dataModuleObj - user defined settings for this data module
      * @param {object} settings - all user settings that will be enhanced.
      */
-    constructor(dataModuleObj, settings, Bus, iVXjsLog) {
+    constructor(dataModule, settings, Bus, iVXjsLog) {
 
         /**
          * User defined data module data that will be used to
@@ -21,7 +19,7 @@ export class DataProcessor {
          * 
          * @type {object}
          */
-        this.moduleData = dataModuleObj;
+        this.dataModule = dataModule;
 
         /**
          * All user settings including default data that will 
@@ -37,7 +35,6 @@ export class DataProcessor {
          * 
          * @type {object}
          */
-        this.RegisteredDataModules = RegisteredDataModules;
         this.Bus = Bus;
         this.iVXjsLog = iVXjsLog
     }
@@ -50,9 +47,10 @@ export class DataProcessor {
      */
     getData() {
         let self = this;
-        let {type, settings: moduleSettings = {}, inSequence = false} = this.moduleData;
+        let {dataModule, settings} = this;
+        let {data : dataSettings} = settings;
         let dataPromise = new Promise((resolve, reject) => {
-            self.runEnhancements(resolve, reject, type, moduleSettings, self.settings);        
+            self.runEnhancements(resolve, reject, dataModule, dataSettings, self.settings);        
         });
 
         return dataPromise;
@@ -63,10 +61,9 @@ export class DataProcessor {
      * this will enhance the current data and actions defined in that 
      * class's enhance method.
      */
-    runEnhancements(resolve, reject, type, moduleSettings, settings) {
-        let registeredDataModules = new RegisteredDataModules();
-        let dataModule = new registeredDataModules[type](moduleSettings, settings, this.Bus, this.iVXjsLog);
-
+    runEnhancements(resolve, reject, DataModuleClass, dataModuleSettings, iVXjsSettings) {
+        let dataModule = new DataModuleClass(dataModuleSettings, iVXjsSettings, this.Bus, this.iVXjsLog);
+        
         dataModule
             .enhance()
             .then((data) => {

@@ -24,8 +24,6 @@ export class iVXjsData {
         }
 
         let enhanced = {
-            ui: configUI,
-            validation: configValidation,
             experience: experience,
             rules: new Rules(experience, customRules).rules,
             config: configData
