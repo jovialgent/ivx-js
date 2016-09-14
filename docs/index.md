@@ -25,5 +25,4 @@ developer:
     btn_class: "btn--inverse"
 ---
 
-
 {% include feature_row id="developer" %}

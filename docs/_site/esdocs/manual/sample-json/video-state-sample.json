@@ -1,0 +1,27 @@
+{
+
+    "defaultState": [{
+        "stateId": "html5-video-state-test"
+    }],
+    "states": [{
+        "id": "html5-video-state-test",
+        "name": "HTML5 Video Test",
+        "url": "/html5-video-test",
+        "type": "video",
+        "header": {},
+        "footer": {},
+        "onEnter": [],
+        "onExit": [],
+        "next": [],
+        "onVideoEnd": [],
+        "playerSettings": {
+            "controls": "standard",
+            "sources": [{
+                "src": "http://clips.vorwaerts-gmbh.de/VfE_html5.mp4",
+                "type": "video/mp4"
+            }]
+        },
+        "personalizations": [],
+        "cuePoints": []
+    }]
+}

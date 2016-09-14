@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl">
+  <title data-ice="title">API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+<link data-ice="userStyle" rel="stylesheet" href="user/css/0-styles.css">
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  <a href="./manual/index.html" data-ice="manualHeaderLink">Manual</a>
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  </ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><div data-ice="index" class="github-markdown"><p>#iVXjs#</p>
+<p>A library with core functionality to run iVX.io like experiences.</p>
+<p>##Development Setup##</p>
+<ol>
+<li>Run <code>npm install</code></li>
+<li>After installation, run <code>npm start</code></li>
+<li>The &apos;core&apos; demo will open: <a href="http://localhost:8888/core">link</a></li>
+</ol>
+<p>##Application Frameworks##</p>
+<p>###angular.ivx.js###</p>
+<p>File source: <code>dist/angular.ivx.js</code></p>
+<p><strong>Dependencies</strong></p>
+<ul>
+<li><a href="https://angularjs.org/">angular</a></li>
+<li><a href="https://github.com/angular-ui/ui-router">ui-router</a></li>
+<li><a href="https://docs.angularjs.org/api/ngSanitize">ngSanitize</a></li>
+</ul>
+<p>Minified versions of each of these can be found in the <code>/deps</code> folder.</p>
+<p>##iVXjs&apos;s Class Overview##</p>
+<p>The iVXjs class has three main properties:</p>
+<ul>
+<li><strong>config</strong> <ul>
+<li>These are settings for the experience and what needs to be rendered and how interactions are done. 
+This object will have a structure that iVXjs&apos;s libraries can recognize and create the states and elements</li>
+</ul>
+</li>
+<li><strong>experience</strong><ul>
+<li>Contains data and functions that record that data for this experience. By default, an experience contains an
+object called <code>data</code> which is all the current data and <code>setData</code> which sets the data of this object.</li>
+</ul>
+</li>
+<li><strong>rules</strong><ul>
+<li>A function that processes an array of rules and results used for navigating based on the data.</li>
+</ul>
+</li>
+</ul>
+<p>###Getting Started: Creating an Input State using angular.ivx.js###</p>
+<ol>
+<li>Add the following HTML into your body tag:<pre><code><code class="source-code prettyprint">&lt;!-- Initializes your app --&gt;
+&lt;div ng-app=&quot;app&quot;&gt;&lt;/div&gt;
+&lt;!-- Angular library and depencies --&gt;
+&lt;script src=&quot;[PATH-TO-JS]/angular.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;[PATH-TO-JS]/angular-ui-router.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;[PATH-TO-JS]/angular-sanitize.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;[PATH-TO-JS]/angular.ivx.js&quot;&gt;&lt;/script&gt; 
+&lt;script&gt;
+ angular
+ .module(&apos;app&apos;, [&apos;ivx-js&apos;])
+ .run(function(){
+     iVXjs.init({
+         config :[CONFIG-DATA]
+     })
+ })    
+&lt;/script&gt;</code>
+</code></pre></li>
+<li>Replace <em>[PATH-TO-JS]</em> with the path to your dependencies</li>
+<li><p>Replace <em>[CONFIG-DATA]</em> in the sample code above with the following snippet:</p>
+<pre><code><code class="source-code prettyprint">{
+ &quot;defaultState&quot;: [{
+     &quot;stateId&quot;: &quot;hello-world&quot;
+ }],
+ &quot;states&quot;: [{
+     &quot;id&quot;: &quot;hello-world&quot;,
+     &quot;name&quot;: &quot;Hello World&quot;,
+     &quot;url&quot;: &quot;/hello-world&quot;,
+     &quot;type&quot;: &quot;input&quot;,
+     &quot;display&quot;: &quot;form&quot;,
+     &quot;header&quot;: {
+         &quot;html&quot; : &quot;&lt;h1&gt;Welcome to iVXjs!&lt;/h1&gt;&lt;h2&gt;Write in your name below so we can get to know you.&lt;/h2&gt;&quot;
+     },
+     &quot;footer&quot;: {
+         &quot;html&quot; : &quot;&quot;
+     },
+     &quot;onEnter&quot;:[],
+     &quot;onExit&quot;: [],
+     &quot;next&quot;: [{
+         &quot;stateId&quot; : &quot;welcome-screen&quot;
+     }],
+     &quot;onSubmit&quot;: [],
+     &quot;inputs&quot;: [{
+         &quot;id&quot;: &quot;name&quot;,
+         &quot;type&quot;: &quot;text&quot;,
+         &quot;name&quot; : &quot;name&quot;,
+         &quot;label&quot; : &quot;Your Name:&quot;           
+     }]
+ },{
+     &quot;id&quot; : &quot;welcome-screen&quot;,
+     &quot;name&quot; : &quot;Welcome Screen&quot;,
+     &quot;url&quot; : &quot;/welcome-screen&quot;,
+     &quot;type&quot; : &quot;html&quot;,
+     &quot;html&quot; : &quot;&lt;div class=&apos;welcome&apos;&gt;&lt;h1&gt;Congratulations {{experience.name}}!&lt;/h1&gt;&lt;h2&gt;You made your first iVXjs Experience!&lt;/h2&gt;&lt;/div&gt;&quot;
+
+ }]
+}</code>
+</code></pre></li>
+<li>Refresh the page and you will see some HTML got injected. The page should look something like
+this following:<blockquote>
+<p><img src="http://c21a7b8386ed9a02468f-07e63bba35c8c27197d9291d1fa4660f.r67.cf2.rackcdn.com/iVXjs-Images/Finished%20Screen%20For%20iVXjs%20Hello%20World.png" alt="Hello World"></p>
+</blockquote>
+</li>
+<li>Write your name in the text field provided.</li>
+<li>Click submit</li>
+<li>You will see on the next page your name next to &quot;Congratulations&quot;.</li>
+</ol>
+<p>##Advanced States##</p>
+<p>###Video States###</p>
+<p>A Video State is a state that allows you to embedembed HTML5, YouTube, or Vimeo videos, but with the added bonus of making them interactive and have personalized messages from information you are gathering using iVXjs. </p>
+<p>To show you how this is done, let&apos;s take the above example in <em>Getting Started</em> and instead of an HTML state with a static congratulations, let&apos;s add a YouTube video and your name.</p>
+<ul>
+<li><p>Get your current config data object.</p>
+<pre><code><code class="source-code prettyprint">{
+  &quot;defaultState&quot;: [{
+      &quot;stateId&quot;: &quot;hello-world&quot;
+  }],
+  &quot;states&quot;: [{
+      &quot;id&quot;: &quot;hello-world&quot;,
+      &quot;name&quot;: &quot;Hello World&quot;,
+      &quot;url&quot;: &quot;/hello-world&quot;,
+      &quot;type&quot;: &quot;input&quot;,
+      &quot;display&quot;: &quot;form&quot;,
+      &quot;header&quot;: {
+          &quot;html&quot; : &quot;&lt;h1&gt;Welcome to iVXjs!&lt;/h1&gt;&lt;h2&gt;Write in your name below so we can get to know you.&lt;/h2&gt;&quot;
+      },
+      &quot;footer&quot;: {
+          &quot;html&quot; : &quot;&quot;
+      },
+      &quot;onEnter&quot;:[],
+      &quot;onExit&quot;: [],
+      &quot;next&quot;: [{
+          &quot;stateId&quot; : &quot;welcome-screen&quot;
+      }],
+      &quot;onSubmit&quot;: [],
+      &quot;inputs&quot;: [{
+          &quot;id&quot;: &quot;name&quot;,
+          &quot;type&quot;: &quot;text&quot;,
+          &quot;name&quot; : &quot;name&quot;,
+          &quot;label&quot; : &quot;Your Name:&quot;           
+      }]
+  },{
+      &quot;id&quot; : &quot;welcome-screen&quot;,
+      &quot;name&quot; : &quot;Welcome Screen&quot;,
+      &quot;url&quot; : &quot;/welcome-screen&quot;,
+      &quot;type&quot; : &quot;html&quot;,
+      &quot;html&quot; : &quot;&lt;div class=&apos;welcome&apos;&gt;&lt;h1&gt;Congratulations {{experience.name}}!&lt;/h1&gt;&lt;h2&gt;You made your first iVXjs Experience!&lt;/h2&gt;&lt;/div&gt;&quot;
+
+  }]
+}</code>
+</code></pre></li>
+<li>Replace the last object in the <code>state</code> array in your config with this spec (it is scary looking, but all will be explained)<pre><code><code class="source-code prettyprint">{
+  &quot;id&quot;: &quot;welcome-screen&quot;,
+  &quot;name&quot;: &quot;Welcome Screen&quot;,
+  &quot;url&quot;: &quot;/welcome-screen&quot;,
+  &quot;type&quot;: &quot;video&quot;,
+  &quot;header&quot;: {
+      &quot;html&quot; : &quot;&lt;h1&gt;You made a video state you rock start!&lt;/h1&gt;&quot;
+  },
+  &quot;footer&quot; : {
+      &quot;html&quot; : &quot;&lt;h2&gt;Wait 10 seconds for a surprise!&lt;/h2&gt;&quot; 
+  },
+  &quot;onEnter&quot;: [],
+  &quot;onExit&quot;: [],
+  &quot;next&quot;: [{
+      &quot;stateId&quot;: &quot;vimeo-video-state-test&quot;
+  }],
+  &quot;onVideoEnd&quot;: [],
+  &quot;playerSettings&quot;: {
+      &quot;youtubeId&quot;: &quot;wC9S_fFMnaU&quot;,
+      &quot;controls&quot;: false,
+      &quot;autoplay&quot;: true
+  },
+  &quot;personalizations&quot;: [{
+      &quot;id&quot;: &quot;congratulations&quot;,
+      &quot;html&quot;: &quot;&lt;h2&gt;Surprise {{experience.name}}!&lt;/h2&gt;&lt;h3&gt;I am a personalization.&lt;/h3&gt;&quot;
+  }],
+  &quot;cuePoints&quot;: [{
+      &quot;eventName&quot;: &quot;animateElement&quot;,
+      &quot;timeAt&quot;: 10,
+      &quot;args&quot;: {
+          &quot;element&quot;: &quot;#congratulations&quot;,
+          &quot;animationClass&quot;: &quot;show&quot;
+      }
+  }]
+}</code>
+</code></pre>Resulting in this super scary config object:<pre><code><code class="source-code prettyprint">{
+  &quot;defaultState&quot;: [{
+      &quot;stateId&quot;: &quot;hello-world&quot;
+  }],
+  &quot;states&quot;: [{
+      &quot;id&quot;: &quot;hello-world&quot;,
+      &quot;name&quot;: &quot;Hello World&quot;,
+      &quot;url&quot;: &quot;/&quot;,
+      &quot;type&quot;: &quot;input&quot;,
+      &quot;display&quot;: &quot;form&quot;,
+      &quot;header&quot;: {
+          &quot;html&quot;: &quot;&lt;h1&gt;Welcome to iVXjs!&lt;/h1&gt;&lt;h2&gt;Write in your name below so we can get to know you.&lt;/h2&gt;&quot;
+      },
+      &quot;footer&quot;: {
+          &quot;html&quot;: &quot;&quot;
+      },
+      &quot;onEnter&quot;: [],
+      &quot;onExit&quot;: [],
+      &quot;next&quot;: [{
+          &quot;stateId&quot;: &quot;welcome-screen&quot;
+      }],
+      &quot;onSubmit&quot;: [],
+      &quot;inputs&quot;: [{
+          &quot;id&quot;: &quot;name&quot;,
+          &quot;type&quot;: &quot;text&quot;,
+          &quot;name&quot;: &quot;name&quot;,
+          &quot;label&quot;: &quot;Your Name:&quot;
+      }]
+  }, {
+      &quot;id&quot;: &quot;welcome-screen&quot;,
+      &quot;name&quot;: &quot;Welcome Screen&quot;,
+      &quot;url&quot;: &quot;/welcome-screen&quot;,
+      &quot;type&quot;: &quot;video&quot;,
+      &quot;header&quot;: {
+          &quot;html&quot; : &quot;&lt;h1&gt;You made a video state you rock start!&lt;/h1&gt;&quot;
+      },
+      &quot;footer&quot; : {
+          &quot;html&quot; : &quot;&lt;h2&gt;Wait 10 seconds for a surprise!&lt;/h2&gt;&quot; 
+      },
+      &quot;onEnter&quot;: [],
+      &quot;onExit&quot;: [],
+      &quot;next&quot;: [{
+          &quot;stateId&quot;: &quot;vimeo-video-state-test&quot;
+      }],
+      &quot;onVideoEnd&quot;: [],
+      &quot;playerSettings&quot;: {
+          &quot;youtubeId&quot;: &quot;wC9S_fFMnaU&quot;,
+          &quot;controls&quot;: false,
+          &quot;autoplay&quot;: true
+      },
+      &quot;personalizations&quot;: [{
+          &quot;id&quot;: &quot;congratulations&quot;,
+          &quot;html&quot;: &quot;&lt;h2&gt;Surprise {{experience.name}}!&lt;/h2&gt;&lt;h3&gt;I am a personalization.&lt;/h3&gt;&quot;
+      }],
+      &quot;cuePoints&quot;: [{
+          &quot;eventName&quot;: &quot;animateElement&quot;,
+          &quot;timeAt&quot;: 10,
+          &quot;args&quot;: {
+              &quot;element&quot;: &quot;#congratulations&quot;,
+              &quot;animationClass&quot;: &quot;show&quot;
+          }
+      }]
+  }]
+}</code>
+</code></pre></li>
+<li>Remove the path from your URL and start from the first state and go through the input stage filling in your name and submit.</li>
+<li>Now watch the video and wait for a surprise!</li>
+</ul>
+<p>###Video State Specs###
+Here&apos;s a more indepth explanation of the Video JSON Spec:</p>
+<pre><code><code class="source-code prettyprint">{
+    &quot;id&quot; : &quot;video-state-id&quot;,  // Video State&apos;s Unique Id
+    &quot;name&quot; : &quot;Video State&quot;,   // Video State&apos;s Name
+    &quot;url&quot; : &quot;/video-state&quot;,   // Video State&apos;s URL path
+    &quot;type&quot; : &quot;video&quot;          // Indicates you are making a video state
+    &quot;next&quot; : [{               // An array of possible states you can do. Review rules for more info
+        stateId : &quot;state-2&quot;,
+        &quot;rule&quot; : {
+            &quot;key&quot; : &quot;finished-video&quot;,
+            &quot;value&quot; : true
+        }
+
+    },{
+        stateId : &quot;state-1&quot;
+    }],
+    &quot;header&quot; : {    // Information on the header portion of the video (good place to put a title or description)
+        &quot;html&quot; : &quot;&lt;h1&gt;Video Header&lt;/h1&gt;&quot;,   // HTML to fill in the header portion. If blank, it defaults to: &lt;h1&gt;[NAME-VALUE]&lt;/h1&gt;
+        &quot;classes&quot; : &quot;huge&quot;  // Classes to add to the header just in case you need to inject CSS styling through frameworks
+    },
+    &quot;footer&quot; : {    // Information for the footer
+        &quot;html&quot; : &quot;&lt;h2&gt;Video Footer&lt;/h2&gt;&quot;,   // Allows you to add HTML to the footer for messages.
+        &quot;classes&quot; : &quot;footer&quot;    // Classes to customize the footer of this video
+    },
+    &quot;onEnter&quot; : [{  // Anytime a user enters this state, this array of events will run
+        &quot;eventName&quot; : &quot;setData&quot;,    // Name of the event to run
+        &quot;args&quot; : {  //Args to pass into the event
+            &quot;key&quot; : &quot;finished-video&quot;,
+            &quot;value&quot; : false
+         }
+    }],
+    &quot;onExit&quot; : [{   // Anytime a user leaves this state, this array of events will run
+        &quot;eventName&quot; : &quot;setData&quot;,            
+        &quot;args&quot; : {                          
+            &quot;key&quot; : &quot;entered-video-state&quot;,
+            &quot;value&quot; : true
+         }
+    },{
+        &quot;eventName&quot; : &quot;setData&quot;,            
+        &quot;args&quot; : {                          
+            &quot;key&quot; : &quot;uniquePersonalization&quot;,
+            &quot;value&quot; : &quot;I am unique!&quot;
+         }
+
+    }],
+    &quot;onVideoEnd&quot;: [{    // Runs only if the user has seen the full video
+        &quot;eventName&quot; : &quot;setData&quot;,
+        &quot;args&quot; :{
+            &quot;key&quot;  : &quot;finished-video&quot;,
+            &quot;value&quot; : true
+        }
+    }],
+    /*
+     * Depending on which video type (HTML5, YouTube, Vimeo) you wish to play you have the following options for video player settings. (Add whichever you need)
+     */
+
+     // HTML5 Video Player Settings Begin
+     &quot;playerSettings&quot; : {
+        &quot;controls&quot; : false, // What kind of controls you wish to appear on your player (false = none, &quot;standard&quot; = preset controls, otherwise standard HTML5 controls)
+        &quot;sources&quot; : [{ // Array of video sources
+            &quot;src&quot; : &quot;http://clips.vorwaerts-gmbh.de/VfE_html5.mp4&quot;,
+            &quot;type&quot; : &quot;video/mp4&quot;
+        }],
+        &quot;tracks&quot; : [], // List of close captioning tracks
+        &quot;autoplay&quot; : true // Plays when video is ready (iOS not supported) 
+     },
+     // HTML5 Video Player Settings End
+
+     // YouTube Video Player Settings Begin
+     &quot;playerSettings&quot; : {
+        &quot;youtubeId&quot; : &quot;wC9S_fFMnaU&quot;, // YouTube Video Id: You can pull that from here: https://www.youtube.com/watch?v=[youtubeId]
+        &quot;controls&quot; : false, // Controls same as HTML5
+        &quot;autoplay&quot; : true  // Same as HTML5
+     },
+     // YouTube Video Player Settings End
+
+     // Vimeo Video Player Settings Begin
+     &quot;playerSettings&quot; : {
+        &quot;vimeoId&quot; : &quot;wC9S_fFMnaU&quot;, // Vimeo Id: You can pull that from here: https://vimeo.com/[vimeoId]
+        &quot;controls&quot; : false, // Controls same as HTML5
+        &quot;autoplay&quot; : true  // Same as HTML5
+     },
+     // Vimeo Video Player Settings End
+
+    &quot;personalizations&quot; : [{ // A personalization is a segment of HTML that is personalized to this experience. By default, it adds a class called &apos;hide&apos; which you will need to add otherwise it will not be hidden by default
+           &quot;id&quot; : &quot;personalization&quot;, // ID to target this personalization using CSS / animateElement event
+           &quot;html&quot; : &quot;&lt;h3&gt;Personalization {{experience.uniquePersonalization}}&lt;/h3&gt;&quot;  // HTML to be put in the container. To inject personalizations, use {{experience.[key]}}
+    }],
+
+    &quot;cuePoints&quot; : [{ // Indicates to the video player to raise different events as video goes along depending on the t9ke
+        &quot;eventName&quot; : &quot;animateElement&quot;, // Event to raise
+        &quot;timeAt&quot; : 5, // At which time to raise it
+        &quot;args&quot; : { // Arguments for the event raised
+            &quot;element&quot; : &quot;#personalization&quot;,
+            &quot;animationClass&quot; : &quot;show&quot;
+        }
+    }]
+
+}</code>
+</code></pre></div>
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.4.7)</span></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

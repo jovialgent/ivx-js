@@ -1,0 +1,36 @@
+{
+    "defaultState": [{
+        "stateId": "datetime-local-sample-state"
+    }],
+    "states": [{
+        "id": "datetime-local-sample-state",
+        "name": "datetime-local Sample State",
+        "url": "/datetime-local-sample-state",
+        "type": "input",
+        "header": {},
+        "footer": {},
+        "onEnter": [],
+        "onExit": [],
+        "onSubmit": [],
+        "form": {
+            "classes": "",
+            "submit": {}
+        },
+        "next": [],
+        "inputs": [{
+            "id": "datetime-local-input",
+            "name": "datetimeLocalInput",
+            "type": "datetime-local",
+            "label": "",
+            "settings": {
+                "container": {},
+                "input": {}
+            },
+            "attributes": {
+                "min" : "01/01/2015",
+                "max" : "01/01/2016"
+            },
+            "errors" : {}
+        }]
+    }]
+}

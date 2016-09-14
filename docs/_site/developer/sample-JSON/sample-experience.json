@@ -1,0 +1,117 @@
+{
+    "defaultState": [
+        {
+            "stateId": "welcome-form"
+        }
+    ],
+    "states": [
+        {
+            "id": "welcome-form",
+            "name": "Welcome Form",
+            "url": "/",
+            "type": "input",
+            "header": {
+                "templateUrl": "form-header.html"
+            },
+            "form": {
+                "classes": "",
+                "submit": {
+                    "label": "Get started!"
+                }
+            },
+            "next": [
+                {
+                    "stateId": "video-sample"
+                }
+            ],
+            "inputs": [
+                {
+                    "id": "full-name",
+                    "name": "fullName",
+                    "type": "text",
+                    "label": "Your name:",
+                    "settings": {
+                        "container": {},
+                        "input": {}
+                    },
+                    "attributes": {
+                        "placeholder": "Enter your name here...",
+                        "required": true
+                    }
+                }
+            ]
+        },
+        {
+            "id": "video-sample",
+            "name": "Video Sample",
+            "url": "/video-sample",
+            "type": "video",
+            "next": [{
+                "stateId" : "helpful-links"
+            }],
+            "playerSettings": {
+                "youtubeId": "4f09VdXex3A"
+            },
+            "personalizations": [
+                {
+                    "id": "name-personalization",
+                    "templateUrl": "name-personalization.html"
+                }
+            ],
+            "cuePoints": [
+                {
+                    "timeAt": 0,
+                    "eventName": "animateElement",
+                    "args": {
+                        "element": "#name-personalization",
+                        "animationClasses": "show"
+                    }
+                },
+                {
+                    "timeAt": 5,
+                    "eventName": "animateElement",
+                    "args": {
+                        "element": "#name-personalization",
+                        "animationClasses": "hide"
+                    }
+                }
+            ]
+        },
+        {
+            "id": "helpful-links",
+            "name": "Helpful Links",
+            "url": "/helpful-links",
+            "type": "navigation",
+            "header": {
+                "templateUrl" : "helpful-links-header.html"
+            },
+            "links": [
+                {
+                    "href": "https://influencetech.github.io/ivx-js/developer/tutorial.hello-world/",
+                    "attributes": {
+                        "target": "_blank"
+                    },
+                    "label": "Getting Started with iVXjs",
+                    "classes" : "btn",
+                    "onClick": []
+                },{
+                    "href" : "https://influencetech.github.io/ivx-js/developer/tutorials/",
+                     "attributes": {
+                        "target": "_blank"
+                    },
+                    "label": "Tutorials",
+                    "classes" : "btn",
+                    "onClick": []
+                },{
+                    "href" : "https://influencetech.github.io/ivx-js/developer/configuration/",
+                     "attributes": {
+                        "target": "_blank"
+                    },
+                    "label": "JSON Specs and Configurations",
+                    "classes" : "btn",
+                    "onClick": []
+                }
+            ]
+        }
+    ]
+}

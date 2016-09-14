@@ -1,0 +1,32 @@
+{
+    "defaultState": [{
+        "stateId": "input-state-test"
+    }],
+    "states": [{
+        "id": "input-state-test",
+        "name": "Input State Test",
+        "url": "/input-state-test",
+        "type": "input",
+        "header": {},
+        "footer": {},
+        "onEnter": [],
+        "onExit": [],
+        "onSubmit": [],
+        "form": {
+            "classes": "",
+            "submit": {}
+        },
+        "next": [],
+        "inputs": [{
+            "id": "text-input-test",
+            "name": "textInputTest",
+            "type": "text",
+            "label": "I am a label",
+            "settings": {
+                "container": {},
+                "input": {}
+            },
+            "attributes": {}
+        }]
+    }]
+}

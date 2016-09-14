@@ -1,0 +1,1326 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>karma-tests</title>
+<style>
+body { background-color: #eeeeee; padding: 0; margin: 5px; overflow-y: scroll; }
+#HTMLReporter h1 { font-size: 12px; font-weight: normal; text-align: right; margin: 10px 0 10px 0 !important; }
+#HTMLReporter { font-size: 11px; font-family: Monaco, "Lucida Console", monospace; line-height: 14px; color: #333333; }
+#HTMLReporter a { text-decoration: none; }
+#HTMLReporter a:hover { text-decoration: underline; }
+#HTMLReporter p, #HTMLReporter h1, #HTMLReporter h2, #HTMLReporter h3, #HTMLReporter h4, #HTMLReporter h5, #HTMLReporter h6 { margin: 0; line-height: 14px; }
+#HTMLReporter .banner, #HTMLReporter .symbolSummary, #HTMLReporter .summary, #HTMLReporter .resultMessage, #HTMLReporter .specDetail .description, #HTMLReporter .alert .bar, #HTMLReporter .stackTrace { padding-left: 9px; padding-right: 9px; }
+
+#HTMLReporter #jasmine_content { position: fixed; right: 100%; }
+#HTMLReporter .version { color: #aaaaaa; }
+#HTMLReporter .banner { margin-top: 14px; }
+#HTMLReporter .duration { color: #aaaaaa; float: right; }
+#HTMLReporter .exceptions { color: #fff; float: right; margin-top: 5px; margin-right: 5px; }
+#HTMLReporter .bar { line-height: 28px; font-size: 14px; display: block; color: #eee; }
+#HTMLReporter .runningAlert { background-color: #666666; }
+#HTMLReporter .skippedAlert { background-color: #aaaaaa; }
+#HTMLReporter .skippedAlert:first-child { background-color: #333333; }
+#HTMLReporter .skippedAlert:hover { text-decoration: none; color: white; text-decoration: underline; }
+#HTMLReporter .passingAlert { background-color: #a6b779; }
+#HTMLReporter .passingAlert:first-child { background-color: #5e7d00; }
+#HTMLReporter .failingAlert { background-color: #cf867e; }
+#HTMLReporter .failingAlert:first-child { background-color: #b03911; }
+#HTMLReporter .results { margin-top: 14px; }
+#HTMLReporter #details { display: none; }
+#HTMLReporter .resultsMenu { color: #999; background-color: #fff; }
+
+#HTMLReporter .summaryMenuItem { font-weight: normal; text-decoration: none; margin-right: 5px; color: #333; }
+#HTMLReporter .detailsMenuItem { font-weight: normal; text-decoration: none; margin-left: 5px; color: #999; }
+
+#HTMLReporter.showDetails .summaryMenuItem { color: #999; }
+#HTMLReporter.showDetails .detailsMenuItem { color: #333; }
+#HTMLReporter.showDetails .summaryMenuItem:hover { text-decoration: underline; }
+#HTMLReporter             .detailsMenuItem:hover { text-decoration: underline; }
+
+
+#HTMLReporter.showDetails .summary { display: none; }
+#HTMLReporter.showDetails #details { display: block; }
+#HTMLReporter .summary { margin-top: 14px; margin-bottom: 40px; }
+#HTMLReporter .summary .suite .suite, #HTMLReporter .summary .specSummary { margin-left: 14px; }
+#HTMLReporter .summary .specSummary.passed { color: #5e7d00; }
+#HTMLReporter .summary .specSummary.failed { color: #b03911; }
+#HTMLReporter .summary .specSummary.skipped { color: #ba9d37; }
+#HTMLReporter .description + .suite { margin-top: 0; }
+#HTMLReporter .suite { margin-top: 14px; }
+#HTMLReporter .suite a { color: #333333; }
+#HTMLReporter #details .specDetail { margin-bottom: 28px; }
+#HTMLReporter #details .specDetail .description { display: block; color: white; background-color: #b03911; }
+#HTMLReporter .resultMessage { padding-top: 14px; color: #333333; }
+#HTMLReporter .resultMessage span.result { display: block; }
+#HTMLReporter .stackTrace { margin: 5px 0 0 0; max-height: 224px; overflow: auto; 
+    line-height: 18px; color: #666666; border: 1px solid #ddd; background: white; white-space: pre; }
+
+
+.fold-buttons { float: right; }
+.fold-buttons a { color: #fff; font-size: 12px; }
+.fold-buttons { display: none } 
+#HTMLReporter .br { margin-top: 8px; }
+#HTMLReporter .section-starter { font-size: 14px; line-height: 18px }
+#HTMLReporter .summary-section { 
+  cursor: -webkit-zoom-out; cursor: -moz-zoom-out; cursor: zoom-out; 
+  background: #fafafa; 
+  padding: 10px; 
+  border-bottom: #eaeaea 1px solid; }
+#HTMLReporter .summary-section.folded { 
+  cursor: -webkit-zoom-in; cursor: -moz-zoom-in; cursor: zoom-in; 
+  padding-bottom: 8px;
+}
+#HTMLReporter .summary-section.folded div { display: none }
+#HTMLReporter .summary-section.folded div.section-starter { display: block }
+/*#HTMLReporter .summary-section:hover { background: #e9e9e9; }*/
+#HTMLReporter .summary-section:hover { background: #f5f5f5; }
+#HTMLReporter .summary-section-totals { 
+  font-size: 11px;
+  display: none; 
+  margin-left: 11px; 
+  overflow: hidden; 
+  position: relative;
+  top: -1px; 
+}
+#HTMLReporter .summary-section.folded .summary-section-totals { display: inline; }
+#HTMLReporter .summary-section-total { color: #fff; vertical-align: baseline; padding: 1px 8px; }
+#HTMLReporter .summary-section-total.passed { background: #5e7d00;  }
+#HTMLReporter .summary-section-total.failed { background: #b03911;  }
+#HTMLReporter .summary-section-total.skipped { background: #ba9d37;  }
+
+#HTMLReporter { font-size: 12px; line-height: 18px; } /*larget font-size*/
+
+</style>
+</head>
+
+<body id="HTMLReporter" class="html-reporter">
+<h1>Tested in Chrome 52.0.2743 (Mac OS X 10.11.3) on Tue Aug 09 2016</h1>
+
+<div class="alert">
+
+
+
+  
+  <span class="passingAlert bar"><span class="fold-buttons"><a href="#" onclick="fold();">Fold</a> | 
+  <a href="#" onclick="unfold();">Unfold</a></span>179 specs, 0 failed, 5 pending</span>
+  
+
+
+</div>
+<div class="results">
+  <div class="summary">
+  
+  
+  
+  
+  
+    <div class="suite passed">
+      <span class="description">iVXjs</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should exist</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should attach a Bus to the iVXjs Object</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">iVXjs #setUpiVXjs</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should set iVXjs's properies equal the mock experience </span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should not set iVXjs's action property if none provided</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should exist</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should emit &quot;validated&quot;</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">iVXjs #init</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should exist</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should return a promise</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">iVXioActions #formatDateForPlatform</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should return the string &quot;2016-01-01&quot; if display is Date and value is 01/01/2016</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">iVXioActions #recordEvent</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should return undefined if there is no event arguments are provided</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should return a Promise if the event object is provided.</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should call the experience host's recordEvent with event object's customEvent value</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">iVXioActions #setConverted</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should return undefined if there is no event arguments are provided</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should return a Promise if the event object is provided.</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should call the experience host's setConverted with event object's label.</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">iVXioActions #setData</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should return undefined if there is no event arguments are provided</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should return a Promise if the event object is provided.</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should call the experience host's setData with event object's key and value.</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should call the experience host's setData with a valid date string.</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should raise an error if it can't find an input</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">iVXioActions #setMilestone</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should return undefined if there is no event arguments are provided</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should return a Promise if the event object is provided.</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should call the experience host's setMilestone with event object's miletone.</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">iVXioRules #getProgressValue</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should return with the correct value based on the progress</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">iVXioRules #evaluateRule</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should return true if there are no rules in the navObj</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should return true if the rule is empty in the navObj</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should still evaluate if rule is expression.</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should use the progressMap if the when statement is equal to &quot;when&quot;.</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should use the experience data if the when is an input key.</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">iVXioRules #processRules</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should return the last stateId if none before it doesn't evaluate to true</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should return the  stateId if an input key is defined in the rule.</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should return the  stateId if the progress evaluates correctly.</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">iVXjsActions #setData</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should set the data to the key and value in event args.</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">iVXjsActions #goToState</span>
+    
+      <div class="specSummary skipped">
+      <span class="description">should emit a goToState event with the state</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">iVXjsActions #setElementClasses</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should add class name if animation class.</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should replace animationClass on the element with the new animation class.</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">iVXjsActions #animateElement</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should return a promise if element exists.</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should return undefined if element is not found.</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">iVXjsData #setUpExperience</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should add experience settings</span>
+      </div>
+    
+      <div class="specSummary skipped">
+      <span class="description">should add module data into  modules when resolved</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">iVXjsData #enhance</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should return a promise.</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should call setUpExperience if config is not a string.</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should call getConfigJSON if config is a string.</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">iVXjsData #isValidJSONRequest</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should call this promises resolve if XHR's readyState is 4 and XHR's status is 200.</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should call this promises reject if XHR's readyState is 4 and XHR's status is not 200.</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Rules #evaluateRules</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should evaluate true if the rule is true</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should evaluate true if no rule exists</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should evaluate true if rule is empty</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should evaluate false if the rule is false</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Rules #processRules</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should evaluate the last navObj in the array if none are true above it</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should evaluate the correct navObj in the array if the rule is true</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should return an empty string if none of them are correct</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Modules</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should exist</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Modules #modules</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should produce a defaultModuleObject if settings is empty</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Modules #ui</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should replace the ui default settings with settings defined in its constructor.</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Modules #validation</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should replace the validation default settings with settings defined in its constructor.</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Modules #data</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should replace the data default settings with settings defined in its constructor.</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Setup #runSetup</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should return a promise that will resolve once all setup is done</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should run in order &quot;setupData&quot;, &quot;runValidation&quot;.</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Setup #setupData</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should return a promise.</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Default Anchor #html</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should create a anchor tag</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should add a target equal to the value in attributes</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should add classes defined in the anchor data</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should have a link equal to the href</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should have an id equal to the id defined in the init</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Default Buttons #html</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should create the number of buttons in the &quot;buttons&quot; array</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should add errors.</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should add classes to a button if classes is defined.</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Default Checkbox #html</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should create a checkbox input</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Default DateInput #html</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should create a dateInput input</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Default DatetimeLocalInput #html</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should create a datetime-local input</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Default Email #html</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should create a email input</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Default Form #html</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should create a form input</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should create a submit button a submit label is defined</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should hide a submit button is hideSubmit is true</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Default InputState #html</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should render a section, header, footer with player html in the center</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">ErrorMessages #html</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should return a correct HTML with error messages.</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should return an empty string if there are no messages.</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">AttributeTags #html</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should create a string attributes for html</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Default Navigation State #html</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should render a section, header, footer with player html in the center</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Default Number #html</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should create a number input</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Default Options #html</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should create a options input</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should create a number of options equal to the number options input</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Default Radio #html</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should create a radio input</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Style #getWidth</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should return ivxjs-grid-1-1 if width was 1</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should return ivxjs-grid-x-y where width equals x/y</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Default Text #html</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should create a TYPE input</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Default Textarea #html</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should create a textarea input</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Default Url #html</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should create a url input</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">DefaultVideoControls #control-Elements</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should create a scrub bar element.</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should have a volume bar element</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should have a place to display the current time.</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should have a place to display the total time.</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should display the mute controls.</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should display a play/pause button.</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Default VideoState #html</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should render a section, header, footer with player html in the center</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">ConfigValidation #hasStatesObj</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should return valid if there are states</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should return invalid if there are states defined</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should return invalid if there are no states</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">ConfigValidation #hasDefaultStateObj</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should return valid if there is a default state array</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">ConfigValidation #validDefaultStateObj</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should return valid if there is a default state.</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should return invalid if there is no default state.</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should return undefined if there is nothing in default state.</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">ConfigStatesValidation #uniqueValidStateData</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should return true if states are valid</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should add errors to the error object with accurate indices and false.</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">ConfigStatesValidation #filledValidStateData</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should return true if states are valid</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should add errors to the error object with accurate indices and false.</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">ConfigStatesValidation #convertToConfigErrorObjs</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should create a missing error object array from the errors</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should create a duplicate message error object array from the errors</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Experience #validAnimateElementObj</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should return valid if it has an animateElement</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should return invalid if it does not have an animateElement</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Experience #validSetDataObj</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should return valid if it has a setData</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should return invalid if it does not have a setData</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">iVXjsValidation #ruleValidationObj</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should return valid if there are rules</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should return invalid if there are  no rules</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">ModuleValidation #validUIModuleObj</span>
+    
+      <div class="specSummary skipped">
+      <span class="description">should return true if ui is defined and type is filled</span>
+      </div>
+    
+      <div class="specSummary skipped">
+      <span class="description">should return false if ui is not defined.</span>
+      </div>
+    
+      <div class="specSummary skipped">
+      <span class="description">should return false if ui type is empty.</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Validation #valid</span>
+    
+      <div class="specSummary passed">
+      <span class="description">it should return true if all arrays are true.</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">it should return false if at least one  valid  is false.</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Video Events #play</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should emit a play event.</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Video Events #pause</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should emit a pause event.</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Video Events #setVolume</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should emit a set volume event.</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Video Events #seek</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should emit a set seek event.</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Video Events #getDuration</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should emit a set a get duration event.</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Video Controls #converSecondsToParts</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should return the currect minutes, hours, and seconds in an object</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Video Controls #createTimeStamp</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should create a time stamp for anytime below 1 hour in this format mm:ss</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should create a time stamp for anytime above 1 hour in this format hh:mm:ss</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Video Controls #addEventListeners</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should add an event listener to its scrubBar</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should add an event listener to its muteControls</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should add an event listener to its volumeBar</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should add an event listener to its playPauseControls</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Video Controls #scrub</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should set the currentTimeInfo's inner html to the current time stamp based off of position.</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should run seek to with value of the seconds to scrub.</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should set the width of the scrubbar's bar to the correct percent</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Video Controls #adjustVolume</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should run setVolume to the correct volume.</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should set the width of the volume bar's bar to the correct percent</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should set the mute button to unmute</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should set the the current volume to its percent.</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Video Controls #setMute</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should set the volume to zero if the current class is unmute</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should set the volume to the current volume if mute than unmuted</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Video Controls #setPlayPause</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should play if current class is this play class.</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should pause if current class is this pause class.</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Video Controls #onTimeUpdate</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should set the width of the scrub bar's width to the percentage done given by the time.</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should set the currentTimeInfo span to the correct time stamp.</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Video Controls #onReadyToPlay</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should set this volume bar to the current volume's width.</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Comparator #compare</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should return if true if values are true for the compare parts</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Comparator #lte</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should return true if lhs is less than or equal to rhs</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should return false if lhs is greater than rhs.</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should return false if lhs or rhs is not a number.</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Comparator #gte</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should return true if lhs is greater than or equal to rhs</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should return false if lhs is less than rhs.</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should return false if lhs or rhs is not a number.</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Comparator #lt</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should return true if lhs is less to rhs</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should return false if lhs is greater or equal to rhs.</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should return false if lhs or rhs is not a number.</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Comparator #gt</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should return true if lhs is greater than rhs</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should return false if lhs is less than or equal to rhs.</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should return false if lhs or rhs is not a number.</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Comparator #equals</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should return true if the lhs and rhs are equal</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should return false if the lhs and rhs are not equal</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Comparator #notEquals</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should return true if the lhs and rhs are not equal</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should return false if the lhs and rhs are equal</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Simple Iterate #constructor</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should say done if the array is empty or undefined</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Simple Iterate #next</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should return the correct element and shrink the array in the simple iterate.</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should return nothing if the iterator is done.</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">TypeValidator #isUndefined</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should return true if undefined or null</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should return false if it is defined or not null</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">TypeValidator #isEmpty</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should return true if object, array or string is empty</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should return false if object or array is no empty</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">ObjectParsers #mapKeys</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should return an array with adjusted callback.</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">ObjectParsers #merge</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should replace the left object to the right object.</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should ignore the element defined in the array</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">ObjectParsers #anyEmpty</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should return an object with isEmpty true if none are empty.</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should return an object with isEmpty false and has an object with errors.</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">ObjectParsers #hasSameArray</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should return true, if there is an array in a collection that equals</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">ObjectParsers #hasSameObject</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should return true, if there is an object that are the same as the element</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">ObjectParsers #isUnique</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should return true if all objects is unique</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should return false if all objects is unique</span>
+      </div>
+    
+    </div>
+  
+  
+</div>
+
+<div id="details">
+  
+</div>
+
+<script>
+
+var folded = false;
+
+document.body.onkeypress = function (e) {
+  if (!e || !e.keyCode) return;
+  switch (e.keyCode) {
+    case 102: toggleFold(); break;
+    case 49: showSummary(); break;
+    
+  }
+};
+
+function showSummary() { document.body.className = "html-reporter showSummary"; }
+function showFailures() { document.body.className = "html-reporter showDetails"; }
+
+function toggleSection(el) {
+  el.className = el.className === 'summary-section' ? 'summary-section folded' : 'summary-section';
+}
+
+function toggleFold() { (folded) ? unfold() : fold(); }
+function fold() {
+  var els = document.querySelectorAll('.summary-section');
+  for (var i = 0; i < els.length; i++) {
+    els[i].className = 'summary-section folded';
+  }
+  folded = true;
+}
+function unfold() {
+  var els = document.querySelectorAll('.summary-section');
+  for (var i = 0; i < els.length; i++) {
+    els[i].className = 'summary-section';
+  }
+  folded = false;
+}
+
+</script>
+
+
+</body>
+</html>
+

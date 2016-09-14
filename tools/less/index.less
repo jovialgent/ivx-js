@@ -8,34 +8,20 @@
     display:none;
 }
 
-
-.video-control-container{
-    
-    .scrub-bar{
-        
-        width:604px;
-        height:1em;
-        line-height: 1em;
-        display: inline-block;
-        background-color:#f56820;
-        .time-lapsed{
-            width:0%;
-            height:100%;
-            background-color: #a3cc6d;
-        }
-    }
-    
-    .volume-bar{
-        width:100px;
-       
-        background-color:#aaa;
-        display:inline-block;
-        border:solid 5px #111;
-        .current-volume{
-            height:100%;
-            width:0%;
-            background-color: white;
-        }
-    }
-   
-}
+.youtube-player-container {
+     width: 100%;
+     padding-bottom: 56.25%;
+     /* 16:9 */
+     position: relative;
+     background: black;
+ }
+ 
+ #youtube-player {
+     position: absolute;
+     width: 100%;
+     height: 100%;
+     top: 0;
+     bottom: 0;
+     left: 0;
+     right: 0;
+ }

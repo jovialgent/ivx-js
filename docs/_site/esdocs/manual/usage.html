@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../">
+  <title data-ice="title">Usage</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+<link data-ice="userStyle" rel="stylesheet" href="user/css/0-styles.css">
+</head>
+<body class="layout-container manual-root" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  <a href="./manual/index.html" data-ice="manualHeaderLink">Manual</a>
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div class="manual-toc-root">
+  
+<div data-ice="manual" data-toc-name="tutorial">
+    <h1 class="manual-toc-title"><a href="manual/tutorial.html" data-ice="title">Tutorial</a></h1>
+    <ul class="manual-toc">
+      
+    <li data-ice="manualNav" class="indent-h1"><span class="manual-dot"></span><a href="manual/tutorial.html#hello-world-using-angular-ivx-js" data-ice="link">Hello World using angular.ivx.js</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/tutorial.html#overview" data-ice="link">Overview</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/tutorial.html#getting-started" data-ice="link">Getting Started</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/tutorial.html#ivxjs-angular-s-dependencies" data-ice="link">iVXjs Angular&apos;s Dependencies</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/tutorial.html#setting-up-the-html" data-ice="link">Setting up the html</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/tutorial.html#breaking-down-the-html" data-ice="link">Breaking down the html</a></li>
+<li data-ice="manualNav" class="indent-h1"><span class="manual-dot"></span><a href="manual/tutorial.html#inline-video-for-iphone" data-ice="link">Inline Video for iPhone</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/tutorial.html#overview" data-ice="link">Overview</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/tutorial.html#getting-started-with-iphone-inline" data-ice="link">Getting Started with iPhone Inline</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/tutorial.html#dependencies" data-ice="link">Dependencies</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/tutorial.html#setting-up-the-html" data-ice="link">Setting up the HTML</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/tutorial.html#using-the-json-to-indicate-inline-iphone" data-ice="link">Using the JSON to indicate inline iPhone</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/tutorial.html#overview" data-ice="link">Overview</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/tutorial.html#sample-data" data-ice="link">Sample Data</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/tutorial.html#process-to-add-inline-iphone-video" data-ice="link">Process to add inline iPhone video</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/tutorial.html#special-notes" data-ice="link">Special Notes</a></li>
+<li data-ice="manualNav" class="indent-h1"><span class="manual-dot"></span><a href="manual/tutorial.html#templates" data-ice="link">Templates</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/tutorial.html#overview" data-ice="link">Overview</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/tutorial.html#html-state-templates" data-ice="link">HTML State Templates</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/tutorial.html#overview" data-ice="link">Overview</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/tutorial.html#sample-data" data-ice="link">Sample Data</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/tutorial.html#from-json-html-state-s-html" data-ice="link">From JSON: HTML State&apos;s HTML</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/tutorial.html#from-template-html-state-s-html" data-ice="link">From Template: HTML State&apos;s HTML</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/tutorial.html#header-footer-templates" data-ice="link">Header/Footer Templates</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/tutorial.html#overview" data-ice="link">Overview</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/tutorial.html#sample-data" data-ice="link">Sample Data</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/tutorial.html#from-json-adding-html-to-headers-footers" data-ice="link">From JSON: Adding HTML to Headers/Footers</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/tutorial.html#from-template-adding-html-to-headers-footers" data-ice="link">From Template: Adding HTML to Headers/Footers</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/tutorial.html#video-personalizations-templates" data-ice="link">Video Personalizations Templates</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/tutorial.html#overview" data-ice="link">Overview</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/tutorial.html#sample-data" data-ice="link">Sample Data</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/tutorial.html#special-note-about-personalizations-" data-ice="link">Special note about personalizations:</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/tutorial.html#from-json-adding-html-to-personalizations" data-ice="link">From JSON: Adding HTML To Personalizations</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/tutorial.html#from-template-using-templates-for-personalizations" data-ice="link">From Template: Using Templates For Personalizations</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/tutorial.html#label-templates" data-ice="link">Label Templates</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/tutorial.html#sample-data-for-label-template-tutorial" data-ice="link">Sample Data for Label Template Tutorial</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/tutorial.html#from-json-adding-label-html" data-ice="link">From JSON: Adding Label HTML</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/tutorial.html#from-template-adding-html-to-labels-from-templates" data-ice="link">From Template: Adding HTML to Labels from Templates</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/tutorial.html#things-to-look-out-for" data-ice="link">Things to Look Out For</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/tutorial.html#template-limitations" data-ice="link">Template Limitations</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/tutorial.html#template-url-override" data-ice="link">Template URL Override</a></li>
+<li data-ice="manualNav" class="indent-h1"><span class="manual-dot"></span><a href="manual/tutorial.html#page-not-found-state" data-ice="link">Page Not Found State</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/tutorial.html#setting-up-the-page-not-found-state" data-ice="link">Setting up the Page Not Found State</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/tutorial.html#sample-data" data-ice="link">Sample Data</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/tutorial.html#adding-a-page-not-found-to-an-existing-experience" data-ice="link">Adding a Page Not Found to an existing experience</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/tutorial.html#notes-about-page-not-found-states" data-ice="link">Notes about Page Not Found States</a></li>
+</ul>
+  </div>
+<div data-ice="manual" data-toc-name="usage">
+    <h1 class="manual-toc-title"><a href="manual/usage.html" data-ice="title">Usage</a></h1>
+    <ul class="manual-toc">
+      
+    <li data-ice="manualNav" class="indent-h1"><span class="manual-dot"></span><a href="manual/usage.html#action-templates" data-ice="link">Action Templates</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/usage.html#animate-element" data-ice="link">Animate Element</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/usage.html#go-to-state" data-ice="link">Go To State</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/usage.html#set-data" data-ice="link">Set Data</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/usage.html#ivxjs-raise-event" data-ice="link">iVXjs Raise Event</a></li>
+<li data-ice="manualNav" class="indent-h1"><span class="manual-dot"></span><a href="manual/usage.html#ivxjs-events" data-ice="link">iVXjs Events</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/usage.html#event-overview" data-ice="link">Event - Overview</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/usage.html#note-about-events-documentation" data-ice="link">Note about events documentation</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/usage.html#ivxjs-bus-implementations" data-ice="link">iVXjs Bus Implementations</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/usage.html#ivxjs-bus-angular-implementation" data-ice="link">iVXjs Bus Angular Implementation</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/usage.html#audio-events" data-ice="link">Audio Events</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/usage.html#ivxjs-audio-can-play" data-ice="link">iVXjs:audio:can-play</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/usage.html#ivxjs-audio-ended" data-ice="link">iVXjs:audio:ended</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/usage.html#ivxjs-audio-mute" data-ice="link">iVXjs:audio:mute</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/usage.html#ivxjs-audio-pause" data-ice="link">iVXjs:audio:pause</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/usage.html#ivxjs-audio-play" data-ice="link">iVXjs:audio:play</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/usage.html#ivxjs-audio-time-update" data-ice="link">iVXjs:audio:time-update</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/usage.html#ivxjs-audio-unmute" data-ice="link">iVXjs:audio:unmute</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/usage.html#config-events" data-ice="link">Config Events</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/usage.html#ivxjs-config-not-valid" data-ice="link">iVXjs:config:not-valid</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/usage.html#ivxjs-config-validated" data-ice="link">iVXjs:config:validated</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/usage.html#http-events" data-ice="link">Http Events</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/usage.html#ivxjs-http-request-error" data-ice="link">iVXjs:http:request:error</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/usage.html#ivxjs-http-request-success" data-ice="link">iVXjs:http:request:success</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/usage.html#ivxjs-http-response-error" data-ice="link">iVXjs:http:response:error</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/usage.html#ivxjs-http-response-success" data-ice="link">iVXjs:http:response:success</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/usage.html#logging-events" data-ice="link">Logging Events</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/usage.html#ivxjs-log" data-ice="link">iVXjs:log</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/usage.html#ivxjs-log-error" data-ice="link">iVXjs:log:error</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/usage.html#ivxjs-log-trace" data-ice="link">iVXjs:log:trace</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/usage.html#ivxjs-log-warn" data-ice="link">iVXjs:log:warn</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/usage.html#state-events" data-ice="link">State Events</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/usage.html#ivxjs-state-change" data-ice="link">iVXjs:state:change</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/usage.html#ivxjs-state-go" data-ice="link">iVXjs:state:go</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/usage.html#ivxjs-state-not-found" data-ice="link">iVXjs:state:not-found</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/usage.html#video-events" data-ice="link">Video Events</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/usage.html#ivxjs-video-can-play" data-ice="link">iVXjs:video:can-play</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/usage.html#ivxjs-video-dispose" data-ice="link">iVXjs:video:dispose</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/usage.html#ivxjs-video-ended" data-ice="link">iVXjs:video:ended</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/usage.html#ivxjs-video-get-duration" data-ice="link">iVXjs:video:get-duration</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/usage.html#ivxjs-video-mute" data-ice="link">iVXjs:video:mute</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/usage.html#ivxjs-video-pause" data-ice="link">iVXjs:video:pause</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/usage.html#ivxjs-video-play" data-ice="link">iVXjs:video:play</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/usage.html#ivxjs-video-seek" data-ice="link">iVXjs:video:seek</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/usage.html#ivxjs-video-set-duration" data-ice="link">iVXjs:video:set-duration</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/usage.html#ivxjs-video-set-volume" data-ice="link">iVXjs:video:set-volume</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/usage.html#ivxjs-video-time-update" data-ice="link">iVXjs:video:time-update</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/usage.html#ivxjs-video-unmute" data-ice="link">iVXjs:video:unmute</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/usage.html#angular-specific-events" data-ice="link">Angular Specific Events</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/usage.html#ivxjs-angular-bootstrapped" data-ice="link">iVXjs:angular:bootstrapped</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/usage.html#ivxjs-angular-template-not-found" data-ice="link">iVXjs:angular:template-not-found</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/usage.html#ivxio-specific-events" data-ice="link">iVXio Specific Events</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/usage.html#ivxjs-ivxio-error-event-not-fired" data-ice="link">iVXjs:iVXio:error:event-not-fired</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/usage.html#ivxjs-ivxio-error-experience" data-ice="link">iVXjs:iVXio:error:experience</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/usage.html#ivxjs-ivxio-error-platform-unavailable" data-ice="link">iVXjs:iVXio:error:platform-unavailable</a></li>
+</ul>
+  </div>
+<div data-ice="manual" data-toc-name="configuration">
+    <h1 class="manual-toc-title"><a href="manual/configuration.html" data-ice="title">Configuration</a></h1>
+    <ul class="manual-toc">
+      
+    <li data-ice="manualNav" class="indent-h1"><span class="manual-dot"></span><a href="manual/configuration.html#json" data-ice="link">JSON</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/configuration.html#json-configuration-overview" data-ice="link">JSON Configuration: Overview</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/configuration.html#note-about-documentation" data-ice="link">Note about documentation</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/configuration.html#base-structure" data-ice="link">Base Structure</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/configuration.html#states" data-ice="link">States</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/configuration.html#shared-state-schema" data-ice="link">Shared State Schema</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/configuration.html#html-state-schema" data-ice="link">HTML State Schema</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/configuration.html#input-state-schema" data-ice="link">Input State Schema</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/configuration.html#navigation-state-schema" data-ice="link">Navigation State Schema</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/configuration.html#video-state-schema" data-ice="link">Video State Schema</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/configuration.html#inputs" data-ice="link">Inputs</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/configuration.html#shared-input-data" data-ice="link">Shared Input Data</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/configuration.html#buttons" data-ice="link">Buttons</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/configuration.html#checkbox" data-ice="link">Checkbox</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/configuration.html#date" data-ice="link">Date</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/configuration.html#datetime-local" data-ice="link">Datetime-Local</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/configuration.html#email" data-ice="link">Email</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/configuration.html#number" data-ice="link">Number</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/configuration.html#options" data-ice="link">Options</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/configuration.html#radio-buttons" data-ice="link">Radio Buttons</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/configuration.html#text" data-ice="link">Text</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/configuration.html#text-area" data-ice="link">Text Area</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/configuration.html#url" data-ice="link">Url</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/configuration.html#events-actions" data-ice="link">Events / Actions</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/configuration.html#basic-event-structure" data-ice="link">Basic Event Structure</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/configuration.html#animateelement" data-ice="link">animateElement</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/configuration.html#gotonextstate" data-ice="link">goToNextState</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/configuration.html#gotostate" data-ice="link">goToState</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/configuration.html#playaudioclip" data-ice="link">playAudioClip</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/configuration.html#setdata" data-ice="link">setData</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/configuration.html#ivx-io-events-actions" data-ice="link">iVX.io Events/Actions</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/configuration.html#recordevent" data-ice="link">recordEvent</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/configuration.html#setcomplete" data-ice="link">setComplete</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/configuration.html#setconverted" data-ice="link">setConverted</a></li>
+<li data-ice="manualNav" class="indent-h3"><span class="manual-dot"></span><a href="manual/configuration.html#setmilestone" data-ice="link">setMilestone</a></li>
+<li data-ice="manualNav" class="indent-h1"><span class="manual-dot"></span><a href="manual/configuration.html#video" data-ice="link">Video</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/configuration.html#video-configuration-overview" data-ice="link">Video Configuration: Overview</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/configuration.html#html5-video-player" data-ice="link">HTML5 Video Player</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/configuration.html#inline-ios-video-player" data-ice="link">Inline iOS Video Player</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/configuration.html#vimeo-video-player" data-ice="link">Vimeo Video Player</a></li>
+<li data-ice="manualNav" class="indent-h2"><span class="manual-dot"></span><a href="manual/configuration.html#youtube-video-player" data-ice="link">YouTube Video Player</a></li>
+</ul>
+  </div>
+<div data-ice="manual" data-toc-name="reference">
+    <h1 class="manual-toc-title"><a href="identifiers.html" data-ice="title">Reference</a></h1>
+    <ul class="manual-toc">
+      
+    </ul>
+  </div>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><div class="github-markdown">
+  <div class="manual-breadcrumb-list">
+    <a href="./manual/./index.html">Manual</a>
+    <span>&#xBB;</span>
+    <span data-ice="title">Usage</span>
+  </div>
+  <div data-ice="content"><h1 id="action-templates">Action Templates</h1>
+<p><strong>Overview</strong></p>
+<p>To help make it easier for developers to create custom components that interact with 
+iVXjs experiences, iVXjs has some attributes that when set will fire different actions 
+within the application when the element is clicked</p>
+<h2 id="animate-element">Animate Element</h2>
+<p><strong>Description</strong></p>
+<p>Adds an animation class to an element. </p>
+<p><strong>Usage</strong></p>
+<pre><code><code class="source-code prettyprint">&lt;ANY ivx-animate=&quot;{[ELEMENT], [ANIMATION CLASS]}&quot;&gt;&lt;/ANY&gt;</code>
+</code></pre><h2 id="go-to-state">Go To State</h2>
+<p><strong>Description</strong></p>
+<p>Navigates to the state specified by the id</p>
+<p><strong>Usage</strong> </p>
+<pre><code><code class="source-code prettyprint">&lt;ANY ivx-go-to-state=&quot;[STATE ID]&quot;&gt;&lt;/ANY&gt;</code>
+</code></pre><h2 id="set-data">Set Data</h2>
+<p><strong>Description</strong> </p>
+<p>Sets the value with the matching key to the current experience&apos;s data object</p>
+<p><strong>Usage</strong> </p>
+<pre><code><code class="source-code prettyprint">&lt;ANY ivx-set-data=&quot;{[KEY], [VALUE]}&quot;&gt;&lt;/ANY&gt;</code>
+</code></pre><h2 id="ivxjs-raise-event">iVXjs Raise Event</h2>
+<p><strong>Description</strong></p>
+<p>Raises an event on the iVXjs&apos;s Bus.</p>
+<p><strong>Usage</strong></p>
+<pre><code><code class="source-code prettyprint">&lt;ANY ivx-event=&quot;[iVXjsEVENT-NAME]&quot;&gt;&lt;/ANY&gt;</code>
+</code></pre><h1 id="ivxjs-events">iVXjs Events</h1>
+<h2 id="event-overview">Event - Overview</h2>
+<p>If a developer wants to interact with an iVXjs experience, the easiest and quickest way
+is to listen and emit events on the Bus. The Bus uses nodejs&apos;s <a href="https://nodejs.org/api/events.html">EventEmitter</a>
+and you can use it by pulling in iVXjs through the appropriate renderer. </p>
+<h2 id="note-about-events-documentation">Note about events documentation</h2>
+<p>The &quot;payload&quot; is all the information that is sent from the triggering event emitter. Be careful though, sometimes
+an event is fired without the information provided so be careful in using the listeners. Also, the payload is 
+documented in a <a href="http://json-schema.org/">JSON Schema Org</a> fashion, but since events can send Functions the validator will not work with JSON validators.</p>
+<h2 id="ivxjs-bus-implementations">iVXjs Bus Implementations</h2>
+<p><strong>Overview</strong> </p>
+<p>Each implementation would have its own implementation of the bus. The following are the various implementations.</p>
+<h3 id="ivxjs-bus-angular-implementation">iVXjs Bus Angular Implementation</h3>
+<p><strong>Snippet</strong> </p>
+<pre><code><code class="source-code prettyprint">angular 
+    .module(&apos;[APPNAME]&apos;)
+    .service([&quot;ivxjs.bus&quot;, function(iVXjsBus){
+        iVXjsBus.on(&apos;EVENTNAME&apos;, function(PAYLOAD){
+
+        });
+    }]);</code>
+</code></pre><h2 id="audio-events">Audio Events</h2>
+<p><strong>Overview</strong></p>
+<p>All events the audio module listens and fires. The payload </p>
+<h3 id="ivxjs-audio-can-play">iVXjs:audio:can-play</h3>
+<p><strong>Description</strong></p>
+<p>Indicates that the current audio file can play.</p>
+<p><strong>Payload</strong></p>
+<p>None</p>
+<h3 id="ivxjs-audio-ended">iVXjs:audio:ended</h3>
+<p><strong>Description</strong></p>
+<p>Indicates that the current audio file has ended.</p>
+<p><strong>Payload</strong> </p>
+<p>None </p>
+<h3 id="ivxjs-audio-mute">iVXjs:audio:mute</h3>
+<p><strong>Description</strong></p>
+<p>Mutes the audio </p>
+<p><strong>Payload</strong> </p>
+<p>None </p>
+<h3 id="ivxjs-audio-pause">iVXjs:audio:pause</h3>
+<p><strong>Description</strong> </p>
+<p>Pauses the audio </p>
+<p><strong>Payload</strong> </p>
+<p>None </p>
+<h3 id="ivxjs-audio-play">iVXjs:audio:play</h3>
+<p><strong>Description</strong></p>
+<p>Plays the audio </p>
+<p><strong>Payload</strong> </p>
+<p>None </p>
+<h3 id="ivxjs-audio-time-update">iVXjs:audio:time-update</h3>
+<p><strong>Description</strong> </p>
+<p>Fires whenever the audio&apos;s object on timeupdate event is fired.</p>
+<p><strong>Payload</strong> </p>
+<p>The current instance of this Audio class.</p>
+<h3 id="ivxjs-audio-unmute">iVXjs:audio:unmute</h3>
+<p><strong>Description</strong></p>
+<p>Unmutes and sets the audio back to the original volume </p>
+<p><strong>Payload</strong> </p>
+<p>None </p>
+<h2 id="config-events">Config Events</h2>
+<p><strong>Overview</strong> </p>
+<p>The time between when the <code>iVXjs.init()</code> function gets called and the user sees the experience rendered is considered
+the configuration set. During this time, the following events can fire.</p>
+<h3 id="ivxjs-config-not-valid">iVXjs:config:not-valid</h3>
+<p><strong>Description</strong></p>
+<p>Fires any instance where the config isn&apos;t valid utilizing the 
+current Validation module. </p>
+<p><strong>Payload</strong></p>
+<pre><code><code class="source-code prettyprint">{
+    &quot;valid&quot; : {
+        &quot;type&quot;: &quot;boolean&quot;,
+        &quot;description&quot; : &quot;Indicates that this validation is not valid&quot;
+    },
+    &quot;error&quot; : {
+        &quot;type&quot; : &quot;object&quot;,
+        &quot;description&quot; : &quot;Contains all the invalid parts of this configuration and a message detailing the error&quot;,
+        &quot;properties&quot; : {
+            &quot;message&quot; : {
+                &quot;type&quot; : &quot;string&quot;,
+                &quot;description&quot; : &quot;An auto-generated human-readable message that indicates the errors. This will always be logged to the console if the configuration is invalid&quot;
+            },
+            &quot;errors&quot; : {
+                &quot;type&quot; : &quot;items&quot;,
+                &quot;description&quot; : &quot;Depending on the validation module, this will have a collection of data for each invalid piece of data in the config.&quot;
+            }
+        }
+    }
+    &quot;required&quot; : [&quot;valid&quot;, &quot;error&quot;]
+}</code>
+</code></pre><h3 id="ivxjs-config-validated">iVXjs:config:validated</h3>
+<p><strong>Description</strong></p>
+<p>Fires when config settings are validated. This event triggers 
+all the rendering of the experience. </p>
+<p><strong>Payload</strong></p>
+<p>A valid instance of iVXjs.</p>
+<h2 id="http-events">Http Events</h2>
+<p><strong>Overview</strong></p>
+<p>Whenever there is a HTTP request, several events will be raised. </p>
+<h3 id="ivxjs-http-request-error">iVXjs:http:request:error</h3>
+<p><strong>Description</strong> </p>
+<p>Fires when a request has an error </p>
+<p><strong>Payload</strong> </p>
+<p>request - Request object sent to the server </p>
+<h3 id="ivxjs-http-request-success">iVXjs:http:request:success</h3>
+<p><strong>Description</strong> </p>
+<p>Fires when a request is successful </p>
+<p><strong>Payload</strong> </p>
+<p>request - Request object sent to the server </p>
+<h3 id="ivxjs-http-response-error">iVXjs:http:response:error</h3>
+<p><strong>Description</strong> </p>
+<p>Fires when there is an error in the response of the server </p>
+<p><strong>Payload</strong> </p>
+<p>response - Response from the server </p>
+<h3 id="ivxjs-http-response-success">iVXjs:http:response:success</h3>
+<p><strong>Description</strong></p>
+<p>Indicates that a response was successful </p>
+<p><strong>Payload</strong> </p>
+<p>response - Response from the server</p>
+<h2 id="logging-events">Logging Events</h2>
+<p><strong>Overview</strong> </p>
+<p>iVXjs has its own logging module that will log any information throughout the application. 
+This logging service will fire events depending on what gets logged through the module.</p>
+<h3 id="ivxjs-log">iVXjs:log</h3>
+<p><strong>Description</strong> </p>
+<p>Indicates that iVXjs&apos;s Logging system has logged a message. </p>
+<p><strong>Payload</strong></p>
+<pre><code><code class="source-code prettyprint">{
+    &quot;type&quot; : &quot;object&quot;,
+    &quot;properties&quot; : {
+        &quot;message&quot;: {
+            &quot;type&quot; : &quot;string&quot;,
+            &quot;description&quot; : &quot;The message logged&quot;
+        },
+        &quot;timestamp&quot;: {
+            &quot;type&quot;: &quot;date&quot;,
+            &quot;description&quot; : &quot;The time this message was logged.&quot;
+        }
+    }
+}</code>
+</code></pre><h3 id="ivxjs-log-error">iVXjs:log:error</h3>
+<p><strong>Description</strong></p>
+<p>Indicates that an error is logged to the console. </p>
+<p><strong>Payload</strong> </p>
+<pre><code><code class="source-code prettyprint">{
+    &quot;type&quot;: &quot;object&quot;,
+    &quot;properties&quot; : {
+        &quot;message&quot; : {
+            &quot;type&quot; : &quot;string&quot;,
+            &quot;description&quot; : &quot;Error message logged to the console&quot;
+        },
+        &quot;type&quot; : {
+            &quot;type&quot; : &quot;string&quot;,
+            &quot;description&quot; : &quot;Type of error that was fired. Typically it is in this format: iVXjs:errorr:[TYPE]
+        },
+        &quot;timestamp: {
+            &quot;type&quot; : &quot;date&quot;,
+            &quot;description&quot; : &quot;The time this error was logged to the console&quot;
+        }
+    }
+}</code>
+</code></pre><h3 id="ivxjs-log-trace">iVXjs:log:trace</h3>
+<p><strong>Description</strong> </p>
+<p>Indicates that iVXjs&apos;s Logging system logged a stack-trace. </p>
+<p><strong>Payload</strong></p>
+<pre><code><code class="source-code prettyprint">{
+    &quot;type&quot; : &quot;object&quot;,
+    &quot;properties&quot; : {
+        &quot;stack&quot;: {
+            &quot;type&quot; : &quot;string&quot;,
+            &quot;description&quot; : &quot;The stack.&quot;
+        },
+        &quot;timestamp&quot;: {
+            &quot;type&quot;: &quot;date&quot;,
+            &quot;description&quot; : &quot;The time this stack was logged.&quot;
+        }
+    }
+}</code>
+</code></pre><h3 id="ivxjs-log-warn">iVXjs:log:warn</h3>
+<p><strong>Description</strong> </p>
+<p>Indicates that iVXjs&apos;s Logging system has logged a warning. </p>
+<p><strong>Payload</strong></p>
+<pre><code><code class="source-code prettyprint">{
+    &quot;type&quot; : &quot;object&quot;,
+    &quot;properties&quot; : {
+        &quot;message&quot;: {
+            &quot;type&quot; : &quot;string&quot;,
+            &quot;description&quot; : &quot;The warning message.&quot;
+        },
+        &quot;timestamp&quot;: {
+            &quot;type&quot;: &quot;date&quot;,
+            &quot;description&quot; : &quot;The time this warning was logged.&quot;
+        }
+    }
+}</code>
+</code></pre><h2 id="state-events">State Events</h2>
+<p><strong>Overview</strong> </p>
+<p>These events all handle interactions with states</p>
+<h3 id="ivxjs-state-change">iVXjs:state:change</h3>
+<p><strong>Description</strong></p>
+<p>Fires whenever a state has successfully changed</p>
+<p><strong>Payload</strong></p>
+<p>All the current information on this state.  </p>
+<p>For Angular: The data sent will follow <a href="http://angular-ui.github.io/ui-router/site/#/api/ui.router.state.$state">ui-router&apos;s state&apos;s</a> current data object.</p>
+<h3 id="ivxjs-state-go">iVXjs:state:go</h3>
+<p><strong>Description</strong></p>
+<p>Tells the navigation service to go to the the state </p>
+<p><strong>Payload</strong></p>
+<pre><code><code class="source-code prettyprint">{
+    &quot;type&quot; : &quot;object&quot;,
+    &quot;properties&quot; : {
+        &quot;stateId&quot; : {
+            &quot;type&quot; : &quot;string&quot;,
+            &quot;description&quot; : &quot;The state id to navigate to.
+        }
+    }
+}</code>
+</code></pre><h3 id="ivxjs-state-not-found">iVXjs:state:not-found</h3>
+<p><strong>Description</strong></p>
+<p>Indicates that a url can&apos;t be found </p>
+<p><strong>Payload</strong> </p>
+<pre><code><code class="source-code prettyprint">{
+    &quot;type&quot; : &quot;string&quot;,
+    &quot;name&quot;: &quot;url&quot;,
+    &quot;description&quot; : &quot;The invalid url that was sent to the navigation service.
+}</code>
+</code></pre><h2 id="video-events">Video Events</h2>
+<p><strong>Overview</strong></p>
+<p>These events are triggered by </p>
+<h3 id="ivxjs-video-can-play">iVXjs:video:can-play</h3>
+<p><strong>Description</strong></p>
+<p>Indicates that this video is ready to play </p>
+<p><strong>Payload</strong> </p>
+<p>player - current instant of this video player.</p>
+<p>stateData - state data where this player exists.</p>
+<h3 id="ivxjs-video-dispose">iVXjs:video:dispose</h3>
+<p><strong>Description</strong> </p>
+<p>Removes all events from the Bus partaining to this particular video event and 
+performs other tasks to remove this video player from the page </p>
+<p><strong>Payload</strong> </p>
+<p>None </p>
+<h3 id="ivxjs-video-ended">iVXjs:video:ended</h3>
+<p><strong>Description</strong> </p>
+<p>Indicates that the current video playing has ended </p>
+<p><strong>Payload</strong> </p>
+<p>videoClass - The current instance of this video module class </p>
+<h3 id="ivxjs-video-get-duration">iVXjs:video:get-duration</h3>
+<p><strong>Description</strong> </p>
+<p>Sends a request to get the current video&apos;s duration. <em>Note: You must listen for iVXjs:video:set-duration event to get the duration</em></p>
+<p><strong>Payload</strong> </p>
+<p>None </p>
+<h3 id="ivxjs-video-mute">iVXjs:video:mute</h3>
+<p><strong>Description</strong> </p>
+<p>Mutes the current video. </p>
+<p><strong>Payload</strong></p>
+<p>None </p>
+<h3 id="ivxjs-video-pause">iVXjs:video:pause</h3>
+<p><strong>Description</strong> </p>
+<p>Pauses the current video. </p>
+<p><strong>Payload</strong> </p>
+<p>None </p>
+<h3 id="ivxjs-video-play">iVXjs:video:play</h3>
+<p><strong>Description</strong> </p>
+<p>Plays the current video. </p>
+<p><strong>Payload</strong> </p>
+<p>None </p>
+<h3 id="ivxjs-video-seek">iVXjs:video:seek</h3>
+<p><strong>Description</strong> </p>
+<p>Sets the current video to the time in seconds </p>
+<p><strong>Payload</strong> </p>
+<pre><code><code class="source-code prettyprint">{
+    &quot;type&quot;: &quot;number&quot;, 
+    &quot;description&quot; : &quot;The time to seek in seconds&quot;
+}</code>
+</code></pre><h3 id="ivxjs-video-set-duration">iVXjs:video:set-duration</h3>
+<p><strong>Description</strong> </p>
+<p>Used mostly to set a counter to the current video&apos;s duration. </p>
+<p><strong>Payload</strong> </p>
+<pre><code><code class="source-code prettyprint">{
+    &quot;type&quot; : &quot;number&quot;,
+    &quot;description&quot; : &quot;The duration of this video in seconds.&quot;
+}</code>
+</code></pre><h3 id="ivxjs-video-set-volume">iVXjs:video:set-volume</h3>
+<p><strong>Description</strong> </p>
+<p>Sets the current video&apos;s volume. Range: 0 to 1;</p>
+<p><strong>Payload</strong></p>
+<pre><code><code class="source-code prettyprint">{
+    &quot;type&quot; : &quot;number&quot;,
+    &quot;min&quot; : 0,
+    &quot;max&quot; : 1,
+    &quot;description&quot; : &quot;The volume to set between 0-1
+}</code>
+</code></pre><h3 id="ivxjs-video-time-update">iVXjs:video:time-update</h3>
+<p><strong>Description</strong></p>
+<p>Fires when the video triggers a timeupdate call. Used for actions 
+during videos.</p>
+<p><strong>Payload</strong> </p>
+<p>player - current instant of this video player.</p>
+<p>player.currentTime - current time of this video player;</p>
+<p>stateData - state data where this player exists.</p>
+<h3 id="ivxjs-video-unmute">iVXjs:video:unmute</h3>
+<p><strong>Description</strong> </p>
+<p>Unmutes the current video and sets the volume to the last volume 
+set. </p>
+<p><strong>Payload</strong> </p>
+<p>None </p>
+<h2 id="angular-specific-events">Angular Specific Events</h2>
+<p><strong>Overview</strong> </p>
+<p>These events only fire when using the Angular implementation of iVXjs.</p>
+<h3 id="ivxjs-angular-bootstrapped">iVXjs:angular:bootstrapped</h3>
+<p><strong>Description</strong> </p>
+<p>Indicates that the iVXjs Angular module was successfully bootstrapped to its 
+elements.</p>
+<p><strong>Payload</strong> </p>
+<p>None </p>
+<h3 id="ivxjs-angular-template-not-found">iVXjs:angular:template-not-found</h3>
+<p><strong>Description</strong> </p>
+<p>When using the <code>ng-include</code> directive in Angular, sometimes a template is not found and this 
+will fire when this happens. </p>
+<p><strong>Payload</strong> </p>
+<p>event - Error event that was fired. </p>
+<h2 id="ivxio-specific-events">iVXio Specific Events</h2>
+<p><strong>Overview</strong></p>
+<p>These events fire when using the iVXio Data Module.</p>
+<h3 id="ivxjs-ivxio-error-event-not-fired">iVXjs:iVXio:error:event-not-fired</h3>
+<p><strong>Description</strong> </p>
+<p>When an iVXio event was not fired due to some error, this event gets fired </p>
+<p><strong>Payload</strong> </p>
+<p>eventArgs - Event arguments fed into the event.</p>
+<p>error - Error passed from the unresolved error. Should contain a message.</p>
+<h3 id="ivxjs-ivxio-error-experience">iVXjs:iVXio:error:experience</h3>
+<p><strong>Description</strong></p>
+<p>Fires whenever there is an error retrieving an experience from the platform.</p>
+<p><strong>Payload</strong> </p>
+<p>error - Error information collected when trying to recieve the data.</p>
+<h3 id="ivxjs-ivxio-error-platform-unavailable">iVXjs:iVXio:error:platform-unavailable</h3>
+<p><strong>Description</strong> </p>
+<p>Fires if iVXjs can&apos;t detect the global iVX object </p>
+<p><strong>Payload</strong> </p>
+<p>None</p>
+</div>
+</div>
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.4.7)</span></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>
