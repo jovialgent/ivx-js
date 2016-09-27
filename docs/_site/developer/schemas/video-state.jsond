@@ -1,0 +1,171 @@
+{
+	"name" : "iVX.js Video State",
+	"description" : "Data to create different types of video players from different sources.",
+	"type" : "object",
+	"properties" : {
+		"playerSettings" : {
+			"name": "Player Settings",
+			"type" : "object",
+			"required" : true,
+			"description" : "The player settings for the video player types. Depending on the settings, it will create the appropriate video players to support the settings. Though none of the elements are required, there needs to be at least src, sources, vimeoId, or youtubeId.",
+			"properties" : {
+				"autoplay" : {
+					"name" : "Autoplay",
+					"type" : "boolean",
+					"description" : "Informs if this video should autoplay when a user enters the state.  It defaults to false. (Doesn't work with iPhone)"
+				},
+				"controls" : {
+					"name" : "Controls",
+					"type" : ["boolean", "string"],
+					"description" : "Decides which controls to use for this video. If true, the native controls appear. If false, as many of the native controls are hidden. If the value is equal to 'default', this will trigger the default controls for this instance of iVX.js.",
+					"enum" : ["standard"]
+				},
+				"attributes" : {
+					"name" : "Attributes",
+					"type" : "object",
+					"description" : "Any other attributes the user wants to add to the video player. The key of the data is the attribute name and the value is the attribute's value. (HTML5 Only)"
+				},
+				"src" : {
+					"name" : "HTML5 Video Source",
+					"type" : "string",
+					"description" : "Filepath to the video file to play in the HTML5 video element. Is required if there are no 'sources', 'vimeoId', or 'youtubeId' is defined"
+				},
+				"youtubeId" : {
+					"name" : "Youtube Video Id",
+					"type" : "string",
+					"description" : "The video id of the YouTube video to play during this video state. The youtubeId can be found in the YouTube video url: https://www.youtube.com/watch?v=[youtubeId]."
+				},
+				"vimeoId" : {
+					"name" : "Vimeo Video Id",
+					"type" : "string",
+					"description" : "The video id of the Vimeo video to play during this video state. The vimeoId can be found in the Vimeo video url: https://vimeo.com/[vimeoId]"
+				},
+				"sources" : {
+					"name" : "Sources",
+					"type" : "array",
+					"description" : "If using the HTML5 video element, these are the settings for source tags between the video element.",
+					"items" : {
+						"name" : "HTML5 Video Source Settings",
+						"type" : "object",
+						"description" : "Settings for this source tag",
+						"properties" : {
+							"src" : {
+								"name" : "Source Tag Source",
+								"type" : "string",
+								"description" : "The path to the this video source.",
+								"required" : true
+							},
+							"type" : {
+								"name" : "Source Tag Video Type",
+								"type" : "string",
+								"description" : "The file type of the video source, required by this source tag",
+								"required" : true
+							}
+						}
+					}
+				},
+				"tracks" : {
+					"name" : "Tracks",
+					"type" : "array",
+					"description" : "If using the HTML 5 video element, this will the settings for the tracks element in the elements used for close captioning",
+					"items" : {
+						"name" : "HTML5 Video Track Settings",
+						"type" : "object",
+						"description" : "Settings for the track element",
+						"properties" : {
+							"src" : {
+								"name" : "Track Tag Source",
+								"type" : "string",
+								"description" : "Path to the .VTT file for this track",
+								"required" : true
+							},
+							"kind" : {
+								"name" : "Track Tag Kind",
+								"type" : "string",
+								"description" : "Kind of track such as chapter"
+							},
+							"default" : {
+								"name" : "Is Default Tag",
+								"type" : "boolean",
+								"description" : "Determines if this track is the default track for this video"
+							}
+						}
+					}
+
+				}
+			}
+		},
+		"personalizations" : {
+			"name" : "Video Personalizations",
+			"type" : "array",
+			"description" : "An array of settings for personalizations for this video state.",
+			"items" : {
+				"name" : "Video Personalization Settings",
+				"type" : "object",
+				"description" : "Settings for this personalization HTML element",
+				"properties" : {
+					"id" : {
+						"name" : "Personalization ID",
+						"type" : "string",
+						"description" : "The id for this personalization that will be targeted by CSS/JS.",
+						"required" : true
+					},
+					"html" : {
+						"name" : "Personalization HTML",
+						"type" : "string",
+						"description" : "The HTML to be inside this personalization.",
+						"required" : true
+					},
+					"templateUrl" : {
+						"name" : "Personalization Template Path",
+						"type" :"string",
+						"description" : "Url path to an external .html file"
+					}
+				}
+			}
+		},
+		"cuePoints" : {
+			"name": "Video Event Cue Points",
+			"type" : "array",
+			"description" : "An array of cuepoints data which will tell what event to fire and when during a video",
+			"items" : {
+				"name" : "Video Cue Point Settings",
+				"type" : "object",
+				"description" : "Settings for the cue point",
+				"properties" : {
+					"eventName" : {
+						"name" : "Cue Point Event Name",
+						"type" : "string",
+						"description" : "Event name to be fired",
+						"required" : true
+					},
+					"args" : {
+						"name" : "Cue Point Event's Arguments",
+						"type" : "object",
+						"description" : "Arguments for the event to be fired"
+					},
+					"timeAt" : {
+						"name" : "Cue Point Time",
+						"type" : "number",
+						"description" : "Time in seconds where this event is fired",
+						"required" : true
+					},
+					"always" : {
+						"name" : "Always Fire",
+						"type" : "boolean",
+						"description" : "By default, an event only fires once. If the event needs to fire whenever the video is at the point in the video, this needs to be true"
+					}
+				}
+			}
+		},
+		"onVideoEnd" : {
+			"name" : "Video End Events",
+			"type" : "array",
+			"description" : "An array of event data to run when a user finishes the video and before the navigation to the next state is fired if there is next state.",
+			"items" : {
+				"type" : "object",
+				"descriptions" : "Event data as defined in the event section of this documentation"
+			}
+		}
+	}
+}

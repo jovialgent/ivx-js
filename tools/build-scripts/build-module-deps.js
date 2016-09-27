@@ -2,11 +2,13 @@ var fs = require('fs');
 var browserify = require('browserify');
 var modules = {
     data : {
-        "ivx-io" : "../../src/modules/data/ivx-io/index.js"
+        "ivx-io" : "../../src/modules/data/ivx-io/index.js",
+        firebase : "../../src/modules/data/firebase/index.js"
     },
     ui : {
         "semantic-ui" : "../../src/modules/ui/semantic-ui/index.js",
-        bootstrap  : "../../src/modules/ui/bootstrap/index.js"
+        bootstrap  : "../../src/modules/ui/bootstrap/index.js",
+        materialize : "../../src/modules/ui/materialize/index.js"
     },
     validation : {
         schema : "../../src/modules/validation/schema/index.js"
@@ -34,6 +36,7 @@ moduleTypes.forEach(function(moduleType, index){
 });
 
 function compress(source,dest){
+      console.log("BUILDING:", source, " TO DESTINATION:", dest);
       browserify(source)
         .transform("babelify", {presets : ["es2015"]})
         .transform({global:true}, 'uglifyify')
@@ -42,6 +45,7 @@ function compress(source,dest){
 }
 
 function bundle(source, dest){
+     console.log("BUILDING:", source, " TO DESTINATION:", dest);
     browserify(source)
         .transform("babelify", {presets : ["es2015"]})
         .bundle()

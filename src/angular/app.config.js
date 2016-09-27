@@ -9,6 +9,7 @@ class AppConfig {
     constructor($stateProvider, $urlRouterProvider, $locationProvider, $compileProvider, $httpProvider, $provide, iVXjs) {
         if (!iVXjs.config) return;
 
+
         this.createStates($stateProvider, iVXjs.config.states);
 
         let defaultStateID = iVXjs.rules(iVXjs.config.defaultState);
@@ -52,7 +53,7 @@ class AppConfig {
             $stateProvider.state(id, {
                 url: url,
                 data: state,
-                template: `<ivxjs-${type}-state></ivxjs-${type}-state>`,
+                template: `<ivxjs-${type}-state class="hide"></ivxjs-${type}-state>`,
                 onEnter: ['$rootScope', '$state', 'iVXjs', 'ivxjs.actions', 'ivxjs.bus', 'ivxjs.modules.audio.experience', 'ivxjs.modules.audio',
                     ($rootScope, $state, iVXjs, iVXjsActions, iVXjsBus, iVXjsAudioExperience, iVXjsAudio) => {
                         if (!iVXjsAudioExperience.eventsAdded) {

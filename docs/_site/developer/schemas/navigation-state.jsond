@@ -1,0 +1,65 @@
+{
+	"name" : "iVXjs Navigation State Schema",
+	"description" : "Settings to render an iVXjs Navigation State.",
+	"type" : "object",
+	"properties" : {
+		"links" : {
+			"type" : "array",
+			"name" : "Links Collection",
+			"description" : "The list of links and their settings to be created in this navigation state.",
+			"items" : {
+				"type" : "object",
+				"name" : "Link Data",
+				"description" : "Contains the data to create a link using the anchor's UI class. A link requires a href, an id.",
+				"properties" : {
+					"id" : {
+						"name" : "Link Id",
+						"type" : "string",
+						"description" : "A unique id for this link so it can be targeted using CSS/Javascript",
+						"required" : true
+					},
+					"href" : {
+						"name" : "Link Destination (href attribute)",
+						"type" : "string",
+						"description" : "The value to add to the href.",
+						"required" : true
+					},
+					"attributes" : {
+						"name": "Link Attributes",
+						"type" : "object",
+						"description" : "Attributes to add to this link.",
+						"properties" : {
+							"target" : {
+								"name" : "Target Attribute",
+								"type" : "string",
+								"enum" : "_blank",
+								"description" : "If you have the _blank in the target, this will open the link in a new tab/window depending on the browser."
+							} 
+						}
+					},
+					"label" : {
+						"name": "Link Label",
+						"type" : "string",
+						"description" : "The label to add to this anchor tag (the value between the <a></a>). If this or labelHTML is missing, it will use the value in the href property"
+					},
+					"labelHTML" : {
+						"name" : "Link Label HTML",
+						"type" : "string",
+						"description" : "HTML to add to this anchor tag (the value between the <a></a>). If this or label is missing, it will use the value in the href property"
+					},
+					"labelTemplateUrl" : {
+						"name" : "Link Label Template Path",
+						"type" : "string",
+						"description" : "Url path to a template for this label"
+					},
+					"onClick" : {
+						"name" : "On Click Actions", 
+						"type" : "array",
+						"description" : "An array of events to fire prior to this link redirecting to the URL referenced in the href."
+					}
+				}
+			}
+		}
+	}
+
+}

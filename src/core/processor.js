@@ -20,7 +20,6 @@ export class ActionProcessor {
         }
 
         let promises = actionArray.map((actionObj) => {
-
             self.iVXjs.Bus.emit(actionObj.eventName, actionObj.args);
 
             if (self.iVXjs.actions && self.iVXjs.actions[actionObj.eventName]) {
@@ -34,7 +33,6 @@ export class ActionProcessor {
                 return self.iVXjs.experience[actionObj.eventName](actionObj.args);
 
             }
-
         });
 
         Promise.all(promises)
@@ -43,7 +41,8 @@ export class ActionProcessor {
             })
             .catch(function (err) {
                 console.error('iVXjs: NOT ALL ACTIONS RESOLVED');
-                self.iVXjs.Bus.emit('iVXjs:iVXio:error:event-not-fired', eventArgs, e);
+                console.dir(err);
+                self.iVXjs.Bus.emit('iVXjs:iVXio:error:event-not-fired', err);
             });
     }
 

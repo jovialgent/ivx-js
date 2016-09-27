@@ -1,0 +1,31 @@
+{
+	"name" : "iVXjs Text Area Input",
+	"description" : "Settings to render a text area input",
+	"type" : "object",
+	"properties" : {
+		"type" : {
+			"name" : "Input Type",
+			"type" : "string",
+			"description" : "Type indicating to render a text area type input",
+			"required" : true,
+			"enum" :["textarea"]
+		},
+		"attributes" : {
+			"type" : "object",
+			"name" : "Text Area Attributes",
+			"description" : "Various textarea attributes to add to the textarea tag.",
+			"properties" : {
+				"minlength" : {
+					"name" : "Minimum Text Length",
+					"type" : "number",
+					"description" : "The minimum number of characters of this input"
+				},
+				"maxlength"  :{
+					"name" : "Maximum Text Length",
+					"type" : "number",
+					"description" : "The maximum number of character of this input"
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,20 @@
+{
+    "eventName": "goToNextState",
+    "args": {
+        "next": [
+            {
+                "stateId": "",
+                "rule": [
+                    {
+                        "key": "",
+                        "is": "",
+                        "value": ""
+                    }
+                ]
+            },
+            {
+                "stateId": ""
+            }
+        ]
+    }
+}

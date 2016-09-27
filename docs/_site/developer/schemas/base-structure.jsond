@@ -1,0 +1,136 @@
+{
+  "name": "iVXjs JSON Base Structure",
+  "description": "This is the root level settings for the iVXjs JSON.",
+  "type": "object",
+  "properties": {
+    "metadata": {
+      "name": "Metadata",
+      "type": "object",
+      "description": "Global data for this iVXjs experience such as this project's title.",
+      "properties": {
+        "title": {
+          "name": "Title",
+          "type": "string",
+          "description": "The title of this experience. To make it work with the Angular version of this libarary, add this directive to the experience's header title tag: ng-bind-html='pageTitle' "
+        }
+      }
+    },
+    "states": {
+      "name": "State Colleciton",
+      "type": "array",
+      "description": "All states that make up this iVXjs experience.",
+      "items": {
+        "name": "State Data",
+        "type": "array",
+        "description": "A collection of states and their respective data. Each state will have their own schema for validation.",
+        "properties": {}
+      },
+      "minLength": 1,
+      "required": true
+    },
+    "defaultState": {
+      "name": "Default State",
+      "type": "array",
+      "description": "Utilizing this current rule system, this will evaluate where this iVXjs Experience will start.",
+      "minLength": 1,
+      "required": true,
+      "items": {
+        "type": "object",
+        "name": "Rules Navigation Data",
+        "description": "Indicates which state to go to next based on its stateId and rule. This is used for determining where the user will start and where the user will go if no state is found.",
+        "properties": {
+          "stateId": {
+            "name": "State ID",
+            "type": "string",
+            "description": "The stateId the user will go to if the rule is evaluated to true or missing.",
+            "required": true
+          },
+          "rule": {
+            "type": "object",
+            "name": "Rule",
+            "description": "Supplies the rule information for this experiences rule function to evaluate if this state should be used. If this rule evaluates to 'true', then iVXjs will navigate to the corresponding state.",
+            "properties": {
+              "key": {
+                "name": "Rule Key",
+                "type": "string",
+                "description": "The key from the experience.data object or a keyword the rule function uses to get the correct data.",
+                "required": true
+              },
+              "is": {
+                "name" : "Rule Comparer",
+                "type": "string",
+                "description": "The type of comparison this key will be evaluated against the value",
+                "enum": [
+                  "lt",
+                  "lte",
+                  "gt",
+                  "gte",
+                  "equals",
+                  "notEquals"
+                ],
+                "required": true
+              },
+              "value": {
+                "name" : "Rule Value",
+                "type": "any",
+                "description": "The value to evaluate the data found in the 'key'.",
+                "required": true
+              }
+            }
+          }
+        }
+      }
+    },
+    "pageNotFoundState": {
+      "name": "Page Not Found State",
+      "type": "array",
+      "description": "This will supply the rules and state IDs to navigate the user if they navigate to a state that doesn't exist.",
+      "minLength": 1,
+      "items": {
+        "type": "object",
+       "name": "Rules Navigation Data",
+        "description": "Indicates which state to go to next based on its stateId and rule. This is used for determining where the user will start and where the user will go if no state is found.",
+        "properties": {
+          "stateId": {
+            "type": "string",
+            "description": "The stateId the user will go to if the rule is evaluated to true or missing.",
+            "required": true
+          },
+          "rule": {
+            "name": "Rule",
+            "type": "object",
+            "description": "Supplies the rule information for this experiences rule function to evaluate if this state should be used. If this rule evaluates to 'true', then iVXjs will navigate to the corresponding state.",
+            "properties": {
+               "key": {
+                "name": "Rule Key",
+                "type": "string",
+                "description": "The key from the experience.data object or a keyword the rule function uses to get the correct data.",
+                "required": true
+              },
+              "is": {
+                "name" : "Rule Comparer",
+                "type": "string",
+                "description": "The type of comparison this key will be evaluated against the value",
+                "enum": [
+                  "lt",
+                  "lte",
+                  "gt",
+                  "gte",
+                  "equals",
+                  "notEquals"
+                ],
+                "required": true
+              },
+              "value": {
+                "name" : "Rule Value",
+                "type": "any",
+                "description": "The value to evaluate the data found in the 'key'.",
+                "required": true
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

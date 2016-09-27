@@ -1,0 +1,14 @@
+{
+	"name" : "iVXjs Checkbox Input",
+	"description" : "JSON Schema for checkbox settings.",
+	"type" : "object",
+	"properties" : {
+		"type" : {
+			"name" : "Input Type",
+			"type" : "string",
+			"description" : "Indicates to create a checkbox input",
+			"enum" : ["checkbox"],
+			"required" : true
+		}
+	}
+}

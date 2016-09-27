@@ -4,6 +4,7 @@ import InputStateController from '../controllers/state.input.js';
 class InputState {
     constructor($state, $compile, $sce, iVXjs, iVXjsActions, iVXjsUIModule, pullInTemplate) {
         this.template = this.templateHTML;
+        this.replace = true;
         this.restrict = 'E';
         this.scope = {}
         this.controller = InputStateController;
@@ -26,7 +27,7 @@ class InputState {
     }
 
     get templateHTML() {
-        return ``;
+        return `<div class="input-state-container"></div>`;
     };
 }
 

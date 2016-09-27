@@ -1,0 +1,73 @@
+{
+	"name": "iVXjs goToNextState Action Settings",
+	"description": "Settings to navigate to a state based on a set of rules",
+	"type": "object",
+	"properties": {
+		"eventName": {
+			"type": "string",
+            "name" : "Event Name",
+			"description" : "Current event name",
+			"enum": ["goToNextState"]
+		},
+		"args": {
+			"type": "object",
+            "name": "goToNextState Arguments",
+			"description": "Arguments for goToNext state which is called next which is similar to a rules array",
+			"properties": {
+				"next": {
+					"type": "array",
+					"name": "Next",
+					"description": "A collection of rules and state Ids that indicate which state this state will go to once an appropriate actions is performed on the state. Each state will have its own action that will trigger a next navigation.",
+					"minLength": 1,
+					"required": true,
+					"items": {
+						"name": "Next Collection Items",
+						"type": "object",
+						"description": "Indicates which state to go to next based on its stateId and rule",
+						"properties": {
+							"stateId": {
+								"name": "State ID",
+								"type": "string",
+								"description": "The stateId the user will go to if the rule is evaluated to true or missing.",
+								"required": true
+							},
+							"rule": {
+								"type": "object",
+								"name": "Rule",
+								"description": "Supplies the rule information for this experiences rule function to evaluate if this state should be used.",
+								"properties": {
+									"key": {
+										"name": "Rule Key",
+										"type": "string",
+										"description": "The key from the experience.data object or a keyword the rule function uses to get the correct data.",
+										"required": true
+									},
+									"is": {
+										"name": "Rule Comparer",
+										"type": "string",
+										"description": "The type of comparison this key will be evaluated against the value",
+										"enum": [
+											"lt",
+											"lte",
+											"gt",
+											"gte",
+											"equals",
+											"notEquals"
+										],
+										"required": true
+									},
+									"value": {
+										"name": "Rule Value",
+										"type": "any",
+										"description": "The value to evaluate the data found in the 'key'.",
+										"required": true
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

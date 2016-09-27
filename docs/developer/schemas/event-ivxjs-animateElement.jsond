@@ -1,0 +1,34 @@
+{
+	"name": "iVXjs animateElement Action Settings",
+	"description": "Settings to run the animate element event",
+	"type": "object",
+	"properties": {
+		"eventName": {
+			"name" : "Event Name",
+			"type": "string",
+			"description": "Indicates to run the animateElement event",
+			"required": true,
+			"enum": ["animateElement"]
+		},
+		"args": {
+			"type": "object",
+			"name" : "animateElement Event Arguments",
+			"description": "The settings to animate the element",
+			"required": true,
+			"properties": {
+				"element": {
+					"name" : "Animate Element Selector",
+					"type": "string",
+					"description": "The selector to the element to animate",
+					"required": true
+				},
+				"animationClasses": {
+					"name" : "Animation CSS Classes",
+					"type": "string",
+					"description": "The class/classes to cause an animation.",
+					"required": true
+				}
+			}
+		}
+	}
+}

@@ -71,11 +71,12 @@ export class iVXjs {
          * Contains all data and functions for an experience to run
          * @type {object} 
          */
-        
+
         this.experience = processedData.experience;
         this.experience.rules = processedData.rules;
         this.experience.Bus = this.Bus;
         this.experience.processor = new ActionProcessor(this);
+        this.experience.config = this.config;
 
         /**
          * Evaluates an array of expressions to allow stat navigation branching
@@ -119,6 +120,10 @@ export class iVXjs {
      
         if(settings.selector){     
             this.selector = settings.selector;
+        }
+
+        if(settings.routeFunction){
+            this.routeFunction = settings.routeFunction;
         }
 
         this.log = new Logging(debug, this.Bus);

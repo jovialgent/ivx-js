@@ -4100,6 +4100,11 @@ var TypeValidator = exports.TypeValidator = function () {
             return this.toString.call(obj) === '[object String]';
         }
     }, {
+        key: 'isNumber',
+        value: function isNumber(obj) {
+            return !isNaN(obj);
+        }
+    }, {
         key: 'isBoolean',
         value: function isBoolean(obj) {
             return typeof obj === 'boolean' || (typeof obj === 'undefined' ? 'undefined' : _typeof(obj)) === 'object' && typeof obj.valueOf() === 'boolean';
@@ -4283,8 +4288,25 @@ var ObjectParsers = exports.ObjectParsers = function () {
         }
     }, {
         key: 'getValueFromPath',
-        value: function getValueFromPath(object, path) {
+        value: function getValueFromPath(path, object) {
             var pathParts = path.split(".");
+            var oldData = object;
+            var currentData = {};
+            var returnValue = void 0;
+
+            pathParts.forEach(function (pathPart, index) {
+                if (typeValidator.isEmpty(pathPart)) return;
+                currentData = oldData[pathPart];
+
+                if (typeValidator.isEmpty(currentData)) {
+
+                    return;
+                }
+                returnValue = currentData;
+                oldData = currentData;
+            });
+
+            return returnValue;
         }
 
         /**

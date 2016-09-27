@@ -70,7 +70,6 @@ export class Setup {
         this.setupData(dataModule) 
             .then(
             function validateExperience(experienceData) {
-                console.dir(experienceData);
                 let validation = self.runValidation(experienceData);
 
                 if(!validation.valid){

@@ -1,0 +1,18 @@
+{
+	"name" : "Basic iVXjs Event/Actions Object Settings",
+	"description" : "The basic structure for the event name structure",
+	"type" : "object",
+	"properties" : {
+		"eventName" : {
+			"name" : "Event Name",
+			"type" : "string",
+			"description" : "This the event name to run by the experience. iVX.js will fire this event on its bus and try to perform the event using actions.",
+			"required" : true
+		},
+		"args" : {
+			"name" : "Event Arguments",
+			"type" : "object",
+			"description" : "All the arguments for this event. The key is the argument name and the value is the value it is set."
+		}
+	}
+}

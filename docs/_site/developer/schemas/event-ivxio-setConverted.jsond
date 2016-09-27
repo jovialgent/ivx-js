@@ -1,0 +1,28 @@
+{
+  "name": "iVXio setConverted Action Settings",
+  "description": "Settings to raise the setConverted action through the iVX platform.",
+  "type": "object",
+  "properties": {
+    "eventName": {
+      "type": "string",
+      "name": "Event Name",
+      "description": "Indicates to raise the iVXio's setConverted event",
+      "required": true,
+      "enum": [
+        "setConverted"
+      ]
+    },
+    "args": {
+      "type": "object",
+      "name": "setConverted Arguments",
+      "description": "Settings for the setConverted event",
+      "properties": {
+        "label": {
+          "name": "Conversion Label",
+          "type": "string",
+          "description": "Conversion label for this setConverted event if one exists"
+        }
+      }
+    }
+  }
+}

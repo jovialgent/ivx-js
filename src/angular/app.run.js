@@ -42,6 +42,20 @@ class AppRun {
             } else {
                 iVXjsAudio.pause();
             }
+
+            if ($state.current.data.restricted) {
+               
+                let navigateBackState = iVXjs.experience.config.pageNotFoundState ? iVXjs.experience.config.pageNotFoundState : iVXjs.experience.config.defaultState;
+                let restrictRedirect = iVXjs.experience.rules(navigateBackState);
+
+                if (iVXjs.experience.isRestricted) {
+                    iVXjs.experience.isRestricted().then((restricted) => {
+                        if (restricted) {
+                            $state.go(restrictRedirect);
+                        }
+                    });
+                }
+            }
         }]);
 
         iVXjsBus.on(audioEventNames.ENDED, (currentAudio) => {
@@ -50,6 +64,21 @@ class AppRun {
 
                 })
             }
+        });
+
+        iVXjsBus.on(stateEventNames.REQUEST_STATE, () =>{
+            let currentState = $state.current;
+            
+            if(!currentState.data){
+                let defaultStateRules = iVXjs.experience.config.defaultState;
+                let defaultStateId = iVXjs.experience.rules(defaultStateRules);
+
+                currentState.data = iVXjs.config.states.find((state)=>{
+                    return state.id === defaultStateId;
+                });
+            } 
+
+            iVXjsBus.emit(stateEventNames.GET_STATE, currentState);
         });
 
         iVXjsBus.on(audioEventNames.TIME_UPDATE, (currentAudio) => {

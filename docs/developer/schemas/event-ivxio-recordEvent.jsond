@@ -1,0 +1,30 @@
+{
+  "name": "iVXio recordEvent Action Settings",
+  "description": "Settings to run the recordEvent action",
+  "type": "object",
+  "properties": {
+    "eventName": {
+      "type": "string",
+      "name": "Event Name",
+      "description": "Indicates to run the recordEvent event",
+      "required": true,
+      "enum": [
+        "recordEvent"
+      ]
+    },
+    "args": {
+      "type": "object",
+      "name": "recordEvent Arguments",
+      "description": "The custom event to raise.",
+      "required": true,
+      "properties": {
+        "customEvent": {
+          "name": "Custom Event",
+          "type": "string",
+          "description": "The event to raise in the platform",
+          "required": true
+        }
+      }
+    }
+  }
+}

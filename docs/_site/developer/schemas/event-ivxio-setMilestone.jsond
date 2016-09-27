@@ -1,0 +1,30 @@
+{
+  "name": "iVXio's setMilestone Action Settings",
+  "description": "Settings to raise the setMileston action through the iVX platform",
+  "type": "object",
+  "properties": {
+    "eventName": {
+      "type": "string",
+	  "name" : "Event Name",
+      "description": "Indicates to raise the iVXio's setMilestone action",
+      "required": true,
+      "enum": [
+        "setMilestone"
+      ]
+    },
+    "args": {
+      "type": "object",
+      "description": "Settings to successfully raise this setMileston action",
+	  "name" : "setMilestone Arguments",
+      "required": true,
+      "properties": {
+        "milestone": {
+		  "name" : "Milestone",
+          "type": "string",
+          "description": "The name of the milestone to be set",
+          "required": true
+        }
+      }
+    }
+  }
+}

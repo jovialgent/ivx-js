@@ -5,6 +5,7 @@ class VideoState {
     constructor($compile, $state, $sce, iVXjs, iVXjsBus, iVXjsUIModule, createInlineVideo, pullInTemplate) {
         this.template = this.templateHTML;
         this.restrict = 'E';
+        this.replace = true;
         this.scope = {}
         this.controller = VideoStateController
         this.controllerAs = 'vm';
@@ -55,7 +56,7 @@ class VideoState {
     }
 
     get templateHTML() {
-        return ``;
+        return `<div class="video-state-container"></div>`;
     }
 }
 

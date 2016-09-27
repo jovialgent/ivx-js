@@ -19,7 +19,7 @@ export class PullInTemplate {
 	}
 
 	convertHeaderFooter(header, footer, data, controller) {
-		let { templateUrl: headerTemplateUrl } = header;
+		let { templateUrl: headerTemplateUrl, html } = header;
 		let { templateUrl: footerTemplateUrl } = footer;
 
 		if (headerTemplateUrl) {
@@ -37,6 +37,12 @@ export class PullInTemplate {
 			footer.html = `<div ng-include="vm.safeFooterTemplateUrl"></div>`;
 			data.footer = footer;
 		}
+
+		if(!header.html){
+			header.html = `<h1>${data.name}</h1>`;
+			data.header = header;
+		}
+
 
 		return data;
 	}

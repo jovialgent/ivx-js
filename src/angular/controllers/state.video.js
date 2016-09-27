@@ -36,6 +36,20 @@ class VideoStateController {
         cuePoints = setUpCuePoints(cuePoints);
 
         iVXjsBus.once(videoEventNames.CAN_PLAY, function stateVideoCanPlay(player) {
+            let transitionAnimation = onVideoReady.find((event, index) =>{
+                return event.eventName === "animateElement" && event.args.element === ".video-state-container";
+            });
+
+            if(!transitionAnimation){
+                onVideoReady.push({
+                    eventName : "animateElement",
+                    args : {
+                        element : ".video-state-container",
+                        animationClasses : "show"
+                    }
+                })
+            }
+
             iVXjsActions.resolveActions(onVideoReady, () => {
                 if (autoplay) {
                     iVXjsBus.emit(videoEventNames.PLAY);

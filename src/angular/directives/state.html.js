@@ -6,26 +6,41 @@ class HtmlState {
     constructor($state, $http, $compile, $sce, $timeout, iVXjs, iVXjsActions, iVXjsAudio, iVXjsBus) {
         this.template = this.templateHTML;
         this.restrict = 'E';
-        this.scope = {}
+        this.replace = true;
+        this.scope = {};
         this.controller = HtmlStateController;
         this.controllerAs = 'vm';
         this.link = function ($scope, iElm, iAttrs, controller) {
             let {id, html, templateUrl, onCompile = [], audio} = $state.current.data;
             let audioEventNames = new AudioEventNames();
-          
+
             if (templateUrl) {
                 let safeTemplateUrl = $sce.getTrustedResourceUrl(templateUrl);
 
                 controller.safeTemplateUrl = safeTemplateUrl
 
-                iElm.find('div').html(`<div ng-include="vm.safeTemplateUrl"></div>`);
+                iElm.html(`<div class="html-state-container" ng-include="vm.safeTemplateUrl"></div>`);
             } else {
-                iElm.find('div').html(html);
+                iElm.html(html);
             }
-            
+
             $scope.experience = iVXjs.experience.data;
-            
+
             $timeout(() => {
+                let hasTransition = onCompile.find((event, index) => {
+                    return event.eventName === "animateElement" && event.args.element === ".html-state-container";
+                });
+
+                if (!hasTransition) {
+                    onCompile.push({
+                        eventName: "animateElement",
+                        args: {
+                            element: ".html-state-container",
+                            animationClasses: "show"
+                        }
+                    })
+                }
+
                 iVXjsActions.resolveActions(onCompile, () => {
                     if (audio && audio.src) {
                         iVXjsBus.emit(audioEventNames.PLAY);
@@ -38,7 +53,7 @@ class HtmlState {
     }
 
     get templateHTML() {
-        return `<div id="{{vm.id}}"></div>`;
+        return `<div class="html-state-container" id="{{vm.id}}"></div>`;
     };
 }
 

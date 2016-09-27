@@ -1,0 +1,81 @@
+{
+	"name" : "iVXjs Input State",
+	"description" : "Settings to create an iVXjs State that collects data from user's input.",
+	"type" : "object",
+	"properties" : {
+		"form" : {
+			"type" : "object",
+			"name" : "Form",
+			"description" : "Style and other content settings for this input state's form.",
+			"properties" : {
+				"classes" : {
+					"name" : "CSS Classes",
+					"type" : "string",
+					"description" : "CSS Classes to add to the form."
+				},
+				"label" : {
+					"name" : "Form Label",
+					"type" : "string",
+					"description" : "Label\/title to appear before the form."
+				},
+				"labelHTML" : {
+					"name" : "Form Label HTML",
+					"type" : "string",
+					"description" : "Label\/title's HTML to appear before the form."
+				},
+				"labelTemplateUrl" : {
+					"name" : "Form Label Template URL",
+					"type" : "string",
+					"description" : "Url path to a template to a HTML label\/title for this form."
+				},
+				"submit" : {
+					"name" : "Submit Settings",
+					"type" :  "object",
+					"description" : "Settings for the submit button",
+					"properties" : {
+						"classes" : {
+							"name" : "Submit Button CSS Classes",
+							"type" : "string",
+							"description" : "Classes to add to the submit button"
+						},
+						"label" : {
+							"name" : "Submit Button Label",
+							"type" : "string",
+							"description" : "Label string to appear on the submit button"
+						},
+						"labelHTML" : {
+							"name" : "Submit Button Label HTML",
+							"type" : "string",
+							"description" : "HTML to appear on the submit button"
+						},
+						"labelTemplateUrl" : {
+							"name" : "Submit Button Lable Template URL",
+							"type" : "string",
+							"description" : "Url path to a template for this label"
+						}
+					}
+				}
+			}
+		},
+		"onSubmit" : {
+			"name" : "On Submit Actions",
+			"type" : "array",
+			"description" : "An array of event data to run when a user submits the data but before it navigates to the next state.",
+			"items" : {
+				"name" : "On Submit Actions Collection",
+				"type" : "object",
+				"description" : "Event data as defined in the event section of this documentation"
+			}
+		},
+		"inputs" : {
+			"name" : "Inputs",
+			"type" : "array",
+			"description" : "All inputs and settings to be shown in this form.",
+			"items" : {
+				"name" : "Inputs Collection",
+				"type" : "object",
+				"description" : "Input information. The settings of which is under the 'input' portion of this documentation"
+			}
+		}
+	}
+}

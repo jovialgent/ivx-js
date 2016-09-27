@@ -1,0 +1,31 @@
+{
+	"name" : "iVXjs Date Input",
+	"type" : "object",
+	"description" : "Schema for date input types",
+	"properties" : {
+		"type" : {
+			"name" : "Input Type",
+			"type" : "string",
+			"description" : "Indicates to create a date type input",
+			"enum" : ["date"],
+			"required" : true
+		},
+		"attributes" : {
+			"name" : "Date Input Attributes",
+			"type" : "object",
+			"description" : "The attributes to add to this date",
+			"properties" : {
+				"min" : {
+					"name" : "Minimum Date",
+					"type" : "string",
+					"description" : "The minimum date for this date input. Must be in this format: mm/dd/yyyy"
+				},
+				"max" :{
+					"name" : "Maximum Date",
+					"type" : "string",
+					"description" : "The maximum date to this date input. Must be in this format: mm/dd/yyyy"
+				}
+			}
+		}
+	}
+}

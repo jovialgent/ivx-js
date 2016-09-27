@@ -161,6 +161,11 @@ myIVXjs.Bus.on(iVXjsConfigEvents.VALIDATED, (iVXjs) => {
         angular.module('ivx-js').directive(key, value);
     });
 
+     if(iVXjs.experience.addEventListeners){
+        iVXjs.experience.addEventListeners(iVXjs.Bus, iVXjs.experience);
+    }
+
+
     var pageSetup = new iVXPageSetUp(iVXjs.config.selector, iVXjs.config.template);
    
     angular.bootstrap(iVXjs.config.bootstrapSelector ? document.querySelector(iVXjs.config.bootstrapSelector) : document, ['ivx-js']);

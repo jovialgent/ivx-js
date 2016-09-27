@@ -1,0 +1,47 @@
+{
+	"name": "iVXjs Options/Select Input settings",
+	"type": "object",
+	"description": "Settings for this option input",
+	"properties": {
+		"type": {
+			"name" : "Input Type",
+			"type": "string",
+			"description": "Indicates that this input is an option type",
+			"enum": ["options"],
+			"required": true
+		},
+		"defaultDisplay": {
+			"name" : "Default Display",
+			"type": "string",
+			"description": "The default display for this input if no value is selected."
+		},
+		"options": {
+			"name" : "Options",
+			"type": "array",
+			"description": "The various options for this options input",
+			"required": true,
+			"minLength": 2,
+			"items": {
+				"type": "object",
+				"name" : "Option Value and Display",
+				"description": "The display and value setting",
+				"properties": {
+					"value": {
+						"name" : "Option Value",
+						"type": "string",
+						"description": "The value to set this option to",
+						"required": true,
+						"minLength": 1
+					},
+					"display": {
+						"name" : "Option Display",
+						"type": "string",
+						"description": "The display that will appear in the input",
+						"required": true,
+						"minLength": 1
+					}
+				}
+			}
+		}
+	}
+}

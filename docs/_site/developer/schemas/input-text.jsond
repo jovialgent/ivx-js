@@ -1,0 +1,31 @@
+{
+	"name" : "iVXjs Text Input",
+	"description" : "Settings to render a text input",
+	"type" : "object",
+	"properties" : {
+		"type" : {
+			"name" : "Input Type",
+			"type" : "string",
+			"description" : "Type indicating to render a text type input",
+			"required" : true,
+			"enum" :["text"]
+		},
+		"attributes" : {
+			"type" : "object",
+			"name" : "Text Input Attributes",
+            "description" : "Various text input attributes to add to this input.",
+			"properties" : {
+				"minlength" : {
+					"name" : "Text Minimum Length",
+					"type" : "number",
+					"description" : "The minimum number of characters of this input"
+				},
+				"maxlength"  :{
+					"name" : "Text Maximum Length",
+					"type" : "number",
+					"description" : "The maximum number of character of this input"
+				}
+			}
+		}
+	}
+}

@@ -9,7 +9,9 @@ export default class extends  iVXjsStateConstants{
             SUCCESS : "success",
             ERROR : "error",
             GO : "go",
-            NOT_FOUND : "not-found"
+            NOT_FOUND : "not-found",
+            GET_STATE : "get-state",
+            REQUEST_STATE : "request-state"
         };
 
         this.addNames(eventNames);

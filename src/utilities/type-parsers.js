@@ -15,6 +15,10 @@ export class TypeValidator {
         return this.toString.call(obj) === '[object String]';
     }
 
+    isNumber(obj){
+        return !isNaN(obj);
+    }
+
     isBoolean(obj){
         return typeof obj === 'boolean' || (typeof obj === 'object' && typeof obj.valueOf() === 'boolean');
     }
@@ -177,10 +181,25 @@ export class ObjectParsers {
         return itHas;
     }
 
-    getValueFromPath(object, path){
+    getValueFromPath(path, object){
         let pathParts = path.split(".");
+        let oldData = object;
+        let currentData = {};
+        let returnValue;
 
+        pathParts.forEach((pathPart, index)=>{
+            if(typeValidator.isEmpty(pathPart)) return;
+            currentData = oldData[pathPart];
+          
+            if(typeValidator.isEmpty(currentData)){
+                
+                return;
+            }
+            returnValue = currentData;
+            oldData = currentData;
+        });
 
+        return returnValue;    
     }
 
 

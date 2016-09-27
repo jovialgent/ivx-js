@@ -6,12 +6,13 @@ class NavigationState {
 	constructor($state, $rootScope, $compile, $timeout, iVXjs, iVXjsModules, iVXjsBus, iVXjsAudio, iVXjsActions, pullInTemplate) {
 		this.template = this.templateHTML;
 		this.restrict = 'E';
-		this.scope = {}
+		this.replace = true;
+		this.scope = {};
 		this.controller = ['$scope', ($scope) => { }];
 		this.controllerAs = 'vm';
 		this.link = function ($scope, iElm, iAttrs, controller) {
 			let { data } = $state.current;
-			let { links = [], header = {}, footer = {}, audio, onLinksReady } = data;
+			let { links = [], header = {}, footer = {}, audio, onLinksReady = [] } = data;
 			let linkSection = links.reduce((html, link, index) => {
 				let linkString = angular.toJson(link);
 				return `${html}
@@ -25,6 +26,20 @@ class NavigationState {
 
 			$scope.experience = iVXjs.experience.data;
 			$timeout(() => {
+				let transitionAnimation = onLinksReady.find((event, index) => {
+					return event.eventName === "animateElement" && event.args.element === ".navigation-state-container";
+				});
+
+				if (!transitionAnimation) {
+					onLinksReady.push({
+						eventName: "animateElement",
+						args: {
+							element: ".navigation-state-container",
+							animationClasses: "show"
+						}
+					})
+				}
+				
 				iVXjsActions.resolveActions(onLinksReady, () => {
 					if (audio && audio.src) {
 						iVXjsBus.emit(audioEventNames.PLAY);
@@ -34,12 +49,12 @@ class NavigationState {
 			}, 1)
 
 			iElm.html(thisNavigationState.html);
-			$compile(iElm.contents())($scope);			
+			$compile(iElm.contents())($scope);
 		}
 	}
 
 	get templateHTML() {
-		return ``;
+		return `<div class="navigation-state-container"></div>`;
 	};
 }
 
