@@ -702,4 +702,4 @@ _setMilestone Event Properties_
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.16.2/lodash.min.js"></script>
-<script src="http://localhost:4000/ivx-js/assets/js/jsond-table-creator.js"></script>
+<script src="https://influencetech.github.io/ivx-js/assets/js/jsond-table-creator.js"></script>
