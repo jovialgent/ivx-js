@@ -125,11 +125,13 @@ To get started, follow the steps below:
             "name": "Video Sample",
             "url": "/video-sample",
             "type": "video",
-            "next": [{
-                "stateId" : "helpful-links"
-            }],
+            "next": [
+                {
+                    "stateId": "helpful-links"
+                }
+            ],
             "playerSettings": {
-                "youtubeId": "4f09VdXex3A"
+                "youtubeId": "oErhFh4AyZ0"
             },
             "personalizations": [
                 {
@@ -162,7 +164,7 @@ To get started, follow the steps below:
             "url": "/helpful-links",
             "type": "navigation",
             "header": {
-                "templateUrl" : "helpful-links-header.html"
+                "templateUrl": "helpful-links-header.html"
             },
             "links": [
                 {
@@ -171,23 +173,25 @@ To get started, follow the steps below:
                         "target": "_blank"
                     },
                     "label": "Getting Started with iVXjs",
-                    "classes" : "btn",
+                    "classes": "btn",
                     "onClick": []
-                },{
-                    "href" : "https://influencetech.github.io/ivx-js/developer/tutorials/",
-                     "attributes": {
+                },
+                {
+                    "href": "https://influencetech.github.io/ivx-js/developer/tutorials/",
+                    "attributes": {
                         "target": "_blank"
                     },
                     "label": "Tutorials",
-                    "classes" : "btn",
+                    "classes": "btn",
                     "onClick": []
-                },{
-                    "href" : "https://influencetech.github.io/ivx-js/developer/configuration/",
-                     "attributes": {
+                },
+                {
+                    "href": "https://influencetech.github.io/ivx-js/developer/configuration/",
+                    "attributes": {
                         "target": "_blank"
                     },
                     "label": "JSON Specs and Configurations",
-                    "classes" : "btn",
+                    "classes": "btn",
                     "onClick": []
                 }
             ]

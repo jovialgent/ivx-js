@@ -46,9 +46,11 @@
             "name": "Video Sample",
             "url": "/video-sample",
             "type": "video",
-            "next": [{
-                "stateId" : "helpful-links"
-            }],
+            "next": [
+                {
+                    "stateId": "helpful-links"
+                }
+            ],
             "playerSettings": {
                 "youtubeId": "oErhFh4AyZ0"
             },
@@ -83,7 +85,7 @@
             "url": "/helpful-links",
             "type": "navigation",
             "header": {
-                "templateUrl" : "helpful-links-header.html"
+                "templateUrl": "helpful-links-header.html"
             },
             "links": [
                 {
@@ -92,23 +94,25 @@
                         "target": "_blank"
                     },
                     "label": "Getting Started with iVXjs",
-                    "classes" : "btn",
+                    "classes": "btn",
                     "onClick": []
-                },{
-                    "href" : "https://influencetech.github.io/ivx-js/developer/tutorials/",
-                     "attributes": {
+                },
+                {
+                    "href": "https://influencetech.github.io/ivx-js/developer/tutorials/",
+                    "attributes": {
                         "target": "_blank"
                     },
                     "label": "Tutorials",
-                    "classes" : "btn",
+                    "classes": "btn",
                     "onClick": []
-                },{
-                    "href" : "https://influencetech.github.io/ivx-js/developer/configuration/",
-                     "attributes": {
+                },
+                {
+                    "href": "https://influencetech.github.io/ivx-js/developer/configuration/",
+                    "attributes": {
                         "target": "_blank"
                     },
                     "label": "JSON Specs and Configurations",
-                    "classes" : "btn",
+                    "classes": "btn",
                     "onClick": []
                 }
             ]

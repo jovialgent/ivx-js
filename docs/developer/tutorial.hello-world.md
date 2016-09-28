@@ -15,251 +15,210 @@ to set up
 
 ## Demo 
 
-[Hello World Demo](https://github.com/influencetech/ivx-js/tree/master/demos/hello-world)
+[Live Demo](https://influencetech.github.io/ivx-js/sample-experience/)
+
+[Source](https://github.com/influencetech/ivx-js/tree/master/demos/hello-world)
 
 ## Getting Started
 
+### Downloading the library
+
+* Clone this repository or download zip
+* Via npm `npm install ivx-js-angular --save`
+
 ### iVXjs Angular's Dependencies
 
-The Angular iVX.js instance--iVXjs for this documentation--has the following script dependencies:
+The Angular iVXjs instance--iVXjs for this documentation--has the following script dependencies:
 
-* angular.ivx.js
 * [Angular 1.5](https://angularjs.org/)
 * [Angular UI-Router](https://github.com/angular-ui/ui-router)
 * [ngSanitize](https://docs.angularjs.org/api/ngSanitize)
 
-Once you go to their website and download you will need the _angular.ivx.js_ file from dist. 
+### Let's create a simple iVXjs Experience 
 
-### Setting up the html
+To get started, follow the steps below:
 
-To get the iVX.js experience working, you can add the following HTML to your project:
+* Add the following HTML to the working project file:
 
 ```
 <!-- Angular application for this page -->
-<div ng-app="[MODULE-NAME]"></div>
-<!-- Container for an iVX.js Experience -->
+<div ng-app="app"></div>
+
+<!-- Container for an iVXjs Experience -->
 <div id='ivx'></div>
+
 <!-- iVXjs Angular Library Dependencies  -->
-<script src='[PATH-TO-JS]/angular.min.js'></script>
-<script src='[PATH-TO-JS]/angular-ui-router.min.js'></script>
-<script src='[PATH-TO-JS]/angular-sanitize.min.js'></script>
+<script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.0-alpha.5/angular-ui-router.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.5.6/angular-sanitize.min.js'></script>
 <script src='[PATH-TO-JS]/angular.ivx.js'></script>
+
+<!-- Youtube iFrame API -->
+<script src='https://www.youtube.com/iframe_api'></script> 
+
 <script>
- angular
- .module('[MODULE-NAME]', ['ivx-js'])
- .run(['iVXjs', function(iVXjs){
- 	iVXjs.init({
- 		"config" : {
- 			"defaultState": [{
- 				"stateId": "hello-world"
- 			}],
- 			"states": [{
- 				"id": "hello-world",
- 				"name": "Hello World",
- 				"url": "/hello-world",
- 				"type": "input",
- 				"header": {
- 					"html" : "<h1>Welcome to iVXjs!</h1><h2>Write in your name below so we can get to know you.</h2>"
- 				},
- 				"footer": {
- 					"html" : ""
- 				},
- 				"onEnter":[],
- 				"onExit": [],
- 				"next": [{
- 					"stateId" : "welcome-screen"
- 				}],
- 				"onSubmit": [],
- 				"inputs": [{
- 					"id": "name",
- 					"type": "text",
- 					"name" : "name",
- 					"label" : "Your Name:"
- 				}]
- 			},{
- 				"id" : "welcome-screen",
- 				"name" : "Welcome Screen",
- 				"url" : "/welcome-screen",
- 				"type" : "html",
- 				"html" : "<div class=\"welcome\"><h1>Congratulations {{experience.name}}!</h1><h2>You made your first iVXjs Experience!</h2></div>"
- 			}]
- 		}
- 	});
- }]);     
+angular
+  .module('app', ['ivx-js'])
+    .config(['iVXjs', function(iVXjs){
+      iVXjs.init({
+        config:"data/sample-experience.json"
+      });
+    }]);    
+</script>
+
+<!-- Angular Templates -->
+
+<!-- Form Header Template -->
+<script type="text/ng-template" id="form-header.html">
+	<h1>Welcome to an iVXjs Sample Experience</h1>
+</script>
+
+<!-- Name Personalization Template -->
+<script type="text/ng-template" id="name-personalization.html">
+	<h1>Hey, {{experience.fullName}}, finding this cool?</h1>
+</script>
+
+<!-- Helpful Links Header Template -->
+<script type="text/ng-template" id="helpful-links-header.html">
+	<h1>Now that you have seen it {{experience.fullName}}, create an experience of your own!</h1>
 </script>
 ```
 
-## Breaking down the html
-
-Let's take a moment to explain what the above HTML is doing:
-
-### Angular Module
-
-We have to add an angular module to a child element of the page so that 
-iVXjs can bootstrap itself to the correct element (more on that in another tutorial)
-So, to make sure it loads properly, add your `ng-app` directive to a child node. For this example,
-replace the `[MODULE-NAME]` with the name of your app:
-
-```
-<div ng-app="[MODULE-NAME]"></div>
-```
-
-### Adding the dependency scripts
-
-These add the scripts to the page. Just replace `[PATH-TO-JS]` with the
-location of these scripts relative to your page.
-
-```
-<script src='[PATH-TO-JS]/angular.min.js'></script>	
-<script src='[PATH-TO-JS]/angular-ui-router.min.js'></script>
-<script src='[PATH-TO-JS]/angular-sanitize.min.js'></script>
-<script src='[PATH-TO-JS]/angular.ivx.js'></script>
-```
-
-### Angular Code
-
-The actual way we begin iVXjs is by running the init function during
-the child app's run function.
-
-First we will need to inject 'ivx-js' into your angular app:
-
-```
-angular
-        .module('[MODULE-NAME]', ['ivx-js'])
-```
-
-Next we need to tell the angular module on run to initialize by running the `iVXjs.init`:
-
-```
-angular
-    .module('[MODULE-NAME]', ['ivx-js'])
-    .run(['iVXjs', 
-        function(iVXjs){
-        iVXjs.init({
-            config : {
-			    "defaultState": [{
-			        "stateId": "hello-world"
-			    }],
-			    "states": [{
-			        "id": "hello-world",
-			        "name": "Hello World",
-			        "url": "/hello-world",
-			        "type": "input",
-			        "header": {
-			            "html" : "<h1>Welcome to iVXjs!</h1><h2>Write in your name below so we can get to know you.</h2>"
-			        },
-			        "footer": {
-			            "html" : ""
-			        },
-			        "onEnter":[],
-			        "onExit": [],
-			        "next": [{
-			            "stateId" : "welcome-screen"
-			        }],
-			        "onSubmit": [],
-			        "inputs": [{
-			            "id": "name",
-			            "type": "text",
-			            "name" : "name",
-			            "label" : "Your Name:"           
-			        }]
-			    },{
-			        "id" : "welcome-screen",
-			        "name" : "Welcome Screen",
-			        "url" : "/welcome-screen",
-			        "type" : "html",
-			        "html" : "<div class=\"welcome\"><h1>Congratulations {{experience.name}}!</h1><h2>You made your first iVXjs Experience!</h2></div>"
-
-			    }]
-			}
-        });
-    }])     
-```
-
-### Configuration
-
-The iVX.js init takes one argument, an object with various settings you can add to customize the experience, but for 
-now we will using the following config. The definition for this spec is [here](/docs/esdocs/manual/configuration.html#json). But,
-for this _Getting Started_ we will explain a little what this config is instructing iVX.js to do.
-
-_Default State_
-
-The default state array tells where is the starting point for this experience. In this case, we want this experience to start 
-at the state "hello-world":
-
-```
-"defaultState": [{
-        "stateId": "hello-world"
-}]
-```
-
-_States_
-
-The states array is the list of all states in this experience. States are segments of an experience where
-a user can interact with in varied of ways. Other tutorials will go over how to set up states, so right now
-we will explain what each state object is doing for this set up.
-
-The first state in the array is an input state. The input state is a state that has input elements that typically captures
-user information and adds it to the experience.data object. In this case, the state's data is indicating that it wants 
-to make a text input that records the user's name. So, the spec here:
-
-```
-
-{
-    "id": "hello-world",
-    "name": "Hello World",
-    "url": "/hello-world",
-    "type": "input",
-    "header": {
-        "html" : "<h1>Welcome to iVXjs!</h1><h2>Write in your name below so we can get to know you.</h2>"
-    },
-    "footer": {
-        "html" : ""
-    },
-    "onEnter":[],
-    "onExit": [],
-    "next": [{
-        "stateId" : "welcome-screen"
-    }],
-    "onSubmit": [],
-    "inputs": [{
-        "id": "name",
-        "type": "text",
-        "name" : "name",
-        "label" : "Your Name:"           
-    }]
-}
-```
-
-Will appear like this here:
-
-![Hellow World State](http://e8ddcf8725663d605209-8d8cc7c733bcfce1ecd11bbb8349e503.r95.cf2.rackcdn.com/tutorial/Hello-World-State.png) 
-
-The next and final state is a HTML state. The HTML state is a state where a user can put in any HTML they want and 
-have it render. The HTML state for this set up shows a congratulatory message. So, the spec is as follows:
+* Create a folder called *data*
+* Create a file called *sample-experience.json*
+* Copy the following contents into the *sample-experience.json* file:
 
 ```
 {
-	"id" : "welcome-screen",
-	"name" : "Welcome Screen",
-	"url" : "/welcome-screen",
-	"type" : "html",
-	"html" : "<div class='welcome'><h1>Congratulations {{experience.name}}!</h1><h2>You made your first iVXjs Experience!</h2></div>"
+    "defaultState": [
+        {
+            "stateId": "welcome-form"
+        }
+    ],
+    "states": [
+        {
+            "id": "welcome-form",
+            "name": "Welcome Form",
+            "url": "/",
+            "type": "input",
+            "header": {
+                "templateUrl": "form-header.html"
+            },
+            "form": {
+                "classes": "",
+                "submit": {
+                    "label": "Get started!"
+                }
+            },
+            "next": [
+                {
+                    "stateId": "video-sample"
+                }
+            ],
+            "inputs": [
+                {
+                    "id": "full-name",
+                    "name": "fullName",
+                    "type": "text",
+                    "label": "Your name:",
+                    "settings": {
+                        "container": {},
+                        "input": {}
+                    },
+                    "attributes": {
+                        "placeholder": "Enter your name here...",
+                        "required": true
+                    }
+                }
+            ]
+        },
+        {
+            "id": "video-sample",
+            "name": "Video Sample",
+            "url": "/video-sample",
+            "type": "video",
+            "next": [
+                {
+                    "stateId": "helpful-links"
+                }
+            ],
+            "playerSettings": {
+                "youtubeId": "oErhFh4AyZ0"
+            },
+            "personalizations": [
+                {
+                    "id": "name-personalization",
+                    "templateUrl": "name-personalization.html"
+                }
+            ],
+            "cuePoints": [
+                {
+                    "timeAt": 0,
+                    "eventName": "animateElement",
+                    "args": {
+                        "element": "#name-personalization",
+                        "animationClasses": "show"
+                    }
+                },
+                {
+                    "timeAt": 5,
+                    "eventName": "animateElement",
+                    "args": {
+                        "element": "#name-personalization",
+                        "animationClasses": "hide"
+                    }
+                }
+            ]
+        },
+        {
+            "id": "helpful-links",
+            "name": "Helpful Links",
+            "url": "/helpful-links",
+            "type": "navigation",
+            "header": {
+                "templateUrl": "helpful-links-header.html"
+            },
+            "links": [
+                {
+                    "href": "https://influencetech.github.io/ivx-js/developer/tutorial.hello-world/",
+                    "attributes": {
+                        "target": "_blank"
+                    },
+                    "label": "Getting Started with iVXjs",
+                    "classes": "btn",
+                    "onClick": []
+                },
+                {
+                    "href": "https://influencetech.github.io/ivx-js/developer/tutorials/",
+                    "attributes": {
+                        "target": "_blank"
+                    },
+                    "label": "Tutorials",
+                    "classes": "btn",
+                    "onClick": []
+                },
+                {
+                    "href": "https://influencetech.github.io/ivx-js/developer/configuration/",
+                    "attributes": {
+                        "target": "_blank"
+                    },
+                    "label": "JSON Specs and Configurations",
+                    "classes": "btn",
+                    "onClick": []
+                }
+            ]
+        }
+    ]
 }
-			   
 ```
 
-Will render:
+* The result should look like this:
+![Sample Experience Form](http://e8ddcf8725663d605209-8d8cc7c733bcfce1ecd11bbb8349e503.r95.cf2.rackcdn.com/github/sample-experience-form-no-style.png)
 
-![Congratulations State](http://e8ddcf8725663d605209-8d8cc7c733bcfce1ecd11bbb8349e503.r95.cf2.rackcdn.com/tutorial/Congratulations%20State.png)
+To make it look a little better, let's add some styling. There are some default styles provided in these css files:
 
-For this state, a special note. Look at this line of the config:
+* __core.css__ (tools/utilities/css/core.css) - Core styling with iVXjs styling components such as a input grid system, YouTube video sizing, etc.
+* __basic-style.css__ (tools/utilities/css/core.css) - A basic style for iVXjs
 
-```
-"html" : "<div class='welcome'><h1>Congratulations {{experience.name}}!</h1><h2>You made your first iVXjs Experience!</h2></div>"
-```
-
-The `{{experience.name}}` indicates to iVX.js to replace the piece of code with the name the user 
-provided in the last state. In this case, the "User's Name" was provided in the state before and 
-now shows here. More on personalizations and tokens in other parts. But, for now it shows how a developer
-can use data collected to enhance future states.
+After adding these css files, the experience should look something like this:
+![Sample Experience Form With Styling](http://e8ddcf8725663d605209-8d8cc7c733bcfce1ecd11bbb8349e503.r95.cf2.rackcdn.com/github/sample-experience-form-styling.png)
