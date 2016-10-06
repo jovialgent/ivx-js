@@ -3,8 +3,6 @@ import AudioEventNames from '../constants/audio.events.js';
 import StateEventNames from '../constants/state.events.js';
 import AngularEventNames from '../constants/angular.events.js';
 
-
-
 class AppRun {
     constructor($rootScope, $state, $window, $transitions, iVXjs, iVXjsBus, iVXjsActions, iVXjsConstants) {
         if (!iVXjs || !iVXjs.config) return;
