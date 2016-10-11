@@ -14,6 +14,15 @@ asks for a user name and displays their name in a special message!
 {: .btn .btn--inverse}
 [Hello World](https://influencetech.github.io/ivx-js/developer/tutorial.hello-world)
 
+## Module Injection
+
+Utilize a new way of embedding video on iPhones to play inline 
+on your page to make a seemless mobile video experience across 
+multiple devices.
+
+{: .btn .btn--inverse}
+[Module Injection](https://influencetech.github.io/ivx-js/developer/tutorial.module-injection)
+
 ## Templates
 
 Get started with templates by seeing how they are used in 
@@ -39,3 +48,5 @@ multiple devices.
 
 {: .btn .btn--inverse}
 [Inline iPhone](https://influencetech.github.io/ivx-js/developer/tutorial.video.iphone-inline)
+
+

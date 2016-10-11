@@ -8,6 +8,73 @@ export default class{
 
     }
 
+    get templateLocations(){
+        return {
+            input : [
+                "header.templateUrl", 
+                "footer.templateUrl", 
+                "form.labelTemplateUrl",
+                "form.submit.labelTemplateUrl",
+                {
+                    path: "inputs",
+                    templateKey : "labelTemplateUrl"
+                },
+                {
+                    path: "inputs.buttons",
+                    templateKey : "labelTemplateUrl"
+                },
+                {
+                    path: "inputs.radioButtons",
+                    templateKey : "labelTemplateUrl"
+                }
+            ],
+            navigation : [
+                "header.templateUrl", 
+                "footer.templateUrl", 
+                "links.labelTemplateUrl"
+            ],
+            html : [
+                "templateUrl"
+            ],
+            video : [
+                "header.templateUrl", 
+                "footer.templateUrl", 
+                "personalizations.templateUrl"
+            ]
+        }
+    }
+
+    addRemoteTemplates(configData, templateRef){
+        let {templateLocations} = this;
+        let {states} = JSON.parse(JSON.stringify(configData));
+        let storage = firebase.storage();
+        let storageRef = storage.ref(templateRef);
+        let templateUrlPromise = new Promise((resolve, reject)=>{
+            let urlGetPromises = [];
+
+            states.forEach((state, index)=>{
+                let {type} = state;
+                let templateLocation = templateLocations[type];
+
+                templateLocation.forEach((path, index) =>{
+                    if(typeValidator.isString(path)){
+                        console.log(path, objectParser.getValueFromPath(path, state));
+                    } else {
+                        let {path : templatePath, templateKey} = path;
+                        let templateDataArray = objectParser.getValueFromPath(path, state);
+                        
+
+                    }
+                   
+                });
+            });
+        });
+
+       
+
+        return templateUrlPromise;
+    }
+
     detokenize(ref, user = {}, experience = {}, iVXjsLog = console) {
             let {data, key: experienceKey} = experience;
             let {uid} = user == null ? {} : user;

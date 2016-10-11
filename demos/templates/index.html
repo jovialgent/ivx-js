@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>iVXjs Hello World</title>
+    <title>iVXjs Template Injection</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
@@ -129,7 +129,7 @@
     <script>
         angular
         .module('app', ['ivx-js'])
-        .run(['iVXjs', function(iVXjs){
+        .config(['iVXjs', function(iVXjs){
             iVXjs.init({
                 config : "data/templates-demo.json"
             });

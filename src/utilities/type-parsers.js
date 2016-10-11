@@ -192,9 +192,10 @@ export class ObjectParsers {
             currentData = oldData[pathPart];
           
             if(typeValidator.isEmpty(currentData)){
-                
+                returnValue = currentData;
                 return;
             }
+
             returnValue = currentData;
             oldData = currentData;
         });

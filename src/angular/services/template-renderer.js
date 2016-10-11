@@ -43,7 +43,6 @@ export class PullInTemplate {
 			data.header = header;
 		}
 
-
 		return data;
 	}
 

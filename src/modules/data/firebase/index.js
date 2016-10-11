@@ -15,7 +15,7 @@ export class FirebaseData {
     constructor(moduleSettings = {}, iVXjsSettings = {}, Bus, iVXjsLog) {
         let {data, experience: defaultExperience} = iVXjsSettings;
         let {data: defaultExperienceData = {}} = defaultExperience;
-        let {apiKey, authDomain, databaseURL, storageBucket, auth = false, createExperienceOnLoad = true, experiencePath = "experiences", localTemplates = false} = data;
+        let {apiKey, authDomain, databaseURL, storageBucket, auth = false, createExperienceOnLoad = true, experiencePath = "experiences", localTemplates = false, templateRef} = data;
 
         this.iVXjsSettings = iVXjsSettings;
         this.Bus = Bus;
@@ -38,50 +38,62 @@ export class FirebaseData {
         this.experiencePath = experiencePath;
         this.localTemplates = localTemplates;
         this.defaultExperience = defaultExperience;
+        this.templateRef = templateRef;
     }
 
-    setUpExperience(configData, src, resolve) {
-        let {auth, createExperienceOnLoad, defaultExperience, experiencePath, localTemplates} = this;
+    setUpExperience(dataFromServer, src, resolve) {
+        let {auth, createExperienceOnLoad, defaultExperience} = this;
+        let {experiencePath, localTemplates, templateRef} = this;
         let {firebaseConstants, iVXjsLog} = this;
         let self = this;
         let database = firebase.database();
         let {experience: modifiedExperience = {}, rules: customRules, ui = 'default', validation = 'iVXjsValidation'} = this.iVXjsSettings;
         let experience = myObjectParser.merge(new iVXjsActions(), modifiedExperience);
         let firebaseExperience = myObjectParser.merge(experience, new Actions(this.iVXjsLog).experienceActions);
-
         experience.experiencePath = experiencePath;
-        experience.localTemplates = localTemplates;
 
-        firebase.auth().getRedirectResult().then((data) => {
-            let {user: redirectUser} = data;
-
-            if (!createExperienceOnLoad) {
-                sendConfigData();
-                return;
-            }
-
-            if (!redirectUser || !localStorage) {
-                createExperience();
-            } else {
-                let {redirectOrigin} = localStorage;
-                let exisitingExperienceData = JSON.parse(redirectOrigin);
-                let {user, crediential} = data;
-
-                setUpExistingExperience(user, exisitingExperienceData);
-            }
-        })
-            .catch((error) => {
-                self.Bus.emit(firebaseConstants.ACCOUNT_EXISTS, error);
-                console.dir(error);
-                let errorMessage = {
-                    message: `Firebase couldn't authenticate with email, ${error.email}, due to error code ${error.code}. 
-            You can handle this error by listening for event: ${firebaseConstants.ACCOUNT_EXISTS}.`,
-                    type: "FIREBASE:AUTHENTICATION"
-                }
-                iVXjsLog.error(errorMessage, "Firebase")
+        if (!localTemplates) {
+            utilities.addRemoteTemplates(dataFromServer, templateRef)
+            .then((configData) =>{
             });
+        } else{
+             initializeExperience(dataFromServer);
 
-        function sendConfigData() {
+        }
+       
+        function initializeExperience(configData) {
+            firebase.auth().getRedirectResult().then((data) => {
+                let {user: redirectUser} = data;
+
+                if (!createExperienceOnLoad) {
+                    sendConfigData(configData);
+                    return;
+                }
+
+                if (!redirectUser || !localStorage) {
+                    createExperience(configData);
+                } else {
+                    let {redirectOrigin} = localStorage;
+                    let exisitingExperienceData = JSON.parse(redirectOrigin);
+                    let {user, crediential} = data;
+
+                    setUpExistingExperience(user, exisitingExperienceData, configData);
+                }
+            })
+                .catch((error) => {
+                    self.Bus.emit(firebaseConstants.ACCOUNT_EXISTS, error);
+                    console.dir(error);
+                    let errorMessage = {
+                        message: `Firebase couldn't authenticate with email, ${error.email}, due to error code ${error.code}. 
+            You can handle this error by listening for event: ${firebaseConstants.ACCOUNT_EXISTS}.`,
+                        type: "FIREBASE:AUTHENTICATION"
+                    }
+                    iVXjsLog.error(errorMessage, "Firebase")
+                });
+
+        }
+
+        function sendConfigData(configData) {
             let user = firebase.auth().currentUser;
 
             experience.src = src;
@@ -98,7 +110,7 @@ export class FirebaseData {
 
         }
 
-        function setUpExistingExperience(user, exisitingExperienceData) {
+        function setUpExistingExperience(user, exisitingExperienceData, configData) {
             let {key, next} = exisitingExperienceData;
             experience.key = key;
             experience.user = user;
@@ -137,7 +149,7 @@ export class FirebaseData {
 
         }
 
-        function createExperience() {
+        function createExperience(configData) {
             let user = firebase.auth().currentUser;
             let newExperienceData = {
                 src
@@ -153,10 +165,7 @@ export class FirebaseData {
 
             if (detokenedExperiencePath) {
                 newExperienceKey = firebase.database().ref(detokenedExperiencePath).push(newExperienceData).key;
-
             }
-
-
 
             experience.key = newExperienceKey;
             experience.auth = auth;
@@ -179,7 +188,7 @@ export class FirebaseData {
                             email: user.email,
                             name: user.displayName,
                             photoURL: user.photoURL,
-                            uid : user.uid
+                            uid: user.uid
                         }
                         newUsers[user.uid] = newUserData;
 

@@ -6,9 +6,8 @@ import StateEvents from "../constants/state.events.js";
 let stateEvents = new StateEvents();
 
 class AppConfig {
-    constructor($stateProvider, $urlRouterProvider, $locationProvider, $compileProvider, $httpProvider, $provide, iVXjs) {
+    constructor($stateProvider, $urlRouterProvider, $locationProvider, $compileProvider, $httpProvider, $sceDelegateProvider, $provide, iVXjs) {
         if (!iVXjs.config) return;
-
 
         this.createStates($stateProvider, iVXjs.config.states);
 
@@ -83,6 +82,6 @@ class AppConfig {
     }
 }
 
-AppConfig.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider', '$compileProvider', '$httpProvider', '$provide', 'iVXjs'];
+AppConfig.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider', '$compileProvider', '$httpProvider', '$sceDelegateProvider', '$provide', 'iVXjs'];
 
 export default createFactoryFunction(AppConfig);

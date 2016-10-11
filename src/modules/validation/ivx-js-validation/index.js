@@ -11,7 +11,7 @@ let comparator = new Comparator()
 
 export class iVXjsValidation extends Validation {
 
-  constructor (data) {
+  constructor(data) {
     super()
     this.data = data
 
@@ -19,12 +19,12 @@ export class iVXjsValidation extends Validation {
       this.error = {
         message: this.collectErrorMessages(),
         data: this.data,
-        errors : this.errors
+        errors: this.errors
       }
     }
   }
 
-  collectErrorMessages () {
+  collectErrorMessages() {
     return this.errors.reverse().reduce((errorMessages, errorObj) => {
       let {error} = errorObj
       return `${errorMessages}
@@ -32,7 +32,7 @@ TYPE: ${error.type ? error.type : 'ERROR'}  PATH: ${error.path} ${error.message 
     }, '');
   }
 
-  get validationArray () {
+  get validationArray() {
     let currentValidationArray = [
       this.ruleValidationObj,
       this.experienceValidationObj,
@@ -41,32 +41,32 @@ TYPE: ${error.type ? error.type : 'ERROR'}  PATH: ${error.path} ${error.message 
     return currentValidationArray
   }
 
-  get configValidationObj(){
-      let {config} = this.data;
-      let {valid, errors} = new ConfigValidation(config);
-      
-      if(!valid){
-          this.addErrors(errors);
+  get configValidationObj() {
+    let {config} = this.data;
+    let {valid, errors} = new ConfigValidation(config);
+
+    if (!valid) {
+      this.addErrors(errors);
+    }
+
+    return {
+      valid: valid,
+      error: {
+        "path": "config",
+        "message": "An experience must have a valid config",
+        "type": "invalid"
       }
-      
-      return {
-          valid : valid,
-          error : {
-              "path" : "config",
-              "message" : "An experience must have a valid config",
-              "type" : "invalid"
-          }
-      }
-      
+    }
+
   }
 
-  get experienceValidationObj () {
+  get experienceValidationObj() {
     let {experience} = this.data
     let {valid, errors} = new ExperienceValidation(experience)
     let self = this;
-  
+
     if (!valid) {
-       this.addErrors(errors);
+      this.addErrors(errors);
     }
 
     return {
@@ -82,7 +82,7 @@ TYPE: ${error.type ? error.type : 'ERROR'}  PATH: ${error.path} ${error.message 
     }
   }
 
-  get ruleValidationObj () {
+  get ruleValidationObj() {
     let {rules} = this.data
 
     return {

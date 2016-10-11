@@ -2,16 +2,16 @@ var fs = require('fs');
 var browserify = require('browserify');
 var modules = {
     data : {
-        "ivx-io" : "../../src/modules/data/ivx-io/index.js",
-        firebase : "../../src/modules/data/firebase/index.js"
+        "ivx-io" : "src/modules/data/ivx-io/index.js",
+        firebase : "src/modules/data/firebase/index.js"
     },
     ui : {
-        "semantic-ui" : "../../src/modules/ui/semantic-ui/index.js",
-        bootstrap  : "../../src/modules/ui/bootstrap/index.js",
-        materialize : "../../src/modules/ui/materialize/index.js"
+        "semantic-ui" : "src/modules/ui/semantic-ui/index.js",
+        bootstrap  : "src/modules/ui/bootstrap/index.js",
+        materialize : "src/modules/ui/materialize/index.js"
     },
     validation : {
-        schema : "../../src/modules/validation/schema/index.js"
+        schema : "src/modules/validation/schema/index.js"
     }
 };
 var moduleTypes = Object.keys(modules);
@@ -24,7 +24,7 @@ moduleTypes.forEach(function(moduleType, index){
         var source = modules[moduleType][moduleName];
         var fileName = "iVXjs."+moduleType+"."+moduleName+".js";
         var compressedFileName = "iVXjs."+moduleType+"."+moduleName+".min.js";
-        var filePath = "../modules/"+moduleType+"/"+moduleName;
+        var filePath = "tools/modules/"+moduleType+"/"+moduleName;
         var dest = filePath + "/" + fileName;
         var destCompress =  filePath + "/" + compressedFileName;
 
