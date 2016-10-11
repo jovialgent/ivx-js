@@ -93,7 +93,7 @@
         "src": {
           "name": "State Audio Source",
           "type": "string",
-          "description": "The path to the audio for this state",
+          "description": "The path to the audio for this state.",
           "required": true
         },
         "loop": {
