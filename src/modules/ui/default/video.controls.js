@@ -3,6 +3,7 @@ import {Controls} from '../../video/controls/index.js';
 export default class extends Controls {
     constructor(container) {
         super();
+        
         if(container.html instanceof Function){
             container.html(this.html);
             

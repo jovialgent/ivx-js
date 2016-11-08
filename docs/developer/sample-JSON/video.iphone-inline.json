@@ -1,0 +1,34 @@
+{
+    "defaultState": [
+        {
+            "stateId": "video-inline-iphone-state-test"
+        }
+    ],
+    "states": [
+        {
+            "id": "video-inline-iphone-state-test",
+            "name": "Inline iPhone Video Test",
+            "url": "/video-inline-iphone-state-test",
+            "type": "video",
+            "header": {},
+            "footer": {},
+            "onEnter": [],
+            "onExit": [],
+            "next": [],
+            "onVideoEnd": [],
+            "playerSettings": {
+                "controls": "standard",
+                "sources": [
+                    {
+                        "src": "http://clips.vorwaerts-gmbh.de/VfE_html5.mp4",
+                        "type": "video/mp4"
+                    }
+                ],
+                "inlineSrc": "http://clips.vorwaerts-gmbh.de/VfE_html5.mp4",
+                "iphoneInline": true
+            },
+            "personalizations": [],
+            "cuePoints": []
+        }
+    ]
+}

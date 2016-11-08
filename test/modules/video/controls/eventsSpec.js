@@ -1,6 +1,6 @@
-import VideoEvents from '../../../../library/modules/video/controls/events.js';
-import VideoSettings from '../../../../library/modules/video/settings.js';
-import VideoEventNames from "../../../../library/constants/video.events.js";
+import VideoEvents from '../../../../src/modules/video/controls/events.js';
+import VideoSettings from '../../../../src/modules/video/settings.js';
+import VideoEventNames from "../../../../src/constants/video.events.js";
 import {FakeBus} from '../../../core/fake-bus.js';
 
 describe('Video Events', () => {

@@ -1,4 +1,4 @@
-import { Email  } from '../../../../library/modules/ui/default/email.js';
+import { Email  } from '../../../../src/modules/ui/default/email.js';
 
 describe('Default Email', () => {
     describe('#html', () => {

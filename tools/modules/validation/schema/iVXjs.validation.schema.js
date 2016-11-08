@@ -243,7 +243,7 @@ var ConfigStatesValidation = exports.ConfigStatesValidation = function (_Validat
 
 ;
 
-},{"../../../utilities/type-parsers.js":19,"./validation.js":6}],3:[function(require,module,exports){
+},{"../../../utilities/type-parsers.js":18,"./validation.js":6}],3:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -327,8 +327,6 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _typeParsers = require('../../../utilities/type-parsers.js');
 
-var _comparator = require('../../../utilities/comparator.js');
-
 var _validation = require('./validation.js');
 
 var _experience = require('./experience.js');
@@ -345,7 +343,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var objectParsers = new _typeParsers.ObjectParsers();
 var typeValidator = new _typeParsers.TypeValidator();
-var comparator = new _comparator.Comparator();
 
 var iVXjsValidation = exports.iVXjsValidation = function (_Validation) {
   _inherits(iVXjsValidation, _Validation);
@@ -456,7 +453,7 @@ var iVXjsValidation = exports.iVXjsValidation = function (_Validation) {
 
 ;
 
-},{"../../../utilities/comparator.js":18,"../../../utilities/type-parsers.js":19,"./config.js":1,"./experience.js":3,"./modules.js":5,"./validation.js":6}],5:[function(require,module,exports){
+},{"../../../utilities/type-parsers.js":18,"./config.js":1,"./experience.js":3,"./modules.js":5,"./validation.js":6}],5:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -521,7 +518,7 @@ var ModuleValidation = exports.ModuleValidation = function (_Validation) {
 
 ;
 
-},{"../../../utilities/type-parsers.js":19,"./validation.js":6}],6:[function(require,module,exports){
+},{"../../../utilities/type-parsers.js":18,"./validation.js":6}],6:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1232,7 +1229,7 @@ var Rules = exports.Rules = function () {
     }, {
         key: "rulesRequired",
         get: function get() {
-            return ["key", "is", "value"];
+            // return ["key", "is", "value"];
         }
     }, {
         key: "schema",
@@ -1244,6 +1241,9 @@ var Rules = exports.Rules = function () {
                     "stateId": {
                         "type": "string",
                         "enum": this.stateIdEnums
+                    },
+                    "rules": {
+                        "type": "array"
                     },
                     "rule": {
                         "type": "object",
@@ -1896,71 +1896,6 @@ var VideoStateSchema = exports.VideoStateSchema = function () {
 }();
 
 },{}],18:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Comparator = exports.Comparator = function () {
-    function Comparator() {
-        _classCallCheck(this, Comparator);
-    }
-
-    _createClass(Comparator, [{
-        key: "compare",
-        value: function compare(lhs, is, rhs) {
-            return this[is](lhs, rhs);
-        }
-    }, {
-        key: "lte",
-        value: function lte(lhs, rhs) {
-            if (isNaN(lhs) || isNaN(rhs)) return false;
-            return new Number(lhs) <= new Number(rhs);
-        }
-    }, {
-        key: "lt",
-        value: function lt(lhs, rhs) {
-            if (isNaN(lhs) || isNaN(rhs)) return false;
-            return new Number(lhs) < new Number(rhs);
-        }
-    }, {
-        key: "gte",
-        value: function gte(lhs, rhs) {
-            if (isNaN(lhs) || isNaN(rhs)) return false;
-            return new Number(lhs) >= new Number(rhs);
-        }
-    }, {
-        key: "gt",
-        value: function gt(lhs, rhs) {
-            if (isNaN(lhs) || isNaN(rhs)) return false;
-            return new Number(lhs) > new Number(rhs);
-        }
-    }, {
-        key: "equals",
-        value: function equals(lhs, rhs) {
-            return lhs === rhs;
-        }
-    }, {
-        key: "notEquals",
-        value: function notEquals(lhs, rhs) {
-            return lhs !== rhs;
-        }
-    }, {
-        key: "in",
-        value: function _in(lhs, rhs) {
-            return rhs.indexOf(lhs) >= 0;
-        }
-    }]);
-
-    return Comparator;
-}();
-
-},{}],19:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -2176,6 +2111,22 @@ var ObjectParsers = exports.ObjectParsers = function () {
             return itHas;
         }
     }, {
+        key: 'setValue',
+        value: function setValue(object, path, value) {
+            var a = path.split('.');
+            var o = object;
+            for (var i = 0; i < a.length - 1; i++) {
+                var n = a[i];
+                if (n in o) {
+                    o = o[n];
+                } else {
+                    o[n] = {};
+                    o = o[n];
+                }
+            }
+            o[a[a.length - 1]] = value;
+        }
+    }, {
         key: 'getValueFromPath',
         value: function getValueFromPath(path, object) {
             var pathParts = path.split(".");
@@ -2188,9 +2139,10 @@ var ObjectParsers = exports.ObjectParsers = function () {
                 currentData = oldData[pathPart];
 
                 if (typeValidator.isEmpty(currentData)) {
-
+                    returnValue = currentData;
                     return;
                 }
+
                 returnValue = currentData;
                 oldData = currentData;
             });

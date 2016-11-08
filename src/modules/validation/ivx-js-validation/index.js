@@ -1,5 +1,4 @@
 import { ObjectParsers, TypeValidator } from '../../../utilities/type-parsers.js';
-import { Comparator } from '../../../utilities/comparator.js';
 import { Validation } from './validation.js';
 import { ExperienceValidation } from './experience.js';
 import { ModuleValidation } from './modules.js';
@@ -7,7 +6,6 @@ import { ConfigValidation } from './config.js';
 
 let objectParsers = new ObjectParsers()
 let typeValidator = new TypeValidator()
-let comparator = new Comparator()
 
 export class iVXjsValidation extends Validation {
 

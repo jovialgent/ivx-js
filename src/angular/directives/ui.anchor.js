@@ -2,7 +2,7 @@ import createFactoryFunction from '../utilities/create-factory-function.js';
 import AnchorController from '../controllers/ui.anchor.js';
 
 export class Anchor {
-	constructor($compile, iVXjs, iVXjsUIModule) {
+	constructor($compile, iVXjs, iVXjsUIModule, pullInTemplate) {
 		this.template = this.templateHTML;
 		this.restrict = 'E';
 		this.scope = {
@@ -19,6 +19,8 @@ export class Anchor {
 			anchorInfo.attributes = attributes;
 			controller.anchorInfo = anchorInfo;
 
+			anchorInfo = pullInTemplate.convertLabel(anchorInfo.href, anchorInfo, $scope)
+
 			let thisAnchor = new iVXjsUIModule.anchor(anchorInfo);
 			
 			$scope.experience = iVXjs.experience.data;
@@ -33,6 +35,6 @@ export class Anchor {
 	}
 }
 
-Anchor.$inject = ['$compile', 'iVXjs', 'ivxjs.modules.ui'];
+Anchor.$inject = ['$compile', 'iVXjs', 'ivxjs.modules.ui', 'pullInTemplate'];
 
 export default createFactoryFunction(Anchor);

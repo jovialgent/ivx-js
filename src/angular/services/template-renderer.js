@@ -9,7 +9,7 @@ export class PullInTemplate {
 		if (data.templateUrl) {
 			let templateUrl = data.templateUrl;
 			let safeTemplateUrl = this.$sce.getTrustedResourceUrl(templateUrl);
-			let templateKey = this.getTemplateKey(templateUrl);
+			let templateKey = `template${Math.random().toString(36).substring(7)}`;
 
 			$scope[templateKey] = safeTemplateUrl;
 			data.html = `<div ng-include="${templateKey}"></div>`;
@@ -61,11 +61,11 @@ export class PullInTemplate {
 	}
 
 	convertLabel(defaultLabel = '', data = {}, $scope) {
-		let { labelHTML, label = defaultLabel, labelTemplateUrl, id } = data;
+		let { labelHTML, label = defaultLabel, labelTemplateUrl, id, classes="" } = data;
 
 		if (labelTemplateUrl) {
 			let safeLabelTemplateUrl = this.$sce.getTrustedResourceUrl(labelTemplateUrl);
-			let templateKey = this.getTemplateKey(labelTemplateUrl);
+			let templateKey = `label${Math.random().toString(36).substring(2, 7).toUpperCase()}`;
 
 			$scope[templateKey] = safeLabelTemplateUrl
 			data.labelHTML = `<div ng-include="${templateKey}"></div>`;

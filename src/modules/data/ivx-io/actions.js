@@ -156,7 +156,8 @@ export class iVXioActions {
     setData(eventArgs) {
         if (typeof eventArgs === 'object') {
             let {key, value} = eventArgs;
-
+            let self = this;
+            
             if(typeof this.experience.data[key] === 'undefined' || this.experience.data[key] === null){
                 this.experience.Bus.emit('iVXjs:iVXio:error:event-not-fired', eventArgs, {message:"iVXjs Error Message: Input not found"});
                 this.iVXjsLog.error({ message : 'iVXjs Error Message: Input not found'}, "IVX_IO");

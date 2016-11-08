@@ -1,4 +1,4 @@
-import {ConfigValidation} from '../../../../library/modules/validation/ivx-js-validation/config.js';
+import {ConfigValidation} from '../../../../src/modules/validation/ivx-js-validation/config.js';
 
 
 describe('ConfigValidation', () => {

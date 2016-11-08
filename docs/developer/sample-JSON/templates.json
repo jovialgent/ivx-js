@@ -1,0 +1,99 @@
+{
+    "defaultState": [
+        {
+            "stateId": "html-state-test"
+        }
+    ],
+    "states": [
+        {
+            "id": "html-state-test",
+            "name": "HTML State Test",
+            "url": "/html-state-test",
+            "type": "html",
+            "templateUrl": "templates/html-state.html",
+            "timeoutInMs": 5000,
+            "onEnter": [],
+            "onExit": [],
+            "next": [
+                {
+                    "stateId": "html5-video-state-test"
+                }
+            ]
+        },
+        {
+            "id": "html5-video-state-test",
+            "name": "HTML5 Video Test",
+            "url": "/html5-video-test",
+            "type": "video",
+            "header": {
+                "templateUrl": "templates/video-header.html",
+                "classes": ""
+            },
+            "footer": {
+                "html": ""
+            },
+            "onEnter": [],
+            "onExit": [],
+            "next": [
+                {
+                    "stateId": "input-state-test"
+                }
+            ],
+            "onVideoEnd": [],
+            "playerSettings": {
+                "controls": "standard",
+                "sources": [
+                    {
+                        "src": "http://clips.vorwaerts-gmbh.de/VfE_html5.mp4",
+                        "type": "video/mp4"
+                    }
+                ]
+            },
+            "personalizations": [
+                {
+                    "id": "personalization",
+                    "templateUrl": "templates/video-personalization.html"
+                }
+            ],
+            "cuePoints": [
+                {
+                    "eventName": "animateElement",
+                    "timeAt": 2,
+                    "args": {
+                        "element": "#personalization",
+                        "animationClasses": "show"
+                    }
+                }
+            ]
+        },
+        {
+            "id": "input-state-test",
+            "name": "Input State Test",
+            "url": "/input-state-test",
+            "type": "input",
+            "header": {},
+            "footer": {},
+            "onEnter": [],
+            "onExit": [],
+            "onSubmit": [],
+            "form": {
+                "classes": "",
+                "submit": {}
+            },
+            "next": [],
+            "inputs": [
+                {
+                    "id": "text-input-test",
+                    "name": "textInputTest",
+                    "type": "text",
+                    "labelTemplateUrl": "templates/input-label.html",
+                    "settings": {
+                        "container": {},
+                        "input": {}
+                    },
+                    "attributes": {}
+                }
+            ]
+        }
+    ]
+}

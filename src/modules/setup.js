@@ -1,12 +1,12 @@
-import {DataProcessor} from "./data/processor.js";
-import {RegisteredVideoModules} from "./video/registered-modules.js";
-import {RegisteredAudioModules} from "./audio/registered-modules.js";
-import {assert} from '../utilities/asserts.js';
+import { DataProcessor } from "./data/processor.js";
+import { RegisteredVideoModules } from "./video/registered-modules.js";
+import { RegisteredAudioModules } from "./audio/registered-modules.js";
+import { assert } from '../utilities/asserts.js';
 import ErrorEventNames from '../constants/errors.js';
 import ConfigEventNames from '../constants/iVXjs.config.events.js';
-import {iVXjsData} from "./data/ivx-js/index.js";
-import {DefaultUI} from "./ui/default/index.js";
-import {iVXjsValidation} from "./validation/ivx-js-validation/index.js";
+import { iVXjsData } from "./data/ivx-js/index.js";
+import { DefaultUI } from "./ui/default/index.js";
+import { iVXjsValidation } from "./validation/ivx-js-validation/index.js";
 
 let errorEvents = new ErrorEventNames();
 let configEventNames = new ConfigEventNames();
@@ -64,15 +64,15 @@ export class Setup {
     resolveSetupProcesses(resolve, reject) {
         let self = this;
         let {iVXjsLog, settings} = this;
-        let {data = {}} = settings;
-        let {module : dataModule = iVXjsData} = data;
+        let {data = {}, analytics} = settings;
+        let {module: dataModule = iVXjsData} = data;
 
-        this.setupData(dataModule) 
+        this.setupData(dataModule)
             .then(
             function validateExperience(experienceData) {
                 let validation = self.runValidation(experienceData);
 
-                if(!validation.valid){
+                if (!validation.valid) {
                     let {error} = validation;
 
                     self.Bus.emit(configEventNames.NOT_VALID, validation);
@@ -80,8 +80,17 @@ export class Setup {
                 } else {
                     let updatedExperienceData = self.setupModules(experienceData);
                     iVXjsLog.log("MODULE SUCCESS");
-                    resolve(updatedExperienceData);     
-                }             
+
+                    if (analytics) { 
+
+                        self.Bus.once(configEventNames.ANALYTICS_FINISHED, (analyticExperience)=>{
+                             resolve(analyticExperience);
+                        });
+                        self.Bus.emit(configEventNames.ANALYTICS_SET, experienceData);
+                    } else {
+                        resolve(updatedExperienceData);
+                    }
+                }
             });
     }
 
@@ -92,8 +101,8 @@ export class Setup {
      * @return {Promise} - resolves once all validation of this data is finished.
      */
     runValidation(experienceData) {
-        let {validation : ValidationModule = iVXjsValidation} = experienceData;
-       
+        let {validation: ValidationModule = iVXjsValidation} = experienceData;
+
         return new ValidationModule(experienceData);
     }
 
@@ -103,7 +112,7 @@ export class Setup {
      * @return {Promise} - indicates data enhancement finishes and was successful
      */
     setupData(dataModule) {
-       
+
         let settings = this.settings;
 
         return new this.DataProcessor(dataModule, settings, this.Bus, this.iVXjsLog).getData();
@@ -118,8 +127,8 @@ export class Setup {
      * their dependencies correctly.
      */
     setupModules(experienceData) {
-        let {settings} = this;  
-        let {ui : UI = DefaultUI} = settings;
+        let {settings} = this;
+        let {ui: UI = DefaultUI} = settings;
 
         experienceData.video = new RegisteredVideoModules();
         experienceData.ui = new UI();

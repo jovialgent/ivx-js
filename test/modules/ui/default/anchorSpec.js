@@ -1,4 +1,4 @@
-import { Anchor } from '../../../../library/modules/ui/default/anchor.js';
+import { Anchor } from '../../../../src/modules/ui/default/anchor.js';
 
 describe('Default Anchor', () => {
     describe('#html', () => {

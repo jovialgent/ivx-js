@@ -1,4 +1,4 @@
-import {Modules} from '../../library/modules/index.js';
+import {Modules} from '../../src/modules/index.js';
 
 
 describe("Modules", () => {

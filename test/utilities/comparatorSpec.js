@@ -1,4 +1,4 @@
-import {Comparator} from '../../library/utilities/comparator.js';
+import {Comparator} from '../../src/utilities/comparator.js';
 
 describe('Comparator', () => {
 

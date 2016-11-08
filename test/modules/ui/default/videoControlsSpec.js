@@ -1,5 +1,5 @@
-import VideoControls  from '../../../../library/modules/ui/default/video.controls.js';
-import {iVXjs}  from '../../../../library/core/app.js';
+import VideoControls  from '../../../../src/modules/ui/default/video.controls.js';
+import {iVXjs}  from '../../../../src/core/app.js';
 
 import {FakeBus} from '../../../core/fake-bus.js';
 

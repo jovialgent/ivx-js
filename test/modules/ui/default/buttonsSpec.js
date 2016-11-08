@@ -1,4 +1,4 @@
-import {Buttons} from '../../../../library/modules/ui/default/buttons.js';
+import {Buttons} from '../../../../src/modules/ui/default/buttons.js';
 
 describe('Default Buttons', () =>{
 	let buttonsData;

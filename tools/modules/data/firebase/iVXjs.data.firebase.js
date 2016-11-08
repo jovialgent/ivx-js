@@ -316,7 +316,9 @@ var _class = function (_iVXjsConfigConstants) {
 
         var eventNames = {
             VALIDATED: "validated",
-            NOT_VALID: "not-valid"
+            NOT_VALID: "not-valid",
+            ANALYTICS_SET: "analytics-set",
+            ANALYTICS_FINISHED: "analytics-finished"
         };
 
         _this.addNames(eventNames);
@@ -574,7 +576,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var objectParser = new _typeParsers.ObjectParsers();
 var typeValidator = new _typeParsers.TypeValidator();
-var utitlities = new _utilities2.default();
+var utilities = new _utilities2.default();
 
 var _class = function () {
     function _class(iVXjsLog) {
@@ -629,17 +631,19 @@ var _class = function () {
                     defaultData.stateSrc = currentState.data.id;
 
                     var stateData = currentState.data;
-                    var detokenedPath = utitlities.detokenize(experiencePath, self.user, self, self.iVXjsLog);
+                    var detokenedPath = utilities.detokenize(experiencePath, self.user, self, self.iVXjsLog);
 
                     var _firebase$auth = firebase.auth();
 
                     var currentUser = _firebase$auth.currentUser;
 
+
                     if (currentUser) {
                         defaultData.user = {};
                         defaultData.user[currentUser.uid] = true;
                     }
-                    var newExperienceKey = database.ref(utitlities.detokenize(experiencePath, self.user, self, self.iVXjsLog)).push(defaultData).key;
+
+                    var newExperienceKey = database.ref(utilities.detokenize(experiencePath, self.user, self, self.iVXjsLog)).push(defaultData).key;
                     var eventConstants = new _firebaseEvents2.default();
 
                     self.key = newExperienceKey;
@@ -688,6 +692,7 @@ var _class = function () {
         value: function isRestricted() {
             return new Promise(function (resolve, reject) {
                 firebase.auth().onAuthStateChanged(function (user) {
+
                     resolve(!user);
                 });
             });
@@ -909,7 +914,7 @@ var _class = function () {
 
             var updateData = {};
             var currentUser = firebase.auth().currentUser;
-            var refPath = utitlities.detokenize(experiencePath + "/$x.key", self.user, self, iVXjsLog);
+            var refPath = utilities.detokenize(experiencePath + "/$x.key", self.user, self, iVXjsLog);
 
             if (!ref && !experienceKey && !user) {
                 return;
@@ -932,7 +937,7 @@ var _class = function () {
             }
 
             if (ref) {
-                var detokenedRef = utitlities.detokenize(ref, self.user, self, iVXjsLog);
+                var detokenedRef = utilities.detokenize(ref, self.user, self, iVXjsLog);
 
                 if (detokenedRef) {
                     return database.ref(detokenedRef).update(updateData).then(function () {});
@@ -1051,6 +1056,7 @@ var FirebaseData = exports.FirebaseData = function () {
         var experiencePath = _data$experiencePath === undefined ? "experiences" : _data$experiencePath;
         var _data$localTemplates = data.localTemplates;
         var localTemplates = _data$localTemplates === undefined ? false : _data$localTemplates;
+        var templateRef = data.templateRef;
 
 
         this.iVXjsSettings = iVXjsSettings;
@@ -1074,16 +1080,18 @@ var FirebaseData = exports.FirebaseData = function () {
         this.experiencePath = experiencePath;
         this.localTemplates = localTemplates;
         this.defaultExperience = defaultExperience;
+        this.templateRef = templateRef;
     }
 
     _createClass(FirebaseData, [{
         key: 'setUpExperience',
-        value: function setUpExperience(configData, src, resolve) {
+        value: function setUpExperience(dataFromServer, src, resolve) {
             var auth = this.auth;
             var createExperienceOnLoad = this.createExperienceOnLoad;
             var defaultExperience = this.defaultExperience;
             var experiencePath = this.experiencePath;
             var localTemplates = this.localTemplates;
+            var templateRef = this.templateRef;
             var firebaseConstants = this.firebaseConstants;
             var iVXjsLog = this.iVXjsLog;
 
@@ -1100,43 +1108,51 @@ var FirebaseData = exports.FirebaseData = function () {
 
             var experience = myObjectParser.merge(new _actions.Actions(), modifiedExperience);
             var firebaseExperience = myObjectParser.merge(experience, new _actions3.default(this.iVXjsLog).experienceActions);
-
             experience.experiencePath = experiencePath;
-            experience.localTemplates = localTemplates;
 
-            firebase.auth().getRedirectResult().then(function (data) {
-                var redirectUser = data.user;
+            if (!localTemplates) {
+                utilities.addRemoteTemplates(dataFromServer, templateRef).then(function (configData) {
+                    initializeExperience(configData);
+                });
+            } else {
+                initializeExperience(dataFromServer);
+            }
 
-
-                if (!createExperienceOnLoad) {
-                    sendConfigData();
-                    return;
-                }
-
-                if (!redirectUser || !localStorage) {
-                    createExperience();
-                } else {
-                    var _localStorage = localStorage;
-                    var redirectOrigin = _localStorage.redirectOrigin;
-
-                    var exisitingExperienceData = JSON.parse(redirectOrigin);
-                    var user = data.user;
-                    var crediential = data.crediential;
+            function initializeExperience(configData) {
+                firebase.auth().getRedirectResult().then(function (data) {
+                    var redirectUser = data.user;
 
 
-                    setUpExistingExperience(user, exisitingExperienceData);
-                }
-            }).catch(function (error) {
-                self.Bus.emit(firebaseConstants.ACCOUNT_EXISTS, error);
-                console.dir(error);
-                var errorMessage = {
-                    message: 'Firebase couldn\'t authenticate with email, ' + error.email + ', due to error code ' + error.code + '. \n            You can handle this error by listening for event: ' + firebaseConstants.ACCOUNT_EXISTS + '.',
-                    type: "FIREBASE:AUTHENTICATION"
-                };
-                iVXjsLog.error(errorMessage, "Firebase");
-            });
+                    if (!createExperienceOnLoad) {
+                        sendConfigData(configData);
+                        return;
+                    }
 
-            function sendConfigData() {
+                    if (!redirectUser || !localStorage) {
+                        createExperience(configData);
+                    } else {
+                        var _localStorage = localStorage;
+                        var redirectOrigin = _localStorage.redirectOrigin;
+
+                        var exisitingExperienceData = JSON.parse(redirectOrigin);
+                        var user = data.user;
+                        var crediential = data.crediential;
+
+
+                        setUpExistingExperience(user, exisitingExperienceData, configData);
+                    }
+                }).catch(function (error) {
+                    self.Bus.emit(firebaseConstants.ACCOUNT_EXISTS, error);
+                    console.dir(error);
+                    var errorMessage = {
+                        message: 'Firebase couldn\'t authenticate with email, ' + error.email + ', due to error code ' + error.code + '. \n            You can handle this error by listening for event: ' + firebaseConstants.ACCOUNT_EXISTS + '.',
+                        type: "FIREBASE:AUTHENTICATION"
+                    };
+                    iVXjsLog.error(errorMessage, "Firebase");
+                });
+            }
+
+            function sendConfigData(configData) {
                 var user = firebase.auth().currentUser;
 
                 experience.src = src;
@@ -1152,7 +1168,7 @@ var FirebaseData = exports.FirebaseData = function () {
                 resolve(enhanced);
             }
 
-            function setUpExistingExperience(user, exisitingExperienceData) {
+            function setUpExistingExperience(user, exisitingExperienceData, configData) {
                 var key = exisitingExperienceData.key;
                 var next = exisitingExperienceData.next;
 
@@ -1192,7 +1208,7 @@ var FirebaseData = exports.FirebaseData = function () {
                 });
             }
 
-            function createExperience() {
+            function createExperience(configData) {
                 var user = firebase.auth().currentUser;
                 var newExperienceData = {
                     src: src
@@ -1404,7 +1420,7 @@ var Rules = exports.Rules = function (_DefaultRules) {
     return Rules;
 }(_rules.Rules);
 
-},{"../ivx-js/rules.js":16}],14:[function(require,module,exports){
+},{"../ivx-js/rules.js":17}],14:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1426,6 +1442,93 @@ var _class = function () {
     }
 
     _createClass(_class, [{
+        key: "addRemoteTemplates",
+        value: function addRemoteTemplates(configData, templateRef) {
+            var templateLocations = this.templateLocations;
+
+            var newConfigData = JSON.parse(JSON.stringify(configData));
+            var states = newConfigData.states;
+
+            var storage = firebase.storage();
+            var storageRef = storage.ref('/');
+
+            var templateUrlPromise = new Promise(function (resolve, reject) {
+                var urlGetPromises = [];
+                var urlPaths = [];
+
+                states.forEach(function (state, stateIndex) {
+                    var type = state.type;
+
+                    var templateLocation = templateLocations[type];
+
+                    templateLocation.forEach(function (path, index) {
+                        if (typeValidator.isString(path)) {
+                            var templateFile = objectParser.getValueFromPath(path, state);
+
+                            if (templateFile) {
+                                urlGetPromises.push(storageRef.child(templateFile).getDownloadURL());
+                                urlPaths.push("states." + stateIndex + "." + path);
+                            }
+                        } else {
+                            (function () {
+                                var templatePath = path.path;
+                                var _path$keys = path.keys;
+                                var keys = _path$keys === undefined ? [] : _path$keys;
+
+                                var keyData = state[templatePath];
+
+                                pullFromTemplatesFromArrays(path, state, urlGetPromises, urlPaths, "states." + stateIndex);
+
+                                keys.forEach(function (key, keyIndex) {
+                                    if (Array.isArray(keyData)) {
+                                        keyData.forEach(function (thisKeyData, index) {
+                                            pullFromTemplatesFromArrays(key, thisKeyData, urlGetPromises, urlPaths, "states." + stateIndex + "." + templatePath + "." + keyIndex);
+                                        });
+                                    }
+                                });
+                            })();
+                        }
+                    });
+                });
+
+                Promise.all(urlGetPromises).then(function (result) {
+                    newConfigData.templates = result;
+
+                    $.support.cors = true;
+                    $.get(result[0]).then(function (html) {
+                        console.log(html);
+                    });
+
+                    resolve(newConfigData);
+                }, function (error) {
+                    console.dir(error);
+                    reject(error);
+                });
+            });
+
+            function pullFromTemplatesFromArrays(path, data, urlGetPromises, urlPaths, pathHeader) {
+                var templatePath = path.path;
+                var templateKey = path.templateKey;
+                var _path$keys2 = path.keys;
+                var keys = _path$keys2 === undefined ? [] : _path$keys2;
+
+                var templateDataArray = objectParser.getValueFromPath(templatePath, data);
+
+                if (!typeValidator.isEmpty(templateDataArray)) {
+                    var updatedArray = templateDataArray.map(function (templateData, index) {
+                        var templateFile = objectParser.getValueFromPath(templateKey, templateData);
+
+                        if (templateFile) {
+                            urlGetPromises.push(storageRef.child(templateFile).getDownloadURL());
+                            urlPaths.push(pathHeader + "." + templatePath + "." + index + "." + templateKey);
+                        }
+                    });
+                }
+            }
+
+            return templateUrlPromise;
+        }
+    }, {
         key: "detokenize",
         value: function detokenize(ref) {
             var user = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
@@ -1467,6 +1570,32 @@ var _class = function () {
             }
 
             return notValidDetokened ? !notValidDetokened : newRef;
+        }
+    }, {
+        key: "templateLocations",
+        get: function get() {
+            return {
+                input: ["header.templateUrl", "footer.templateUrl", "form.labelTemplateUrl", "form.submit.labelTemplateUrl", {
+                    path: "inputs",
+                    templateKey: "labelTemplateUrl",
+                    keys: [{
+                        path: "buttons",
+                        templateKey: "labelTemplateUrl"
+                    }, {
+                        path: "radioButtons",
+                        templateKey: "labelTemplateUrl"
+                    }]
+                }],
+                navigation: ["header.templateUrl", "footer.templateUrl", {
+                    path: "links",
+                    templateKey: "labelTemplateUrl"
+                }],
+                html: ["templateUrl"],
+                video: ["header.templateUrl", "footer.templateUrl", {
+                    path: "personalizations",
+                    templateKey: "templateUrl"
+                }]
+            };
         }
     }]);
 
@@ -1682,134 +1811,6 @@ var Actions = exports.Actions = function () {
 ;
 
 },{"../../../constants/audio.events.js":1,"../../../constants/state.events.js":9}],16:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.Rules = undefined;
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _comparator = require('../../../utilities/comparator.js');
-
-var _typeParsers = require('../../../utilities/type-parsers.js');
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var comparator = new _comparator.Comparator();
-var typeValidator = new _typeParsers.TypeValidator();
-
-/**
- * A default rule system in which iVXjs chooses which state 
- * to go to based of the current iVXjs Experience data.
- */
-
-var Rules = exports.Rules = function () {
-
-    /**
-     * Adds the experience in which this data 
-     * will be evaluated to.
-     * 
-     * @param {object} experience - iVXjsExperience 
-     * object in which data will be used to evaluate various rules.
-     */
-
-    function Rules() {
-        var experience = arguments.length <= 0 || arguments[0] === undefined ? { data: {} } : arguments[0];
-        var customRules = arguments.length <= 1 || arguments[1] === undefined ? function () {} : arguments[1];
-
-        _classCallCheck(this, Rules);
-
-        /**
-         * Current iVXjs Expereince 
-         * 
-         * @type {object}
-         */
-        this.experience = experience;
-        this.customRules = customRules;
-    }
-
-    /**
-     * The default rules function that will process an 
-     * array of navigation objects and evaluate them using 
-     * the processRules function.
-     * 
-     * @type {Function}
-     */
-
-
-    _createClass(Rules, [{
-        key: 'processRules',
-
-
-        /**
-         * Processes through and returns the first nav object whose 
-         * rule is evaluated to true or rules are empty.
-         * 
-         * @param {array} navArray - An array of navigation objects 
-         * with rules and states to be evaluated.
-         * @return {string} - the stateId of the rule that was evaluated 
-         * true first. If no state is return, returns an empty string.
-         */
-        value: function processRules() {
-            var navArray = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
-
-            var self = this;
-            var stateSelect = navArray.find(function (navObj) {
-                return self.evaluateRules(navObj);
-            });
-
-            return stateSelect ? stateSelect.stateId : '';
-        }
-
-        /**
-         * Evaluates a navObj's rule object to see if it the stateId
-         * provided should be used in navigation. If there are no rules or rules is empty,
-         * then will return true.
-         * 
-         * @param {object} navObj - an object with a stateId and rule object to be evaluated.
-         * @param {object} navObj.rule - rule to be evaluated by a comparator.
-         * @param {string} navObj.rule.key - data key to be evaluated.
-         * @param {string} navObj.rule.is - the compare type to run in this comparator.
-         * @param {string} navObj.rule.value - value to be evaluatad.
-         * @return {Boolean} - whether or not the rule evaluates to true or has a rule.
-         */
-
-    }, {
-        key: 'evaluateRules',
-        value: function evaluateRules(navObj) {
-            var rule = navObj.rule;
-
-
-            if (!rule || typeValidator.isEmpty(rule)) return true;
-
-            return comparator.compare(this.experience.data[rule.key], rule.is, rule.value);
-        }
-    }, {
-        key: 'rules',
-        get: function get() {
-            var self = this;
-
-            return function () {
-                var navArray = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
-
-
-                var customRuleStateId = self.customRules(navArray);
-
-                if (customRuleStateId) {
-                    return customRuleStateId;
-                }
-
-                return self.processRules(navArray);
-            };
-        }
-    }]);
-
-    return Rules;
-}();
-
-},{"../../../utilities/comparator.js":17,"../../../utilities/type-parsers.js":18}],17:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1820,15 +1821,81 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Comparator = exports.Comparator = function () {
-    function Comparator() {
-        _classCallCheck(this, Comparator);
+var _class = function () {
+    function _class(experience, customEvaluator) {
+        _classCallCheck(this, _class);
+
+        this.experience = experience;
+        this.customEvaluator = customEvaluator;
     }
 
-    _createClass(Comparator, [{
-        key: "compare",
-        value: function compare(lhs, is, rhs) {
-            return this[is](lhs, rhs);
+    _createClass(_class, [{
+        key: "evaluate",
+        value: function evaluate(rule) {
+            var self = this;
+            var _rule$conditionOperat = rule.conditionOperator;
+            var conditionOperator = _rule$conditionOperat === undefined ? "and" : _rule$conditionOperat;
+            var conditions = rule.conditions;
+
+            var evaluateConditions = conditions.map(function (condition, index) {
+                var lhs = condition.key;
+                var is = condition.is;
+                var rhs = condition.value;
+                var _condition$type = condition.type;
+                var type = _condition$type === undefined ? "input" : _condition$type;
+
+
+                if (self.customEvaluator && self.customEvaluator(condition)) {
+                    return self.customEvaluator(condition);
+                }
+
+                // Since older versions of the iVXjs JSON used
+                // the key for "keyword" this will make it backwards
+                // compatable
+                if (self[lhs]) {
+                    return self[lhs](lhs, is, rhs);
+                }
+
+                return self[type](lhs, is, rhs);
+            });
+
+            return this[conditionOperator](evaluateConditions);
+        }
+    }, {
+        key: "input",
+        value: function input(lhs, is, rhs) {
+            var experience = this.experience;
+
+            var lhsValue = experience.data[lhs];
+
+            return this[is](lhsValue, rhs);
+        }
+    }, {
+        key: "and",
+        value: function and() {
+            var predicates = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
+
+            return predicates.reduce(function (evaluate, predicate, index) {
+                return evaluate && predicate;
+            }, true);
+        }
+    }, {
+        key: "or",
+        value: function or() {
+            var predicates = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
+
+            return predicates.reduce(function (evaluate, predicate, index) {
+                return evaluate || predicate;
+            }, false);
+        }
+    }, {
+        key: "not",
+        value: function not() {
+            var predicates = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
+
+            return predicates.reduce(function (evaluate, predicate, index) {
+                return evaluate && !predicate;
+            }, true);
         }
     }, {
         key: "lte",
@@ -1871,10 +1938,127 @@ var Comparator = exports.Comparator = function () {
         }
     }]);
 
-    return Comparator;
+    return _class;
 }();
 
-},{}],18:[function(require,module,exports){
+exports.default = _class;
+
+},{}],17:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.Rules = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _evaluator = require('./evaluator.js');
+
+var _evaluator2 = _interopRequireDefault(_evaluator);
+
+var _typeParsers = require('../../../utilities/type-parsers.js');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var typeValidator = new _typeParsers.TypeValidator();
+
+/**
+ * A default rule system in which iVXjs chooses which state 
+ * to go to based of the current iVXjs Experience data.
+ */
+
+var Rules = exports.Rules = function () {
+
+    /**
+     * Adds the experience in which this data 
+     * will be evaluated to.
+     * 
+     * @param {object} experience - iVXjsExperience 
+     * object in which data will be used to evaluate various rules.
+     */
+
+    function Rules() {
+        var experience = arguments.length <= 0 || arguments[0] === undefined ? { data: {} } : arguments[0];
+        var customEvaluator = arguments[1];
+
+        _classCallCheck(this, Rules);
+
+        /**
+         * Current iVXjs Expereince 
+         * 
+         * @type {object}
+         */
+        this.experience = experience;
+        this.evaluator = new _evaluator2.default(experience, customEvaluator);
+    }
+
+    /**
+     * The default rules function that will process an 
+     * array of navigation objects and evaluate them using 
+     * the processRules function.
+     * 
+     * @type {Function}
+     */
+
+
+    _createClass(Rules, [{
+        key: 'processRules',
+
+
+        /**
+         * Processes through and returns the first nav object whose 
+         * rule is evaluated to true or rules are empty.
+         * 
+         * @param {array} navArray - An array of navigation objects 
+         * with rules and states to be evaluated.
+         * @return {string} - the stateId of the rule that was evaluated 
+         * true first. If no state is return, returns an empty string.
+         */
+        value: function processRules() {
+            var navArray = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
+
+            var self = this;
+            var stateSelect = navArray.find(function (navObj) {
+                var rule = navObj.rule;
+
+
+                if (typeValidator.isEmpty(rule)) return true;
+
+                var conditions = rule.conditions;
+                var _rule$conditionOperat = rule.conditionOperator;
+                var conditionOperator = _rule$conditionOperat === undefined ? "and" : _rule$conditionOperat;
+
+
+                if (!conditions) {
+                    rule.conditionOperator = conditionOperator;
+                    rule.conditions = [rule];
+                }
+
+                return self.evaluator.evaluate(rule);
+            });
+
+            return stateSelect ? stateSelect.stateId : '';
+        }
+    }, {
+        key: 'rules',
+        get: function get() {
+            var self = this;
+
+            return function () {
+                var navArray = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
+
+                return self.processRules(navArray);
+            };
+        }
+    }]);
+
+    return Rules;
+}();
+
+},{"../../../utilities/type-parsers.js":18,"./evaluator.js":16}],18:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -2090,6 +2274,22 @@ var ObjectParsers = exports.ObjectParsers = function () {
             return itHas;
         }
     }, {
+        key: 'setValue',
+        value: function setValue(object, path, value) {
+            var a = path.split('.');
+            var o = object;
+            for (var i = 0; i < a.length - 1; i++) {
+                var n = a[i];
+                if (n in o) {
+                    o = o[n];
+                } else {
+                    o[n] = {};
+                    o = o[n];
+                }
+            }
+            o[a[a.length - 1]] = value;
+        }
+    }, {
         key: 'getValueFromPath',
         value: function getValueFromPath(path, object) {
             var pathParts = path.split(".");
@@ -2102,9 +2302,10 @@ var ObjectParsers = exports.ObjectParsers = function () {
                 currentData = oldData[pathPart];
 
                 if (typeValidator.isEmpty(currentData)) {
-
+                    returnValue = currentData;
                     return;
                 }
+
                 returnValue = currentData;
                 oldData = currentData;
             });

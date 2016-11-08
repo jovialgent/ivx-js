@@ -4,16 +4,21 @@ import StateEventNames from '../constants/state.events.js';
 import AngularEventNames from '../constants/angular.events.js';
 
 class AppRun {
-    constructor($rootScope, $state, $window, $transitions, iVXjs, iVXjsBus, iVXjsActions, iVXjsConstants) {
+    constructor($rootScope, $state, $window, $transitions, $http, iVXjs, iVXjsBus, iVXjsActions, iVXjsConstants) {
         if (!iVXjs || !iVXjs.config) return;
 
-        let {metadata = {}} = iVXjs.config;
-        let {title = 'iVX.js Player'} = metadata;
+        let {metadata = {}, templates} = iVXjs.config;
+        let {title = 'iVX.js Player', description, image} = metadata;
         let audioEventNames = new AudioEventNames();
         let stateEventNames = new StateEventNames();
         let angularEventNames = new AngularEventNames();
 
+        
+
         $rootScope.pageTitle = title;
+        $rootScope.ogImage = image;
+        $rootScope.ogDescription = description;
+        
 
         iVXjs.Bus.on(stateEventNames.GO, (state) => {
             let evalState = state;
@@ -87,6 +92,6 @@ class AppRun {
     }
 }
 
-AppRun.$inject = ['$rootScope', '$state', '$window', '$transitions', 'iVXjs', 'ivxjs.bus', 'ivxjs.actions', 'ivxjs.constants'];
+AppRun.$inject = ['$rootScope', '$state', '$window', '$transitions', '$http', 'iVXjs', 'ivxjs.bus', 'ivxjs.actions', 'ivxjs.constants'];
 
 export default createFactoryFunction(AppRun);

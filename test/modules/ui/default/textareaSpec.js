@@ -1,4 +1,4 @@
-import { Textarea  } from '../../../../library/modules/ui/default/textarea.js';
+import { Textarea  } from '../../../../src/modules/ui/default/textarea.js';
 
 describe('Default Textarea', () => {
     describe('#html', () => {

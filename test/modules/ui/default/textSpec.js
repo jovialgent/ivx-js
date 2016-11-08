@@ -1,4 +1,4 @@
-import { Text  } from '../../../../library/modules/ui/default/text.js';
+import { Text  } from '../../../../src/modules/ui/default/text.js';
 
 describe('Default Text', () => {
     describe('#html', () => {

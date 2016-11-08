@@ -1,5 +1,5 @@
-import {AttributeTags} from '../../../../library/modules/ui/utilities/attributes.js';
-import {ErrorMessages} from '../../../../library/modules/ui/default/messages.js';
+import {AttributeTags} from '../../../../src/modules/ui/utilities/attributes.js';
+import {ErrorMessages} from '../../../../src/modules/ui/default/messages.js';
 
 
 describe('ErrorMessages', () =>{

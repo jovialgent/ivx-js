@@ -1,4 +1,4 @@
-import {SimpleIterate} from '../../library/utilities/simple-iterate.js';
+import {SimpleIterate} from '../../src/utilities/simple-iterate.js';
 
 describe('Simple Iterate', () => {
     describe('#constructor', () =>{

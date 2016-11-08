@@ -1,4 +1,4 @@
-import { Options  } from '../../../../library/modules/ui/default/options.js';
+import { Options  } from '../../../../src/modules/ui/default/options.js';
 
 describe('Default Options', () => {
     describe('#html', () => {

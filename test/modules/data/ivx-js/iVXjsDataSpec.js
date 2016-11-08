@@ -1,7 +1,6 @@
-import {iVXjsData} from '../../../../library/modules/data/ivx-js/index.js';
-import {Actions} from '../../../../library/modules/data/ivx-js/actions.js';
-import {Rules} from '../../../../library/modules/data/ivx-js/rules.js';
-
+import {iVXjsData} from '../../../../src/modules/data/ivx-js/index.js';
+import {Actions} from '../../../../src/modules/data/ivx-js/actions.js';
+import {Rules} from '../../../../src/modules/data/ivx-js/rules.js';
 
 describe('iVXjsData', () => {
 
@@ -9,12 +8,8 @@ describe('iVXjsData', () => {
         let thisData, settings, promises, defaultActions, defaultRules;
 
         beforeEach(() => {
-
-
             defaultActions = new Actions();
             defaultRules = new Rules();
-
-
         });
 
         it('should add experience settings', () => {

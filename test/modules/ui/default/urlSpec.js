@@ -1,4 +1,4 @@
-import { Url  } from '../../../../library/modules/ui/default/url.js';
+import { Url  } from '../../../../src/modules/ui/default/url.js';
 
 describe('Default Url', () => {
     describe('#html', () => {

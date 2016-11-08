@@ -2,7 +2,7 @@ import DefaultVideoControls from '../default/video.controls.js';
 
 export default class extends DefaultVideoControls {
     constructor(container, iVXjsBus) {
-        super(container, iVXjsBus);
+        super(container);
     }
 
     get totalTimeInfoClasses() {

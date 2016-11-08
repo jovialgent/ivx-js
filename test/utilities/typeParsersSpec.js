@@ -1,4 +1,4 @@
-import {TypeValidator, ObjectParsers} from '../../library/utilities/type-parsers.js';
+import {TypeValidator, ObjectParsers} from '../../src/utilities/type-parsers.js';
 
 describe('TypeValidator', () => {
     let typeValidator;

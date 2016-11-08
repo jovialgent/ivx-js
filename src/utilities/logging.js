@@ -40,6 +40,14 @@ export default class {
         Bus.emit(LoggingMessages.ERROR, errorPayload);
     }
 
+    debug(message){
+        let {show} = this;
+
+        if(show){
+            this.log(`DEBUG: ${message}`)
+        }
+    }
+
     log(message) {
         let {show, LoggingMessages, Bus} = this;
         let logMessage = LoggingMessages.LOG;
@@ -48,10 +56,7 @@ export default class {
             timestamp: new Date()
         };
 
-        if (show) {
-            console.log(`${logMessage}: ${message}`);
-        }
-
+        console.log(`${logMessage}: ${message}`);
         Bus.emit(logMessage, logPayload);
     }
 

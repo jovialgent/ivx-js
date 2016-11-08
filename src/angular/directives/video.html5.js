@@ -1,5 +1,6 @@
 import createFactoryFunction from '../utilities/create-factory-function.js';
 import HTML5VideoController from '../controllers/video.html5.js';
+import VideoEventConstants from "../../constants/video.events.js";
 
 class HTML5VideoPlayer {
     constructor($compile, $timeout, iVXjsVideoModule, iVXjsBus, iVXjsLog, createInlineVideo) {
@@ -13,6 +14,9 @@ class HTML5VideoPlayer {
         this.controllerAs = 'vm';
         this.link = ($scope, iElm, iAttrs, controller) => {
             let {settings, stateData} = $scope;
+            let {playerSettings = {}} = stateData;
+            let {iphoneInline = false} = playerSettings;
+            let videoEventNames = new VideoEventConstants();
 
             stateData = {
                 id: stateData.id,
@@ -25,8 +29,9 @@ class HTML5VideoPlayer {
 
             thisVideoPlayer.addEventListeners(iVXjsBus);
             $timeout(() => {
-                if (createInlineVideo.isiOS()) {
+                if (createInlineVideo.isiOS() && iphoneInline) {
                     createInlineVideo.makeInlineVideo(iElm.find('video')[0], iElm.find('div')[0], $scope);
+                    createInlineVideo.emitCanPlay(iElm.find('video')[0]);
                 }
             }, 1);
 

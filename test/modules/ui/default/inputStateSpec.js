@@ -1,4 +1,4 @@
-import { InputState } from '../../../../library/modules/ui/default/state.input.js';
+import { InputState } from '../../../../src/modules/ui/default/state.input.js';
 
 describe('Default InputState', () => {
     describe('#html', () => {

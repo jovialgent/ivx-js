@@ -86,7 +86,6 @@ export class Buttons {
      */
     get html() {
         let {errors: errorClass = {}, buttons = [], input = {}, buttonClasses} = this;
-        console.dir(buttons);
         let { attributes = {}, errors = {}, messages = {} } = errorClass;
         let buttonErrorMessages = Object.keys(attributes).map((key, index) => {
             return {

@@ -1,4 +1,4 @@
-import {ConfigStatesValidation} from '../../../../library/modules/validation/ivx-js-validation/config.states.js';
+import {ConfigStatesValidation} from '../../../../src/modules/validation/ivx-js-validation/config.states.js';
 
 describe('ConfigStatesValidation', () => {
 

@@ -1,0 +1,55 @@
+---
+jsarr:
+     - js/lib/iphone-inline-video.browser.js
+     - js/lib/angular.ivx.js
+---
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Inline iPhone</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<style>
+	.show{visibility:show;pointer-events:auto;-webkit-animation:showState .1s;-moz-animation:showState .1s;-o-animation:showState .1s;animation:showState .1s;opacity:1}.hide{visibility:hidden;pointer-events:none;-webkit-animation:hideState .1s;-moz-animation:hideState .1s;-o-animation:hideState .1s;animation:hideState .1s;opacity:0}.show-action{-webkit-animation:showState .1s;-moz-animation:showState .1s;-o-animation:showState .1s;animation:showState .1s;opacity:1}.hide-action{-webkit-animation:hideState .1s;-moz-animation:hideState .1s;-o-animation:hideState .1s;animation:hideState .1s;opacity:0}@-webkit-keyframes hideState{0%{opacity:1}100%{opacity:0;display:none;visibility:hidden}}@-moz-keyframes hideState{0%{opacity:1}100%{opacity:0;display:none;visibility:hidden}}@-o-keyframes hideState{0%{opacity:1}100%{opacity:0;display:none;visibility:hidden}}@keyframes hideState{0%{opacity:1}100%{opacity:0;display:none;visibility:hidden}}lesshat-selector{-lh-property:0}@-webkit-keyframes showState{0%{opacity:0}100%{opacity:1}}@-moz-keyframes showState{0%{opacity:0}100%{opacity:1}}@-o-keyframes showState{0%{opacity:0}100%{opacity:1}}@keyframes showState{0%{opacity:0}100%{opacity:1}}.IIV::-webkit-media-controls-play-button,.IIV::-webkit-media-controls-start-playback-button{opacity:0;pointer-events:none;width:5px}
+    </style>
+
+</head>
+
+<body ng-app="app">
+
+	<div id="ivx"></div>
+
+	<!-- Optional jQuery dependency (Must come first) -->
+	<!-- script src='https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js'></script> -->
+
+	<!-- Angular -->
+	<script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js'></script>
+
+	<!-- Angular UI Router -->
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.0-alpha.5/angular-ui-router.js'></script>
+
+	<!-- ngSanitize -->
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.5.6/angular-sanitize.min.js'></script>
+
+
+	<!-- Angular iVXjs Library -->
+	{% for js in page.jsarr %}
+	<script type="text/javascript">
+    {% include {{ js }} %}
+    </script> {% endfor %}
+
+	<script>
+        angular
+        .module('app', ['ivx-js'])
+        .run(['iVXjs', function(iVXjs){
+            iVXjs.init({
+                config : "https://influencetech.github.io/ivx-js/developer/sample-JSON/video.iphone-inline.json"
+            });
+        }])     
+    </script>
+
+</body>
+
+</html>

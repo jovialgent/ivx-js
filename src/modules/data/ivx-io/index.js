@@ -1,12 +1,11 @@
 import { iVXioActions } from './actions.js'
 import { iVXioRules } from './rules.js'
 import { Actions as iVXjsActions } from '../ivx-js/actions.js'
-import { Comparator } from '../../../utilities/comparator.js'
 import { TypeValidator, ObjectParsers } from '../../../utilities/type-parsers.js';
 import { assert } from '../../../utilities/asserts.js';
+import InputValidator from "./input-validators/index.js";
 import iVXioErrorNames from '../../../constants/iVXio.errors.js';
 
-let comparator = new Comparator()
 let typeValidator = new TypeValidator()
 let objectParser = new ObjectParsers()
 
@@ -59,12 +58,12 @@ export class iVXio {
     let iVXioErrors = new iVXioErrorNames();
     let self = this
     let enhancementPromise = new Promise((resolve, reject) => {
-      if(typeof iVX === 'undefined'){
-         window.setTimeout(() =>{
-           self.Bus.emit(iVXioErrors.PLATFORM_UNAVAILABLE, {});
-         }, 100)
-          reject();
-          return;
+      if (typeof iVX === 'undefined') {
+        window.setTimeout(() => {
+          self.Bus.emit(iVXioErrors.PLATFORM_UNAVAILABLE, {});
+        }, 100)
+        reject();
+        return;
       }
 
       iVX(experienceHostSettings)
@@ -76,6 +75,17 @@ export class iVXio {
           let modifiedActions = new iVXioActions(experience, this.iVXjsLog);
           let {ui: storyUI, validation: storyValidation} = iVX.experience.story.data;
           let rules = new iVXioRules(experience, customRules).rules;
+          let states = new InputValidator(iVX.experience.story.data.states, iVX.experience.story.inputs).states;
+
+          experience.whiteList = [
+            'self',
+            'http://ivx-xapi.*.inf-env.com/**',
+            'https://ivx-xapi.*.inf-env.com/**',
+            'https://xapi.ivx.io/**'
+          ];
+
+          iVX.experience.story.data.states = states;
+
           let enhancediVXjsSettings = {
             ui: iVXjsSettings.ui,
             validation: iVXjsSettings.validation,
@@ -100,13 +110,13 @@ export class iVXio {
 module.export = initializeiVXIO;
 
 if (angular && angular.module('ivx-js')) {
-    angular
-        .module('ivx-js')
-        .constant('iVXjs.data.iVXio', initializeiVXIO);
+  angular
+    .module('ivx-js')
+    .constant('iVXjs.data.iVXio', initializeiVXIO);
 }
 
 function initializeiVXIO(settings) {
-    settings.module = iVXio;
+  settings.module = iVXio;
 
-    return settings;
+  return settings;
 };

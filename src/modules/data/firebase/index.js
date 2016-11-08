@@ -55,6 +55,7 @@ export class FirebaseData {
         if (!localTemplates) {
             utilities.addRemoteTemplates(dataFromServer, templateRef)
             .then((configData) =>{
+                initializeExperience(configData);
             });
         } else{
              initializeExperience(dataFromServer);

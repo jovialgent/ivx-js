@@ -1,4 +1,4 @@
-import { Checkbox } from '../../../../library/modules/ui/default/checkbox.js';
+import { Checkbox } from '../../../../src/modules/ui/default/checkbox.js';
 
 describe('Default Checkbox', () => {
     describe('#html', () => {

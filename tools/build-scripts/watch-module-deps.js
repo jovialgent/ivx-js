@@ -8,16 +8,28 @@ var output = argv.output;
 var input = argv.input;
 var inputMap = {
     data: {
-        firebase: "src/modules/data/firebase/index.js",
-        "ivx-io": "src/modules/data/ivx-io/index.js"
+        "ivx-io": "src/modules/data/ivx-io/index.js",
+        firebase: "src/modules/data/firebase/index.js"
     },
-    ui : {
-        materialize : "src/modules/ui/materialize/index.js"
+    ui: {
+        "semantic-ui": "src/modules/ui/semantic-ui/index.js",
+        bootstrap: "src/modules/ui/bootstrap/index.js",
+        materialize: "src/modules/ui/materialize/index.js"
+    },
+    validation: {
+        schema: "src/modules/validation/schema/index.js"
+    },
+    analytics: {
+        google: "src/modules/analytics/google/index.js"
     }
-}
+};
 var outputMap = {
-    sandbox: "tools/sandbox/public/js/lib/iVXjs." + input + ".min.js"
+    sandbox: "tools/sandbox/public/js/lib/iVXjs." + input + ".min.js",
+    "story-player" : "influence/story-player/dev/js/deps/iVXjs."+input+".min.js",
+    "story-player-dev" : "influence/story-player/local-build/js/iVXjs."+input+".min.js"
 }
+
+// Command: node tools/build-scripts/watch-module-deps.js --input [MODULE] --output [DESTINATION]
 
 var inputPath = getValueByPath(input, inputMap);
 var outputPath = outputMap[output];
@@ -31,11 +43,15 @@ function setup() {
         entries: [inputPath],
         cache: {},
         packageCache: {},
+        debug: true,
         plugin: [watchify, errorify]
     })
         .transform("babelify", { presets: ["es2015"] })
         .transform({ global: true }, 'uglifyify');
 
+    console.log("INPUT:", inputPath);
+    console.log("OUTPUT:", outputPath);
+    
     browserifyInstance.on('update', bundle);
     bundle();
 

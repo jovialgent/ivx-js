@@ -28,7 +28,7 @@ function sortCuePoints(cuePoints) {
 }
 
 class VideoStateController {
-    constructor($rootScope, $state, iVXjsActions, iVXjsBus) {
+    constructor($rootScope, $state, iVXjsActions, iVXjsBus, iVXjs) {
         let {playerSettings, onVideoEnd = [], onVideoReady = [], next, cuePoints = []} = $state.current.data;
         let {autoplay = false} = playerSettings;
         let videoEventNames = new VideoEventConstants();
@@ -49,6 +49,7 @@ class VideoStateController {
                     }
                 })
             }
+            
 
             iVXjsActions.resolveActions(onVideoReady, () => {
                 if (autoplay) {
@@ -58,7 +59,7 @@ class VideoStateController {
             });
         });
         iVXjsBus.once(videoEventNames.ENDED, function stateVideoEnded() {
-            console.log("GOT HERE?");
+            iVXjs.log.log("GOT HERE?");
             iVXjsBus.emit(videoEventNames.DISPOSE);
             iVXjsActions.resolveThenNavigate(onVideoEnd, next);
         });
@@ -84,6 +85,6 @@ class VideoStateController {
     }
 }
 
-VideoStateController.$inject = ['$rootScope', '$state', 'ivxjs.actions', 'ivxjs.bus'];
+VideoStateController.$inject = ['$rootScope', '$state', 'ivxjs.actions', 'ivxjs.bus', 'iVXjs'];
 
 export default createFactoryFunction(VideoStateController)

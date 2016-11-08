@@ -1,7 +1,7 @@
-import { Comparator } from '../../../utilities/comparator.js';
+import Evaluator from './evaluator.js';
 import { TypeValidator, ObjectParsers } from '../../../utilities/type-parsers.js';
 
-let comparator = new Comparator();
+
 let typeValidator = new TypeValidator();
 
 /**
@@ -17,7 +17,7 @@ export class Rules {
      * @param {object} experience - iVXjsExperience 
      * object in which data will be used to evaluate various rules.
      */
-    constructor(experience = { data: {} }, customRules = () => { }) {
+    constructor(experience = { data: {} }, customEvaluator) {
 
         /**
          * Current iVXjs Expereince 
@@ -25,7 +25,7 @@ export class Rules {
          * @type {object}
          */
         this.experience = experience;
-        this.customRules = customRules;
+        this.evaluator = new Evaluator(experience, customEvaluator);
     }
 
     /**
@@ -39,13 +39,6 @@ export class Rules {
         let self = this;
 
         return (navArray = []) => {
-
-            let customRuleStateId = self.customRules(navArray);
-
-            if (customRuleStateId) {
-                return customRuleStateId;
-            }
-
             return self.processRules(navArray);
         }
     }
@@ -62,29 +55,20 @@ export class Rules {
     processRules(navArray = []) {
         let self = this;
         let stateSelect = navArray.find((navObj) => {
-            return self.evaluateRules(navObj);
+            let {rule} = navObj;
+
+            if(typeValidator.isEmpty(rule)) return true;
+
+            let {conditions, conditionOperator = "and"} = rule;
+
+            if (!conditions) {
+                rule.conditionOperator = conditionOperator;
+                rule.conditions = [rule];
+            }
+
+            return self.evaluator.evaluate(rule);
         });
 
         return stateSelect ? stateSelect.stateId : '';
-    }
-
-    /**
-     * Evaluates a navObj's rule object to see if it the stateId
-     * provided should be used in navigation. If there are no rules or rules is empty,
-     * then will return true.
-     * 
-     * @param {object} navObj - an object with a stateId and rule object to be evaluated.
-     * @param {object} navObj.rule - rule to be evaluated by a comparator.
-     * @param {string} navObj.rule.key - data key to be evaluated.
-     * @param {string} navObj.rule.is - the compare type to run in this comparator.
-     * @param {string} navObj.rule.value - value to be evaluatad.
-     * @return {Boolean} - whether or not the rule evaluates to true or has a rule.
-     */
-    evaluateRules(navObj) {
-        let {rule} = navObj;
-
-        if (!rule || typeValidator.isEmpty(rule)) return true;
-
-        return comparator.compare(this.experience.data[rule.key], rule.is, rule.value);
     }
 }

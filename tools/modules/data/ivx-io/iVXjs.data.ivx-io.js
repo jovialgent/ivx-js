@@ -169,7 +169,9 @@ var _class = function (_iVXjsConstants) {
             HTTP: new _http2.default().HTTP,
             VALIDATION: "validation",
             SET_UP: "set-up",
-            IVX_IO: new _iVXio2.default().IVX_IO
+            IVX_IO: new _iVXio2.default().IVX_IO,
+            DEFAULT: "default",
+            ASSERT: "assert"
         };
 
         _this.addNames(eventNames);
@@ -832,6 +834,7 @@ var iVXioActions = exports.iVXioActions = function () {
                 var key = eventArgs.key;
                 var value = eventArgs.value;
 
+                var self = this;
 
                 if (typeof this.experience.data[key] === 'undefined' || this.experience.data[key] === null) {
                     this.experience.Bus.emit('iVXjs:iVXio:error:event-not-fired', eventArgs, { message: "iVXjs Error Message: Input not found" });
@@ -883,7 +886,117 @@ var iVXioActions = exports.iVXioActions = function () {
     return iVXioActions;
 }();
 
-},{"../../../constants/iVXio.errors.js":5,"../../../utilities/logging.js":18}],13:[function(require,module,exports){
+},{"../../../constants/iVXio.errors.js":5,"../../../utilities/logging.js":30}],13:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _evaluator = require('../ivx-js/evaluator.js');
+
+var _evaluator2 = _interopRequireDefault(_evaluator);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _class = function (_Evaluator) {
+    _inherits(_class, _Evaluator);
+
+    function _class(experience, customEvaluator) {
+        _classCallCheck(this, _class);
+
+        return _possibleConstructorReturn(this, Object.getPrototypeOf(_class).call(this, experience, customEvaluator));
+    }
+
+    _createClass(_class, [{
+        key: 'storyEvents',
+        value: function storyEvents(lhs, is, storyEvent) {
+            var experience = this.experience;
+            var events = experience.events;
+
+
+            if (storyEvent === 'none') {
+                return noEventFired(is, events, experience);
+            }
+
+            return this[is](storyEvent, events);
+
+            function noEventFired(is, events, experience) {
+                var isFired = is === 'fired';
+
+                return events.length <= 0 && isFired;
+            }
+        }
+    }, {
+        key: 'fired',
+        value: function fired(event, events) {
+            var firedEvent = events.find(function (eventFired, index) {
+                return eventFired === event;
+            });
+
+            return typeof firedEvent !== 'undefined';
+        }
+    }, {
+        key: 'notFired',
+        value: function notFired(event, events) {
+            var firedEvent = events.find(function (eventFired, index) {
+                return eventFired === event;
+            });
+
+            return typeof firedEvent === 'undefined';
+        }
+    }, {
+        key: 'progress',
+        value: function progress(lhs, is, _progress) {
+            var experience = this.experience;
+            var currentStoryProgress = experience.progress;
+            var currentMilestone = experience.milestone;
+            var story = experience.story;
+            var progressMap = story.progressMap;
+
+            var currentProgress = void 0;
+            var currentProgressValue = -1;
+            var currentMilestoneValue = -1;
+
+            if (currentMilestone && currentMilestone.length > 0) {
+                var currentMilestoneString = currentMilestone[0].toLowerCase() + currentMilestone.substring(1);
+
+                currentMilestoneValue = progressMap[currentMilestoneString] ? progressMap[currentMilestoneString] : -1;
+            }
+
+            if (isStoryProgress(currentStoryProgress)) {
+                var currentProgressString = currentStoryProgress[0].toLowerCase() + currentStoryProgress.substring(1);
+
+                currentProgressValue = progressMap[currentProgressString];
+            }
+
+            _progress = _progress[0].toLowerCase() + _progress.substring(1);
+
+            var progressValue = progressMap[_progress];
+            var evaluateProgress = currentProgressValue > currentMilestoneValue ? currentProgressValue : currentMilestoneValue;
+
+            return this[is](evaluateProgress, progressValue);
+
+            function isStoryProgress(progress) {
+                return progress === 'Started' || progress === 'Completed' || progress === 'Converted';
+            }
+        }
+    }]);
+
+    return _class;
+}(_evaluator2.default);
+
+exports.default = _class;
+
+},{"../ivx-js/evaluator.js":27}],14:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -899,11 +1012,13 @@ var _rules = require('./rules.js');
 
 var _actions2 = require('../ivx-js/actions.js');
 
-var _comparator = require('../../../utilities/comparator.js');
-
 var _typeParsers = require('../../../utilities/type-parsers.js');
 
 var _asserts = require('../../../utilities/asserts.js');
+
+var _index = require('./input-validators/index.js');
+
+var _index2 = _interopRequireDefault(_index);
 
 var _iVXioErrors = require('../../../constants/iVXio.errors.js');
 
@@ -913,7 +1028,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var comparator = new _comparator.Comparator();
 var typeValidator = new _typeParsers.TypeValidator();
 var objectParser = new _typeParsers.ObjectParsers();
 
@@ -1004,6 +1118,12 @@ var iVXio = exports.iVXio = function () {
           var storyValidation = _iVX$experience$story.validation;
 
           var rules = new _rules.iVXioRules(experience, customRules).rules;
+          var states = new _index2.default(iVX.experience.story.data.states, iVX.experience.story.inputs).states;
+
+          experience.whiteList = ['self', 'http://ivx-xapi.*.inf-env.com/**', 'https://ivx-xapi.*.inf-env.com/**', 'https://xapi.ivx.io/**'];
+
+          iVX.experience.story.data.states = states;
+
           var enhancediVXjsSettings = {
             ui: iVXjsSettings.ui,
             validation: iVXjsSettings.validation,
@@ -1039,202 +1159,678 @@ function initializeiVXIO(settings) {
   return settings;
 };
 
-},{"../../../constants/iVXio.errors.js":5,"../../../utilities/asserts.js":16,"../../../utilities/comparator.js":17,"../../../utilities/type-parsers.js":19,"../ivx-js/actions.js":15,"./actions.js":12,"./rules.js":14}],14:[function(require,module,exports){
-'use strict';
+},{"../../../constants/iVXio.errors.js":5,"../../../utilities/asserts.js":29,"../../../utilities/type-parsers.js":31,"../ivx-js/actions.js":26,"./actions.js":12,"./input-validators/index.js":17,"./rules.js":25}],15:[function(require,module,exports){
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.iVXioRules = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _comparator = require('../../../utilities/comparator.js');
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var _typeParsers = require('../../../utilities/type-parsers.js');
+var _class = function () {
+    function _class(inputData) {
+        _classCallCheck(this, _class);
+
+        this.inputData = inputData;
+        this.TYPE = "checkbox";
+    }
+
+    _createClass(_class, [{
+        key: "setButtonInput",
+        value: function setButtonInput(inputData) {
+            var _inputData$buttons = inputData.buttons;
+            var buttons = _inputData$buttons === undefined ? [] : _inputData$buttons;
+
+            var hasFalse = false;
+            var hasTrue = false;
+            var newButtons = buttons.reduce(function (buttonArray, buttonData, index) {
+                var value = buttonData.value;
+
+                var isFalse = typeof value === "boolean" && !value;
+                var isTrue = typeof value === "boolean" && value;
+
+                if (isTrue && !hasTrue) {
+                    buttonArray[0] = buttonData;
+                    hasTrue = true;
+                }
+
+                if (isFalse && !hasFalse) {
+                    buttonArray[1] = buttonData;
+                    hasFalse = true;
+                }
+
+                return buttonArray;
+            }, []);
+
+            if (!hasTrue) {
+                newButtons[0] = {
+                    value: true,
+                    label: "True"
+                };
+            }
+
+            if (!hasFalse) {
+                newButtons[1] = {
+                    value: false,
+                    label: "False"
+                };
+            }
+
+            inputData.buttons = newButtons;
+
+            return inputData;
+        }
+    }, {
+        key: "input",
+        get: function get() {
+            var inputData = this.inputData;
+            var TYPE = this.TYPE;
+
+            var rawInputData = JSON.parse(JSON.stringify(inputData));
+            var type = rawInputData.type;
+
+
+            if (type === "buttons") {
+                return this.setButtonInput(inputData);
+            }
+
+            rawInputData.type = TYPE;
+
+            return rawInputData;
+        }
+    }]);
+
+    return _class;
+}();
+
+exports.default = _class;
+
+},{}],16:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var comparator = new _comparator.Comparator();
-var typeValidator = new _typeParsers.TypeValidator();
+var _class = function () {
+    function _class(inputData) {
+        _classCallCheck(this, _class);
+
+        this.inputData = inputData;
+        this.TYPE = "email";
+    }
+
+    _createClass(_class, [{
+        key: "input",
+        get: function get() {
+            var inputData = this.inputData;
+            var TYPE = this.TYPE;
+
+            var rawInputData = JSON.parse(JSON.stringify(inputData));
+
+            rawInputData.type = TYPE;
+
+            return rawInputData;
+        }
+    }]);
+
+    return _class;
+}();
+
+exports.default = _class;
+
+},{}],17:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _textShort = require("./text-short.js");
+
+var _textShort2 = _interopRequireDefault(_textShort);
+
+var _textMedium = require("./text-medium.js");
+
+var _textMedium2 = _interopRequireDefault(_textMedium);
+
+var _textLarge = require("./text-large.js");
+
+var _textLarge2 = _interopRequireDefault(_textLarge);
+
+var _textarea = require("./textarea.js");
+
+var _textarea2 = _interopRequireDefault(_textarea);
+
+var _number = require("./number.js");
+
+var _number2 = _interopRequireDefault(_number);
+
+var _email = require("./email.js");
+
+var _email2 = _interopRequireDefault(_email);
+
+var _url = require("./url.js");
+
+var _url2 = _interopRequireDefault(_url);
+
+var _checkbox = require("./checkbox.js");
+
+var _checkbox2 = _interopRequireDefault(_checkbox);
+
+var _options = require("./options.js");
+
+var _options2 = _interopRequireDefault(_options);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var _class = function () {
+    function _class(states, storyInputs) {
+        _classCallCheck(this, _class);
+
+        this.rawStates = JSON.parse(JSON.stringify(states));
+        this.storyInputs = storyInputs;
+        this.states = this.validateInputStates(this.rawStates);
+    }
+
+    _createClass(_class, [{
+        key: "validateInputStates",
+        value: function validateInputStates(states) {
+            var self = this;
+            return states.map(function (state, index) {
+                if (state.type === "input") {
+                    var inputs = state.inputs;
+
+                    state.inputs = self.validateInputs(inputs);
+                }
+
+                return state;
+            });
+        }
+    }, {
+        key: "validateInputs",
+        value: function validateInputs(inputs) {
+            var inputValidators = this.inputValidators;
+            var storyInputs = this.storyInputs;
+
+            return inputs.map(function (input, index) {
+                var name = input.name;
+
+                var storyInput = storyInputs[name];
+                var display = storyInput.display;
+
+                var validator = inputValidators[display];
+
+                if (validator) {
+                    return new validator(input, storyInput).input;
+                }
+
+                return input;
+            });
+        }
+    }, {
+        key: "inputValidators",
+        get: function get() {
+            return {
+                TextShort: _textShort2.default,
+                TextMedium: _textMedium2.default,
+                TextLarge: _textLarge2.default,
+                TextArea: _textarea2.default,
+                Number: _number2.default,
+                Email: _email2.default,
+                Url: _url2.default,
+                Checkbox: _checkbox2.default,
+                Options: _options2.default
+            };
+        }
+    }]);
+
+    return _class;
+}();
+
+exports.default = _class;
+
+},{"./checkbox.js":15,"./email.js":16,"./number.js":18,"./options.js":19,"./text-large.js":20,"./text-medium.js":21,"./text-short.js":22,"./textarea.js":23,"./url.js":24}],18:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var _class = function () {
+    function _class(inputData, storyInputData) {
+        _classCallCheck(this, _class);
+
+        var _storyInputData$attri = storyInputData.attributes;
+        var attributes = _storyInputData$attri === undefined ? {} : _storyInputData$attri;
+        var _attributes$max = attributes.max;
+        var max = _attributes$max === undefined ? Number.MAX_SAFE_INTEGER : _attributes$max;
+        var _attributes$min = attributes.min;
+        var min = _attributes$min === undefined ? Number.MIN_SAFE_INTEGER : _attributes$min;
+        var _attributes$step = attributes.step;
+        var step = _attributes$step === undefined ? 1 : _attributes$step;
+
+
+        this.inputData = inputData;
+        this.MIN = parseInt(min);
+        this.STEP = parseInt(step);
+        this.MAX = parseInt(max);
+        this.TYPE = "number";
+    }
+
+    _createClass(_class, [{
+        key: "input",
+        get: function get() {
+            var inputData = this.inputData;
+            var TYPE = this.TYPE;
+            var MIN = this.MIN;
+            var MAX = this.MAX;
+            var STEP = this.STEP;
+
+            var rawInputData = JSON.parse(JSON.stringify(inputData));
+            var _rawInputData$attribu = rawInputData.attributes;
+            var attributes = _rawInputData$attribu === undefined ? {} : _rawInputData$attribu;
+            var min = attributes.min;
+            var max = attributes.max;
+            var step = attributes.step;
+
+
+            rawInputData.type = TYPE;
+            rawInputData.attributes.min = min >= MIN ? min : MIN;
+            rawInputData.attributes.max = max <= MAX ? max : MAX;
+            rawInputData.attributes.step = step ? step : STEP;
+
+            return rawInputData;
+        }
+    }]);
+
+    return _class;
+}();
+
+exports.default = _class;
+
+},{}],19:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var _class = function () {
+    function _class(inputData) {
+        var storyInputData = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+
+        _classCallCheck(this, _class);
+
+        this.inputData = inputData;
+        this.TYPE = "options";
+        this.OPTIONS = storyInputData.options;
+    }
+
+    _createClass(_class, [{
+        key: "setButtonInput",
+        value: function setButtonInput(inputData) {
+            var _inputData$buttons = inputData.buttons;
+            var buttons = _inputData$buttons === undefined ? [] : _inputData$buttons;
+            var OPTIONS = this.OPTIONS;
+
+            var newButtons = buttons.reduce(function (buttonArray, buttonData, index) {
+                var value = buttonData.value;
+
+                var hasOption = OPTIONS.find(function (option, index) {
+                    return option.value === value;
+                });
+                if (hasOption) {
+                    buttonArray.push(buttonData);
+                }
+
+                return buttonArray;
+            }, []);
+
+            inputData.buttons = newButtons;
+
+            return inputData;
+        }
+    }, {
+        key: "input",
+        get: function get() {
+            var inputData = this.inputData;
+            var TYPE = this.TYPE;
+            var OPTIONS = this.OPTIONS;
+            var type = inputData.type;
+
+
+            if (type === "buttons") {
+                return this.setButtonInput(inputData);
+            }
+
+            inputData.type = TYPE;
+            inputData.options = OPTIONS;
+
+            return inputData;
+        }
+    }]);
+
+    return _class;
+}();
+
+exports.default = _class;
+
+},{}],20:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var _class = function () {
+    function _class(inputData) {
+        var storyInputData = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+
+        _classCallCheck(this, _class);
+
+        var _storyInputData$attri = storyInputData.attributes;
+        var attributes = _storyInputData$attri === undefined ? {} : _storyInputData$attri;
+        var _attributes$minlength = attributes.minlength;
+        var minlength = _attributes$minlength === undefined ? 0 : _attributes$minlength;
+        var _attributes$maxlength = attributes.maxlength;
+        var maxlength = _attributes$maxlength === undefined ? 256 : _attributes$maxlength;
+
+
+        this.inputData = inputData;
+        this.MAX_LENGTH = parseInt(maxlength);
+        this.MIN_LENGTH = parseInt(minlength);
+    }
+
+    _createClass(_class, [{
+        key: "input",
+        get: function get() {
+            var inputData = this.inputData;
+            var MAX_LENGTH = this.MAX_LENGTH;
+            var MIN_LENGTH = this.MIN_LENGTH;
+
+            var rawInputData = JSON.parse(JSON.stringify(inputData));
+
+            rawInputData.attributes.maxlength = MAX_LENGTH;
+            rawInputData.attributes.minlength = MIN_LENGTH;
+
+            return rawInputData;
+        }
+    }]);
+
+    return _class;
+}();
+
+exports.default = _class;
+
+},{}],21:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var _class = function () {
+    function _class(inputData) {
+        var storyInputData = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+
+        _classCallCheck(this, _class);
+
+        var _storyInputData$attri = storyInputData.attributes;
+        var attributes = _storyInputData$attri === undefined ? {} : _storyInputData$attri;
+        var _attributes$minlength = attributes.minlength;
+        var minlength = _attributes$minlength === undefined ? 0 : _attributes$minlength;
+        var _attributes$maxlength = attributes.maxlength;
+        var maxlength = _attributes$maxlength === undefined ? 128 : _attributes$maxlength;
+
+
+        this.inputData = inputData;
+        this.MAX_LENGTH = parseInt(maxlength);
+        this.MIN_LENGTH = parseInt(minlength);
+    }
+
+    _createClass(_class, [{
+        key: "input",
+        get: function get() {
+            var inputData = this.inputData;
+            var MAX_LENGTH = this.MAX_LENGTH;
+            var MIN_LENGTH = this.MIN_LENGTH;
+
+            var rawInputData = JSON.parse(JSON.stringify(inputData));
+
+            rawInputData.attributes.maxlength = MAX_LENGTH;
+            rawInputData.attributes.minlength = MIN_LENGTH;
+
+            return rawInputData;
+        }
+    }]);
+
+    return _class;
+}();
+
+exports.default = _class;
+
+},{}],22:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var _class = function () {
+    function _class(inputData) {
+        var storyInputData = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+
+        _classCallCheck(this, _class);
+
+        var _storyInputData$attri = storyInputData.attributes;
+        var attributes = _storyInputData$attri === undefined ? {} : _storyInputData$attri;
+        var _attributes$minlength = attributes.minlength;
+        var minlength = _attributes$minlength === undefined ? 0 : _attributes$minlength;
+        var _attributes$maxlength = attributes.maxlength;
+        var maxlength = _attributes$maxlength === undefined ? 64 : _attributes$maxlength;
+
+
+        this.inputData = inputData;
+        this.MAX_LENGTH = parseInt(maxlength);
+        this.MIN_LENGTH = parseInt(minlength);
+    }
+
+    _createClass(_class, [{
+        key: "input",
+        get: function get() {
+            var inputData = this.inputData;
+            var MAX_LENGTH = this.MAX_LENGTH;
+            var MIN_LENGTH = this.MIN_LENGTH;
+
+            var rawInputData = JSON.parse(JSON.stringify(inputData));
+
+            rawInputData.attributes.maxlength = MAX_LENGTH;
+            rawInputData.attributes.minlength = MIN_LENGTH;
+
+            return rawInputData;
+        }
+    }]);
+
+    return _class;
+}();
+
+exports.default = _class;
+
+},{}],23:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var _class = function () {
+    function _class(inputData) {
+        var storyInputData = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+
+        _classCallCheck(this, _class);
+
+        var _storyInputData$attri = storyInputData.attributes;
+        var attributes = _storyInputData$attri === undefined ? {} : _storyInputData$attri;
+        var _attributes$minlength = attributes.minlength;
+        var minlength = _attributes$minlength === undefined ? 0 : _attributes$minlength;
+        var _attributes$maxlength = attributes.maxlength;
+        var maxlength = _attributes$maxlength === undefined ? 1024 : _attributes$maxlength;
+
+
+        this.inputData = inputData;
+        this.MAX_LENGTH = parseInt(maxlength);
+        this.MIN_LENGTH = parseInt(minlength);
+        this.TYPE = "textarea";
+    }
+
+    _createClass(_class, [{
+        key: "input",
+        get: function get() {
+            var inputData = this.inputData;
+            var MAX_LENGTH = this.MAX_LENGTH;
+            var MIN_LENGTH = this.MIN_LENGTH;
+            var TYPE = this.TYPE;
+
+            var rawInputData = JSON.parse(JSON.stringify(inputData));
+
+            rawInputData.attributes.maxlength = MAX_LENGTH;
+            rawInputData.attributes.minlength = MIN_LENGTH;
+            rawInputData.type = TYPE;
+
+            return rawInputData;
+        }
+    }]);
+
+    return _class;
+}();
+
+exports.default = _class;
+
+},{}],24:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var _class = function () {
+    function _class(inputData) {
+        _classCallCheck(this, _class);
+
+        this.inputData = inputData;
+        this.TYPE = "url";
+    }
+
+    _createClass(_class, [{
+        key: "input",
+        get: function get() {
+            var inputData = this.inputData;
+            var TYPE = this.TYPE;
+
+            var rawInputData = JSON.parse(JSON.stringify(inputData));
+
+            rawInputData.type = TYPE;
+
+            return rawInputData;
+        }
+    }]);
+
+    return _class;
+}();
+
+exports.default = _class;
+
+},{}],25:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.iVXioRules = undefined;
+
+var _evaluator = require("./evaluator.js");
+
+var _evaluator2 = _interopRequireDefault(_evaluator);
+
+var _rules = require("../ivx-js/rules.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 /**
  * Generates an iVXio Rules function that allows navigation and 
  * rule evaluation based on both experience data and progress.
  */
 
-var iVXioRules = exports.iVXioRules = function () {
+var iVXioRules = exports.iVXioRules = function (_Rules) {
+  _inherits(iVXioRules, _Rules);
 
-    /**
-     * Attaches the current experience to this class to help
-     * process both data and progress informaiton.
-     * 
-     * @param {iVXioExperiece} experience - iVXio Experience object
-     * containing all the information for these rules to evaluate on.
-     */
+  /**
+   * Attaches the current experience to this class to help
+   * process both data and progress informaiton.
+   * 
+   * @param {iVXioExperiece} experience - iVXio Experience object
+   * containing all the information for these rules to evaluate on.
+   */
 
-    function iVXioRules(experience, customRules) {
-        _classCallCheck(this, iVXioRules);
+  function iVXioRules(experience, customEvaluator) {
+    _classCallCheck(this, iVXioRules);
 
-        /**
-         * Puts the current exprience object into this class 
-         * for rule evaluation.
-         * 
-         * @type {iVXioExperience}
-         */
-        this.experience = experience;
-        this.customRules = customRules;
-    }
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(iVXioRules).call(this, experience, customEvaluator));
 
-    /**
-     * A function that returns a stateId when an object in its
-     * navArray evaluates to true.
-     * 
-     * @type {Function}
-     */
+    _this.evaluator = new _evaluator2.default(experience, customEvaluator);
+    return _this;
+  }
 
+  return iVXioRules;
+}(_rules.Rules);
 
-    _createClass(iVXioRules, [{
-        key: 'getProgressValue',
-
-
-        /**
-         * Converts the progress name to a numeric value using this 
-         * expererience's progressMap so the processRules function 
-         * can evaluate this navigation based on its value.
-         * 
-         * @param {string} progress - Key to a progress value in this experiences
-         * progress map.
-         * @return {number} - the value of the progress in the progress map.
-         */
-        value: function getProgressValue(progress) {
-            var story = this.experience.story;
-            var progressMap = story.progressMap;
-
-            var firstLetter = progress[0].toLowerCase();
-
-            progress = '' + firstLetter + progress.substring(1);
-
-            return progressMap[progress];
-        }
-
-        /**
-         * Iterates through an array of rules and stateIds and returns
-         * the first stateId to navigate to next based on this evaluateRule
-         * function. 
-         * 
-         * 
-         * @param {array} - navArray - An array of expressions and states 
-         * that will evaluate the correct navigation to go to next.
-         * @return {string} - state id to navigate next to.
-         * 
-         */
-
-    }, {
-        key: 'processRules',
-        value: function processRules(navArray) {
-            var self = this;
-            var stateSelect = navArray.find(function (navObj) {
-                return self.evaluateRule(navObj);
-            });
-            var state = stateSelect.state;
-            var stateId = stateSelect.stateId;
-
-
-            stateId = state ? state : stateId;
-
-            return stateId;
-        }
-
-        /**
-         * Evaluates a rule to be true or false depending on 
-         * the experience's current data and progress. Used to choose 
-         * which state to navigate to next.
-         * 
-         * @param {Object} navObj - an object containing at least a state ID
-         * and an optional rule to be evaluated.
-         * @return {Boolean} - a true/false value determining if the rule evaluates to
-         * true or false. If a rule doesn't exist, this will return true implying that the 
-         * state is a default.
-         */
-
-    }, {
-        key: 'evaluateRule',
-        value: function evaluateRule(navObj) {
-            var when = void 0;
-            var rule = navObj.rule;
-
-
-            if (!rule || typeValidator.isEmpty(rule)) return true;
-
-            var key = rule.key;
-            var is = rule.is;
-            var value = rule.value;
-
-
-            if (key === 'progress') {
-                var _experience = this.experience;
-                var progress = _experience.progress;
-                var milestone = _experience.milestone;
-
-
-                if (progress === 'Started' && milestone) {
-                    progress = milestone;
-                }
-
-                when = this.getProgressValue(progress);
-                value = this.getProgressValue(value);
-            } else {
-                when = this.experience.data[key];
-            }
-
-            return comparator.compare(when, is, value);
-        }
-    }, {
-        key: 'rules',
-        get: function get() {
-            var self = this;
-
-            return function (navArray) {
-                if (typeof self.navArray !== 'undefined') {
-
-                    if (self.customRules) {
-                        var customRuleStateId = self.customRules(navArray);
-
-                        if (customRuleStateId) {
-                            return customRuleStateId;
-                        }
-                    }
-                }
-                return self.processRules(navArray);
-            };
-        }
-
-        /**
-         * iVXio's expressions use the symbols for evaluation, so this 
-         * maps to the keywords for comparing.
-         * 
-         * @type {object}
-         */
-
-    }, {
-        key: 'expressionMap',
-        get: function get() {
-            return {
-                "<=": "lte",
-                ">=": "gte",
-                "<": "lt",
-                ">": "gt",
-                "==": "equals",
-                "!=": "notEquals"
-            };
-        }
-    }]);
-
-    return iVXioRules;
-}();
-
-},{"../../../utilities/comparator.js":17,"../../../utilities/type-parsers.js":19}],15:[function(require,module,exports){
+},{"../ivx-js/rules.js":28,"./evaluator.js":13}],26:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1440,20 +2036,7 @@ var Actions = exports.Actions = function () {
 
 ;
 
-},{"../../../constants/audio.events.js":1,"../../../constants/state.events.js":9}],16:[function(require,module,exports){
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-exports.assert = assert;
-function assert(test, name, message) {
-	if (!test) throw new Error(name + " is invalid: " + message + ".");
-
-	return test;
-}
-
-},{}],17:[function(require,module,exports){
+},{"../../../constants/audio.events.js":1,"../../../constants/state.events.js":9}],27:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -1464,15 +2047,81 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Comparator = exports.Comparator = function () {
-    function Comparator() {
-        _classCallCheck(this, Comparator);
+var _class = function () {
+    function _class(experience, customEvaluator) {
+        _classCallCheck(this, _class);
+
+        this.experience = experience;
+        this.customEvaluator = customEvaluator;
     }
 
-    _createClass(Comparator, [{
-        key: "compare",
-        value: function compare(lhs, is, rhs) {
-            return this[is](lhs, rhs);
+    _createClass(_class, [{
+        key: "evaluate",
+        value: function evaluate(rule) {
+            var self = this;
+            var _rule$conditionOperat = rule.conditionOperator;
+            var conditionOperator = _rule$conditionOperat === undefined ? "and" : _rule$conditionOperat;
+            var conditions = rule.conditions;
+
+            var evaluateConditions = conditions.map(function (condition, index) {
+                var lhs = condition.key;
+                var is = condition.is;
+                var rhs = condition.value;
+                var _condition$type = condition.type;
+                var type = _condition$type === undefined ? "input" : _condition$type;
+
+
+                if (self.customEvaluator && self.customEvaluator(condition)) {
+                    return self.customEvaluator(condition);
+                }
+
+                // Since older versions of the iVXjs JSON used
+                // the key for "keyword" this will make it backwards
+                // compatable
+                if (self[lhs]) {
+                    return self[lhs](lhs, is, rhs);
+                }
+
+                return self[type](lhs, is, rhs);
+            });
+
+            return this[conditionOperator](evaluateConditions);
+        }
+    }, {
+        key: "input",
+        value: function input(lhs, is, rhs) {
+            var experience = this.experience;
+
+            var lhsValue = experience.data[lhs];
+
+            return this[is](lhsValue, rhs);
+        }
+    }, {
+        key: "and",
+        value: function and() {
+            var predicates = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
+
+            return predicates.reduce(function (evaluate, predicate, index) {
+                return evaluate && predicate;
+            }, true);
+        }
+    }, {
+        key: "or",
+        value: function or() {
+            var predicates = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
+
+            return predicates.reduce(function (evaluate, predicate, index) {
+                return evaluate || predicate;
+            }, false);
+        }
+    }, {
+        key: "not",
+        value: function not() {
+            var predicates = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
+
+            return predicates.reduce(function (evaluate, predicate, index) {
+                return evaluate && !predicate;
+            }, true);
         }
     }, {
         key: "lte",
@@ -1515,10 +2164,172 @@ var Comparator = exports.Comparator = function () {
         }
     }]);
 
-    return Comparator;
+    return _class;
 }();
 
-},{}],18:[function(require,module,exports){
+exports.default = _class;
+
+},{}],28:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.Rules = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _evaluator = require('./evaluator.js');
+
+var _evaluator2 = _interopRequireDefault(_evaluator);
+
+var _typeParsers = require('../../../utilities/type-parsers.js');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var typeValidator = new _typeParsers.TypeValidator();
+
+/**
+ * A default rule system in which iVXjs chooses which state 
+ * to go to based of the current iVXjs Experience data.
+ */
+
+var Rules = exports.Rules = function () {
+
+    /**
+     * Adds the experience in which this data 
+     * will be evaluated to.
+     * 
+     * @param {object} experience - iVXjsExperience 
+     * object in which data will be used to evaluate various rules.
+     */
+
+    function Rules() {
+        var experience = arguments.length <= 0 || arguments[0] === undefined ? { data: {} } : arguments[0];
+        var customEvaluator = arguments[1];
+
+        _classCallCheck(this, Rules);
+
+        /**
+         * Current iVXjs Expereince 
+         * 
+         * @type {object}
+         */
+        this.experience = experience;
+        this.evaluator = new _evaluator2.default(experience, customEvaluator);
+    }
+
+    /**
+     * The default rules function that will process an 
+     * array of navigation objects and evaluate them using 
+     * the processRules function.
+     * 
+     * @type {Function}
+     */
+
+
+    _createClass(Rules, [{
+        key: 'processRules',
+
+
+        /**
+         * Processes through and returns the first nav object whose 
+         * rule is evaluated to true or rules are empty.
+         * 
+         * @param {array} navArray - An array of navigation objects 
+         * with rules and states to be evaluated.
+         * @return {string} - the stateId of the rule that was evaluated 
+         * true first. If no state is return, returns an empty string.
+         */
+        value: function processRules() {
+            var navArray = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
+
+            var self = this;
+            var stateSelect = navArray.find(function (navObj) {
+                var rule = navObj.rule;
+
+
+                if (typeValidator.isEmpty(rule)) return true;
+
+                var conditions = rule.conditions;
+                var _rule$conditionOperat = rule.conditionOperator;
+                var conditionOperator = _rule$conditionOperat === undefined ? "and" : _rule$conditionOperat;
+
+
+                if (!conditions) {
+                    rule.conditionOperator = conditionOperator;
+                    rule.conditions = [rule];
+                }
+
+                return self.evaluator.evaluate(rule);
+            });
+
+            return stateSelect ? stateSelect.stateId : '';
+        }
+    }, {
+        key: 'rules',
+        get: function get() {
+            var self = this;
+
+            return function () {
+                var navArray = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
+
+                return self.processRules(navArray);
+            };
+        }
+    }]);
+
+    return Rules;
+}();
+
+},{"../../../utilities/type-parsers.js":31,"./evaluator.js":27}],29:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var _class = function () {
+	function _class(log) {
+		_classCallCheck(this, _class);
+
+		this.log = log;
+	}
+
+	_createClass(_class, [{
+		key: "assert",
+		value: function assert(test, name, message) {
+			var log = this.log;
+			var debug = log.show;
+
+
+			if (!test) {
+				var errorObj = {
+					message: name + " is invalid: " + message + "."
+				};
+
+				if (debug) {
+					this.log.error(errorObj, "ASSERT");
+					throw new Error(errorObj.message);
+				}
+			}
+
+			return test;
+		}
+	}]);
+
+	return _class;
+}();
+
+exports.default = _class;
+
+},{}],30:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1591,6 +2402,16 @@ var _class = function () {
             Bus.emit(_logging2.default.ERROR, errorPayload);
         }
     }, {
+        key: 'debug',
+        value: function debug(message) {
+            var show = this.show;
+
+
+            if (show) {
+                this.log('DEBUG: ' + message);
+            }
+        }
+    }, {
         key: 'log',
         value: function log(message) {
             var show = this.show;
@@ -1603,10 +2424,7 @@ var _class = function () {
                 timestamp: new Date()
             };
 
-            if (show) {
-                console.log(logMessage + ': ' + message);
-            }
-
+            console.log(logMessage + ': ' + message);
             Bus.emit(logMessage, logPayload);
         }
     }, {
@@ -1634,7 +2452,7 @@ var _class = function () {
 
 exports.default = _class;
 
-},{"../constants/errors.js":3,"../constants/logging.js":8}],19:[function(require,module,exports){
+},{"../constants/errors.js":3,"../constants/logging.js":8}],31:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1850,6 +2668,22 @@ var ObjectParsers = exports.ObjectParsers = function () {
             return itHas;
         }
     }, {
+        key: 'setValue',
+        value: function setValue(object, path, value) {
+            var a = path.split('.');
+            var o = object;
+            for (var i = 0; i < a.length - 1; i++) {
+                var n = a[i];
+                if (n in o) {
+                    o = o[n];
+                } else {
+                    o[n] = {};
+                    o = o[n];
+                }
+            }
+            o[a[a.length - 1]] = value;
+        }
+    }, {
         key: 'getValueFromPath',
         value: function getValueFromPath(path, object) {
             var pathParts = path.split(".");
@@ -1862,9 +2696,10 @@ var ObjectParsers = exports.ObjectParsers = function () {
                 currentData = oldData[pathPart];
 
                 if (typeValidator.isEmpty(currentData)) {
-
+                    returnValue = currentData;
                     return;
                 }
+
                 returnValue = currentData;
                 oldData = currentData;
             });
@@ -1919,4 +2754,4 @@ var ObjectParsers = exports.ObjectParsers = function () {
 
 ;
 
-},{}]},{},[13]);
+},{}]},{},[14]);

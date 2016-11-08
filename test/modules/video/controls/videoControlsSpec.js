@@ -1,5 +1,5 @@
-import {Controls} from '../../../../library/modules/video/controls/index.js';
-import VideoSettings from '../../../../library/modules/video/settings.js';
+import {Controls} from '../../../../src/modules/video/controls/index.js';
+import VideoSettings from '../../../../src/modules/video/settings.js';
 
 describe('Video Controls', () => {
     let scrubBar, muteControls, volumeBar, totalTimeInfo, playPauseControls, currentTimeInfo, fakeBus, videoControls;

@@ -1,4 +1,4 @@
-import { Date as DateInput } from '../../../../library/modules/ui/default/date.js';
+import { Date as DateInput } from '../../../../src/modules/ui/default/date.js';
 
 describe('Default DateInput', () => {
     describe('#html', () => {

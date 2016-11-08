@@ -1,5 +1,5 @@
-import { Form  } from '../../../../library/modules/ui/default/form.js';
-import { Style  } from '../../../../library/modules/ui/default/style.js';
+import { Form  } from '../../../../src/modules/ui/default/form.js';
+import { Style  } from '../../../../src/modules/ui/default/style.js';
 
 
 describe('Default Form', () => {

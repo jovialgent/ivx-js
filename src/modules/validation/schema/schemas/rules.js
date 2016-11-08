@@ -15,7 +15,7 @@ export class Rules {
     }
 
     get rulesRequired(){
-        return ["key", "is", "value"];
+        // return ["key", "is", "value"];
     }
 
     get schema(){
@@ -26,6 +26,9 @@ export class Rules {
                 "stateId" : {
                     "type" : "string",
                     "enum" : this.stateIdEnums
+                },
+                "rules" : {
+                    "type" : "array"
                 },
                 "rule" : {
                     "type" : "object",

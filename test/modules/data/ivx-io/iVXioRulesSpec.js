@@ -1,4 +1,4 @@
-import {iVXioRules} from '../../../../library/modules/data/ivx-io/rules.js';
+import {iVXioRules} from '../../../../src/modules/data/ivx-io/rules.js';
 import {MockiVXioExperience} from './mock-experience.js';
 
 describe('iVXioRules', () => {

@@ -1,4 +1,4 @@
-import {ExperienceValidation} from '../../../../library/modules/validation/ivx-js-validation/experience.js';
+import {ExperienceValidation} from '../../../../src/modules/validation/ivx-js-validation/experience.js';
 
 describe('Experience', () => {
     describe('#validAnimateElementObj', () => {

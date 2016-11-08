@@ -6,7 +6,9 @@ export default class extends  iVXjsConfigConstants{
 
         let eventNames = {
             VALIDATED : "validated",
-            NOT_VALID : "not-valid"
+            NOT_VALID : "not-valid",
+            ANALYTICS_SET : "analytics-set",
+            ANALYTICS_FINISHED : "analytics-finished"
         };
 
         this.addNames(eventNames);

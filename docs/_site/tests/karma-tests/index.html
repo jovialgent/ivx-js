@@ -94,7 +94,7 @@ body { background-color: #eeeeee; padding: 0; margin: 5px; overflow-y: scroll; }
 </head>
 
 <body id="HTMLReporter" class="html-reporter">
-<h1>Tested in Chrome 52.0.2743 (Mac OS X 10.11.3) on Tue Aug 09 2016</h1>
+<h1>Tested in Chrome 54.0.2840 (Mac OS X 10.12.0) on Wed Oct 19 2016</h1>
 
 <div class="alert">
 
@@ -102,7 +102,7 @@ body { background-color: #eeeeee; padding: 0; margin: 5px; overflow-y: scroll; }
 
   
   <span class="passingAlert bar"><span class="fold-buttons"><a href="#" onclick="fold();">Fold</a> | 
-  <a href="#" onclick="unfold();">Unfold</a></span>179 specs, 0 failed, 5 pending</span>
+  <a href="#" onclick="unfold();">Unfold</a></span>195 specs, 0 failed, 2 pending</span>
   
 
 
@@ -157,6 +157,32 @@ body { background-color: #eeeeee; padding: 0; margin: 5px; overflow-y: scroll; }
     
       <div class="specSummary passed">
       <span class="description">should return a promise</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">FireBaseActions #handleRedirect</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should run 'addScope' if provider has that function</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">localStorage.redirectOrigin should equal a stringified version of the statedata</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">FireBaseActions #isRestricted</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should return false if here is a user</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should return true if here is no user</span>
       </div>
     
     </div>
@@ -293,6 +319,111 @@ body { background-color: #eeeeee; padding: 0; margin: 5px; overflow-y: scroll; }
     
       <div class="specSummary passed">
       <span class="description">should return the  stateId if the progress evaluates correctly.</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">iVXioInputValidators #TextShort</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should add maxlength of 64 to a text input</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should add maxlength to equal minlength and maxlegnth to a text input attribute</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">iVXioInputValidators #TextMedium</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should add maxlength of 128 to a text input</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should add maxlength to equal minlength and maxlegnth to a text input attribute</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">iVXioInputValidators #TextLarge</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should add maxlength of 256 to a text input</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should add maxlength to equal minlength and maxlegnth to a text input attribute</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">iVXioInputValidators #TextArea</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should add maxlength of 1024 to a text input</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should be text area</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">iVXioInputValidators #Number</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should add min and max to a to be the story input.</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should be number.</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">iVXioInputValidators #Email</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should be email.</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">iVXioInputValidators #Url</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should be url.</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">iVXioInputValidators #Checkbox</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should be checkbox.</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">iVXioInputValidators #Options</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should be options.</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">options should be the same as the options in the story.</span>
       </div>
     
     </div>
@@ -850,23 +981,6 @@ body { background-color: #eeeeee; padding: 0; margin: 5px; overflow-y: scroll; }
     
       <div class="specSummary passed">
       <span class="description">should return invalid if there are  no rules</span>
-      </div>
-    
-    </div>
-  
-    <div class="suite passed">
-      <span class="description">ModuleValidation #validUIModuleObj</span>
-    
-      <div class="specSummary skipped">
-      <span class="description">should return true if ui is defined and type is filled</span>
-      </div>
-    
-      <div class="specSummary skipped">
-      <span class="description">should return false if ui is not defined.</span>
-      </div>
-    
-      <div class="specSummary skipped">
-      <span class="description">should return false if ui type is empty.</span>
       </div>
     
     </div>

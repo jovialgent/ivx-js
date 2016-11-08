@@ -1,4 +1,4 @@
-import { Number as NumberInput } from '../../../../library/modules/ui/default/number.js';
+import { Number as NumberInput } from '../../../../src/modules/ui/default/number.js';
 
 describe('Default Number', () => {
     describe('#html', () => {

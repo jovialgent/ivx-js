@@ -1,9 +1,9 @@
-import { iVXioActions } from '../../../../library/modules/data/ivx-io/actions.js';
+import { iVXioActions } from '../../../../src/modules/data/ivx-io/actions.js';
 import { MockiVXioExperience } from './mock-experience.js';
 import { FakeBus } from "../../../core/fake-bus.js";
-import { iVXjs } from '../../../../library/core/app.js';
-import iVXioErrors from '../../../../library/constants/iVXio.errors.js';
-import Errors  from '../../../../library/constants/errors.js';
+import { iVXjs } from '../../../../src/core/app.js';
+import iVXioErrors from '../../../../src/constants/iVXio.errors.js';
+import Errors  from '../../../../src/constants/errors.js';
 
 let iVXioErrorNames = new iVXioErrors();
 let errorNames = new Errors();

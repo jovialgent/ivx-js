@@ -40,8 +40,10 @@ module.exports = function (config) {
             'node_modules/angular/angular.min.js',
             'node_modules/angular-mocks/angular-mocks.js',
             'test/**/*Spec.js',
-            'library/core/**/*.js',
-            'library/angular/app.js',
+            'src/core/**/*.js',
+            'src/angular/app.js',
+            "src/modules/data/firebase/index.js",
+             
             {
                 pattern: 'test/mock-data/**/*.json',
                 served: true
@@ -57,8 +59,9 @@ module.exports = function (config) {
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
 
-            "library/core/**/*.js": ['browserify'],
-            "library/angular/app.js": ['browserify'],
+            "src/core/**/*.js": ['browserify'],
+            "src/modules/data/firebase/index.js" : ["browserify"],
+            "src/angular/app.js": ['browserify'],
             
             
             "test/**/*Spec.js": ['browserify'],

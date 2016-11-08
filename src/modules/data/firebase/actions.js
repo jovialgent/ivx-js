@@ -6,7 +6,7 @@ import FirebaseUtilities from "./utilities.js";
 
 let objectParser = new ObjectParsers();
 let typeValidator = new TypeValidator();
-let utitlities = new FirebaseUtilities();
+let utilities = new FirebaseUtilities();
 
 export default class {
     constructor(iVXjsLog) {
@@ -76,14 +76,16 @@ export default class {
                 defaultData.stateSrc = currentState.data.id;  
                
                 let stateData = currentState.data;
-                let detokenedPath = utitlities.detokenize(experiencePath, self.user, self, self.iVXjsLog);
+                let detokenedPath = utilities.detokenize(experiencePath, self.user, self, self.iVXjsLog);
                 let {currentUser} = firebase.auth();
+
                 if(currentUser){ 
                     defaultData.user = {
                     };
                     defaultData.user[currentUser.uid] = true;
                 }
-                let newExperienceKey = database.ref(utitlities.detokenize(experiencePath, self.user, self, self.iVXjsLog)).push(defaultData).key;
+                
+                let newExperienceKey = database.ref(utilities.detokenize(experiencePath, self.user, self, self.iVXjsLog)).push(defaultData).key;
                 let eventConstants = new FirebaseEvents();
 
                 self.key = newExperienceKey;
@@ -130,6 +132,7 @@ export default class {
     isRestricted() {
         return new Promise((resolve, reject) => {
             firebase.auth().onAuthStateChanged(function (user) {
+
                 resolve(!user);
             });
         })
@@ -315,7 +318,6 @@ export default class {
         });
 
         return authPromise;
-
     }
 
     setData(eventObj) {
@@ -325,7 +327,7 @@ export default class {
         let {key, value, ref, user = false} = eventObj;
         let updateData = {};
         let currentUser = firebase.auth().currentUser;
-        let refPath = utitlities.detokenize(`${experiencePath}/$x.key`, self.user, self, iVXjsLog);
+        let refPath = utilities.detokenize(`${experiencePath}/$x.key`, self.user, self, iVXjsLog);
 
 
         if (!ref && !experienceKey && !user) {
@@ -350,7 +352,7 @@ export default class {
         }
 
         if (ref) {
-            let detokenedRef = utitlities.detokenize(ref, self.user, self, iVXjsLog);
+            let detokenedRef = utilities.detokenize(ref, self.user, self, iVXjsLog);
 
             if (detokenedRef) {
                 return database.ref(detokenedRef)

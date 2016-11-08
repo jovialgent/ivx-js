@@ -1,5 +1,5 @@
-import {Actions} from '../../../../library/modules/data/ivx-js/actions.js';
-import {iVXjs} from '../../../../library/core/app.js';
+import {Actions} from '../../../../src/modules/data/ivx-js/actions.js';
+import {iVXjs} from '../../../../src/core/app.js';
 import {FakeBus} from '../../../core/fake-bus.js';
 
 describe('iVXjsActions', () => {

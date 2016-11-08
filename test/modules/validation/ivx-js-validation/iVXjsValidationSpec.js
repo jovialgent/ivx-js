@@ -1,4 +1,4 @@
-import {iVXjsValidation} from '../../../../library/modules/validation/ivx-js-validation/index.js';
+import {iVXjsValidation} from '../../../../src/modules/validation/ivx-js-validation/index.js';
 
 describe('iVXjsValidation', () => {
 

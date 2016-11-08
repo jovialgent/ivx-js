@@ -270,7 +270,7 @@ _Sample Data_
 
 _Schema_
 
-[video-state.jsond](https://influencetech.github.io/ivx-js/developer/schemas/navigation-state.jsond)
+[video-state.jsond](https://influencetech.github.io/ivx-js/developer/schemas/video-state.jsond)
 
 _Video State Properties_
 
@@ -369,7 +369,7 @@ _Sample Data_
 
 _Schema_
 
-[input-datetime-local.jsond](https://influencetech.github.io/ivx-js/developer/schemas/input-datetime-datetime-local.jsond)
+[input-datetime-local.jsond](https://influencetech.github.io/ivx-js/developer/schemas/input-datetime-local.jsond)
 
 _Datetime Local Input Settings_
 

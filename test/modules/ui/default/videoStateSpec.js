@@ -1,4 +1,4 @@
-import { VideoState } from '../../../../library/modules/ui/default/state.video.js';
+import { VideoState } from '../../../../src/modules/ui/default/state.video.js';
 
 describe('Default VideoState', () => {
     describe('#html', () => {

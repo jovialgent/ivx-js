@@ -1,4 +1,4 @@
-import { Radio } from '../../../../library/modules/ui/default/radio.js';
+import { Radio } from '../../../../src/modules/ui/default/radio.js';
 
 describe('Default Radio', () => {
     describe('#html', () => {

@@ -11,8 +11,14 @@ class AppConfig {
 
         this.createStates($stateProvider, iVXjs.config.states);
 
+        let {experience} = iVXjs;
+        let {templates = []} = iVXjs.config;
         let defaultStateID = iVXjs.rules(iVXjs.config.defaultState);
         let {url} = iVXjs.config.states.find((state) => { return state.id === defaultStateID });
+
+        if (experience.whiteList) {
+            $sceDelegateProvider.resourceUrlWhitelist(experience.whiteList);
+        }
 
         $urlRouterProvider
             .otherwise(($injector, $location) => {
@@ -29,10 +35,10 @@ class AppConfig {
 
                 let pageNotFoundState = iVXjs.config.states.find((state) => { return state.id === pageNotFoundStateId });
 
-                if(pageNotFoundState){
-                    pageNotFoundUrl  = pageNotFoundState.url;
+                if (pageNotFoundState) {
+                    pageNotFoundUrl = pageNotFoundState.url;
                 }
-                
+
                 return pageNotFoundUrl ? pageNotFoundUrl : url;
             });
         this.create$httpInjectors($httpProvider, $provide);

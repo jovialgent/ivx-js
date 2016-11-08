@@ -11,6 +11,7 @@ export class Controls extends ControlEvents {
     dispose(iVXjsBus) {
         iVXjsBus.removeListener(this.controlEventNames.TIME_UPDATE, this.updateTime);
         iVXjsBus.removeListener(this.controlEventNames.PLAYING, this.whilePlaying);
+        iVXjsBus.removeListener(this.controlEventNames.CAN_PLAY, this.canPlayCallback);
     }
 
     getAbsolutePosition(element) {
@@ -121,7 +122,7 @@ export class Controls extends ControlEvents {
             let {totalTimeInfo, currentTimeInfo, scrubBar} = self;
             let durationTimeObject = self.convertSecondsToParts(duration);
             let durationTimeStamp = self.createTimeStamp(durationTimeObject);
-            
+
             self.duration = duration;
 
             if (totalTimeInfo) totalTimeInfo.innerHTML = `/${durationTimeStamp}`;
@@ -135,19 +136,19 @@ export class Controls extends ControlEvents {
         let {currentTime: seconds} = player;
 
         seconds = seconds > this.duration ? 0 : seconds;
-        
+         
         let currentTimeObject = this.convertSecondsToParts(seconds);
         let currentTimeStamp = this.createTimeStamp(currentTimeObject);
         let timeLapsed = seconds / this.duration;
-        
+
         if (currentTimeInfo) currentTimeInfo.innerHTML = `${currentTimeStamp}`;
         
         let searchClasses = [scrubBarTimeLapseClasses];
         
         if (scrubBar) {
-            let timelapsed = this.getElementByClasses(scrubBar.children, searchClasses);
-
-            timelapsed.style.width = `${timeLapsed * 100}%`;
+            let timelapsedElement = this.getElementByClasses(scrubBar.children, searchClasses);
+             
+            timelapsedElement.style.width = `${timeLapsed * 100}%`;
         }
     }
 
@@ -185,6 +186,7 @@ export class Controls extends ControlEvents {
         this.updateTime = iVXjsBus.on(this.controlEventNames.TIME_UPDATE, updateTime);
         this.whilePaused = iVXjsBus.on(this.controlEventNames.PAUSED, whilePaused);
         this.whilePlaying = iVXjsBus.on(this.controlEventNames.PLAYING, whilePlaying);
+        this.canPlayCallback =  iVXjsBus.on(this.controlEventNames.CAN_PLAY, canPlayCallBack);
         this.updateTime = this.updateTime ? this.updateTime : updateTime;
         
         volumeBar.addEventListener('mousedown', (event) => {
@@ -200,8 +202,7 @@ export class Controls extends ControlEvents {
             self.setMute(event);
         });
 
-        iVXjsBus.once(this.controlEventNames.CAN_PLAY, canPlayCallBack);
-
+       
         function canPlayCallBack(player, _stateData) {
             self.onReadyToPlay(player, _stateData);
         }
@@ -218,8 +219,6 @@ export class Controls extends ControlEvents {
             self.onPlaying();
         }
     }
-
-
 
     getElementByClasses(elements, classes) {
         let elementArray = elements instanceof Array ?

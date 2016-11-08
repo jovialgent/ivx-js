@@ -1,4 +1,4 @@
-import {Style} from '../../../../library/modules/ui/default/style.js';
+import {Style} from '../../../../src/modules/ui/default/style.js';
 
 describe('Style', () => {
 

@@ -1,4 +1,4 @@
-import {Rules} from '../../../../library/modules/data/ivx-js/rules.js';
+import {Rules} from '../../../../src/modules/data/ivx-js/rules.js';
 
 describe('Rules', () => {
     describe('#evaluateRules', () => {

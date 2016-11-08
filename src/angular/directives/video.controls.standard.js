@@ -1,5 +1,9 @@
 import createFactoryFunction from '../utilities/create-factory-function.js';
 import StandardControlsController from '../controllers/video.controls.standard.js';
+import VideoEventNames from '../../constants/video.events.js';
+
+let videoEventNames = new VideoEventNames();
+
 
 class StandardControls {
     constructor(iVXjsUI, iVXjsBus) {
@@ -10,10 +14,13 @@ class StandardControls {
         this.controllerAs = 'vm'
         this.link = ($scope, iElm, iAttrs, controller) => {
             let standardControls = new iVXjsUI.videoControls(iElm.find('div'), iVXjsBus);
-    
+
             controller.controls = standardControls;
-    
-            standardControls.addEventListeners(iVXjsBus);        
+
+           
+            standardControls.addEventListeners(iVXjsBus);   
+            
+                
         }
     }
 

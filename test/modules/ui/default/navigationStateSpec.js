@@ -1,4 +1,4 @@
-import { NavigationState } from '../../../../library/modules/ui/default/state.navigation.js';
+import { NavigationState } from '../../../../src/modules/ui/default/state.navigation.js';
 
 describe('Default Navigation State', () => {
     describe('#html', () => {

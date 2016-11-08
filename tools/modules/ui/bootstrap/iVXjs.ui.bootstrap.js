@@ -82,6 +82,7 @@ var _class = function (_VideoConstants) {
             PAUSED: "paused",
             PLAY: "play",
             PLAYING: "playing",
+            READY_PLAYER: "ready-player",
             SEEK: "seek",
             SET_DURATION: "set-duration",
             SET_VOLUME: "set-volume",
@@ -1340,8 +1341,6 @@ var Buttons = exports.Buttons = function () {
             var _input = this.input;
             var input = _input === undefined ? {} : _input;
             var buttonClasses = this.buttonClasses;
-
-            console.dir(buttons);
             var _errorClass$attribute = errorClass.attributes;
             var attributes = _errorClass$attribute === undefined ? {} : _errorClass$attribute;
             var _errorClass$errors = errorClass.errors;
@@ -3712,6 +3711,7 @@ var Controls = exports.Controls = function (_ControlEvents) {
         value: function dispose(iVXjsBus) {
             iVXjsBus.removeListener(this.controlEventNames.TIME_UPDATE, this.updateTime);
             iVXjsBus.removeListener(this.controlEventNames.PLAYING, this.whilePlaying);
+            iVXjsBus.removeListener(this.controlEventNames.CAN_PLAY, this.canPlayCallback);
         }
     }, {
         key: 'getAbsolutePosition',
@@ -3880,9 +3880,9 @@ var Controls = exports.Controls = function (_ControlEvents) {
             var searchClasses = [scrubBarTimeLapseClasses];
 
             if (scrubBar) {
-                var timelapsed = this.getElementByClasses(scrubBar.children, searchClasses);
+                var timelapsedElement = this.getElementByClasses(scrubBar.children, searchClasses);
 
-                timelapsed.style.width = timeLapsed * 100 + '%';
+                timelapsedElement.style.width = timeLapsed * 100 + '%';
             }
         }
     }, {
@@ -3927,6 +3927,7 @@ var Controls = exports.Controls = function (_ControlEvents) {
             this.updateTime = iVXjsBus.on(this.controlEventNames.TIME_UPDATE, updateTime);
             this.whilePaused = iVXjsBus.on(this.controlEventNames.PAUSED, whilePaused);
             this.whilePlaying = iVXjsBus.on(this.controlEventNames.PLAYING, whilePlaying);
+            this.canPlayCallback = iVXjsBus.on(this.controlEventNames.CAN_PLAY, canPlayCallBack);
             this.updateTime = this.updateTime ? this.updateTime : updateTime;
 
             volumeBar.addEventListener('mousedown', function (event) {
@@ -3941,8 +3942,6 @@ var Controls = exports.Controls = function (_ControlEvents) {
             muteControls.addEventListener('click', function (event) {
                 self.setMute(event);
             });
-
-            iVXjsBus.once(this.controlEventNames.CAN_PLAY, canPlayCallBack);
 
             function canPlayCallBack(player, _stateData) {
                 self.onReadyToPlay(player, _stateData);
@@ -4064,12 +4063,44 @@ exports.default = _class;
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.assert = assert;
-function assert(test, name, message) {
-	if (!test) throw new Error(name + " is invalid: " + message + ".");
 
-	return test;
-}
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var _class = function () {
+	function _class(log) {
+		_classCallCheck(this, _class);
+
+		this.log = log;
+	}
+
+	_createClass(_class, [{
+		key: "assert",
+		value: function assert(test, name, message) {
+			var log = this.log;
+			var debug = log.show;
+
+
+			if (!test) {
+				var errorObj = {
+					message: name + " is invalid: " + message + "."
+				};
+
+				if (debug) {
+					this.log.error(errorObj, "ASSERT");
+					throw new Error(errorObj.message);
+				}
+			}
+
+			return test;
+		}
+	}]);
+
+	return _class;
+}();
+
+exports.default = _class;
 
 },{}],47:[function(require,module,exports){
 'use strict';
@@ -4287,6 +4318,22 @@ var ObjectParsers = exports.ObjectParsers = function () {
             return itHas;
         }
     }, {
+        key: 'setValue',
+        value: function setValue(object, path, value) {
+            var a = path.split('.');
+            var o = object;
+            for (var i = 0; i < a.length - 1; i++) {
+                var n = a[i];
+                if (n in o) {
+                    o = o[n];
+                } else {
+                    o[n] = {};
+                    o = o[n];
+                }
+            }
+            o[a[a.length - 1]] = value;
+        }
+    }, {
         key: 'getValueFromPath',
         value: function getValueFromPath(path, object) {
             var pathParts = path.split(".");
@@ -4299,9 +4346,10 @@ var ObjectParsers = exports.ObjectParsers = function () {
                 currentData = oldData[pathPart];
 
                 if (typeValidator.isEmpty(currentData)) {
-
+                    returnValue = currentData;
                     return;
                 }
+
                 returnValue = currentData;
                 oldData = currentData;
             });

@@ -1,4 +1,4 @@
-import {Validation} from '../../../../library/modules/validation/ivx-js-validation/validation.js';
+import {Validation} from '../../../../src/modules/validation/ivx-js-validation/validation.js';
 
 
 describe('Validation', () => {

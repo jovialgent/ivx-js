@@ -1,5 +1,5 @@
-import {Setup} from '../../library/modules/setup.js';
-import {SimpleIterate} from '../../library/utilities/simple-iterate.js';
+import {Setup} from '../../src/modules/setup.js';
+import {SimpleIterate} from '../../src/utilities/simple-iterate.js';
 
 describe('Setup', () => {
 

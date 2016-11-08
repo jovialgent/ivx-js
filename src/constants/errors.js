@@ -14,7 +14,9 @@ export default class extends iVXjsConstants {
             HTTP : new HttpConstants().HTTP,
             VALIDATION : "validation",
             SET_UP : "set-up",
-            IVX_IO : new iVXioConstants().IVX_IO
+            IVX_IO : new iVXioConstants().IVX_IO,
+            DEFAULT : "default",
+            ASSERT : "assert"
         };
 
         this.addNames(eventNames);

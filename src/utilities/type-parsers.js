@@ -3,7 +3,7 @@ export class TypeValidator {
 
     }
 
-    get toString(){
+    get toString() {
         return Object.prototype.toString;
     }
 
@@ -11,15 +11,15 @@ export class TypeValidator {
         return obj === undefined || obj === null;
     }
 
-    isString(obj){
+    isString(obj) {
         return this.toString.call(obj) === '[object String]';
     }
 
-    isNumber(obj){
+    isNumber(obj) {
         return !isNaN(obj);
     }
 
-    isBoolean(obj){
+    isBoolean(obj) {
         return typeof obj === 'boolean' || (typeof obj === 'object' && typeof obj.valueOf() === 'boolean');
     }
 
@@ -61,9 +61,9 @@ export class ObjectParsers {
         let keys = Object.keys(object);
         let entries = keys.reduce((currentArray, key) => {
             let entry = [key, object[key]];
-        
+
             currentArray.push(entry);
-        
+
             return currentArray;
         }, []);
         let reduceMap = new Map(entries);
@@ -149,7 +149,7 @@ export class ObjectParsers {
 
     hasSameObject(collection, element) {
         let itHas = false;
-        
+
         collection.forEach((checkElement, index) => {
             if (typeof checkElement === 'object') {
                 let checkElementKeys = Object.keys(checkElement);
@@ -181,17 +181,32 @@ export class ObjectParsers {
         return itHas;
     }
 
-    getValueFromPath(path, object){
+    setValue(object, path, value) {
+        var a = path.split('.');
+        var o = object;
+        for (var i = 0; i < a.length - 1; i++) {
+            var n = a[i];
+            if (n in o) {
+                o = o[n];
+            } else {
+                o[n] = {};
+                o = o[n];
+            }
+        }
+        o[a[a.length - 1]] = value;
+    }
+
+    getValueFromPath(path, object) {
         let pathParts = path.split(".");
         let oldData = object;
         let currentData = {};
         let returnValue;
 
-        pathParts.forEach((pathPart, index)=>{
-            if(typeValidator.isEmpty(pathPart)) return;
+        pathParts.forEach((pathPart, index) => {
+            if (typeValidator.isEmpty(pathPart)) return;
             currentData = oldData[pathPart];
-          
-            if(typeValidator.isEmpty(currentData)){
+
+            if (typeValidator.isEmpty(currentData)) {
                 returnValue = currentData;
                 return;
             }
@@ -200,7 +215,7 @@ export class ObjectParsers {
             oldData = currentData;
         });
 
-        return returnValue;    
+        return returnValue;
     }
 
 
@@ -223,7 +238,7 @@ export class ObjectParsers {
             allUniqueValues[key] = [];
             collection.forEach((element, index) => {
                 let notUnique = self.has(allUniqueValues[key], element[key]);
-                
+
                 if (notUnique) {
                     hasUnique.errors.push({
                         key: key,

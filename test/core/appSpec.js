@@ -1,5 +1,5 @@
-import {iVXjs} from '../../library/core/app.js';
-import iVXjsConfigEvents from '../../library/constants/iVXjs.config.events.js';
+import {iVXjs} from '../../src/core/app.js';
+import iVXjsConfigEvents from '../../src/constants/iVXjs.config.events.js';
 import {FakeBus} from './fake-bus.js';
 
 let iVXjsConfigEventNames = new iVXjsConfigEvents();

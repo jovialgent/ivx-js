@@ -1,4 +1,4 @@
-import { DatetimeLocal  } from '../../../../library/modules/ui/default/datetime-local.js';
+import { DatetimeLocal  } from '../../../../src/modules/ui/default/datetime-local.js';
 
 describe('Default DatetimeLocalInput', () => {
     describe('#html', () => {

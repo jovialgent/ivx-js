@@ -50,20 +50,76 @@
             "required": true
           },
           "rule": {
-            "type": "object",
             "name": "Rule",
-            "description": "Supplies the rule information for this experiences rule function to evaluate if this state should be used.",
+            "type": "object",
+            "description": "Supplies the rule information for this experiences rule function to evaluate if this state should be used. If this rule evaluates to 'true', then iVXjs will navigate to the corresponding state.",
             "properties": {
-               "key": {
+              "conditionOperators": {
+                "name": "Condition Operators",
+                "type": "string",
+                "description": "Indicates how to evaluate the conditions for this rule.",
+                "enum": [
+                  "and",
+                  "or",
+                  "not"
+                ]
+              },
+              "conditions": {
+                "name": "Conditions",
+                "type": "array",
+                "description": "The conditions/rules to be evaluate to a boolean.",
+                "required" : true,
+                "items": {
+                  "type": "object",
+                  "name": "Condition Settings",
+                  "description": "The key, value and the evaluator for each of the conditions.",
+                  "properties": {
+                    "key": {
+                      "name": "Condition Key",
+                      "type": "string",
+                      "description": "The key from the experience.data object or a keyword the rule function uses to get the correct data.",
+                      "required": true
+                    },
+                    "is": {
+                      "name": "Condition Comparer",
+                      "type": "string",
+                      "description": "The type of comparison this key will be evaluated against the value",
+                      "enum": [
+                        "lt",
+                        "lte",
+                        "gt",
+                        "gte",
+                        "equals",
+                        "notEquals"
+                      ],
+                      "required": true
+                    },
+                    "value": {
+                      "name": "Condition Value",
+                      "type": "any",
+                      "description": "The value to evaluate the data found in the 'key'.",
+                      "required": true
+                    },
+                    "type" : {
+                      "name" : "Condition Type",
+                      "type" : "string",
+                      "description" : "Type of comparison. By default, it is input meaning it looks for any data input in the experience object. However, some data modules may use this to indicate a special kind of condition"
+                    }
+                  }
+                }
+              },
+              "key": {
                 "name": "Rule Key",
                 "type": "string",
                 "description": "The key from the experience.data object or a keyword the rule function uses to get the correct data.",
+                "specialNote" : "This is depreciated. Use the conditionOperator and conditions for rule evaluation in the future",
                 "required": true
               },
               "is": {
-                "name" : "Rule Comparer",
+                "name": "Rule Comparer",
                 "type": "string",
                 "description": "The type of comparison this key will be evaluated against the value",
+                "specialNote" : "This is depreciated. Use the conditionOperator and conditions for rule evaluation in the future",
                 "enum": [
                   "lt",
                   "lte",
@@ -75,9 +131,10 @@
                 "required": true
               },
               "value": {
-                "name" : "Rule Value",
+                "name": "Rule Value",
                 "type": "any",
                 "description": "The value to evaluate the data found in the 'key'.",
+                "specialNote" : "This is depreciated. Use the conditionOperator and conditions for rule evaluation in the future",
                 "required": true
               }
             }
