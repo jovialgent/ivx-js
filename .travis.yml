@@ -4,9 +4,10 @@ node_js:
 script: 
 - npm run build
 before_deploy : 
-- "cd build/cdn"
 - "ls"
+- "cd build/cdn"
 deploy:
+  skip_cleanup : true
   provider: cloudfiles
   username: rackspace.services
   api_key:

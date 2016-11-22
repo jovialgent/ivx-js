@@ -1,6 +1,6 @@
 ---
 layout: single
-source : http://127.0.0.1:4000/ivx-js/
+source : https://influencetech.github.io/ivx-js/
 jsarr:
      - js/jsond-table.js
 ---
