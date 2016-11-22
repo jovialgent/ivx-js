@@ -13,4 +13,4 @@ deploy:
   container: iVX.js CDN
   on:
     repo: influencetech/ivx-js
-    branch: ''
+    branch: master
