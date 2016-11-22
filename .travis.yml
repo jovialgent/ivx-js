@@ -1,9 +1,11 @@
 language: node_js
 node_js:
 - "4.4.0"
-before_deploy : "cd build/cdn"
 script: 
 - npm run build
+before_deploy : 
+- "cd build/cdn"
+- "ls"
 deploy:
   provider: cloudfiles
   username: rackspace.services
