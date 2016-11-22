@@ -29,7 +29,7 @@ var mkdirp = require('mkdirp');
 
 
 if (output === 'cdn') {
-    var path = "build/cdn/" + packageJSON.version;
+    var path = "build/cdn/ivx-js/" + packageJSON.version;
 
     buildFiles(path);
 
