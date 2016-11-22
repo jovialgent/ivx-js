@@ -1,7 +1,7 @@
 language: node_js
 node_js:
 - "4.4.0"
-script: 
+script:
 - npm run build
 before_deploy : 
 - "ls"
@@ -13,7 +13,7 @@ deploy:
   api_key:
     secure: lvg21tFp00U2ELuH+Q3SmVAtkfoB/kHW5PyxdacLdSkMfnCc2gcqnCinHt3ZjwePwdFri36N+xsbFwzIdWj5ypkfZQSeU+NSdPO6ZHSx6w7qeeQ2h2roqg+aTLWlFTgH78r2R8rcGsmiQtVamGBMl6iWvzgpE3i4tSE6QWUWv2fF8m8W4ma5jN1FkQw8IwaSk9FOtNjeox6pkuTT4awTMLjWhc2k29opT/fsCNvgcAq8pdx/dZj2XhoTxOASYdIoCcpjvTuEFgcGA8Rwoe87rBfeu3TqE62/pdCpzRSbKuBHgt2okFT/6GMJzCX7DBmbPBPJzcSd9rRCGMJqm8tMQwSWui2tXClw7Y7RCJszarvx7BX9Xpqrim4I8qH9c/cavAsy2FGASlV5nraRD2hVjj9BlyK7/RQDcZD6AKhTXjExilnaeYzvNsut8ErHVwoETyfVOaD16j2JC2nLT6SZVvW1JxxahKfAcxyZ2FOWRMEuVYZRTENxFHCL+mTsxTFgUdTNHguHx11Hb/NHvQrZ7P1vBw+OymSg4qejqP+F7QuKdmI/Q4nC2wisNx0ENlDZjmw8vwtVxjsU+6ZMGacbsYJhoorVn8ZaqcQmqg9pZACoQ1i/7lR5RD7gEyOGTz8CeqBSMd5ImmQi49NUJLrnBwGQp4gdsNFHq4PR7ut8F8k=
   region: ORD
-  container: iVX.js CDN
+  container: iVX.js CDN/ivx-js
   on:
     repo: influencetech/ivx-js
     branch: master

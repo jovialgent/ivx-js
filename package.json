@@ -31,7 +31,7 @@
     "github:build:cdn" : "node tools/build-scripts/build-module-deps.js --output cdn",
     "modules:data:watch-module:firebase:compress" : "node tools/build-scripts/watch-module-deps.js --output sandbox --input data.firebase",
     "modules:ui:watch-module:materialize:compress" : "node tools/build-scripts/watch-module-deps.js --output sandbox --input ui.materialize",
-    "test": "echo 'no test right now'",
+    "test": "npm run test:start:karma",
     "test:create-server": "node_modules/.bin/browser-sync start --server docs --files \"docs/**/*.*\" --startPath \"tests/karma-tests\" --port 8890 --ui-port 8891",
     "test:start": "node_modules/.bin/npm-run-all -p test:create-server test:start:karma",
     "test:start:karma": "node_modules/.bin/karma start karma.conf.js",
