@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-- 0.6
+- "4.4.x"
 before_deploy : "cd build/cdn"
 deploy:
   provider: cloudfiles

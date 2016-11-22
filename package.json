@@ -3,10 +3,6 @@
   "version": "0.7.0",
   "description": "An interactive experience src. ",
   "main": "index.js",
-  "engines": {
-    "node": "5.0.0",
-    "npm": "3.5.0"
-  },
   "scripts": {
     "build": "node_modules/.bin/npm-run-all  \"github:build:cdn\" ",
     "demo:all:update-js" : "node_modules/.bin/npm-run-all \"demo:module-injection:update-js\" \"demo:hello-world:update-js\" \"demo:iphone-inline:update-js\" \"demo:ivx-io:update-js\"  \"demo:set-up-a-404-state:update-js\"  \"demo:templates:update-js\" ",
