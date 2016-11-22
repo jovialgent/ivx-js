@@ -2,7 +2,8 @@ language: node_js
 node_js:
 - 0.6
 before_install: 
-    - npm i -g npm@2
+    - npm i -g npm@3
+    - npm -v
 before_deploy : "cd build/cdn"
 deploy:
   provider: cloudfiles
