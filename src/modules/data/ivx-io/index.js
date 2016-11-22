@@ -69,13 +69,21 @@ export class iVXio {
       iVX(experienceHostSettings)
         .then(
         (iVX) => {
+          if (!iVX || !iVX.experience || !iVX.experience.story || !iVX.experience.story.data) {
+            window.setTimeout(() => {
+              self.Bus.emit(iVXioErrors.PLATFORM_UNAVAILABLE, {});
+            }, 100);
+            return;
+          }
           let {experience: experienceSettings = {}, rules: customRules} = iVXjsSettings;
           let defaultActions = objectParser.merge(new iVXjsActions(), experienceSettings);
           let experience = objectParser.merge(defaultActions, iVX.experience);
           let modifiedActions = new iVXioActions(experience, this.iVXjsLog);
           let {ui: storyUI, validation: storyValidation} = iVX.experience.story.data;
+          iVX.experience.story.data.metadata = iVX.experience.story.data.metadata ? iVX.experience.story.data.metadata : {};
           let rules = new iVXioRules(experience, customRules).rules;
           let states = new InputValidator(iVX.experience.story.data.states, iVX.experience.story.inputs).states;
+
 
           experience.whiteList = [
             'self',
@@ -85,6 +93,7 @@ export class iVXio {
           ];
 
           iVX.experience.story.data.states = states;
+          iVX.experience.story.data.metadata.title = iVX.experience.story.data.metadata.title ? iVX.experience.story.data.metadata.title : "iVX Story Player";
 
           let enhancediVXjsSettings = {
             ui: iVXjsSettings.ui,

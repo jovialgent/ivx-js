@@ -153,7 +153,7 @@
 					"always" : {
 						"name" : "Always Fire",
 						"type" : "boolean",
-						"description" : "By default, an event only fires once. If the event needs to fire whenever the video is at the point in the video, this needs to be true"
+						"description" : "By default, an event only fires once. If the event needs to fire whenever the video is at the point in the video, this needs to be true."
 					}
 				}
 			}

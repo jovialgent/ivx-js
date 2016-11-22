@@ -7,6 +7,12 @@ describe('TypeValidator', () => {
         typeValidator = new TypeValidator();
     });
 
+    describe('#isFunction', ()=>{
+        it('should return true if function', () => {
+            expect(typeValidator.isFunction(()=>{})).toEqual(true);
+        });
+    })
+
     describe('#isUndefined', () => {
 
 

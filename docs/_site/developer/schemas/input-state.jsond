@@ -67,6 +67,15 @@
 				"description" : "Event data as defined in the event section of this documentation"
 			}
 		},
+		"onInputReady" : {
+			"name" : "On Input Ready",
+			"type" : "array",
+			"description" : "An array of event data that runs when the HTML is rendered on the page. Used primarily for animating elements on the DOM",
+			"items" : {
+				"type" : "Object",
+				"description" : "Event data as defined in the event section of this documentation"
+			}
+		},
 		"inputs" : {
 			"name" : "Inputs",
 			"type" : "array",

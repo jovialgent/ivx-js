@@ -1,5 +1,6 @@
 ---
 layout: single
+source : http://127.0.0.1:4000/ivx-js/
 jsarr:
      - js/jsond-table.js
 ---
@@ -78,7 +79,7 @@ jsarr:
 The core of all iVXjs experiences is the configuration JSON you feed into its init function. Without a
 proper configuration, the experience won't load and you will not be able to use any of the features in
 iVXjs. This configuration document will help guide you in making the a correct JSON spec and be a reference
-to what is needed to implement the features you want. 
+to what is needed to implement the features you want.  {{page.source}}
 
 ## About this documentation
 
@@ -168,15 +169,15 @@ This is the base structure for the configuration file.
 
 _Sample Data_
 
-[base-structure-sample.json](https://influencetech.github.io/ivx-js/developer/sample-JSON/base-structure-sample.json)
+[base-structure-sample.json]({{page.source}}developer/sample-JSON/base-structure-sample.json)
 
 _Schema_
 
-[base-structure-sample.jsond](https://influencetech.github.io/ivx-js/developer/schemas/base-structure.jsond)
+[base-structure-sample.jsond]({{page.source}}developer/schemas/base-structure.jsond)
 
 _Base Properties_
 
-<div id="basic-json-schema" class="json-schema-table-container" data-json-src="https://influencetech.github.io/ivx-js/developer/schemas/base-structure.jsond"></div> 
+<div id="basic-json-schema" class="json-schema-table-container" data-json-src="{{page.source}}developer/schemas/base-structure.jsond"></div> 
 
 # States
 
@@ -192,15 +193,15 @@ All states have the following data below. Assume the specific states types have 
 
 _Sample Data_
 
-[shared-state-data-sample.json]({https://influencetech.github.io/ivx-js/developer/sample-JSON/shared-state-data-sample.json)
+[shared-state-data-sample.json]({{page.source}}developer/sample-JSON/shared-state-data-sample.json)
 
 _Schema_
 
-[shared-state-data.jsond](https://influencetech.github.io/ivx-js/developer/schemas/shared-state.jsond)
+[shared-state-data.jsond]({{page.source}}developer/schemas/shared-state.jsond)
 
 _Shared State Properties_
 
-<div id="shared-state-schema" class="json-schema-table-container" data-json-src="https://influencetech.github.io/ivx-js/developer/schemas/shared-state.jsond"></div> 
+<div id="shared-state-schema" class="json-schema-table-container" data-json-src="{{page.source}}developer/schemas/shared-state.jsond"></div> 
 
 ## HTML State Schema
 
@@ -210,15 +211,15 @@ The HTML State's data is simple and is designed to help make it easy to inject a
 
 _Sample Data_
 
-[html-state-sample.json](https://influencetech.github.io/ivx-js/developer/sample-JSON/html-state-sample.json)
+[html-state-sample.json]({{page.source}}developer/sample-JSON/html-state-sample.json)
 
 _Schema_
 
-[html-state.jsond](https://influencetech.github.io/ivx-js/developer/schemas/shared-state.jsond)
+[html-state.jsond]({{page.source}}developer/schemas/html-state.jsond)
 
 _HTML State Properties_
 
-<div id="html-state-schema" class="json-schema-table-container" data-json-src="https://influencetech.github.io/ivx-js/developer/schemas/html-state.jsond"></div> 
+<div id="html-state-schema" class="json-schema-table-container" data-json-src="{{page.source}}developer/schemas/html-state.jsond"></div> 
 
 ## Input State Schema
 
@@ -228,16 +229,16 @@ The input state's data allows the developer to create a state with a form and co
 
 _Sample Data_
 
-[input-state-sample.json](https://influencetech.github.io/ivx-js/developer/sample-JSON/input-state-sample.json)
+[input-state-sample.json]({{page.source}}developer/sample-JSON/input-state-sample.json)
 
 
 _Schema_
 
-[input-state.jsond](https://influencetech.github.io/ivx-js/developer/schemas/input-state.jsond)
+[input-state.jsond]({{page.source}}developer/schemas/input-state.jsond)
 
 _Input State Properties_
 
-<div id="input-state-schema" class="json-schema-table-container" data-json-src="https://influencetech.github.io/ivx-js/developer/schemas/input-state.jsond"></div> 
+<div id="input-state-schema" class="json-schema-table-container" data-json-src="{{page.source}}developer/schemas/input-state.jsond"></div> 
 
 
 ## Navigation State Schema
@@ -248,15 +249,15 @@ Settings for the navigation state with the data to set up the links for this sta
 
 _Sample Data_
 
-[navigation-state-sample.json](https://influencetech.github.io/ivx-js/developer/sample-JSON/navigation-state-sample.json)
+[navigation-state-sample.json]({{page.source}}developer/sample-JSON/navigation-state-sample.json)
 
 _Schema_
 
-[navigation-state.jsond](https://influencetech.github.io/ivx-js/developer/schemas/navigation-state.jsond)
+[navigation-state.jsond]({{page.source}}developer/schemas/navigation-state.jsond)
 
 _Navigation State Settings_
 
-<div id="navigation-state-schema" class="json-schema-table-container" data-json-src="https://influencetech.github.io/ivx-js/developer/schemas/navigation-state.jsond"></div> 
+<div id="navigation-state-schema" class="json-schema-table-container" data-json-src="{{page.source}}developer/schemas/navigation-state.jsond"></div> 
 
 ## Video State Schema
 
@@ -266,15 +267,15 @@ The Video State's data has various sections that tell iVXjs what personalization
 
 _Sample Data_
 
-[video-state-sample.json](https://influencetech.github.io/ivx-js/developer/sample-JSON/video-state-sample.json)
+[video-state-sample.json]({{page.source}}developer/sample-JSON/video-state-sample.json)
 
 _Schema_
 
-[video-state.jsond](https://influencetech.github.io/ivx-js/developer/schemas/video-state.jsond)
+[video-state.jsond]({{page.source}}developer/schemas/video-state.jsond)
 
 _Video State Properties_
 
-<div id="video-state-schema" class="json-schema-table-container" data-json-src="https://influencetech.github.io/ivx-js/developer/schemas/video-state.jsond"></div> 
+<div id="video-state-schema" class="json-schema-table-container" data-json-src="{{page.source}}developer/schemas/video-state.jsond"></div> 
 
 
 # Inputs
@@ -291,15 +292,15 @@ Most inputs share attributes to record data and here are the settings that most 
 
 _Sample Data_
 
-[input-data-shared-sample.json](https://influencetech.github.io/ivx-js/developer/sample-JSON/input-data-shared-sample.json)
+[input-data-shared-sample.json]({{page.source}}developer/sample-JSON/input-data-shared-sample.json)
 
 _Schema_
 
-[input-data-shared.jsond](https://influencetech.github.io/ivx-js/developer/schemas/input-data-shared.jsond)
+[input-data-shared.jsond]({{page.source}}developer/schemas/input-data-shared.jsond)
 
 _Input Shared Data Settings_
 
-<div id="input-stared-schema" class="json-schema-table-container" data-json-src="https://influencetech.github.io/ivx-js/developer/schemas/input-data-shared.jsond"></div>
+<div id="input-stared-schema" class="json-schema-table-container" data-json-src="{{page.source}}developer/schemas/input-data-shared.jsond"></div>
 
 ## Buttons
 
@@ -309,15 +310,15 @@ Buttons data allows the user to create a group of buttons that set values on cli
 
 _Sample Data_
 
-[input-button-data-sample.json](https://influencetech.github.io/ivx-js/developer/sample-JSON/input-button-data-sample.json)
+[input-button-data-sample.json]({{page.source}}developer/sample-JSON/input-button-data-sample.json)
 
 _Schema_
 
-[input-buttons.jsond](https://influencetech.github.io/ivx-js/developer/schemas/input-buttons.jsond)
+[input-buttons.jsond]({{page.source}}developer/schemas/input-buttons.jsond)
 
 _Button Input Settings_
 
-<div id="input-buttons-schema" class="json-schema-table-container" data-json-src="https://influencetech.github.io/ivx-js/developer/schemas/input-buttons.jsond"></div>
+<div id="input-buttons-schema" class="json-schema-table-container" data-json-src="{{page.source}}developer/schemas/input-buttons.jsond"></div>
 
 
 ## Checkbox
@@ -328,15 +329,15 @@ Settings for the input to render a checkbox.
 
 _Sample Data_
 
-[input-checkbox-data-sample.json](https://influencetech.github.io/ivx-js/developer/sample-JSON/input-checkbox-data-sample.json)
+[input-checkbox-data-sample.json]({{page.source}}developer/sample-JSON/input-checkbox-data-sample.json)
 
 _Schema_
 
-[input-checkbox.jsond](https://influencetech.github.io/ivx-js/developer/schemas/input-checkbox.jsond)
+[input-checkbox.jsond]({{page.source}}developer/schemas/input-checkbox.jsond)
 
 _Checkbox Input Settings_
 
-<div id="input-checkbox-schema" class="json-schema-table-container" data-json-src="https://influencetech.github.io/ivx-js/developer/schemas/input-checkbox.jsond"></div>
+<div id="input-checkbox-schema" class="json-schema-table-container" data-json-src="{{page.source}}developer/schemas/input-checkbox.jsond"></div>
 
 ## Date
 
@@ -350,11 +351,11 @@ _Sample Data_
 
 _Schema_
 
-[input-date.jsond](https://influencetech.github.io/ivx-js/developer/schemas/input-date.jsond)
+[input-date.jsond]({{page.source}}developer/schemas/input-date.jsond)
 
 _Date Input Settings_
 
-<div id="input-date-schema" class="json-schema-table-container" data-json-src="https://influencetech.github.io/ivx-js/developer/schemas/input-date.jsond"></div>
+<div id="input-date-schema" class="json-schema-table-container" data-json-src="{{page.source}}developer/schemas/input-date.jsond"></div>
 
 
 ## Datetime-Local
@@ -365,15 +366,15 @@ Settings for the datetime-local input type
 
 _Sample Data_
 
-[input-datetime-local-data-sample.json](https://influencetech.github.io/ivx-js/developer/sample-JSON/input-datetime-local-data-sample.json)
+[input-datetime-local-data-sample.json]({{page.source}}developer/sample-JSON/input-datetime-local-data-sample.json)
 
 _Schema_
 
-[input-datetime-local.jsond](https://influencetech.github.io/ivx-js/developer/schemas/input-datetime-local.jsond)
+[input-datetime-local.jsond]({{page.source}}developer/schemas/input-datetime-local.jsond)
 
 _Datetime Local Input Settings_
 
-<div id="input-datetime-local-schema" class="json-schema-table-container" data-json-src="https://influencetech.github.io/ivx-js/developer/schemas/input-datetime-local.jsond"></div>
+<div id="input-datetime-local-schema" class="json-schema-table-container" data-json-src="{{page.source}}developer/schemas/input-datetime-local.jsond"></div>
 
 
 ## Email
@@ -384,15 +385,15 @@ Settings for this email input type
 
 _Sample Data_
 
-[input-email-data-sample.json](https://influencetech.github.io/ivx-js/developer/sample-JSON/sample-json/input-email-data-sample.json)
+[input-email-data-sample.json]({{page.source}}developer/sample-JSON/sample-json/input-email-data-sample.json)
 
 _Schema_
 
-[input-email.jsond](https://influencetech.github.io/ivx-js/developer/schemas/input-email.jsond)
+[input-email.jsond]({{page.source}}developer/schemas/input-email.jsond)
 
 _Email Input Settings_
 
-<div id="input-email-schema" class="json-schema-table-container" data-json-src="https://influencetech.github.io/ivx-js/developer/schemas/input-email.jsond"></div>
+<div id="input-email-schema" class="json-schema-table-container" data-json-src="{{page.source}}developer/schemas/input-email.jsond"></div>
 
 ## Number
 
@@ -402,15 +403,15 @@ Settings for the number input type
 
 _Sample Data_
 
-[input-number-data-sample.json](https://influencetech.github.io/ivx-js/developer/sample-JSON/input-number-data-sample.json)
+[input-number-data-sample.json]({{page.source}}developer/sample-JSON/input-number-data-sample.json)
 
 _Schema_
 
-[input-number.jsond](https://influencetech.github.io/ivx-js/developer/schemas/input-number.jsond)
+[input-number.jsond]({{page.source}}developer/schemas/input-number.jsond)
 
 _Number Input Settings_
 
-<div id="input-number-schema" class="json-schema-table-container" data-json-src="https://influencetech.github.io/ivx-js/developer/schemas/input-number.jsond"></div>
+<div id="input-number-schema" class="json-schema-table-container" data-json-src="{{page.source}}developer/schemas/input-number.jsond"></div>
 
 ## Options
 
@@ -420,15 +421,15 @@ Settings for this select/options input
 
 _Sample Data_
 
-[input-options-data-sample.json](https://influencetech.github.io/ivx-js/developer/sample-JSON/input-options-data-sample.json)
+[input-options-data-sample.json]({{page.source}}developer/sample-JSON/input-options-data-sample.json)
 
 _Schema_
 
-[input-options.jsond](https://influencetech.github.io/ivx-js/developer/schemas/input-options.jsond)
+[input-options.jsond]({{page.source}}developer/schemas/input-options.jsond)
 
 _Options Input Settings_
 
-<div id="input-options-schema" class="json-schema-table-container" data-json-src="https://influencetech.github.io/ivx-js/developer/schemas/input-options.jsond"></div>
+<div id="input-options-schema" class="json-schema-table-container" data-json-src="{{page.source}}developer/schemas/input-options.jsond"></div>
 
 ## Radio Buttons
 
@@ -438,15 +439,15 @@ Settings to render radio buttons
 
 _Sample Data_
 
-[input-radio-data-sample.json](https://influencetech.github.io/ivx-js/developer/sample-JSON/input-radio-data-sample.json)
+[input-radio-data-sample.json]({{page.source}}developer/sample-JSON/input-radio-data-sample.json)
 
 _Schema_
 
-[input-radio.jsond](https://influencetech.github.io/ivx-js/developer/schemas/input-radio.jsond)
+[input-radio.jsond]({{page.source}}developer/schemas/input-radio.jsond)
 
 _Radio Input Settings_
 
-<div id="input-radio-schema" class="json-schema-table-container" data-json-src="https://influencetech.github.io/ivx-js/developer/schemas/input-radio.jsond"></div>
+<div id="input-radio-schema" class="json-schema-table-container" data-json-src="{{page.source}}developer/schemas/input-radio.jsond"></div>
 
 
 ## Text
@@ -457,15 +458,15 @@ Settings for the text type input
 
 _Sample Data_
 
-[input-text-data-sample.json](https://influencetech.github.io/ivx-js/developer/sample-JSON/input-text-data-sample.json)
+[input-text-data-sample.json]({{page.source}}developer/sample-JSON/input-text-data-sample.json)
 
 _Schema_
 
-[input-text.jsond](https://influencetech.github.io/ivx-js/developer/schemas/input-text.jsond)
+[input-text.jsond]({{page.source}}developer/schemas/input-text.jsond)
 
 _Text Input Settings_
 
-<div id="input-text-schema" class="json-schema-table-container" data-json-src="https://influencetech.github.io/ivx-js/developer/schemas/input-text.jsond"></div>
+<div id="input-text-schema" class="json-schema-table-container" data-json-src="{{page.source}}developer/schemas/input-text.jsond"></div>
 
 
 ## Text Area
@@ -476,15 +477,15 @@ Settings for the textarea type input
 
 _Sample Data_
 
-[input-textarea-data-sample.json](https://influencetech.github.io/ivx-js/developer/sample-JSON/input-textarea-data-sample.json)
+[input-textarea-data-sample.json]({{page.source}}developer/sample-JSON/input-textarea-data-sample.json)
 
 _Schema_
 
-[input-textarea.jsond](https://influencetech.github.io/ivx-js/developer/schemas/input-textarea.jsond)
+[input-textarea.jsond]({{page.source}}developer/schemas/input-textarea.jsond)
 
 _Text Area Input Settings_
 
-<div id="input-textarea-schema" class="json-schema-table-container" data-json-src="https://influencetech.github.io/ivx-js/developer/schemas/input-textarea.jsond"></div>
+<div id="input-textarea-schema" class="json-schema-table-container" data-json-src="{{page.source}}developer/schemas/input-textarea.jsond"></div>
 
 
 ## Url
@@ -495,15 +496,15 @@ Settings for this Url input type
 
 _Sample Data_
 
-[input-url-data-sample.json](https://influencetech.github.io/ivx-js/developer/sample-JSON/input-url-data-sample.json)
+[input-url-data-sample.json]({{page.source}}developer/sample-JSON/input-url-data-sample.json)
 
 _Schema_
 
-[input-url.jsond](https://influencetech.github.io/ivx-js/developer/schemas/input-url.jsond)
+[input-url.jsond]({{page.source}}developer/schemas/input-url.jsond)
 
 _Url Input Settings_
 
-<div id="input-url-schema" class="json-schema-table-container" data-json-src="https://influencetech.github.io/ivx-js/developer/schemas/input-url.jsond"></div>
+<div id="input-url-schema" class="json-schema-table-container" data-json-src="{{page.source}}developer/schemas/input-url.jsond"></div>
 
 
 
@@ -521,15 +522,15 @@ Simple structure for indicating to run an event in the various event arrays.
 
 _Sample Data_
 
-[event-base-structure.json](https://influencetech.github.io/ivx-js/developer/sample-JSON/event-base-structure.json)
+[event-base-structure.json]({{page.source}}developer/sample-JSON/event-base-structure.json)
 
 _Schema_
 
-[event-base-structure.jsond](https://influencetech.github.io/ivx-js/developer/schemas/event-base-structure.jsond)
+[event-base-structure.jsond]({{page.source}}developer/schemas/event-base-structure.jsond)
 
 _Basic Event Properties_
 
-<div id="event-base-structure-schema" class="json-schema-table-container" data-json-src="https://influencetech.github.io/ivx-js/developer/schemas/event-base-structure.jsond"></div>
+<div id="event-base-structure-schema" class="json-schema-table-container" data-json-src="{{page.source}}developer/schemas/event-base-structure.jsond"></div>
 
 ## animateElement
 
@@ -539,15 +540,15 @@ Indicates to iVXjs to run the native animateElement action.
 
 _Sample Data_
 
-[event-ivxjs-animateElement.json](https://influencetech.github.io/ivx-js/developer/sample-JSON/event-ivxjs-animateElement.json)
+[event-ivxjs-animateElement.json]({{page.source}}developer/sample-JSON/event-ivxjs-animateElement.json)
 
 _Schema_
 
-[event-ivxjs-animateElement.jsond](https://influencetech.github.io/ivx-js/developer/schemas/event-ivxjs-animateElement.jsond)
+[event-ivxjs-animateElement.jsond]({{page.source}}developer/schemas/event-ivxjs-animateElement.jsond)
 
 _animateElement Event Properties_
 
-<div id="event-ivxjs-animateElement-schema" class="json-schema-table-container" data-json-src="https://influencetech.github.io/ivx-js/developer/schemas/event-ivxjs-animateElement.jsond"></div>
+<div id="event-ivxjs-animateElement-schema" class="json-schema-table-container" data-json-src="{{page.source}}developer/schemas/event-ivxjs-animateElement.jsond"></div>
 
 ## goToNextState
 
@@ -557,15 +558,15 @@ The settings that takes a set of rules and navigates to a state based on them.
 
 _Sample Data_
 
-[event-ivxjs-goToNextState.json](https://influencetech.github.io/ivx-js/developer/sample-JSON/event-ivxjs-goToNextState.json)
+[event-ivxjs-goToNextState.json]({{page.source}}developer/sample-JSON/event-ivxjs-goToNextState.json)
 
 _Schema_
 
-[event-ivxjs-goToNextState.jsond](https://influencetech.github.io/ivx-js/developer/schemas/event-ivxjs-goToNextState.jsond)
+[event-ivxjs-goToNextState.jsond]({{page.source}}developer/schemas/event-ivxjs-goToNextState.jsond)
 
 _goToNextState Event Properties_
 
-<div id="event-ivxjs-goToNextState-schema" class="json-schema-table-container" data-json-src="https://influencetech.github.io/ivx-js/developer/schemas/event-ivxjs-goToNextState.jsond"></div>
+<div id="event-ivxjs-goToNextState-schema" class="json-schema-table-container" data-json-src="{{page.source}}developer/schemas/event-ivxjs-goToNextState.jsond"></div>
 
 ## goToState
 
@@ -575,15 +576,15 @@ Settings to fire the goToState event.
 
 _Sample Data_
 
-[event-ivxjs-goToState.json](https://influencetech.github.io/ivx-js/developer/sample-JSON/event-ivxjs-goToState.json)
+[event-ivxjs-goToState.json]({{page.source}}developer/sample-JSON/event-ivxjs-goToState.json)
 
 _Schema_
 
-[event-ivxjs-goToState.jsond](https://influencetech.github.io/ivx-js/developer/schemas/event-ivxjs-goToState.jsond)
+[event-ivxjs-goToState.jsond]({{page.source}}developer/schemas/event-ivxjs-goToState.jsond)
 
 _goToState Event Properties_
 
-<div id="event-ivxjs-goToState-schema" class="json-schema-table-container" data-json-src="https://influencetech.github.io/ivx-js/developer/schemas/event-ivxjs-goToState.jsond"></div>
+<div id="event-ivxjs-goToState-schema" class="json-schema-table-container" data-json-src="{{page.source}}developer/schemas/event-ivxjs-goToState.jsond"></div>
 
 ## playAudioClip
 
@@ -593,15 +594,15 @@ Loads and plays a piece of audio.
 
 _Sample Data_
 
-[event-ivxjs-playAudioClip.json](https://influencetech.github.io/ivx-js/developer/sample-JSON/event-ivxjs-playAudioClip.json)
+[event-ivxjs-playAudioClip.json]({{page.source}}developer/sample-JSON/event-ivxjs-playAudioClip.json)
 
 _Schema_
 
-[event-ivxjs-playAudioClip.jsond](https://influencetech.github.io/ivx-js/developer/schemas/event-ivxjs-playAudioClip.jsond)
+[event-ivxjs-playAudioClip.jsond]({{page.source}}developer/schemas/event-ivxjs-playAudioClip.jsond)
 
 _playAudioClip Event Properties_
 
-<div id="event-ivxjs-playAudioClip-schema" class="json-schema-table-container" data-json-src="https://influencetech.github.io/ivx-js/developer/schemas/event-ivxjs-playAudioClip.jsond"></div>
+<div id="event-ivxjs-playAudioClip-schema" class="json-schema-table-container" data-json-src="{{page.source}}developer/schemas/event-ivxjs-playAudioClip.jsond"></div>
 
 ## setData
 
@@ -611,15 +612,15 @@ The settings to raise the setData event
 
 _Sample Data_
 
-[event-ivxjs-setData.json](https://influencetech.github.io/ivx-js/developer/sample-JSON/event-ivxjs-setData.json)
+[event-ivxjs-setData.json]({{page.source}}developer/sample-JSON/event-ivxjs-setData.json)
 
 _Schema_
 
-[event-ivxjs-setData.jsond](https://influencetech.github.io/ivx-js/developer/schemas/event-ivxjs-setData.jsond)
+[event-ivxjs-setData.jsond]({{page.source}}developer/schemas/event-ivxjs-setData.jsond)
 
 _setData Event Properties_
 
-<div id="event-ivxjs-setData-schema" class="json-schema-table-container" data-json-src="https://influencetech.github.io/ivx-js/developer/schemas/event-ivxjs-setData.jsond"></div>
+<div id="event-ivxjs-setData-schema" class="json-schema-table-container" data-json-src="{{page.source}}developer/schemas/event-ivxjs-setData.jsond"></div>
 
 # iVXio Events/Actions
 
@@ -635,15 +636,15 @@ Raises an iVXio event defined by the platform
 
 _Sample Data_
 
-[event-ivxio-recordEvent.json](https://influencetech.github.io/ivx-js/developer/sample-JSON/event-ivxio-recordEvent.json)
+[event-ivxio-recordEvent.json]({{page.source}}developer/sample-JSON/event-ivxio-recordEvent.json)
 
 _Schema_
 
-[event-ivxio-recordEvent.jsond](https://influencetech.github.io/ivx-js/developer/schemas/event-ivxio-recordEvent.jsond)
+[event-ivxio-recordEvent.jsond]({{page.source}}developer/schemas/event-ivxio-recordEvent.jsond)
 
 _recordEvent Event Properties_
 
-<div id="event-ivxio-recordEvent-schema" class="json-schema-table-container" data-json-src="https://influencetech.github.io/ivx-js/developer/schemas/event-ivxio-recordEvent.jsond"></div>
+<div id="event-ivxio-recordEvent-schema" class="json-schema-table-container" data-json-src="{{page.source}}developer/schemas/event-ivxio-recordEvent.jsond"></div>
 
 ## setComplete
 
@@ -653,15 +654,15 @@ Sets this iVXio experience's progress to complete
 
 _Sample Data_
 
-[event-ivxio-setComplete.json](https://influencetech.github.io/ivx-js/developer/sample-JSON/event-ivxio-setComplete.json)
+[event-ivxio-setComplete.json]({{page.source}}developer/sample-JSON/event-ivxio-setComplete.json)
 
 _Schema_
 
-[event-ivxio-setComplete.jsond](https://influencetech.github.io/ivx-js/developer/schemas/event-ivxio-setComplete.jsond)
+[event-ivxio-setComplete.jsond]({{page.source}}developer/schemas/event-ivxio-setComplete.jsond)
 
 _setComplete Event Properties_
 
-<div id="event-ivxio-setComplete-schema" class="json-schema-table-container" data-json-src="https://influencetech.github.io/ivx-js/developer/schemas/event-ivxio-setComplete.jsond"></div>
+<div id="event-ivxio-setComplete-schema" class="json-schema-table-container" data-json-src="{{page.source}}developer/schemas/event-ivxio-setComplete.jsond"></div>
 
 
 ## setConverted
@@ -672,15 +673,15 @@ Sets this iVXio's experience progress to converted
 
 _Sample Data_
 
-[event-ivxio-setConverted.json](https://influencetech.github.io/ivx-js/developer/sample-JSON/event-ivxio-setConverted.json)
+[event-ivxio-setConverted.json]({{page.source}}developer/sample-JSON/event-ivxio-setConverted.json)
 
 _Schema_
 
-[event-ivxio-setConverted.jsond](https://influencetech.github.io/ivx-js/developer/schemas/event-ivxio-setConverted.jsond)
+[event-ivxio-setConverted.jsond]({{page.source}}developer/schemas/event-ivxio-setConverted.jsond)
 
 _setConverted Event Properties_
 
-<div id="event-ivxio-setConverted-schema" class="json-schema-table-container" data-json-src="https://influencetech.github.io/ivx-js/developer/schemas/event-ivxio-setConverted.jsond"></div>
+<div id="event-ivxio-setConverted-schema" class="json-schema-table-container" data-json-src="{{page.source}}developer/schemas/event-ivxio-setConverted.jsond"></div>
 
 ## setMilestone
 
@@ -690,16 +691,16 @@ Sets this iVXio's experience to a specific milestone
 
 _Sample Data_
 
-[event-ivxio-setMilestone.json](https://influencetech.github.io/ivx-js/developer/sample-JSON/event-ivxio-setMilestone.json)
+[event-ivxio-setMilestone.json]({{page.source}}developer/sample-JSON/event-ivxio-setMilestone.json)
 
 _Schema_
 
-[event-ivxio-setMilestone.jsond](https://influencetech.github.io/ivx-js/developer/schemas/event-ivxio-setMilestone.jsond)
+[event-ivxio-setMilestone.jsond]({{page.source}}developer/schemas/event-ivxio-setMilestone.jsond)
 
 _setMilestone Event Properties_
 
-<div id="event-ivxio-setMilestone-schema" class="json-schema-table-container" data-json-src="https://influencetech.github.io/ivx-js/developer/schemas/event-ivxio-setMilestone.jsond"></div>
+<div id="event-ivxio-setMilestone-schema" class="json-schema-table-container" data-json-src="{{page.source}}developer/schemas/event-ivxio-setMilestone.jsond"></div>
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.16.2/lodash.min.js"></script>
-<script src="https://influencetech.github.io/ivx-js/assets/js/jsond-table-creator.js"></script>
+<script src="{{page.source}}assets/js/jsond-table-creator.js"></script>

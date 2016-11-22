@@ -1,8 +1,10 @@
 import createFactoryFunction from '../utilities/create-factory-function.js';
 import VideoStateController from '../controllers/state.video.js';
+import VideoEventConstants from "../../constants/video.events.js";
+
 
 class VideoState {
-    constructor($compile, $state, $sce, iVXjs, iVXjsBus, iVXjsUIModule, createInlineVideo, pullInTemplate) {
+    constructor($compile, $state, $sce, $timeout, iVXjs, iVXjsBus, iVXjsUIModule, createInlineVideo, pullInTemplate) {
         this.template = this.templateHTML;
         this.restrict = 'E';
         this.replace = true;
@@ -30,6 +32,8 @@ class VideoState {
                 data.isIphone = true;
             }
 
+            
+
             let personalizationsHTML = personalizations.reduce((personalizationHTML, thisPersonalization, index) => {
                 thisPersonalization = pullInTemplate.convertTemplateUrlToHtml(thisPersonalization, $scope);
                 
@@ -52,6 +56,13 @@ class VideoState {
 
             iElm.html(videoFramework.html);
             $compile(iElm.contents())($scope);
+
+            if(createInlineVideo.isiOS()){
+                let videoEventNames = new VideoEventConstants();
+                $timeout(()=>{
+                    iVXjsBus.emit(videoEventNames.CAN_PLAY);
+                },1);
+            }
         }
     }
 
@@ -60,6 +71,6 @@ class VideoState {
     }
 }
 
-VideoState.$inject = ['$compile', '$state', '$sce', 'iVXjs', 'ivxjs.bus', 'ivxjs.modules.ui', 'createInlineVideo', 'pullInTemplate'];
+VideoState.$inject = ['$compile', '$state', '$sce', '$timeout', 'iVXjs', 'ivxjs.bus', 'ivxjs.modules.ui', 'createInlineVideo', 'pullInTemplate'];
 
 export default createFactoryFunction(VideoState);

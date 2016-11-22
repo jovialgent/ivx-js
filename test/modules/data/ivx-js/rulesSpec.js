@@ -1,65 +1,6 @@
 import {Rules} from '../../../../src/modules/data/ivx-js/rules.js';
 
 describe('Rules', () => {
-    describe('#evaluateRules', () => {
-        let experience, rules;
-
-        beforeEach(() => {
-            experience = {
-                data: {
-                    test: 1
-                }
-            };
-            rules = new Rules(experience);
-        });
-
-        it('should evaluate true if the rule is true', () => {
-            let navObj = {
-                rule: {
-                    key: "test",
-                    is: "lte",
-                    value: 1
-                },
-                stateId: 'test2'
-            };
-
-            expect(rules.evaluateRules(navObj)).toEqual(true);
-        });
-
-        it('should evaluate true if no rule exists', () => {
-            let navObj = {
-
-                stateId: 'test2'
-            };
-
-            expect(rules.evaluateRules(navObj)).toEqual(true);
-        });
-        
-        it('should evaluate true if rule is empty', () => {
-            let navObj = {
-                rules : {
-                    
-                },
-                stateId: 'test2'
-            };
-
-            expect(rules.evaluateRules(navObj)).toEqual(true);
-        });
-
-
-        it('should evaluate false if the rule is false', () => {
-            let navObj = {
-                rule: {
-                    key: "test",
-                    is: "lt",
-                    value: 1
-                },
-                stateId: 'test2'
-            };
-
-            expect(rules.evaluateRules(navObj)).toEqual(false);
-        })
-    });
 
     describe('#processRules', () => {
         let experience, rules;

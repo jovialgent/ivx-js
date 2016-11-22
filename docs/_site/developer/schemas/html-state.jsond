@@ -26,6 +26,15 @@
 				"type": "object",
 				"descriptions": "Event data as defined in the event section of this documentation"
 			}
+		},
+		"onCompile" : {
+			"name" : "On Compile",
+			"type" : "array",
+			"description" : "An array event data that runs when the HTML has been compiled to the screen. Used primarily for animation on dom elements defined in the the HTML.",
+			"items" : {
+				"type" : "object",
+				"description" : "Event data as defined in the event section of this document"
+			}
 		}
 	}
 }

@@ -1,3 +1,7 @@
+import { TypeValidator, ObjectParsers } from '../../../utilities/type-parsers.js';
+
+let typeValidator = new TypeValidator();
+
 export default class {
     constructor(experience, customEvaluator){
          this.experience = experience;
@@ -10,7 +14,7 @@ export default class {
         let evaluateConditions = conditions.map((condition, index) =>{
             let {key : lhs, is, value : rhs, type = "input"} = condition;
 
-            if(self.customEvaluator && self.customEvaluator(condition)){
+            if(self.customEvaluator && typeValidator.isFunction(self.customEvaluator) && self.customEvaluator(condition)){
                 return self.customEvaluator(condition);
             }
 

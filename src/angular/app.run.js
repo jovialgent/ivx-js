@@ -8,18 +8,15 @@ class AppRun {
         if (!iVXjs || !iVXjs.config) return;
 
         let {metadata = {}, templates} = iVXjs.config;
-        let {title = 'iVX.js Player', description, image} = metadata;
+        let {title = 'iVX Story Player', description, image} = metadata;
         let audioEventNames = new AudioEventNames();
         let stateEventNames = new StateEventNames();
         let angularEventNames = new AngularEventNames();
-
-        
 
         $rootScope.pageTitle = title;
         $rootScope.ogImage = image;
         $rootScope.ogDescription = description;
         
-
         iVXjs.Bus.on(stateEventNames.GO, (state) => {
             let evalState = state;
             

@@ -49,7 +49,6 @@ class VideoStateController {
                     }
                 })
             }
-            
 
             iVXjsActions.resolveActions(onVideoReady, () => {
                 if (autoplay) {
@@ -59,7 +58,6 @@ class VideoStateController {
             });
         });
         iVXjsBus.once(videoEventNames.ENDED, function stateVideoEnded() {
-            iVXjs.log.log("GOT HERE?");
             iVXjsBus.emit(videoEventNames.DISPOSE);
             iVXjsActions.resolveThenNavigate(onVideoEnd, next);
         });

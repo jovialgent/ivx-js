@@ -15,6 +15,10 @@ export class TypeValidator {
         return this.toString.call(obj) === '[object String]';
     }
 
+    isFunction(obj){
+        return obj && this.toString.call(obj) === '[object Function]';
+    }
+
     isNumber(obj) {
         return !isNaN(obj);
     }

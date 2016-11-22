@@ -20,11 +20,12 @@ module.exports = function (config) {
             'karma-browserify',
             'karma-coverage',
             'karma-mocha-reporter',
+            'karma-phantomjs-launcher',
             'karma-chrome-launcher',
             'karma-fixture',
             'karma-json-fixtures-preprocessor',
-            'karma-html-reporter'
-
+            'karma-html-reporter',
+            "karma-teamcity-reporter"
         ],
 
         customLaunchers: {
@@ -144,7 +145,26 @@ module.exports = function (config) {
 
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-        browsers: ['Chrome', 'Chrome_without_security'],
+        browsers: ["PhantomJS"],
+
+        customLaunchers: {
+            'PhantomJS_custom': {
+                base: 'PhantomJS',
+                options: {
+                    windowName: 'my-window',
+                    settings: {
+                        webSecurityEnabled: false
+                    },
+                },
+                flags: ['--load-images=true'],
+                debug: true
+            }
+        },
+
+        phantomjsLauncher: {
+            // Have phantomjs exit if a ResourceError is encountered (useful if karma exits without killing phantom)
+            exitOnResourceError: true
+        },
 
 
         // Continuous Integration mode

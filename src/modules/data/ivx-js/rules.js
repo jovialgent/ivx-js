@@ -53,6 +53,11 @@ export class Rules {
      * true first. If no state is return, returns an empty string.
      */
     processRules(navArray = []) {
+
+        if(!Array.isArray(navArray)){
+            navArray = [];
+        }
+        
         let self = this;
         let stateSelect = navArray.find((navObj) => {
             let {rule} = navObj;

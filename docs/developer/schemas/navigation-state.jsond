@@ -3,6 +3,11 @@
 	"description" : "Settings to render an iVXjs Navigation State.",
 	"type" : "object",
 	"properties" : {
+		"onLinksReady" : {
+			"type" : "array",
+			"name" : "On Links Ready",
+			"description" : "An array of event data that runs when the links have rendered on the page. Primarily used in animating and transitioning in states."
+		},
 		"links" : {
 			"type" : "array",
 			"name" : "Links Collection",

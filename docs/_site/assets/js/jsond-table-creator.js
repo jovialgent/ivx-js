@@ -6887,40 +6887,6 @@ jsonSchemaTables.forEach(function (jsonSchemaTable, index) {
     });
 });
 
-// angular
-//     .module('app', ['ivx-js', 'ui.router'])
-//     .config(["$stateProvider", "$urlRouterProvider", "$locationProvider", 'iVXjs', "iVXjs.data.firebase", "iVXjs.ui.materialize", "iVXjsFirebaseUtilitiesProvider",
-//         function ($stateProvider, $urlRouterProvider, $locationProvider, iVXjs, iVXjsFirebaseDataModule, iVXjsMaterializeUIModule, iVXjsFirebaseUtilitiesProvider) {
-//             let experiencePath = "myExperiences/$uid/$x.data.occurring/$x.data.currentDate";
-
-//             iVXjs.init({
-//                 // data: iVXjsFirebaseDataModule({
-//                 //     apiKey: "AIzaSyBkGnV_jYYRm7S19UIfBVDtEb2yEYrlJW0",
-//                 //     authDomain: "georges-demos.firebaseapp.com",
-//                 //     databaseURL: "https://georges-demos.firebaseio.com",
-//                 //     storageBucket: "georges-demos.appspot.com",
-//                 //     experiencePath,
-//                 //     createExperienceOnLoad: true,
-//                 //     localTemplates: false
-//                 // }),
-//                 ui: iVXjsMaterializeUIModule(),
-//                 // config: "iVXjsJSON/timetrackerDemo",
-//                 config : "data/transition-testing.json",
-//                 experience: {
-//                     data: {
-//                         occurring: "my_notes",
-//                         currentDate: currentDate()
-//                     }
-//                 }
-//             });
-
-//             function currentDate(token = "_") {
-//                 var date = new Date();
-//                 var currentMonth = (date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1));
-
-//                 return `${currentMonth}${token}${date.getDate()}${token}${date.getFullYear()}`;
-//             }
-//         }]);
 
 },{"./jsond-table-creator.js":300,"./jsond-table-data-creator.js":301,"babel-polyfill":1}],300:[function(require,module,exports){
 "use strict";
@@ -7122,6 +7088,8 @@ var _class = function () {
                 var values = _.values(tableToProcess.properties);
                 var keys = _.keys(tableToProcess.properties);
                 var tableBeingProcessed = tableToProcess.key;
+
+               
 
                 // Find any tables based on whether it is an
                 // object or array type

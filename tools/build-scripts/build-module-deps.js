@@ -1,5 +1,12 @@
 var fs = require('fs');
 var browserify = require('browserify');
+var minimist = require("minimist");
+var argv = require('minimist')(process.argv.slice(2));
+var output = argv.output;
+var input = argv.input;
+var version = argv.version;
+var packageJSON = require('../../package.json');
+
 var modules = {
     data: {
         "ivx-io": "src/modules/data/ivx-io/index.js",
@@ -20,23 +27,40 @@ var modules = {
 var moduleTypes = Object.keys(modules);
 var mkdirp = require('mkdirp');
 
-moduleTypes.forEach(function (moduleType, index) {
-    var moduleNames = Object.keys(modules[moduleType]);
 
-    moduleNames.forEach(function (moduleName, index) {
-        var source = modules[moduleType][moduleName];
-        var fileName = "iVXjs." + moduleType + "." + moduleName + ".js";
-        var compressedFileName = "iVXjs." + moduleType + "." + moduleName + ".min.js";
-        var filePath = "tools/modules/" + moduleType + "/" + moduleName;
-        var dest = filePath + "/" + fileName;
-        var destCompress = filePath + "/" + compressedFileName;
+if (output === 'cdn') {
+    var path = "build/cdn/" + packageJSON.version;
 
-        mkdirp(filePath, function () {
-            bundle(source, dest);
-            compress(source, destCompress);
+    buildFiles(path);
+
+}
+
+
+
+
+function buildFiles(path) {
+    mkdirp(path, function () {
+        moduleTypes.forEach(function (moduleType, index) {
+            var moduleNames = Object.keys(modules[moduleType]);
+            moduleNames.forEach(function (moduleName, index) {
+                var source = modules[moduleType][moduleName];
+                var fileName = "iVXjs." + moduleType + "." + moduleName + ".js";
+                var compressedFileName = "iVXjs." + moduleType + "." + moduleName + ".min.js";
+                var dest = path + "/" + fileName;
+                var destCompress = path + "/" + compressedFileName;
+
+
+                bundle(source, dest);
+                compress(source, destCompress);
+            });
         });
+
+        compress("src/angular/app.js", path + "/angular.ivx.min.js");
+        bundle("src/angular/app.js", path + "/angular.ivx.js");
+        compress("src/angular/app.js", "dist/angular.ivx.min.js");
+        bundle("src/angular/app.js", "dist/angular.ivx.js");
     });
-});
+}
 
 function compress(source, dest) {
     console.log("BUILDING:", source, " TO DESTINATION:", dest);
