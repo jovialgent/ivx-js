@@ -57,7 +57,7 @@ class VideoState {
             iElm.html(videoFramework.html);
             $compile(iElm.contents())($scope);
 
-            if(createInlineVideo.isiOS()){
+            if(createInlineVideo.isMobile()){
                 let videoEventNames = new VideoEventConstants();
                 $timeout(()=>{
                     iVXjsBus.emit(videoEventNames.CAN_PLAY);

@@ -12,9 +12,34 @@ export default class{
         if(type === "buttons"){
             return this.setButtonInput(inputData);
         } 
+
+        if(type === "radio"){
+            return this.setRadioButtonInput(inputData);
+        }
         
         inputData.type = TYPE;
         inputData.options = OPTIONS;
+
+        return inputData;
+    }
+
+    setRadioButtonInput(inputData){
+        let {radioButtons} = inputData;
+        let {OPTIONS} = this;
+        let newRadioButtons = radioButtons.reduce((radioButtonArray, radioButtonData, index)=>{
+            let {value} = radioButtonData;
+            let hasOption = OPTIONS.find((option,index)=>{
+                return option.value === value;
+            });
+
+            if(hasOption){
+                radioButtonArray.push(radioButtonData);
+            }
+
+            return radioButtonArray;
+        },[]);
+
+        inputData.radioButtons = newRadioButtons;
 
         return inputData;
     }

@@ -28,6 +28,7 @@ class FormInput {
                 let {type, attributes, settings = {}, id} = input;
                 let inputString = JSON.stringify(input);
 
+                inputString = inputString.replace(/\'/g, `&#39;`);
                 hideSubmit = shouldHideSubmit(inputs, type, attributes);
                 
                 return {
