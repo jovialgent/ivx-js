@@ -32,7 +32,6 @@ class VideoState {
                 data.isIphone = true;
             }
 
-            
 
             let personalizationsHTML = personalizations.reduce((personalizationHTML, thisPersonalization, index) => {
                 thisPersonalization = pullInTemplate.convertTemplateUrlToHtml(thisPersonalization, $scope);

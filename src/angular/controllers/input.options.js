@@ -13,8 +13,9 @@ class OptionsInputController extends InputControllerHelper {
         };
        
         $timeout(() =>{
+            
              if(attributes.required){
-                $scope.$parent.formInput[name].$setValidity('required',  experienceValue);
+                $scope.$parent.formInput[name].$setValidity('required',  experienceValue.length > 0);
                 $scope.$parent.formInput[name].$error.required = true;
              }
         }, 1);
