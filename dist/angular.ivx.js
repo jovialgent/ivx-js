@@ -1,12 +1,12 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 (function (global){
-"use strict";
+/*istanbul ignore next*/"use strict";
 
-require("core-js/shim");
+/*istanbul ignore next*/require("core-js/shim");
 
-require("regenerator-runtime/runtime");
+/*istanbul ignore next*/require("babel-regenerator-runtime");
 
-require("core-js/fn/regexp/escape");
+/*istanbul ignore next*/require("core-js/fn/regexp/escape");
 
 /* eslint max-len: 0 */
 
@@ -33,21 +33,682 @@ define(String.prototype, "padRight", "".padEnd);
   [][key] && define(Array, key, Function.call.bind([][key]));
 });
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"core-js/fn/regexp/escape":2,"core-js/shim":296,"regenerator-runtime/runtime":297}],2:[function(require,module,exports){
+},{"babel-regenerator-runtime":2,"core-js/fn/regexp/escape":3,"core-js/shim":296}],2:[function(require,module,exports){
+(function (process,global){
+/**
+ * Copyright (c) 2014, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * https://raw.github.com/facebook/regenerator/master/LICENSE file. An
+ * additional grant of patent rights can be found in the PATENTS file in
+ * the same directory.
+ */
+
+!(function(global) {
+  "use strict";
+
+  var hasOwn = Object.prototype.hasOwnProperty;
+  var undefined; // More compressible than void 0.
+  var iteratorSymbol =
+    typeof Symbol === "function" && Symbol.iterator || "@@iterator";
+
+  var inModule = typeof module === "object";
+  var runtime = global.regeneratorRuntime;
+  if (runtime) {
+    if (inModule) {
+      // If regeneratorRuntime is defined globally and we're in a module,
+      // make the exports object identical to regeneratorRuntime.
+      module.exports = runtime;
+    }
+    // Don't bother evaluating the rest of this file if the runtime was
+    // already defined globally.
+    return;
+  }
+
+  // Define the runtime globally (as expected by generated code) as either
+  // module.exports (if we're in a module) or a new, empty object.
+  runtime = global.regeneratorRuntime = inModule ? module.exports : {};
+
+  function wrap(innerFn, outerFn, self, tryLocsList) {
+    // If outerFn provided, then outerFn.prototype instanceof Generator.
+    var generator = Object.create((outerFn || Generator).prototype);
+    var context = new Context(tryLocsList || []);
+
+    // The ._invoke method unifies the implementations of the .next,
+    // .throw, and .return methods.
+    generator._invoke = makeInvokeMethod(innerFn, self, context);
+
+    return generator;
+  }
+  runtime.wrap = wrap;
+
+  // Try/catch helper to minimize deoptimizations. Returns a completion
+  // record like context.tryEntries[i].completion. This interface could
+  // have been (and was previously) designed to take a closure to be
+  // invoked without arguments, but in all the cases we care about we
+  // already have an existing method we want to call, so there's no need
+  // to create a new function object. We can even get away with assuming
+  // the method takes exactly one argument, since that happens to be true
+  // in every case, so we don't have to touch the arguments object. The
+  // only additional allocation required is the completion record, which
+  // has a stable shape and so hopefully should be cheap to allocate.
+  function tryCatch(fn, obj, arg) {
+    try {
+      return { type: "normal", arg: fn.call(obj, arg) };
+    } catch (err) {
+      return { type: "throw", arg: err };
+    }
+  }
+
+  var GenStateSuspendedStart = "suspendedStart";
+  var GenStateSuspendedYield = "suspendedYield";
+  var GenStateExecuting = "executing";
+  var GenStateCompleted = "completed";
+
+  // Returning this object from the innerFn has the same effect as
+  // breaking out of the dispatch switch statement.
+  var ContinueSentinel = {};
+
+  // Dummy constructor functions that we use as the .constructor and
+  // .constructor.prototype properties for functions that return Generator
+  // objects. For full spec compliance, you may wish to configure your
+  // minifier not to mangle the names of these two functions.
+  function Generator() {}
+  function GeneratorFunction() {}
+  function GeneratorFunctionPrototype() {}
+
+  var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype;
+  GeneratorFunction.prototype = Gp.constructor = GeneratorFunctionPrototype;
+  GeneratorFunctionPrototype.constructor = GeneratorFunction;
+  GeneratorFunction.displayName = "GeneratorFunction";
+
+  // Helper for defining the .next, .throw, and .return methods of the
+  // Iterator interface in terms of a single ._invoke method.
+  function defineIteratorMethods(prototype) {
+    ["next", "throw", "return"].forEach(function(method) {
+      prototype[method] = function(arg) {
+        return this._invoke(method, arg);
+      };
+    });
+  }
+
+  runtime.isGeneratorFunction = function(genFun) {
+    var ctor = typeof genFun === "function" && genFun.constructor;
+    return ctor
+      ? ctor === GeneratorFunction ||
+        // For the native GeneratorFunction constructor, the best we can
+        // do is to check its .name property.
+        (ctor.displayName || ctor.name) === "GeneratorFunction"
+      : false;
+  };
+
+  runtime.mark = function(genFun) {
+    if (Object.setPrototypeOf) {
+      Object.setPrototypeOf(genFun, GeneratorFunctionPrototype);
+    } else {
+      genFun.__proto__ = GeneratorFunctionPrototype;
+    }
+    genFun.prototype = Object.create(Gp);
+    return genFun;
+  };
+
+  // Within the body of any async function, `await x` is transformed to
+  // `yield regeneratorRuntime.awrap(x)`, so that the runtime can test
+  // `value instanceof AwaitArgument` to determine if the yielded value is
+  // meant to be awaited. Some may consider the name of this method too
+  // cutesy, but they are curmudgeons.
+  runtime.awrap = function(arg) {
+    return new AwaitArgument(arg);
+  };
+
+  function AwaitArgument(arg) {
+    this.arg = arg;
+  }
+
+  function AsyncIterator(generator) {
+    // This invoke function is written in a style that assumes some
+    // calling function (or Promise) will handle exceptions.
+    function invoke(method, arg) {
+      var result = generator[method](arg);
+      var value = result.value;
+      return value instanceof AwaitArgument
+        ? Promise.resolve(value.arg).then(invokeNext, invokeThrow)
+        : Promise.resolve(value).then(function(unwrapped) {
+            // When a yielded Promise is resolved, its final value becomes
+            // the .value of the Promise<{value,done}> result for the
+            // current iteration. If the Promise is rejected, however, the
+            // result for this iteration will be rejected with the same
+            // reason. Note that rejections of yielded Promises are not
+            // thrown back into the generator function, as is the case
+            // when an awaited Promise is rejected. This difference in
+            // behavior between yield and await is important, because it
+            // allows the consumer to decide what to do with the yielded
+            // rejection (swallow it and continue, manually .throw it back
+            // into the generator, abandon iteration, whatever). With
+            // await, by contrast, there is no opportunity to examine the
+            // rejection reason outside the generator function, so the
+            // only option is to throw it from the await expression, and
+            // let the generator function handle the exception.
+            result.value = unwrapped;
+            return result;
+          });
+    }
+
+    if (typeof process === "object" && process.domain) {
+      invoke = process.domain.bind(invoke);
+    }
+
+    var invokeNext = invoke.bind(generator, "next");
+    var invokeThrow = invoke.bind(generator, "throw");
+    var invokeReturn = invoke.bind(generator, "return");
+    var previousPromise;
+
+    function enqueue(method, arg) {
+      function callInvokeWithMethodAndArg() {
+        return invoke(method, arg);
+      }
+
+      return previousPromise =
+        // If enqueue has been called before, then we want to wait until
+        // all previous Promises have been resolved before calling invoke,
+        // so that results are always delivered in the correct order. If
+        // enqueue has not been called before, then it is important to
+        // call invoke immediately, without waiting on a callback to fire,
+        // so that the async generator function has the opportunity to do
+        // any necessary setup in a predictable way. This predictability
+        // is why the Promise constructor synchronously invokes its
+        // executor callback, and why async functions synchronously
+        // execute code before the first await. Since we implement simple
+        // async functions in terms of async generators, it is especially
+        // important to get this right, even though it requires care.
+        previousPromise ? previousPromise.then(
+          callInvokeWithMethodAndArg,
+          // Avoid propagating failures to Promises returned by later
+          // invocations of the iterator.
+          callInvokeWithMethodAndArg
+        ) : new Promise(function (resolve) {
+          resolve(callInvokeWithMethodAndArg());
+        });
+    }
+
+    // Define the unified helper method that is used to implement .next,
+    // .throw, and .return (see defineIteratorMethods).
+    this._invoke = enqueue;
+  }
+
+  defineIteratorMethods(AsyncIterator.prototype);
+
+  // Note that simple async functions are implemented on top of
+  // AsyncIterator objects; they just return a Promise for the value of
+  // the final result produced by the iterator.
+  runtime.async = function(innerFn, outerFn, self, tryLocsList) {
+    var iter = new AsyncIterator(
+      wrap(innerFn, outerFn, self, tryLocsList)
+    );
+
+    return runtime.isGeneratorFunction(outerFn)
+      ? iter // If outerFn is a generator, return the full iterator.
+      : iter.next().then(function(result) {
+          return result.done ? result.value : iter.next();
+        });
+  };
+
+  function makeInvokeMethod(innerFn, self, context) {
+    var state = GenStateSuspendedStart;
+
+    return function invoke(method, arg) {
+      if (state === GenStateExecuting) {
+        throw new Error("Generator is already running");
+      }
+
+      if (state === GenStateCompleted) {
+        if (method === "throw") {
+          throw arg;
+        }
+
+        // Be forgiving, per 25.3.3.3.3 of the spec:
+        // https://people.mozilla.org/~jorendorff/es6-draft.html#sec-generatorresume
+        return doneResult();
+      }
+
+      while (true) {
+        var delegate = context.delegate;
+        if (delegate) {
+          if (method === "return" ||
+              (method === "throw" && delegate.iterator[method] === undefined)) {
+            // A return or throw (when the delegate iterator has no throw
+            // method) always terminates the yield* loop.
+            context.delegate = null;
+
+            // If the delegate iterator has a return method, give it a
+            // chance to clean up.
+            var returnMethod = delegate.iterator["return"];
+            if (returnMethod) {
+              var record = tryCatch(returnMethod, delegate.iterator, arg);
+              if (record.type === "throw") {
+                // If the return method threw an exception, let that
+                // exception prevail over the original return or throw.
+                method = "throw";
+                arg = record.arg;
+                continue;
+              }
+            }
+
+            if (method === "return") {
+              // Continue with the outer return, now that the delegate
+              // iterator has been terminated.
+              continue;
+            }
+          }
+
+          var record = tryCatch(
+            delegate.iterator[method],
+            delegate.iterator,
+            arg
+          );
+
+          if (record.type === "throw") {
+            context.delegate = null;
+
+            // Like returning generator.throw(uncaught), but without the
+            // overhead of an extra function call.
+            method = "throw";
+            arg = record.arg;
+            continue;
+          }
+
+          // Delegate generator ran and handled its own exceptions so
+          // regardless of what the method was, we continue as if it is
+          // "next" with an undefined arg.
+          method = "next";
+          arg = undefined;
+
+          var info = record.arg;
+          if (info.done) {
+            context[delegate.resultName] = info.value;
+            context.next = delegate.nextLoc;
+          } else {
+            state = GenStateSuspendedYield;
+            return info;
+          }
+
+          context.delegate = null;
+        }
+
+        if (method === "next") {
+          context._sent = arg;
+
+          if (state === GenStateSuspendedYield) {
+            context.sent = arg;
+          } else {
+            context.sent = undefined;
+          }
+        } else if (method === "throw") {
+          if (state === GenStateSuspendedStart) {
+            state = GenStateCompleted;
+            throw arg;
+          }
+
+          if (context.dispatchException(arg)) {
+            // If the dispatched exception was caught by a catch block,
+            // then let that catch block handle the exception normally.
+            method = "next";
+            arg = undefined;
+          }
+
+        } else if (method === "return") {
+          context.abrupt("return", arg);
+        }
+
+        state = GenStateExecuting;
+
+        var record = tryCatch(innerFn, self, context);
+        if (record.type === "normal") {
+          // If an exception is thrown from innerFn, we leave state ===
+          // GenStateExecuting and loop back for another invocation.
+          state = context.done
+            ? GenStateCompleted
+            : GenStateSuspendedYield;
+
+          var info = {
+            value: record.arg,
+            done: context.done
+          };
+
+          if (record.arg === ContinueSentinel) {
+            if (context.delegate && method === "next") {
+              // Deliberately forget the last sent value so that we don't
+              // accidentally pass it on to the delegate.
+              arg = undefined;
+            }
+          } else {
+            return info;
+          }
+
+        } else if (record.type === "throw") {
+          state = GenStateCompleted;
+          // Dispatch the exception by looping back around to the
+          // context.dispatchException(arg) call above.
+          method = "throw";
+          arg = record.arg;
+        }
+      }
+    };
+  }
+
+  // Define Generator.prototype.{next,throw,return} in terms of the
+  // unified ._invoke helper method.
+  defineIteratorMethods(Gp);
+
+  Gp[iteratorSymbol] = function() {
+    return this;
+  };
+
+  Gp.toString = function() {
+    return "[object Generator]";
+  };
+
+  function pushTryEntry(locs) {
+    var entry = { tryLoc: locs[0] };
+
+    if (1 in locs) {
+      entry.catchLoc = locs[1];
+    }
+
+    if (2 in locs) {
+      entry.finallyLoc = locs[2];
+      entry.afterLoc = locs[3];
+    }
+
+    this.tryEntries.push(entry);
+  }
+
+  function resetTryEntry(entry) {
+    var record = entry.completion || {};
+    record.type = "normal";
+    delete record.arg;
+    entry.completion = record;
+  }
+
+  function Context(tryLocsList) {
+    // The root entry object (effectively a try statement without a catch
+    // or a finally block) gives us a place to store values thrown from
+    // locations where there is no enclosing try statement.
+    this.tryEntries = [{ tryLoc: "root" }];
+    tryLocsList.forEach(pushTryEntry, this);
+    this.reset(true);
+  }
+
+  runtime.keys = function(object) {
+    var keys = [];
+    for (var key in object) {
+      keys.push(key);
+    }
+    keys.reverse();
+
+    // Rather than returning an object with a next method, we keep
+    // things simple and return the next function itself.
+    return function next() {
+      while (keys.length) {
+        var key = keys.pop();
+        if (key in object) {
+          next.value = key;
+          next.done = false;
+          return next;
+        }
+      }
+
+      // To avoid creating an additional object, we just hang the .value
+      // and .done properties off the next function object itself. This
+      // also ensures that the minifier will not anonymize the function.
+      next.done = true;
+      return next;
+    };
+  };
+
+  function values(iterable) {
+    if (iterable) {
+      var iteratorMethod = iterable[iteratorSymbol];
+      if (iteratorMethod) {
+        return iteratorMethod.call(iterable);
+      }
+
+      if (typeof iterable.next === "function") {
+        return iterable;
+      }
+
+      if (!isNaN(iterable.length)) {
+        var i = -1, next = function next() {
+          while (++i < iterable.length) {
+            if (hasOwn.call(iterable, i)) {
+              next.value = iterable[i];
+              next.done = false;
+              return next;
+            }
+          }
+
+          next.value = undefined;
+          next.done = true;
+
+          return next;
+        };
+
+        return next.next = next;
+      }
+    }
+
+    // Return an iterator with no values.
+    return { next: doneResult };
+  }
+  runtime.values = values;
+
+  function doneResult() {
+    return { value: undefined, done: true };
+  }
+
+  Context.prototype = {
+    constructor: Context,
+
+    reset: function(skipTempReset) {
+      this.prev = 0;
+      this.next = 0;
+      this.sent = undefined;
+      this.done = false;
+      this.delegate = null;
+
+      this.tryEntries.forEach(resetTryEntry);
+
+      if (!skipTempReset) {
+        for (var name in this) {
+          // Not sure about the optimal order of these conditions:
+          if (name.charAt(0) === "t" &&
+              hasOwn.call(this, name) &&
+              !isNaN(+name.slice(1))) {
+            this[name] = undefined;
+          }
+        }
+      }
+    },
+
+    stop: function() {
+      this.done = true;
+
+      var rootEntry = this.tryEntries[0];
+      var rootRecord = rootEntry.completion;
+      if (rootRecord.type === "throw") {
+        throw rootRecord.arg;
+      }
+
+      return this.rval;
+    },
+
+    dispatchException: function(exception) {
+      if (this.done) {
+        throw exception;
+      }
+
+      var context = this;
+      function handle(loc, caught) {
+        record.type = "throw";
+        record.arg = exception;
+        context.next = loc;
+        return !!caught;
+      }
+
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        var record = entry.completion;
+
+        if (entry.tryLoc === "root") {
+          // Exception thrown outside of any try block that could handle
+          // it, so set the completion value of the entire function to
+          // throw the exception.
+          return handle("end");
+        }
+
+        if (entry.tryLoc <= this.prev) {
+          var hasCatch = hasOwn.call(entry, "catchLoc");
+          var hasFinally = hasOwn.call(entry, "finallyLoc");
+
+          if (hasCatch && hasFinally) {
+            if (this.prev < entry.catchLoc) {
+              return handle(entry.catchLoc, true);
+            } else if (this.prev < entry.finallyLoc) {
+              return handle(entry.finallyLoc);
+            }
+
+          } else if (hasCatch) {
+            if (this.prev < entry.catchLoc) {
+              return handle(entry.catchLoc, true);
+            }
+
+          } else if (hasFinally) {
+            if (this.prev < entry.finallyLoc) {
+              return handle(entry.finallyLoc);
+            }
+
+          } else {
+            throw new Error("try statement without catch or finally");
+          }
+        }
+      }
+    },
+
+    abrupt: function(type, arg) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        if (entry.tryLoc <= this.prev &&
+            hasOwn.call(entry, "finallyLoc") &&
+            this.prev < entry.finallyLoc) {
+          var finallyEntry = entry;
+          break;
+        }
+      }
+
+      if (finallyEntry &&
+          (type === "break" ||
+           type === "continue") &&
+          finallyEntry.tryLoc <= arg &&
+          arg <= finallyEntry.finallyLoc) {
+        // Ignore the finally entry if control is not jumping to a
+        // location outside the try/catch block.
+        finallyEntry = null;
+      }
+
+      var record = finallyEntry ? finallyEntry.completion : {};
+      record.type = type;
+      record.arg = arg;
+
+      if (finallyEntry) {
+        this.next = finallyEntry.finallyLoc;
+      } else {
+        this.complete(record);
+      }
+
+      return ContinueSentinel;
+    },
+
+    complete: function(record, afterLoc) {
+      if (record.type === "throw") {
+        throw record.arg;
+      }
+
+      if (record.type === "break" ||
+          record.type === "continue") {
+        this.next = record.arg;
+      } else if (record.type === "return") {
+        this.rval = record.arg;
+        this.next = "end";
+      } else if (record.type === "normal" && afterLoc) {
+        this.next = afterLoc;
+      }
+    },
+
+    finish: function(finallyLoc) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        if (entry.finallyLoc === finallyLoc) {
+          this.complete(entry.completion, entry.afterLoc);
+          resetTryEntry(entry);
+          return ContinueSentinel;
+        }
+      }
+    },
+
+    "catch": function(tryLoc) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        if (entry.tryLoc === tryLoc) {
+          var record = entry.completion;
+          if (record.type === "throw") {
+            var thrown = record.arg;
+            resetTryEntry(entry);
+          }
+          return thrown;
+        }
+      }
+
+      // The context.catch method must only be called with a location
+      // argument that corresponds to a known catch block.
+      throw new Error("illegal catch attempt");
+    },
+
+    delegateYield: function(iterable, resultName, nextLoc) {
+      this.delegate = {
+        iterator: values(iterable),
+        resultName: resultName,
+        nextLoc: nextLoc
+      };
+
+      return ContinueSentinel;
+    }
+  };
+})(
+  // Among the various tricks for obtaining a reference to the global
+  // object, this seems to be the most reliable technique that does not
+  // use indirect eval (which violates Content Security Policy).
+  typeof global === "object" ? global :
+  typeof window === "object" ? window :
+  typeof self === "object" ? self : this
+);
+
+}).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"_process":298}],3:[function(require,module,exports){
 require('../../modules/core.regexp.escape');
 module.exports = require('../../modules/_core').RegExp.escape;
-},{"../../modules/_core":23,"../../modules/core.regexp.escape":120}],3:[function(require,module,exports){
+},{"../../modules/_core":24,"../../modules/core.regexp.escape":120}],4:[function(require,module,exports){
 module.exports = function(it){
   if(typeof it != 'function')throw TypeError(it + ' is not a function!');
   return it;
 };
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 var cof = require('./_cof');
 module.exports = function(it, msg){
   if(typeof it != 'number' && cof(it) != 'Number')throw TypeError(msg);
   return +it;
 };
-},{"./_cof":18}],5:[function(require,module,exports){
+},{"./_cof":19}],6:[function(require,module,exports){
 // 22.1.3.31 Array.prototype[@@unscopables]
 var UNSCOPABLES = require('./_wks')('unscopables')
   , ArrayProto  = Array.prototype;
@@ -55,19 +716,19 @@ if(ArrayProto[UNSCOPABLES] == undefined)require('./_hide')(ArrayProto, UNSCOPABL
 module.exports = function(key){
   ArrayProto[UNSCOPABLES][key] = true;
 };
-},{"./_hide":40,"./_wks":117}],6:[function(require,module,exports){
+},{"./_hide":41,"./_wks":118}],7:[function(require,module,exports){
 module.exports = function(it, Constructor, name, forbiddenField){
   if(!(it instanceof Constructor) || (forbiddenField !== undefined && forbiddenField in it)){
     throw TypeError(name + ': incorrect invocation!');
   } return it;
 };
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 var isObject = require('./_is-object');
 module.exports = function(it){
   if(!isObject(it))throw TypeError(it + ' is not an object!');
   return it;
 };
-},{"./_is-object":49}],8:[function(require,module,exports){
+},{"./_is-object":50}],9:[function(require,module,exports){
 // 22.1.3.3 Array.prototype.copyWithin(target, start, end = this.length)
 'use strict';
 var toObject = require('./_to-object')
@@ -94,7 +755,7 @@ module.exports = [].copyWithin || function copyWithin(target/*= 0*/, start/*= 0,
     from += inc;
   } return O;
 };
-},{"./_to-index":105,"./_to-length":108,"./_to-object":109}],9:[function(require,module,exports){
+},{"./_to-index":106,"./_to-length":109,"./_to-object":110}],10:[function(require,module,exports){
 // 22.1.3.6 Array.prototype.fill(value, start = 0, end = this.length)
 'use strict';
 var toObject = require('./_to-object')
@@ -110,7 +771,7 @@ module.exports = function fill(value /*, start = 0, end = @length */){
   while(endPos > index)O[index++] = value;
   return O;
 };
-},{"./_to-index":105,"./_to-length":108,"./_to-object":109}],10:[function(require,module,exports){
+},{"./_to-index":106,"./_to-length":109,"./_to-object":110}],11:[function(require,module,exports){
 var forOf = require('./_for-of');
 
 module.exports = function(iter, ITERATOR){
@@ -119,7 +780,7 @@ module.exports = function(iter, ITERATOR){
   return result;
 };
 
-},{"./_for-of":37}],11:[function(require,module,exports){
+},{"./_for-of":38}],12:[function(require,module,exports){
 // false -> Array#indexOf
 // true  -> Array#includes
 var toIObject = require('./_to-iobject')
@@ -141,7 +802,7 @@ module.exports = function(IS_INCLUDES){
     } return !IS_INCLUDES && -1;
   };
 };
-},{"./_to-index":105,"./_to-iobject":107,"./_to-length":108}],12:[function(require,module,exports){
+},{"./_to-index":106,"./_to-iobject":108,"./_to-length":109}],13:[function(require,module,exports){
 // 0 -> Array#forEach
 // 1 -> Array#map
 // 2 -> Array#filter
@@ -186,7 +847,7 @@ module.exports = function(TYPE, $create){
     return IS_FIND_INDEX ? -1 : IS_SOME || IS_EVERY ? IS_EVERY : result;
   };
 };
-},{"./_array-species-create":15,"./_ctx":25,"./_iobject":45,"./_to-length":108,"./_to-object":109}],13:[function(require,module,exports){
+},{"./_array-species-create":16,"./_ctx":26,"./_iobject":46,"./_to-length":109,"./_to-object":110}],14:[function(require,module,exports){
 var aFunction = require('./_a-function')
   , toObject  = require('./_to-object')
   , IObject   = require('./_iobject')
@@ -215,7 +876,7 @@ module.exports = function(that, callbackfn, aLen, memo, isRight){
   }
   return memo;
 };
-},{"./_a-function":3,"./_iobject":45,"./_to-length":108,"./_to-object":109}],14:[function(require,module,exports){
+},{"./_a-function":4,"./_iobject":46,"./_to-length":109,"./_to-object":110}],15:[function(require,module,exports){
 var isObject = require('./_is-object')
   , isArray  = require('./_is-array')
   , SPECIES  = require('./_wks')('species');
@@ -232,14 +893,14 @@ module.exports = function(original){
     }
   } return C === undefined ? Array : C;
 };
-},{"./_is-array":47,"./_is-object":49,"./_wks":117}],15:[function(require,module,exports){
+},{"./_is-array":48,"./_is-object":50,"./_wks":118}],16:[function(require,module,exports){
 // 9.4.2.3 ArraySpeciesCreate(originalArray, length)
 var speciesConstructor = require('./_array-species-constructor');
 
 module.exports = function(original, length){
   return new (speciesConstructor(original))(length);
 };
-},{"./_array-species-constructor":14}],16:[function(require,module,exports){
+},{"./_array-species-constructor":15}],17:[function(require,module,exports){
 'use strict';
 var aFunction  = require('./_a-function')
   , isObject   = require('./_is-object')
@@ -264,7 +925,7 @@ module.exports = Function.bind || function bind(that /*, args... */){
   if(isObject(fn.prototype))bound.prototype = fn.prototype;
   return bound;
 };
-},{"./_a-function":3,"./_invoke":44,"./_is-object":49}],17:[function(require,module,exports){
+},{"./_a-function":4,"./_invoke":45,"./_is-object":50}],18:[function(require,module,exports){
 // getting tag from 19.1.3.6 Object.prototype.toString()
 var cof = require('./_cof')
   , TAG = require('./_wks')('toStringTag')
@@ -288,17 +949,16 @@ module.exports = function(it){
     // ES3 arguments fallback
     : (B = cof(O)) == 'Object' && typeof O.callee == 'function' ? 'Arguments' : B;
 };
-},{"./_cof":18,"./_wks":117}],18:[function(require,module,exports){
+},{"./_cof":19,"./_wks":118}],19:[function(require,module,exports){
 var toString = {}.toString;
 
 module.exports = function(it){
   return toString.call(it).slice(8, -1);
 };
-},{}],19:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 'use strict';
 var dP          = require('./_object-dp').f
   , create      = require('./_object-create')
-  , hide        = require('./_hide')
   , redefineAll = require('./_redefine-all')
   , ctx         = require('./_ctx')
   , anInstance  = require('./_an-instance')
@@ -438,7 +1098,7 @@ module.exports = {
     setSpecies(NAME);
   }
 };
-},{"./_an-instance":6,"./_ctx":25,"./_defined":27,"./_descriptors":28,"./_for-of":37,"./_hide":40,"./_iter-define":53,"./_iter-step":55,"./_meta":62,"./_object-create":66,"./_object-dp":67,"./_redefine-all":86,"./_set-species":91}],20:[function(require,module,exports){
+},{"./_an-instance":7,"./_ctx":26,"./_defined":28,"./_descriptors":29,"./_for-of":38,"./_iter-define":54,"./_iter-step":56,"./_meta":63,"./_object-create":67,"./_object-dp":68,"./_redefine-all":87,"./_set-species":92}],21:[function(require,module,exports){
 // https://github.com/DavidBruant/Map-Set.prototype.toJSON
 var classof = require('./_classof')
   , from    = require('./_array-from-iterable');
@@ -448,7 +1108,7 @@ module.exports = function(NAME){
     return from(this);
   };
 };
-},{"./_array-from-iterable":10,"./_classof":17}],21:[function(require,module,exports){
+},{"./_array-from-iterable":11,"./_classof":18}],22:[function(require,module,exports){
 'use strict';
 var redefineAll       = require('./_redefine-all')
   , getWeak           = require('./_meta').getWeak
@@ -532,7 +1192,7 @@ module.exports = {
   },
   ufstore: uncaughtFrozenStore
 };
-},{"./_an-instance":6,"./_an-object":7,"./_array-methods":12,"./_for-of":37,"./_has":39,"./_is-object":49,"./_meta":62,"./_redefine-all":86}],22:[function(require,module,exports){
+},{"./_an-instance":7,"./_an-object":8,"./_array-methods":13,"./_for-of":38,"./_has":40,"./_is-object":50,"./_meta":63,"./_redefine-all":87}],23:[function(require,module,exports){
 'use strict';
 var global            = require('./_global')
   , $export           = require('./_export')
@@ -618,10 +1278,10 @@ module.exports = function(NAME, wrapper, methods, common, IS_MAP, IS_WEAK){
 
   return C;
 };
-},{"./_an-instance":6,"./_export":32,"./_fails":34,"./_for-of":37,"./_global":38,"./_inherit-if-required":43,"./_is-object":49,"./_iter-detect":54,"./_meta":62,"./_redefine":87,"./_redefine-all":86,"./_set-to-string-tag":92}],23:[function(require,module,exports){
+},{"./_an-instance":7,"./_export":33,"./_fails":35,"./_for-of":38,"./_global":39,"./_inherit-if-required":44,"./_is-object":50,"./_iter-detect":55,"./_meta":63,"./_redefine":88,"./_redefine-all":87,"./_set-to-string-tag":93}],24:[function(require,module,exports){
 var core = module.exports = {version: '2.4.0'};
 if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
-},{}],24:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 'use strict';
 var $defineProperty = require('./_object-dp')
   , createDesc      = require('./_property-desc');
@@ -630,7 +1290,7 @@ module.exports = function(object, index, value){
   if(index in object)$defineProperty.f(object, index, createDesc(0, value));
   else object[index] = value;
 };
-},{"./_object-dp":67,"./_property-desc":85}],25:[function(require,module,exports){
+},{"./_object-dp":68,"./_property-desc":86}],26:[function(require,module,exports){
 // optional / simple context binding
 var aFunction = require('./_a-function');
 module.exports = function(fn, that, length){
@@ -651,7 +1311,7 @@ module.exports = function(fn, that, length){
     return fn.apply(that, arguments);
   };
 };
-},{"./_a-function":3}],26:[function(require,module,exports){
+},{"./_a-function":4}],27:[function(require,module,exports){
 'use strict';
 var anObject    = require('./_an-object')
   , toPrimitive = require('./_to-primitive')
@@ -661,18 +1321,18 @@ module.exports = function(hint){
   if(hint !== 'string' && hint !== NUMBER && hint !== 'default')throw TypeError('Incorrect hint');
   return toPrimitive(anObject(this), hint != NUMBER);
 };
-},{"./_an-object":7,"./_to-primitive":110}],27:[function(require,module,exports){
+},{"./_an-object":8,"./_to-primitive":111}],28:[function(require,module,exports){
 // 7.2.1 RequireObjectCoercible(argument)
 module.exports = function(it){
   if(it == undefined)throw TypeError("Can't call method on  " + it);
   return it;
 };
-},{}],28:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 // Thank's IE8 for his funny defineProperty
 module.exports = !require('./_fails')(function(){
   return Object.defineProperty({}, 'a', {get: function(){ return 7; }}).a != 7;
 });
-},{"./_fails":34}],29:[function(require,module,exports){
+},{"./_fails":35}],30:[function(require,module,exports){
 var isObject = require('./_is-object')
   , document = require('./_global').document
   // in old IE typeof document.createElement is 'object'
@@ -680,12 +1340,12 @@ var isObject = require('./_is-object')
 module.exports = function(it){
   return is ? document.createElement(it) : {};
 };
-},{"./_global":38,"./_is-object":49}],30:[function(require,module,exports){
+},{"./_global":39,"./_is-object":50}],31:[function(require,module,exports){
 // IE 8- don't enum bug keys
 module.exports = (
   'constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf'
 ).split(',');
-},{}],31:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 // all enumerable object keys, includes symbols
 var getKeys = require('./_object-keys')
   , gOPS    = require('./_object-gops')
@@ -701,7 +1361,7 @@ module.exports = function(it){
     while(symbols.length > i)if(isEnum.call(it, key = symbols[i++]))result.push(key);
   } return result;
 };
-},{"./_object-gops":73,"./_object-keys":76,"./_object-pie":77}],32:[function(require,module,exports){
+},{"./_object-gops":74,"./_object-keys":77,"./_object-pie":78}],33:[function(require,module,exports){
 var global    = require('./_global')
   , core      = require('./_core')
   , hide      = require('./_hide')
@@ -745,7 +1405,7 @@ $export.W = 32;  // wrap
 $export.U = 64;  // safe
 $export.R = 128; // real proto method for `library` 
 module.exports = $export;
-},{"./_core":23,"./_ctx":25,"./_global":38,"./_hide":40,"./_redefine":87}],33:[function(require,module,exports){
+},{"./_core":24,"./_ctx":26,"./_global":39,"./_hide":41,"./_redefine":88}],34:[function(require,module,exports){
 var MATCH = require('./_wks')('match');
 module.exports = function(KEY){
   var re = /./;
@@ -758,7 +1418,7 @@ module.exports = function(KEY){
     } catch(f){ /* empty */ }
   } return true;
 };
-},{"./_wks":117}],34:[function(require,module,exports){
+},{"./_wks":118}],35:[function(require,module,exports){
 module.exports = function(exec){
   try {
     return !!exec();
@@ -766,7 +1426,7 @@ module.exports = function(exec){
     return true;
   }
 };
-},{}],35:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 'use strict';
 var hide     = require('./_hide')
   , redefine = require('./_redefine')
@@ -795,7 +1455,7 @@ module.exports = function(KEY, length, exec){
     );
   }
 };
-},{"./_defined":27,"./_fails":34,"./_hide":40,"./_redefine":87,"./_wks":117}],36:[function(require,module,exports){
+},{"./_defined":28,"./_fails":35,"./_hide":41,"./_redefine":88,"./_wks":118}],37:[function(require,module,exports){
 'use strict';
 // 21.2.5.3 get RegExp.prototype.flags
 var anObject = require('./_an-object');
@@ -809,7 +1469,7 @@ module.exports = function(){
   if(that.sticky)     result += 'y';
   return result;
 };
-},{"./_an-object":7}],37:[function(require,module,exports){
+},{"./_an-object":8}],38:[function(require,module,exports){
 var ctx         = require('./_ctx')
   , call        = require('./_iter-call')
   , isArrayIter = require('./_is-array-iter')
@@ -835,17 +1495,17 @@ var exports = module.exports = function(iterable, entries, fn, that, ITERATOR){
 };
 exports.BREAK  = BREAK;
 exports.RETURN = RETURN;
-},{"./_an-object":7,"./_ctx":25,"./_is-array-iter":46,"./_iter-call":51,"./_to-length":108,"./core.get-iterator-method":118}],38:[function(require,module,exports){
+},{"./_an-object":8,"./_ctx":26,"./_is-array-iter":47,"./_iter-call":52,"./_to-length":109,"./core.get-iterator-method":119}],39:[function(require,module,exports){
 // https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
 var global = module.exports = typeof window != 'undefined' && window.Math == Math
   ? window : typeof self != 'undefined' && self.Math == Math ? self : Function('return this')();
 if(typeof __g == 'number')__g = global; // eslint-disable-line no-undef
-},{}],39:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 var hasOwnProperty = {}.hasOwnProperty;
 module.exports = function(it, key){
   return hasOwnProperty.call(it, key);
 };
-},{}],40:[function(require,module,exports){
+},{}],41:[function(require,module,exports){
 var dP         = require('./_object-dp')
   , createDesc = require('./_property-desc');
 module.exports = require('./_descriptors') ? function(object, key, value){
@@ -854,13 +1514,13 @@ module.exports = require('./_descriptors') ? function(object, key, value){
   object[key] = value;
   return object;
 };
-},{"./_descriptors":28,"./_object-dp":67,"./_property-desc":85}],41:[function(require,module,exports){
+},{"./_descriptors":29,"./_object-dp":68,"./_property-desc":86}],42:[function(require,module,exports){
 module.exports = require('./_global').document && document.documentElement;
-},{"./_global":38}],42:[function(require,module,exports){
+},{"./_global":39}],43:[function(require,module,exports){
 module.exports = !require('./_descriptors') && !require('./_fails')(function(){
   return Object.defineProperty(require('./_dom-create')('div'), 'a', {get: function(){ return 7; }}).a != 7;
 });
-},{"./_descriptors":28,"./_dom-create":29,"./_fails":34}],43:[function(require,module,exports){
+},{"./_descriptors":29,"./_dom-create":30,"./_fails":35}],44:[function(require,module,exports){
 var isObject       = require('./_is-object')
   , setPrototypeOf = require('./_set-proto').set;
 module.exports = function(that, target, C){
@@ -869,7 +1529,7 @@ module.exports = function(that, target, C){
     setPrototypeOf(that, P);
   } return that;
 };
-},{"./_is-object":49,"./_set-proto":90}],44:[function(require,module,exports){
+},{"./_is-object":50,"./_set-proto":91}],45:[function(require,module,exports){
 // fast apply, http://jsperf.lnkit.com/fast-apply/5
 module.exports = function(fn, args, that){
   var un = that === undefined;
@@ -886,13 +1546,13 @@ module.exports = function(fn, args, that){
                       : fn.call(that, args[0], args[1], args[2], args[3]);
   } return              fn.apply(that, args);
 };
-},{}],45:[function(require,module,exports){
+},{}],46:[function(require,module,exports){
 // fallback for non-array-like ES3 and non-enumerable old V8 strings
 var cof = require('./_cof');
 module.exports = Object('z').propertyIsEnumerable(0) ? Object : function(it){
   return cof(it) == 'String' ? it.split('') : Object(it);
 };
-},{"./_cof":18}],46:[function(require,module,exports){
+},{"./_cof":19}],47:[function(require,module,exports){
 // check on default Array iterator
 var Iterators  = require('./_iterators')
   , ITERATOR   = require('./_wks')('iterator')
@@ -901,24 +1561,24 @@ var Iterators  = require('./_iterators')
 module.exports = function(it){
   return it !== undefined && (Iterators.Array === it || ArrayProto[ITERATOR] === it);
 };
-},{"./_iterators":56,"./_wks":117}],47:[function(require,module,exports){
+},{"./_iterators":57,"./_wks":118}],48:[function(require,module,exports){
 // 7.2.2 IsArray(argument)
 var cof = require('./_cof');
 module.exports = Array.isArray || function isArray(arg){
   return cof(arg) == 'Array';
 };
-},{"./_cof":18}],48:[function(require,module,exports){
+},{"./_cof":19}],49:[function(require,module,exports){
 // 20.1.2.3 Number.isInteger(number)
 var isObject = require('./_is-object')
   , floor    = Math.floor;
 module.exports = function isInteger(it){
   return !isObject(it) && isFinite(it) && floor(it) === it;
 };
-},{"./_is-object":49}],49:[function(require,module,exports){
+},{"./_is-object":50}],50:[function(require,module,exports){
 module.exports = function(it){
   return typeof it === 'object' ? it !== null : typeof it === 'function';
 };
-},{}],50:[function(require,module,exports){
+},{}],51:[function(require,module,exports){
 // 7.2.8 IsRegExp(argument)
 var isObject = require('./_is-object')
   , cof      = require('./_cof')
@@ -927,7 +1587,7 @@ module.exports = function(it){
   var isRegExp;
   return isObject(it) && ((isRegExp = it[MATCH]) !== undefined ? !!isRegExp : cof(it) == 'RegExp');
 };
-},{"./_cof":18,"./_is-object":49,"./_wks":117}],51:[function(require,module,exports){
+},{"./_cof":19,"./_is-object":50,"./_wks":118}],52:[function(require,module,exports){
 // call something on iterator step with safe closing on error
 var anObject = require('./_an-object');
 module.exports = function(iterator, fn, value, entries){
@@ -940,7 +1600,7 @@ module.exports = function(iterator, fn, value, entries){
     throw e;
   }
 };
-},{"./_an-object":7}],52:[function(require,module,exports){
+},{"./_an-object":8}],53:[function(require,module,exports){
 'use strict';
 var create         = require('./_object-create')
   , descriptor     = require('./_property-desc')
@@ -954,7 +1614,7 @@ module.exports = function(Constructor, NAME, next){
   Constructor.prototype = create(IteratorPrototype, {next: descriptor(1, next)});
   setToStringTag(Constructor, NAME + ' Iterator');
 };
-},{"./_hide":40,"./_object-create":66,"./_property-desc":85,"./_set-to-string-tag":92,"./_wks":117}],53:[function(require,module,exports){
+},{"./_hide":41,"./_object-create":67,"./_property-desc":86,"./_set-to-string-tag":93,"./_wks":118}],54:[function(require,module,exports){
 'use strict';
 var LIBRARY        = require('./_library')
   , $export        = require('./_export')
@@ -1025,7 +1685,7 @@ module.exports = function(Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCED
   }
   return methods;
 };
-},{"./_export":32,"./_has":39,"./_hide":40,"./_iter-create":52,"./_iterators":56,"./_library":58,"./_object-gpo":74,"./_redefine":87,"./_set-to-string-tag":92,"./_wks":117}],54:[function(require,module,exports){
+},{"./_export":33,"./_has":40,"./_hide":41,"./_iter-create":53,"./_iterators":57,"./_library":59,"./_object-gpo":75,"./_redefine":88,"./_set-to-string-tag":93,"./_wks":118}],55:[function(require,module,exports){
 var ITERATOR     = require('./_wks')('iterator')
   , SAFE_CLOSING = false;
 
@@ -1047,13 +1707,13 @@ module.exports = function(exec, skipClosing){
   } catch(e){ /* empty */ }
   return safe;
 };
-},{"./_wks":117}],55:[function(require,module,exports){
+},{"./_wks":118}],56:[function(require,module,exports){
 module.exports = function(done, value){
   return {value: value, done: !!done};
 };
-},{}],56:[function(require,module,exports){
-module.exports = {};
 },{}],57:[function(require,module,exports){
+module.exports = {};
+},{}],58:[function(require,module,exports){
 var getKeys   = require('./_object-keys')
   , toIObject = require('./_to-iobject');
 module.exports = function(object, el){
@@ -1064,9 +1724,9 @@ module.exports = function(object, el){
     , key;
   while(length > index)if(O[key = keys[index++]] === el)return key;
 };
-},{"./_object-keys":76,"./_to-iobject":107}],58:[function(require,module,exports){
+},{"./_object-keys":77,"./_to-iobject":108}],59:[function(require,module,exports){
 module.exports = false;
-},{}],59:[function(require,module,exports){
+},{}],60:[function(require,module,exports){
 // 20.2.2.14 Math.expm1(x)
 var $expm1 = Math.expm1;
 module.exports = (!$expm1
@@ -1077,17 +1737,17 @@ module.exports = (!$expm1
 ) ? function expm1(x){
   return (x = +x) == 0 ? x : x > -1e-6 && x < 1e-6 ? x + x * x / 2 : Math.exp(x) - 1;
 } : $expm1;
-},{}],60:[function(require,module,exports){
+},{}],61:[function(require,module,exports){
 // 20.2.2.20 Math.log1p(x)
 module.exports = Math.log1p || function log1p(x){
   return (x = +x) > -1e-8 && x < 1e-8 ? x - x * x / 2 : Math.log(1 + x);
 };
-},{}],61:[function(require,module,exports){
+},{}],62:[function(require,module,exports){
 // 20.2.2.28 Math.sign(x)
 module.exports = Math.sign || function sign(x){
   return (x = +x) == 0 || x != x ? x : x < 0 ? -1 : 1;
 };
-},{}],62:[function(require,module,exports){
+},{}],63:[function(require,module,exports){
 var META     = require('./_uid')('meta')
   , isObject = require('./_is-object')
   , has      = require('./_has')
@@ -1141,7 +1801,7 @@ var meta = module.exports = {
   getWeak:  getWeak,
   onFreeze: onFreeze
 };
-},{"./_fails":34,"./_has":39,"./_is-object":49,"./_object-dp":67,"./_uid":114}],63:[function(require,module,exports){
+},{"./_fails":35,"./_has":40,"./_is-object":50,"./_object-dp":68,"./_uid":115}],64:[function(require,module,exports){
 var Map     = require('./es6.map')
   , $export = require('./_export')
   , shared  = require('./_shared')('metadata')
@@ -1193,7 +1853,7 @@ module.exports = {
   key: toMetaKey,
   exp: exp
 };
-},{"./_export":32,"./_shared":94,"./es6.map":150,"./es6.weak-map":256}],64:[function(require,module,exports){
+},{"./_export":33,"./_shared":95,"./es6.map":150,"./es6.weak-map":256}],65:[function(require,module,exports){
 var global    = require('./_global')
   , macrotask = require('./_task').set
   , Observer  = global.MutationObserver || global.WebKitMutationObserver
@@ -1262,7 +1922,7 @@ module.exports = function(){
     } last = task;
   };
 };
-},{"./_cof":18,"./_global":38,"./_task":104}],65:[function(require,module,exports){
+},{"./_cof":19,"./_global":39,"./_task":105}],66:[function(require,module,exports){
 'use strict';
 // 19.1.2.1 Object.assign(target, source, ...)
 var getKeys  = require('./_object-keys')
@@ -1296,7 +1956,7 @@ module.exports = !$assign || require('./_fails')(function(){
     while(length > j)if(isEnum.call(S, key = keys[j++]))T[key] = S[key];
   } return T;
 } : $assign;
-},{"./_fails":34,"./_iobject":45,"./_object-gops":73,"./_object-keys":76,"./_object-pie":77,"./_to-object":109}],66:[function(require,module,exports){
+},{"./_fails":35,"./_iobject":46,"./_object-gops":74,"./_object-keys":77,"./_object-pie":78,"./_to-object":110}],67:[function(require,module,exports){
 // 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
 var anObject    = require('./_an-object')
   , dPs         = require('./_object-dps')
@@ -1310,6 +1970,7 @@ var createDict = function(){
   // Thrash, waste and sodomy: IE GC bug
   var iframe = require('./_dom-create')('iframe')
     , i      = enumBugKeys.length
+    , lt     = '<'
     , gt     = '>'
     , iframeDocument;
   iframe.style.display = 'none';
@@ -1319,7 +1980,7 @@ var createDict = function(){
   // html.removeChild(iframe);
   iframeDocument = iframe.contentWindow.document;
   iframeDocument.open();
-  iframeDocument.write('<script>document.F=Object</script' + gt);
+  iframeDocument.write(lt + 'script' + gt + 'document.F=Object' + lt + '/script' + gt);
   iframeDocument.close();
   createDict = iframeDocument.F;
   while(i--)delete createDict[PROTOTYPE][enumBugKeys[i]];
@@ -1337,7 +1998,8 @@ module.exports = Object.create || function create(O, Properties){
   } else result = createDict();
   return Properties === undefined ? result : dPs(result, Properties);
 };
-},{"./_an-object":7,"./_dom-create":29,"./_enum-bug-keys":30,"./_html":41,"./_object-dps":68,"./_shared-key":93}],67:[function(require,module,exports){
+
+},{"./_an-object":8,"./_dom-create":30,"./_enum-bug-keys":31,"./_html":42,"./_object-dps":69,"./_shared-key":94}],68:[function(require,module,exports){
 var anObject       = require('./_an-object')
   , IE8_DOM_DEFINE = require('./_ie8-dom-define')
   , toPrimitive    = require('./_to-primitive')
@@ -1354,7 +2016,7 @@ exports.f = require('./_descriptors') ? Object.defineProperty : function defineP
   if('value' in Attributes)O[P] = Attributes.value;
   return O;
 };
-},{"./_an-object":7,"./_descriptors":28,"./_ie8-dom-define":42,"./_to-primitive":110}],68:[function(require,module,exports){
+},{"./_an-object":8,"./_descriptors":29,"./_ie8-dom-define":43,"./_to-primitive":111}],69:[function(require,module,exports){
 var dP       = require('./_object-dp')
   , anObject = require('./_an-object')
   , getKeys  = require('./_object-keys');
@@ -1368,7 +2030,7 @@ module.exports = require('./_descriptors') ? Object.defineProperties : function 
   while(length > i)dP.f(O, P = keys[i++], Properties[P]);
   return O;
 };
-},{"./_an-object":7,"./_descriptors":28,"./_object-dp":67,"./_object-keys":76}],69:[function(require,module,exports){
+},{"./_an-object":8,"./_descriptors":29,"./_object-dp":68,"./_object-keys":77}],70:[function(require,module,exports){
 // Forced replacement prototype accessors methods
 module.exports = require('./_library')|| !require('./_fails')(function(){
   var K = Math.random();
@@ -1376,7 +2038,7 @@ module.exports = require('./_library')|| !require('./_fails')(function(){
   __defineSetter__.call(null, K, function(){ /* empty */});
   delete require('./_global')[K];
 });
-},{"./_fails":34,"./_global":38,"./_library":58}],70:[function(require,module,exports){
+},{"./_fails":35,"./_global":39,"./_library":59}],71:[function(require,module,exports){
 var pIE            = require('./_object-pie')
   , createDesc     = require('./_property-desc')
   , toIObject      = require('./_to-iobject')
@@ -1393,7 +2055,7 @@ exports.f = require('./_descriptors') ? gOPD : function getOwnPropertyDescriptor
   } catch(e){ /* empty */ }
   if(has(O, P))return createDesc(!pIE.f.call(O, P), O[P]);
 };
-},{"./_descriptors":28,"./_has":39,"./_ie8-dom-define":42,"./_object-pie":77,"./_property-desc":85,"./_to-iobject":107,"./_to-primitive":110}],71:[function(require,module,exports){
+},{"./_descriptors":29,"./_has":40,"./_ie8-dom-define":43,"./_object-pie":78,"./_property-desc":86,"./_to-iobject":108,"./_to-primitive":111}],72:[function(require,module,exports){
 // fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
 var toIObject = require('./_to-iobject')
   , gOPN      = require('./_object-gopn').f
@@ -1414,7 +2076,7 @@ module.exports.f = function getOwnPropertyNames(it){
   return windowNames && toString.call(it) == '[object Window]' ? getWindowNames(it) : gOPN(toIObject(it));
 };
 
-},{"./_object-gopn":72,"./_to-iobject":107}],72:[function(require,module,exports){
+},{"./_object-gopn":73,"./_to-iobject":108}],73:[function(require,module,exports){
 // 19.1.2.7 / 15.2.3.4 Object.getOwnPropertyNames(O)
 var $keys      = require('./_object-keys-internal')
   , hiddenKeys = require('./_enum-bug-keys').concat('length', 'prototype');
@@ -1422,9 +2084,9 @@ var $keys      = require('./_object-keys-internal')
 exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O){
   return $keys(O, hiddenKeys);
 };
-},{"./_enum-bug-keys":30,"./_object-keys-internal":75}],73:[function(require,module,exports){
+},{"./_enum-bug-keys":31,"./_object-keys-internal":76}],74:[function(require,module,exports){
 exports.f = Object.getOwnPropertySymbols;
-},{}],74:[function(require,module,exports){
+},{}],75:[function(require,module,exports){
 // 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
 var has         = require('./_has')
   , toObject    = require('./_to-object')
@@ -1438,7 +2100,7 @@ module.exports = Object.getPrototypeOf || function(O){
     return O.constructor.prototype;
   } return O instanceof Object ? ObjectProto : null;
 };
-},{"./_has":39,"./_shared-key":93,"./_to-object":109}],75:[function(require,module,exports){
+},{"./_has":40,"./_shared-key":94,"./_to-object":110}],76:[function(require,module,exports){
 var has          = require('./_has')
   , toIObject    = require('./_to-iobject')
   , arrayIndexOf = require('./_array-includes')(false)
@@ -1456,7 +2118,7 @@ module.exports = function(object, names){
   }
   return result;
 };
-},{"./_array-includes":11,"./_has":39,"./_shared-key":93,"./_to-iobject":107}],76:[function(require,module,exports){
+},{"./_array-includes":12,"./_has":40,"./_shared-key":94,"./_to-iobject":108}],77:[function(require,module,exports){
 // 19.1.2.14 / 15.2.3.14 Object.keys(O)
 var $keys       = require('./_object-keys-internal')
   , enumBugKeys = require('./_enum-bug-keys');
@@ -1464,9 +2126,9 @@ var $keys       = require('./_object-keys-internal')
 module.exports = Object.keys || function keys(O){
   return $keys(O, enumBugKeys);
 };
-},{"./_enum-bug-keys":30,"./_object-keys-internal":75}],77:[function(require,module,exports){
+},{"./_enum-bug-keys":31,"./_object-keys-internal":76}],78:[function(require,module,exports){
 exports.f = {}.propertyIsEnumerable;
-},{}],78:[function(require,module,exports){
+},{}],79:[function(require,module,exports){
 // most Object methods by ES6 should accept primitives
 var $export = require('./_export')
   , core    = require('./_core')
@@ -1477,7 +2139,7 @@ module.exports = function(KEY, exec){
   exp[KEY] = exec(fn);
   $export($export.S + $export.F * fails(function(){ fn(1); }), 'Object', exp);
 };
-},{"./_core":23,"./_export":32,"./_fails":34}],79:[function(require,module,exports){
+},{"./_core":24,"./_export":33,"./_fails":35}],80:[function(require,module,exports){
 var getKeys   = require('./_object-keys')
   , toIObject = require('./_to-iobject')
   , isEnum    = require('./_object-pie').f;
@@ -1494,7 +2156,7 @@ module.exports = function(isEntries){
     } return result;
   };
 };
-},{"./_object-keys":76,"./_object-pie":77,"./_to-iobject":107}],80:[function(require,module,exports){
+},{"./_object-keys":77,"./_object-pie":78,"./_to-iobject":108}],81:[function(require,module,exports){
 // all object keys, includes non-enumerable and symbols
 var gOPN     = require('./_object-gopn')
   , gOPS     = require('./_object-gops')
@@ -1505,7 +2167,7 @@ module.exports = Reflect && Reflect.ownKeys || function ownKeys(it){
     , getSymbols = gOPS.f;
   return getSymbols ? keys.concat(getSymbols(it)) : keys;
 };
-},{"./_an-object":7,"./_global":38,"./_object-gopn":72,"./_object-gops":73}],81:[function(require,module,exports){
+},{"./_an-object":8,"./_global":39,"./_object-gopn":73,"./_object-gops":74}],82:[function(require,module,exports){
 var $parseFloat = require('./_global').parseFloat
   , $trim       = require('./_string-trim').trim;
 
@@ -1514,7 +2176,7 @@ module.exports = 1 / $parseFloat(require('./_string-ws') + '-0') !== -Infinity ?
     , result = $parseFloat(string);
   return result === 0 && string.charAt(0) == '-' ? -0 : result;
 } : $parseFloat;
-},{"./_global":38,"./_string-trim":102,"./_string-ws":103}],82:[function(require,module,exports){
+},{"./_global":39,"./_string-trim":103,"./_string-ws":104}],83:[function(require,module,exports){
 var $parseInt = require('./_global').parseInt
   , $trim     = require('./_string-trim').trim
   , ws        = require('./_string-ws')
@@ -1524,7 +2186,7 @@ module.exports = $parseInt(ws + '08') !== 8 || $parseInt(ws + '0x16') !== 22 ? f
   var string = $trim(String(str), 3);
   return $parseInt(string, (radix >>> 0) || (hex.test(string) ? 16 : 10));
 } : $parseInt;
-},{"./_global":38,"./_string-trim":102,"./_string-ws":103}],83:[function(require,module,exports){
+},{"./_global":39,"./_string-trim":103,"./_string-ws":104}],84:[function(require,module,exports){
 'use strict';
 var path      = require('./_path')
   , invoke    = require('./_invoke')
@@ -1548,9 +2210,9 @@ module.exports = function(/* ...pargs */){
     return invoke(fn, args, that);
   };
 };
-},{"./_a-function":3,"./_invoke":44,"./_path":84}],84:[function(require,module,exports){
+},{"./_a-function":4,"./_invoke":45,"./_path":85}],85:[function(require,module,exports){
 module.exports = require('./_global');
-},{"./_global":38}],85:[function(require,module,exports){
+},{"./_global":39}],86:[function(require,module,exports){
 module.exports = function(bitmap, value){
   return {
     enumerable  : !(bitmap & 1),
@@ -1559,13 +2221,13 @@ module.exports = function(bitmap, value){
     value       : value
   };
 };
-},{}],86:[function(require,module,exports){
+},{}],87:[function(require,module,exports){
 var redefine = require('./_redefine');
 module.exports = function(target, src, safe){
   for(var key in src)redefine(target, key, src[key], safe);
   return target;
 };
-},{"./_redefine":87}],87:[function(require,module,exports){
+},{"./_redefine":88}],88:[function(require,module,exports){
 var global    = require('./_global')
   , hide      = require('./_hide')
   , has       = require('./_has')
@@ -1598,7 +2260,7 @@ require('./_core').inspectSource = function(it){
 })(Function.prototype, TO_STRING, function toString(){
   return typeof this == 'function' && this[SRC] || $toString.call(this);
 });
-},{"./_core":23,"./_global":38,"./_has":39,"./_hide":40,"./_uid":114}],88:[function(require,module,exports){
+},{"./_core":24,"./_global":39,"./_has":40,"./_hide":41,"./_uid":115}],89:[function(require,module,exports){
 module.exports = function(regExp, replace){
   var replacer = replace === Object(replace) ? function(part){
     return replace[part];
@@ -1607,12 +2269,12 @@ module.exports = function(regExp, replace){
     return String(it).replace(regExp, replacer);
   };
 };
-},{}],89:[function(require,module,exports){
+},{}],90:[function(require,module,exports){
 // 7.2.9 SameValue(x, y)
 module.exports = Object.is || function is(x, y){
   return x === y ? x !== 0 || 1 / x === 1 / y : x != x && y != y;
 };
-},{}],90:[function(require,module,exports){
+},{}],91:[function(require,module,exports){
 // Works with __proto__ only. Old v8 can't work with null proto objects.
 /* eslint-disable no-proto */
 var isObject = require('./_is-object')
@@ -1638,7 +2300,7 @@ module.exports = {
     }({}, false) : undefined),
   check: check
 };
-},{"./_an-object":7,"./_ctx":25,"./_is-object":49,"./_object-gopd":70}],91:[function(require,module,exports){
+},{"./_an-object":8,"./_ctx":26,"./_is-object":50,"./_object-gopd":71}],92:[function(require,module,exports){
 'use strict';
 var global      = require('./_global')
   , dP          = require('./_object-dp')
@@ -1652,7 +2314,7 @@ module.exports = function(KEY){
     get: function(){ return this; }
   });
 };
-},{"./_descriptors":28,"./_global":38,"./_object-dp":67,"./_wks":117}],92:[function(require,module,exports){
+},{"./_descriptors":29,"./_global":39,"./_object-dp":68,"./_wks":118}],93:[function(require,module,exports){
 var def = require('./_object-dp').f
   , has = require('./_has')
   , TAG = require('./_wks')('toStringTag');
@@ -1660,20 +2322,20 @@ var def = require('./_object-dp').f
 module.exports = function(it, tag, stat){
   if(it && !has(it = stat ? it : it.prototype, TAG))def(it, TAG, {configurable: true, value: tag});
 };
-},{"./_has":39,"./_object-dp":67,"./_wks":117}],93:[function(require,module,exports){
+},{"./_has":40,"./_object-dp":68,"./_wks":118}],94:[function(require,module,exports){
 var shared = require('./_shared')('keys')
   , uid    = require('./_uid');
 module.exports = function(key){
   return shared[key] || (shared[key] = uid(key));
 };
-},{"./_shared":94,"./_uid":114}],94:[function(require,module,exports){
+},{"./_shared":95,"./_uid":115}],95:[function(require,module,exports){
 var global = require('./_global')
   , SHARED = '__core-js_shared__'
   , store  = global[SHARED] || (global[SHARED] = {});
 module.exports = function(key){
   return store[key] || (store[key] = {});
 };
-},{"./_global":38}],95:[function(require,module,exports){
+},{"./_global":39}],96:[function(require,module,exports){
 // 7.3.20 SpeciesConstructor(O, defaultConstructor)
 var anObject  = require('./_an-object')
   , aFunction = require('./_a-function')
@@ -1682,7 +2344,7 @@ module.exports = function(O, D){
   var C = anObject(O).constructor, S;
   return C === undefined || (S = anObject(C)[SPECIES]) == undefined ? D : aFunction(S);
 };
-},{"./_a-function":3,"./_an-object":7,"./_wks":117}],96:[function(require,module,exports){
+},{"./_a-function":4,"./_an-object":8,"./_wks":118}],97:[function(require,module,exports){
 var fails = require('./_fails');
 
 module.exports = function(method, arg){
@@ -1690,7 +2352,7 @@ module.exports = function(method, arg){
     arg ? method.call(null, function(){}, 1) : method.call(null);
   });
 };
-},{"./_fails":34}],97:[function(require,module,exports){
+},{"./_fails":35}],98:[function(require,module,exports){
 var toInteger = require('./_to-integer')
   , defined   = require('./_defined');
 // true  -> String#at
@@ -1708,7 +2370,7 @@ module.exports = function(TO_STRING){
       : TO_STRING ? s.slice(i, i + 2) : (a - 0xd800 << 10) + (b - 0xdc00) + 0x10000;
   };
 };
-},{"./_defined":27,"./_to-integer":106}],98:[function(require,module,exports){
+},{"./_defined":28,"./_to-integer":107}],99:[function(require,module,exports){
 // helper for String#{startsWith, endsWith, includes}
 var isRegExp = require('./_is-regexp')
   , defined  = require('./_defined');
@@ -1717,7 +2379,7 @@ module.exports = function(that, searchString, NAME){
   if(isRegExp(searchString))throw TypeError('String#' + NAME + " doesn't accept regex!");
   return String(defined(that));
 };
-},{"./_defined":27,"./_is-regexp":50}],99:[function(require,module,exports){
+},{"./_defined":28,"./_is-regexp":51}],100:[function(require,module,exports){
 var $export = require('./_export')
   , fails   = require('./_fails')
   , defined = require('./_defined')
@@ -1737,7 +2399,7 @@ module.exports = function(NAME, exec){
     return test !== test.toLowerCase() || test.split('"').length > 3;
   }), 'String', O);
 };
-},{"./_defined":27,"./_export":32,"./_fails":34}],100:[function(require,module,exports){
+},{"./_defined":28,"./_export":33,"./_fails":35}],101:[function(require,module,exports){
 // https://github.com/tc39/proposal-string-pad-start-end
 var toLength = require('./_to-length')
   , repeat   = require('./_string-repeat')
@@ -1755,7 +2417,7 @@ module.exports = function(that, maxLength, fillString, left){
   return left ? stringFiller + S : S + stringFiller;
 };
 
-},{"./_defined":27,"./_string-repeat":101,"./_to-length":108}],101:[function(require,module,exports){
+},{"./_defined":28,"./_string-repeat":102,"./_to-length":109}],102:[function(require,module,exports){
 'use strict';
 var toInteger = require('./_to-integer')
   , defined   = require('./_defined');
@@ -1768,7 +2430,7 @@ module.exports = function repeat(count){
   for(;n > 0; (n >>>= 1) && (str += str))if(n & 1)res += str;
   return res;
 };
-},{"./_defined":27,"./_to-integer":106}],102:[function(require,module,exports){
+},{"./_defined":28,"./_to-integer":107}],103:[function(require,module,exports){
 var $export = require('./_export')
   , defined = require('./_defined')
   , fails   = require('./_fails')
@@ -1799,10 +2461,10 @@ var trim = exporter.trim = function(string, TYPE){
 };
 
 module.exports = exporter;
-},{"./_defined":27,"./_export":32,"./_fails":34,"./_string-ws":103}],103:[function(require,module,exports){
+},{"./_defined":28,"./_export":33,"./_fails":35,"./_string-ws":104}],104:[function(require,module,exports){
 module.exports = '\x09\x0A\x0B\x0C\x0D\x20\xA0\u1680\u180E\u2000\u2001\u2002\u2003' +
   '\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF';
-},{}],104:[function(require,module,exports){
+},{}],105:[function(require,module,exports){
 var ctx                = require('./_ctx')
   , invoke             = require('./_invoke')
   , html               = require('./_html')
@@ -1878,7 +2540,7 @@ module.exports = {
   set:   setTask,
   clear: clearTask
 };
-},{"./_cof":18,"./_ctx":25,"./_dom-create":29,"./_global":38,"./_html":41,"./_invoke":44}],105:[function(require,module,exports){
+},{"./_cof":19,"./_ctx":26,"./_dom-create":30,"./_global":39,"./_html":42,"./_invoke":45}],106:[function(require,module,exports){
 var toInteger = require('./_to-integer')
   , max       = Math.max
   , min       = Math.min;
@@ -1886,34 +2548,34 @@ module.exports = function(index, length){
   index = toInteger(index);
   return index < 0 ? max(index + length, 0) : min(index, length);
 };
-},{"./_to-integer":106}],106:[function(require,module,exports){
+},{"./_to-integer":107}],107:[function(require,module,exports){
 // 7.1.4 ToInteger
 var ceil  = Math.ceil
   , floor = Math.floor;
 module.exports = function(it){
   return isNaN(it = +it) ? 0 : (it > 0 ? floor : ceil)(it);
 };
-},{}],107:[function(require,module,exports){
+},{}],108:[function(require,module,exports){
 // to indexed object, toObject with fallback for non-array-like ES3 strings
 var IObject = require('./_iobject')
   , defined = require('./_defined');
 module.exports = function(it){
   return IObject(defined(it));
 };
-},{"./_defined":27,"./_iobject":45}],108:[function(require,module,exports){
+},{"./_defined":28,"./_iobject":46}],109:[function(require,module,exports){
 // 7.1.15 ToLength
 var toInteger = require('./_to-integer')
   , min       = Math.min;
 module.exports = function(it){
   return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0; // pow(2, 53) - 1 == 9007199254740991
 };
-},{"./_to-integer":106}],109:[function(require,module,exports){
+},{"./_to-integer":107}],110:[function(require,module,exports){
 // 7.1.13 ToObject(argument)
 var defined = require('./_defined');
 module.exports = function(it){
   return Object(defined(it));
 };
-},{"./_defined":27}],110:[function(require,module,exports){
+},{"./_defined":28}],111:[function(require,module,exports){
 // 7.1.1 ToPrimitive(input [, PreferredType])
 var isObject = require('./_is-object');
 // instead of the ES6 spec version, we didn't implement @@toPrimitive case
@@ -1926,7 +2588,7 @@ module.exports = function(it, S){
   if(!S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it)))return val;
   throw TypeError("Can't convert object to primitive value");
 };
-},{"./_is-object":49}],111:[function(require,module,exports){
+},{"./_is-object":50}],112:[function(require,module,exports){
 'use strict';
 if(require('./_descriptors')){
   var LIBRARY             = require('./_library')
@@ -1940,7 +2602,6 @@ if(require('./_descriptors')){
     , propertyDesc        = require('./_property-desc')
     , hide                = require('./_hide')
     , redefineAll         = require('./_redefine-all')
-    , isInteger           = require('./_is-integer')
     , toInteger           = require('./_to-integer')
     , toLength            = require('./_to-length')
     , toIndex             = require('./_to-index')
@@ -1954,7 +2615,6 @@ if(require('./_descriptors')){
     , create              = require('./_object-create')
     , getPrototypeOf      = require('./_object-gpo')
     , gOPN                = require('./_object-gopn').f
-    , isIterable          = require('./core.is-iterable')
     , getIterFn           = require('./core.get-iterator-method')
     , uid                 = require('./_uid')
     , wks                 = require('./_wks')
@@ -2408,7 +3068,7 @@ if(require('./_descriptors')){
     if(!LIBRARY && !CORRECT_ITER_NAME)hide(TypedArrayPrototype, ITERATOR, $iterator);
   };
 } else module.exports = function(){ /* empty */ };
-},{"./_an-instance":6,"./_array-copy-within":8,"./_array-fill":9,"./_array-includes":11,"./_array-methods":12,"./_classof":17,"./_ctx":25,"./_descriptors":28,"./_export":32,"./_fails":34,"./_global":38,"./_has":39,"./_hide":40,"./_is-array-iter":46,"./_is-integer":48,"./_is-object":49,"./_iter-detect":54,"./_iterators":56,"./_library":58,"./_object-create":66,"./_object-dp":67,"./_object-gopd":70,"./_object-gopn":72,"./_object-gpo":74,"./_property-desc":85,"./_redefine-all":86,"./_same-value":89,"./_set-species":91,"./_species-constructor":95,"./_to-index":105,"./_to-integer":106,"./_to-length":108,"./_to-object":109,"./_to-primitive":110,"./_typed":113,"./_typed-buffer":112,"./_uid":114,"./_wks":117,"./core.get-iterator-method":118,"./core.is-iterable":119,"./es6.array.iterator":131}],112:[function(require,module,exports){
+},{"./_an-instance":7,"./_array-copy-within":9,"./_array-fill":10,"./_array-includes":12,"./_array-methods":13,"./_classof":18,"./_ctx":26,"./_descriptors":29,"./_export":33,"./_fails":35,"./_global":39,"./_has":40,"./_hide":41,"./_is-array-iter":47,"./_is-object":50,"./_iter-detect":55,"./_iterators":57,"./_library":59,"./_object-create":67,"./_object-dp":68,"./_object-gopd":71,"./_object-gopn":73,"./_object-gpo":75,"./_property-desc":86,"./_redefine-all":87,"./_same-value":90,"./_set-species":92,"./_species-constructor":96,"./_to-index":106,"./_to-integer":107,"./_to-length":109,"./_to-object":110,"./_to-primitive":111,"./_typed":114,"./_typed-buffer":113,"./_uid":115,"./_wks":118,"./core.get-iterator-method":119,"./es6.array.iterator":131}],113:[function(require,module,exports){
 'use strict';
 var global         = require('./_global')
   , DESCRIPTORS    = require('./_descriptors')
@@ -2432,13 +3092,11 @@ var global         = require('./_global')
   , $ArrayBuffer   = global[ARRAY_BUFFER]
   , $DataView      = global[DATA_VIEW]
   , Math           = global.Math
-  , parseInt       = global.parseInt
   , RangeError     = global.RangeError
   , Infinity       = global.Infinity
   , BaseBuffer     = $ArrayBuffer
   , abs            = Math.abs
   , pow            = Math.pow
-  , min            = Math.min
   , floor          = Math.floor
   , log            = Math.log
   , LN2            = Math.LN2
@@ -2684,7 +3342,7 @@ setToStringTag($DataView, DATA_VIEW);
 hide($DataView[PROTOTYPE], $typed.VIEW, true);
 exports[ARRAY_BUFFER] = $ArrayBuffer;
 exports[DATA_VIEW] = $DataView;
-},{"./_an-instance":6,"./_array-fill":9,"./_descriptors":28,"./_fails":34,"./_global":38,"./_hide":40,"./_library":58,"./_object-dp":67,"./_object-gopn":72,"./_redefine-all":86,"./_set-to-string-tag":92,"./_to-integer":106,"./_to-length":108,"./_typed":113}],113:[function(require,module,exports){
+},{"./_an-instance":7,"./_array-fill":10,"./_descriptors":29,"./_fails":35,"./_global":39,"./_hide":41,"./_library":59,"./_object-dp":68,"./_object-gopn":73,"./_redefine-all":87,"./_set-to-string-tag":93,"./_to-integer":107,"./_to-length":109,"./_typed":114}],114:[function(require,module,exports){
 var global = require('./_global')
   , hide   = require('./_hide')
   , uid    = require('./_uid')
@@ -2711,13 +3369,13 @@ module.exports = {
   TYPED:  TYPED,
   VIEW:   VIEW
 };
-},{"./_global":38,"./_hide":40,"./_uid":114}],114:[function(require,module,exports){
+},{"./_global":39,"./_hide":41,"./_uid":115}],115:[function(require,module,exports){
 var id = 0
   , px = Math.random();
 module.exports = function(key){
   return 'Symbol('.concat(key === undefined ? '' : key, ')_', (++id + px).toString(36));
 };
-},{}],115:[function(require,module,exports){
+},{}],116:[function(require,module,exports){
 var global         = require('./_global')
   , core           = require('./_core')
   , LIBRARY        = require('./_library')
@@ -2727,9 +3385,9 @@ module.exports = function(name){
   var $Symbol = core.Symbol || (core.Symbol = LIBRARY ? {} : global.Symbol || {});
   if(name.charAt(0) != '_' && !(name in $Symbol))defineProperty($Symbol, name, {value: wksExt.f(name)});
 };
-},{"./_core":23,"./_global":38,"./_library":58,"./_object-dp":67,"./_wks-ext":116}],116:[function(require,module,exports){
+},{"./_core":24,"./_global":39,"./_library":59,"./_object-dp":68,"./_wks-ext":117}],117:[function(require,module,exports){
 exports.f = require('./_wks');
-},{"./_wks":117}],117:[function(require,module,exports){
+},{"./_wks":118}],118:[function(require,module,exports){
 var store      = require('./_shared')('wks')
   , uid        = require('./_uid')
   , Symbol     = require('./_global').Symbol
@@ -2741,7 +3399,7 @@ var $exports = module.exports = function(name){
 };
 
 $exports.store = store;
-},{"./_global":38,"./_shared":94,"./_uid":114}],118:[function(require,module,exports){
+},{"./_global":39,"./_shared":95,"./_uid":115}],119:[function(require,module,exports){
 var classof   = require('./_classof')
   , ITERATOR  = require('./_wks')('iterator')
   , Iterators = require('./_iterators');
@@ -2750,31 +3408,21 @@ module.exports = require('./_core').getIteratorMethod = function(it){
     || it['@@iterator']
     || Iterators[classof(it)];
 };
-},{"./_classof":17,"./_core":23,"./_iterators":56,"./_wks":117}],119:[function(require,module,exports){
-var classof   = require('./_classof')
-  , ITERATOR  = require('./_wks')('iterator')
-  , Iterators = require('./_iterators');
-module.exports = require('./_core').isIterable = function(it){
-  var O = Object(it);
-  return O[ITERATOR] !== undefined
-    || '@@iterator' in O
-    || Iterators.hasOwnProperty(classof(O));
-};
-},{"./_classof":17,"./_core":23,"./_iterators":56,"./_wks":117}],120:[function(require,module,exports){
+},{"./_classof":18,"./_core":24,"./_iterators":57,"./_wks":118}],120:[function(require,module,exports){
 // https://github.com/benjamingr/RexExp.escape
 var $export = require('./_export')
   , $re     = require('./_replacer')(/[\\^$*+?.()|[\]{}]/g, '\\$&');
 
 $export($export.S, 'RegExp', {escape: function escape(it){ return $re(it); }});
 
-},{"./_export":32,"./_replacer":88}],121:[function(require,module,exports){
+},{"./_export":33,"./_replacer":89}],121:[function(require,module,exports){
 // 22.1.3.3 Array.prototype.copyWithin(target, start, end = this.length)
 var $export = require('./_export');
 
 $export($export.P, 'Array', {copyWithin: require('./_array-copy-within')});
 
 require('./_add-to-unscopables')('copyWithin');
-},{"./_add-to-unscopables":5,"./_array-copy-within":8,"./_export":32}],122:[function(require,module,exports){
+},{"./_add-to-unscopables":6,"./_array-copy-within":9,"./_export":33}],122:[function(require,module,exports){
 'use strict';
 var $export = require('./_export')
   , $every  = require('./_array-methods')(4);
@@ -2785,14 +3433,14 @@ $export($export.P + $export.F * !require('./_strict-method')([].every, true), 'A
     return $every(this, callbackfn, arguments[1]);
   }
 });
-},{"./_array-methods":12,"./_export":32,"./_strict-method":96}],123:[function(require,module,exports){
+},{"./_array-methods":13,"./_export":33,"./_strict-method":97}],123:[function(require,module,exports){
 // 22.1.3.6 Array.prototype.fill(value, start = 0, end = this.length)
 var $export = require('./_export');
 
 $export($export.P, 'Array', {fill: require('./_array-fill')});
 
 require('./_add-to-unscopables')('fill');
-},{"./_add-to-unscopables":5,"./_array-fill":9,"./_export":32}],124:[function(require,module,exports){
+},{"./_add-to-unscopables":6,"./_array-fill":10,"./_export":33}],124:[function(require,module,exports){
 'use strict';
 var $export = require('./_export')
   , $filter = require('./_array-methods')(2);
@@ -2803,7 +3451,7 @@ $export($export.P + $export.F * !require('./_strict-method')([].filter, true), '
     return $filter(this, callbackfn, arguments[1]);
   }
 });
-},{"./_array-methods":12,"./_export":32,"./_strict-method":96}],125:[function(require,module,exports){
+},{"./_array-methods":13,"./_export":33,"./_strict-method":97}],125:[function(require,module,exports){
 'use strict';
 // 22.1.3.9 Array.prototype.findIndex(predicate, thisArg = undefined)
 var $export = require('./_export')
@@ -2818,7 +3466,7 @@ $export($export.P + $export.F * forced, 'Array', {
   }
 });
 require('./_add-to-unscopables')(KEY);
-},{"./_add-to-unscopables":5,"./_array-methods":12,"./_export":32}],126:[function(require,module,exports){
+},{"./_add-to-unscopables":6,"./_array-methods":13,"./_export":33}],126:[function(require,module,exports){
 'use strict';
 // 22.1.3.8 Array.prototype.find(predicate, thisArg = undefined)
 var $export = require('./_export')
@@ -2833,7 +3481,7 @@ $export($export.P + $export.F * forced, 'Array', {
   }
 });
 require('./_add-to-unscopables')(KEY);
-},{"./_add-to-unscopables":5,"./_array-methods":12,"./_export":32}],127:[function(require,module,exports){
+},{"./_add-to-unscopables":6,"./_array-methods":13,"./_export":33}],127:[function(require,module,exports){
 'use strict';
 var $export  = require('./_export')
   , $forEach = require('./_array-methods')(0)
@@ -2845,7 +3493,7 @@ $export($export.P + $export.F * !STRICT, 'Array', {
     return $forEach(this, callbackfn, arguments[1]);
   }
 });
-},{"./_array-methods":12,"./_export":32,"./_strict-method":96}],128:[function(require,module,exports){
+},{"./_array-methods":13,"./_export":33,"./_strict-method":97}],128:[function(require,module,exports){
 'use strict';
 var ctx            = require('./_ctx')
   , $export        = require('./_export')
@@ -2884,7 +3532,7 @@ $export($export.S + $export.F * !require('./_iter-detect')(function(iter){ Array
   }
 });
 
-},{"./_create-property":24,"./_ctx":25,"./_export":32,"./_is-array-iter":46,"./_iter-call":51,"./_iter-detect":54,"./_to-length":108,"./_to-object":109,"./core.get-iterator-method":118}],129:[function(require,module,exports){
+},{"./_create-property":25,"./_ctx":26,"./_export":33,"./_is-array-iter":47,"./_iter-call":52,"./_iter-detect":55,"./_to-length":109,"./_to-object":110,"./core.get-iterator-method":119}],129:[function(require,module,exports){
 'use strict';
 var $export       = require('./_export')
   , $indexOf      = require('./_array-includes')(false)
@@ -2900,12 +3548,12 @@ $export($export.P + $export.F * (NEGATIVE_ZERO || !require('./_strict-method')($
       : $indexOf(this, searchElement, arguments[1]);
   }
 });
-},{"./_array-includes":11,"./_export":32,"./_strict-method":96}],130:[function(require,module,exports){
+},{"./_array-includes":12,"./_export":33,"./_strict-method":97}],130:[function(require,module,exports){
 // 22.1.2.2 / 15.4.3.2 Array.isArray(arg)
 var $export = require('./_export');
 
 $export($export.S, 'Array', {isArray: require('./_is-array')});
-},{"./_export":32,"./_is-array":47}],131:[function(require,module,exports){
+},{"./_export":33,"./_is-array":48}],131:[function(require,module,exports){
 'use strict';
 var addToUnscopables = require('./_add-to-unscopables')
   , step             = require('./_iter-step')
@@ -2940,7 +3588,7 @@ Iterators.Arguments = Iterators.Array;
 addToUnscopables('keys');
 addToUnscopables('values');
 addToUnscopables('entries');
-},{"./_add-to-unscopables":5,"./_iter-define":53,"./_iter-step":55,"./_iterators":56,"./_to-iobject":107}],132:[function(require,module,exports){
+},{"./_add-to-unscopables":6,"./_iter-define":54,"./_iter-step":56,"./_iterators":57,"./_to-iobject":108}],132:[function(require,module,exports){
 'use strict';
 // 22.1.3.13 Array.prototype.join(separator)
 var $export   = require('./_export')
@@ -2953,7 +3601,7 @@ $export($export.P + $export.F * (require('./_iobject') != Object || !require('./
     return arrayJoin.call(toIObject(this), separator === undefined ? ',' : separator);
   }
 });
-},{"./_export":32,"./_iobject":45,"./_strict-method":96,"./_to-iobject":107}],133:[function(require,module,exports){
+},{"./_export":33,"./_iobject":46,"./_strict-method":97,"./_to-iobject":108}],133:[function(require,module,exports){
 'use strict';
 var $export       = require('./_export')
   , toIObject     = require('./_to-iobject')
@@ -2976,7 +3624,7 @@ $export($export.P + $export.F * (NEGATIVE_ZERO || !require('./_strict-method')($
     return -1;
   }
 });
-},{"./_export":32,"./_strict-method":96,"./_to-integer":106,"./_to-iobject":107,"./_to-length":108}],134:[function(require,module,exports){
+},{"./_export":33,"./_strict-method":97,"./_to-integer":107,"./_to-iobject":108,"./_to-length":109}],134:[function(require,module,exports){
 'use strict';
 var $export = require('./_export')
   , $map    = require('./_array-methods')(1);
@@ -2987,7 +3635,7 @@ $export($export.P + $export.F * !require('./_strict-method')([].map, true), 'Arr
     return $map(this, callbackfn, arguments[1]);
   }
 });
-},{"./_array-methods":12,"./_export":32,"./_strict-method":96}],135:[function(require,module,exports){
+},{"./_array-methods":13,"./_export":33,"./_strict-method":97}],135:[function(require,module,exports){
 'use strict';
 var $export        = require('./_export')
   , createProperty = require('./_create-property');
@@ -3007,7 +3655,7 @@ $export($export.S + $export.F * require('./_fails')(function(){
     return result;
   }
 });
-},{"./_create-property":24,"./_export":32,"./_fails":34}],136:[function(require,module,exports){
+},{"./_create-property":25,"./_export":33,"./_fails":35}],136:[function(require,module,exports){
 'use strict';
 var $export = require('./_export')
   , $reduce = require('./_array-reduce');
@@ -3018,7 +3666,7 @@ $export($export.P + $export.F * !require('./_strict-method')([].reduceRight, tru
     return $reduce(this, callbackfn, arguments.length, arguments[1], true);
   }
 });
-},{"./_array-reduce":13,"./_export":32,"./_strict-method":96}],137:[function(require,module,exports){
+},{"./_array-reduce":14,"./_export":33,"./_strict-method":97}],137:[function(require,module,exports){
 'use strict';
 var $export = require('./_export')
   , $reduce = require('./_array-reduce');
@@ -3029,7 +3677,7 @@ $export($export.P + $export.F * !require('./_strict-method')([].reduce, true), '
     return $reduce(this, callbackfn, arguments.length, arguments[1], false);
   }
 });
-},{"./_array-reduce":13,"./_export":32,"./_strict-method":96}],138:[function(require,module,exports){
+},{"./_array-reduce":14,"./_export":33,"./_strict-method":97}],138:[function(require,module,exports){
 'use strict';
 var $export    = require('./_export')
   , html       = require('./_html')
@@ -3058,7 +3706,7 @@ $export($export.P + $export.F * require('./_fails')(function(){
     return cloned;
   }
 });
-},{"./_cof":18,"./_export":32,"./_fails":34,"./_html":41,"./_to-index":105,"./_to-length":108}],139:[function(require,module,exports){
+},{"./_cof":19,"./_export":33,"./_fails":35,"./_html":42,"./_to-index":106,"./_to-length":109}],139:[function(require,module,exports){
 'use strict';
 var $export = require('./_export')
   , $some   = require('./_array-methods')(3);
@@ -3069,7 +3717,7 @@ $export($export.P + $export.F * !require('./_strict-method')([].some, true), 'Ar
     return $some(this, callbackfn, arguments[1]);
   }
 });
-},{"./_array-methods":12,"./_export":32,"./_strict-method":96}],140:[function(require,module,exports){
+},{"./_array-methods":13,"./_export":33,"./_strict-method":97}],140:[function(require,module,exports){
 'use strict';
 var $export   = require('./_export')
   , aFunction = require('./_a-function')
@@ -3093,14 +3741,14 @@ $export($export.P + $export.F * (fails(function(){
       : $sort.call(toObject(this), aFunction(comparefn));
   }
 });
-},{"./_a-function":3,"./_export":32,"./_fails":34,"./_strict-method":96,"./_to-object":109}],141:[function(require,module,exports){
+},{"./_a-function":4,"./_export":33,"./_fails":35,"./_strict-method":97,"./_to-object":110}],141:[function(require,module,exports){
 require('./_set-species')('Array');
-},{"./_set-species":91}],142:[function(require,module,exports){
+},{"./_set-species":92}],142:[function(require,module,exports){
 // 20.3.3.1 / 15.9.4.4 Date.now()
 var $export = require('./_export');
 
 $export($export.S, 'Date', {now: function(){ return new Date().getTime(); }});
-},{"./_export":32}],143:[function(require,module,exports){
+},{"./_export":33}],143:[function(require,module,exports){
 'use strict';
 // 20.3.4.36 / 15.9.5.43 Date.prototype.toISOString()
 var $export = require('./_export')
@@ -3129,7 +3777,7 @@ $export($export.P + $export.F * (fails(function(){
       ':' + lz(d.getUTCSeconds()) + '.' + (m > 99 ? m : '0' + lz(m)) + 'Z';
   }
 });
-},{"./_export":32,"./_fails":34}],144:[function(require,module,exports){
+},{"./_export":33,"./_fails":35}],144:[function(require,module,exports){
 'use strict';
 var $export     = require('./_export')
   , toObject    = require('./_to-object')
@@ -3144,12 +3792,12 @@ $export($export.P + $export.F * require('./_fails')(function(){
     return typeof pv == 'number' && !isFinite(pv) ? null : O.toISOString();
   }
 });
-},{"./_export":32,"./_fails":34,"./_to-object":109,"./_to-primitive":110}],145:[function(require,module,exports){
+},{"./_export":33,"./_fails":35,"./_to-object":110,"./_to-primitive":111}],145:[function(require,module,exports){
 var TO_PRIMITIVE = require('./_wks')('toPrimitive')
   , proto        = Date.prototype;
 
 if(!(TO_PRIMITIVE in proto))require('./_hide')(proto, TO_PRIMITIVE, require('./_date-to-primitive'));
-},{"./_date-to-primitive":26,"./_hide":40,"./_wks":117}],146:[function(require,module,exports){
+},{"./_date-to-primitive":27,"./_hide":41,"./_wks":118}],146:[function(require,module,exports){
 var DateProto    = Date.prototype
   , INVALID_DATE = 'Invalid Date'
   , TO_STRING    = 'toString'
@@ -3161,12 +3809,12 @@ if(new Date(NaN) + '' != INVALID_DATE){
     return value === value ? $toString.call(this) : INVALID_DATE;
   });
 }
-},{"./_redefine":87}],147:[function(require,module,exports){
+},{"./_redefine":88}],147:[function(require,module,exports){
 // 19.2.3.2 / 15.3.4.5 Function.prototype.bind(thisArg, args...)
 var $export = require('./_export');
 
 $export($export.P, 'Function', {bind: require('./_bind')});
-},{"./_bind":16,"./_export":32}],148:[function(require,module,exports){
+},{"./_bind":17,"./_export":33}],148:[function(require,module,exports){
 'use strict';
 var isObject       = require('./_is-object')
   , getPrototypeOf = require('./_object-gpo')
@@ -3180,7 +3828,7 @@ if(!(HAS_INSTANCE in FunctionProto))require('./_object-dp').f(FunctionProto, HAS
   while(O = getPrototypeOf(O))if(this.prototype === O)return true;
   return false;
 }});
-},{"./_is-object":49,"./_object-dp":67,"./_object-gpo":74,"./_wks":117}],149:[function(require,module,exports){
+},{"./_is-object":50,"./_object-dp":68,"./_object-gpo":75,"./_wks":118}],149:[function(require,module,exports){
 var dP         = require('./_object-dp').f
   , createDesc = require('./_property-desc')
   , has        = require('./_has')
@@ -3206,7 +3854,7 @@ NAME in FProto || require('./_descriptors') && dP(FProto, NAME, {
     }
   }
 });
-},{"./_descriptors":28,"./_has":39,"./_object-dp":67,"./_property-desc":85}],150:[function(require,module,exports){
+},{"./_descriptors":29,"./_has":40,"./_object-dp":68,"./_property-desc":86}],150:[function(require,module,exports){
 'use strict';
 var strong = require('./_collection-strong');
 
@@ -3224,7 +3872,7 @@ module.exports = require('./_collection')('Map', function(get){
     return strong.def(this, key === 0 ? 0 : key, value);
   }
 }, strong, true);
-},{"./_collection":22,"./_collection-strong":19}],151:[function(require,module,exports){
+},{"./_collection":23,"./_collection-strong":20}],151:[function(require,module,exports){
 // 20.2.2.3 Math.acosh(x)
 var $export = require('./_export')
   , log1p   = require('./_math-log1p')
@@ -3243,7 +3891,7 @@ $export($export.S + $export.F * !($acosh
       : log1p(x - 1 + sqrt(x - 1) * sqrt(x + 1));
   }
 });
-},{"./_export":32,"./_math-log1p":60}],152:[function(require,module,exports){
+},{"./_export":33,"./_math-log1p":61}],152:[function(require,module,exports){
 // 20.2.2.5 Math.asinh(x)
 var $export = require('./_export')
   , $asinh  = Math.asinh;
@@ -3254,7 +3902,7 @@ function asinh(x){
 
 // Tor Browser bug: Math.asinh(0) -> -0 
 $export($export.S + $export.F * !($asinh && 1 / $asinh(0) > 0), 'Math', {asinh: asinh});
-},{"./_export":32}],153:[function(require,module,exports){
+},{"./_export":33}],153:[function(require,module,exports){
 // 20.2.2.7 Math.atanh(x)
 var $export = require('./_export')
   , $atanh  = Math.atanh;
@@ -3265,7 +3913,7 @@ $export($export.S + $export.F * !($atanh && 1 / $atanh(-0) < 0), 'Math', {
     return (x = +x) == 0 ? x : Math.log((1 + x) / (1 - x)) / 2;
   }
 });
-},{"./_export":32}],154:[function(require,module,exports){
+},{"./_export":33}],154:[function(require,module,exports){
 // 20.2.2.9 Math.cbrt(x)
 var $export = require('./_export')
   , sign    = require('./_math-sign');
@@ -3275,7 +3923,7 @@ $export($export.S, 'Math', {
     return sign(x = +x) * Math.pow(Math.abs(x), 1 / 3);
   }
 });
-},{"./_export":32,"./_math-sign":61}],155:[function(require,module,exports){
+},{"./_export":33,"./_math-sign":62}],155:[function(require,module,exports){
 // 20.2.2.11 Math.clz32(x)
 var $export = require('./_export');
 
@@ -3284,7 +3932,7 @@ $export($export.S, 'Math', {
     return (x >>>= 0) ? 31 - Math.floor(Math.log(x + 0.5) * Math.LOG2E) : 32;
   }
 });
-},{"./_export":32}],156:[function(require,module,exports){
+},{"./_export":33}],156:[function(require,module,exports){
 // 20.2.2.12 Math.cosh(x)
 var $export = require('./_export')
   , exp     = Math.exp;
@@ -3294,13 +3942,13 @@ $export($export.S, 'Math', {
     return (exp(x = +x) + exp(-x)) / 2;
   }
 });
-},{"./_export":32}],157:[function(require,module,exports){
+},{"./_export":33}],157:[function(require,module,exports){
 // 20.2.2.14 Math.expm1(x)
 var $export = require('./_export')
   , $expm1  = require('./_math-expm1');
 
 $export($export.S + $export.F * ($expm1 != Math.expm1), 'Math', {expm1: $expm1});
-},{"./_export":32,"./_math-expm1":59}],158:[function(require,module,exports){
+},{"./_export":33,"./_math-expm1":60}],158:[function(require,module,exports){
 // 20.2.2.16 Math.fround(x)
 var $export   = require('./_export')
   , sign      = require('./_math-sign')
@@ -3327,7 +3975,7 @@ $export($export.S, 'Math', {
     return $sign * result;
   }
 });
-},{"./_export":32,"./_math-sign":61}],159:[function(require,module,exports){
+},{"./_export":33,"./_math-sign":62}],159:[function(require,module,exports){
 // 20.2.2.17 Math.hypot([value1[, value2[, … ]]])
 var $export = require('./_export')
   , abs     = Math.abs;
@@ -3353,7 +4001,7 @@ $export($export.S, 'Math', {
     return larg === Infinity ? Infinity : larg * Math.sqrt(sum);
   }
 });
-},{"./_export":32}],160:[function(require,module,exports){
+},{"./_export":33}],160:[function(require,module,exports){
 // 20.2.2.18 Math.imul(x, y)
 var $export = require('./_export')
   , $imul   = Math.imul;
@@ -3371,7 +4019,7 @@ $export($export.S + $export.F * require('./_fails')(function(){
     return 0 | xl * yl + ((UINT16 & xn >>> 16) * yl + xl * (UINT16 & yn >>> 16) << 16 >>> 0);
   }
 });
-},{"./_export":32,"./_fails":34}],161:[function(require,module,exports){
+},{"./_export":33,"./_fails":35}],161:[function(require,module,exports){
 // 20.2.2.21 Math.log10(x)
 var $export = require('./_export');
 
@@ -3380,12 +4028,12 @@ $export($export.S, 'Math', {
     return Math.log(x) / Math.LN10;
   }
 });
-},{"./_export":32}],162:[function(require,module,exports){
+},{"./_export":33}],162:[function(require,module,exports){
 // 20.2.2.20 Math.log1p(x)
 var $export = require('./_export');
 
 $export($export.S, 'Math', {log1p: require('./_math-log1p')});
-},{"./_export":32,"./_math-log1p":60}],163:[function(require,module,exports){
+},{"./_export":33,"./_math-log1p":61}],163:[function(require,module,exports){
 // 20.2.2.22 Math.log2(x)
 var $export = require('./_export');
 
@@ -3394,12 +4042,12 @@ $export($export.S, 'Math', {
     return Math.log(x) / Math.LN2;
   }
 });
-},{"./_export":32}],164:[function(require,module,exports){
+},{"./_export":33}],164:[function(require,module,exports){
 // 20.2.2.28 Math.sign(x)
 var $export = require('./_export');
 
 $export($export.S, 'Math', {sign: require('./_math-sign')});
-},{"./_export":32,"./_math-sign":61}],165:[function(require,module,exports){
+},{"./_export":33,"./_math-sign":62}],165:[function(require,module,exports){
 // 20.2.2.30 Math.sinh(x)
 var $export = require('./_export')
   , expm1   = require('./_math-expm1')
@@ -3415,7 +4063,7 @@ $export($export.S + $export.F * require('./_fails')(function(){
       : (exp(x - 1) - exp(-x - 1)) * (Math.E / 2);
   }
 });
-},{"./_export":32,"./_fails":34,"./_math-expm1":59}],166:[function(require,module,exports){
+},{"./_export":33,"./_fails":35,"./_math-expm1":60}],166:[function(require,module,exports){
 // 20.2.2.33 Math.tanh(x)
 var $export = require('./_export')
   , expm1   = require('./_math-expm1')
@@ -3428,7 +4076,7 @@ $export($export.S, 'Math', {
     return a == Infinity ? 1 : b == Infinity ? -1 : (a - b) / (exp(x) + exp(-x));
   }
 });
-},{"./_export":32,"./_math-expm1":59}],167:[function(require,module,exports){
+},{"./_export":33,"./_math-expm1":60}],167:[function(require,module,exports){
 // 20.2.2.34 Math.trunc(x)
 var $export = require('./_export');
 
@@ -3437,7 +4085,7 @@ $export($export.S, 'Math', {
     return (it > 0 ? Math.floor : Math.ceil)(it);
   }
 });
-},{"./_export":32}],168:[function(require,module,exports){
+},{"./_export":33}],168:[function(require,module,exports){
 'use strict';
 var global            = require('./_global')
   , has               = require('./_has')
@@ -3507,12 +4155,12 @@ if(!$Number(' 0o1') || !$Number('0b1') || $Number('+0x1')){
   proto.constructor = $Number;
   require('./_redefine')(global, NUMBER, $Number);
 }
-},{"./_cof":18,"./_descriptors":28,"./_fails":34,"./_global":38,"./_has":39,"./_inherit-if-required":43,"./_object-create":66,"./_object-dp":67,"./_object-gopd":70,"./_object-gopn":72,"./_redefine":87,"./_string-trim":102,"./_to-primitive":110}],169:[function(require,module,exports){
+},{"./_cof":19,"./_descriptors":29,"./_fails":35,"./_global":39,"./_has":40,"./_inherit-if-required":44,"./_object-create":67,"./_object-dp":68,"./_object-gopd":71,"./_object-gopn":73,"./_redefine":88,"./_string-trim":103,"./_to-primitive":111}],169:[function(require,module,exports){
 // 20.1.2.1 Number.EPSILON
 var $export = require('./_export');
 
 $export($export.S, 'Number', {EPSILON: Math.pow(2, -52)});
-},{"./_export":32}],170:[function(require,module,exports){
+},{"./_export":33}],170:[function(require,module,exports){
 // 20.1.2.2 Number.isFinite(number)
 var $export   = require('./_export')
   , _isFinite = require('./_global').isFinite;
@@ -3522,12 +4170,12 @@ $export($export.S, 'Number', {
     return typeof it == 'number' && _isFinite(it);
   }
 });
-},{"./_export":32,"./_global":38}],171:[function(require,module,exports){
+},{"./_export":33,"./_global":39}],171:[function(require,module,exports){
 // 20.1.2.3 Number.isInteger(number)
 var $export = require('./_export');
 
 $export($export.S, 'Number', {isInteger: require('./_is-integer')});
-},{"./_export":32,"./_is-integer":48}],172:[function(require,module,exports){
+},{"./_export":33,"./_is-integer":49}],172:[function(require,module,exports){
 // 20.1.2.4 Number.isNaN(number)
 var $export = require('./_export');
 
@@ -3536,7 +4184,7 @@ $export($export.S, 'Number', {
     return number != number;
   }
 });
-},{"./_export":32}],173:[function(require,module,exports){
+},{"./_export":33}],173:[function(require,module,exports){
 // 20.1.2.5 Number.isSafeInteger(number)
 var $export   = require('./_export')
   , isInteger = require('./_is-integer')
@@ -3547,30 +4195,29 @@ $export($export.S, 'Number', {
     return isInteger(number) && abs(number) <= 0x1fffffffffffff;
   }
 });
-},{"./_export":32,"./_is-integer":48}],174:[function(require,module,exports){
+},{"./_export":33,"./_is-integer":49}],174:[function(require,module,exports){
 // 20.1.2.6 Number.MAX_SAFE_INTEGER
 var $export = require('./_export');
 
 $export($export.S, 'Number', {MAX_SAFE_INTEGER: 0x1fffffffffffff});
-},{"./_export":32}],175:[function(require,module,exports){
+},{"./_export":33}],175:[function(require,module,exports){
 // 20.1.2.10 Number.MIN_SAFE_INTEGER
 var $export = require('./_export');
 
 $export($export.S, 'Number', {MIN_SAFE_INTEGER: -0x1fffffffffffff});
-},{"./_export":32}],176:[function(require,module,exports){
+},{"./_export":33}],176:[function(require,module,exports){
 var $export     = require('./_export')
   , $parseFloat = require('./_parse-float');
 // 20.1.2.12 Number.parseFloat(string)
 $export($export.S + $export.F * (Number.parseFloat != $parseFloat), 'Number', {parseFloat: $parseFloat});
-},{"./_export":32,"./_parse-float":81}],177:[function(require,module,exports){
+},{"./_export":33,"./_parse-float":82}],177:[function(require,module,exports){
 var $export   = require('./_export')
   , $parseInt = require('./_parse-int');
 // 20.1.2.13 Number.parseInt(string, radix)
 $export($export.S + $export.F * (Number.parseInt != $parseInt), 'Number', {parseInt: $parseInt});
-},{"./_export":32,"./_parse-int":82}],178:[function(require,module,exports){
+},{"./_export":33,"./_parse-int":83}],178:[function(require,module,exports){
 'use strict';
 var $export      = require('./_export')
-  , anInstance   = require('./_an-instance')
   , toInteger    = require('./_to-integer')
   , aNumberValue = require('./_a-number-value')
   , repeat       = require('./_string-repeat')
@@ -3682,7 +4329,7 @@ $export($export.P + $export.F * (!!$toFixed && (
     } return m;
   }
 });
-},{"./_a-number-value":4,"./_an-instance":6,"./_export":32,"./_fails":34,"./_string-repeat":101,"./_to-integer":106}],179:[function(require,module,exports){
+},{"./_a-number-value":5,"./_export":33,"./_fails":35,"./_string-repeat":102,"./_to-integer":107}],179:[function(require,module,exports){
 'use strict';
 var $export      = require('./_export')
   , $fails       = require('./_fails')
@@ -3701,24 +4348,24 @@ $export($export.P + $export.F * ($fails(function(){
     return precision === undefined ? $toPrecision.call(that) : $toPrecision.call(that, precision); 
   }
 });
-},{"./_a-number-value":4,"./_export":32,"./_fails":34}],180:[function(require,module,exports){
+},{"./_a-number-value":5,"./_export":33,"./_fails":35}],180:[function(require,module,exports){
 // 19.1.3.1 Object.assign(target, source)
 var $export = require('./_export');
 
 $export($export.S + $export.F, 'Object', {assign: require('./_object-assign')});
-},{"./_export":32,"./_object-assign":65}],181:[function(require,module,exports){
+},{"./_export":33,"./_object-assign":66}],181:[function(require,module,exports){
 var $export = require('./_export')
 // 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
 $export($export.S, 'Object', {create: require('./_object-create')});
-},{"./_export":32,"./_object-create":66}],182:[function(require,module,exports){
+},{"./_export":33,"./_object-create":67}],182:[function(require,module,exports){
 var $export = require('./_export');
 // 19.1.2.3 / 15.2.3.7 Object.defineProperties(O, Properties)
 $export($export.S + $export.F * !require('./_descriptors'), 'Object', {defineProperties: require('./_object-dps')});
-},{"./_descriptors":28,"./_export":32,"./_object-dps":68}],183:[function(require,module,exports){
+},{"./_descriptors":29,"./_export":33,"./_object-dps":69}],183:[function(require,module,exports){
 var $export = require('./_export');
 // 19.1.2.4 / 15.2.3.6 Object.defineProperty(O, P, Attributes)
 $export($export.S + $export.F * !require('./_descriptors'), 'Object', {defineProperty: require('./_object-dp').f});
-},{"./_descriptors":28,"./_export":32,"./_object-dp":67}],184:[function(require,module,exports){
+},{"./_descriptors":29,"./_export":33,"./_object-dp":68}],184:[function(require,module,exports){
 // 19.1.2.5 Object.freeze(O)
 var isObject = require('./_is-object')
   , meta     = require('./_meta').onFreeze;
@@ -3728,7 +4375,7 @@ require('./_object-sap')('freeze', function($freeze){
     return $freeze && isObject(it) ? $freeze(meta(it)) : it;
   };
 });
-},{"./_is-object":49,"./_meta":62,"./_object-sap":78}],185:[function(require,module,exports){
+},{"./_is-object":50,"./_meta":63,"./_object-sap":79}],185:[function(require,module,exports){
 // 19.1.2.6 Object.getOwnPropertyDescriptor(O, P)
 var toIObject                 = require('./_to-iobject')
   , $getOwnPropertyDescriptor = require('./_object-gopd').f;
@@ -3738,12 +4385,12 @@ require('./_object-sap')('getOwnPropertyDescriptor', function(){
     return $getOwnPropertyDescriptor(toIObject(it), key);
   };
 });
-},{"./_object-gopd":70,"./_object-sap":78,"./_to-iobject":107}],186:[function(require,module,exports){
+},{"./_object-gopd":71,"./_object-sap":79,"./_to-iobject":108}],186:[function(require,module,exports){
 // 19.1.2.7 Object.getOwnPropertyNames(O)
 require('./_object-sap')('getOwnPropertyNames', function(){
   return require('./_object-gopn-ext').f;
 });
-},{"./_object-gopn-ext":71,"./_object-sap":78}],187:[function(require,module,exports){
+},{"./_object-gopn-ext":72,"./_object-sap":79}],187:[function(require,module,exports){
 // 19.1.2.9 Object.getPrototypeOf(O)
 var toObject        = require('./_to-object')
   , $getPrototypeOf = require('./_object-gpo');
@@ -3753,7 +4400,7 @@ require('./_object-sap')('getPrototypeOf', function(){
     return $getPrototypeOf(toObject(it));
   };
 });
-},{"./_object-gpo":74,"./_object-sap":78,"./_to-object":109}],188:[function(require,module,exports){
+},{"./_object-gpo":75,"./_object-sap":79,"./_to-object":110}],188:[function(require,module,exports){
 // 19.1.2.11 Object.isExtensible(O)
 var isObject = require('./_is-object');
 
@@ -3762,7 +4409,7 @@ require('./_object-sap')('isExtensible', function($isExtensible){
     return isObject(it) ? $isExtensible ? $isExtensible(it) : true : false;
   };
 });
-},{"./_is-object":49,"./_object-sap":78}],189:[function(require,module,exports){
+},{"./_is-object":50,"./_object-sap":79}],189:[function(require,module,exports){
 // 19.1.2.12 Object.isFrozen(O)
 var isObject = require('./_is-object');
 
@@ -3771,7 +4418,7 @@ require('./_object-sap')('isFrozen', function($isFrozen){
     return isObject(it) ? $isFrozen ? $isFrozen(it) : false : true;
   };
 });
-},{"./_is-object":49,"./_object-sap":78}],190:[function(require,module,exports){
+},{"./_is-object":50,"./_object-sap":79}],190:[function(require,module,exports){
 // 19.1.2.13 Object.isSealed(O)
 var isObject = require('./_is-object');
 
@@ -3780,11 +4427,11 @@ require('./_object-sap')('isSealed', function($isSealed){
     return isObject(it) ? $isSealed ? $isSealed(it) : false : true;
   };
 });
-},{"./_is-object":49,"./_object-sap":78}],191:[function(require,module,exports){
+},{"./_is-object":50,"./_object-sap":79}],191:[function(require,module,exports){
 // 19.1.3.10 Object.is(value1, value2)
 var $export = require('./_export');
 $export($export.S, 'Object', {is: require('./_same-value')});
-},{"./_export":32,"./_same-value":89}],192:[function(require,module,exports){
+},{"./_export":33,"./_same-value":90}],192:[function(require,module,exports){
 // 19.1.2.14 Object.keys(O)
 var toObject = require('./_to-object')
   , $keys    = require('./_object-keys');
@@ -3794,7 +4441,7 @@ require('./_object-sap')('keys', function(){
     return $keys(toObject(it));
   };
 });
-},{"./_object-keys":76,"./_object-sap":78,"./_to-object":109}],193:[function(require,module,exports){
+},{"./_object-keys":77,"./_object-sap":79,"./_to-object":110}],193:[function(require,module,exports){
 // 19.1.2.15 Object.preventExtensions(O)
 var isObject = require('./_is-object')
   , meta     = require('./_meta').onFreeze;
@@ -3804,7 +4451,7 @@ require('./_object-sap')('preventExtensions', function($preventExtensions){
     return $preventExtensions && isObject(it) ? $preventExtensions(meta(it)) : it;
   };
 });
-},{"./_is-object":49,"./_meta":62,"./_object-sap":78}],194:[function(require,module,exports){
+},{"./_is-object":50,"./_meta":63,"./_object-sap":79}],194:[function(require,module,exports){
 // 19.1.2.17 Object.seal(O)
 var isObject = require('./_is-object')
   , meta     = require('./_meta').onFreeze;
@@ -3814,11 +4461,11 @@ require('./_object-sap')('seal', function($seal){
     return $seal && isObject(it) ? $seal(meta(it)) : it;
   };
 });
-},{"./_is-object":49,"./_meta":62,"./_object-sap":78}],195:[function(require,module,exports){
+},{"./_is-object":50,"./_meta":63,"./_object-sap":79}],195:[function(require,module,exports){
 // 19.1.3.19 Object.setPrototypeOf(O, proto)
 var $export = require('./_export');
 $export($export.S, 'Object', {setPrototypeOf: require('./_set-proto').set});
-},{"./_export":32,"./_set-proto":90}],196:[function(require,module,exports){
+},{"./_export":33,"./_set-proto":91}],196:[function(require,module,exports){
 'use strict';
 // 19.1.3.6 Object.prototype.toString()
 var classof = require('./_classof')
@@ -3829,17 +4476,17 @@ if(test + '' != '[object z]'){
     return '[object ' + classof(this) + ']';
   }, true);
 }
-},{"./_classof":17,"./_redefine":87,"./_wks":117}],197:[function(require,module,exports){
+},{"./_classof":18,"./_redefine":88,"./_wks":118}],197:[function(require,module,exports){
 var $export     = require('./_export')
   , $parseFloat = require('./_parse-float');
 // 18.2.4 parseFloat(string)
 $export($export.G + $export.F * (parseFloat != $parseFloat), {parseFloat: $parseFloat});
-},{"./_export":32,"./_parse-float":81}],198:[function(require,module,exports){
+},{"./_export":33,"./_parse-float":82}],198:[function(require,module,exports){
 var $export   = require('./_export')
   , $parseInt = require('./_parse-int');
 // 18.2.5 parseInt(string, radix)
 $export($export.G + $export.F * (parseInt != $parseInt), {parseInt: $parseInt});
-},{"./_export":32,"./_parse-int":82}],199:[function(require,module,exports){
+},{"./_export":33,"./_parse-int":83}],199:[function(require,module,exports){
 'use strict';
 var LIBRARY            = require('./_library')
   , global             = require('./_global')
@@ -3847,11 +4494,9 @@ var LIBRARY            = require('./_library')
   , classof            = require('./_classof')
   , $export            = require('./_export')
   , isObject           = require('./_is-object')
-  , anObject           = require('./_an-object')
   , aFunction          = require('./_a-function')
   , anInstance         = require('./_an-instance')
   , forOf              = require('./_for-of')
-  , setProto           = require('./_set-proto').set
   , speciesConstructor = require('./_species-constructor')
   , task               = require('./_task').set
   , microtask          = require('./_microtask')()
@@ -4141,37 +4786,50 @@ $export($export.S + $export.F * !(USE_NATIVE && require('./_iter-detect')(functi
     return capability.promise;
   }
 });
-},{"./_a-function":3,"./_an-instance":6,"./_an-object":7,"./_classof":17,"./_core":23,"./_ctx":25,"./_export":32,"./_for-of":37,"./_global":38,"./_is-object":49,"./_iter-detect":54,"./_library":58,"./_microtask":64,"./_redefine-all":86,"./_set-proto":90,"./_set-species":91,"./_set-to-string-tag":92,"./_species-constructor":95,"./_task":104,"./_wks":117}],200:[function(require,module,exports){
+},{"./_a-function":4,"./_an-instance":7,"./_classof":18,"./_core":24,"./_ctx":26,"./_export":33,"./_for-of":38,"./_global":39,"./_is-object":50,"./_iter-detect":55,"./_library":59,"./_microtask":65,"./_redefine-all":87,"./_set-species":92,"./_set-to-string-tag":93,"./_species-constructor":96,"./_task":105,"./_wks":118}],200:[function(require,module,exports){
 // 26.1.1 Reflect.apply(target, thisArgument, argumentsList)
 var $export   = require('./_export')
   , aFunction = require('./_a-function')
   , anObject  = require('./_an-object')
-  , _apply    = Function.apply;
-
-$export($export.S, 'Reflect', {
+  , rApply    = (require('./_global').Reflect || {}).apply
+  , fApply    = Function.apply;
+// MS Edge argumentsList argument is optional
+$export($export.S + $export.F * !require('./_fails')(function(){
+  rApply(function(){});
+}), 'Reflect', {
   apply: function apply(target, thisArgument, argumentsList){
-    return _apply.call(aFunction(target), thisArgument, anObject(argumentsList));
+    var T = aFunction(target)
+      , L = anObject(argumentsList);
+    return rApply ? rApply(T, thisArgument, L) : fApply.call(T, thisArgument, L);
   }
 });
-},{"./_a-function":3,"./_an-object":7,"./_export":32}],201:[function(require,module,exports){
+},{"./_a-function":4,"./_an-object":8,"./_export":33,"./_fails":35,"./_global":39}],201:[function(require,module,exports){
 // 26.1.2 Reflect.construct(target, argumentsList [, newTarget])
-var $export   = require('./_export')
-  , create    = require('./_object-create')
-  , aFunction = require('./_a-function')
-  , anObject  = require('./_an-object')
-  , isObject  = require('./_is-object')
-  , bind      = require('./_bind');
+var $export    = require('./_export')
+  , create     = require('./_object-create')
+  , aFunction  = require('./_a-function')
+  , anObject   = require('./_an-object')
+  , isObject   = require('./_is-object')
+  , fails      = require('./_fails')
+  , bind       = require('./_bind')
+  , rConstruct = (require('./_global').Reflect || {}).construct;
 
-// MS Edge supports only 2 arguments
+// MS Edge supports only 2 arguments and argumentsList argument is optional
 // FF Nightly sets third argument as `new.target`, but does not create `this` from it
-$export($export.S + $export.F * require('./_fails')(function(){
+var NEW_TARGET_BUG = fails(function(){
   function F(){}
-  return !(Reflect.construct(function(){}, [], F) instanceof F);
-}), 'Reflect', {
+  return !(rConstruct(function(){}, [], F) instanceof F);
+});
+var ARGS_BUG = !fails(function(){
+  rConstruct(function(){});
+});
+
+$export($export.S + $export.F * (NEW_TARGET_BUG || ARGS_BUG), 'Reflect', {
   construct: function construct(Target, args /*, newTarget*/){
     aFunction(Target);
     anObject(args);
     var newTarget = arguments.length < 3 ? Target : aFunction(arguments[2]);
+    if(ARGS_BUG && !NEW_TARGET_BUG)return rConstruct(Target, args, newTarget);
     if(Target == newTarget){
       // w/o altered newTarget, optimization for 0-4 arguments
       switch(args.length){
@@ -4193,7 +4851,7 @@ $export($export.S + $export.F * require('./_fails')(function(){
     return isObject(result) ? result : instance;
   }
 });
-},{"./_a-function":3,"./_an-object":7,"./_bind":16,"./_export":32,"./_fails":34,"./_is-object":49,"./_object-create":66}],202:[function(require,module,exports){
+},{"./_a-function":4,"./_an-object":8,"./_bind":17,"./_export":33,"./_fails":35,"./_global":39,"./_is-object":50,"./_object-create":67}],202:[function(require,module,exports){
 // 26.1.3 Reflect.defineProperty(target, propertyKey, attributes)
 var dP          = require('./_object-dp')
   , $export     = require('./_export')
@@ -4216,7 +4874,7 @@ $export($export.S + $export.F * require('./_fails')(function(){
     }
   }
 });
-},{"./_an-object":7,"./_export":32,"./_fails":34,"./_object-dp":67,"./_to-primitive":110}],203:[function(require,module,exports){
+},{"./_an-object":8,"./_export":33,"./_fails":35,"./_object-dp":68,"./_to-primitive":111}],203:[function(require,module,exports){
 // 26.1.4 Reflect.deleteProperty(target, propertyKey)
 var $export  = require('./_export')
   , gOPD     = require('./_object-gopd').f
@@ -4228,7 +4886,7 @@ $export($export.S, 'Reflect', {
     return desc && !desc.configurable ? false : delete target[propertyKey];
   }
 });
-},{"./_an-object":7,"./_export":32,"./_object-gopd":70}],204:[function(require,module,exports){
+},{"./_an-object":8,"./_export":33,"./_object-gopd":71}],204:[function(require,module,exports){
 'use strict';
 // 26.1.5 Reflect.enumerate(target)
 var $export  = require('./_export')
@@ -4255,7 +4913,7 @@ $export($export.S, 'Reflect', {
     return new Enumerate(target);
   }
 });
-},{"./_an-object":7,"./_export":32,"./_iter-create":52}],205:[function(require,module,exports){
+},{"./_an-object":8,"./_export":33,"./_iter-create":53}],205:[function(require,module,exports){
 // 26.1.7 Reflect.getOwnPropertyDescriptor(target, propertyKey)
 var gOPD     = require('./_object-gopd')
   , $export  = require('./_export')
@@ -4266,7 +4924,7 @@ $export($export.S, 'Reflect', {
     return gOPD.f(anObject(target), propertyKey);
   }
 });
-},{"./_an-object":7,"./_export":32,"./_object-gopd":70}],206:[function(require,module,exports){
+},{"./_an-object":8,"./_export":33,"./_object-gopd":71}],206:[function(require,module,exports){
 // 26.1.8 Reflect.getPrototypeOf(target)
 var $export  = require('./_export')
   , getProto = require('./_object-gpo')
@@ -4277,7 +4935,7 @@ $export($export.S, 'Reflect', {
     return getProto(anObject(target));
   }
 });
-},{"./_an-object":7,"./_export":32,"./_object-gpo":74}],207:[function(require,module,exports){
+},{"./_an-object":8,"./_export":33,"./_object-gpo":75}],207:[function(require,module,exports){
 // 26.1.6 Reflect.get(target, propertyKey [, receiver])
 var gOPD           = require('./_object-gopd')
   , getPrototypeOf = require('./_object-gpo')
@@ -4299,7 +4957,7 @@ function get(target, propertyKey/*, receiver*/){
 }
 
 $export($export.S, 'Reflect', {get: get});
-},{"./_an-object":7,"./_export":32,"./_has":39,"./_is-object":49,"./_object-gopd":70,"./_object-gpo":74}],208:[function(require,module,exports){
+},{"./_an-object":8,"./_export":33,"./_has":40,"./_is-object":50,"./_object-gopd":71,"./_object-gpo":75}],208:[function(require,module,exports){
 // 26.1.9 Reflect.has(target, propertyKey)
 var $export = require('./_export');
 
@@ -4308,7 +4966,7 @@ $export($export.S, 'Reflect', {
     return propertyKey in target;
   }
 });
-},{"./_export":32}],209:[function(require,module,exports){
+},{"./_export":33}],209:[function(require,module,exports){
 // 26.1.10 Reflect.isExtensible(target)
 var $export       = require('./_export')
   , anObject      = require('./_an-object')
@@ -4320,12 +4978,12 @@ $export($export.S, 'Reflect', {
     return $isExtensible ? $isExtensible(target) : true;
   }
 });
-},{"./_an-object":7,"./_export":32}],210:[function(require,module,exports){
+},{"./_an-object":8,"./_export":33}],210:[function(require,module,exports){
 // 26.1.11 Reflect.ownKeys(target)
 var $export = require('./_export');
 
 $export($export.S, 'Reflect', {ownKeys: require('./_own-keys')});
-},{"./_export":32,"./_own-keys":80}],211:[function(require,module,exports){
+},{"./_export":33,"./_own-keys":81}],211:[function(require,module,exports){
 // 26.1.12 Reflect.preventExtensions(target)
 var $export            = require('./_export')
   , anObject           = require('./_an-object')
@@ -4342,7 +5000,7 @@ $export($export.S, 'Reflect', {
     }
   }
 });
-},{"./_an-object":7,"./_export":32}],212:[function(require,module,exports){
+},{"./_an-object":8,"./_export":33}],212:[function(require,module,exports){
 // 26.1.14 Reflect.setPrototypeOf(target, proto)
 var $export  = require('./_export')
   , setProto = require('./_set-proto');
@@ -4358,7 +5016,7 @@ if(setProto)$export($export.S, 'Reflect', {
     }
   }
 });
-},{"./_export":32,"./_set-proto":90}],213:[function(require,module,exports){
+},{"./_export":33,"./_set-proto":91}],213:[function(require,module,exports){
 // 26.1.13 Reflect.set(target, propertyKey, V [, receiver])
 var dP             = require('./_object-dp')
   , gOPD           = require('./_object-gopd')
@@ -4390,7 +5048,7 @@ function set(target, propertyKey, V/*, receiver*/){
 }
 
 $export($export.S, 'Reflect', {set: set});
-},{"./_an-object":7,"./_export":32,"./_has":39,"./_is-object":49,"./_object-dp":67,"./_object-gopd":70,"./_object-gpo":74,"./_property-desc":85}],214:[function(require,module,exports){
+},{"./_an-object":8,"./_export":33,"./_has":40,"./_is-object":50,"./_object-dp":68,"./_object-gopd":71,"./_object-gpo":75,"./_property-desc":86}],214:[function(require,module,exports){
 var global            = require('./_global')
   , inheritIfRequired = require('./_inherit-if-required')
   , dP                = require('./_object-dp').f
@@ -4434,13 +5092,13 @@ if(require('./_descriptors') && (!CORRECT_NEW || require('./_fails')(function(){
 }
 
 require('./_set-species')('RegExp');
-},{"./_descriptors":28,"./_fails":34,"./_flags":36,"./_global":38,"./_inherit-if-required":43,"./_is-regexp":50,"./_object-dp":67,"./_object-gopn":72,"./_redefine":87,"./_set-species":91,"./_wks":117}],215:[function(require,module,exports){
+},{"./_descriptors":29,"./_fails":35,"./_flags":37,"./_global":39,"./_inherit-if-required":44,"./_is-regexp":51,"./_object-dp":68,"./_object-gopn":73,"./_redefine":88,"./_set-species":92,"./_wks":118}],215:[function(require,module,exports){
 // 21.2.5.3 get RegExp.prototype.flags()
 if(require('./_descriptors') && /./g.flags != 'g')require('./_object-dp').f(RegExp.prototype, 'flags', {
   configurable: true,
   get: require('./_flags')
 });
-},{"./_descriptors":28,"./_flags":36,"./_object-dp":67}],216:[function(require,module,exports){
+},{"./_descriptors":29,"./_flags":37,"./_object-dp":68}],216:[function(require,module,exports){
 // @@match logic
 require('./_fix-re-wks')('match', 1, function(defined, MATCH, $match){
   // 21.1.3.11 String.prototype.match(regexp)
@@ -4451,7 +5109,7 @@ require('./_fix-re-wks')('match', 1, function(defined, MATCH, $match){
     return fn !== undefined ? fn.call(regexp, O) : new RegExp(regexp)[MATCH](String(O));
   }, $match];
 });
-},{"./_fix-re-wks":35}],217:[function(require,module,exports){
+},{"./_fix-re-wks":36}],217:[function(require,module,exports){
 // @@replace logic
 require('./_fix-re-wks')('replace', 2, function(defined, REPLACE, $replace){
   // 21.1.3.14 String.prototype.replace(searchValue, replaceValue)
@@ -4464,7 +5122,7 @@ require('./_fix-re-wks')('replace', 2, function(defined, REPLACE, $replace){
       : $replace.call(String(O), searchValue, replaceValue);
   }, $replace];
 });
-},{"./_fix-re-wks":35}],218:[function(require,module,exports){
+},{"./_fix-re-wks":36}],218:[function(require,module,exports){
 // @@search logic
 require('./_fix-re-wks')('search', 1, function(defined, SEARCH, $search){
   // 21.1.3.15 String.prototype.search(regexp)
@@ -4475,7 +5133,7 @@ require('./_fix-re-wks')('search', 1, function(defined, SEARCH, $search){
     return fn !== undefined ? fn.call(regexp, O) : new RegExp(regexp)[SEARCH](String(O));
   }, $search];
 });
-},{"./_fix-re-wks":35}],219:[function(require,module,exports){
+},{"./_fix-re-wks":36}],219:[function(require,module,exports){
 // @@split logic
 require('./_fix-re-wks')('split', 2, function(defined, SPLIT, $split){
   'use strict';
@@ -4546,7 +5204,7 @@ require('./_fix-re-wks')('split', 2, function(defined, SPLIT, $split){
     return fn !== undefined ? fn.call(separator, O, limit) : $split.call(String(O), separator, limit);
   }, $split];
 });
-},{"./_fix-re-wks":35,"./_is-regexp":50}],220:[function(require,module,exports){
+},{"./_fix-re-wks":36,"./_is-regexp":51}],220:[function(require,module,exports){
 'use strict';
 require('./es6.regexp.flags');
 var anObject    = require('./_an-object')
@@ -4572,7 +5230,7 @@ if(require('./_fails')(function(){ return $toString.call({source: 'a', flags: 'b
     return $toString.call(this);
   });
 }
-},{"./_an-object":7,"./_descriptors":28,"./_fails":34,"./_flags":36,"./_redefine":87,"./es6.regexp.flags":215}],221:[function(require,module,exports){
+},{"./_an-object":8,"./_descriptors":29,"./_fails":35,"./_flags":37,"./_redefine":88,"./es6.regexp.flags":215}],221:[function(require,module,exports){
 'use strict';
 var strong = require('./_collection-strong');
 
@@ -4585,7 +5243,7 @@ module.exports = require('./_collection')('Set', function(get){
     return strong.def(this, value = value === 0 ? 0 : value, value);
   }
 }, strong);
-},{"./_collection":22,"./_collection-strong":19}],222:[function(require,module,exports){
+},{"./_collection":23,"./_collection-strong":20}],222:[function(require,module,exports){
 'use strict';
 // B.2.3.2 String.prototype.anchor(name)
 require('./_string-html')('anchor', function(createHTML){
@@ -4593,7 +5251,7 @@ require('./_string-html')('anchor', function(createHTML){
     return createHTML(this, 'a', 'name', name);
   }
 });
-},{"./_string-html":99}],223:[function(require,module,exports){
+},{"./_string-html":100}],223:[function(require,module,exports){
 'use strict';
 // B.2.3.3 String.prototype.big()
 require('./_string-html')('big', function(createHTML){
@@ -4601,7 +5259,7 @@ require('./_string-html')('big', function(createHTML){
     return createHTML(this, 'big', '', '');
   }
 });
-},{"./_string-html":99}],224:[function(require,module,exports){
+},{"./_string-html":100}],224:[function(require,module,exports){
 'use strict';
 // B.2.3.4 String.prototype.blink()
 require('./_string-html')('blink', function(createHTML){
@@ -4609,7 +5267,7 @@ require('./_string-html')('blink', function(createHTML){
     return createHTML(this, 'blink', '', '');
   }
 });
-},{"./_string-html":99}],225:[function(require,module,exports){
+},{"./_string-html":100}],225:[function(require,module,exports){
 'use strict';
 // B.2.3.5 String.prototype.bold()
 require('./_string-html')('bold', function(createHTML){
@@ -4617,7 +5275,7 @@ require('./_string-html')('bold', function(createHTML){
     return createHTML(this, 'b', '', '');
   }
 });
-},{"./_string-html":99}],226:[function(require,module,exports){
+},{"./_string-html":100}],226:[function(require,module,exports){
 'use strict';
 var $export = require('./_export')
   , $at     = require('./_string-at')(false);
@@ -4627,7 +5285,7 @@ $export($export.P, 'String', {
     return $at(this, pos);
   }
 });
-},{"./_export":32,"./_string-at":97}],227:[function(require,module,exports){
+},{"./_export":33,"./_string-at":98}],227:[function(require,module,exports){
 // 21.1.3.6 String.prototype.endsWith(searchString [, endPosition])
 'use strict';
 var $export   = require('./_export')
@@ -4648,7 +5306,7 @@ $export($export.P + $export.F * require('./_fails-is-regexp')(ENDS_WITH), 'Strin
       : that.slice(end - search.length, end) === search;
   }
 });
-},{"./_export":32,"./_fails-is-regexp":33,"./_string-context":98,"./_to-length":108}],228:[function(require,module,exports){
+},{"./_export":33,"./_fails-is-regexp":34,"./_string-context":99,"./_to-length":109}],228:[function(require,module,exports){
 'use strict';
 // B.2.3.6 String.prototype.fixed()
 require('./_string-html')('fixed', function(createHTML){
@@ -4656,7 +5314,7 @@ require('./_string-html')('fixed', function(createHTML){
     return createHTML(this, 'tt', '', '');
   }
 });
-},{"./_string-html":99}],229:[function(require,module,exports){
+},{"./_string-html":100}],229:[function(require,module,exports){
 'use strict';
 // B.2.3.7 String.prototype.fontcolor(color)
 require('./_string-html')('fontcolor', function(createHTML){
@@ -4664,7 +5322,7 @@ require('./_string-html')('fontcolor', function(createHTML){
     return createHTML(this, 'font', 'color', color);
   }
 });
-},{"./_string-html":99}],230:[function(require,module,exports){
+},{"./_string-html":100}],230:[function(require,module,exports){
 'use strict';
 // B.2.3.8 String.prototype.fontsize(size)
 require('./_string-html')('fontsize', function(createHTML){
@@ -4672,7 +5330,7 @@ require('./_string-html')('fontsize', function(createHTML){
     return createHTML(this, 'font', 'size', size);
   }
 });
-},{"./_string-html":99}],231:[function(require,module,exports){
+},{"./_string-html":100}],231:[function(require,module,exports){
 var $export        = require('./_export')
   , toIndex        = require('./_to-index')
   , fromCharCode   = String.fromCharCode
@@ -4696,7 +5354,7 @@ $export($export.S + $export.F * (!!$fromCodePoint && $fromCodePoint.length != 1)
     } return res.join('');
   }
 });
-},{"./_export":32,"./_to-index":105}],232:[function(require,module,exports){
+},{"./_export":33,"./_to-index":106}],232:[function(require,module,exports){
 // 21.1.3.7 String.prototype.includes(searchString, position = 0)
 'use strict';
 var $export  = require('./_export')
@@ -4709,7 +5367,7 @@ $export($export.P + $export.F * require('./_fails-is-regexp')(INCLUDES), 'String
       .indexOf(searchString, arguments.length > 1 ? arguments[1] : undefined);
   }
 });
-},{"./_export":32,"./_fails-is-regexp":33,"./_string-context":98}],233:[function(require,module,exports){
+},{"./_export":33,"./_fails-is-regexp":34,"./_string-context":99}],233:[function(require,module,exports){
 'use strict';
 // B.2.3.9 String.prototype.italics()
 require('./_string-html')('italics', function(createHTML){
@@ -4717,7 +5375,7 @@ require('./_string-html')('italics', function(createHTML){
     return createHTML(this, 'i', '', '');
   }
 });
-},{"./_string-html":99}],234:[function(require,module,exports){
+},{"./_string-html":100}],234:[function(require,module,exports){
 'use strict';
 var $at  = require('./_string-at')(true);
 
@@ -4735,7 +5393,7 @@ require('./_iter-define')(String, 'String', function(iterated){
   this._i += point.length;
   return {value: point, done: false};
 });
-},{"./_iter-define":53,"./_string-at":97}],235:[function(require,module,exports){
+},{"./_iter-define":54,"./_string-at":98}],235:[function(require,module,exports){
 'use strict';
 // B.2.3.10 String.prototype.link(url)
 require('./_string-html')('link', function(createHTML){
@@ -4743,7 +5401,7 @@ require('./_string-html')('link', function(createHTML){
     return createHTML(this, 'a', 'href', url);
   }
 });
-},{"./_string-html":99}],236:[function(require,module,exports){
+},{"./_string-html":100}],236:[function(require,module,exports){
 var $export   = require('./_export')
   , toIObject = require('./_to-iobject')
   , toLength  = require('./_to-length');
@@ -4762,14 +5420,14 @@ $export($export.S, 'String', {
     } return res.join('');
   }
 });
-},{"./_export":32,"./_to-iobject":107,"./_to-length":108}],237:[function(require,module,exports){
+},{"./_export":33,"./_to-iobject":108,"./_to-length":109}],237:[function(require,module,exports){
 var $export = require('./_export');
 
 $export($export.P, 'String', {
   // 21.1.3.13 String.prototype.repeat(count)
   repeat: require('./_string-repeat')
 });
-},{"./_export":32,"./_string-repeat":101}],238:[function(require,module,exports){
+},{"./_export":33,"./_string-repeat":102}],238:[function(require,module,exports){
 'use strict';
 // B.2.3.11 String.prototype.small()
 require('./_string-html')('small', function(createHTML){
@@ -4777,7 +5435,7 @@ require('./_string-html')('small', function(createHTML){
     return createHTML(this, 'small', '', '');
   }
 });
-},{"./_string-html":99}],239:[function(require,module,exports){
+},{"./_string-html":100}],239:[function(require,module,exports){
 // 21.1.3.18 String.prototype.startsWith(searchString [, position ])
 'use strict';
 var $export     = require('./_export')
@@ -4796,7 +5454,7 @@ $export($export.P + $export.F * require('./_fails-is-regexp')(STARTS_WITH), 'Str
       : that.slice(index, index + search.length) === search;
   }
 });
-},{"./_export":32,"./_fails-is-regexp":33,"./_string-context":98,"./_to-length":108}],240:[function(require,module,exports){
+},{"./_export":33,"./_fails-is-regexp":34,"./_string-context":99,"./_to-length":109}],240:[function(require,module,exports){
 'use strict';
 // B.2.3.12 String.prototype.strike()
 require('./_string-html')('strike', function(createHTML){
@@ -4804,7 +5462,7 @@ require('./_string-html')('strike', function(createHTML){
     return createHTML(this, 'strike', '', '');
   }
 });
-},{"./_string-html":99}],241:[function(require,module,exports){
+},{"./_string-html":100}],241:[function(require,module,exports){
 'use strict';
 // B.2.3.13 String.prototype.sub()
 require('./_string-html')('sub', function(createHTML){
@@ -4812,7 +5470,7 @@ require('./_string-html')('sub', function(createHTML){
     return createHTML(this, 'sub', '', '');
   }
 });
-},{"./_string-html":99}],242:[function(require,module,exports){
+},{"./_string-html":100}],242:[function(require,module,exports){
 'use strict';
 // B.2.3.14 String.prototype.sup()
 require('./_string-html')('sup', function(createHTML){
@@ -4820,7 +5478,7 @@ require('./_string-html')('sup', function(createHTML){
     return createHTML(this, 'sup', '', '');
   }
 });
-},{"./_string-html":99}],243:[function(require,module,exports){
+},{"./_string-html":100}],243:[function(require,module,exports){
 'use strict';
 // 21.1.3.25 String.prototype.trim()
 require('./_string-trim')('trim', function($trim){
@@ -4828,7 +5486,7 @@ require('./_string-trim')('trim', function($trim){
     return $trim(this, 3);
   };
 });
-},{"./_string-trim":102}],244:[function(require,module,exports){
+},{"./_string-trim":103}],244:[function(require,module,exports){
 'use strict';
 // ECMAScript 6 symbols shim
 var global         = require('./_global')
@@ -5064,7 +5722,7 @@ setToStringTag($Symbol, 'Symbol');
 setToStringTag(Math, 'Math', true);
 // 24.3.3 JSON[@@toStringTag]
 setToStringTag(global.JSON, 'JSON', true);
-},{"./_an-object":7,"./_descriptors":28,"./_enum-keys":31,"./_export":32,"./_fails":34,"./_global":38,"./_has":39,"./_hide":40,"./_is-array":47,"./_keyof":57,"./_library":58,"./_meta":62,"./_object-create":66,"./_object-dp":67,"./_object-gopd":70,"./_object-gopn":72,"./_object-gopn-ext":71,"./_object-gops":73,"./_object-keys":76,"./_object-pie":77,"./_property-desc":85,"./_redefine":87,"./_set-to-string-tag":92,"./_shared":94,"./_to-iobject":107,"./_to-primitive":110,"./_uid":114,"./_wks":117,"./_wks-define":115,"./_wks-ext":116}],245:[function(require,module,exports){
+},{"./_an-object":8,"./_descriptors":29,"./_enum-keys":32,"./_export":33,"./_fails":35,"./_global":39,"./_has":40,"./_hide":41,"./_is-array":48,"./_keyof":58,"./_library":59,"./_meta":63,"./_object-create":67,"./_object-dp":68,"./_object-gopd":71,"./_object-gopn":73,"./_object-gopn-ext":72,"./_object-gops":74,"./_object-keys":77,"./_object-pie":78,"./_property-desc":86,"./_redefine":88,"./_set-to-string-tag":93,"./_shared":95,"./_to-iobject":108,"./_to-primitive":111,"./_uid":115,"./_wks":118,"./_wks-define":116,"./_wks-ext":117}],245:[function(require,module,exports){
 'use strict';
 var $export      = require('./_export')
   , $typed       = require('./_typed')
@@ -5073,7 +5731,6 @@ var $export      = require('./_export')
   , toIndex      = require('./_to-index')
   , toLength     = require('./_to-length')
   , isObject     = require('./_is-object')
-  , TYPED_ARRAY  = require('./_wks')('typed_array')
   , ArrayBuffer  = require('./_global').ArrayBuffer
   , speciesConstructor = require('./_species-constructor')
   , $ArrayBuffer = buffer.ArrayBuffer
@@ -5112,66 +5769,66 @@ $export($export.P + $export.U + $export.F * require('./_fails')(function(){
 });
 
 require('./_set-species')(ARRAY_BUFFER);
-},{"./_an-object":7,"./_export":32,"./_fails":34,"./_global":38,"./_is-object":49,"./_set-species":91,"./_species-constructor":95,"./_to-index":105,"./_to-length":108,"./_typed":113,"./_typed-buffer":112,"./_wks":117}],246:[function(require,module,exports){
+},{"./_an-object":8,"./_export":33,"./_fails":35,"./_global":39,"./_is-object":50,"./_set-species":92,"./_species-constructor":96,"./_to-index":106,"./_to-length":109,"./_typed":114,"./_typed-buffer":113}],246:[function(require,module,exports){
 var $export = require('./_export');
 $export($export.G + $export.W + $export.F * !require('./_typed').ABV, {
   DataView: require('./_typed-buffer').DataView
 });
-},{"./_export":32,"./_typed":113,"./_typed-buffer":112}],247:[function(require,module,exports){
+},{"./_export":33,"./_typed":114,"./_typed-buffer":113}],247:[function(require,module,exports){
 require('./_typed-array')('Float32', 4, function(init){
   return function Float32Array(data, byteOffset, length){
     return init(this, data, byteOffset, length);
   };
 });
-},{"./_typed-array":111}],248:[function(require,module,exports){
+},{"./_typed-array":112}],248:[function(require,module,exports){
 require('./_typed-array')('Float64', 8, function(init){
   return function Float64Array(data, byteOffset, length){
     return init(this, data, byteOffset, length);
   };
 });
-},{"./_typed-array":111}],249:[function(require,module,exports){
+},{"./_typed-array":112}],249:[function(require,module,exports){
 require('./_typed-array')('Int16', 2, function(init){
   return function Int16Array(data, byteOffset, length){
     return init(this, data, byteOffset, length);
   };
 });
-},{"./_typed-array":111}],250:[function(require,module,exports){
+},{"./_typed-array":112}],250:[function(require,module,exports){
 require('./_typed-array')('Int32', 4, function(init){
   return function Int32Array(data, byteOffset, length){
     return init(this, data, byteOffset, length);
   };
 });
-},{"./_typed-array":111}],251:[function(require,module,exports){
+},{"./_typed-array":112}],251:[function(require,module,exports){
 require('./_typed-array')('Int8', 1, function(init){
   return function Int8Array(data, byteOffset, length){
     return init(this, data, byteOffset, length);
   };
 });
-},{"./_typed-array":111}],252:[function(require,module,exports){
+},{"./_typed-array":112}],252:[function(require,module,exports){
 require('./_typed-array')('Uint16', 2, function(init){
   return function Uint16Array(data, byteOffset, length){
     return init(this, data, byteOffset, length);
   };
 });
-},{"./_typed-array":111}],253:[function(require,module,exports){
+},{"./_typed-array":112}],253:[function(require,module,exports){
 require('./_typed-array')('Uint32', 4, function(init){
   return function Uint32Array(data, byteOffset, length){
     return init(this, data, byteOffset, length);
   };
 });
-},{"./_typed-array":111}],254:[function(require,module,exports){
+},{"./_typed-array":112}],254:[function(require,module,exports){
 require('./_typed-array')('Uint8', 1, function(init){
   return function Uint8Array(data, byteOffset, length){
     return init(this, data, byteOffset, length);
   };
 });
-},{"./_typed-array":111}],255:[function(require,module,exports){
+},{"./_typed-array":112}],255:[function(require,module,exports){
 require('./_typed-array')('Uint8', 1, function(init){
   return function Uint8ClampedArray(data, byteOffset, length){
     return init(this, data, byteOffset, length);
   };
 }, true);
-},{"./_typed-array":111}],256:[function(require,module,exports){
+},{"./_typed-array":112}],256:[function(require,module,exports){
 'use strict';
 var each         = require('./_array-methods')(0)
   , redefine     = require('./_redefine')
@@ -5179,7 +5836,6 @@ var each         = require('./_array-methods')(0)
   , assign       = require('./_object-assign')
   , weak         = require('./_collection-weak')
   , isObject     = require('./_is-object')
-  , has          = require('./_has')
   , getWeak      = meta.getWeak
   , isExtensible = Object.isExtensible
   , uncaughtFrozenStore = weak.ufstore
@@ -5229,7 +5885,7 @@ if(new $WeakMap().set((Object.freeze || Object)(tmp), 7).get(tmp) != 7){
     });
   });
 }
-},{"./_array-methods":12,"./_collection":22,"./_collection-weak":21,"./_has":39,"./_is-object":49,"./_meta":62,"./_object-assign":65,"./_redefine":87}],257:[function(require,module,exports){
+},{"./_array-methods":13,"./_collection":23,"./_collection-weak":22,"./_is-object":50,"./_meta":63,"./_object-assign":66,"./_redefine":88}],257:[function(require,module,exports){
 'use strict';
 var weak = require('./_collection-weak');
 
@@ -5242,7 +5898,7 @@ require('./_collection')('WeakSet', function(get){
     return weak.def(this, value, true);
   }
 }, weak, false, true);
-},{"./_collection":22,"./_collection-weak":21}],258:[function(require,module,exports){
+},{"./_collection":23,"./_collection-weak":22}],258:[function(require,module,exports){
 'use strict';
 // https://github.com/tc39/Array.prototype.includes
 var $export   = require('./_export')
@@ -5255,7 +5911,7 @@ $export($export.P, 'Array', {
 });
 
 require('./_add-to-unscopables')('includes');
-},{"./_add-to-unscopables":5,"./_array-includes":11,"./_export":32}],259:[function(require,module,exports){
+},{"./_add-to-unscopables":6,"./_array-includes":12,"./_export":33}],259:[function(require,module,exports){
 // https://github.com/rwaldron/tc39-notes/blob/master/es6/2014-09/sept-25.md#510-globalasap-for-enqueuing-a-microtask
 var $export   = require('./_export')
   , microtask = require('./_microtask')()
@@ -5268,7 +5924,7 @@ $export($export.G, {
     microtask(domain ? domain.bind(fn) : fn);
   }
 });
-},{"./_cof":18,"./_export":32,"./_global":38,"./_microtask":64}],260:[function(require,module,exports){
+},{"./_cof":19,"./_export":33,"./_global":39,"./_microtask":65}],260:[function(require,module,exports){
 // https://github.com/ljharb/proposal-is-error
 var $export = require('./_export')
   , cof     = require('./_cof');
@@ -5278,12 +5934,12 @@ $export($export.S, 'Error', {
     return cof(it) === 'Error';
   }
 });
-},{"./_cof":18,"./_export":32}],261:[function(require,module,exports){
+},{"./_cof":19,"./_export":33}],261:[function(require,module,exports){
 // https://github.com/DavidBruant/Map-Set.prototype.toJSON
 var $export  = require('./_export');
 
 $export($export.P + $export.R, 'Map', {toJSON: require('./_collection-to-json')('Map')});
-},{"./_collection-to-json":20,"./_export":32}],262:[function(require,module,exports){
+},{"./_collection-to-json":21,"./_export":33}],262:[function(require,module,exports){
 // https://gist.github.com/BrendanEich/4294d5c212a6d2254703
 var $export = require('./_export');
 
@@ -5295,7 +5951,7 @@ $export($export.S, 'Math', {
     return $x1 + (y1 >>> 0) + (($x0 & $y0 | ($x0 | $y0) & ~($x0 + $y0 >>> 0)) >>> 31) | 0;
   }
 });
-},{"./_export":32}],263:[function(require,module,exports){
+},{"./_export":33}],263:[function(require,module,exports){
 // https://gist.github.com/BrendanEich/4294d5c212a6d2254703
 var $export = require('./_export');
 
@@ -5312,7 +5968,7 @@ $export($export.S, 'Math', {
     return u1 * v1 + (t >> 16) + ((u0 * v1 >>> 0) + (t & UINT16) >> 16);
   }
 });
-},{"./_export":32}],264:[function(require,module,exports){
+},{"./_export":33}],264:[function(require,module,exports){
 // https://gist.github.com/BrendanEich/4294d5c212a6d2254703
 var $export = require('./_export');
 
@@ -5324,7 +5980,7 @@ $export($export.S, 'Math', {
     return $x1 - (y1 >>> 0) - ((~$x0 & $y0 | ~($x0 ^ $y0) & $x0 - $y0 >>> 0) >>> 31) | 0;
   }
 });
-},{"./_export":32}],265:[function(require,module,exports){
+},{"./_export":33}],265:[function(require,module,exports){
 // https://gist.github.com/BrendanEich/4294d5c212a6d2254703
 var $export = require('./_export');
 
@@ -5341,7 +5997,7 @@ $export($export.S, 'Math', {
     return u1 * v1 + (t >>> 16) + ((u0 * v1 >>> 0) + (t & UINT16) >>> 16);
   }
 });
-},{"./_export":32}],266:[function(require,module,exports){
+},{"./_export":33}],266:[function(require,module,exports){
 'use strict';
 var $export         = require('./_export')
   , toObject        = require('./_to-object')
@@ -5354,7 +6010,7 @@ require('./_descriptors') && $export($export.P + require('./_object-forced-pam')
     $defineProperty.f(toObject(this), P, {get: aFunction(getter), enumerable: true, configurable: true});
   }
 });
-},{"./_a-function":3,"./_descriptors":28,"./_export":32,"./_object-dp":67,"./_object-forced-pam":69,"./_to-object":109}],267:[function(require,module,exports){
+},{"./_a-function":4,"./_descriptors":29,"./_export":33,"./_object-dp":68,"./_object-forced-pam":70,"./_to-object":110}],267:[function(require,module,exports){
 'use strict';
 var $export         = require('./_export')
   , toObject        = require('./_to-object')
@@ -5367,7 +6023,7 @@ require('./_descriptors') && $export($export.P + require('./_object-forced-pam')
     $defineProperty.f(toObject(this), P, {set: aFunction(setter), enumerable: true, configurable: true});
   }
 });
-},{"./_a-function":3,"./_descriptors":28,"./_export":32,"./_object-dp":67,"./_object-forced-pam":69,"./_to-object":109}],268:[function(require,module,exports){
+},{"./_a-function":4,"./_descriptors":29,"./_export":33,"./_object-dp":68,"./_object-forced-pam":70,"./_to-object":110}],268:[function(require,module,exports){
 // https://github.com/tc39/proposal-object-values-entries
 var $export  = require('./_export')
   , $entries = require('./_object-to-array')(true);
@@ -5377,7 +6033,7 @@ $export($export.S, 'Object', {
     return $entries(it);
   }
 });
-},{"./_export":32,"./_object-to-array":79}],269:[function(require,module,exports){
+},{"./_export":33,"./_object-to-array":80}],269:[function(require,module,exports){
 // https://github.com/tc39/proposal-object-getownpropertydescriptors
 var $export        = require('./_export')
   , ownKeys        = require('./_own-keys')
@@ -5392,12 +6048,12 @@ $export($export.S, 'Object', {
       , keys    = ownKeys(O)
       , result  = {}
       , i       = 0
-      , key, D;
+      , key;
     while(keys.length > i)createProperty(result, key = keys[i++], getDesc(O, key));
     return result;
   }
 });
-},{"./_create-property":24,"./_export":32,"./_object-gopd":70,"./_own-keys":80,"./_to-iobject":107}],270:[function(require,module,exports){
+},{"./_create-property":25,"./_export":33,"./_object-gopd":71,"./_own-keys":81,"./_to-iobject":108}],270:[function(require,module,exports){
 'use strict';
 var $export                  = require('./_export')
   , toObject                 = require('./_to-object')
@@ -5416,7 +6072,7 @@ require('./_descriptors') && $export($export.P + require('./_object-forced-pam')
     } while(O = getPrototypeOf(O));
   }
 });
-},{"./_descriptors":28,"./_export":32,"./_object-forced-pam":69,"./_object-gopd":70,"./_object-gpo":74,"./_to-object":109,"./_to-primitive":110}],271:[function(require,module,exports){
+},{"./_descriptors":29,"./_export":33,"./_object-forced-pam":70,"./_object-gopd":71,"./_object-gpo":75,"./_to-object":110,"./_to-primitive":111}],271:[function(require,module,exports){
 'use strict';
 var $export                  = require('./_export')
   , toObject                 = require('./_to-object')
@@ -5435,7 +6091,7 @@ require('./_descriptors') && $export($export.P + require('./_object-forced-pam')
     } while(O = getPrototypeOf(O));
   }
 });
-},{"./_descriptors":28,"./_export":32,"./_object-forced-pam":69,"./_object-gopd":70,"./_object-gpo":74,"./_to-object":109,"./_to-primitive":110}],272:[function(require,module,exports){
+},{"./_descriptors":29,"./_export":33,"./_object-forced-pam":70,"./_object-gopd":71,"./_object-gpo":75,"./_to-object":110,"./_to-primitive":111}],272:[function(require,module,exports){
 // https://github.com/tc39/proposal-object-values-entries
 var $export = require('./_export')
   , $values = require('./_object-to-array')(false);
@@ -5445,7 +6101,7 @@ $export($export.S, 'Object', {
     return $values(it);
   }
 });
-},{"./_export":32,"./_object-to-array":79}],273:[function(require,module,exports){
+},{"./_export":33,"./_object-to-array":80}],273:[function(require,module,exports){
 'use strict';
 // https://github.com/zenparsing/es-observable
 var $export     = require('./_export')
@@ -5645,7 +6301,7 @@ hide($Observable.prototype, OBSERVABLE, function(){ return this; });
 $export($export.G, {Observable: $Observable});
 
 require('./_set-species')('Observable');
-},{"./_a-function":3,"./_an-instance":6,"./_an-object":7,"./_core":23,"./_export":32,"./_for-of":37,"./_global":38,"./_hide":40,"./_microtask":64,"./_redefine-all":86,"./_set-species":91,"./_wks":117}],274:[function(require,module,exports){
+},{"./_a-function":4,"./_an-instance":7,"./_an-object":8,"./_core":24,"./_export":33,"./_for-of":38,"./_global":39,"./_hide":41,"./_microtask":65,"./_redefine-all":87,"./_set-species":92,"./_wks":118}],274:[function(require,module,exports){
 var metadata                  = require('./_metadata')
   , anObject                  = require('./_an-object')
   , toMetaKey                 = metadata.key
@@ -5654,7 +6310,7 @@ var metadata                  = require('./_metadata')
 metadata.exp({defineMetadata: function defineMetadata(metadataKey, metadataValue, target, targetKey){
   ordinaryDefineOwnMetadata(metadataKey, metadataValue, anObject(target), toMetaKey(targetKey));
 }});
-},{"./_an-object":7,"./_metadata":63}],275:[function(require,module,exports){
+},{"./_an-object":8,"./_metadata":64}],275:[function(require,module,exports){
 var metadata               = require('./_metadata')
   , anObject               = require('./_an-object')
   , toMetaKey              = metadata.key
@@ -5670,7 +6326,7 @@ metadata.exp({deleteMetadata: function deleteMetadata(metadataKey, target /*, ta
   targetMetadata['delete'](targetKey);
   return !!targetMetadata.size || store['delete'](target);
 }});
-},{"./_an-object":7,"./_metadata":63}],276:[function(require,module,exports){
+},{"./_an-object":8,"./_metadata":64}],276:[function(require,module,exports){
 var Set                     = require('./es6.set')
   , from                    = require('./_array-from-iterable')
   , metadata                = require('./_metadata')
@@ -5690,7 +6346,7 @@ var ordinaryMetadataKeys = function(O, P){
 metadata.exp({getMetadataKeys: function getMetadataKeys(target /*, targetKey */){
   return ordinaryMetadataKeys(anObject(target), arguments.length < 2 ? undefined : toMetaKey(arguments[1]));
 }});
-},{"./_an-object":7,"./_array-from-iterable":10,"./_metadata":63,"./_object-gpo":74,"./es6.set":221}],277:[function(require,module,exports){
+},{"./_an-object":8,"./_array-from-iterable":11,"./_metadata":64,"./_object-gpo":75,"./es6.set":221}],277:[function(require,module,exports){
 var metadata               = require('./_metadata')
   , anObject               = require('./_an-object')
   , getPrototypeOf         = require('./_object-gpo')
@@ -5708,7 +6364,7 @@ var ordinaryGetMetadata = function(MetadataKey, O, P){
 metadata.exp({getMetadata: function getMetadata(metadataKey, target /*, targetKey */){
   return ordinaryGetMetadata(metadataKey, anObject(target), arguments.length < 3 ? undefined : toMetaKey(arguments[2]));
 }});
-},{"./_an-object":7,"./_metadata":63,"./_object-gpo":74}],278:[function(require,module,exports){
+},{"./_an-object":8,"./_metadata":64,"./_object-gpo":75}],278:[function(require,module,exports){
 var metadata                = require('./_metadata')
   , anObject                = require('./_an-object')
   , ordinaryOwnMetadataKeys = metadata.keys
@@ -5717,7 +6373,7 @@ var metadata                = require('./_metadata')
 metadata.exp({getOwnMetadataKeys: function getOwnMetadataKeys(target /*, targetKey */){
   return ordinaryOwnMetadataKeys(anObject(target), arguments.length < 2 ? undefined : toMetaKey(arguments[1]));
 }});
-},{"./_an-object":7,"./_metadata":63}],279:[function(require,module,exports){
+},{"./_an-object":8,"./_metadata":64}],279:[function(require,module,exports){
 var metadata               = require('./_metadata')
   , anObject               = require('./_an-object')
   , ordinaryGetOwnMetadata = metadata.get
@@ -5727,7 +6383,7 @@ metadata.exp({getOwnMetadata: function getOwnMetadata(metadataKey, target /*, ta
   return ordinaryGetOwnMetadata(metadataKey, anObject(target)
     , arguments.length < 3 ? undefined : toMetaKey(arguments[2]));
 }});
-},{"./_an-object":7,"./_metadata":63}],280:[function(require,module,exports){
+},{"./_an-object":8,"./_metadata":64}],280:[function(require,module,exports){
 var metadata               = require('./_metadata')
   , anObject               = require('./_an-object')
   , getPrototypeOf         = require('./_object-gpo')
@@ -5744,7 +6400,7 @@ var ordinaryHasMetadata = function(MetadataKey, O, P){
 metadata.exp({hasMetadata: function hasMetadata(metadataKey, target /*, targetKey */){
   return ordinaryHasMetadata(metadataKey, anObject(target), arguments.length < 3 ? undefined : toMetaKey(arguments[2]));
 }});
-},{"./_an-object":7,"./_metadata":63,"./_object-gpo":74}],281:[function(require,module,exports){
+},{"./_an-object":8,"./_metadata":64,"./_object-gpo":75}],281:[function(require,module,exports){
 var metadata               = require('./_metadata')
   , anObject               = require('./_an-object')
   , ordinaryHasOwnMetadata = metadata.has
@@ -5754,7 +6410,7 @@ metadata.exp({hasOwnMetadata: function hasOwnMetadata(metadataKey, target /*, ta
   return ordinaryHasOwnMetadata(metadataKey, anObject(target)
     , arguments.length < 3 ? undefined : toMetaKey(arguments[2]));
 }});
-},{"./_an-object":7,"./_metadata":63}],282:[function(require,module,exports){
+},{"./_an-object":8,"./_metadata":64}],282:[function(require,module,exports){
 var metadata                  = require('./_metadata')
   , anObject                  = require('./_an-object')
   , aFunction                 = require('./_a-function')
@@ -5770,12 +6426,12 @@ metadata.exp({metadata: function metadata(metadataKey, metadataValue){
     );
   };
 }});
-},{"./_a-function":3,"./_an-object":7,"./_metadata":63}],283:[function(require,module,exports){
+},{"./_a-function":4,"./_an-object":8,"./_metadata":64}],283:[function(require,module,exports){
 // https://github.com/DavidBruant/Map-Set.prototype.toJSON
 var $export  = require('./_export');
 
 $export($export.P + $export.R, 'Set', {toJSON: require('./_collection-to-json')('Set')});
-},{"./_collection-to-json":20,"./_export":32}],284:[function(require,module,exports){
+},{"./_collection-to-json":21,"./_export":33}],284:[function(require,module,exports){
 'use strict';
 // https://github.com/mathiasbynens/String.prototype.at
 var $export = require('./_export')
@@ -5786,7 +6442,7 @@ $export($export.P, 'String', {
     return $at(this, pos);
   }
 });
-},{"./_export":32,"./_string-at":97}],285:[function(require,module,exports){
+},{"./_export":33,"./_string-at":98}],285:[function(require,module,exports){
 'use strict';
 // https://tc39.github.io/String.prototype.matchAll/
 var $export     = require('./_export')
@@ -5817,7 +6473,7 @@ $export($export.P, 'String', {
     return new $RegExpStringIterator(rx, S);
   }
 });
-},{"./_defined":27,"./_export":32,"./_flags":36,"./_is-regexp":50,"./_iter-create":52,"./_to-length":108}],286:[function(require,module,exports){
+},{"./_defined":28,"./_export":33,"./_flags":37,"./_is-regexp":51,"./_iter-create":53,"./_to-length":109}],286:[function(require,module,exports){
 'use strict';
 // https://github.com/tc39/proposal-string-pad-start-end
 var $export = require('./_export')
@@ -5828,7 +6484,7 @@ $export($export.P, 'String', {
     return $pad(this, maxLength, arguments.length > 1 ? arguments[1] : undefined, false);
   }
 });
-},{"./_export":32,"./_string-pad":100}],287:[function(require,module,exports){
+},{"./_export":33,"./_string-pad":101}],287:[function(require,module,exports){
 'use strict';
 // https://github.com/tc39/proposal-string-pad-start-end
 var $export = require('./_export')
@@ -5839,7 +6495,7 @@ $export($export.P, 'String', {
     return $pad(this, maxLength, arguments.length > 1 ? arguments[1] : undefined, true);
   }
 });
-},{"./_export":32,"./_string-pad":100}],288:[function(require,module,exports){
+},{"./_export":33,"./_string-pad":101}],288:[function(require,module,exports){
 'use strict';
 // https://github.com/sebmarkbage/ecmascript-string-left-right-trim
 require('./_string-trim')('trimLeft', function($trim){
@@ -5847,7 +6503,7 @@ require('./_string-trim')('trimLeft', function($trim){
     return $trim(this, 1);
   };
 }, 'trimStart');
-},{"./_string-trim":102}],289:[function(require,module,exports){
+},{"./_string-trim":103}],289:[function(require,module,exports){
 'use strict';
 // https://github.com/sebmarkbage/ecmascript-string-left-right-trim
 require('./_string-trim')('trimRight', function($trim){
@@ -5855,16 +6511,16 @@ require('./_string-trim')('trimRight', function($trim){
     return $trim(this, 2);
   };
 }, 'trimEnd');
-},{"./_string-trim":102}],290:[function(require,module,exports){
+},{"./_string-trim":103}],290:[function(require,module,exports){
 require('./_wks-define')('asyncIterator');
-},{"./_wks-define":115}],291:[function(require,module,exports){
+},{"./_wks-define":116}],291:[function(require,module,exports){
 require('./_wks-define')('observable');
-},{"./_wks-define":115}],292:[function(require,module,exports){
+},{"./_wks-define":116}],292:[function(require,module,exports){
 // https://github.com/ljharb/proposal-global
 var $export = require('./_export');
 
 $export($export.S, 'System', {global: require('./_global')});
-},{"./_export":32,"./_global":38}],293:[function(require,module,exports){
+},{"./_export":33,"./_global":39}],293:[function(require,module,exports){
 var $iterators    = require('./es6.array.iterator')
   , redefine      = require('./_redefine')
   , global        = require('./_global')
@@ -5887,14 +6543,14 @@ for(var collections = ['NodeList', 'DOMTokenList', 'MediaList', 'StyleSheetList'
     for(key in $iterators)if(!proto[key])redefine(proto, key, $iterators[key], true);
   }
 }
-},{"./_global":38,"./_hide":40,"./_iterators":56,"./_redefine":87,"./_wks":117,"./es6.array.iterator":131}],294:[function(require,module,exports){
+},{"./_global":39,"./_hide":41,"./_iterators":57,"./_redefine":88,"./_wks":118,"./es6.array.iterator":131}],294:[function(require,module,exports){
 var $export = require('./_export')
   , $task   = require('./_task');
 $export($export.G + $export.B, {
   setImmediate:   $task.set,
   clearImmediate: $task.clear
 });
-},{"./_export":32,"./_task":104}],295:[function(require,module,exports){
+},{"./_export":33,"./_task":105}],295:[function(require,module,exports){
 // ie9- setTimeout & setInterval additional parameters fix
 var global     = require('./_global')
   , $export    = require('./_export')
@@ -5915,7 +6571,7 @@ $export($export.G + $export.B + $export.F * MSIE, {
   setTimeout:  wrap(global.setTimeout),
   setInterval: wrap(global.setInterval)
 });
-},{"./_export":32,"./_global":38,"./_invoke":44,"./_partial":83}],296:[function(require,module,exports){
+},{"./_export":33,"./_global":39,"./_invoke":45,"./_partial":84}],296:[function(require,module,exports){
 require('./modules/es6.symbol');
 require('./modules/es6.object.create');
 require('./modules/es6.object.define-property');
@@ -6092,679 +6748,7 @@ require('./modules/web.timers');
 require('./modules/web.immediate');
 require('./modules/web.dom.iterable');
 module.exports = require('./modules/_core');
-},{"./modules/_core":23,"./modules/es6.array.copy-within":121,"./modules/es6.array.every":122,"./modules/es6.array.fill":123,"./modules/es6.array.filter":124,"./modules/es6.array.find":126,"./modules/es6.array.find-index":125,"./modules/es6.array.for-each":127,"./modules/es6.array.from":128,"./modules/es6.array.index-of":129,"./modules/es6.array.is-array":130,"./modules/es6.array.iterator":131,"./modules/es6.array.join":132,"./modules/es6.array.last-index-of":133,"./modules/es6.array.map":134,"./modules/es6.array.of":135,"./modules/es6.array.reduce":137,"./modules/es6.array.reduce-right":136,"./modules/es6.array.slice":138,"./modules/es6.array.some":139,"./modules/es6.array.sort":140,"./modules/es6.array.species":141,"./modules/es6.date.now":142,"./modules/es6.date.to-iso-string":143,"./modules/es6.date.to-json":144,"./modules/es6.date.to-primitive":145,"./modules/es6.date.to-string":146,"./modules/es6.function.bind":147,"./modules/es6.function.has-instance":148,"./modules/es6.function.name":149,"./modules/es6.map":150,"./modules/es6.math.acosh":151,"./modules/es6.math.asinh":152,"./modules/es6.math.atanh":153,"./modules/es6.math.cbrt":154,"./modules/es6.math.clz32":155,"./modules/es6.math.cosh":156,"./modules/es6.math.expm1":157,"./modules/es6.math.fround":158,"./modules/es6.math.hypot":159,"./modules/es6.math.imul":160,"./modules/es6.math.log10":161,"./modules/es6.math.log1p":162,"./modules/es6.math.log2":163,"./modules/es6.math.sign":164,"./modules/es6.math.sinh":165,"./modules/es6.math.tanh":166,"./modules/es6.math.trunc":167,"./modules/es6.number.constructor":168,"./modules/es6.number.epsilon":169,"./modules/es6.number.is-finite":170,"./modules/es6.number.is-integer":171,"./modules/es6.number.is-nan":172,"./modules/es6.number.is-safe-integer":173,"./modules/es6.number.max-safe-integer":174,"./modules/es6.number.min-safe-integer":175,"./modules/es6.number.parse-float":176,"./modules/es6.number.parse-int":177,"./modules/es6.number.to-fixed":178,"./modules/es6.number.to-precision":179,"./modules/es6.object.assign":180,"./modules/es6.object.create":181,"./modules/es6.object.define-properties":182,"./modules/es6.object.define-property":183,"./modules/es6.object.freeze":184,"./modules/es6.object.get-own-property-descriptor":185,"./modules/es6.object.get-own-property-names":186,"./modules/es6.object.get-prototype-of":187,"./modules/es6.object.is":191,"./modules/es6.object.is-extensible":188,"./modules/es6.object.is-frozen":189,"./modules/es6.object.is-sealed":190,"./modules/es6.object.keys":192,"./modules/es6.object.prevent-extensions":193,"./modules/es6.object.seal":194,"./modules/es6.object.set-prototype-of":195,"./modules/es6.object.to-string":196,"./modules/es6.parse-float":197,"./modules/es6.parse-int":198,"./modules/es6.promise":199,"./modules/es6.reflect.apply":200,"./modules/es6.reflect.construct":201,"./modules/es6.reflect.define-property":202,"./modules/es6.reflect.delete-property":203,"./modules/es6.reflect.enumerate":204,"./modules/es6.reflect.get":207,"./modules/es6.reflect.get-own-property-descriptor":205,"./modules/es6.reflect.get-prototype-of":206,"./modules/es6.reflect.has":208,"./modules/es6.reflect.is-extensible":209,"./modules/es6.reflect.own-keys":210,"./modules/es6.reflect.prevent-extensions":211,"./modules/es6.reflect.set":213,"./modules/es6.reflect.set-prototype-of":212,"./modules/es6.regexp.constructor":214,"./modules/es6.regexp.flags":215,"./modules/es6.regexp.match":216,"./modules/es6.regexp.replace":217,"./modules/es6.regexp.search":218,"./modules/es6.regexp.split":219,"./modules/es6.regexp.to-string":220,"./modules/es6.set":221,"./modules/es6.string.anchor":222,"./modules/es6.string.big":223,"./modules/es6.string.blink":224,"./modules/es6.string.bold":225,"./modules/es6.string.code-point-at":226,"./modules/es6.string.ends-with":227,"./modules/es6.string.fixed":228,"./modules/es6.string.fontcolor":229,"./modules/es6.string.fontsize":230,"./modules/es6.string.from-code-point":231,"./modules/es6.string.includes":232,"./modules/es6.string.italics":233,"./modules/es6.string.iterator":234,"./modules/es6.string.link":235,"./modules/es6.string.raw":236,"./modules/es6.string.repeat":237,"./modules/es6.string.small":238,"./modules/es6.string.starts-with":239,"./modules/es6.string.strike":240,"./modules/es6.string.sub":241,"./modules/es6.string.sup":242,"./modules/es6.string.trim":243,"./modules/es6.symbol":244,"./modules/es6.typed.array-buffer":245,"./modules/es6.typed.data-view":246,"./modules/es6.typed.float32-array":247,"./modules/es6.typed.float64-array":248,"./modules/es6.typed.int16-array":249,"./modules/es6.typed.int32-array":250,"./modules/es6.typed.int8-array":251,"./modules/es6.typed.uint16-array":252,"./modules/es6.typed.uint32-array":253,"./modules/es6.typed.uint8-array":254,"./modules/es6.typed.uint8-clamped-array":255,"./modules/es6.weak-map":256,"./modules/es6.weak-set":257,"./modules/es7.array.includes":258,"./modules/es7.asap":259,"./modules/es7.error.is-error":260,"./modules/es7.map.to-json":261,"./modules/es7.math.iaddh":262,"./modules/es7.math.imulh":263,"./modules/es7.math.isubh":264,"./modules/es7.math.umulh":265,"./modules/es7.object.define-getter":266,"./modules/es7.object.define-setter":267,"./modules/es7.object.entries":268,"./modules/es7.object.get-own-property-descriptors":269,"./modules/es7.object.lookup-getter":270,"./modules/es7.object.lookup-setter":271,"./modules/es7.object.values":272,"./modules/es7.observable":273,"./modules/es7.reflect.define-metadata":274,"./modules/es7.reflect.delete-metadata":275,"./modules/es7.reflect.get-metadata":277,"./modules/es7.reflect.get-metadata-keys":276,"./modules/es7.reflect.get-own-metadata":279,"./modules/es7.reflect.get-own-metadata-keys":278,"./modules/es7.reflect.has-metadata":280,"./modules/es7.reflect.has-own-metadata":281,"./modules/es7.reflect.metadata":282,"./modules/es7.set.to-json":283,"./modules/es7.string.at":284,"./modules/es7.string.match-all":285,"./modules/es7.string.pad-end":286,"./modules/es7.string.pad-start":287,"./modules/es7.string.trim-left":288,"./modules/es7.string.trim-right":289,"./modules/es7.symbol.async-iterator":290,"./modules/es7.symbol.observable":291,"./modules/es7.system.global":292,"./modules/web.dom.iterable":293,"./modules/web.immediate":294,"./modules/web.timers":295}],297:[function(require,module,exports){
-(function (process,global){
-/**
- * Copyright (c) 2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * https://raw.github.com/facebook/regenerator/master/LICENSE file. An
- * additional grant of patent rights can be found in the PATENTS file in
- * the same directory.
- */
-
-!(function(global) {
-  "use strict";
-
-  var hasOwn = Object.prototype.hasOwnProperty;
-  var undefined; // More compressible than void 0.
-  var $Symbol = typeof Symbol === "function" ? Symbol : {};
-  var iteratorSymbol = $Symbol.iterator || "@@iterator";
-  var toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag";
-
-  var inModule = typeof module === "object";
-  var runtime = global.regeneratorRuntime;
-  if (runtime) {
-    if (inModule) {
-      // If regeneratorRuntime is defined globally and we're in a module,
-      // make the exports object identical to regeneratorRuntime.
-      module.exports = runtime;
-    }
-    // Don't bother evaluating the rest of this file if the runtime was
-    // already defined globally.
-    return;
-  }
-
-  // Define the runtime globally (as expected by generated code) as either
-  // module.exports (if we're in a module) or a new, empty object.
-  runtime = global.regeneratorRuntime = inModule ? module.exports : {};
-
-  function wrap(innerFn, outerFn, self, tryLocsList) {
-    // If outerFn provided, then outerFn.prototype instanceof Generator.
-    var generator = Object.create((outerFn || Generator).prototype);
-    var context = new Context(tryLocsList || []);
-
-    // The ._invoke method unifies the implementations of the .next,
-    // .throw, and .return methods.
-    generator._invoke = makeInvokeMethod(innerFn, self, context);
-
-    return generator;
-  }
-  runtime.wrap = wrap;
-
-  // Try/catch helper to minimize deoptimizations. Returns a completion
-  // record like context.tryEntries[i].completion. This interface could
-  // have been (and was previously) designed to take a closure to be
-  // invoked without arguments, but in all the cases we care about we
-  // already have an existing method we want to call, so there's no need
-  // to create a new function object. We can even get away with assuming
-  // the method takes exactly one argument, since that happens to be true
-  // in every case, so we don't have to touch the arguments object. The
-  // only additional allocation required is the completion record, which
-  // has a stable shape and so hopefully should be cheap to allocate.
-  function tryCatch(fn, obj, arg) {
-    try {
-      return { type: "normal", arg: fn.call(obj, arg) };
-    } catch (err) {
-      return { type: "throw", arg: err };
-    }
-  }
-
-  var GenStateSuspendedStart = "suspendedStart";
-  var GenStateSuspendedYield = "suspendedYield";
-  var GenStateExecuting = "executing";
-  var GenStateCompleted = "completed";
-
-  // Returning this object from the innerFn has the same effect as
-  // breaking out of the dispatch switch statement.
-  var ContinueSentinel = {};
-
-  // Dummy constructor functions that we use as the .constructor and
-  // .constructor.prototype properties for functions that return Generator
-  // objects. For full spec compliance, you may wish to configure your
-  // minifier not to mangle the names of these two functions.
-  function Generator() {}
-  function GeneratorFunction() {}
-  function GeneratorFunctionPrototype() {}
-
-  var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype;
-  GeneratorFunction.prototype = Gp.constructor = GeneratorFunctionPrototype;
-  GeneratorFunctionPrototype.constructor = GeneratorFunction;
-  GeneratorFunctionPrototype[toStringTagSymbol] = GeneratorFunction.displayName = "GeneratorFunction";
-
-  // Helper for defining the .next, .throw, and .return methods of the
-  // Iterator interface in terms of a single ._invoke method.
-  function defineIteratorMethods(prototype) {
-    ["next", "throw", "return"].forEach(function(method) {
-      prototype[method] = function(arg) {
-        return this._invoke(method, arg);
-      };
-    });
-  }
-
-  runtime.isGeneratorFunction = function(genFun) {
-    var ctor = typeof genFun === "function" && genFun.constructor;
-    return ctor
-      ? ctor === GeneratorFunction ||
-        // For the native GeneratorFunction constructor, the best we can
-        // do is to check its .name property.
-        (ctor.displayName || ctor.name) === "GeneratorFunction"
-      : false;
-  };
-
-  runtime.mark = function(genFun) {
-    if (Object.setPrototypeOf) {
-      Object.setPrototypeOf(genFun, GeneratorFunctionPrototype);
-    } else {
-      genFun.__proto__ = GeneratorFunctionPrototype;
-      if (!(toStringTagSymbol in genFun)) {
-        genFun[toStringTagSymbol] = "GeneratorFunction";
-      }
-    }
-    genFun.prototype = Object.create(Gp);
-    return genFun;
-  };
-
-  // Within the body of any async function, `await x` is transformed to
-  // `yield regeneratorRuntime.awrap(x)`, so that the runtime can test
-  // `value instanceof AwaitArgument` to determine if the yielded value is
-  // meant to be awaited. Some may consider the name of this method too
-  // cutesy, but they are curmudgeons.
-  runtime.awrap = function(arg) {
-    return new AwaitArgument(arg);
-  };
-
-  function AwaitArgument(arg) {
-    this.arg = arg;
-  }
-
-  function AsyncIterator(generator) {
-    function invoke(method, arg, resolve, reject) {
-      var record = tryCatch(generator[method], generator, arg);
-      if (record.type === "throw") {
-        reject(record.arg);
-      } else {
-        var result = record.arg;
-        var value = result.value;
-        if (value instanceof AwaitArgument) {
-          return Promise.resolve(value.arg).then(function(value) {
-            invoke("next", value, resolve, reject);
-          }, function(err) {
-            invoke("throw", err, resolve, reject);
-          });
-        }
-
-        return Promise.resolve(value).then(function(unwrapped) {
-          // When a yielded Promise is resolved, its final value becomes
-          // the .value of the Promise<{value,done}> result for the
-          // current iteration. If the Promise is rejected, however, the
-          // result for this iteration will be rejected with the same
-          // reason. Note that rejections of yielded Promises are not
-          // thrown back into the generator function, as is the case
-          // when an awaited Promise is rejected. This difference in
-          // behavior between yield and await is important, because it
-          // allows the consumer to decide what to do with the yielded
-          // rejection (swallow it and continue, manually .throw it back
-          // into the generator, abandon iteration, whatever). With
-          // await, by contrast, there is no opportunity to examine the
-          // rejection reason outside the generator function, so the
-          // only option is to throw it from the await expression, and
-          // let the generator function handle the exception.
-          result.value = unwrapped;
-          resolve(result);
-        }, reject);
-      }
-    }
-
-    if (typeof process === "object" && process.domain) {
-      invoke = process.domain.bind(invoke);
-    }
-
-    var previousPromise;
-
-    function enqueue(method, arg) {
-      function callInvokeWithMethodAndArg() {
-        return new Promise(function(resolve, reject) {
-          invoke(method, arg, resolve, reject);
-        });
-      }
-
-      return previousPromise =
-        // If enqueue has been called before, then we want to wait until
-        // all previous Promises have been resolved before calling invoke,
-        // so that results are always delivered in the correct order. If
-        // enqueue has not been called before, then it is important to
-        // call invoke immediately, without waiting on a callback to fire,
-        // so that the async generator function has the opportunity to do
-        // any necessary setup in a predictable way. This predictability
-        // is why the Promise constructor synchronously invokes its
-        // executor callback, and why async functions synchronously
-        // execute code before the first await. Since we implement simple
-        // async functions in terms of async generators, it is especially
-        // important to get this right, even though it requires care.
-        previousPromise ? previousPromise.then(
-          callInvokeWithMethodAndArg,
-          // Avoid propagating failures to Promises returned by later
-          // invocations of the iterator.
-          callInvokeWithMethodAndArg
-        ) : callInvokeWithMethodAndArg();
-    }
-
-    // Define the unified helper method that is used to implement .next,
-    // .throw, and .return (see defineIteratorMethods).
-    this._invoke = enqueue;
-  }
-
-  defineIteratorMethods(AsyncIterator.prototype);
-
-  // Note that simple async functions are implemented on top of
-  // AsyncIterator objects; they just return a Promise for the value of
-  // the final result produced by the iterator.
-  runtime.async = function(innerFn, outerFn, self, tryLocsList) {
-    var iter = new AsyncIterator(
-      wrap(innerFn, outerFn, self, tryLocsList)
-    );
-
-    return runtime.isGeneratorFunction(outerFn)
-      ? iter // If outerFn is a generator, return the full iterator.
-      : iter.next().then(function(result) {
-          return result.done ? result.value : iter.next();
-        });
-  };
-
-  function makeInvokeMethod(innerFn, self, context) {
-    var state = GenStateSuspendedStart;
-
-    return function invoke(method, arg) {
-      if (state === GenStateExecuting) {
-        throw new Error("Generator is already running");
-      }
-
-      if (state === GenStateCompleted) {
-        if (method === "throw") {
-          throw arg;
-        }
-
-        // Be forgiving, per 25.3.3.3.3 of the spec:
-        // https://people.mozilla.org/~jorendorff/es6-draft.html#sec-generatorresume
-        return doneResult();
-      }
-
-      while (true) {
-        var delegate = context.delegate;
-        if (delegate) {
-          if (method === "return" ||
-              (method === "throw" && delegate.iterator[method] === undefined)) {
-            // A return or throw (when the delegate iterator has no throw
-            // method) always terminates the yield* loop.
-            context.delegate = null;
-
-            // If the delegate iterator has a return method, give it a
-            // chance to clean up.
-            var returnMethod = delegate.iterator["return"];
-            if (returnMethod) {
-              var record = tryCatch(returnMethod, delegate.iterator, arg);
-              if (record.type === "throw") {
-                // If the return method threw an exception, let that
-                // exception prevail over the original return or throw.
-                method = "throw";
-                arg = record.arg;
-                continue;
-              }
-            }
-
-            if (method === "return") {
-              // Continue with the outer return, now that the delegate
-              // iterator has been terminated.
-              continue;
-            }
-          }
-
-          var record = tryCatch(
-            delegate.iterator[method],
-            delegate.iterator,
-            arg
-          );
-
-          if (record.type === "throw") {
-            context.delegate = null;
-
-            // Like returning generator.throw(uncaught), but without the
-            // overhead of an extra function call.
-            method = "throw";
-            arg = record.arg;
-            continue;
-          }
-
-          // Delegate generator ran and handled its own exceptions so
-          // regardless of what the method was, we continue as if it is
-          // "next" with an undefined arg.
-          method = "next";
-          arg = undefined;
-
-          var info = record.arg;
-          if (info.done) {
-            context[delegate.resultName] = info.value;
-            context.next = delegate.nextLoc;
-          } else {
-            state = GenStateSuspendedYield;
-            return info;
-          }
-
-          context.delegate = null;
-        }
-
-        if (method === "next") {
-          // Setting context._sent for legacy support of Babel's
-          // function.sent implementation.
-          context.sent = context._sent = arg;
-
-        } else if (method === "throw") {
-          if (state === GenStateSuspendedStart) {
-            state = GenStateCompleted;
-            throw arg;
-          }
-
-          if (context.dispatchException(arg)) {
-            // If the dispatched exception was caught by a catch block,
-            // then let that catch block handle the exception normally.
-            method = "next";
-            arg = undefined;
-          }
-
-        } else if (method === "return") {
-          context.abrupt("return", arg);
-        }
-
-        state = GenStateExecuting;
-
-        var record = tryCatch(innerFn, self, context);
-        if (record.type === "normal") {
-          // If an exception is thrown from innerFn, we leave state ===
-          // GenStateExecuting and loop back for another invocation.
-          state = context.done
-            ? GenStateCompleted
-            : GenStateSuspendedYield;
-
-          var info = {
-            value: record.arg,
-            done: context.done
-          };
-
-          if (record.arg === ContinueSentinel) {
-            if (context.delegate && method === "next") {
-              // Deliberately forget the last sent value so that we don't
-              // accidentally pass it on to the delegate.
-              arg = undefined;
-            }
-          } else {
-            return info;
-          }
-
-        } else if (record.type === "throw") {
-          state = GenStateCompleted;
-          // Dispatch the exception by looping back around to the
-          // context.dispatchException(arg) call above.
-          method = "throw";
-          arg = record.arg;
-        }
-      }
-    };
-  }
-
-  // Define Generator.prototype.{next,throw,return} in terms of the
-  // unified ._invoke helper method.
-  defineIteratorMethods(Gp);
-
-  Gp[iteratorSymbol] = function() {
-    return this;
-  };
-
-  Gp[toStringTagSymbol] = "Generator";
-
-  Gp.toString = function() {
-    return "[object Generator]";
-  };
-
-  function pushTryEntry(locs) {
-    var entry = { tryLoc: locs[0] };
-
-    if (1 in locs) {
-      entry.catchLoc = locs[1];
-    }
-
-    if (2 in locs) {
-      entry.finallyLoc = locs[2];
-      entry.afterLoc = locs[3];
-    }
-
-    this.tryEntries.push(entry);
-  }
-
-  function resetTryEntry(entry) {
-    var record = entry.completion || {};
-    record.type = "normal";
-    delete record.arg;
-    entry.completion = record;
-  }
-
-  function Context(tryLocsList) {
-    // The root entry object (effectively a try statement without a catch
-    // or a finally block) gives us a place to store values thrown from
-    // locations where there is no enclosing try statement.
-    this.tryEntries = [{ tryLoc: "root" }];
-    tryLocsList.forEach(pushTryEntry, this);
-    this.reset(true);
-  }
-
-  runtime.keys = function(object) {
-    var keys = [];
-    for (var key in object) {
-      keys.push(key);
-    }
-    keys.reverse();
-
-    // Rather than returning an object with a next method, we keep
-    // things simple and return the next function itself.
-    return function next() {
-      while (keys.length) {
-        var key = keys.pop();
-        if (key in object) {
-          next.value = key;
-          next.done = false;
-          return next;
-        }
-      }
-
-      // To avoid creating an additional object, we just hang the .value
-      // and .done properties off the next function object itself. This
-      // also ensures that the minifier will not anonymize the function.
-      next.done = true;
-      return next;
-    };
-  };
-
-  function values(iterable) {
-    if (iterable) {
-      var iteratorMethod = iterable[iteratorSymbol];
-      if (iteratorMethod) {
-        return iteratorMethod.call(iterable);
-      }
-
-      if (typeof iterable.next === "function") {
-        return iterable;
-      }
-
-      if (!isNaN(iterable.length)) {
-        var i = -1, next = function next() {
-          while (++i < iterable.length) {
-            if (hasOwn.call(iterable, i)) {
-              next.value = iterable[i];
-              next.done = false;
-              return next;
-            }
-          }
-
-          next.value = undefined;
-          next.done = true;
-
-          return next;
-        };
-
-        return next.next = next;
-      }
-    }
-
-    // Return an iterator with no values.
-    return { next: doneResult };
-  }
-  runtime.values = values;
-
-  function doneResult() {
-    return { value: undefined, done: true };
-  }
-
-  Context.prototype = {
-    constructor: Context,
-
-    reset: function(skipTempReset) {
-      this.prev = 0;
-      this.next = 0;
-      // Resetting context._sent for legacy support of Babel's
-      // function.sent implementation.
-      this.sent = this._sent = undefined;
-      this.done = false;
-      this.delegate = null;
-
-      this.tryEntries.forEach(resetTryEntry);
-
-      if (!skipTempReset) {
-        for (var name in this) {
-          // Not sure about the optimal order of these conditions:
-          if (name.charAt(0) === "t" &&
-              hasOwn.call(this, name) &&
-              !isNaN(+name.slice(1))) {
-            this[name] = undefined;
-          }
-        }
-      }
-    },
-
-    stop: function() {
-      this.done = true;
-
-      var rootEntry = this.tryEntries[0];
-      var rootRecord = rootEntry.completion;
-      if (rootRecord.type === "throw") {
-        throw rootRecord.arg;
-      }
-
-      return this.rval;
-    },
-
-    dispatchException: function(exception) {
-      if (this.done) {
-        throw exception;
-      }
-
-      var context = this;
-      function handle(loc, caught) {
-        record.type = "throw";
-        record.arg = exception;
-        context.next = loc;
-        return !!caught;
-      }
-
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
-        var record = entry.completion;
-
-        if (entry.tryLoc === "root") {
-          // Exception thrown outside of any try block that could handle
-          // it, so set the completion value of the entire function to
-          // throw the exception.
-          return handle("end");
-        }
-
-        if (entry.tryLoc <= this.prev) {
-          var hasCatch = hasOwn.call(entry, "catchLoc");
-          var hasFinally = hasOwn.call(entry, "finallyLoc");
-
-          if (hasCatch && hasFinally) {
-            if (this.prev < entry.catchLoc) {
-              return handle(entry.catchLoc, true);
-            } else if (this.prev < entry.finallyLoc) {
-              return handle(entry.finallyLoc);
-            }
-
-          } else if (hasCatch) {
-            if (this.prev < entry.catchLoc) {
-              return handle(entry.catchLoc, true);
-            }
-
-          } else if (hasFinally) {
-            if (this.prev < entry.finallyLoc) {
-              return handle(entry.finallyLoc);
-            }
-
-          } else {
-            throw new Error("try statement without catch or finally");
-          }
-        }
-      }
-    },
-
-    abrupt: function(type, arg) {
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
-        if (entry.tryLoc <= this.prev &&
-            hasOwn.call(entry, "finallyLoc") &&
-            this.prev < entry.finallyLoc) {
-          var finallyEntry = entry;
-          break;
-        }
-      }
-
-      if (finallyEntry &&
-          (type === "break" ||
-           type === "continue") &&
-          finallyEntry.tryLoc <= arg &&
-          arg <= finallyEntry.finallyLoc) {
-        // Ignore the finally entry if control is not jumping to a
-        // location outside the try/catch block.
-        finallyEntry = null;
-      }
-
-      var record = finallyEntry ? finallyEntry.completion : {};
-      record.type = type;
-      record.arg = arg;
-
-      if (finallyEntry) {
-        this.next = finallyEntry.finallyLoc;
-      } else {
-        this.complete(record);
-      }
-
-      return ContinueSentinel;
-    },
-
-    complete: function(record, afterLoc) {
-      if (record.type === "throw") {
-        throw record.arg;
-      }
-
-      if (record.type === "break" ||
-          record.type === "continue") {
-        this.next = record.arg;
-      } else if (record.type === "return") {
-        this.rval = record.arg;
-        this.next = "end";
-      } else if (record.type === "normal" && afterLoc) {
-        this.next = afterLoc;
-      }
-    },
-
-    finish: function(finallyLoc) {
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
-        if (entry.finallyLoc === finallyLoc) {
-          this.complete(entry.completion, entry.afterLoc);
-          resetTryEntry(entry);
-          return ContinueSentinel;
-        }
-      }
-    },
-
-    "catch": function(tryLoc) {
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
-        if (entry.tryLoc === tryLoc) {
-          var record = entry.completion;
-          if (record.type === "throw") {
-            var thrown = record.arg;
-            resetTryEntry(entry);
-          }
-          return thrown;
-        }
-      }
-
-      // The context.catch method must only be called with a location
-      // argument that corresponds to a known catch block.
-      throw new Error("illegal catch attempt");
-    },
-
-    delegateYield: function(iterable, resultName, nextLoc) {
-      this.delegate = {
-        iterator: values(iterable),
-        resultName: resultName,
-        nextLoc: nextLoc
-      };
-
-      return ContinueSentinel;
-    }
-  };
-})(
-  // Among the various tricks for obtaining a reference to the global
-  // object, this seems to be the most reliable technique that does not
-  // use indirect eval (which violates Content Security Policy).
-  typeof global === "object" ? global :
-  typeof window === "object" ? window :
-  typeof self === "object" ? self : this
-);
-
-}).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":299}],298:[function(require,module,exports){
+},{"./modules/_core":24,"./modules/es6.array.copy-within":121,"./modules/es6.array.every":122,"./modules/es6.array.fill":123,"./modules/es6.array.filter":124,"./modules/es6.array.find":126,"./modules/es6.array.find-index":125,"./modules/es6.array.for-each":127,"./modules/es6.array.from":128,"./modules/es6.array.index-of":129,"./modules/es6.array.is-array":130,"./modules/es6.array.iterator":131,"./modules/es6.array.join":132,"./modules/es6.array.last-index-of":133,"./modules/es6.array.map":134,"./modules/es6.array.of":135,"./modules/es6.array.reduce":137,"./modules/es6.array.reduce-right":136,"./modules/es6.array.slice":138,"./modules/es6.array.some":139,"./modules/es6.array.sort":140,"./modules/es6.array.species":141,"./modules/es6.date.now":142,"./modules/es6.date.to-iso-string":143,"./modules/es6.date.to-json":144,"./modules/es6.date.to-primitive":145,"./modules/es6.date.to-string":146,"./modules/es6.function.bind":147,"./modules/es6.function.has-instance":148,"./modules/es6.function.name":149,"./modules/es6.map":150,"./modules/es6.math.acosh":151,"./modules/es6.math.asinh":152,"./modules/es6.math.atanh":153,"./modules/es6.math.cbrt":154,"./modules/es6.math.clz32":155,"./modules/es6.math.cosh":156,"./modules/es6.math.expm1":157,"./modules/es6.math.fround":158,"./modules/es6.math.hypot":159,"./modules/es6.math.imul":160,"./modules/es6.math.log10":161,"./modules/es6.math.log1p":162,"./modules/es6.math.log2":163,"./modules/es6.math.sign":164,"./modules/es6.math.sinh":165,"./modules/es6.math.tanh":166,"./modules/es6.math.trunc":167,"./modules/es6.number.constructor":168,"./modules/es6.number.epsilon":169,"./modules/es6.number.is-finite":170,"./modules/es6.number.is-integer":171,"./modules/es6.number.is-nan":172,"./modules/es6.number.is-safe-integer":173,"./modules/es6.number.max-safe-integer":174,"./modules/es6.number.min-safe-integer":175,"./modules/es6.number.parse-float":176,"./modules/es6.number.parse-int":177,"./modules/es6.number.to-fixed":178,"./modules/es6.number.to-precision":179,"./modules/es6.object.assign":180,"./modules/es6.object.create":181,"./modules/es6.object.define-properties":182,"./modules/es6.object.define-property":183,"./modules/es6.object.freeze":184,"./modules/es6.object.get-own-property-descriptor":185,"./modules/es6.object.get-own-property-names":186,"./modules/es6.object.get-prototype-of":187,"./modules/es6.object.is":191,"./modules/es6.object.is-extensible":188,"./modules/es6.object.is-frozen":189,"./modules/es6.object.is-sealed":190,"./modules/es6.object.keys":192,"./modules/es6.object.prevent-extensions":193,"./modules/es6.object.seal":194,"./modules/es6.object.set-prototype-of":195,"./modules/es6.object.to-string":196,"./modules/es6.parse-float":197,"./modules/es6.parse-int":198,"./modules/es6.promise":199,"./modules/es6.reflect.apply":200,"./modules/es6.reflect.construct":201,"./modules/es6.reflect.define-property":202,"./modules/es6.reflect.delete-property":203,"./modules/es6.reflect.enumerate":204,"./modules/es6.reflect.get":207,"./modules/es6.reflect.get-own-property-descriptor":205,"./modules/es6.reflect.get-prototype-of":206,"./modules/es6.reflect.has":208,"./modules/es6.reflect.is-extensible":209,"./modules/es6.reflect.own-keys":210,"./modules/es6.reflect.prevent-extensions":211,"./modules/es6.reflect.set":213,"./modules/es6.reflect.set-prototype-of":212,"./modules/es6.regexp.constructor":214,"./modules/es6.regexp.flags":215,"./modules/es6.regexp.match":216,"./modules/es6.regexp.replace":217,"./modules/es6.regexp.search":218,"./modules/es6.regexp.split":219,"./modules/es6.regexp.to-string":220,"./modules/es6.set":221,"./modules/es6.string.anchor":222,"./modules/es6.string.big":223,"./modules/es6.string.blink":224,"./modules/es6.string.bold":225,"./modules/es6.string.code-point-at":226,"./modules/es6.string.ends-with":227,"./modules/es6.string.fixed":228,"./modules/es6.string.fontcolor":229,"./modules/es6.string.fontsize":230,"./modules/es6.string.from-code-point":231,"./modules/es6.string.includes":232,"./modules/es6.string.italics":233,"./modules/es6.string.iterator":234,"./modules/es6.string.link":235,"./modules/es6.string.raw":236,"./modules/es6.string.repeat":237,"./modules/es6.string.small":238,"./modules/es6.string.starts-with":239,"./modules/es6.string.strike":240,"./modules/es6.string.sub":241,"./modules/es6.string.sup":242,"./modules/es6.string.trim":243,"./modules/es6.symbol":244,"./modules/es6.typed.array-buffer":245,"./modules/es6.typed.data-view":246,"./modules/es6.typed.float32-array":247,"./modules/es6.typed.float64-array":248,"./modules/es6.typed.int16-array":249,"./modules/es6.typed.int32-array":250,"./modules/es6.typed.int8-array":251,"./modules/es6.typed.uint16-array":252,"./modules/es6.typed.uint32-array":253,"./modules/es6.typed.uint8-array":254,"./modules/es6.typed.uint8-clamped-array":255,"./modules/es6.weak-map":256,"./modules/es6.weak-set":257,"./modules/es7.array.includes":258,"./modules/es7.asap":259,"./modules/es7.error.is-error":260,"./modules/es7.map.to-json":261,"./modules/es7.math.iaddh":262,"./modules/es7.math.imulh":263,"./modules/es7.math.isubh":264,"./modules/es7.math.umulh":265,"./modules/es7.object.define-getter":266,"./modules/es7.object.define-setter":267,"./modules/es7.object.entries":268,"./modules/es7.object.get-own-property-descriptors":269,"./modules/es7.object.lookup-getter":270,"./modules/es7.object.lookup-setter":271,"./modules/es7.object.values":272,"./modules/es7.observable":273,"./modules/es7.reflect.define-metadata":274,"./modules/es7.reflect.delete-metadata":275,"./modules/es7.reflect.get-metadata":277,"./modules/es7.reflect.get-metadata-keys":276,"./modules/es7.reflect.get-own-metadata":279,"./modules/es7.reflect.get-own-metadata-keys":278,"./modules/es7.reflect.has-metadata":280,"./modules/es7.reflect.has-own-metadata":281,"./modules/es7.reflect.metadata":282,"./modules/es7.set.to-json":283,"./modules/es7.string.at":284,"./modules/es7.string.match-all":285,"./modules/es7.string.pad-end":286,"./modules/es7.string.pad-start":287,"./modules/es7.string.trim-left":288,"./modules/es7.string.trim-right":289,"./modules/es7.symbol.async-iterator":290,"./modules/es7.symbol.observable":291,"./modules/es7.system.global":292,"./modules/web.dom.iterable":293,"./modules/web.immediate":294,"./modules/web.timers":295}],297:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -6824,8 +6808,12 @@ EventEmitter.prototype.emit = function(type) {
       er = arguments[1];
       if (er instanceof Error) {
         throw er; // Unhandled 'error' event
+      } else {
+        // At least give some kind of context to the user
+        var err = new Error('Uncaught, unspecified "error" event. (' + er + ')');
+        err.context = er;
+        throw err;
       }
-      throw TypeError('Uncaught, unspecified "error" event.');
     }
   }
 
@@ -7064,10 +7052,96 @@ function isUndefined(arg) {
   return arg === void 0;
 }
 
-},{}],299:[function(require,module,exports){
+},{}],298:[function(require,module,exports){
 // shim for using process in browser
-
 var process = module.exports = {};
+
+// cached from whatever global is present so that test runners that stub it
+// don't break things.  But we need to wrap it in a try catch in case it is
+// wrapped in strict mode code which doesn't define any globals.  It's inside a
+// function because try/catches deoptimize in certain engines.
+
+var cachedSetTimeout;
+var cachedClearTimeout;
+
+function defaultSetTimout() {
+    throw new Error('setTimeout has not been defined');
+}
+function defaultClearTimeout () {
+    throw new Error('clearTimeout has not been defined');
+}
+(function () {
+    try {
+        if (typeof setTimeout === 'function') {
+            cachedSetTimeout = setTimeout;
+        } else {
+            cachedSetTimeout = defaultSetTimout;
+        }
+    } catch (e) {
+        cachedSetTimeout = defaultSetTimout;
+    }
+    try {
+        if (typeof clearTimeout === 'function') {
+            cachedClearTimeout = clearTimeout;
+        } else {
+            cachedClearTimeout = defaultClearTimeout;
+        }
+    } catch (e) {
+        cachedClearTimeout = defaultClearTimeout;
+    }
+} ())
+function runTimeout(fun) {
+    if (cachedSetTimeout === setTimeout) {
+        //normal enviroments in sane situations
+        return setTimeout(fun, 0);
+    }
+    // if setTimeout wasn't available but was latter defined
+    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+        cachedSetTimeout = setTimeout;
+        return setTimeout(fun, 0);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedSetTimeout(fun, 0);
+    } catch(e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+            return cachedSetTimeout.call(null, fun, 0);
+        } catch(e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+            return cachedSetTimeout.call(this, fun, 0);
+        }
+    }
+
+
+}
+function runClearTimeout(marker) {
+    if (cachedClearTimeout === clearTimeout) {
+        //normal enviroments in sane situations
+        return clearTimeout(marker);
+    }
+    // if clearTimeout wasn't available but was latter defined
+    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+        cachedClearTimeout = clearTimeout;
+        return clearTimeout(marker);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedClearTimeout(marker);
+    } catch (e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+            return cachedClearTimeout.call(null, marker);
+        } catch (e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+            return cachedClearTimeout.call(this, marker);
+        }
+    }
+
+
+
+}
 var queue = [];
 var draining = false;
 var currentQueue;
@@ -7092,7 +7166,7 @@ function drainQueue() {
     if (draining) {
         return;
     }
-    var timeout = setTimeout(cleanUpNextTick);
+    var timeout = runTimeout(cleanUpNextTick);
     draining = true;
 
     var len = queue.length;
@@ -7109,7 +7183,7 @@ function drainQueue() {
     }
     currentQueue = null;
     draining = false;
-    clearTimeout(timeout);
+    runClearTimeout(timeout);
 }
 
 process.nextTick = function (fun) {
@@ -7121,7 +7195,7 @@ process.nextTick = function (fun) {
     }
     queue.push(new Item(fun, args));
     if (queue.length === 1 && !draining) {
-        setTimeout(drainQueue, 0);
+        runTimeout(drainQueue);
     }
 };
 
@@ -7160,7 +7234,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],300:[function(require,module,exports){
+},{}],299:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -7200,17 +7274,15 @@ var AppConfig = function () {
         this.createStates($stateProvider, iVXjs.config.states);
 
         var experience = iVXjs.experience;
-        var _iVXjs$config$templat = iVXjs.config.templates;
-        var templates = _iVXjs$config$templat === undefined ? [] : _iVXjs$config$templat;
+        var _iVXjs$config$templat = iVXjs.config.templates,
+            templates = _iVXjs$config$templat === undefined ? [] : _iVXjs$config$templat;
 
         var defaultStateID = iVXjs.rules(iVXjs.config.defaultState);
 
         var _iVXjs$config$states$ = iVXjs.config.states.find(function (state) {
             return state.id === defaultStateID;
-        });
-
-        var url = _iVXjs$config$states$.url;
-
+        }),
+            url = _iVXjs$config$states$.url;
 
         if (experience.whiteList) {
             $sceDelegateProvider.resourceUrlWhitelist(experience.whiteList);
@@ -7251,16 +7323,16 @@ var AppConfig = function () {
     }, {
         key: 'createStates',
         value: function createStates($stateProvider) {
-            var states = arguments.length <= 1 || arguments[1] === undefined ? [] : arguments[1];
+            var states = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
 
             states.forEach(function (state, index) {
-                var type = state.type;
-                var id = state.id;
-                var url = state.url;
-                var _state$onEnter = state.onEnter;
-                var onEnter = _state$onEnter === undefined ? [] : _state$onEnter;
-                var _state$onExit = state.onExit;
-                var onExit = _state$onExit === undefined ? [] : _state$onExit;
+                var type = state.type,
+                    id = state.id,
+                    url = state.url,
+                    _state$onEnter = state.onEnter,
+                    onEnter = _state$onEnter === undefined ? [] : _state$onEnter,
+                    _state$onExit = state.onExit,
+                    onExit = _state$onExit === undefined ? [] : _state$onExit;
 
                 var videoEventNames = new _videoEvents2.default();
 
@@ -7299,7 +7371,7 @@ AppConfig.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider'
 
 exports.default = (0, _createFactoryFunction2.default)(AppConfig);
 
-},{"../constants/state.events.js":375,"../constants/video.events.js":377,"./services/http-interceptors.js":352,"./utilities/create-factory-function.js":356}],301:[function(require,module,exports){
+},{"../constants/state.events.js":374,"../constants/video.events.js":376,"./services/http-interceptors.js":351,"./utilities/create-factory-function.js":355}],300:[function(require,module,exports){
 'use strict';
 
 var _containerSetup = require('./utilities/container-setup.js');
@@ -7478,7 +7550,7 @@ var myIVXjs = new _app.iVXjs();
 //Services
 
 
-//Template Directives
+//Template Directives 
 
 
 // Config
@@ -7508,7 +7580,7 @@ angular.module('ivx-js', ['ui.router', 'ngSanitize'])
 // Navigation State
 .directive('ivxjsNavigationState', _stateNavigation2.default)
 
-// Video Players   
+// Video Players    
 .directive('ivxjsYoutubeVideoPlayer', _videoYoutube2.default).directive('ivxjsHtml5VideoPlayer', _videoHtml2.default).directive('ivxjsVimeoVideoPlayer', _videoVimeo2.default).directive('ivxjsStandardVideoControls', _videoControlsStandard2.default)
 
 // Video State
@@ -7522,7 +7594,7 @@ angular.module('ivx-js', ['ui.router', 'ngSanitize'])
 
 //Controllers
 
-//Filters
+//Filters 
 .filter('stringParsers', ['$rootScope', function ($rootScope) {
     return function (name, text) {
         return stringParser[name](text);
@@ -7556,7 +7628,7 @@ myIVXjs.Bus.on(iVXjsConfigEvents.VALIDATED, function (iVXjs) {
     iVXjs.Bus.emit(angularEventNames.BOOTSTRAPPED);
 });
 
-},{"../constants/angular.events.js":361,"../constants/iVXjs.config.events.js":370,"../constants/registered-constants.js":374,"../core/app.js":379,"../utilities/type-parsers.js":425,"./app.config.js":300,"./app.run.js":302,"./directives/input.buttons.js":323,"./directives/input.checkbox.js":324,"./directives/input.date.js":325,"./directives/input.datetime-local.js":326,"./directives/input.email.js":327,"./directives/input.form.js":328,"./directives/input.number.js":329,"./directives/input.options.js":330,"./directives/input.radio.js":331,"./directives/input.text.js":332,"./directives/input.textarea.js":333,"./directives/input.url.js":334,"./directives/state.html.js":335,"./directives/state.input.js":336,"./directives/state.navigation.js":337,"./directives/state.video.js":338,"./directives/template.animate-element.js":339,"./directives/template.go-to-state.js":340,"./directives/template.raise-ivxjs-event.js":341,"./directives/template.set-data.js":342,"./directives/ui.anchor.js":343,"./directives/video.controls.standard.js":344,"./directives/video.html5.js":345,"./directives/video.vimeo.js":346,"./directives/video.youtube.js":347,"./filters/string-parsers.js":348,"./providers/ivxjs.setup.js":349,"./services/actions.js":350,"./services/bus.js":351,"./services/ios-inline-video.js":353,"./services/template-renderer.js":354,"./utilities/container-setup.js":355}],302:[function(require,module,exports){
+},{"../constants/angular.events.js":360,"../constants/iVXjs.config.events.js":369,"../constants/registered-constants.js":373,"../core/app.js":378,"../utilities/type-parsers.js":424,"./app.config.js":299,"./app.run.js":301,"./directives/input.buttons.js":322,"./directives/input.checkbox.js":323,"./directives/input.date.js":324,"./directives/input.datetime-local.js":325,"./directives/input.email.js":326,"./directives/input.form.js":327,"./directives/input.number.js":328,"./directives/input.options.js":329,"./directives/input.radio.js":330,"./directives/input.text.js":331,"./directives/input.textarea.js":332,"./directives/input.url.js":333,"./directives/state.html.js":334,"./directives/state.input.js":335,"./directives/state.navigation.js":336,"./directives/state.video.js":337,"./directives/template.animate-element.js":338,"./directives/template.go-to-state.js":339,"./directives/template.raise-ivxjs-event.js":340,"./directives/template.set-data.js":341,"./directives/ui.anchor.js":342,"./directives/video.controls.standard.js":343,"./directives/video.html5.js":344,"./directives/video.vimeo.js":345,"./directives/video.youtube.js":346,"./filters/string-parsers.js":347,"./providers/ivxjs.setup.js":348,"./services/actions.js":349,"./services/bus.js":350,"./services/ios-inline-video.js":352,"./services/template-renderer.js":353,"./utilities/container-setup.js":354}],301:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -7588,14 +7660,14 @@ var AppRun = function AppRun($rootScope, $state, $window, $transitions, $http, i
 
     if (!iVXjs || !iVXjs.config) return;
 
-    var _iVXjs$config = iVXjs.config;
-    var _iVXjs$config$metadat = _iVXjs$config.metadata;
-    var metadata = _iVXjs$config$metadat === undefined ? {} : _iVXjs$config$metadat;
-    var templates = _iVXjs$config.templates;
-    var _metadata$title = metadata.title;
-    var title = _metadata$title === undefined ? 'iVX Story Player' : _metadata$title;
-    var description = metadata.description;
-    var image = metadata.image;
+    var _iVXjs$config = iVXjs.config,
+        _iVXjs$config$metadat = _iVXjs$config.metadata,
+        metadata = _iVXjs$config$metadat === undefined ? {} : _iVXjs$config$metadat,
+        templates = _iVXjs$config.templates;
+    var _metadata$title = metadata.title,
+        title = _metadata$title === undefined ? 'iVX Story Player' : _metadata$title,
+        description = metadata.description,
+        image = metadata.image;
 
     var audioEventNames = new _audioEvents2.default();
     var stateEventNames = new _stateEvents2.default();
@@ -7683,7 +7755,7 @@ AppRun.$inject = ['$rootScope', '$state', '$window', '$transitions', '$http', 'i
 
 exports.default = (0, _createFactoryFunction2.default)(AppRun);
 
-},{"../constants/angular.events.js":361,"../constants/audio.events.js":363,"../constants/state.events.js":375,"./utilities/create-factory-function.js":356}],303:[function(require,module,exports){
+},{"../constants/angular.events.js":360,"../constants/audio.events.js":362,"../constants/state.events.js":374,"./utilities/create-factory-function.js":355}],302:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -7710,20 +7782,20 @@ var ButtonsInputController = function (_InputControllerHelpe) {
     function ButtonsInputController($scope, iVXjs, iVXjsActions) {
         _classCallCheck(this, ButtonsInputController);
 
-        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ButtonsInputController).call(this, $scope, iVXjs, iVXjsActions));
+        var _this = _possibleConstructorReturn(this, (ButtonsInputController.__proto__ || Object.getPrototypeOf(ButtonsInputController)).call(this, $scope, iVXjs, iVXjsActions));
 
         var input = $scope.inputData;
         var $parent = $scope.$parent;
-        var inputs = $parent.inputs;
-        var formInput = $parent.formInput;
-        var parentController = $parent.vm;
+        var inputs = $parent.inputs,
+            formInput = $parent.formInput,
+            parentController = $parent.vm;
 
 
         _this.onClick = function ($event, button) {
             $event.preventDefault();
 
-            var _button$onClick = button.onClick;
-            var onClick = _button$onClick === undefined ? [] : _button$onClick;
+            var _button$onClick = button.onClick,
+                onClick = _button$onClick === undefined ? [] : _button$onClick;
 
 
             onClick.unshift({ eventName: "setData", args: { key: input.name, value: button.value } });
@@ -7748,7 +7820,7 @@ ButtonsInputController.$inject = ['$scope', 'iVXjs', 'ivxjs.actions'];
 
 exports.default = (0, _createFactoryFunction2.default)(ButtonsInputController);
 
-},{"../utilities/create-factory-function.js":356,"../utilities/input-controller.js":358}],304:[function(require,module,exports){
+},{"../utilities/create-factory-function.js":355,"../utilities/input-controller.js":357}],303:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -7775,7 +7847,7 @@ var CheckboxInputController = function (_InputControllerHelpe) {
 	function CheckboxInputController($scope, iVXjs, iVXjsActions) {
 		_classCallCheck(this, CheckboxInputController);
 
-		return _possibleConstructorReturn(this, Object.getPrototypeOf(CheckboxInputController).call(this, $scope, iVXjs, iVXjsActions));
+		return _possibleConstructorReturn(this, (CheckboxInputController.__proto__ || Object.getPrototypeOf(CheckboxInputController)).call(this, $scope, iVXjs, iVXjsActions));
 	}
 
 	return CheckboxInputController;
@@ -7785,7 +7857,7 @@ CheckboxInputController.$inject = ['$scope', 'iVXjs', 'ivxjs.actions'];
 
 exports.default = (0, _createFactoryFunction2.default)(CheckboxInputController);
 
-},{"../utilities/create-factory-function.js":356,"../utilities/input-controller.js":358}],305:[function(require,module,exports){
+},{"../utilities/create-factory-function.js":355,"../utilities/input-controller.js":357}],304:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -7812,7 +7884,7 @@ var DateTimeLocalController = function (_InputControllerHelpe) {
     function DateTimeLocalController($scope, iVXjs, iVXjsActions) {
         _classCallCheck(this, DateTimeLocalController);
 
-        return _possibleConstructorReturn(this, Object.getPrototypeOf(DateTimeLocalController).call(this, $scope, iVXjs, iVXjsActions));
+        return _possibleConstructorReturn(this, (DateTimeLocalController.__proto__ || Object.getPrototypeOf(DateTimeLocalController)).call(this, $scope, iVXjs, iVXjsActions));
     }
 
     return DateTimeLocalController;
@@ -7822,7 +7894,7 @@ DateTimeLocalController.$inject = ['$scope', 'iVXjs', 'ivxjs.actions'];
 
 exports.default = (0, _createFactoryFunction2.default)(DateTimeLocalController);
 
-},{"../utilities/create-factory-function.js":356,"../utilities/input-controller.js":358}],306:[function(require,module,exports){
+},{"../utilities/create-factory-function.js":355,"../utilities/input-controller.js":357}],305:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -7849,7 +7921,7 @@ var DateController = function (_InputControllerHelpe) {
 	function DateController($scope, iVXjs, iVXjsActions) {
 		_classCallCheck(this, DateController);
 
-		return _possibleConstructorReturn(this, Object.getPrototypeOf(DateController).call(this, $scope, iVXjs, iVXjsActions));
+		return _possibleConstructorReturn(this, (DateController.__proto__ || Object.getPrototypeOf(DateController)).call(this, $scope, iVXjs, iVXjsActions));
 	}
 
 	return DateController;
@@ -7859,7 +7931,7 @@ DateController.$inject = ['$scope', 'iVXjs', 'ivxjs.actions'];
 
 exports.default = (0, _createFactoryFunction2.default)(DateController);
 
-},{"../utilities/create-factory-function.js":356,"../utilities/input-controller.js":358}],307:[function(require,module,exports){
+},{"../utilities/create-factory-function.js":355,"../utilities/input-controller.js":357}],306:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -7886,7 +7958,7 @@ var EmailInputController = function (_InputControllerHelpe) {
 	function EmailInputController($scope, iVXjs, iVXjsActions) {
 		_classCallCheck(this, EmailInputController);
 
-		return _possibleConstructorReturn(this, Object.getPrototypeOf(EmailInputController).call(this, $scope, iVXjs, iVXjsActions));
+		return _possibleConstructorReturn(this, (EmailInputController.__proto__ || Object.getPrototypeOf(EmailInputController)).call(this, $scope, iVXjs, iVXjsActions));
 	}
 
 	return EmailInputController;
@@ -7896,7 +7968,7 @@ EmailInputController.$inject = ['$scope', 'iVXjs', 'ivxjs.actions'];
 
 exports.default = (0, _createFactoryFunction2.default)(EmailInputController);
 
-},{"../utilities/create-factory-function.js":356,"../utilities/input-controller.js":358}],308:[function(require,module,exports){
+},{"../utilities/create-factory-function.js":355,"../utilities/input-controller.js":357}],307:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -7929,7 +8001,7 @@ FormInputController.$inject = ['$scope', '$filter'];
 
 exports.default = (0, _createFactoryFunction2.default)(FormInputController);
 
-},{"../utilities/create-factory-function.js":356}],309:[function(require,module,exports){
+},{"../utilities/create-factory-function.js":355}],308:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -7956,7 +8028,7 @@ var NumberInputController = function (_InputControllerHelpe) {
 	function NumberInputController($scope, iVXjs, iVXjsActions) {
 		_classCallCheck(this, NumberInputController);
 
-		return _possibleConstructorReturn(this, Object.getPrototypeOf(NumberInputController).call(this, $scope, iVXjs, iVXjsActions));
+		return _possibleConstructorReturn(this, (NumberInputController.__proto__ || Object.getPrototypeOf(NumberInputController)).call(this, $scope, iVXjs, iVXjsActions));
 	}
 
 	return NumberInputController;
@@ -7966,7 +8038,7 @@ NumberInputController.$inject = ['$scope', 'iVXjs', 'ivxjs.actions'];
 
 exports.default = (0, _createFactoryFunction2.default)(NumberInputController);
 
-},{"../utilities/create-factory-function.js":356,"../utilities/input-controller.js":358}],310:[function(require,module,exports){
+},{"../utilities/create-factory-function.js":355,"../utilities/input-controller.js":357}],309:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -7993,14 +8065,14 @@ var OptionsInputController = function (_InputControllerHelpe) {
     function OptionsInputController($scope, $timeout, iVXjs, iVXjsActions) {
         _classCallCheck(this, OptionsInputController);
 
-        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(OptionsInputController).call(this, $scope, iVXjs, iVXjsActions));
+        var _this = _possibleConstructorReturn(this, (OptionsInputController.__proto__ || Object.getPrototypeOf(OptionsInputController)).call(this, $scope, iVXjs, iVXjsActions));
 
-        var _$scope$inputData = $scope.inputData;
-        var defaultValue = _$scope$inputData.defaultValue;
-        var options = _$scope$inputData.options;
-        var name = _$scope$inputData.name;
-        var _$scope$inputData$att = _$scope$inputData.attributes;
-        var attributes = _$scope$inputData$att === undefined ? {} : _$scope$inputData$att;
+        var _$scope$inputData = $scope.inputData,
+            defaultValue = _$scope$inputData.defaultValue,
+            options = _$scope$inputData.options,
+            name = _$scope$inputData.name,
+            _$scope$inputData$att = _$scope$inputData.attributes,
+            attributes = _$scope$inputData$att === undefined ? {} : _$scope$inputData$att;
 
         var experienceValue = iVXjs.experience.data[name];
 
@@ -8009,8 +8081,9 @@ var OptionsInputController = function (_InputControllerHelpe) {
         };
 
         $timeout(function () {
+
             if (attributes.required) {
-                $scope.$parent.formInput[name].$setValidity('required', experienceValue);
+                $scope.$parent.formInput[name].$setValidity('required', experienceValue.length > 0);
                 $scope.$parent.formInput[name].$error.required = true;
             }
         }, 1);
@@ -8024,7 +8097,7 @@ OptionsInputController.$inject = ['$scope', '$timeout', 'iVXjs', 'ivxjs.actions'
 
 exports.default = (0, _createFactoryFunction2.default)(OptionsInputController);
 
-},{"../utilities/create-factory-function.js":356,"../utilities/input-controller.js":358}],311:[function(require,module,exports){
+},{"../utilities/create-factory-function.js":355,"../utilities/input-controller.js":357}],310:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -8051,7 +8124,7 @@ var RadioInputController = function (_InputControllerHelpe) {
     function RadioInputController($scope, iVXjs, iVXjsActions) {
         _classCallCheck(this, RadioInputController);
 
-        return _possibleConstructorReturn(this, Object.getPrototypeOf(RadioInputController).call(this, $scope, iVXjs, iVXjsActions));
+        return _possibleConstructorReturn(this, (RadioInputController.__proto__ || Object.getPrototypeOf(RadioInputController)).call(this, $scope, iVXjs, iVXjsActions));
     }
 
     return RadioInputController;
@@ -8061,7 +8134,7 @@ RadioInputController.$inject = ['$scope', 'iVXjs', 'ivxjs.actions'];
 
 exports.default = (0, _createFactoryFunction2.default)(RadioInputController);
 
-},{"../utilities/create-factory-function.js":356,"../utilities/input-controller.js":358}],312:[function(require,module,exports){
+},{"../utilities/create-factory-function.js":355,"../utilities/input-controller.js":357}],311:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -8088,7 +8161,7 @@ var TextInputController = function (_InputControllerHelpe) {
 	function TextInputController($scope, iVXjs, iVXjsActions) {
 		_classCallCheck(this, TextInputController);
 
-		return _possibleConstructorReturn(this, Object.getPrototypeOf(TextInputController).call(this, $scope, iVXjs, iVXjsActions));
+		return _possibleConstructorReturn(this, (TextInputController.__proto__ || Object.getPrototypeOf(TextInputController)).call(this, $scope, iVXjs, iVXjsActions));
 	}
 
 	return TextInputController;
@@ -8098,7 +8171,7 @@ TextInputController.$inject = ['$scope', 'iVXjs', 'ivxjs.actions'];
 
 exports.default = (0, _createFactoryFunction2.default)(TextInputController);
 
-},{"../utilities/create-factory-function.js":356,"../utilities/input-controller.js":358}],313:[function(require,module,exports){
+},{"../utilities/create-factory-function.js":355,"../utilities/input-controller.js":357}],312:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -8125,7 +8198,7 @@ var TextAreaInputController = function (_InputControllerHelpe) {
 	function TextAreaInputController($scope, iVXjs, iVXjsActions) {
 		_classCallCheck(this, TextAreaInputController);
 
-		return _possibleConstructorReturn(this, Object.getPrototypeOf(TextAreaInputController).call(this, $scope, iVXjs, iVXjsActions));
+		return _possibleConstructorReturn(this, (TextAreaInputController.__proto__ || Object.getPrototypeOf(TextAreaInputController)).call(this, $scope, iVXjs, iVXjsActions));
 	}
 
 	return TextAreaInputController;
@@ -8135,7 +8208,7 @@ TextAreaInputController.$inject = ['$scope', 'iVXjs', 'ivxjs.actions'];
 
 exports.default = (0, _createFactoryFunction2.default)(TextAreaInputController);
 
-},{"../utilities/create-factory-function.js":356,"../utilities/input-controller.js":358}],314:[function(require,module,exports){
+},{"../utilities/create-factory-function.js":355,"../utilities/input-controller.js":357}],313:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -8162,7 +8235,7 @@ var URLInputController = function (_InputControllerHelpe) {
 	function URLInputController($scope, iVXjs, iVXjsActions) {
 		_classCallCheck(this, URLInputController);
 
-		return _possibleConstructorReturn(this, Object.getPrototypeOf(URLInputController).call(this, $scope, iVXjs, iVXjsActions));
+		return _possibleConstructorReturn(this, (URLInputController.__proto__ || Object.getPrototypeOf(URLInputController)).call(this, $scope, iVXjs, iVXjsActions));
 	}
 
 	return URLInputController;
@@ -8172,7 +8245,7 @@ URLInputController.$inject = ['$scope', 'iVXjs', 'ivxjs.actions'];
 
 exports.default = (0, _createFactoryFunction2.default)(URLInputController);
 
-},{"../utilities/create-factory-function.js":356,"../utilities/input-controller.js":358}],315:[function(require,module,exports){
+},{"../utilities/create-factory-function.js":355,"../utilities/input-controller.js":357}],314:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -8193,13 +8266,13 @@ var HtmlStateController = function () {
     function HtmlStateController($state, $scope, $rootScope, iVXjsActions, iVXjsBus) {
         _classCallCheck(this, HtmlStateController);
 
-        var _$state$current$data = $state.current.data;
-        var id = _$state$current$data.id;
-        var timeoutInMs = _$state$current$data.timeoutInMs;
-        var _$state$current$data$ = _$state$current$data.onTimeout;
-        var onTimeout = _$state$current$data$ === undefined ? [] : _$state$current$data$;
-        var _$state$current$data$2 = _$state$current$data.next;
-        var next = _$state$current$data$2 === undefined ? [] : _$state$current$data$2;
+        var _$state$current$data = $state.current.data,
+            id = _$state$current$data.id,
+            timeoutInMs = _$state$current$data.timeoutInMs,
+            _$state$current$data$ = _$state$current$data.onTimeout,
+            onTimeout = _$state$current$data$ === undefined ? [] : _$state$current$data$,
+            _$state$current$data$2 = _$state$current$data.next,
+            next = _$state$current$data$2 === undefined ? [] : _$state$current$data$2;
 
 
         this.id = id;
@@ -8233,7 +8306,7 @@ HtmlStateController.$inject = ['$state', '$scope', '$rootScope', 'ivxjs.actions'
 
 exports.default = (0, _createFactoryFunction2.default)(HtmlStateController);
 
-},{"../utilities/create-factory-function.js":356}],316:[function(require,module,exports){
+},{"../utilities/create-factory-function.js":355}],315:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -8260,19 +8333,19 @@ var InputStateController = function InputStateController($state, $scope, $rootSc
     _classCallCheck(this, InputStateController);
 
     var thisStateDataClass = new _stateData2.default($state);
-    var _thisStateDataClass$s = thisStateDataClass.stateData;
-    var inputs = _thisStateDataClass$s.inputs;
-    var id = _thisStateDataClass$s.id;
-    var headerHTML = _thisStateDataClass$s.headerHTML;
-    var footerHTML = _thisStateDataClass$s.footerHTML;
-    var name = _thisStateDataClass$s.name;
-    var _thisStateDataClass$s2 = _thisStateDataClass$s.next;
-    var next = _thisStateDataClass$s2 === undefined ? [] : _thisStateDataClass$s2;
-    var _thisStateDataClass$s3 = _thisStateDataClass$s.onSubmit;
-    var onSubmit = _thisStateDataClass$s3 === undefined ? [] : _thisStateDataClass$s3;
-    var _thisStateDataClass$s4 = _thisStateDataClass$s.onInputReady;
-    var onInputReady = _thisStateDataClass$s4 === undefined ? [] : _thisStateDataClass$s4;
-    var audio = _thisStateDataClass$s.audio;
+    var _thisStateDataClass$s = thisStateDataClass.stateData,
+        inputs = _thisStateDataClass$s.inputs,
+        id = _thisStateDataClass$s.id,
+        headerHTML = _thisStateDataClass$s.headerHTML,
+        footerHTML = _thisStateDataClass$s.footerHTML,
+        name = _thisStateDataClass$s.name,
+        _thisStateDataClass$s2 = _thisStateDataClass$s.next,
+        next = _thisStateDataClass$s2 === undefined ? [] : _thisStateDataClass$s2,
+        _thisStateDataClass$s3 = _thisStateDataClass$s.onSubmit,
+        onSubmit = _thisStateDataClass$s3 === undefined ? [] : _thisStateDataClass$s3,
+        _thisStateDataClass$s4 = _thisStateDataClass$s.onInputReady,
+        onInputReady = _thisStateDataClass$s4 === undefined ? [] : _thisStateDataClass$s4,
+        audio = _thisStateDataClass$s.audio;
 
     var audioEventNames = new _audioEvents2.default();
 
@@ -8316,7 +8389,7 @@ InputStateController.$inject = ['$state', '$scope', '$rootScope', '$timeout', 'i
 
 exports.default = (0, _createFactoryFunction2.default)(InputStateController);
 
-},{"../../constants/audio.events.js":363,"../utilities/create-factory-function.js":356,"../utilities/state-data.js":360}],317:[function(require,module,exports){
+},{"../../constants/audio.events.js":362,"../utilities/create-factory-function.js":355,"../utilities/state-data.js":359}],316:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -8364,17 +8437,17 @@ function sortCuePoints(cuePoints) {
 var VideoStateController = function VideoStateController($rootScope, $state, iVXjsActions, iVXjsBus, iVXjs) {
     _classCallCheck(this, VideoStateController);
 
-    var _$state$current$data = $state.current.data;
-    var playerSettings = _$state$current$data.playerSettings;
-    var _$state$current$data$ = _$state$current$data.onVideoEnd;
-    var onVideoEnd = _$state$current$data$ === undefined ? [] : _$state$current$data$;
-    var _$state$current$data$2 = _$state$current$data.onVideoReady;
-    var onVideoReady = _$state$current$data$2 === undefined ? [] : _$state$current$data$2;
-    var next = _$state$current$data.next;
-    var _$state$current$data$3 = _$state$current$data.cuePoints;
-    var cuePoints = _$state$current$data$3 === undefined ? [] : _$state$current$data$3;
-    var _playerSettings$autop = playerSettings.autoplay;
-    var autoplay = _playerSettings$autop === undefined ? false : _playerSettings$autop;
+    var _$state$current$data = $state.current.data,
+        playerSettings = _$state$current$data.playerSettings,
+        _$state$current$data$ = _$state$current$data.onVideoEnd,
+        onVideoEnd = _$state$current$data$ === undefined ? [] : _$state$current$data$,
+        _$state$current$data$2 = _$state$current$data.onVideoReady,
+        onVideoReady = _$state$current$data$2 === undefined ? [] : _$state$current$data$2,
+        next = _$state$current$data.next,
+        _$state$current$data$3 = _$state$current$data.cuePoints,
+        cuePoints = _$state$current$data$3 === undefined ? [] : _$state$current$data$3;
+    var _playerSettings$autop = playerSettings.autoplay,
+        autoplay = _playerSettings$autop === undefined ? false : _playerSettings$autop;
 
     var videoEventNames = new _videoEvents2.default();
 
@@ -8413,11 +8486,11 @@ var VideoStateController = function VideoStateController($rootScope, $state, iVX
         if (cuePoints.length <= 0) return;
 
         cuePoints.forEach(function (cuePoint, index) {
-            var timeAt = cuePoint.timeAt;
-            var _cuePoint$fired = cuePoint.fired;
-            var fired = _cuePoint$fired === undefined ? false : _cuePoint$fired;
-            var _cuePoint$always = cuePoint.always;
-            var always = _cuePoint$always === undefined ? false : _cuePoint$always;
+            var timeAt = cuePoint.timeAt,
+                _cuePoint$fired = cuePoint.fired,
+                fired = _cuePoint$fired === undefined ? false : _cuePoint$fired,
+                _cuePoint$always = cuePoint.always,
+                always = _cuePoint$always === undefined ? false : _cuePoint$always;
 
             var timeUntil = Math.abs(cuePoint.timeAt - currentTime);
 
@@ -8434,7 +8507,7 @@ VideoStateController.$inject = ['$rootScope', '$state', 'ivxjs.actions', 'ivxjs.
 
 exports.default = (0, _createFactoryFunction2.default)(VideoStateController);
 
-},{"../../constants/video.events.js":377,"../utilities/create-factory-function.js":356}],318:[function(require,module,exports){
+},{"../../constants/video.events.js":376,"../utilities/create-factory-function.js":355}],317:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -8463,12 +8536,12 @@ var AnchorController = function () {
 	_createClass(AnchorController, [{
 		key: 'onLinkClick',
 		value: function onLinkClick($event) {
-			var _anchorInfo = this.anchorInfo;
-			var _anchorInfo$onClick = _anchorInfo.onClick;
-			var onClickEvents = _anchorInfo$onClick === undefined ? [] : _anchorInfo$onClick;
-			var href = _anchorInfo.href;
-			var _anchorInfo$attribute = _anchorInfo.attributes;
-			var attributes = _anchorInfo$attribute === undefined ? {} : _anchorInfo$attribute;
+			var _anchorInfo = this.anchorInfo,
+			    _anchorInfo$onClick = _anchorInfo.onClick,
+			    onClickEvents = _anchorInfo$onClick === undefined ? [] : _anchorInfo$onClick,
+			    href = _anchorInfo.href,
+			    _anchorInfo$attribute = _anchorInfo.attributes,
+			    attributes = _anchorInfo$attribute === undefined ? {} : _anchorInfo$attribute;
 
 			var self = this;
 			var hasGoToNextState = onClickEvents.find(function (clickEvent, index) {
@@ -8498,7 +8571,7 @@ AnchorController.$inject = ['$scope', '$window', 'ivxjs.actions', 'ivxjs.modules
 
 exports.default = (0, _createFactoryFunction2.default)(AnchorController);
 
-},{"../utilities/create-factory-function.js":356}],319:[function(require,module,exports){
+},{"../utilities/create-factory-function.js":355}],318:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -8532,7 +8605,7 @@ StandardControls.$inject = ['ivxjs.bus'];
 
 exports.default = (0, _createFactoryFunction2.default)(StandardControls);
 
-},{"../../constants/video.events.js":377,"../utilities/create-factory-function.js":356}],320:[function(require,module,exports){
+},{"../../constants/video.events.js":376,"../utilities/create-factory-function.js":355}],319:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -8566,7 +8639,7 @@ HTML5VideoPlayerController.$inject = ['$scope', 'ivxjs.bus'];
 
 exports.default = (0, _createFactoryFunction2.default)(HTML5VideoPlayerController);
 
-},{"../../constants/video.events.js":377,"../utilities/create-factory-function.js":356}],321:[function(require,module,exports){
+},{"../../constants/video.events.js":376,"../utilities/create-factory-function.js":355}],320:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -8600,7 +8673,7 @@ VimeoVideoPlayerController.$inject = ['$scope', 'ivxjs.bus'];
 
 exports.default = (0, _createFactoryFunction2.default)(VimeoVideoPlayerController);
 
-},{"../../constants/video.events.js":377,"../utilities/create-factory-function.js":356}],322:[function(require,module,exports){
+},{"../../constants/video.events.js":376,"../utilities/create-factory-function.js":355}],321:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -8634,7 +8707,7 @@ YoutubeVideoPlayerController.$inject = ['$rootScope', '$scope', '$window', 'ivxj
 
 exports.default = (0, _createFactoryFunction2.default)(YoutubeVideoPlayerController);
 
-},{"../../constants/video.events.js":377,"../utilities/create-factory-function.js":356}],323:[function(require,module,exports){
+},{"../../constants/video.events.js":376,"../utilities/create-factory-function.js":355}],322:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -8673,32 +8746,32 @@ var ButtonsInput = function () {
         this.controllerAs = 'vm';
         this.link = function ($scope, iElm, iAttrs, controller) {
             var input = $scope.inputData;
-            var _input = input;
-            var id = _input.id;
-            var name = _input.name;
-            var labelHTML = _input.labelHTML;
-            var _input$label = _input.label;
-            var label = _input$label === undefined ? '' : _input$label;
-            var _input$errors = _input.errors;
-            var errors = _input$errors === undefined ? { required: 'Must click to continue.' } : _input$errors;
-            var _input$skipSettings = _input.skipSettings;
-            var skipSettings = _input$skipSettings === undefined ? { label: "Skip" } : _input$skipSettings;
-            var buttons = _input.buttons;
-            var _input$attributes = _input.attributes;
-            var attributes = _input$attributes === undefined ? {} : _input$attributes;
-            var _input$settings = _input.settings;
-            var settings = _input$settings === undefined ? {} : _input$settings;
+            var _input = input,
+                id = _input.id,
+                name = _input.name,
+                labelHTML = _input.labelHTML,
+                _input$label = _input.label,
+                label = _input$label === undefined ? '' : _input$label,
+                _input$errors = _input.errors,
+                errors = _input$errors === undefined ? { required: 'Must click to continue.' } : _input$errors,
+                _input$skipSettings = _input.skipSettings,
+                skipSettings = _input$skipSettings === undefined ? { label: "Skip" } : _input$skipSettings,
+                buttons = _input.buttons,
+                _input$attributes = _input.attributes,
+                attributes = _input$attributes === undefined ? {} : _input$attributes,
+                _input$settings = _input.settings,
+                settings = _input$settings === undefined ? {} : _input$settings;
 
             var inputButtonData = buttons.map(function (button, index) {
                 button = pullInTemplate.convertLabel(button.value, button, $scope);
 
                 var buttonString = angular.toJson(button);
-                var _button = button;
-                var label = _button.label;
-                var labelHTML = _button.labelHTML;
-                var value = _button.value;
-                var _button$classes = _button.classes;
-                var classes = _button$classes === undefined ? '' : _button$classes;
+                var _button = button,
+                    label = _button.label,
+                    labelHTML = _button.labelHTML,
+                    value = _button.value,
+                    _button$classes = _button.classes,
+                    classes = _button$classes === undefined ? '' : _button$classes;
 
 
                 label = labelHTML ? labelHTML : label;
@@ -8714,11 +8787,11 @@ var ButtonsInput = function () {
             input = pullInTemplate.convertLabel($filter('stringParsers')('startCase', id), input, $scope);
 
             if (!attributes.required) {
-                var _label = skipSettings.label;
-                var _labelHTML = skipSettings.labelHTML;
-                var value = skipSettings.value;
-                var _skipSettings$classes = skipSettings.classes;
-                var classes = _skipSettings$classes === undefined ? '' : _skipSettings$classes;
+                var _label = skipSettings.label,
+                    _labelHTML = skipSettings.labelHTML,
+                    value = skipSettings.value,
+                    _skipSettings$classes = skipSettings.classes,
+                    classes = _skipSettings$classes === undefined ? '' : _skipSettings$classes;
 
 
                 _label = _labelHTML ? _labelHTML : _label;
@@ -8759,7 +8832,7 @@ ButtonsInput.$inject = ['$compile', '$filter', 'iVXjs', 'ivxjs.modules.ui', 'pul
 
 exports.default = (0, _createFactoryFunction2.default)(ButtonsInput);
 
-},{"../controllers/input.buttons.js":303,"../utilities/create-factory-function.js":356,"../utilities/messages.error.js":359}],324:[function(require,module,exports){
+},{"../controllers/input.buttons.js":302,"../utilities/create-factory-function.js":355,"../utilities/messages.error.js":358}],323:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -8798,17 +8871,17 @@ var CheckboxInput = function () {
         this.controllerAs = 'vm';
         this.link = function ($scope, iElm, iAttrs, controller) {
             var input = $scope.inputData;
-            var _input = input;
-            var id = _input.id;
-            var name = _input.name;
-            var _input$errors = _input.errors;
-            var errors = _input$errors === undefined ? {} : _input$errors;
-            var labelHTML = _input.labelHTML;
-            var label = _input.label;
-            var _input$attributes = _input.attributes;
-            var attributes = _input$attributes === undefined ? {} : _input$attributes;
-            var _input$settings = _input.settings;
-            var settings = _input$settings === undefined ? {} : _input$settings;
+            var _input = input,
+                id = _input.id,
+                name = _input.name,
+                _input$errors = _input.errors,
+                errors = _input$errors === undefined ? {} : _input$errors,
+                labelHTML = _input.labelHTML,
+                label = _input.label,
+                _input$attributes = _input.attributes,
+                attributes = _input$attributes === undefined ? {} : _input$attributes,
+                _input$settings = _input.settings,
+                settings = _input$settings === undefined ? {} : _input$settings;
 
             var tagHTML = 'ng-blur="vm.onChange(inputValue)" ng-model="inputValue"';
 
@@ -8843,7 +8916,7 @@ CheckboxInput.$inject = ['$compile', '$filter', 'ivxjs.modules.ui', 'pullInTempl
 
 exports.default = (0, _createFactoryFunction2.default)(CheckboxInput);
 
-},{"../controllers/input.checkbox.js":304,"../utilities/create-factory-function.js":356,"../utilities/messages.error.js":359}],325:[function(require,module,exports){
+},{"../controllers/input.checkbox.js":303,"../utilities/create-factory-function.js":355,"../utilities/messages.error.js":358}],324:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -8884,17 +8957,17 @@ var DateInput = function () {
         this.controllerAs = 'vm';
         this.link = function ($scope, iElm, iAttrs, controller) {
             var input = $scope.inputData;
-            var _input = input;
-            var id = _input.id;
-            var name = _input.name;
-            var _input$errors = _input.errors;
-            var errors = _input$errors === undefined ? {} : _input$errors;
-            var labelHTML = _input.labelHTML;
-            var label = _input.label;
-            var _input$attributes = _input.attributes;
-            var attributes = _input$attributes === undefined ? {} : _input$attributes;
-            var _input$settings = _input.settings;
-            var settings = _input$settings === undefined ? {} : _input$settings;
+            var _input = input,
+                id = _input.id,
+                name = _input.name,
+                _input$errors = _input.errors,
+                errors = _input$errors === undefined ? {} : _input$errors,
+                labelHTML = _input.labelHTML,
+                label = _input.label,
+                _input$attributes = _input.attributes,
+                attributes = _input$attributes === undefined ? {} : _input$attributes,
+                _input$settings = _input.settings,
+                settings = _input$settings === undefined ? {} : _input$settings;
 
 
             if (attributes.min) {
@@ -8945,7 +9018,7 @@ DateInput.$inject = ['$compile', '$filter', 'iVXjs', 'ivxjs.modules.ui', 'pullIn
 
 exports.default = (0, _createFactoryFunction2.default)(DateInput);
 
-},{"../controllers/input.date.js":306,"../utilities/create-factory-function.js":356,"../utilities/date-parser.js":357,"../utilities/messages.error.js":359}],326:[function(require,module,exports){
+},{"../controllers/input.date.js":305,"../utilities/create-factory-function.js":355,"../utilities/date-parser.js":356,"../utilities/messages.error.js":358}],325:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -8986,17 +9059,17 @@ var DateTimeLocalInput = function () {
         this.controllerAs = 'vm';
         this.link = function ($scope, iElm, iAttrs, controller) {
             var input = $scope.inputData;
-            var _input = input;
-            var id = _input.id;
-            var name = _input.name;
-            var _input$errors = _input.errors;
-            var errors = _input$errors === undefined ? {} : _input$errors;
-            var labelHTML = _input.labelHTML;
-            var label = _input.label;
-            var _input$attributes = _input.attributes;
-            var attributes = _input$attributes === undefined ? {} : _input$attributes;
-            var _input$settings = _input.settings;
-            var settings = _input$settings === undefined ? {} : _input$settings;
+            var _input = input,
+                id = _input.id,
+                name = _input.name,
+                _input$errors = _input.errors,
+                errors = _input$errors === undefined ? {} : _input$errors,
+                labelHTML = _input.labelHTML,
+                label = _input.label,
+                _input$attributes = _input.attributes,
+                attributes = _input$attributes === undefined ? {} : _input$attributes,
+                _input$settings = _input.settings,
+                settings = _input$settings === undefined ? {} : _input$settings;
 
 
             input.label = label ? label : $filter('stringParsers')('startCase', id);
@@ -9044,7 +9117,7 @@ DateTimeLocalInput.$inject = ['$compile', '$filter', 'ivxjs.modules.ui', 'pullIn
 
 exports.default = (0, _createFactoryFunction2.default)(DateTimeLocalInput);
 
-},{"../controllers/input.date-time-local.js":305,"../utilities/create-factory-function.js":356,"../utilities/date-parser.js":357,"../utilities/messages.error.js":359}],327:[function(require,module,exports){
+},{"../controllers/input.date-time-local.js":304,"../utilities/create-factory-function.js":355,"../utilities/date-parser.js":356,"../utilities/messages.error.js":358}],326:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -9083,18 +9156,18 @@ var EmailInput = function () {
         this.controllerAs = 'vm';
         this.link = function ($scope, iElm, iAttrs, controller) {
             var input = $scope.inputData;
-            var _input = input;
-            var id = _input.id;
-            var name = _input.name;
-            var _input$errors = _input.errors;
-            var errors = _input$errors === undefined ? {} : _input$errors;
-            var labelHTML = _input.labelHTML;
-            var label = _input.label;
-            var _input$attributes = _input.attributes;
-            var attributes = _input$attributes === undefined ? {} : _input$attributes;
-            var type = _input.type;
-            var _input$settings = _input.settings;
-            var settings = _input$settings === undefined ? {} : _input$settings;
+            var _input = input,
+                id = _input.id,
+                name = _input.name,
+                _input$errors = _input.errors,
+                errors = _input$errors === undefined ? {} : _input$errors,
+                labelHTML = _input.labelHTML,
+                label = _input.label,
+                _input$attributes = _input.attributes,
+                attributes = _input$attributes === undefined ? {} : _input$attributes,
+                type = _input.type,
+                _input$settings = _input.settings,
+                settings = _input$settings === undefined ? {} : _input$settings;
 
             var errorMessages = new _messagesError.ErrorMessages(input, errors, attributes);
             var tagHTML = 'ng-blur="vm.onChange(inputValue)" ng-model="inputValue"';
@@ -9129,7 +9202,7 @@ EmailInput.$inject = ['$compile', '$filter', 'ivxjs.modules.ui', 'pullInTemplate
 
 exports.default = (0, _createFactoryFunction2.default)(EmailInput);
 
-},{"../controllers/input.email.js":307,"../utilities/create-factory-function.js":356,"../utilities/messages.error.js":359}],328:[function(require,module,exports){
+},{"../controllers/input.email.js":306,"../utilities/create-factory-function.js":355,"../utilities/messages.error.js":358}],327:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -9174,20 +9247,21 @@ var FormInput = function () {
                 return hideSubmitOnType[type];
             };
             var hideSubmit = false;
-            var inputs = $scope.inputs;
-            var _$scope$formSettings = $scope.formSettings;
-            var formSettings = _$scope$formSettings === undefined ? {} : _$scope$formSettings;
-            var formId = $scope.formId;
+            var inputs = $scope.inputs,
+                _$scope$formSettings = $scope.formSettings,
+                formSettings = _$scope$formSettings === undefined ? {} : _$scope$formSettings,
+                formId = $scope.formId;
 
             var formInputs = inputs.map(function (input) {
-                var type = input.type;
-                var attributes = input.attributes;
-                var _input$settings = input.settings;
-                var settings = _input$settings === undefined ? {} : _input$settings;
-                var id = input.id;
+                var type = input.type,
+                    attributes = input.attributes,
+                    _input$settings = input.settings,
+                    settings = _input$settings === undefined ? {} : _input$settings,
+                    id = input.id;
 
                 var inputString = JSON.stringify(input);
 
+                inputString = inputString.replace(/\'/g, '&#39;');
                 hideSubmit = shouldHideSubmit(inputs, type, attributes);
 
                 return {
@@ -9224,7 +9298,7 @@ FormInput.$inject = ['$compile', '$filter', 'ivxjs.modules.ui', 'pullInTemplate'
 
 exports.default = (0, _createFactoryFunction2.default)(FormInput);
 
-},{"../controllers/input.form.js":308,"../utilities/create-factory-function.js":356}],329:[function(require,module,exports){
+},{"../controllers/input.form.js":307,"../utilities/create-factory-function.js":355}],328:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -9263,18 +9337,18 @@ var NumberInput = function () {
         this.controllerAs = 'vm';
         this.link = function ($scope, iElm, iAttrs, controller) {
             var input = $scope.inputData;
-            var _input = input;
-            var id = _input.id;
-            var name = _input.name;
-            var _input$errors = _input.errors;
-            var errors = _input$errors === undefined ? {} : _input$errors;
-            var labelHTML = _input.labelHTML;
-            var label = _input.label;
-            var _input$attributes = _input.attributes;
-            var attributes = _input$attributes === undefined ? {} : _input$attributes;
-            var type = _input.type;
-            var _input$settings = _input.settings;
-            var settings = _input$settings === undefined ? {} : _input$settings;
+            var _input = input,
+                id = _input.id,
+                name = _input.name,
+                _input$errors = _input.errors,
+                errors = _input$errors === undefined ? {} : _input$errors,
+                labelHTML = _input.labelHTML,
+                label = _input.label,
+                _input$attributes = _input.attributes,
+                attributes = _input$attributes === undefined ? {} : _input$attributes,
+                type = _input.type,
+                _input$settings = _input.settings,
+                settings = _input$settings === undefined ? {} : _input$settings;
 
             var errorMessages = new _messagesError.ErrorMessages(input, errors, attributes);
             var tagHTML = 'ng-blur="vm.onChange(inputValue)" ng-model="inputValue"';
@@ -9309,7 +9383,7 @@ NumberInput.$inject = ['$compile', '$filter', 'ivxjs.modules.ui', 'pullInTemplat
 
 exports.default = (0, _createFactoryFunction2.default)(NumberInput);
 
-},{"../controllers/input.number.js":309,"../utilities/create-factory-function.js":356,"../utilities/messages.error.js":359}],330:[function(require,module,exports){
+},{"../controllers/input.number.js":308,"../utilities/create-factory-function.js":355,"../utilities/messages.error.js":358}],329:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -9348,20 +9422,20 @@ var OptionsInput = function () {
         this.replace = true;
         this.link = function ($scope, iElm, iAttrs, controller) {
             var input = $scope.inputData;
-            var _input = input;
-            var id = _input.id;
-            var _input$errors = _input.errors;
-            var errors = _input$errors === undefined ? {} : _input$errors;
-            var name = _input.name;
-            var labelHTML = _input.labelHTML;
-            var _input$attributes = _input.attributes;
-            var attributes = _input$attributes === undefined ? {} : _input$attributes;
-            var options = _input.options;
-            var defaultDisplay = _input.defaultDisplay;
-            var _input$settings = _input.settings;
-            var settings = _input$settings === undefined ? {} : _input$settings;
-            var _settings$directives = settings.directives;
-            var directives = _settings$directives === undefined ? '' : _settings$directives;
+            var _input = input,
+                id = _input.id,
+                _input$errors = _input.errors,
+                errors = _input$errors === undefined ? {} : _input$errors,
+                name = _input.name,
+                labelHTML = _input.labelHTML,
+                _input$attributes = _input.attributes,
+                attributes = _input$attributes === undefined ? {} : _input$attributes,
+                options = _input.options,
+                defaultDisplay = _input.defaultDisplay,
+                _input$settings = _input.settings,
+                settings = _input$settings === undefined ? {} : _input$settings;
+            var _settings$directives = settings.directives,
+                directives = _settings$directives === undefined ? '' : _settings$directives;
 
             var errorMessages = new _messagesError.ErrorMessages(input, errors, attributes);
             var defaultOptionTag = '<option value="">Select an option...</option>';
@@ -9404,7 +9478,7 @@ OptionsInput.$inject = ['$compile', '$filter', 'ivxjs.modules.ui', 'ivxjs.bus', 
 
 exports.default = (0, _createFactoryFunction2.default)(OptionsInput);
 
-},{"../controllers/input.options.js":310,"../utilities/create-factory-function.js":356,"../utilities/messages.error.js":359}],331:[function(require,module,exports){
+},{"../controllers/input.options.js":309,"../utilities/create-factory-function.js":355,"../utilities/messages.error.js":358}],330:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -9443,19 +9517,19 @@ var RadioInput = function () {
         this.controllerAs = 'vm';
         this.link = function ($scope, iElm, iAttrs, controller) {
             var input = $scope.inputData;
-            var _input = input;
-            var id = _input.id;
-            var _input$errors = _input.errors;
-            var errors = _input$errors === undefined ? {} : _input$errors;
-            var name = _input.name;
-            var labelHTML = _input.labelHTML;
-            var label = _input.label;
-            var _input$attributes = _input.attributes;
-            var attributes = _input$attributes === undefined ? {} : _input$attributes;
-            var _input$radioButtons = _input.radioButtons;
-            var radioButtons = _input$radioButtons === undefined ? [] : _input$radioButtons;
-            var _input$settings = _input.settings;
-            var settings = _input$settings === undefined ? {} : _input$settings;
+            var _input = input,
+                id = _input.id,
+                _input$errors = _input.errors,
+                errors = _input$errors === undefined ? {} : _input$errors,
+                name = _input.name,
+                labelHTML = _input.labelHTML,
+                label = _input.label,
+                _input$attributes = _input.attributes,
+                attributes = _input$attributes === undefined ? {} : _input$attributes,
+                _input$radioButtons = _input.radioButtons,
+                radioButtons = _input$radioButtons === undefined ? [] : _input$radioButtons,
+                _input$settings = _input.settings,
+                settings = _input$settings === undefined ? {} : _input$settings;
 
             var radioErrorRequired = '';
 
@@ -9470,12 +9544,12 @@ var RadioInput = function () {
             var inputRadioButtonData = radioButtons.map(function (radioButton, index) {
                 radioButton = pullInTemplate.convertLabel('', radioButton, $scope);
 
-                var _radioButton = radioButton;
-                var label = _radioButton.label;
-                var labelHTML = _radioButton.labelHTML;
-                var value = _radioButton.value;
-                var _radioButton$classes = _radioButton.classes;
-                var classes = _radioButton$classes === undefined ? '' : _radioButton$classes;
+                var _radioButton = radioButton,
+                    label = _radioButton.label,
+                    labelHTML = _radioButton.labelHTML,
+                    value = _radioButton.value,
+                    _radioButton$classes = _radioButton.classes,
+                    classes = _radioButton$classes === undefined ? '' : _radioButton$classes;
 
 
                 if (labelHTML) label = labelHTML;
@@ -9515,7 +9589,7 @@ RadioInput.$inject = ['$compile', '$filter', 'ivxjs.modules.ui', 'pullInTemplate
 
 exports.default = (0, _createFactoryFunction2.default)(RadioInput);
 
-},{"../controllers/input.radio.js":311,"../utilities/create-factory-function.js":356,"../utilities/messages.error.js":359}],332:[function(require,module,exports){
+},{"../controllers/input.radio.js":310,"../utilities/create-factory-function.js":355,"../utilities/messages.error.js":358}],331:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -9554,19 +9628,19 @@ var TextInput = function () {
         this.controllerAs = 'vm';
         this.link = function ($scope, iElm, iAttrs, controller) {
             var input = $scope.inputData;
-            var _input = input;
-            var id = _input.id;
-            var name = _input.name;
-            var _input$errors = _input.errors;
-            var errors = _input$errors === undefined ? {} : _input$errors;
-            var labelHTML = _input.labelHTML;
-            var _input$label = _input.label;
-            var label = _input$label === undefined ? $filter('stringParsers')('startCase', id) : _input$label;
-            var _input$attributes = _input.attributes;
-            var attributes = _input$attributes === undefined ? {} : _input$attributes;
-            var type = _input.type;
-            var _input$settings = _input.settings;
-            var settings = _input$settings === undefined ? {} : _input$settings;
+            var _input = input,
+                id = _input.id,
+                name = _input.name,
+                _input$errors = _input.errors,
+                errors = _input$errors === undefined ? {} : _input$errors,
+                labelHTML = _input.labelHTML,
+                _input$label = _input.label,
+                label = _input$label === undefined ? $filter('stringParsers')('startCase', id) : _input$label,
+                _input$attributes = _input.attributes,
+                attributes = _input$attributes === undefined ? {} : _input$attributes,
+                type = _input.type,
+                _input$settings = _input.settings,
+                settings = _input$settings === undefined ? {} : _input$settings;
 
             var errorMessages = new _messagesError.ErrorMessages(input, errors, attributes);
             var tagHTML = 'ng-blur="vm.onChange(inputValue)" ng-model="inputValue"';
@@ -9602,7 +9676,7 @@ TextInput.$inject = ['$compile', '$filter', 'iVXjs', 'ivxjs.modules.ui', 'pullIn
 
 exports.default = (0, _createFactoryFunction2.default)(TextInput);
 
-},{"../controllers/input.text.js":312,"../utilities/create-factory-function.js":356,"../utilities/messages.error.js":359}],333:[function(require,module,exports){
+},{"../controllers/input.text.js":311,"../utilities/create-factory-function.js":355,"../utilities/messages.error.js":358}],332:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -9641,18 +9715,18 @@ var TextAreaInput = function () {
         this.controllerAs = 'vm';
         this.link = function ($scope, iElm, iAttrs, controller) {
             var input = $scope.inputData;
-            var _input = input;
-            var id = _input.id;
-            var name = _input.name;
-            var _input$errors = _input.errors;
-            var errors = _input$errors === undefined ? {} : _input$errors;
-            var labelHTML = _input.labelHTML;
-            var label = _input.label;
-            var _input$attributes = _input.attributes;
-            var attributes = _input$attributes === undefined ? {} : _input$attributes;
-            var type = _input.type;
-            var _input$settings = _input.settings;
-            var settings = _input$settings === undefined ? {} : _input$settings;
+            var _input = input,
+                id = _input.id,
+                name = _input.name,
+                _input$errors = _input.errors,
+                errors = _input$errors === undefined ? {} : _input$errors,
+                labelHTML = _input.labelHTML,
+                label = _input.label,
+                _input$attributes = _input.attributes,
+                attributes = _input$attributes === undefined ? {} : _input$attributes,
+                type = _input.type,
+                _input$settings = _input.settings,
+                settings = _input$settings === undefined ? {} : _input$settings;
 
             var errorMessages = new _messagesError.ErrorMessages(input, errors, attributes);
             var tagHTML = 'ng-blur="vm.onChange(inputValue)" ng-model="inputValue"';
@@ -9687,7 +9761,7 @@ TextAreaInput.$inject = ['$compile', '$filter', 'ivxjs.modules.ui', 'pullInTempl
 
 exports.default = (0, _createFactoryFunction2.default)(TextAreaInput);
 
-},{"../controllers/input.textarea.js":313,"../utilities/create-factory-function.js":356,"../utilities/messages.error.js":359}],334:[function(require,module,exports){
+},{"../controllers/input.textarea.js":312,"../utilities/create-factory-function.js":355,"../utilities/messages.error.js":358}],333:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -9726,18 +9800,18 @@ var UrlInput = function () {
         this.controllerAs = 'vm';
         this.link = function ($scope, iElm, iAttrs, controller) {
             var input = $scope.inputData;
-            var _input = input;
-            var id = _input.id;
-            var name = _input.name;
-            var _input$errors = _input.errors;
-            var errors = _input$errors === undefined ? {} : _input$errors;
-            var labelHTML = _input.labelHTML;
-            var label = _input.label;
-            var _input$attributes = _input.attributes;
-            var attributes = _input$attributes === undefined ? {} : _input$attributes;
-            var type = _input.type;
-            var _input$settings = _input.settings;
-            var settings = _input$settings === undefined ? {} : _input$settings;
+            var _input = input,
+                id = _input.id,
+                name = _input.name,
+                _input$errors = _input.errors,
+                errors = _input$errors === undefined ? {} : _input$errors,
+                labelHTML = _input.labelHTML,
+                label = _input.label,
+                _input$attributes = _input.attributes,
+                attributes = _input$attributes === undefined ? {} : _input$attributes,
+                type = _input.type,
+                _input$settings = _input.settings,
+                settings = _input$settings === undefined ? {} : _input$settings;
 
             var errorMessages = new _messagesError.ErrorMessages(input, errors, attributes);
             var tagHTML = 'ng-blur="vm.onChange(inputValue)" ng-model="inputValue"';
@@ -9772,7 +9846,7 @@ UrlInput.$inject = ['$compile', '$filter', 'ivxjs.modules.ui', 'pullInTemplate']
 
 exports.default = (0, _createFactoryFunction2.default)(UrlInput);
 
-},{"../controllers/input.url.js":314,"../utilities/create-factory-function.js":356,"../utilities/messages.error.js":359}],335:[function(require,module,exports){
+},{"../controllers/input.url.js":313,"../utilities/create-factory-function.js":355,"../utilities/messages.error.js":358}],334:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -9808,13 +9882,13 @@ var HtmlState = function () {
         this.controller = _stateHtml2.default;
         this.controllerAs = 'vm';
         this.link = function ($scope, iElm, iAttrs, controller) {
-            var _$state$current$data = $state.current.data;
-            var id = _$state$current$data.id;
-            var html = _$state$current$data.html;
-            var templateUrl = _$state$current$data.templateUrl;
-            var _$state$current$data$ = _$state$current$data.onCompile;
-            var onCompile = _$state$current$data$ === undefined ? [] : _$state$current$data$;
-            var audio = _$state$current$data.audio;
+            var _$state$current$data = $state.current.data,
+                id = _$state$current$data.id,
+                html = _$state$current$data.html,
+                templateUrl = _$state$current$data.templateUrl,
+                _$state$current$data$ = _$state$current$data.onCompile,
+                onCompile = _$state$current$data$ === undefined ? [] : _$state$current$data$,
+                audio = _$state$current$data.audio;
 
             var audioEventNames = new _audioEvents2.default();
 
@@ -9869,7 +9943,7 @@ HtmlState.$inject = ['$state', '$http', '$compile', '$sce', '$timeout', 'iVXjs',
 
 exports.default = (0, _createFactoryFunction2.default)(HtmlState);
 
-},{"../../constants/audio.events.js":363,"../controllers/state.html.js":315,"../utilities/create-factory-function.js":356}],336:[function(require,module,exports){
+},{"../../constants/audio.events.js":362,"../controllers/state.html.js":314,"../utilities/create-factory-function.js":355}],335:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -9902,18 +9976,18 @@ var InputState = function () {
         this.controllerAs = 'vm';
         this.link = function ($scope, iElm, iAttrs, controller) {
             var data = $state.current.data;
-            var _data = data;
-            var headerHTML = _data.headerHTML;
-            var _data$footerHTML = _data.footerHTML;
-            var footerHTML = _data$footerHTML === undefined ? '' : _data$footerHTML;
-            var _data$onInputReady = _data.onInputReady;
-            var onInputReady = _data$onInputReady === undefined ? [] : _data$onInputReady;
-            var _data$form = _data.form;
-            var formSettings = _data$form === undefined ? {} : _data$form;
-            var _data$header = _data.header;
-            var header = _data$header === undefined ? {} : _data$header;
-            var _data$footer = _data.footer;
-            var footer = _data$footer === undefined ? {} : _data$footer;
+            var _data = data,
+                headerHTML = _data.headerHTML,
+                _data$footerHTML = _data.footerHTML,
+                footerHTML = _data$footerHTML === undefined ? '' : _data$footerHTML,
+                _data$onInputReady = _data.onInputReady,
+                onInputReady = _data$onInputReady === undefined ? [] : _data$onInputReady,
+                _data$form = _data.form,
+                formSettings = _data$form === undefined ? {} : _data$form,
+                _data$header = _data.header,
+                header = _data$header === undefined ? {} : _data$header,
+                _data$footer = _data.footer,
+                footer = _data$footer === undefined ? {} : _data$footer;
 
             var formSection = '<ivxjs-form-input inputs=\'vm.inputs\' form-id=\'vm.id\' on-submit=\'vm.onSubmit\' form-settings="vm.formSettings"></ivxjs-form-input>';
 
@@ -9943,7 +10017,7 @@ InputState.$inject = ['$state', '$compile', '$sce', 'iVXjs', 'ivxjs.actions', 'i
 
 exports.default = (0, _createFactoryFunction2.default)(InputState);
 
-},{"../controllers/state.input.js":316,"../utilities/create-factory-function.js":356}],337:[function(require,module,exports){
+},{"../controllers/state.input.js":315,"../utilities/create-factory-function.js":355}],336:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -9976,16 +10050,16 @@ var NavigationState = function () {
 		this.controllerAs = 'vm';
 		this.link = function ($scope, iElm, iAttrs, controller) {
 			var data = $state.current.data;
-			var _data = data;
-			var _data$links = _data.links;
-			var links = _data$links === undefined ? [] : _data$links;
-			var _data$header = _data.header;
-			var header = _data$header === undefined ? {} : _data$header;
-			var _data$footer = _data.footer;
-			var footer = _data$footer === undefined ? {} : _data$footer;
-			var audio = _data.audio;
-			var _data$onLinksReady = _data.onLinksReady;
-			var onLinksReady = _data$onLinksReady === undefined ? [] : _data$onLinksReady;
+			var _data = data,
+			    _data$links = _data.links,
+			    links = _data$links === undefined ? [] : _data$links,
+			    _data$header = _data.header,
+			    header = _data$header === undefined ? {} : _data$header,
+			    _data$footer = _data.footer,
+			    footer = _data$footer === undefined ? {} : _data$footer,
+			    audio = _data.audio,
+			    _data$onLinksReady = _data.onLinksReady,
+			    onLinksReady = _data$onLinksReady === undefined ? [] : _data$onLinksReady;
 
 			var linkSection = links.reduce(function (html, link, index) {
 				var linkString = angular.toJson(link);
@@ -10039,11 +10113,11 @@ NavigationState.$inject = ['$state', '$rootScope', '$compile', '$timeout', 'iVXj
 
 exports.default = (0, _createFactoryFunction2.default)(NavigationState);
 
-},{"../../constants/audio.events.js":363,"../utilities/create-factory-function.js":356}],338:[function(require,module,exports){
+},{"../../constants/audio.events.js":362,"../utilities/create-factory-function.js":355}],337:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-            value: true
+    value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -10065,107 +10139,105 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var VideoState = function () {
-            function VideoState($compile, $state, $sce, $timeout, iVXjs, iVXjsBus, iVXjsUIModule, createInlineVideo, pullInTemplate) {
-                        _classCallCheck(this, VideoState);
+    function VideoState($compile, $state, $sce, $timeout, iVXjs, iVXjsBus, iVXjsUIModule, createInlineVideo, pullInTemplate) {
+        _classCallCheck(this, VideoState);
 
-                        this.template = this.templateHTML;
-                        this.restrict = 'E';
-                        this.replace = true;
-                        this.scope = {};
-                        this.controller = _stateVideo2.default;
-                        this.controllerAs = 'vm';
-                        this.link = function ($scope, iElm, iAttrs, controller) {
-                                    var _angular$copy = angular.copy($state.current);
+        this.template = this.templateHTML;
+        this.restrict = 'E';
+        this.replace = true;
+        this.scope = {};
+        this.controller = _stateVideo2.default;
+        this.controllerAs = 'vm';
+        this.link = function ($scope, iElm, iAttrs, controller) {
+            var _angular$copy = angular.copy($state.current),
+                data = _angular$copy.data;
 
-                                    var data = _angular$copy.data;
+            controller.stateData = data;
 
+            var _data = data,
+                id = _data.id,
+                _data$playerType = _data.playerType,
+                playerType = _data$playerType === undefined ? "html5" : _data$playerType,
+                _data$playerSettings = _data.playerSettings,
+                playerSettings = _data$playerSettings === undefined ? {} : _data$playerSettings,
+                _data$cuePoints = _data.cuePoints,
+                cuePoints = _data$cuePoints === undefined ? [] : _data$cuePoints,
+                _data$personalization = _data.personalizations,
+                personalizations = _data$personalization === undefined ? [] : _data$personalization,
+                _data$header = _data.header,
+                header = _data$header === undefined ? {} : _data$header,
+                _data$footer = _data.footer,
+                footer = _data$footer === undefined ? {} : _data$footer;
+            var vimeoId = playerSettings.vimeoId,
+                youtubeId = playerSettings.youtubeId,
+                inlineSrc = playerSettings.inlineSrc,
+                _playerSettings$iphon = playerSettings.iphoneInline,
+                iphoneInline = _playerSettings$iphon === undefined ? false : _playerSettings$iphon;
 
-                                    controller.stateData = data;
+            var controlsHTML = '';
 
-                                    var _data = data;
-                                    var id = _data.id;
-                                    var _data$playerType = _data.playerType;
-                                    var playerType = _data$playerType === undefined ? "html5" : _data$playerType;
-                                    var _data$playerSettings = _data.playerSettings;
-                                    var playerSettings = _data$playerSettings === undefined ? {} : _data$playerSettings;
-                                    var _data$cuePoints = _data.cuePoints;
-                                    var cuePoints = _data$cuePoints === undefined ? [] : _data$cuePoints;
-                                    var _data$personalization = _data.personalizations;
-                                    var personalizations = _data$personalization === undefined ? [] : _data$personalization;
-                                    var _data$header = _data.header;
-                                    var header = _data$header === undefined ? {} : _data$header;
-                                    var _data$footer = _data.footer;
-                                    var footer = _data$footer === undefined ? {} : _data$footer;
-                                    var vimeoId = playerSettings.vimeoId;
-                                    var youtubeId = playerSettings.youtubeId;
-                                    var inlineSrc = playerSettings.inlineSrc;
-                                    var _playerSettings$iphon = playerSettings.iphoneInline;
-                                    var iphoneInline = _playerSettings$iphon === undefined ? false : _playerSettings$iphon;
-
-                                    var controlsHTML = '';
-
-                                    if (typeof playerSettings.controls === 'string') {
-                                                controlsHTML = '<ivxjs-' + playerSettings.controls + '-video-controls></ivxjs-' + playerSettings.controls + '-video-controls>';
-                                    }
-
-                                    if (vimeoId) playerType = 'vimeo';
-                                    if (youtubeId) playerType = 'youtube';
-                                    if (createInlineVideo.isiOS() && iphoneInline && inlineSrc) {
-                                                playerType = 'html5';
-                                                playerSettings.src = inlineSrc;
-                                                data.isIphone = true;
-                                    }
-
-                                    var personalizationsHTML = personalizations.reduce(function (personalizationHTML, thisPersonalization, index) {
-                                                thisPersonalization = pullInTemplate.convertTemplateUrlToHtml(thisPersonalization, $scope);
-
-                                                var _thisPersonalization = thisPersonalization;
-                                                var _thisPersonalization$ = _thisPersonalization.defaultAnimationClass;
-                                                var defaultAnimationClass = _thisPersonalization$ === undefined ? 'hide' : _thisPersonalization$;
-                                                var html = _thisPersonalization.html;
-                                                var id = _thisPersonalization.id;
-
-
-                                                return personalizationHTML + ' <div id="' + id + '" class="' + defaultAnimationClass + '">' + html + '</div> ';
-                                    }, "");
-
-                                    var videoPlayerHTML = '\n               <ivxjs-' + playerType + '-video-player settings="vm.stateData.playerSettings" state-data="vm.stateData"></ivxjs-' + playerType + '-video-player>\n               ' + controlsHTML + '\n               ' + personalizationsHTML;
-
-                                    data = pullInTemplate.convertHeaderFooter(header, footer, data, controller);
-
-                                    var videoFramework = new iVXjsUIModule.states.video(videoPlayerHTML, data);
-
-                                    $scope.experience = iVXjs.experience.data;
-
-                                    iElm.html(videoFramework.html);
-                                    $compile(iElm.contents())($scope);
-
-                                    if (createInlineVideo.isiOS()) {
-                                                (function () {
-                                                            var videoEventNames = new _videoEvents2.default();
-                                                            $timeout(function () {
-                                                                        iVXjsBus.emit(videoEventNames.CAN_PLAY);
-                                                            }, 1);
-                                                })();
-                                    }
-                        };
+            if (typeof playerSettings.controls === 'string') {
+                controlsHTML = '<ivxjs-' + playerSettings.controls + '-video-controls></ivxjs-' + playerSettings.controls + '-video-controls>';
             }
 
-            _createClass(VideoState, [{
-                        key: 'templateHTML',
-                        get: function get() {
-                                    return '<div class="video-state-container"></div>';
-                        }
-            }]);
+            if (vimeoId) playerType = 'vimeo';
+            if (youtubeId) playerType = 'youtube';
+            if (createInlineVideo.isiOS() && iphoneInline && inlineSrc) {
+                playerType = 'html5';
+                playerSettings.src = inlineSrc;
+                data.isIphone = true;
+            }
 
-            return VideoState;
+            var personalizationsHTML = personalizations.reduce(function (personalizationHTML, thisPersonalization, index) {
+                thisPersonalization = pullInTemplate.convertTemplateUrlToHtml(thisPersonalization, $scope);
+
+                var _thisPersonalization = thisPersonalization,
+                    _thisPersonalization$ = _thisPersonalization.defaultAnimationClass,
+                    defaultAnimationClass = _thisPersonalization$ === undefined ? 'hide' : _thisPersonalization$,
+                    html = _thisPersonalization.html,
+                    id = _thisPersonalization.id;
+
+
+                return personalizationHTML + ' <div id="' + id + '" class="' + defaultAnimationClass + '">' + html + '</div> ';
+            }, "");
+
+            var videoPlayerHTML = '\n               <ivxjs-' + playerType + '-video-player settings="vm.stateData.playerSettings" state-data="vm.stateData"></ivxjs-' + playerType + '-video-player>\n               ' + controlsHTML + '\n               ' + personalizationsHTML;
+
+            data = pullInTemplate.convertHeaderFooter(header, footer, data, controller);
+
+            var videoFramework = new iVXjsUIModule.states.video(videoPlayerHTML, data);
+
+            $scope.experience = iVXjs.experience.data;
+
+            iElm.html(videoFramework.html);
+            $compile(iElm.contents())($scope);
+
+            if (createInlineVideo.isMobile()) {
+                (function () {
+                    var videoEventNames = new _videoEvents2.default();
+                    $timeout(function () {
+                        iVXjsBus.emit(videoEventNames.CAN_PLAY);
+                    }, 1);
+                })();
+            }
+        };
+    }
+
+    _createClass(VideoState, [{
+        key: 'templateHTML',
+        get: function get() {
+            return '<div class="video-state-container"></div>';
+        }
+    }]);
+
+    return VideoState;
 }();
 
 VideoState.$inject = ['$compile', '$state', '$sce', '$timeout', 'iVXjs', 'ivxjs.bus', 'ivxjs.modules.ui', 'createInlineVideo', 'pullInTemplate'];
 
 exports.default = (0, _createFactoryFunction2.default)(VideoState);
 
-},{"../../constants/video.events.js":377,"../controllers/state.video.js":317,"../utilities/create-factory-function.js":356}],339:[function(require,module,exports){
+},{"../../constants/video.events.js":376,"../controllers/state.video.js":316,"../utilities/create-factory-function.js":355}],338:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -10182,6 +10254,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 // CONTROLLER
 // import {[CTRLNAME]} from '[CTRLFILE]';
+
 
 var AnimateElement = function AnimateElement(iVXjs) {
     _classCallCheck(this, AnimateElement);
@@ -10222,7 +10295,7 @@ AnimateElement.$inject = ['iVXjs'];
 
 exports.default = (0, _createFactoryFunction2.default)(AnimateElement);
 
-},{"../utilities/create-factory-function.js":356}],340:[function(require,module,exports){
+},{"../utilities/create-factory-function.js":355}],339:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -10239,6 +10312,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 // CONTROLLER
 // import {[CTRLNAME]} from '[CTRLFILE]';
+
 
 var GoToState = function GoToState(iVXjs, iVXjsBus) {
     _classCallCheck(this, GoToState);
@@ -10261,7 +10335,7 @@ GoToState.$inject = ['iVXjs', 'ivxjs.bus'];
 
 exports.default = (0, _createFactoryFunction2.default)(GoToState);
 
-},{"../utilities/create-factory-function.js":356}],341:[function(require,module,exports){
+},{"../utilities/create-factory-function.js":355}],340:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -10300,7 +10374,7 @@ RaiseiVXjsEvent.$inject = ['iVXjs', 'ivxjs.bus'];
 
 exports.default = (0, _createFactoryFunction2.default)(RaiseiVXjsEvent);
 
-},{"../utilities/create-factory-function.js":356}],342:[function(require,module,exports){
+},{"../utilities/create-factory-function.js":355}],341:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -10317,6 +10391,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 // CONTROLLER
 // import {[CTRLNAME]} from '[CTRLFILE]';
+
 
 var SetData = function SetData(iVXjs) {
     _classCallCheck(this, SetData);
@@ -10361,7 +10436,7 @@ SetData.$inject = ['iVXjs'];
 
 exports.default = (0, _createFactoryFunction2.default)(SetData);
 
-},{"../utilities/create-factory-function.js":356}],343:[function(require,module,exports){
+},{"../utilities/create-factory-function.js":355}],342:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -10397,9 +10472,9 @@ var Anchor = exports.Anchor = function () {
 		this.replace = true;
 		this.link = function ($scope, iElm, iAttrs, controller) {
 			var anchorInfo = $scope.anchorInfo;
-			var _anchorInfo = anchorInfo;
-			var _anchorInfo$attribute = _anchorInfo.attributes;
-			var attributes = _anchorInfo$attribute === undefined ? {} : _anchorInfo$attribute;
+			var _anchorInfo = anchorInfo,
+			    _anchorInfo$attribute = _anchorInfo.attributes,
+			    attributes = _anchorInfo$attribute === undefined ? {} : _anchorInfo$attribute;
 
 
 			attributes['ng-click'] = 'vm.onLinkClick($event)';
@@ -10431,7 +10506,7 @@ Anchor.$inject = ['$compile', 'iVXjs', 'ivxjs.modules.ui', 'pullInTemplate'];
 
 exports.default = (0, _createFactoryFunction2.default)(Anchor);
 
-},{"../controllers/ui.anchor.js":318,"../utilities/create-factory-function.js":356}],344:[function(require,module,exports){
+},{"../controllers/ui.anchor.js":317,"../utilities/create-factory-function.js":355}],343:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -10490,7 +10565,7 @@ StandardControls.$inject = ['ivxjs.modules.ui', 'ivxjs.bus'];
 
 exports.default = (0, _createFactoryFunction2.default)(StandardControls);
 
-},{"../../constants/video.events.js":377,"../controllers/video.controls.standard.js":319,"../utilities/create-factory-function.js":356}],345:[function(require,module,exports){
+},{"../../constants/video.events.js":376,"../controllers/video.controls.standard.js":318,"../utilities/create-factory-function.js":355}],344:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -10528,13 +10603,13 @@ var HTML5VideoPlayer = function () {
         this.controller = _videoHtml2.default;
         this.controllerAs = 'vm';
         this.link = function ($scope, iElm, iAttrs, controller) {
-            var settings = $scope.settings;
-            var stateData = $scope.stateData;
-            var _stateData = stateData;
-            var _stateData$playerSett = _stateData.playerSettings;
-            var playerSettings = _stateData$playerSett === undefined ? {} : _stateData$playerSett;
-            var _playerSettings$iphon = playerSettings.iphoneInline;
-            var iphoneInline = _playerSettings$iphon === undefined ? false : _playerSettings$iphon;
+            var settings = $scope.settings,
+                stateData = $scope.stateData;
+            var _stateData = stateData,
+                _stateData$playerSett = _stateData.playerSettings,
+                playerSettings = _stateData$playerSett === undefined ? {} : _stateData$playerSett;
+            var _playerSettings$iphon = playerSettings.iphoneInline,
+                iphoneInline = _playerSettings$iphon === undefined ? false : _playerSettings$iphon;
 
             var videoEventNames = new _videoEvents2.default();
 
@@ -10575,7 +10650,7 @@ HTML5VideoPlayer.$inject = ['$compile', '$timeout', 'ivxjs.modules.video', 'ivxj
 
 exports.default = (0, _createFactoryFunction2.default)(HTML5VideoPlayer);
 
-},{"../../constants/video.events.js":377,"../controllers/video.html5.js":320,"../utilities/create-factory-function.js":356}],346:[function(require,module,exports){
+},{"../../constants/video.events.js":376,"../controllers/video.html5.js":319,"../utilities/create-factory-function.js":355}],345:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -10612,8 +10687,8 @@ var VimeoVideoPlayer = function () {
         this.link = function ($scope, iElm, iAttrs, controller) {
             if (!iVXjsVideoModule.vimeo) return;
 
-            var settings = $scope.settings;
-            var stateData = $scope.stateData;
+            var settings = $scope.settings,
+                stateData = $scope.stateData;
 
 
             stateData = {
@@ -10647,7 +10722,7 @@ VimeoVideoPlayer.$inject = ['$rootScope', '$compile', '$window', '$timeout', 'iv
 
 exports.default = (0, _createFactoryFunction2.default)(VimeoVideoPlayer);
 
-},{"../controllers/video.vimeo.js":321,"../utilities/create-factory-function.js":356}],347:[function(require,module,exports){
+},{"../controllers/video.vimeo.js":320,"../utilities/create-factory-function.js":355}],346:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -10683,8 +10758,8 @@ var YoutubeVideoPlayer = function () {
         this.link = function ($scope, iElm, iAttrs, controller) {
             if (!iVXjsVideoModule.youtube) return;
 
-            var settings = $scope.settings;
-            var stateData = $scope.stateData;
+            var settings = $scope.settings,
+                stateData = $scope.stateData;
 
 
             settings.id = settings.youtubeId;
@@ -10727,7 +10802,7 @@ YoutubeVideoPlayer.$inject = ['$rootScope', '$compile', '$window', 'ivxjs.bus', 
 
 exports.default = (0, _createFactoryFunction2.default)(YoutubeVideoPlayer);
 
-},{"../controllers/video.youtube.js":322,"../utilities/create-factory-function.js":356}],348:[function(require,module,exports){
+},{"../controllers/video.youtube.js":321,"../utilities/create-factory-function.js":355}],347:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -10775,7 +10850,7 @@ var StringParsers = exports.StringParsers = function () {
     return StringParsers;
 }();
 
-},{}],349:[function(require,module,exports){
+},{}],348:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -10807,10 +10882,8 @@ var iVXjsSetup = function () {
 
             var _iVXjs$config$states$ = iVXjs.config.states.find(function (state) {
                 return state.id === defaultStateID;
-            });
-
-            var url = _iVXjs$config$states$.url;
-
+            }),
+                url = _iVXjs$config$states$.url;
 
             $urlRouterProvider.otherwise(url);
         }
@@ -10818,13 +10891,13 @@ var iVXjsSetup = function () {
         key: 'createStates',
         value: function createStates($stateProvider, states) {
             states.forEach(function (state, index) {
-                var type = state.type;
-                var id = state.id;
-                var url = state.url;
-                var _state$onEnter = state.onEnter;
-                var onEnter = _state$onEnter === undefined ? [] : _state$onEnter;
-                var _state$onExit = state.onExit;
-                var onExit = _state$onExit === undefined ? [] : _state$onExit;
+                var type = state.type,
+                    id = state.id,
+                    url = state.url,
+                    _state$onEnter = state.onEnter,
+                    onEnter = _state$onEnter === undefined ? [] : _state$onEnter,
+                    _state$onExit = state.onExit,
+                    onExit = _state$onExit === undefined ? [] : _state$onExit;
 
 
                 $stateProvider.state(id, {
@@ -10850,7 +10923,7 @@ iVXjsSetup.$inject = [];
 
 exports.default = (0, _createFactoryFunction2.default)(iVXjsSetup);
 
-},{"../utilities/create-factory-function.js":356}],350:[function(require,module,exports){
+},{"../utilities/create-factory-function.js":355}],349:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -10884,7 +10957,7 @@ var Actions = exports.Actions = function (_ActionProcessor) {
     function Actions($rootScope, $state, $window, iVXjs, iVXjsBus) {
         _classCallCheck(this, Actions);
 
-        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Actions).call(this, iVXjs));
+        var _this = _possibleConstructorReturn(this, (Actions.__proto__ || Object.getPrototypeOf(Actions)).call(this, iVXjs));
 
         _this.$rootScope = $rootScope;
         _this.$state = $state;
@@ -10924,7 +10997,7 @@ Actions.$inject = ['$rootScope', '$state', '$window', 'iVXjs', 'ivxjs.bus'];
 
 exports.default = (0, _createFactoryFunction2.default)(Actions);
 
-},{"../../core/processor.js":380,"../../utilities/type-parsers.js":425,"../utilities/create-factory-function.js":356}],351:[function(require,module,exports){
+},{"../../core/processor.js":379,"../../utilities/type-parsers.js":424,"../utilities/create-factory-function.js":355}],350:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -10978,8 +11051,8 @@ var Bus = exports.Bus = function () {
         key: 'on',
         value: function on(eventName, callback) {
             var self = this;
-            var _callback$name = callback.name;
-            var fnName = _callback$name === undefined ? Math.random().toString(36).substring(7) : _callback$name;
+            var _callback$name = callback.name,
+                fnName = _callback$name === undefined ? Math.random().toString(36).substring(7) : _callback$name;
 
             var enhancedCallbackString = '\n            return function ' + fnName + '(args){\n                callback.apply(this, args);\n                \n                if(!$rootScope.$$phase){\n                    $rootScope.$apply();\n                }\n            }\n        ';
             var enhancedCallback = new Function('callback', '$rootScope', enhancedCallbackString)(callback, this.$rootScope);
@@ -11013,7 +11086,7 @@ var BusService = (0, _createFactoryFunction2.default)(Bus);
 
 exports.BusService = BusService;
 
-},{"../../utilities/type-parsers.js":425,"../utilities/create-factory-function.js":356}],352:[function(require,module,exports){
+},{"../../utilities/type-parsers.js":424,"../utilities/create-factory-function.js":355}],351:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -11066,7 +11139,7 @@ HttpInterceptors.$inject = ["$q", "iVXjs", "ivxjs.log"];
 
 exports.default = (0, _createFactoryFunction2.default)(HttpInterceptors);
 
-},{"../../constants/http.events.js":366,"../utilities/create-factory-function.js":356}],353:[function(require,module,exports){
+},{"../../constants/http.events.js":365,"../utilities/create-factory-function.js":355}],352:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -11162,6 +11235,15 @@ var CreateInlineVideo = function () {
 			var userAgent = navigator.userAgent || navigator.vendor || window.opera;
 			return userAgent.match(/iPhone/i);
 		}
+	}, {
+		key: 'isMobile',
+		value: function isMobile() {
+			var check = false;
+			(function (a) {
+				if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i.test(a) || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0, 4))) check = true;
+			})(navigator.userAgent || navigator.vendor || window.opera);
+			return check;
+		}
 	}]);
 
 	return CreateInlineVideo;
@@ -11171,7 +11253,7 @@ CreateInlineVideo.$inject = ['$window', '$timeout', 'ivxjs.bus'];
 
 exports.default = (0, _createFactoryFunction2.default)(CreateInlineVideo);
 
-},{"../../constants/video.events.js":377,"../utilities/create-factory-function.js":356}],354:[function(require,module,exports){
+},{"../../constants/video.events.js":376,"../utilities/create-factory-function.js":355}],353:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -11213,8 +11295,8 @@ var PullInTemplate = exports.PullInTemplate = function () {
 	}, {
 		key: 'convertHeaderFooter',
 		value: function convertHeaderFooter(header, footer, data, controller) {
-			var headerTemplateUrl = header.templateUrl;
-			var html = header.html;
+			var headerTemplateUrl = header.templateUrl,
+			    html = header.html;
 			var footerTemplateUrl = footer.templateUrl;
 
 
@@ -11259,16 +11341,16 @@ var PullInTemplate = exports.PullInTemplate = function () {
 	}, {
 		key: 'convertLabel',
 		value: function convertLabel() {
-			var defaultLabel = arguments.length <= 0 || arguments[0] === undefined ? '' : arguments[0];
-			var data = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+			var defaultLabel = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+			var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 			var $scope = arguments[2];
-			var labelHTML = data.labelHTML;
-			var _data$label = data.label;
-			var label = _data$label === undefined ? defaultLabel : _data$label;
-			var labelTemplateUrl = data.labelTemplateUrl;
-			var id = data.id;
-			var _data$classes = data.classes;
-			var classes = _data$classes === undefined ? "" : _data$classes;
+			var labelHTML = data.labelHTML,
+			    _data$label = data.label,
+			    label = _data$label === undefined ? defaultLabel : _data$label,
+			    labelTemplateUrl = data.labelTemplateUrl,
+			    id = data.id,
+			    _data$classes = data.classes,
+			    classes = _data$classes === undefined ? "" : _data$classes;
 
 
 			if (labelTemplateUrl) {
@@ -11290,7 +11372,7 @@ PullInTemplate.$inject = ['$sce'];
 
 exports.default = (0, _createFactoryFunction2.default)(PullInTemplate);
 
-},{"../utilities/create-factory-function.js":356}],355:[function(require,module,exports){
+},{"../utilities/create-factory-function.js":355}],354:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -11319,7 +11401,7 @@ var _class = function _class(selector, template, audioClass) {
 
 exports.default = _class;
 
-},{"../../utilities/type-parsers.js":425}],356:[function(require,module,exports){
+},{"../../utilities/type-parsers.js":424}],355:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -11342,7 +11424,7 @@ function createFactoryFunction(constructor) {
 	return args;
 }
 
-},{}],357:[function(require,module,exports){
+},{}],356:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -11426,7 +11508,7 @@ var DateParser = exports.DateParser = function () {
     return DateParser;
 }();
 
-},{}],358:[function(require,module,exports){
+},{}],357:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -11468,9 +11550,9 @@ var InputControllerHelper = exports.InputControllerHelper = function InputContro
                 value = value === 'true';
             }
 
-            var name = input.name;
-            var _input$onChange = input.onChange;
-            var onChange = _input$onChange === undefined ? [] : _input$onChange;
+            var name = input.name,
+                _input$onChange = input.onChange,
+                onChange = _input$onChange === undefined ? [] : _input$onChange;
 
 
             onChange.unshift({
@@ -11486,7 +11568,7 @@ var InputControllerHelper = exports.InputControllerHelper = function InputContro
     };
 };
 
-},{"../../utilities/type-parsers.js":425}],359:[function(require,module,exports){
+},{"../../utilities/type-parsers.js":424}],358:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -11504,12 +11586,12 @@ var thisObjectParser = new _typeParsers.ObjectParsers();
 
 var ErrorMessages = exports.ErrorMessages = function () {
     function ErrorMessages(input, errors) {
-        var attributes = arguments.length <= 2 || arguments[2] === undefined ? {} : arguments[2];
+        var attributes = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
 
         _classCallCheck(this, ErrorMessages);
 
-        var inputName = input.name;
-        var inputType = input.type;
+        var inputName = input.name,
+            inputType = input.type;
 
         this.inputName = inputName;
         this.inputType = inputType;
@@ -11535,10 +11617,10 @@ var ErrorMessages = exports.ErrorMessages = function () {
     }, {
         key: 'messages',
         get: function get() {
-            var inputName = this.inputName;
-            var inputType = this.inputType;
-            var errors = this.errors;
-            var attributes = this.attributes;
+            var inputName = this.inputName,
+                inputType = this.inputType,
+                errors = this.errors,
+                attributes = this.attributes;
 
             var angularErrorMap = this.angularErrorMap;
             var defaultMessages = this.defaultErrorMessages;
@@ -11561,9 +11643,9 @@ var ErrorMessages = exports.ErrorMessages = function () {
     }, {
         key: 'inputTypeError',
         get: function get() {
-            var inputName = this.inputName;
-            var inputType = this.inputType;
-            var errors = this.errors;
+            var inputName = this.inputName,
+                inputType = this.inputType,
+                errors = this.errors;
 
             var errorMessage = errors[inputType];
 
@@ -11609,7 +11691,7 @@ var ErrorMessages = exports.ErrorMessages = function () {
     return ErrorMessages;
 }();
 
-},{"../../utilities/type-parsers.js":425}],360:[function(require,module,exports){
+},{"../../utilities/type-parsers.js":424}],359:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -11627,7 +11709,7 @@ var _class = function _class($state) {
 
 exports.default = _class;
 
-},{}],361:[function(require,module,exports){
+},{}],360:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -11656,7 +11738,7 @@ var _class = function (_AngularConstants) {
     function _class() {
         _classCallCheck(this, _class);
 
-        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(_class).call(this));
+        var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
 
         var eventNames = {
             TEMPLATE_NOT_FOUND: "template-not-found",
@@ -11673,7 +11755,7 @@ var _class = function (_AngularConstants) {
             var DELIMETER = this.DELIMETER;
 
 
-            return "" + _get(Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + eventName;
+            return "" + _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + eventName;
         }
     }]);
 
@@ -11682,7 +11764,7 @@ var _class = function (_AngularConstants) {
 
 exports.default = _class;
 
-},{"./angular.js":362}],362:[function(require,module,exports){
+},{"./angular.js":361}],361:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -11711,7 +11793,7 @@ var _class = function (_iVXjsConstants) {
     function _class() {
         _classCallCheck(this, _class);
 
-        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(_class).call(this));
+        var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
 
         _this.ANGULAR = "angular";
         return _this;
@@ -11720,11 +11802,11 @@ var _class = function (_iVXjsConstants) {
     _createClass(_class, [{
         key: "convention",
         value: function convention() {
-            var DELIMETER = this.DELIMETER;
-            var ANGULAR = this.ANGULAR;
+            var DELIMETER = this.DELIMETER,
+                ANGULAR = this.ANGULAR;
 
 
-            return "" + _get(Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + ANGULAR;
+            return "" + _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + ANGULAR;
         }
     }]);
 
@@ -11733,7 +11815,7 @@ var _class = function (_iVXjsConstants) {
 
 exports.default = _class;
 
-},{"./index.js":372}],363:[function(require,module,exports){
+},{"./index.js":371}],362:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -11762,7 +11844,7 @@ var _class = function (_AudioConstants) {
     function _class() {
         _classCallCheck(this, _class);
 
-        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(_class).call(this));
+        var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
 
         var eventNames = {
             ADD_PLAYING_CLASS: 'add-playing-class',
@@ -11794,7 +11876,7 @@ var _class = function (_AudioConstants) {
             var DELIMETER = this.DELIMETER;
 
 
-            return "" + _get(Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + eventName;
+            return "" + _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + eventName;
         }
     }]);
 
@@ -11803,7 +11885,7 @@ var _class = function (_AudioConstants) {
 
 exports.default = _class;
 
-},{"./audio.js":364}],364:[function(require,module,exports){
+},{"./audio.js":363}],363:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -11832,7 +11914,7 @@ var _class = function (_iVXjsConstants) {
     function _class() {
         _classCallCheck(this, _class);
 
-        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(_class).call(this));
+        var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
 
         _this.AUDIO = "audio";
         return _this;
@@ -11841,11 +11923,11 @@ var _class = function (_iVXjsConstants) {
     _createClass(_class, [{
         key: "convention",
         value: function convention() {
-            var DELIMETER = this.DELIMETER;
-            var AUDIO = this.AUDIO;
+            var DELIMETER = this.DELIMETER,
+                AUDIO = this.AUDIO;
 
 
-            return "" + _get(Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + AUDIO;
+            return "" + _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + AUDIO;
         }
     }]);
 
@@ -11854,7 +11936,7 @@ var _class = function (_iVXjsConstants) {
 
 exports.default = _class;
 
-},{"./index.js":372}],365:[function(require,module,exports){
+},{"./index.js":371}],364:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -11895,7 +11977,7 @@ var _class = function (_iVXjsConstants) {
     function _class() {
         _classCallCheck(this, _class);
 
-        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(_class).call(this));
+        var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
 
         _this.ERROR = "error";
 
@@ -11916,10 +11998,10 @@ var _class = function (_iVXjsConstants) {
     _createClass(_class, [{
         key: "convention",
         value: function convention(eventName) {
-            var ERROR = this.ERROR;
-            var DELIMETER = this.DELIMETER;
+            var ERROR = this.ERROR,
+                DELIMETER = this.DELIMETER;
 
-            return "" + _get(Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + ERROR + DELIMETER + eventName;
+            return "" + _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + ERROR + DELIMETER + eventName;
         }
     }]);
 
@@ -11928,7 +12010,7 @@ var _class = function (_iVXjsConstants) {
 
 exports.default = _class;
 
-},{"./http.js":367,"./iVXio.js":369,"./index.js":372,"./video.js":378}],366:[function(require,module,exports){
+},{"./http.js":366,"./iVXio.js":368,"./index.js":371,"./video.js":377}],365:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -11957,7 +12039,7 @@ var _class = function (_HTTPConstants) {
     function _class() {
         _classCallCheck(this, _class);
 
-        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(_class).call(this));
+        var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
 
         var errorTypes = {
             REQUEST_ERROR: "request" + _this.DELIMETER + "error",
@@ -11975,7 +12057,7 @@ var _class = function (_HTTPConstants) {
         value: function convention(errorName) {
             var DELIMETER = this.DELIMETER;
 
-            return "" + _get(Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + errorName;
+            return "" + _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + errorName;
         }
     }]);
 
@@ -11984,7 +12066,7 @@ var _class = function (_HTTPConstants) {
 
 exports.default = _class;
 
-},{"./http.js":367}],367:[function(require,module,exports){
+},{"./http.js":366}],366:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -12013,7 +12095,7 @@ var _class = function (_iVXjsConstants) {
     function _class() {
         _classCallCheck(this, _class);
 
-        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(_class).call(this));
+        var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
 
         _this.HTTP = "http";
         return _this;
@@ -12022,11 +12104,11 @@ var _class = function (_iVXjsConstants) {
     _createClass(_class, [{
         key: "convention",
         value: function convention() {
-            var DELIMETER = this.DELIMETER;
-            var HTTP = this.HTTP;
+            var DELIMETER = this.DELIMETER,
+                HTTP = this.HTTP;
 
 
-            return "" + _get(Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + HTTP;
+            return "" + _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + HTTP;
         }
     }]);
 
@@ -12035,7 +12117,7 @@ var _class = function (_iVXjsConstants) {
 
 exports.default = _class;
 
-},{"./index.js":372}],368:[function(require,module,exports){
+},{"./index.js":371}],367:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -12068,7 +12150,7 @@ var _class = function (_iVXioConstants) {
     function _class() {
         _classCallCheck(this, _class);
 
-        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(_class).call(this));
+        var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
 
         _this.ERROR = new _errors2.default().ERROR;
 
@@ -12085,10 +12167,10 @@ var _class = function (_iVXioConstants) {
     _createClass(_class, [{
         key: "convention",
         value: function convention(errorName) {
-            var ERROR = this.ERROR;
-            var DELIMETER = this.DELIMETER;
+            var ERROR = this.ERROR,
+                DELIMETER = this.DELIMETER;
 
-            return "" + _get(Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + ERROR + DELIMETER + errorName;
+            return "" + _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + ERROR + DELIMETER + errorName;
         }
     }]);
 
@@ -12097,7 +12179,7 @@ var _class = function (_iVXioConstants) {
 
 exports.default = _class;
 
-},{"./errors.js":365,"./iVXio.js":369}],369:[function(require,module,exports){
+},{"./errors.js":364,"./iVXio.js":368}],368:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -12126,7 +12208,7 @@ var _class = function (_iVXjsConstants) {
     function _class() {
         _classCallCheck(this, _class);
 
-        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(_class).call(this));
+        var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
 
         _this.IVX_IO = "iVXio";
         return _this;
@@ -12135,11 +12217,11 @@ var _class = function (_iVXjsConstants) {
     _createClass(_class, [{
         key: "convention",
         value: function convention() {
-            var DELIMETER = this.DELIMETER;
-            var IVX_IO = this.IVX_IO;
+            var DELIMETER = this.DELIMETER,
+                IVX_IO = this.IVX_IO;
 
 
-            return "" + _get(Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + IVX_IO;
+            return "" + _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + IVX_IO;
         }
     }]);
 
@@ -12148,7 +12230,7 @@ var _class = function (_iVXjsConstants) {
 
 exports.default = _class;
 
-},{"./index.js":372}],370:[function(require,module,exports){
+},{"./index.js":371}],369:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -12177,7 +12259,7 @@ var _class = function (_iVXjsConfigConstants) {
     function _class() {
         _classCallCheck(this, _class);
 
-        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(_class).call(this));
+        var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
 
         var eventNames = {
             VALIDATED: "validated",
@@ -12196,7 +12278,7 @@ var _class = function (_iVXjsConfigConstants) {
             var DELIMETER = this.DELIMETER;
 
 
-            return "" + _get(Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + eventName;
+            return "" + _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + eventName;
         }
     }]);
 
@@ -12205,7 +12287,7 @@ var _class = function (_iVXjsConfigConstants) {
 
 exports.default = _class;
 
-},{"./iVXjs.config.js":371}],371:[function(require,module,exports){
+},{"./iVXjs.config.js":370}],370:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -12234,7 +12316,7 @@ var _class = function (_iVXjsConstants) {
     function _class() {
         _classCallCheck(this, _class);
 
-        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(_class).call(this));
+        var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
 
         _this.CONFIG = "config";
         return _this;
@@ -12243,11 +12325,11 @@ var _class = function (_iVXjsConstants) {
     _createClass(_class, [{
         key: "convention",
         value: function convention() {
-            var DELIMETER = this.DELIMETER;
-            var CONFIG = this.CONFIG;
+            var DELIMETER = this.DELIMETER,
+                CONFIG = this.CONFIG;
 
 
-            return "" + _get(Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + CONFIG;
+            return "" + _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + CONFIG;
         }
     }]);
 
@@ -12256,7 +12338,7 @@ var _class = function (_iVXjsConstants) {
 
 exports.default = _class;
 
-},{"./index.js":372}],372:[function(require,module,exports){
+},{"./index.js":371}],371:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -12297,7 +12379,7 @@ var _class = function () {
 
 exports.default = _class;
 
-},{}],373:[function(require,module,exports){
+},{}],372:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -12326,7 +12408,7 @@ var _class = function (_iVXjsConstants) {
     function _class() {
         _classCallCheck(this, _class);
 
-        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(_class).call(this));
+        var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
 
         _this.LOGGING = "log";
 
@@ -12344,14 +12426,14 @@ var _class = function (_iVXjsConstants) {
     _createClass(_class, [{
         key: "convention",
         value: function convention(level) {
-            var DELIMETER = this.DELIMETER;
-            var LOGGING = this.LOGGING;
+            var DELIMETER = this.DELIMETER,
+                LOGGING = this.LOGGING;
 
             if (level.length <= 0) {
-                return "" + _get(Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + LOGGING;
+                return "" + _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + LOGGING;
             }
 
-            return "" + _get(Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + LOGGING + DELIMETER + level;
+            return "" + _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + LOGGING + DELIMETER + level;
         }
     }]);
 
@@ -12360,7 +12442,7 @@ var _class = function (_iVXjsConstants) {
 
 exports.default = _class;
 
-},{"./index.js":372}],374:[function(require,module,exports){
+},{"./index.js":371}],373:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -12420,7 +12502,7 @@ var _class = function _class() {
         EVENTS: new _audioEvents2.default()
     };
 
-    // Errors
+    // Errors 
     this.ERRORS = {
         EVENTS: new _errors2.default()
     };
@@ -12450,7 +12532,7 @@ var _class = function _class() {
         EVENTS: new _stateEvents2.default()
     };
 
-    // Video
+    // Video 
     this.VIDEO = {
         EVENTS: new _videoEvents2.default()
     };
@@ -12458,7 +12540,7 @@ var _class = function _class() {
 
 exports.default = _class;
 
-},{"./angular.events.js":361,"./audio.events.js":363,"./errors.js":365,"./http.events.js":366,"./iVXio.errors.js":368,"./iVXjs.config.events.js":370,"./logging.js":373,"./state.events.js":375,"./video.events.js":377}],375:[function(require,module,exports){
+},{"./angular.events.js":360,"./audio.events.js":362,"./errors.js":364,"./http.events.js":365,"./iVXio.errors.js":367,"./iVXjs.config.events.js":369,"./logging.js":372,"./state.events.js":374,"./video.events.js":376}],374:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -12487,7 +12569,7 @@ var _class = function (_iVXjsStateConstants) {
     function _class() {
         _classCallCheck(this, _class);
 
-        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(_class).call(this));
+        var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
 
         var eventNames = {
             CHANGE: "change",
@@ -12509,7 +12591,7 @@ var _class = function (_iVXjsStateConstants) {
             var DELIMETER = this.DELIMETER;
 
 
-            return "" + _get(Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + eventName;
+            return "" + _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + eventName;
         }
     }]);
 
@@ -12518,7 +12600,7 @@ var _class = function (_iVXjsStateConstants) {
 
 exports.default = _class;
 
-},{"./state.js":376}],376:[function(require,module,exports){
+},{"./state.js":375}],375:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -12547,7 +12629,7 @@ var _class = function (_iVXjsConstants) {
     function _class() {
         _classCallCheck(this, _class);
 
-        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(_class).call(this));
+        var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
 
         _this.STATE = "state";
         return _this;
@@ -12556,11 +12638,11 @@ var _class = function (_iVXjsConstants) {
     _createClass(_class, [{
         key: "convention",
         value: function convention() {
-            var DELIMETER = this.DELIMETER;
-            var STATE = this.STATE;
+            var DELIMETER = this.DELIMETER,
+                STATE = this.STATE;
 
 
-            return "" + _get(Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + STATE;
+            return "" + _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + STATE;
         }
     }]);
 
@@ -12569,7 +12651,7 @@ var _class = function (_iVXjsConstants) {
 
 exports.default = _class;
 
-},{"./index.js":372}],377:[function(require,module,exports){
+},{"./index.js":371}],376:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -12598,7 +12680,7 @@ var _class = function (_VideoConstants) {
     function _class() {
         _classCallCheck(this, _class);
 
-        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(_class).call(this));
+        var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
 
         var eventNames = {
             ADD_PLAYING_CLASS: 'add-playing-class',
@@ -12630,7 +12712,7 @@ var _class = function (_VideoConstants) {
             var DELIMETER = this.DELIMETER;
 
 
-            return "" + _get(Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + eventName;
+            return "" + _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + eventName;
         }
     }]);
 
@@ -12639,7 +12721,7 @@ var _class = function (_VideoConstants) {
 
 exports.default = _class;
 
-},{"./video.js":378}],378:[function(require,module,exports){
+},{"./video.js":377}],377:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -12668,7 +12750,7 @@ var _class = function (_iVXjsConstants) {
     function _class() {
         _classCallCheck(this, _class);
 
-        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(_class).call(this));
+        var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
 
         _this.VIDEO = "video";
         return _this;
@@ -12677,11 +12759,11 @@ var _class = function (_iVXjsConstants) {
     _createClass(_class, [{
         key: "convention",
         value: function convention() {
-            var DELIMETER = this.DELIMETER;
-            var VIDEO = this.VIDEO;
+            var DELIMETER = this.DELIMETER,
+                VIDEO = this.VIDEO;
 
 
-            return "" + _get(Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + VIDEO;
+            return "" + _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + VIDEO;
         }
     }]);
 
@@ -12690,7 +12772,7 @@ var _class = function (_iVXjsConstants) {
 
 exports.default = _class;
 
-},{"./index.js":372}],379:[function(require,module,exports){
+},{"./index.js":371}],378:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -12732,7 +12814,6 @@ var iVXjs = exports.iVXjs = function () {
          * Sets Up iVXjs and adds a Bus since it will be used
          * for setting up this class asyncronously
          */
-
         function iVXjs() {
                 _classCallCheck(this, iVXjs);
 
@@ -12838,8 +12919,8 @@ var iVXjs = exports.iVXjs = function () {
                 key: 'init',
                 value: function init(settings) {
                         var self = this;
-                        var _settings$debug = settings.debug;
-                        var debug = _settings$debug === undefined ? true : _settings$debug;
+                        var _settings$debug = settings.debug,
+                            debug = _settings$debug === undefined ? true : _settings$debug;
 
 
                         if (settings.selector) {
@@ -12869,7 +12950,7 @@ var iVXjs = exports.iVXjs = function () {
 
 ;
 
-},{"../constants/iVXjs.config.events.js":370,"../modules/setup.js":388,"../utilities/logging.js":424,"./processor.js":380,"babel-polyfill":1,"events":298}],380:[function(require,module,exports){
+},{"../constants/iVXjs.config.events.js":369,"../modules/setup.js":387,"../utilities/logging.js":423,"./processor.js":379,"babel-polyfill":1,"events":297}],379:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -12930,7 +13011,7 @@ var ActionProcessor = exports.ActionProcessor = function () {
     return ActionProcessor;
 }();
 
-},{"../utilities/type-parsers.js":425}],381:[function(require,module,exports){
+},{"../utilities/type-parsers.js":424}],380:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -12951,7 +13032,7 @@ var RegisteredAudioModules = exports.RegisteredAudioModules = function Registere
 
 ;
 
-},{"./types/html5.js":382}],382:[function(require,module,exports){
+},{"./types/html5.js":381}],381:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -12973,7 +13054,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var Html5 = exports.Html5 = function () {
     function Html5(selector) {
-        var id = arguments.length <= 1 || arguments[1] === undefined ? 'voiceover' : arguments[1];
+        var id = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'voiceover';
 
         _classCallCheck(this, Html5);
 
@@ -13060,21 +13141,21 @@ var Html5 = exports.Html5 = function () {
     }, {
         key: "runCuePoints",
         value: function runCuePoints(processor) {
-            var _audioElement = this.audioElement;
-            var audioElement = _audioElement === undefined ? {} : _audioElement;
-            var _cuePoints = this.cuePoints;
-            var cuePoints = _cuePoints === undefined ? [] : _cuePoints;
+            var _audioElement = this.audioElement,
+                audioElement = _audioElement === undefined ? {} : _audioElement,
+                _cuePoints = this.cuePoints,
+                cuePoints = _cuePoints === undefined ? [] : _cuePoints;
             var currentTime = audioElement.currentTime;
 
 
             if (cuePoints.length <= 0) return;
 
             cuePoints.forEach(function (cuePoint, index) {
-                var timeAt = cuePoint.timeAt;
-                var _cuePoint$fired = cuePoint.fired;
-                var fired = _cuePoint$fired === undefined ? false : _cuePoint$fired;
-                var _cuePoint$once = cuePoint.once;
-                var once = _cuePoint$once === undefined ? false : _cuePoint$once;
+                var timeAt = cuePoint.timeAt,
+                    _cuePoint$fired = cuePoint.fired,
+                    fired = _cuePoint$fired === undefined ? false : _cuePoint$fired,
+                    _cuePoint$once = cuePoint.once,
+                    once = _cuePoint$once === undefined ? false : _cuePoint$once;
 
                 var timeUntil = Math.abs(cuePoint.timeAt - currentTime);
 
@@ -13118,10 +13199,10 @@ var Html5 = exports.Html5 = function () {
             this.setOnEnd();
 
             function setUp(audioInfo) {
-                var _audioInfo$cuePoints = audioInfo.cuePoints;
-                var cuePoints = _audioInfo$cuePoints === undefined ? [] : _audioInfo$cuePoints;
-                var _audioInfo$onEnd = audioInfo.onEnd;
-                var onEnd = _audioInfo$onEnd === undefined ? [] : _audioInfo$onEnd;
+                var _audioInfo$cuePoints = audioInfo.cuePoints,
+                    cuePoints = _audioInfo$cuePoints === undefined ? [] : _audioInfo$cuePoints,
+                    _audioInfo$onEnd = audioInfo.onEnd,
+                    onEnd = _audioInfo$onEnd === undefined ? [] : _audioInfo$onEnd;
 
 
                 if (audioInfo.id === self.id) {
@@ -13170,7 +13251,7 @@ var Html5 = exports.Html5 = function () {
     return Html5;
 }();
 
-},{"../../../constants/audio.events.js":363,"../../../utilities/type-parsers.js":425}],383:[function(require,module,exports){
+},{"../../../constants/audio.events.js":362,"../../../utilities/type-parsers.js":424}],382:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -13197,14 +13278,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * is any process that needs to return a promise indicating that 
  * it finished.
  */
-
 var Actions = exports.Actions = function () {
 
     /**
      * Creates a default data object to be used by various
      * 
      */
-
     function Actions() {
         _classCallCheck(this, Actions);
 
@@ -13229,8 +13308,8 @@ var Actions = exports.Actions = function () {
     _createClass(Actions, [{
         key: "setElementClasses",
         value: function setElementClasses(element, eventObj) {
-            var _eventObj$animationCl = eventObj.animationClasses;
-            var animationClasses = _eventObj$animationCl === undefined ? "" : _eventObj$animationCl;
+            var _eventObj$animationCl = eventObj.animationClasses,
+                animationClasses = _eventObj$animationCl === undefined ? "" : _eventObj$animationCl;
             var oldAnimationClass = element.animationClass;
 
 
@@ -13358,8 +13437,8 @@ var Actions = exports.Actions = function () {
     }, {
         key: "setData",
         value: function setData(eventObj) {
-            var key = eventObj.key;
-            var value = eventObj.value;
+            var key = eventObj.key,
+                value = eventObj.value;
 
             var self = this;
             var setDataPromise = new Promise(function (resolve, reject) {
@@ -13376,7 +13455,7 @@ var Actions = exports.Actions = function () {
 
 ;
 
-},{"../../../constants/audio.events.js":363,"../../../constants/state.events.js":375}],384:[function(require,module,exports){
+},{"../../../constants/audio.events.js":362,"../../../constants/state.events.js":374}],383:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -13403,23 +13482,23 @@ var _class = function () {
         key: "evaluate",
         value: function evaluate(rule) {
             var self = this;
-            var _rule$conditionOperat = rule.conditionOperator;
-            var conditionOperator = _rule$conditionOperat === undefined ? "and" : _rule$conditionOperat;
-            var conditions = rule.conditions;
+            var _rule$conditionOperat = rule.conditionOperator,
+                conditionOperator = _rule$conditionOperat === undefined ? "and" : _rule$conditionOperat,
+                conditions = rule.conditions;
 
             var evaluateConditions = conditions.map(function (condition, index) {
-                var lhs = condition.key;
-                var is = condition.is;
-                var rhs = condition.value;
-                var _condition$type = condition.type;
-                var type = _condition$type === undefined ? "input" : _condition$type;
+                var lhs = condition.key,
+                    is = condition.is,
+                    rhs = condition.value,
+                    _condition$type = condition.type,
+                    type = _condition$type === undefined ? "input" : _condition$type;
 
 
                 if (self.customEvaluator && typeValidator.isFunction(self.customEvaluator) && self.customEvaluator(condition)) {
                     return self.customEvaluator(condition);
                 }
 
-                // Since older versions of the iVXjs JSON used
+                // Since older versions of the iVXjs JSON used 
                 // the key for "keyword" this will make it backwards
                 // compatable
                 if (self[lhs]) {
@@ -13443,7 +13522,7 @@ var _class = function () {
     }, {
         key: "and",
         value: function and() {
-            var predicates = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
+            var predicates = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
 
             return predicates.reduce(function (evaluate, predicate, index) {
                 return evaluate && predicate;
@@ -13452,7 +13531,7 @@ var _class = function () {
     }, {
         key: "or",
         value: function or() {
-            var predicates = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
+            var predicates = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
 
             return predicates.reduce(function (evaluate, predicate, index) {
                 return evaluate || predicate;
@@ -13461,7 +13540,7 @@ var _class = function () {
     }, {
         key: "not",
         value: function not() {
-            var predicates = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
+            var predicates = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
 
             return predicates.reduce(function (evaluate, predicate, index) {
                 return evaluate && !predicate;
@@ -13513,7 +13592,7 @@ var _class = function () {
 
 exports.default = _class;
 
-},{"../../../utilities/type-parsers.js":425}],385:[function(require,module,exports){
+},{"../../../utilities/type-parsers.js":424}],384:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -13536,8 +13615,8 @@ var myObjectParser = new _typeParsers.ObjectParsers();
 
 var iVXjsData = exports.iVXjsData = function () {
     function iVXjsData() {
-        var moduleSettings = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-        var iVXjsSettings = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+        var moduleSettings = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+        var iVXjsSettings = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
         var Bus = arguments[2];
         var iVXjsLog = arguments[3];
 
@@ -13552,24 +13631,24 @@ var iVXjsData = exports.iVXjsData = function () {
     _createClass(iVXjsData, [{
         key: 'setUpExperience',
         value: function setUpExperience(configData, enhanceResolve) {
-            var _iVXjsSettings = this.iVXjsSettings;
-            var config = _iVXjsSettings.config;
-            var _iVXjsSettings$data = _iVXjsSettings.data;
-            var data = _iVXjsSettings$data === undefined ? {} : _iVXjsSettings$data;
-            var modifiedExperience = _iVXjsSettings.experience;
-            var customRules = _iVXjsSettings.rules;
-            var _iVXjsSettings$ui = _iVXjsSettings.ui;
-            var ui = _iVXjsSettings$ui === undefined ? 'default' : _iVXjsSettings$ui;
-            var _iVXjsSettings$valida = _iVXjsSettings.validation;
-            var validation = _iVXjsSettings$valida === undefined ? 'iVXjsValidation' : _iVXjsSettings$valida;
+            var _iVXjsSettings = this.iVXjsSettings,
+                config = _iVXjsSettings.config,
+                _iVXjsSettings$data = _iVXjsSettings.data,
+                data = _iVXjsSettings$data === undefined ? {} : _iVXjsSettings$data,
+                modifiedExperience = _iVXjsSettings.experience,
+                customRules = _iVXjsSettings.rules,
+                _iVXjsSettings$ui = _iVXjsSettings.ui,
+                ui = _iVXjsSettings$ui === undefined ? 'default' : _iVXjsSettings$ui,
+                _iVXjsSettings$valida = _iVXjsSettings.validation,
+                validation = _iVXjsSettings$valida === undefined ? 'iVXjsValidation' : _iVXjsSettings$valida;
 
             var experience = defaultActions;
-            var _configData$modules = configData.modules;
-            var configModules = _configData$modules === undefined ? {} : _configData$modules;
-            var _configModules$ui = configModules.ui;
-            var configUI = _configModules$ui === undefined ? ui : _configModules$ui;
-            var _configModules$valida = configModules.validation;
-            var configValidation = _configModules$valida === undefined ? validation : _configModules$valida;
+            var _configData$modules = configData.modules,
+                configModules = _configData$modules === undefined ? {} : _configData$modules;
+            var _configModules$ui = configModules.ui,
+                configUI = _configModules$ui === undefined ? ui : _configModules$ui,
+                _configModules$valida = configModules.validation,
+                configValidation = _configModules$valida === undefined ? validation : _configModules$valida;
 
 
             if (modifiedExperience) {
@@ -13643,7 +13722,7 @@ var iVXjsData = exports.iVXjsData = function () {
     return iVXjsData;
 }();
 
-},{"../../../utilities/type-parsers.js":425,"./actions.js":383,"./rules.js":386}],386:[function(require,module,exports){
+},{"../../../utilities/type-parsers.js":424,"./actions.js":382,"./rules.js":385}],385:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -13679,9 +13758,8 @@ var Rules = exports.Rules = function () {
      * @param {object} experience - iVXjsExperience 
      * object in which data will be used to evaluate various rules.
      */
-
     function Rules() {
-        var experience = arguments.length <= 0 || arguments[0] === undefined ? { data: {} } : arguments[0];
+        var experience = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { data: {} };
         var customEvaluator = arguments[1];
 
         _classCallCheck(this, Rules);
@@ -13718,7 +13796,7 @@ var Rules = exports.Rules = function () {
          * true first. If no state is return, returns an empty string.
          */
         value: function processRules() {
-            var navArray = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
+            var navArray = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
 
 
             if (!Array.isArray(navArray)) {
@@ -13732,9 +13810,9 @@ var Rules = exports.Rules = function () {
 
                 if (typeValidator.isEmpty(rule)) return true;
 
-                var conditions = rule.conditions;
-                var _rule$conditionOperat = rule.conditionOperator;
-                var conditionOperator = _rule$conditionOperat === undefined ? "and" : _rule$conditionOperat;
+                var conditions = rule.conditions,
+                    _rule$conditionOperat = rule.conditionOperator,
+                    conditionOperator = _rule$conditionOperat === undefined ? "and" : _rule$conditionOperat;
 
 
                 if (!conditions) {
@@ -13753,7 +13831,7 @@ var Rules = exports.Rules = function () {
             var self = this;
 
             return function () {
-                var navArray = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
+                var navArray = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
 
                 return self.processRules(navArray);
             };
@@ -13763,7 +13841,7 @@ var Rules = exports.Rules = function () {
     return Rules;
 }();
 
-},{"../../../utilities/type-parsers.js":425,"./evaluator.js":384}],387:[function(require,module,exports){
+},{"../../../utilities/type-parsers.js":424,"./evaluator.js":383}],386:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -13778,7 +13856,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * Enhances the data to run an experience as defined in the data module's 
  * settings.
  */
-
 var DataProcessor = exports.DataProcessor = function () {
 
   /**
@@ -13788,7 +13865,6 @@ var DataProcessor = exports.DataProcessor = function () {
    * @param {object} dataModuleObj - user defined settings for this data module
    * @param {object} settings - all user settings that will be enhanced.
    */
-
   function DataProcessor(dataModule, settings, Bus, iVXjsLog) {
     _classCallCheck(this, DataProcessor);
 
@@ -13830,8 +13906,8 @@ var DataProcessor = exports.DataProcessor = function () {
     key: "getData",
     value: function getData() {
       var self = this;
-      var dataModule = this.dataModule;
-      var settings = this.settings;
+      var dataModule = this.dataModule,
+          settings = this.settings;
       var dataSettings = settings.data;
 
       var dataPromise = new Promise(function (resolve, reject) {
@@ -13865,7 +13941,7 @@ var DataProcessor = exports.DataProcessor = function () {
 
 ;
 
-},{}],388:[function(require,module,exports){
+},{}],387:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -13917,9 +13993,8 @@ var Setup = exports.Setup = function () {
      * 
      * @param {object} settings - this experience's settings.
      */
-
     function Setup() {
-        var settings = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+        var settings = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
         var Bus = arguments[1];
         var iVXjsLog = arguments[2];
 
@@ -13967,13 +14042,13 @@ var Setup = exports.Setup = function () {
         key: "resolveSetupProcesses",
         value: function resolveSetupProcesses(resolve, reject) {
             var self = this;
-            var iVXjsLog = this.iVXjsLog;
-            var settings = this.settings;
-            var _settings$data = settings.data;
-            var data = _settings$data === undefined ? {} : _settings$data;
-            var analytics = settings.analytics;
-            var _data$module = data.module;
-            var dataModule = _data$module === undefined ? _index.iVXjsData : _data$module;
+            var iVXjsLog = this.iVXjsLog,
+                settings = this.settings;
+            var _settings$data = settings.data,
+                data = _settings$data === undefined ? {} : _settings$data,
+                analytics = settings.analytics;
+            var _data$module = data.module,
+                dataModule = _data$module === undefined ? _index.iVXjsData : _data$module;
 
 
             this.setupData(dataModule).then(function validateExperience(experienceData) {
@@ -14012,8 +14087,8 @@ var Setup = exports.Setup = function () {
     }, {
         key: "runValidation",
         value: function runValidation(experienceData) {
-            var _experienceData$valid = experienceData.validation;
-            var ValidationModule = _experienceData$valid === undefined ? _index3.iVXjsValidation : _experienceData$valid;
+            var _experienceData$valid = experienceData.validation,
+                ValidationModule = _experienceData$valid === undefined ? _index3.iVXjsValidation : _experienceData$valid;
 
 
             return new ValidationModule(experienceData);
@@ -14047,8 +14122,8 @@ var Setup = exports.Setup = function () {
         key: "setupModules",
         value: function setupModules(experienceData) {
             var settings = this.settings;
-            var _settings$ui = settings.ui;
-            var UI = _settings$ui === undefined ? _index2.DefaultUI : _settings$ui;
+            var _settings$ui = settings.ui,
+                UI = _settings$ui === undefined ? _index2.DefaultUI : _settings$ui;
 
 
             experienceData.video = new _registeredModules.RegisteredVideoModules();
@@ -14064,7 +14139,7 @@ var Setup = exports.Setup = function () {
 
 ;
 
-},{"../constants/errors.js":365,"../constants/iVXjs.config.events.js":370,"../utilities/asserts.js":423,"./audio/registered-modules.js":381,"./data/ivx-js/index.js":385,"./data/processor.js":387,"./ui/default/index.js":396,"./validation/ivx-js-validation/index.js":413,"./video/registered-modules.js":418}],389:[function(require,module,exports){
+},{"../constants/errors.js":364,"../constants/iVXjs.config.events.js":369,"../utilities/asserts.js":422,"./audio/registered-modules.js":380,"./data/ivx-js/index.js":384,"./data/processor.js":386,"./ui/default/index.js":395,"./validation/ivx-js-validation/index.js":412,"./video/registered-modules.js":417}],388:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -14100,18 +14175,18 @@ var Anchor = exports.Anchor = function () {
         key: 'html',
         get: function get() {
             var anchorClasses = this.anchorClasses;
-            var _anchorInfo = this.anchorInfo;
-            var _anchorInfo$href = _anchorInfo.href;
-            var href = _anchorInfo$href === undefined ? '' : _anchorInfo$href;
-            var _anchorInfo$classes = _anchorInfo.classes;
-            var classes = _anchorInfo$classes === undefined ? '' : _anchorInfo$classes;
-            var _anchorInfo$attribute = _anchorInfo.attributes;
-            var attributes = _anchorInfo$attribute === undefined ? {} : _anchorInfo$attribute;
-            var _anchorInfo$label = _anchorInfo.label;
-            var label = _anchorInfo$label === undefined ? labelHTML : _anchorInfo$label;
-            var labelHTML = _anchorInfo.labelHTML;
-            var _anchorInfo$id = _anchorInfo.id;
-            var id = _anchorInfo$id === undefined ? '' : _anchorInfo$id;
+            var _anchorInfo = this.anchorInfo,
+                _anchorInfo$href = _anchorInfo.href,
+                href = _anchorInfo$href === undefined ? '' : _anchorInfo$href,
+                _anchorInfo$classes = _anchorInfo.classes,
+                classes = _anchorInfo$classes === undefined ? '' : _anchorInfo$classes,
+                _anchorInfo$attribute = _anchorInfo.attributes,
+                attributes = _anchorInfo$attribute === undefined ? {} : _anchorInfo$attribute,
+                _anchorInfo$label = _anchorInfo.label,
+                label = _anchorInfo$label === undefined ? labelHTML : _anchorInfo$label,
+                labelHTML = _anchorInfo.labelHTML,
+                _anchorInfo$id = _anchorInfo.id,
+                id = _anchorInfo$id === undefined ? '' : _anchorInfo$id;
 
             var attributeHTML = new _attributes.AttributeTags(attributes, Object.keys(attributes)).html;
 
@@ -14126,7 +14201,7 @@ var Anchor = exports.Anchor = function () {
     return Anchor;
 }();
 
-},{"../../../utilities/asserts.js":423,"../../../utilities/type-parsers.js":425,"../utilities/attributes.js":409}],390:[function(require,module,exports){
+},{"../../../utilities/asserts.js":422,"../../../utilities/type-parsers.js":424,"../utilities/attributes.js":408}],389:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -14168,11 +14243,10 @@ var Buttons = exports.Buttons = function () {
      * @param {Class} buttonsInfo.errors - an error class that was created by the 
      * rendering library so the errors open and display alongside the library. 
      */
-
     function Buttons() {
-        var buttons = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
+        var buttons = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
         var input = arguments[1];
-        var errorMessages = arguments.length <= 2 || arguments[2] === undefined ? _messages.ErrorMessages : arguments[2];
+        var errorMessages = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : _messages.ErrorMessages;
 
         _classCallCheck(this, Buttons);
 
@@ -14243,19 +14317,19 @@ var Buttons = exports.Buttons = function () {
     }, {
         key: "html",
         get: function get() {
-            var _errors = this.errors;
-            var errorClass = _errors === undefined ? {} : _errors;
-            var _buttons = this.buttons;
-            var buttons = _buttons === undefined ? [] : _buttons;
-            var _input = this.input;
-            var input = _input === undefined ? {} : _input;
-            var buttonClasses = this.buttonClasses;
-            var _errorClass$attribute = errorClass.attributes;
-            var attributes = _errorClass$attribute === undefined ? {} : _errorClass$attribute;
-            var _errorClass$errors = errorClass.errors;
-            var errors = _errorClass$errors === undefined ? {} : _errorClass$errors;
-            var _errorClass$messages = errorClass.messages;
-            var messages = _errorClass$messages === undefined ? {} : _errorClass$messages;
+            var _errors = this.errors,
+                errorClass = _errors === undefined ? {} : _errors,
+                _buttons = this.buttons,
+                buttons = _buttons === undefined ? [] : _buttons,
+                _input = this.input,
+                input = _input === undefined ? {} : _input,
+                buttonClasses = this.buttonClasses;
+            var _errorClass$attribute = errorClass.attributes,
+                attributes = _errorClass$attribute === undefined ? {} : _errorClass$attribute,
+                _errorClass$errors = errorClass.errors,
+                errors = _errorClass$errors === undefined ? {} : _errorClass$errors,
+                _errorClass$messages = errorClass.messages,
+                messages = _errorClass$messages === undefined ? {} : _errorClass$messages;
 
             var buttonErrorMessages = Object.keys(attributes).map(function (key, index) {
                 return {
@@ -14264,19 +14338,19 @@ var Buttons = exports.Buttons = function () {
                 };
             });
             var errorMessages = new this.errorMessages(buttonErrorMessages).html;
-            var _input$label = input.label;
-            var label = _input$label === undefined ? '' : _input$label;
-            var _input$labelHTML = input.labelHTML;
-            var labelHTML = _input$labelHTML === undefined ? '' : _input$labelHTML;
-            var _input$showLabel = input.showLabel;
-            var showLabel = _input$showLabel === undefined ? false : _input$showLabel;
+            var _input$label = input.label,
+                label = _input$label === undefined ? '' : _input$label,
+                _input$labelHTML = input.labelHTML,
+                labelHTML = _input$labelHTML === undefined ? '' : _input$labelHTML,
+                _input$showLabel = input.showLabel,
+                showLabel = _input$showLabel === undefined ? false : _input$showLabel;
 
             var buttonsHTML = buttons.reduce(function (html, button, index) {
-                var label = button.label;
-                var _button$attrHTML = button.attrHTML;
-                var attrHTML = _button$attrHTML === undefined ? '' : _button$attrHTML;
-                var _button$classes = button.classes;
-                var classes = _button$classes === undefined ? "" : _button$classes;
+                var label = button.label,
+                    _button$attrHTML = button.attrHTML,
+                    attrHTML = _button$attrHTML === undefined ? '' : _button$attrHTML,
+                    _button$classes = button.classes,
+                    classes = _button$classes === undefined ? "" : _button$classes;
 
 
                 return html + " \n                   <button " + attrHTML + " class=\"" + classes + " " + buttonClasses + "\">\n                       " + label + "\n                   </button>";
@@ -14294,7 +14368,7 @@ var Buttons = exports.Buttons = function () {
     return Buttons;
 }();
 
-},{"../../../utilities/asserts.js":423,"../../../utilities/type-parsers.js":425,"../utilities/attributes.js":409,"./messages.js":397,"./style":404}],391:[function(require,module,exports){
+},{"../../../utilities/asserts.js":422,"../../../utilities/type-parsers.js":424,"../utilities/attributes.js":408,"./messages.js":396,"./style":403}],390:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -14331,20 +14405,19 @@ var Checkbox = exports.Checkbox = function () {
      * @param {class} errorMessages - a class that will render the 
      * specific type of error messages based on this UI's settings.
      */
-
     function Checkbox() {
-        var inputObj = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-        var errorMessages = arguments.length <= 1 || arguments[1] === undefined ? _messages.ErrorMessages : arguments[1];
+        var inputObj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+        var errorMessages = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _messages.ErrorMessages;
 
         _classCallCheck(this, Checkbox);
 
-        var input = inputObj.input;
-        var _inputObj$tags = inputObj.tags;
-        var tags = _inputObj$tags === undefined ? '' : _inputObj$tags;
-        var _inputObj$settings = inputObj.settings;
-        var settings = _inputObj$settings === undefined ? {} : _inputObj$settings;
-        var _inputObj$errors = inputObj.errors;
-        var errors = _inputObj$errors === undefined ? {} : _inputObj$errors;
+        var input = inputObj.input,
+            _inputObj$tags = inputObj.tags,
+            tags = _inputObj$tags === undefined ? '' : _inputObj$tags,
+            _inputObj$settings = inputObj.settings,
+            settings = _inputObj$settings === undefined ? {} : _inputObj$settings,
+            _inputObj$errors = inputObj.errors,
+            errors = _inputObj$errors === undefined ? {} : _inputObj$errors;
 
         /**
          * This checkbox's input configuration 
@@ -14403,17 +14476,17 @@ var Checkbox = exports.Checkbox = function () {
          * @return {String} - html of the fully created checkbox
          */
         value: function renderCheckboxContainer(classes, attributes) {
-            var input = this.input;
-            var settings = this.settings;
-            var _input$label = input.label;
-            var label = _input$label === undefined ? '' : _input$label;
-            var labelHTML = input.labelHTML;
-            var _input$name = input.name;
-            var name = _input$name === undefined ? '' : _input$name;
-            var _input$id = input.id;
-            var id = _input$id === undefined ? '' : _input$id;
-            var _settings$showLabel = settings.showLabel;
-            var showLabel = _settings$showLabel === undefined ? true : _settings$showLabel;
+            var input = this.input,
+                settings = this.settings;
+            var _input$label = input.label,
+                label = _input$label === undefined ? '' : _input$label,
+                labelHTML = input.labelHTML,
+                _input$name = input.name,
+                name = _input$name === undefined ? '' : _input$name,
+                _input$id = input.id,
+                id = _input$id === undefined ? '' : _input$id;
+            var _settings$showLabel = settings.showLabel,
+                showLabel = _settings$showLabel === undefined ? true : _settings$showLabel;
 
 
             if (labelHTML) label = labelHTML;
@@ -14455,8 +14528,8 @@ var Checkbox = exports.Checkbox = function () {
         key: "requiredAttributes",
         get: function get() {
             var input = this.input;
-            var id = input.id;
-            var name = input.name;
+            var id = input.id,
+                name = input.name;
 
 
             return "id=\"" + id + "\" name=\"" + name + "\" type=\"checkbox\"";
@@ -14464,29 +14537,29 @@ var Checkbox = exports.Checkbox = function () {
     }, {
         key: "html",
         get: function get() {
-            var tags = this.tags;
-            var _settings = this.settings;
-            var settings = _settings === undefined ? {} : _settings;
-            var errors = this.errors;
-            var input = this.input;
-            var uiClasses = this.uiClasses;
-            var uiAttributes = this.uiAttributes;
-            var requiredAttributes = this.requiredAttributes;
-            var _settings$input = settings.input;
-            var inputSettings = _settings$input === undefined ? {} : _settings$input;
-            var _inputSettings$classe = inputSettings.classes;
-            var classes = _inputSettings$classe === undefined ? '' : _inputSettings$classe;
-            var id = input.id;
-            var name = input.name;
-            var _input$label2 = input.label;
-            var label = _input$label2 === undefined ? '' : _input$label2;
-            var _errors = this.errors;
-            var _errors$messages = _errors.messages;
-            var messages = _errors$messages === undefined ? [] : _errors$messages;
-            var _errors$attributes = _errors.attributes;
-            var attributes = _errors$attributes === undefined ? {} : _errors$attributes;
-            var _errors$tags = _errors.tags;
-            var errorTags = _errors$tags === undefined ? '' : _errors$tags;
+            var tags = this.tags,
+                _settings = this.settings,
+                settings = _settings === undefined ? {} : _settings,
+                errors = this.errors,
+                input = this.input,
+                uiClasses = this.uiClasses,
+                uiAttributes = this.uiAttributes,
+                requiredAttributes = this.requiredAttributes;
+            var _settings$input = settings.input,
+                inputSettings = _settings$input === undefined ? {} : _settings$input;
+            var _inputSettings$classe = inputSettings.classes,
+                classes = _inputSettings$classe === undefined ? '' : _inputSettings$classe;
+            var id = input.id,
+                name = input.name,
+                _input$label2 = input.label,
+                label = _input$label2 === undefined ? '' : _input$label2;
+            var _errors = this.errors,
+                _errors$messages = _errors.messages,
+                messages = _errors$messages === undefined ? [] : _errors$messages,
+                _errors$attributes = _errors.attributes,
+                attributes = _errors$attributes === undefined ? {} : _errors$attributes,
+                _errors$tags = _errors.tags,
+                errorTags = _errors$tags === undefined ? '' : _errors$tags;
 
             var errorAttributes = attributes;
             var errorHTML = new this.errorMessages(messages).html;
@@ -14502,7 +14575,7 @@ var Checkbox = exports.Checkbox = function () {
     return Checkbox;
 }();
 
-},{"../utilities/attributes.js":409,"./messages.js":397,"./style":404}],392:[function(require,module,exports){
+},{"../utilities/attributes.js":408,"./messages.js":396,"./style":403}],391:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -14540,21 +14613,20 @@ var Date = exports.Date = function () {
    * error messaging appearance.
    * @param {object} errorMessages - UI specific Error messages 
    */
-
   function Date() {
-    var inputObj = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-    var errorMessages = arguments.length <= 1 || arguments[1] === undefined ? _messages.ErrorMessages : arguments[1];
+    var inputObj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    var errorMessages = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _messages.ErrorMessages;
 
     _classCallCheck(this, Date);
 
-    var _inputObj$input = inputObj.input;
-    var input = _inputObj$input === undefined ? {} : _inputObj$input;
-    var _inputObj$settings = inputObj.settings;
-    var settings = _inputObj$settings === undefined ? {} : _inputObj$settings;
-    var _inputObj$tags = inputObj.tags;
-    var tags = _inputObj$tags === undefined ? {} : _inputObj$tags;
-    var _inputObj$errors = inputObj.errors;
-    var errors = _inputObj$errors === undefined ? {} : _inputObj$errors;
+    var _inputObj$input = inputObj.input,
+        input = _inputObj$input === undefined ? {} : _inputObj$input,
+        _inputObj$settings = inputObj.settings,
+        settings = _inputObj$settings === undefined ? {} : _inputObj$settings,
+        _inputObj$tags = inputObj.tags,
+        tags = _inputObj$tags === undefined ? {} : _inputObj$tags,
+        _inputObj$errors = inputObj.errors,
+        errors = _inputObj$errors === undefined ? {} : _inputObj$errors;
 
     /**
      * Input specific settings for this date input
@@ -14642,36 +14714,36 @@ var Date = exports.Date = function () {
   }, {
     key: "html",
     get: function get() {
-      var input = this.input;
-      var settings = this.settings;
-      var tags = this.tags;
-      var errors = this.errors;
-      var uiClasses = this.uiClasses;
-      var uiAttributes = this.uiAttributes;
-      var label = input.label;
-      var labelHTML = input.labelHTML;
-      var _input$name = input.name;
-      var name = _input$name === undefined ? '' : _input$name;
-      var _input$id = input.id;
-      var id = _input$id === undefined ? '' : _input$id;
-      var _settings$input = settings.input;
-      var inputSettings = _settings$input === undefined ? {} : _settings$input;
-      var _settings$showLabel = settings.showLabel;
-      var showLabel = _settings$showLabel === undefined ? true : _settings$showLabel;
-      var _inputSettings$classe = inputSettings.classes;
-      var classes = _inputSettings$classe === undefined ? '' : _inputSettings$classe;
+      var input = this.input,
+          settings = this.settings,
+          tags = this.tags,
+          errors = this.errors,
+          uiClasses = this.uiClasses,
+          uiAttributes = this.uiAttributes;
+      var label = input.label,
+          labelHTML = input.labelHTML,
+          _input$name = input.name,
+          name = _input$name === undefined ? '' : _input$name,
+          _input$id = input.id,
+          id = _input$id === undefined ? '' : _input$id;
+      var _settings$input = settings.input,
+          inputSettings = _settings$input === undefined ? {} : _settings$input,
+          _settings$showLabel = settings.showLabel,
+          showLabel = _settings$showLabel === undefined ? true : _settings$showLabel;
+      var _inputSettings$classe = inputSettings.classes,
+          classes = _inputSettings$classe === undefined ? '' : _inputSettings$classe;
 
 
       classes = classes + " " + uiClasses;
 
-      var _errors$messages = errors.messages;
-      var errorMessages = _errors$messages === undefined ? [] : _errors$messages;
-      var _errors$attributes = errors.attributes;
-      var errorAttributes = _errors$attributes === undefined ? '' : _errors$attributes;
-      var _errors$nonValidate = errors.nonValidate;
-      var nonValidate = _errors$nonValidate === undefined ? [] : _errors$nonValidate;
-      var _errors$tags = errors.tags;
-      var errorTags = _errors$tags === undefined ? '' : _errors$tags;
+      var _errors$messages = errors.messages,
+          errorMessages = _errors$messages === undefined ? [] : _errors$messages,
+          _errors$attributes = errors.attributes,
+          errorAttributes = _errors$attributes === undefined ? '' : _errors$attributes,
+          _errors$nonValidate = errors.nonValidate,
+          nonValidate = _errors$nonValidate === undefined ? [] : _errors$nonValidate,
+          _errors$tags = errors.tags,
+          errorTags = _errors$tags === undefined ? '' : _errors$tags;
 
       var errorHTML = new this.errorMessages(errorMessages).html;
       var nonValidateAttributesHTML = new _attributes.AttributeTags(errorAttributes, nonValidate).html;
@@ -14689,7 +14761,7 @@ var Date = exports.Date = function () {
   return Date;
 }();
 
-},{"../utilities/attributes.js":409,"./messages.js":397,"./style":404}],393:[function(require,module,exports){
+},{"../utilities/attributes.js":408,"./messages.js":396,"./style":403}],392:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -14727,21 +14799,20 @@ var DatetimeLocal = exports.DatetimeLocal = function () {
         * error messaging appearance.
         * @param {object} errorMessages - UI specific Error messages
         */
-
         function DatetimeLocal() {
-                var inputObj = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-                var errorMessages = arguments.length <= 1 || arguments[1] === undefined ? _messages.ErrorMessages : arguments[1];
+                var inputObj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+                var errorMessages = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _messages.ErrorMessages;
 
                 _classCallCheck(this, DatetimeLocal);
 
-                var _inputObj$input = inputObj.input;
-                var input = _inputObj$input === undefined ? {} : _inputObj$input;
-                var _inputObj$settings = inputObj.settings;
-                var settings = _inputObj$settings === undefined ? {} : _inputObj$settings;
-                var _inputObj$tags = inputObj.tags;
-                var tags = _inputObj$tags === undefined ? {} : _inputObj$tags;
-                var _inputObj$errors = inputObj.errors;
-                var errors = _inputObj$errors === undefined ? {} : _inputObj$errors;
+                var _inputObj$input = inputObj.input,
+                    input = _inputObj$input === undefined ? {} : _inputObj$input,
+                    _inputObj$settings = inputObj.settings,
+                    settings = _inputObj$settings === undefined ? {} : _inputObj$settings,
+                    _inputObj$tags = inputObj.tags,
+                    tags = _inputObj$tags === undefined ? {} : _inputObj$tags,
+                    _inputObj$errors = inputObj.errors,
+                    errors = _inputObj$errors === undefined ? {} : _inputObj$errors;
 
                 /**
                  * Input specific settings for this datetime-local input
@@ -14829,36 +14900,36 @@ var DatetimeLocal = exports.DatetimeLocal = function () {
         }, {
                 key: "html",
                 get: function get() {
-                        var input = this.input;
-                        var settings = this.settings;
-                        var tags = this.tags;
-                        var errors = this.errors;
-                        var uiClasses = this.uiClasses;
-                        var uiAttributes = this.uiAttributes;
-                        var label = input.label;
-                        var labelHTML = input.labelHTML;
-                        var _input$name = input.name;
-                        var name = _input$name === undefined ? '' : _input$name;
-                        var _input$id = input.id;
-                        var id = _input$id === undefined ? '' : _input$id;
-                        var _settings$input = settings.input;
-                        var inputSettings = _settings$input === undefined ? {} : _settings$input;
-                        var _settings$showLabel = settings.showLabel;
-                        var showLabel = _settings$showLabel === undefined ? true : _settings$showLabel;
-                        var _inputSettings$classe = inputSettings.classes;
-                        var classes = _inputSettings$classe === undefined ? '' : _inputSettings$classe;
+                        var input = this.input,
+                            settings = this.settings,
+                            tags = this.tags,
+                            errors = this.errors,
+                            uiClasses = this.uiClasses,
+                            uiAttributes = this.uiAttributes;
+                        var label = input.label,
+                            labelHTML = input.labelHTML,
+                            _input$name = input.name,
+                            name = _input$name === undefined ? '' : _input$name,
+                            _input$id = input.id,
+                            id = _input$id === undefined ? '' : _input$id;
+                        var _settings$input = settings.input,
+                            inputSettings = _settings$input === undefined ? {} : _settings$input,
+                            _settings$showLabel = settings.showLabel,
+                            showLabel = _settings$showLabel === undefined ? true : _settings$showLabel;
+                        var _inputSettings$classe = inputSettings.classes,
+                            classes = _inputSettings$classe === undefined ? '' : _inputSettings$classe;
 
 
                         classes = classes + " " + uiClasses;
 
-                        var _errors$messages = errors.messages;
-                        var errorMessages = _errors$messages === undefined ? [] : _errors$messages;
-                        var _errors$attributes = errors.attributes;
-                        var errorAttributes = _errors$attributes === undefined ? '' : _errors$attributes;
-                        var _errors$nonValidate = errors.nonValidate;
-                        var nonValidate = _errors$nonValidate === undefined ? [] : _errors$nonValidate;
-                        var _errors$tags = errors.tags;
-                        var errorTags = _errors$tags === undefined ? '' : _errors$tags;
+                        var _errors$messages = errors.messages,
+                            errorMessages = _errors$messages === undefined ? [] : _errors$messages,
+                            _errors$attributes = errors.attributes,
+                            errorAttributes = _errors$attributes === undefined ? '' : _errors$attributes,
+                            _errors$nonValidate = errors.nonValidate,
+                            nonValidate = _errors$nonValidate === undefined ? [] : _errors$nonValidate,
+                            _errors$tags = errors.tags,
+                            errorTags = _errors$tags === undefined ? '' : _errors$tags;
 
                         var errorHTML = new this.errorMessages(errorMessages).html;
                         var nonValidateAttributesHTML = new this.attributeTags(errorAttributes, nonValidate).html;
@@ -14876,7 +14947,7 @@ var DatetimeLocal = exports.DatetimeLocal = function () {
         return DatetimeLocal;
 }();
 
-},{"../utilities/attributes.js":409,"./messages.js":397,"./style":404}],394:[function(require,module,exports){
+},{"../utilities/attributes.js":408,"./messages.js":396,"./style":403}],393:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -14914,21 +14985,20 @@ var Email = exports.Email = function () {
          * error messaging appearance.
          * @param {object} errorMessages - UI specific Error messages 
          */
-
         function Email() {
-                var inputObj = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-                var errorMessages = arguments.length <= 1 || arguments[1] === undefined ? _messages.ErrorMessages : arguments[1];
+                var inputObj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+                var errorMessages = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _messages.ErrorMessages;
 
                 _classCallCheck(this, Email);
 
-                var _inputObj$input = inputObj.input;
-                var input = _inputObj$input === undefined ? {} : _inputObj$input;
-                var _inputObj$settings = inputObj.settings;
-                var settings = _inputObj$settings === undefined ? {} : _inputObj$settings;
-                var _inputObj$tags = inputObj.tags;
-                var tags = _inputObj$tags === undefined ? {} : _inputObj$tags;
-                var _inputObj$errors = inputObj.errors;
-                var errors = _inputObj$errors === undefined ? {} : _inputObj$errors;
+                var _inputObj$input = inputObj.input,
+                    input = _inputObj$input === undefined ? {} : _inputObj$input,
+                    _inputObj$settings = inputObj.settings,
+                    settings = _inputObj$settings === undefined ? {} : _inputObj$settings,
+                    _inputObj$tags = inputObj.tags,
+                    tags = _inputObj$tags === undefined ? {} : _inputObj$tags,
+                    _inputObj$errors = inputObj.errors,
+                    errors = _inputObj$errors === undefined ? {} : _inputObj$errors;
 
                 /**
                  * Input specific settings for this email input
@@ -15016,37 +15086,37 @@ var Email = exports.Email = function () {
         }, {
                 key: "html",
                 get: function get() {
-                        var input = this.input;
-                        var settings = this.settings;
-                        var tags = this.tags;
-                        var errors = this.errors;
-                        var uiClasses = this.uiClasses;
-                        var uiAttributes = this.uiAttributes;
-                        var _input$label = input.label;
-                        var label = _input$label === undefined ? '' : _input$label;
-                        var labelHTML = input.labelHTML;
-                        var _input$name = input.name;
-                        var name = _input$name === undefined ? '' : _input$name;
-                        var _input$id = input.id;
-                        var id = _input$id === undefined ? '' : _input$id;
-                        var _settings$input = settings.input;
-                        var inputSettings = _settings$input === undefined ? {} : _settings$input;
-                        var _settings$showLabel = settings.showLabel;
-                        var showLabel = _settings$showLabel === undefined ? true : _settings$showLabel;
-                        var _inputSettings$classe = inputSettings.classes;
-                        var classes = _inputSettings$classe === undefined ? '' : _inputSettings$classe;
+                        var input = this.input,
+                            settings = this.settings,
+                            tags = this.tags,
+                            errors = this.errors,
+                            uiClasses = this.uiClasses,
+                            uiAttributes = this.uiAttributes;
+                        var _input$label = input.label,
+                            label = _input$label === undefined ? '' : _input$label,
+                            labelHTML = input.labelHTML,
+                            _input$name = input.name,
+                            name = _input$name === undefined ? '' : _input$name,
+                            _input$id = input.id,
+                            id = _input$id === undefined ? '' : _input$id;
+                        var _settings$input = settings.input,
+                            inputSettings = _settings$input === undefined ? {} : _settings$input,
+                            _settings$showLabel = settings.showLabel,
+                            showLabel = _settings$showLabel === undefined ? true : _settings$showLabel;
+                        var _inputSettings$classe = inputSettings.classes,
+                            classes = _inputSettings$classe === undefined ? '' : _inputSettings$classe;
 
 
                         classes = classes + " " + uiClasses;
 
-                        var _errors$messages = errors.messages;
-                        var errorMessages = _errors$messages === undefined ? [] : _errors$messages;
-                        var _errors$attributes = errors.attributes;
-                        var errorAttributes = _errors$attributes === undefined ? '' : _errors$attributes;
-                        var _errors$nonValidate = errors.nonValidate;
-                        var nonValidate = _errors$nonValidate === undefined ? [] : _errors$nonValidate;
-                        var _errors$tags = errors.tags;
-                        var errorTags = _errors$tags === undefined ? '' : _errors$tags;
+                        var _errors$messages = errors.messages,
+                            errorMessages = _errors$messages === undefined ? [] : _errors$messages,
+                            _errors$attributes = errors.attributes,
+                            errorAttributes = _errors$attributes === undefined ? '' : _errors$attributes,
+                            _errors$nonValidate = errors.nonValidate,
+                            nonValidate = _errors$nonValidate === undefined ? [] : _errors$nonValidate,
+                            _errors$tags = errors.tags,
+                            errorTags = _errors$tags === undefined ? '' : _errors$tags;
 
                         var errorHTML = new this.errorMessages(errorMessages).html;
                         var nonValidateAttributesHTML = new this.attributeTags(errorAttributes, nonValidate).html;
@@ -15064,7 +15134,7 @@ var Email = exports.Email = function () {
         return Email;
 }();
 
-},{"../utilities/attributes.js":409,"./messages.js":397,"./style":404}],395:[function(require,module,exports){
+},{"../utilities/attributes.js":408,"./messages.js":396,"./style":403}],394:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -15082,7 +15152,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * Creates a form wrapper around these inputs and a 
  * submit button to submit the form.
  */
-
 var Form = exports.Form = function () {
 
     /**
@@ -15093,9 +15162,8 @@ var Form = exports.Form = function () {
      * added to the form primarily used for validation and submit functions.
      * @param {object} settings - Global settings for this form.
      */
-
     function Form(inputHTML, name, additionalAttrHTML, settings) {
-        var style = arguments.length <= 4 || arguments[4] === undefined ? _style.Style : arguments[4];
+        var style = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : _style.Style;
 
         _classCallCheck(this, Form);
 
@@ -15173,21 +15241,21 @@ var Form = exports.Form = function () {
     }, {
         key: 'submitButtonHTML',
         get: function get() {
-            var _submit = this.submit;
-            var submit = _submit === undefined ? {} : _submit;
-            var _submit$label = submit.label;
-            var submitLabel = _submit$label === undefined ? "Submit" : _submit$label;
-            var submitLabelHTML = submit.labelHTML;
-            var _submit$input = submit.input;
-            var submitInput = _submit$input === undefined ? {} : _submit$input;
-            var _submit$container = submit.container;
-            var submitContainer = _submit$container === undefined ? {} : _submit$container;
-            var _submit$attributes = submit.attributes;
-            var attributes = _submit$attributes === undefined ? '' : _submit$attributes;
-            var _submitInput$classes = submitInput.classes;
-            var submitInputClasses = _submitInput$classes === undefined ? "" : _submitInput$classes;
-            var _submitContainer$clas = submitContainer.classes;
-            var submitContainerClasses = _submitContainer$clas === undefined ? "" : _submitContainer$clas;
+            var _submit = this.submit,
+                submit = _submit === undefined ? {} : _submit;
+            var _submit$label = submit.label,
+                submitLabel = _submit$label === undefined ? "Submit" : _submit$label,
+                submitLabelHTML = submit.labelHTML,
+                _submit$input = submit.input,
+                submitInput = _submit$input === undefined ? {} : _submit$input,
+                _submit$container = submit.container,
+                submitContainer = _submit$container === undefined ? {} : _submit$container,
+                _submit$attributes = submit.attributes,
+                attributes = _submit$attributes === undefined ? '' : _submit$attributes;
+            var _submitInput$classes = submitInput.classes,
+                submitInputClasses = _submitInput$classes === undefined ? "" : _submitInput$classes;
+            var _submitContainer$clas = submitContainer.classes,
+                submitContainerClasses = _submitContainer$clas === undefined ? "" : _submitContainer$clas;
 
 
             submitLabel = submitLabelHTML ? submitLabelHTML : submitLabel;
@@ -15206,19 +15274,19 @@ var Form = exports.Form = function () {
     }, {
         key: 'html',
         get: function get() {
-            var inputHTML = this.inputHTML;
-            var name = this.name;
-            var additionalAttrHTML = this.additionalAttrHTML;
-            var settings = this.settings;
-            var formClasses = this.formClasses;
-            var _settings$submit = settings.submit;
-            var submit = _settings$submit === undefined ? {} : _settings$submit;
-            var _settings$classes = settings.classes;
-            var configFormClasses = _settings$classes === undefined ? '' : _settings$classes;
-            var formId = settings.id;
-            var _settings$label = settings.label;
-            var label = _settings$label === undefined ? '' : _settings$label;
-            var labelHTML = settings.labelHTML;
+            var inputHTML = this.inputHTML,
+                name = this.name,
+                additionalAttrHTML = this.additionalAttrHTML,
+                settings = this.settings,
+                formClasses = this.formClasses;
+            var _settings$submit = settings.submit,
+                submit = _settings$submit === undefined ? {} : _settings$submit,
+                _settings$classes = settings.classes,
+                configFormClasses = _settings$classes === undefined ? '' : _settings$classes,
+                formId = settings.id,
+                _settings$label = settings.label,
+                label = _settings$label === undefined ? '' : _settings$label,
+                labelHTML = settings.labelHTML;
 
 
             if (labelHTML) label = labelHTML;
@@ -15239,7 +15307,7 @@ var Form = exports.Form = function () {
     return Form;
 }();
 
-},{"./style":404}],396:[function(require,module,exports){
+},{"./style":403}],395:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -15291,14 +15359,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 //States
 
 
-//Controls
+//Controls 
 
 
 /**
  * Registers all the various default UI classes to 
  * this class to be used by various renders.
  */
-
 var DefaultUI =
 
 /**
@@ -15349,7 +15416,7 @@ exports.DefaultUI = function DefaultUI() {
     };
 };
 
-},{"./anchor.js":389,"./buttons.js":390,"./checkbox.js":391,"./date.js":392,"./datetime-local.js":393,"./email.js":394,"./form.js":395,"./number.js":398,"./options.js":399,"./radio.js":400,"./state.input.js":401,"./state.navigation.js":402,"./state.video.js":403,"./text.js":405,"./textarea.js":406,"./url.js":407,"./video.controls.js":408}],397:[function(require,module,exports){
+},{"./anchor.js":388,"./buttons.js":389,"./checkbox.js":390,"./date.js":391,"./datetime-local.js":392,"./email.js":393,"./form.js":394,"./number.js":397,"./options.js":398,"./radio.js":399,"./state.input.js":400,"./state.navigation.js":401,"./state.video.js":402,"./text.js":404,"./textarea.js":405,"./url.js":406,"./video.controls.js":407}],396:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -15365,7 +15432,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * attributes created from the various rendering libraries
  * iVXjs uses. 
  */
-
 var ErrorMessages = exports.ErrorMessages = function () {
 
     /**
@@ -15376,9 +15442,8 @@ var ErrorMessages = exports.ErrorMessages = function () {
      * error messages with attributes indicating the message 
      * and the conditions in which to show them.
      */
-
     function ErrorMessages() {
-        var errorMessages = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
+        var errorMessages = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
 
         _classCallCheck(this, ErrorMessages);
 
@@ -15425,9 +15490,9 @@ var ErrorMessages = exports.ErrorMessages = function () {
     }, {
         key: 'html',
         get: function get() {
-            var errorMessages = this.errorMessages;
-            var messageClasses = this.messageClasses;
-            var containerClasses = this.containerClasses;
+            var errorMessages = this.errorMessages,
+                messageClasses = this.messageClasses,
+                containerClasses = this.containerClasses;
 
             var errorMessageHTML = errorMessages.reduce(function (errorMessageHTML, errorMessage, index) {
                 return errorMessageHTML + '<span class="' + messageClasses + '" ' + errorMessage.attrHTML + '>\n                    ' + errorMessage.message + '\n                </span>';
@@ -15444,7 +15509,7 @@ var ErrorMessages = exports.ErrorMessages = function () {
     return ErrorMessages;
 }();
 
-},{}],398:[function(require,module,exports){
+},{}],397:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -15464,7 +15529,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * Creates a number input that will record numbers  
  * for iVXjs.
  */
-
 var Number = exports.Number = function () {
 
         /**
@@ -15478,21 +15542,20 @@ var Number = exports.Number = function () {
          * error messaging appearance.
          * @param {object} errorMessages - UI specific Error messages 
          */
-
         function Number() {
-                var inputObj = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-                var errorMessages = arguments.length <= 1 || arguments[1] === undefined ? _messages.ErrorMessages : arguments[1];
+                var inputObj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+                var errorMessages = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _messages.ErrorMessages;
 
                 _classCallCheck(this, Number);
 
-                var _inputObj$input = inputObj.input;
-                var input = _inputObj$input === undefined ? {} : _inputObj$input;
-                var _inputObj$settings = inputObj.settings;
-                var settings = _inputObj$settings === undefined ? {} : _inputObj$settings;
-                var _inputObj$tags = inputObj.tags;
-                var tags = _inputObj$tags === undefined ? {} : _inputObj$tags;
-                var _inputObj$errors = inputObj.errors;
-                var errors = _inputObj$errors === undefined ? {} : _inputObj$errors;
+                var _inputObj$input = inputObj.input,
+                    input = _inputObj$input === undefined ? {} : _inputObj$input,
+                    _inputObj$settings = inputObj.settings,
+                    settings = _inputObj$settings === undefined ? {} : _inputObj$settings,
+                    _inputObj$tags = inputObj.tags,
+                    tags = _inputObj$tags === undefined ? {} : _inputObj$tags,
+                    _inputObj$errors = inputObj.errors,
+                    errors = _inputObj$errors === undefined ? {} : _inputObj$errors;
 
                 /**
                  * Input specific settings for this number input
@@ -15583,37 +15646,37 @@ var Number = exports.Number = function () {
         }, {
                 key: "html",
                 get: function get() {
-                        var input = this.input;
-                        var settings = this.settings;
-                        var tags = this.tags;
-                        var errors = this.errors;
-                        var uiClasses = this.uiClasses;
-                        var uiAttributes = this.uiAttributes;
-                        var _input$label = input.label;
-                        var label = _input$label === undefined ? '' : _input$label;
-                        var _input$name = input.name;
-                        var name = _input$name === undefined ? '' : _input$name;
-                        var _input$id = input.id;
-                        var id = _input$id === undefined ? '' : _input$id;
-                        var labelHTML = input.labelHTML;
-                        var _settings$input = settings.input;
-                        var inputSettings = _settings$input === undefined ? {} : _settings$input;
-                        var _settings$showLabel = settings.showLabel;
-                        var showLabel = _settings$showLabel === undefined ? true : _settings$showLabel;
-                        var _inputSettings$classe = inputSettings.classes;
-                        var classes = _inputSettings$classe === undefined ? '' : _inputSettings$classe;
+                        var input = this.input,
+                            settings = this.settings,
+                            tags = this.tags,
+                            errors = this.errors,
+                            uiClasses = this.uiClasses,
+                            uiAttributes = this.uiAttributes;
+                        var _input$label = input.label,
+                            label = _input$label === undefined ? '' : _input$label,
+                            _input$name = input.name,
+                            name = _input$name === undefined ? '' : _input$name,
+                            _input$id = input.id,
+                            id = _input$id === undefined ? '' : _input$id,
+                            labelHTML = input.labelHTML;
+                        var _settings$input = settings.input,
+                            inputSettings = _settings$input === undefined ? {} : _settings$input,
+                            _settings$showLabel = settings.showLabel,
+                            showLabel = _settings$showLabel === undefined ? true : _settings$showLabel;
+                        var _inputSettings$classe = inputSettings.classes,
+                            classes = _inputSettings$classe === undefined ? '' : _inputSettings$classe;
 
 
                         classes = classes + " " + uiClasses;
 
-                        var _errors$messages = errors.messages;
-                        var errorMessages = _errors$messages === undefined ? [] : _errors$messages;
-                        var _errors$attributes = errors.attributes;
-                        var errorAttributes = _errors$attributes === undefined ? '' : _errors$attributes;
-                        var _errors$nonValidate = errors.nonValidate;
-                        var nonValidate = _errors$nonValidate === undefined ? [] : _errors$nonValidate;
-                        var _errors$tags = errors.tags;
-                        var errorTags = _errors$tags === undefined ? '' : _errors$tags;
+                        var _errors$messages = errors.messages,
+                            errorMessages = _errors$messages === undefined ? [] : _errors$messages,
+                            _errors$attributes = errors.attributes,
+                            errorAttributes = _errors$attributes === undefined ? '' : _errors$attributes,
+                            _errors$nonValidate = errors.nonValidate,
+                            nonValidate = _errors$nonValidate === undefined ? [] : _errors$nonValidate,
+                            _errors$tags = errors.tags,
+                            errorTags = _errors$tags === undefined ? '' : _errors$tags;
 
                         var errorHTML = new this.errorMessages(errorMessages).html;
                         var nonValidateAttributesHTML = new this.attributeTags(errorAttributes, nonValidate).html;
@@ -15631,7 +15694,7 @@ var Number = exports.Number = function () {
         return Number;
 }();
 
-},{"../utilities/attributes.js":409,"./messages.js":397}],399:[function(require,module,exports){
+},{"../utilities/attributes.js":408,"./messages.js":396}],398:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -15653,19 +15716,19 @@ var style = new _style.Style();
 
 var Options = exports.Options = function () {
     function Options(inputObj) {
-        var errorMessages = arguments.length <= 1 || arguments[1] === undefined ? _messages.ErrorMessages : arguments[1];
+        var errorMessages = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _messages.ErrorMessages;
 
         _classCallCheck(this, Options);
 
-        var input = inputObj.input;
-        var _inputObj$defaultDisp = inputObj.defaultDisplay;
-        var defaultDisplay = _inputObj$defaultDisp === undefined ? '' : _inputObj$defaultDisp;
-        var _inputObj$settings = inputObj.settings;
-        var settings = _inputObj$settings === undefined ? {} : _inputObj$settings;
-        var _inputObj$tags = inputObj.tags;
-        var tags = _inputObj$tags === undefined ? '' : _inputObj$tags;
-        var _inputObj$errors = inputObj.errors;
-        var errors = _inputObj$errors === undefined ? {} : _inputObj$errors;
+        var input = inputObj.input,
+            _inputObj$defaultDisp = inputObj.defaultDisplay,
+            defaultDisplay = _inputObj$defaultDisp === undefined ? '' : _inputObj$defaultDisp,
+            _inputObj$settings = inputObj.settings,
+            settings = _inputObj$settings === undefined ? {} : _inputObj$settings,
+            _inputObj$tags = inputObj.tags,
+            tags = _inputObj$tags === undefined ? '' : _inputObj$tags,
+            _inputObj$errors = inputObj.errors,
+            errors = _inputObj$errors === undefined ? {} : _inputObj$errors;
 
 
         this.tags = tags;
@@ -15690,37 +15753,37 @@ var Options = exports.Options = function () {
     }, {
         key: "html",
         get: function get() {
-            var tags = this.tags;
-            var input = this.input;
-            var defaultDisplay = this.defaultDisplay;
-            var errors = this.errors;
-            var settings = this.settings;
-            var uiClasses = this.uiClasses;
-            var uiAttributes = this.uiAttributes;
-            var id = input.id;
-            var name = input.name;
-            var options = input.options;
-            var _input$label = input.label;
-            var label = _input$label === undefined ? '' : _input$label;
-            var labelHTML = input.labelHTML;
-            var _settings$input = settings.input;
-            var inputSettings = _settings$input === undefined ? {} : _settings$input;
-            var _settings$showLabel = settings.showLabel;
-            var showLabel = _settings$showLabel === undefined ? true : _settings$showLabel;
-            var _inputSettings$classe = inputSettings.classes;
-            var classes = _inputSettings$classe === undefined ? '' : _inputSettings$classe;
+            var tags = this.tags,
+                input = this.input,
+                defaultDisplay = this.defaultDisplay,
+                errors = this.errors,
+                settings = this.settings,
+                uiClasses = this.uiClasses,
+                uiAttributes = this.uiAttributes;
+            var id = input.id,
+                name = input.name,
+                options = input.options,
+                _input$label = input.label,
+                label = _input$label === undefined ? '' : _input$label,
+                labelHTML = input.labelHTML;
+            var _settings$input = settings.input,
+                inputSettings = _settings$input === undefined ? {} : _settings$input,
+                _settings$showLabel = settings.showLabel,
+                showLabel = _settings$showLabel === undefined ? true : _settings$showLabel;
+            var _inputSettings$classe = inputSettings.classes,
+                classes = _inputSettings$classe === undefined ? '' : _inputSettings$classe;
 
 
             classes = classes + " " + uiClasses;
 
-            var _errors$messages = errors.messages;
-            var errorMessages = _errors$messages === undefined ? [] : _errors$messages;
-            var _errors$attributes = errors.attributes;
-            var errorAttributes = _errors$attributes === undefined ? '' : _errors$attributes;
-            var _errors$nonValidate = errors.nonValidate;
-            var nonValidate = _errors$nonValidate === undefined ? [] : _errors$nonValidate;
-            var _errors$tags = errors.tags;
-            var errorTags = _errors$tags === undefined ? '' : _errors$tags;
+            var _errors$messages = errors.messages,
+                errorMessages = _errors$messages === undefined ? [] : _errors$messages,
+                _errors$attributes = errors.attributes,
+                errorAttributes = _errors$attributes === undefined ? '' : _errors$attributes,
+                _errors$nonValidate = errors.nonValidate,
+                nonValidate = _errors$nonValidate === undefined ? [] : _errors$nonValidate,
+                _errors$tags = errors.tags,
+                errorTags = _errors$tags === undefined ? '' : _errors$tags;
 
             var defaultOptionTag = "<option value=\"\">Select an option...</option>";
             var errorHTML = new this.errorMessages(errorMessages).html;
@@ -15747,7 +15810,7 @@ var Options = exports.Options = function () {
     return Options;
 }();
 
-},{"../utilities/attributes.js":409,"./messages.js":397,"./style":404}],400:[function(require,module,exports){
+},{"../utilities/attributes.js":408,"./messages.js":396,"./style":403}],399:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -15765,18 +15828,18 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var Radio = exports.Radio = function () {
     function Radio(radioInputObj) {
-        var errorMessages = arguments.length <= 1 || arguments[1] === undefined ? _messages.ErrorMessages : arguments[1];
+        var errorMessages = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _messages.ErrorMessages;
 
         _classCallCheck(this, Radio);
 
-        var _radioInputObj$input = radioInputObj.input;
-        var input = _radioInputObj$input === undefined ? {} : _radioInputObj$input;
-        var _radioInputObj$radios = radioInputObj.radios;
-        var radios = _radioInputObj$radios === undefined ? [] : _radioInputObj$radios;
-        var _radioInputObj$errors = radioInputObj.errors;
-        var errors = _radioInputObj$errors === undefined ? {} : _radioInputObj$errors;
-        var _radioInputObj$settin = radioInputObj.settings;
-        var settings = _radioInputObj$settin === undefined ? {} : _radioInputObj$settin;
+        var _radioInputObj$input = radioInputObj.input,
+            input = _radioInputObj$input === undefined ? {} : _radioInputObj$input,
+            _radioInputObj$radios = radioInputObj.radios,
+            radios = _radioInputObj$radios === undefined ? [] : _radioInputObj$radios,
+            _radioInputObj$errors = radioInputObj.errors,
+            errors = _radioInputObj$errors === undefined ? {} : _radioInputObj$errors,
+            _radioInputObj$settin = radioInputObj.settings,
+            settings = _radioInputObj$settin === undefined ? {} : _radioInputObj$settin;
 
 
         this.radios = radios;
@@ -15815,30 +15878,30 @@ var Radio = exports.Radio = function () {
     }, {
         key: "html",
         get: function get() {
-            var errors = this.errors;
-            var radios = this.radios;
-            var settings = this.settings;
-            var input = this.input;
-            var uiClasses = this.uiClasses;
-            var errorMessages = errors.messages;
-            var _errors$tags = errors.tags;
-            var errorTags = _errors$tags === undefined ? "" : _errors$tags;
+            var errors = this.errors,
+                radios = this.radios,
+                settings = this.settings,
+                input = this.input,
+                uiClasses = this.uiClasses;
+            var errorMessages = errors.messages,
+                _errors$tags = errors.tags,
+                errorTags = _errors$tags === undefined ? "" : _errors$tags;
 
             var self = this;
-            var inputLabel = input.label;
-            var inputLableHTML = input.labelHTML;
-            var _settings$showLabel = settings.showLabel;
-            var showLabel = _settings$showLabel === undefined ? true : _settings$showLabel;
+            var inputLabel = input.label,
+                inputLableHTML = input.labelHTML;
+            var _settings$showLabel = settings.showLabel,
+                showLabel = _settings$showLabel === undefined ? true : _settings$showLabel;
 
 
             if (inputLableHTML) inputLabel = inputLableHTML;
 
             var radiosHTML = radios.reduce(function (html, radio) {
-                var label = radio.label;
-                var _radio$attrHTML = radio.attrHTML;
-                var attrHTML = _radio$attrHTML === undefined ? '' : _radio$attrHTML;
-                var _radio$classes = radio.classes;
-                var classes = _radio$classes === undefined ? '' : _radio$classes;
+                var label = radio.label,
+                    _radio$attrHTML = radio.attrHTML,
+                    attrHTML = _radio$attrHTML === undefined ? '' : _radio$attrHTML,
+                    _radio$classes = radio.classes,
+                    classes = _radio$classes === undefined ? '' : _radio$classes;
 
 
                 attrHTML = attrHTML + " " + errorTags;
@@ -15857,7 +15920,7 @@ var Radio = exports.Radio = function () {
     return Radio;
 }();
 
-},{"../utilities/attributes.js":409,"./messages.js":397}],401:[function(require,module,exports){
+},{"../utilities/attributes.js":408,"./messages.js":396}],400:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -15894,27 +15957,27 @@ var InputState = exports.InputState = function () {
     }, {
         key: 'html',
         get: function get() {
-            var formSection = this.formSection;
-            var data = this.data;
-            var defaultFooterClasses = this.defaultFooterClasses;
-            var defaultHeaderClasses = this.defaultHeaderClasses;
-            var defaultSectionClasses = this.defaultSectionClasses;
-            var _data$header = data.header;
-            var header = _data$header === undefined ? {} : _data$header;
-            var _data$footer = data.footer;
-            var footer = _data$footer === undefined ? {} : _data$footer;
-            var _data$section = data.section;
-            var section = _data$section === undefined ? {} : _data$section;
-            var _header$classes = header.classes;
-            var headerClasses = _header$classes === undefined ? '' : _header$classes;
-            var _header$html = header.html;
-            var headerHTML = _header$html === undefined ? '<h1>' + data.name + '</h1>' : _header$html;
-            var _section$classes = section.classes;
-            var sectionClasses = _section$classes === undefined ? '' : _section$classes;
-            var _footer$classes = footer.classes;
-            var footerClasses = _footer$classes === undefined ? '' : _footer$classes;
-            var _footer$html = footer.html;
-            var footerHTML = _footer$html === undefined ? '' : _footer$html;
+            var formSection = this.formSection,
+                data = this.data,
+                defaultFooterClasses = this.defaultFooterClasses,
+                defaultHeaderClasses = this.defaultHeaderClasses,
+                defaultSectionClasses = this.defaultSectionClasses;
+            var _data$header = data.header,
+                header = _data$header === undefined ? {} : _data$header,
+                _data$footer = data.footer,
+                footer = _data$footer === undefined ? {} : _data$footer,
+                _data$section = data.section,
+                section = _data$section === undefined ? {} : _data$section;
+            var _header$classes = header.classes,
+                headerClasses = _header$classes === undefined ? '' : _header$classes,
+                _header$html = header.html,
+                headerHTML = _header$html === undefined ? '<h1>' + data.name + '</h1>' : _header$html;
+            var _section$classes = section.classes,
+                sectionClasses = _section$classes === undefined ? '' : _section$classes;
+            var _footer$classes = footer.classes,
+                footerClasses = _footer$classes === undefined ? '' : _footer$classes,
+                _footer$html = footer.html,
+                footerHTML = _footer$html === undefined ? '' : _footer$html;
 
 
             return '\n            <section class="' + sectionClasses + ' ' + defaultSectionClasses + '" id="' + data.id + '">\n                 <header class="' + headerClasses + ' ' + defaultHeaderClasses + '">' + headerHTML + '</header>\n                ' + formSection + '\n                <footer class="' + footerClasses + ' ' + defaultFooterClasses + '">' + footerHTML + '</footer>\n            </section>';
@@ -15924,7 +15987,7 @@ var InputState = exports.InputState = function () {
     return InputState;
 }();
 
-},{}],402:[function(require,module,exports){
+},{}],401:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -15969,34 +16032,34 @@ var NavigationState = exports.NavigationState = function () {
     }, {
         key: 'html',
         get: function get() {
-            var data = this.data;
-            var linkSection = this.linkSection;
-            var defaultFooterClasses = this.defaultFooterClasses;
-            var defaultHeaderClasses = this.defaultHeaderClasses;
-            var defaultSectionClasses = this.defaultSectionClasses;
-            var defaultLinkContainerClasses = this.defaultLinkContainerClasses;
-            var _data$header = data.header;
-            var header = _data$header === undefined ? {} : _data$header;
-            var _data$footer = data.footer;
-            var footer = _data$footer === undefined ? {} : _data$footer;
-            var _data$section = data.section;
-            var section = _data$section === undefined ? {} : _data$section;
-            var _data$linkContainer = data.linkContainer;
-            var linkContainer = _data$linkContainer === undefined ? {} : _data$linkContainer;
-            var _header$classes = header.classes;
-            var headerClasses = _header$classes === undefined ? '' : _header$classes;
-            var _header$html = header.html;
-            var headerHTML = _header$html === undefined ? '' : _header$html;
-            var _section$classes = section.classes;
-            var sectionClasses = _section$classes === undefined ? '' : _section$classes;
-            var _footer$classes = footer.classes;
-            var footerClasses = _footer$classes === undefined ? '' : _footer$classes;
-            var _footer$html = footer.html;
-            var footerHTML = _footer$html === undefined ? '' : _footer$html;
-            var _linkContainer$classe = linkContainer.classes;
-            var linkContainerClasses = _linkContainer$classe === undefined ? '' : _linkContainer$classe;
-            var _linkContainer$attrib = linkContainer.attributes;
-            var linkContainerAttributes = _linkContainer$attrib === undefined ? {} : _linkContainer$attrib;
+            var data = this.data,
+                linkSection = this.linkSection,
+                defaultFooterClasses = this.defaultFooterClasses,
+                defaultHeaderClasses = this.defaultHeaderClasses,
+                defaultSectionClasses = this.defaultSectionClasses,
+                defaultLinkContainerClasses = this.defaultLinkContainerClasses;
+            var _data$header = data.header,
+                header = _data$header === undefined ? {} : _data$header,
+                _data$footer = data.footer,
+                footer = _data$footer === undefined ? {} : _data$footer,
+                _data$section = data.section,
+                section = _data$section === undefined ? {} : _data$section,
+                _data$linkContainer = data.linkContainer,
+                linkContainer = _data$linkContainer === undefined ? {} : _data$linkContainer;
+            var _header$classes = header.classes,
+                headerClasses = _header$classes === undefined ? '' : _header$classes,
+                _header$html = header.html,
+                headerHTML = _header$html === undefined ? '' : _header$html;
+            var _section$classes = section.classes,
+                sectionClasses = _section$classes === undefined ? '' : _section$classes;
+            var _footer$classes = footer.classes,
+                footerClasses = _footer$classes === undefined ? '' : _footer$classes,
+                _footer$html = footer.html,
+                footerHTML = _footer$html === undefined ? '' : _footer$html;
+            var _linkContainer$classe = linkContainer.classes,
+                linkContainerClasses = _linkContainer$classe === undefined ? '' : _linkContainer$classe,
+                _linkContainer$attrib = linkContainer.attributes,
+                linkContainerAttributes = _linkContainer$attrib === undefined ? {} : _linkContainer$attrib;
 
             var linkContainerAttributeHTML = new _attributes.AttributeTags(linkContainerAttributes, Object.keys(linkContainerAttributes)).html;
 
@@ -16007,7 +16070,7 @@ var NavigationState = exports.NavigationState = function () {
     return NavigationState;
 }();
 
-},{"../utilities/attributes.js":409}],403:[function(require,module,exports){
+},{"../utilities/attributes.js":408}],402:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -16029,8 +16092,8 @@ var VideoState = exports.VideoState = function () {
     _createClass(VideoState, [{
         key: 'iPhoneInlineClasses',
         get: function get() {
-            var _data$isIphone = this.data.isIphone;
-            var isIphone = _data$isIphone === undefined ? false : _data$isIphone;
+            var _data$isIphone = this.data.isIphone,
+                isIphone = _data$isIphone === undefined ? false : _data$isIphone;
 
 
             return isIphone ? 'iphone-inline' : '';
@@ -16038,26 +16101,26 @@ var VideoState = exports.VideoState = function () {
     }, {
         key: 'html',
         get: function get() {
-            var _playerSection = this.playerSection;
-            var playerSection = _playerSection === undefined ? '' : _playerSection;
-            var _data = this.data;
-            var data = _data === undefined ? { name: '' } : _data;
-            var _data$header = data.header;
-            var headerSettings = _data$header === undefined ? {} : _data$header;
-            var _data$footer = data.footer;
-            var footerSettings = _data$footer === undefined ? {} : _data$footer;
-            var _data$section = data.section;
-            var sectionSettings = _data$section === undefined ? {} : _data$section;
-            var _headerSettings$class = headerSettings.classes;
-            var headerClasses = _headerSettings$class === undefined ? '' : _headerSettings$class;
-            var _headerSettings$html = headerSettings.html;
-            var headerHTML = _headerSettings$html === undefined ? '<h1>' + data.name + '</h1>' : _headerSettings$html;
-            var _sectionSettings$clas = sectionSettings.classes;
-            var sectionClasses = _sectionSettings$clas === undefined ? '' : _sectionSettings$clas;
-            var _footerSettings$class = footerSettings.classes;
-            var footerClasses = _footerSettings$class === undefined ? '' : _footerSettings$class;
-            var _footerSettings$html = footerSettings.html;
-            var footerHTML = _footerSettings$html === undefined ? '' : _footerSettings$html;
+            var _playerSection = this.playerSection,
+                playerSection = _playerSection === undefined ? '' : _playerSection,
+                _data = this.data,
+                data = _data === undefined ? { name: '' } : _data;
+            var _data$header = data.header,
+                headerSettings = _data$header === undefined ? {} : _data$header,
+                _data$footer = data.footer,
+                footerSettings = _data$footer === undefined ? {} : _data$footer,
+                _data$section = data.section,
+                sectionSettings = _data$section === undefined ? {} : _data$section;
+            var _headerSettings$class = headerSettings.classes,
+                headerClasses = _headerSettings$class === undefined ? '' : _headerSettings$class,
+                _headerSettings$html = headerSettings.html,
+                headerHTML = _headerSettings$html === undefined ? '<h1>' + data.name + '</h1>' : _headerSettings$html;
+            var _sectionSettings$clas = sectionSettings.classes,
+                sectionClasses = _sectionSettings$clas === undefined ? '' : _sectionSettings$clas;
+            var _footerSettings$class = footerSettings.classes,
+                footerClasses = _footerSettings$class === undefined ? '' : _footerSettings$class,
+                _footerSettings$html = footerSettings.html,
+                footerHTML = _footerSettings$html === undefined ? '' : _footerSettings$html;
 
 
             return '\n            <section class="' + sectionClasses + '" id="' + data.id + '">\n                <header class="' + headerClasses + '">' + headerHTML + '</header>\n                ' + playerSection + '\n                <footer class="' + footerClasses + '">' + footerHTML + '</footer>\n            </section>';
@@ -16067,7 +16130,7 @@ var VideoState = exports.VideoState = function () {
     return VideoState;
 }();
 
-},{}],404:[function(require,module,exports){
+},{}],403:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -16096,19 +16159,19 @@ var Style = exports.Style = function () {
         key: 'addWidthClasses',
         value: function addWidthClasses(inputsHTML) {
             var self = this;
-            var _containerClasses = this.containerClasses;
-            var containerClasses = _containerClasses === undefined ? '' : _containerClasses;
+            var _containerClasses = this.containerClasses,
+                containerClasses = _containerClasses === undefined ? '' : _containerClasses;
 
             var contents = inputsHTML.reduce(function (currentHTML, inputHTML) {
-                var html = inputHTML.html;
-                var _inputHTML$settings = inputHTML.settings;
-                var settings = _inputHTML$settings === undefined ? {} : _inputHTML$settings;
-                var _settings$width = settings.width;
-                var width = _settings$width === undefined ? '1' : _settings$width;
-                var _settings$container = settings.container;
-                var container = _settings$container === undefined ? {} : _settings$container;
-                var _container$classes = container.classes;
-                var classes = _container$classes === undefined ? '' : _container$classes;
+                var html = inputHTML.html,
+                    _inputHTML$settings = inputHTML.settings,
+                    settings = _inputHTML$settings === undefined ? {} : _inputHTML$settings;
+                var _settings$width = settings.width,
+                    width = _settings$width === undefined ? '1' : _settings$width,
+                    _settings$container = settings.container,
+                    container = _settings$container === undefined ? {} : _settings$container;
+                var _container$classes = container.classes,
+                    classes = _container$classes === undefined ? '' : _container$classes;
 
 
                 classes = classes + ' ' + containerClasses;
@@ -16132,7 +16195,7 @@ var Style = exports.Style = function () {
     return Style;
 }();
 
-},{}],405:[function(require,module,exports){
+},{}],404:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -16154,19 +16217,19 @@ var style = new _style.Style();
 
 var Text = exports.Text = function () {
     function Text() {
-        var inputObj = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-        var errorMessages = arguments.length <= 1 || arguments[1] === undefined ? _messages.ErrorMessages : arguments[1];
+        var inputObj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+        var errorMessages = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _messages.ErrorMessages;
 
         _classCallCheck(this, Text);
 
-        var _inputObj$input = inputObj.input;
-        var input = _inputObj$input === undefined ? {} : _inputObj$input;
-        var _inputObj$settings = inputObj.settings;
-        var settings = _inputObj$settings === undefined ? {} : _inputObj$settings;
-        var _inputObj$tags = inputObj.tags;
-        var tags = _inputObj$tags === undefined ? {} : _inputObj$tags;
-        var _inputObj$errors = inputObj.errors;
-        var errors = _inputObj$errors === undefined ? {} : _inputObj$errors;
+        var _inputObj$input = inputObj.input,
+            input = _inputObj$input === undefined ? {} : _inputObj$input,
+            _inputObj$settings = inputObj.settings,
+            settings = _inputObj$settings === undefined ? {} : _inputObj$settings,
+            _inputObj$tags = inputObj.tags,
+            tags = _inputObj$tags === undefined ? {} : _inputObj$tags,
+            _inputObj$errors = inputObj.errors,
+            errors = _inputObj$errors === undefined ? {} : _inputObj$errors;
 
 
         this.input = input;
@@ -16190,37 +16253,37 @@ var Text = exports.Text = function () {
     }, {
         key: "html",
         get: function get() {
-            var input = this.input;
-            var settings = this.settings;
-            var tags = this.tags;
-            var errors = this.errors;
-            var uiClasses = this.uiClasses;
-            var uiAttributes = this.uiAttributes;
-            var _input$label = input.label;
-            var label = _input$label === undefined ? '' : _input$label;
-            var labelHTML = input.labelHTML;
-            var _input$name = input.name;
-            var name = _input$name === undefined ? '' : _input$name;
-            var _input$id = input.id;
-            var id = _input$id === undefined ? '' : _input$id;
-            var _settings$input = settings.input;
-            var inputSettings = _settings$input === undefined ? {} : _settings$input;
-            var _settings$showLabel = settings.showLabel;
-            var showLabel = _settings$showLabel === undefined ? true : _settings$showLabel;
-            var _inputSettings$classe = inputSettings.classes;
-            var classes = _inputSettings$classe === undefined ? '' : _inputSettings$classe;
+            var input = this.input,
+                settings = this.settings,
+                tags = this.tags,
+                errors = this.errors,
+                uiClasses = this.uiClasses,
+                uiAttributes = this.uiAttributes;
+            var _input$label = input.label,
+                label = _input$label === undefined ? '' : _input$label,
+                labelHTML = input.labelHTML,
+                _input$name = input.name,
+                name = _input$name === undefined ? '' : _input$name,
+                _input$id = input.id,
+                id = _input$id === undefined ? '' : _input$id;
+            var _settings$input = settings.input,
+                inputSettings = _settings$input === undefined ? {} : _settings$input,
+                _settings$showLabel = settings.showLabel,
+                showLabel = _settings$showLabel === undefined ? true : _settings$showLabel;
+            var _inputSettings$classe = inputSettings.classes,
+                classes = _inputSettings$classe === undefined ? '' : _inputSettings$classe;
 
 
             classes = classes + " " + uiClasses;
 
-            var _errors$messages = errors.messages;
-            var errorMessages = _errors$messages === undefined ? [] : _errors$messages;
-            var _errors$attributes = errors.attributes;
-            var errorAttributes = _errors$attributes === undefined ? '' : _errors$attributes;
-            var _errors$nonValidate = errors.nonValidate;
-            var nonValidate = _errors$nonValidate === undefined ? [] : _errors$nonValidate;
-            var _errors$tags = errors.tags;
-            var errorTags = _errors$tags === undefined ? '' : _errors$tags;
+            var _errors$messages = errors.messages,
+                errorMessages = _errors$messages === undefined ? [] : _errors$messages,
+                _errors$attributes = errors.attributes,
+                errorAttributes = _errors$attributes === undefined ? '' : _errors$attributes,
+                _errors$nonValidate = errors.nonValidate,
+                nonValidate = _errors$nonValidate === undefined ? [] : _errors$nonValidate,
+                _errors$tags = errors.tags,
+                errorTags = _errors$tags === undefined ? '' : _errors$tags;
 
             var errorHTML = new this.errorMessages(errorMessages).html;
             var nonValidateAttributesHTML = new this.attributeTags(errorAttributes, nonValidate).html;
@@ -16238,7 +16301,7 @@ var Text = exports.Text = function () {
     return Text;
 }();
 
-},{"../utilities/attributes.js":409,"./messages.js":397,"./style":404}],406:[function(require,module,exports){
+},{"../utilities/attributes.js":408,"./messages.js":396,"./style":403}],405:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -16260,19 +16323,19 @@ var style = new _style.Style();
 
 var Textarea = exports.Textarea = function () {
     function Textarea() {
-        var inputObj = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-        var errorMessages = arguments.length <= 1 || arguments[1] === undefined ? _messages.ErrorMessages : arguments[1];
+        var inputObj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+        var errorMessages = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _messages.ErrorMessages;
 
         _classCallCheck(this, Textarea);
 
-        var _inputObj$input = inputObj.input;
-        var input = _inputObj$input === undefined ? {} : _inputObj$input;
-        var _inputObj$settings = inputObj.settings;
-        var settings = _inputObj$settings === undefined ? {} : _inputObj$settings;
-        var _inputObj$tags = inputObj.tags;
-        var tags = _inputObj$tags === undefined ? {} : _inputObj$tags;
-        var _inputObj$errors = inputObj.errors;
-        var errors = _inputObj$errors === undefined ? {} : _inputObj$errors;
+        var _inputObj$input = inputObj.input,
+            input = _inputObj$input === undefined ? {} : _inputObj$input,
+            _inputObj$settings = inputObj.settings,
+            settings = _inputObj$settings === undefined ? {} : _inputObj$settings,
+            _inputObj$tags = inputObj.tags,
+            tags = _inputObj$tags === undefined ? {} : _inputObj$tags,
+            _inputObj$errors = inputObj.errors,
+            errors = _inputObj$errors === undefined ? {} : _inputObj$errors;
 
 
         this.input = input;
@@ -16296,33 +16359,33 @@ var Textarea = exports.Textarea = function () {
     }, {
         key: "html",
         get: function get() {
-            var input = this.input;
-            var settings = this.settings;
-            var tags = this.tags;
-            var errors = this.errors;
-            var uiClasses = this.uiClasses;
-            var uiAttributes = this.uiAttributes;
-            var _input$label = input.label;
-            var label = _input$label === undefined ? '' : _input$label;
-            var labelHTML = input.labelHTML;
-            var _input$name = input.name;
-            var name = _input$name === undefined ? '' : _input$name;
-            var _input$id = input.id;
-            var id = _input$id === undefined ? '' : _input$id;
-            var _settings$input = settings.input;
-            var inputSettings = _settings$input === undefined ? {} : _settings$input;
-            var _settings$showLabel = settings.showLabel;
-            var showLabel = _settings$showLabel === undefined ? true : _settings$showLabel;
-            var _inputSettings$classe = inputSettings.classes;
-            var classes = _inputSettings$classe === undefined ? '' : _inputSettings$classe;
-            var _errors$messages = errors.messages;
-            var errorMessages = _errors$messages === undefined ? [] : _errors$messages;
-            var _errors$attributes = errors.attributes;
-            var errorAttributes = _errors$attributes === undefined ? '' : _errors$attributes;
-            var _errors$nonValidate = errors.nonValidate;
-            var nonValidate = _errors$nonValidate === undefined ? [] : _errors$nonValidate;
-            var _errors$tags = errors.tags;
-            var errorTags = _errors$tags === undefined ? '' : _errors$tags;
+            var input = this.input,
+                settings = this.settings,
+                tags = this.tags,
+                errors = this.errors,
+                uiClasses = this.uiClasses,
+                uiAttributes = this.uiAttributes;
+            var _input$label = input.label,
+                label = _input$label === undefined ? '' : _input$label,
+                labelHTML = input.labelHTML,
+                _input$name = input.name,
+                name = _input$name === undefined ? '' : _input$name,
+                _input$id = input.id,
+                id = _input$id === undefined ? '' : _input$id;
+            var _settings$input = settings.input,
+                inputSettings = _settings$input === undefined ? {} : _settings$input,
+                _settings$showLabel = settings.showLabel,
+                showLabel = _settings$showLabel === undefined ? true : _settings$showLabel;
+            var _inputSettings$classe = inputSettings.classes,
+                classes = _inputSettings$classe === undefined ? '' : _inputSettings$classe;
+            var _errors$messages = errors.messages,
+                errorMessages = _errors$messages === undefined ? [] : _errors$messages,
+                _errors$attributes = errors.attributes,
+                errorAttributes = _errors$attributes === undefined ? '' : _errors$attributes,
+                _errors$nonValidate = errors.nonValidate,
+                nonValidate = _errors$nonValidate === undefined ? [] : _errors$nonValidate,
+                _errors$tags = errors.tags,
+                errorTags = _errors$tags === undefined ? '' : _errors$tags;
 
             var errorHTML = new this.errorMessages(errorMessages).html;
             var nonValidateAttributesHTML = new this.attributeTags(errorAttributes, nonValidate).html;
@@ -16340,7 +16403,7 @@ var Textarea = exports.Textarea = function () {
     return Textarea;
 }();
 
-},{"../utilities/attributes.js":409,"./messages.js":397,"./style":404}],407:[function(require,module,exports){
+},{"../utilities/attributes.js":408,"./messages.js":396,"./style":403}],406:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -16362,19 +16425,19 @@ var style = new _style.Style();
 
 var Url = exports.Url = function () {
     function Url() {
-        var inputObj = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-        var errorMessages = arguments.length <= 1 || arguments[1] === undefined ? _messages.ErrorMessages : arguments[1];
+        var inputObj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+        var errorMessages = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _messages.ErrorMessages;
 
         _classCallCheck(this, Url);
 
-        var _inputObj$input = inputObj.input;
-        var input = _inputObj$input === undefined ? {} : _inputObj$input;
-        var _inputObj$settings = inputObj.settings;
-        var settings = _inputObj$settings === undefined ? {} : _inputObj$settings;
-        var _inputObj$tags = inputObj.tags;
-        var tags = _inputObj$tags === undefined ? {} : _inputObj$tags;
-        var _inputObj$errors = inputObj.errors;
-        var errors = _inputObj$errors === undefined ? {} : _inputObj$errors;
+        var _inputObj$input = inputObj.input,
+            input = _inputObj$input === undefined ? {} : _inputObj$input,
+            _inputObj$settings = inputObj.settings,
+            settings = _inputObj$settings === undefined ? {} : _inputObj$settings,
+            _inputObj$tags = inputObj.tags,
+            tags = _inputObj$tags === undefined ? {} : _inputObj$tags,
+            _inputObj$errors = inputObj.errors,
+            errors = _inputObj$errors === undefined ? {} : _inputObj$errors;
 
 
         this.input = input;
@@ -16398,33 +16461,33 @@ var Url = exports.Url = function () {
     }, {
         key: "html",
         get: function get() {
-            var input = this.input;
-            var settings = this.settings;
-            var tags = this.tags;
-            var errors = this.errors;
-            var uiClasses = this.uiClasses;
-            var uiAttributes = this.uiAttributes;
-            var _input$label = input.label;
-            var label = _input$label === undefined ? '' : _input$label;
-            var labelHTML = input.labelHTML;
-            var _input$name = input.name;
-            var name = _input$name === undefined ? '' : _input$name;
-            var _input$id = input.id;
-            var id = _input$id === undefined ? '' : _input$id;
-            var _settings$input = settings.input;
-            var inputSettings = _settings$input === undefined ? {} : _settings$input;
-            var _settings$showLabel = settings.showLabel;
-            var showLabel = _settings$showLabel === undefined ? true : _settings$showLabel;
-            var _inputSettings$classe = inputSettings.classes;
-            var classes = _inputSettings$classe === undefined ? '' : _inputSettings$classe;
-            var _errors$messages = errors.messages;
-            var errorMessages = _errors$messages === undefined ? [] : _errors$messages;
-            var _errors$attributes = errors.attributes;
-            var errorAttributes = _errors$attributes === undefined ? '' : _errors$attributes;
-            var _errors$nonValidate = errors.nonValidate;
-            var nonValidate = _errors$nonValidate === undefined ? [] : _errors$nonValidate;
-            var _errors$tags = errors.tags;
-            var errorTags = _errors$tags === undefined ? '' : _errors$tags;
+            var input = this.input,
+                settings = this.settings,
+                tags = this.tags,
+                errors = this.errors,
+                uiClasses = this.uiClasses,
+                uiAttributes = this.uiAttributes;
+            var _input$label = input.label,
+                label = _input$label === undefined ? '' : _input$label,
+                labelHTML = input.labelHTML,
+                _input$name = input.name,
+                name = _input$name === undefined ? '' : _input$name,
+                _input$id = input.id,
+                id = _input$id === undefined ? '' : _input$id;
+            var _settings$input = settings.input,
+                inputSettings = _settings$input === undefined ? {} : _settings$input,
+                _settings$showLabel = settings.showLabel,
+                showLabel = _settings$showLabel === undefined ? true : _settings$showLabel;
+            var _inputSettings$classe = inputSettings.classes,
+                classes = _inputSettings$classe === undefined ? '' : _inputSettings$classe;
+            var _errors$messages = errors.messages,
+                errorMessages = _errors$messages === undefined ? [] : _errors$messages,
+                _errors$attributes = errors.attributes,
+                errorAttributes = _errors$attributes === undefined ? '' : _errors$attributes,
+                _errors$nonValidate = errors.nonValidate,
+                nonValidate = _errors$nonValidate === undefined ? [] : _errors$nonValidate,
+                _errors$tags = errors.tags,
+                errorTags = _errors$tags === undefined ? '' : _errors$tags;
 
             var errorHTML = new this.errorMessages(errorMessages).html;
             var nonValidateAttributesHTML = new this.attributeTags(errorAttributes, nonValidate).html;
@@ -16440,7 +16503,7 @@ var Url = exports.Url = function () {
     return Url;
 }();
 
-},{"../utilities/attributes.js":409,"./messages.js":397,"./style":404}],408:[function(require,module,exports){
+},{"../utilities/attributes.js":408,"./messages.js":396,"./style":403}],407:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -16463,7 +16526,7 @@ var _class = function (_Controls) {
     function _class(container) {
         _classCallCheck(this, _class);
 
-        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(_class).call(this));
+        var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
 
         if (container.html instanceof Function) {
             container.html(_this.html);
@@ -16474,12 +16537,12 @@ var _class = function (_Controls) {
             container.appendChild(div);
         }
 
-        var playPauseControlsClasses = _this.playPauseControlsClasses;
-        var totalTimeInfoClasses = _this.totalTimeInfoClasses;
-        var currentTimeInfoClasses = _this.currentTimeInfoClasses;
-        var scrubBarClasses = _this.scrubBarClasses;
-        var muteControlsClasses = _this.muteControlsClasses;
-        var volumeBarClasses = _this.volumeBarClasses;
+        var playPauseControlsClasses = _this.playPauseControlsClasses,
+            totalTimeInfoClasses = _this.totalTimeInfoClasses,
+            currentTimeInfoClasses = _this.currentTimeInfoClasses,
+            scrubBarClasses = _this.scrubBarClasses,
+            muteControlsClasses = _this.muteControlsClasses,
+            volumeBarClasses = _this.volumeBarClasses;
 
 
         _this.container = container;
@@ -16574,8 +16637,8 @@ var _class = function (_Controls) {
     }, {
         key: 'muteButtonHTML',
         get: function get() {
-            var unmute = this.unmuteClasses;
-            var muteControlsClasses = this.muteControlsClasses;
+            var unmute = this.unmuteClasses,
+                muteControlsClasses = this.muteControlsClasses;
 
             return '\n            <button id="video-controls-mute-controls" class="' + muteControlsClasses + '">\n                <i class="' + unmute + '"></i>\n            </button>\n        ';
         }
@@ -16587,11 +16650,11 @@ var _class = function (_Controls) {
     }, {
         key: 'html',
         get: function get() {
-            var playPauseButtonHTML = this.playPauseButtonHTML;
-            var scrubBarHTML = this.scrubBarHTML;
-            var timestampHTML = this.timestampHTML;
-            var muteButtonHTML = this.muteButtonHTML;
-            var volumeBarHTML = this.volumeBarHTML;
+            var playPauseButtonHTML = this.playPauseButtonHTML,
+                scrubBarHTML = this.scrubBarHTML,
+                timestampHTML = this.timestampHTML,
+                muteButtonHTML = this.muteButtonHTML,
+                volumeBarHTML = this.volumeBarHTML;
 
             return '\n           ' + playPauseButtonHTML + '\n           ' + scrubBarHTML + '\n           ' + timestampHTML + '\n           ' + muteButtonHTML + '\n           ' + volumeBarHTML + '                        \n        ';
         }
@@ -16602,7 +16665,7 @@ var _class = function (_Controls) {
 
 exports.default = _class;
 
-},{"../../video/controls/index.js":417}],409:[function(require,module,exports){
+},{"../../video/controls/index.js":416}],408:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -16617,7 +16680,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  * Converts an object with attributes and keys into HTML
  * that inputs can be used.
  */
-
 var AttributeTags = exports.AttributeTags = function () {
 
   /**
@@ -16626,10 +16688,9 @@ var AttributeTags = exports.AttributeTags = function () {
    * @param {Object} attributeData - settings for all the attributes.
    * @param {Array} attributeKeys - attribute names to be set.
    */
-
   function AttributeTags() {
-    var attributeData = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-    var attributeKeys = arguments.length <= 1 || arguments[1] === undefined ? [] : arguments[1];
+    var attributeData = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    var attributeKeys = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
 
     _classCallCheck(this, AttributeTags);
 
@@ -16662,8 +16723,8 @@ var AttributeTags = exports.AttributeTags = function () {
   _createClass(AttributeTags, [{
     key: 'html',
     get: function get() {
-      var attributeKeys = this.attributeKeys;
-      var attributeData = this.attributeData;
+      var attributeKeys = this.attributeKeys,
+          attributeData = this.attributeData;
 
       var attributeHTML = attributeKeys.reduce(function (currentAttributeHTML, currentKey) {
 
@@ -16683,7 +16744,7 @@ var AttributeTags = exports.AttributeTags = function () {
 
 ;
 
-},{}],410:[function(require,module,exports){
+},{}],409:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -16707,11 +16768,11 @@ var ConfigValidation = exports.ConfigValidation = function (_Validation) {
     _inherits(ConfigValidation, _Validation);
 
     function ConfigValidation() {
-        var config = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+        var config = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
         _classCallCheck(this, ConfigValidation);
 
-        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ConfigValidation).call(this));
+        var _this = _possibleConstructorReturn(this, (ConfigValidation.__proto__ || Object.getPrototypeOf(ConfigValidation)).call(this));
 
         _this.config = config;
         return _this;
@@ -16725,11 +16786,9 @@ var ConfigValidation = exports.ConfigValidation = function (_Validation) {
     }, {
         key: 'validStateConfig',
         get: function get() {
-            var _ref = new _configStates.ConfigStatesValidation(this.config.states);
-
-            var valid = _ref.valid;
-            var errors = _ref.errors;
-
+            var _ref = new _configStates.ConfigStatesValidation(this.config.states),
+                valid = _ref.valid,
+                errors = _ref.errors;
 
             if (!valid) {
                 this.addErrors(errors);
@@ -16768,8 +16827,8 @@ var ConfigValidation = exports.ConfigValidation = function (_Validation) {
     }, {
         key: 'hasDefaultStateObj',
         get: function get() {
-            var _config$defaultState = this.config.defaultState;
-            var defaultState = _config$defaultState === undefined ? [] : _config$defaultState;
+            var _config$defaultState = this.config.defaultState,
+                defaultState = _config$defaultState === undefined ? [] : _config$defaultState;
 
             var defaultStateExists = typeof defaultState !== 'undefined' && defaultState.length >= 1;
 
@@ -16804,7 +16863,7 @@ var ConfigValidation = exports.ConfigValidation = function (_Validation) {
 
 ;
 
-},{"./config.states.js":411,"./validation.js":415}],411:[function(require,module,exports){
+},{"./config.states.js":410,"./validation.js":414}],410:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -16831,11 +16890,11 @@ var ConfigStatesValidation = exports.ConfigStatesValidation = function (_Validat
     _inherits(ConfigStatesValidation, _Validation);
 
     function ConfigStatesValidation() {
-        var states = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
+        var states = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
 
         _classCallCheck(this, ConfigStatesValidation);
 
-        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ConfigStatesValidation).call(this));
+        var _this = _possibleConstructorReturn(this, (ConfigStatesValidation.__proto__ || Object.getPrototypeOf(ConfigStatesValidation)).call(this));
 
         _this.states = states;
         return _this;
@@ -16845,9 +16904,9 @@ var ConfigStatesValidation = exports.ConfigStatesValidation = function (_Validat
         key: 'convertToConfigErrorObjs',
         value: function convertToConfigErrorObjs(errors, errorType) {
             return errors.map(function (error) {
-                var key = error.key;
-                var value = error.value;
-                var index = error.index;
+                var key = error.key,
+                    value = error.value,
+                    index = error.index;
 
                 var errorObject = {
                     type: errorType,
@@ -16870,12 +16929,10 @@ var ConfigStatesValidation = exports.ConfigStatesValidation = function (_Validat
     }, {
         key: 'filledValidStateData',
         get: function get() {
-            var _objectParsers$anyEmp = objectParsers.anyEmpty(this.states, ['id', 'url', 'type']);
-
-            var _objectParsers$anyEmp2 = _objectParsers$anyEmp.errors;
-            var errors = _objectParsers$anyEmp2 === undefined ? [] : _objectParsers$anyEmp2;
-            var isEmpty = _objectParsers$anyEmp.isEmpty;
-
+            var _objectParsers$anyEmp = objectParsers.anyEmpty(this.states, ['id', 'url', 'type']),
+                _objectParsers$anyEmp2 = _objectParsers$anyEmp.errors,
+                errors = _objectParsers$anyEmp2 === undefined ? [] : _objectParsers$anyEmp2,
+                isEmpty = _objectParsers$anyEmp.isEmpty;
 
             if (isEmpty) {
 
@@ -16897,12 +16954,10 @@ var ConfigStatesValidation = exports.ConfigStatesValidation = function (_Validat
     }, {
         key: 'uniqueValidStateData',
         get: function get() {
-            var _objectParsers$isUniq = objectParsers.isUnique(this.states, ['id', 'url']);
-
-            var _objectParsers$isUniq2 = _objectParsers$isUniq.errors;
-            var errors = _objectParsers$isUniq2 === undefined ? [] : _objectParsers$isUniq2;
-            var valid = _objectParsers$isUniq.isUnique;
-
+            var _objectParsers$isUniq = objectParsers.isUnique(this.states, ['id', 'url']),
+                _objectParsers$isUniq2 = _objectParsers$isUniq.errors,
+                errors = _objectParsers$isUniq2 === undefined ? [] : _objectParsers$isUniq2,
+                valid = _objectParsers$isUniq.isUnique;
 
             if (!valid) {
 
@@ -16928,7 +16983,7 @@ var ConfigStatesValidation = exports.ConfigStatesValidation = function (_Validat
 
 ;
 
-},{"../../../utilities/type-parsers.js":425,"./validation.js":415}],412:[function(require,module,exports){
+},{"../../../utilities/type-parsers.js":424,"./validation.js":414}],411:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -16950,11 +17005,11 @@ var ExperienceValidation = exports.ExperienceValidation = function (_Validation)
     _inherits(ExperienceValidation, _Validation);
 
     function ExperienceValidation() {
-        var experience = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+        var experience = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
         _classCallCheck(this, ExperienceValidation);
 
-        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ExperienceValidation).call(this));
+        var _this = _possibleConstructorReturn(this, (ExperienceValidation.__proto__ || Object.getPrototypeOf(ExperienceValidation)).call(this));
 
         _this.experience = experience;
         return _this;
@@ -17000,7 +17055,7 @@ var ExperienceValidation = exports.ExperienceValidation = function (_Validation)
 
 ;
 
-},{"./validation.js":415}],413:[function(require,module,exports){
+},{"./validation.js":414}],412:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -17035,7 +17090,7 @@ var iVXjsValidation = exports.iVXjsValidation = function (_Validation) {
   function iVXjsValidation(data) {
     _classCallCheck(this, iVXjsValidation);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(iVXjsValidation).call(this));
+    var _this = _possibleConstructorReturn(this, (iVXjsValidation.__proto__ || Object.getPrototypeOf(iVXjsValidation)).call(this));
 
     _this.data = data;
 
@@ -17069,11 +17124,9 @@ var iVXjsValidation = exports.iVXjsValidation = function (_Validation) {
     get: function get() {
       var config = this.data.config;
 
-      var _ref = new _config.ConfigValidation(config);
-
-      var valid = _ref.valid;
-      var errors = _ref.errors;
-
+      var _ref = new _config.ConfigValidation(config),
+          valid = _ref.valid,
+          errors = _ref.errors;
 
       if (!valid) {
         this.addErrors(errors);
@@ -17093,10 +17146,9 @@ var iVXjsValidation = exports.iVXjsValidation = function (_Validation) {
     get: function get() {
       var experience = this.data.experience;
 
-      var _ref2 = new _experience.ExperienceValidation(experience);
-
-      var valid = _ref2.valid;
-      var errors = _ref2.errors;
+      var _ref2 = new _experience.ExperienceValidation(experience),
+          valid = _ref2.valid,
+          errors = _ref2.errors;
 
       var self = this;
 
@@ -17138,7 +17190,7 @@ var iVXjsValidation = exports.iVXjsValidation = function (_Validation) {
 
 ;
 
-},{"../../../utilities/type-parsers.js":425,"./config.js":410,"./experience.js":412,"./modules.js":414,"./validation.js":415}],414:[function(require,module,exports){
+},{"../../../utilities/type-parsers.js":424,"./config.js":409,"./experience.js":411,"./modules.js":413,"./validation.js":414}],413:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -17166,7 +17218,7 @@ var ModuleValidation = exports.ModuleValidation = function (_Validation) {
     function ModuleValidation(experience) {
         _classCallCheck(this, ModuleValidation);
 
-        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ModuleValidation).call(this));
+        var _this = _possibleConstructorReturn(this, (ModuleValidation.__proto__ || Object.getPrototypeOf(ModuleValidation)).call(this));
 
         _this.experience = experience;
         _this.typeValidator = new _typeParsers.TypeValidator();
@@ -17203,7 +17255,7 @@ var ModuleValidation = exports.ModuleValidation = function (_Validation) {
 
 ;
 
-},{"../../../utilities/type-parsers.js":425,"./validation.js":415}],415:[function(require,module,exports){
+},{"../../../utilities/type-parsers.js":424,"./validation.js":414}],414:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -17253,7 +17305,7 @@ var Validation = exports.Validation = function () {
 
 ;
 
-},{}],416:[function(require,module,exports){
+},{}],415:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -17316,7 +17368,7 @@ var _class = function () {
 
 exports.default = _class;
 
-},{"../settings.js":419}],417:[function(require,module,exports){
+},{"../settings.js":418}],416:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -17348,7 +17400,7 @@ var Controls = exports.Controls = function (_ControlEvents) {
     function Controls() {
         _classCallCheck(this, Controls);
 
-        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Controls).call(this));
+        var _this = _possibleConstructorReturn(this, (Controls.__proto__ || Object.getPrototypeOf(Controls)).call(this));
 
         _this.currentVolume = 0.5;
         _this.controlEventNames = new _videoEvents2.default();
@@ -17379,12 +17431,12 @@ var Controls = exports.Controls = function (_ControlEvents) {
     }, {
         key: 'adjustVolume',
         value: function adjustVolume(event) {
-            var volumeBar = this.volumeBar;
-            var muteControls = this.muteControls;
-            var currentVolume = this.currentVolume;
-            var volumeBarCurrentVolumeClasses = this.volumeBarCurrentVolumeClasses;
-            var unmuteClasses = this.unmuteClasses;
-            var muteClasses = this.muteClasses;
+            var volumeBar = this.volumeBar,
+                muteControls = this.muteControls,
+                currentVolume = this.currentVolume,
+                volumeBarCurrentVolumeClasses = this.volumeBarCurrentVolumeClasses,
+                unmuteClasses = this.unmuteClasses,
+                muteClasses = this.muteClasses;
             var width = volumeBar.offsetWidth;
 
             var currentVolumeSpan = this.getElementByClasses(volumeBar.children, [volumeBarCurrentVolumeClasses]);
@@ -17406,9 +17458,9 @@ var Controls = exports.Controls = function (_ControlEvents) {
     }, {
         key: 'scrub',
         value: function scrub(event) {
-            var currentTimeInfo = this.currentTimeInfo;
-            var scrubBar = this.scrubBar;
-            var scrubBarTimeLapseClasses = this.scrubBarTimeLapseClasses;
+            var currentTimeInfo = this.currentTimeInfo,
+                scrubBar = this.scrubBar,
+                scrubBarTimeLapseClasses = this.scrubBarTimeLapseClasses;
             var width = scrubBar.offsetWidth;
 
             var absolutePosition = this.getAbsolutePosition(scrubBar);
@@ -17430,9 +17482,9 @@ var Controls = exports.Controls = function (_ControlEvents) {
     }, {
         key: 'setPlayPause',
         value: function setPlayPause(event) {
-            var playPauseControls = this.playPauseControls;
-            var playClasses = this.playClasses;
-            var pauseClasses = this.pauseClasses;
+            var playPauseControls = this.playPauseControls,
+                playClasses = this.playClasses,
+                pauseClasses = this.pauseClasses;
 
             var searchClasses = [playClasses, pauseClasses];
             var playPauseIcon = this.getElementByClasses(playPauseControls.children, searchClasses);
@@ -17455,11 +17507,11 @@ var Controls = exports.Controls = function (_ControlEvents) {
     }, {
         key: 'setMute',
         value: function setMute(event) {
-            var muteControls = this.muteControls;
-            var muteClasses = this.muteClasses;
-            var unmuteClasses = this.unmuteClasses;
-            var volumeBar = this.volumeBar;
-            var volumeBarCurrentVolumeClasses = this.volumeBarCurrentVolumeClasses;
+            var muteControls = this.muteControls,
+                muteClasses = this.muteClasses,
+                unmuteClasses = this.unmuteClasses,
+                volumeBar = this.volumeBar,
+                volumeBarCurrentVolumeClasses = this.volumeBarCurrentVolumeClasses;
 
             var muteControlsClasses = [muteClasses, unmuteClasses];
             var muteIcon = this.getElementByClasses(muteControls.children, muteControlsClasses);
@@ -17485,8 +17537,8 @@ var Controls = exports.Controls = function (_ControlEvents) {
     }, {
         key: 'onReadyToPlay',
         value: function onReadyToPlay(player, stateData) {
-            var volumeBar = this.volumeBar;
-            var volumeBarCurrentVolumeClasses = this.volumeBarCurrentVolumeClasses;
+            var volumeBar = this.volumeBar,
+                volumeBarCurrentVolumeClasses = this.volumeBarCurrentVolumeClasses;
 
             var self = this;
             var currentVolumeSpan = this.getElementByClasses(volumeBar.children, [volumeBarCurrentVolumeClasses]);
@@ -17495,9 +17547,9 @@ var Controls = exports.Controls = function (_ControlEvents) {
 
             this.setVolume(self.currentVolume);
             this.getDuration(function (duration) {
-                var totalTimeInfo = self.totalTimeInfo;
-                var currentTimeInfo = self.currentTimeInfo;
-                var scrubBar = self.scrubBar;
+                var totalTimeInfo = self.totalTimeInfo,
+                    currentTimeInfo = self.currentTimeInfo,
+                    scrubBar = self.scrubBar;
 
                 var durationTimeObject = self.convertSecondsToParts(duration);
                 var durationTimeStamp = self.createTimeStamp(durationTimeObject);
@@ -17512,9 +17564,9 @@ var Controls = exports.Controls = function (_ControlEvents) {
     }, {
         key: 'onTimeUpdate',
         value: function onTimeUpdate(player) {
-            var currentTimeInfo = this.currentTimeInfo;
-            var scrubBar = this.scrubBar;
-            var scrubBarTimeLapseClasses = this.scrubBarTimeLapseClasses;
+            var currentTimeInfo = this.currentTimeInfo,
+                scrubBar = this.scrubBar,
+                scrubBarTimeLapseClasses = this.scrubBarTimeLapseClasses;
             var seconds = player.currentTime;
 
 
@@ -17537,9 +17589,9 @@ var Controls = exports.Controls = function (_ControlEvents) {
     }, {
         key: 'onPlaying',
         value: function onPlaying() {
-            var playPauseControls = this.playPauseControls;
-            var playClasses = this.playClasses;
-            var pauseClasses = this.pauseClasses;
+            var playPauseControls = this.playPauseControls,
+                playClasses = this.playClasses,
+                pauseClasses = this.pauseClasses;
 
             var searchClasses = [playClasses, pauseClasses];
             var playPauseIcon = this.getElementByClasses(playPauseControls.children, searchClasses);
@@ -17551,9 +17603,9 @@ var Controls = exports.Controls = function (_ControlEvents) {
     }, {
         key: 'onPaused',
         value: function onPaused() {
-            var playPauseControls = this.playPauseControls;
-            var playClasses = this.playClasses;
-            var pauseClasses = this.pauseClasses;
+            var playPauseControls = this.playPauseControls,
+                playClasses = this.playClasses,
+                pauseClasses = this.pauseClasses;
 
             var searchClasses = [playClasses, pauseClasses];
             var playPauseIcon = this.getElementByClasses(playPauseControls.children, searchClasses);
@@ -17566,10 +17618,10 @@ var Controls = exports.Controls = function (_ControlEvents) {
         key: 'addEventListeners',
         value: function addEventListeners(iVXjsBus) {
             var self = this;
-            var scrubBar = this.scrubBar;
-            var volumeBar = this.volumeBar;
-            var playPauseControls = this.playPauseControls;
-            var muteControls = this.muteControls;
+            var scrubBar = this.scrubBar,
+                volumeBar = this.volumeBar,
+                playPauseControls = this.playPauseControls,
+                muteControls = this.muteControls;
 
 
             this.iVXjsBus = iVXjsBus;
@@ -17628,9 +17680,9 @@ var Controls = exports.Controls = function (_ControlEvents) {
     }, {
         key: 'createTimeStamp',
         value: function createTimeStamp(timeObject) {
-            var hours = timeObject.hours;
-            var minutes = timeObject.remainingMinutes;
-            var seconds = timeObject.remainingSeconds;
+            var hours = timeObject.hours,
+                minutes = timeObject.remainingMinutes,
+                seconds = timeObject.remainingSeconds;
 
             var hourString = '';
             var minuteString = minutes < 10 ? '0' + minutes + ':' : minutes + ':';
@@ -17663,7 +17715,7 @@ var Controls = exports.Controls = function (_ControlEvents) {
 
 ;
 
-},{"../../../constants/video.events.js":377,"./events.js":416}],418:[function(require,module,exports){
+},{"../../../constants/video.events.js":376,"./events.js":415}],417:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -17690,7 +17742,7 @@ var RegisteredVideoModules = exports.RegisteredVideoModules = function Registere
 
 ;
 
-},{"./types/html5.js":420,"./types/vimeo.js":421,"./types/youTube.js":422}],419:[function(require,module,exports){
+},{"./types/html5.js":419,"./types/vimeo.js":420,"./types/youTube.js":421}],418:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -17733,7 +17785,7 @@ var _class = function () {
 exports.default = _class;
 ;
 
-},{}],420:[function(require,module,exports){
+},{}],419:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -17762,7 +17814,7 @@ var playerSettings = new _settings3.default();
 
 var Html5 = exports.Html5 = function () {
     function Html5(container, settings) {
-        var stateData = arguments.length <= 2 || arguments[2] === undefined ? {} : arguments[2];
+        var stateData = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
         var iVXjsLog = arguments[3];
 
         _classCallCheck(this, Html5);
@@ -17846,8 +17898,8 @@ var Html5 = exports.Html5 = function () {
     }, {
         key: "addEventListeners",
         value: function addEventListeners(iVXjsBus) {
-            var videoEventNames = this.videoEventNames;
-            var iVXjsLog = this.iVXjsLog;
+            var videoEventNames = this.videoEventNames,
+                iVXjsLog = this.iVXjsLog;
             ;
             var self = this;
 
@@ -17875,9 +17927,9 @@ var Html5 = exports.Html5 = function () {
 
             this.player.addEventListener('error', function (event) {
                 var settings = self.settings;
-                var src = settings.src;
-                var _settings$sources = settings.sources;
-                var sources = _settings$sources === undefined ? [] : _settings$sources;
+                var src = settings.src,
+                    _settings$sources = settings.sources,
+                    sources = _settings$sources === undefined ? [] : _settings$sources;
 
                 var sourceString = "";
 
@@ -17951,15 +18003,15 @@ var Html5 = exports.Html5 = function () {
     }, {
         key: "html",
         get: function get() {
-            var _stateData$isiOS = this.stateData.isiOS;
-            var isiOS = _stateData$isiOS === undefined ? false : _stateData$isiOS;
-            var _settings = this.settings;
-            var _settings$tracks = _settings.tracks;
-            var tracks = _settings$tracks === undefined ? [] : _settings$tracks;
-            var _settings$sources2 = _settings.sources;
-            var sources = _settings$sources2 === undefined ? [] : _settings$sources2;
-            var _settings$controls = _settings.controls;
-            var controls = _settings$controls === undefined ? true : _settings$controls;
+            var _stateData$isiOS = this.stateData.isiOS,
+                isiOS = _stateData$isiOS === undefined ? false : _stateData$isiOS;
+            var _settings = this.settings,
+                _settings$tracks = _settings.tracks,
+                tracks = _settings$tracks === undefined ? [] : _settings$tracks,
+                _settings$sources2 = _settings.sources,
+                sources = _settings$sources2 === undefined ? [] : _settings$sources2,
+                _settings$controls = _settings.controls,
+                controls = _settings$controls === undefined ? true : _settings$controls;
 
             var tags = ['tracks', 'sources', 'autoplay'];
             var justAttrs = ['controls'];
@@ -18000,7 +18052,7 @@ var Html5 = exports.Html5 = function () {
 
 ;
 
-},{"../../../constants/video.events.js":377,"../../../utilities/type-parsers.js":425,"../settings.js":419}],421:[function(require,module,exports){
+},{"../../../constants/video.events.js":376,"../../../utilities/type-parsers.js":424,"../settings.js":418}],420:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -18031,9 +18083,9 @@ var Vimeo = exports.Vimeo = function () {
         this._settings = settings;
         this._stateData = stateData;
 
-        var id = settings.id;
-        var width = settings.width;
-        var loop = settings.loop;
+        var id = settings.id,
+            width = settings.width,
+            loop = settings.loop;
 
         var options = { id: id, width: width, loop: loop };
 
@@ -18079,9 +18131,9 @@ var Vimeo = exports.Vimeo = function () {
     }, {
         key: "addEventListeners",
         value: function addEventListeners(iVXjsBus) {
-            var stateData = this._stateData;
-            var videoEventNames = this.videoEventNames;
-            var _settings = this._settings;
+            var stateData = this._stateData,
+                videoEventNames = this.videoEventNames,
+                _settings = this._settings;
             var id = _settings.id;
 
             var self = this;
@@ -18172,7 +18224,7 @@ var Vimeo = exports.Vimeo = function () {
     return Vimeo;
 }();
 
-},{"../../../constants/video.events.js":377,"../settings.js":419}],422:[function(require,module,exports){
+},{"../../../constants/video.events.js":376,"../settings.js":418}],421:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -18206,13 +18258,13 @@ var YouTube = exports.YouTube = function () {
     _createClass(YouTube, [{
         key: 'createPlayer',
         value: function createPlayer() {
-            var _settings = this._settings;
-            var _settings$height = _settings.height;
-            var height = _settings$height === undefined ? 'inherit' : _settings$height;
-            var _settings$width = _settings.width;
-            var width = _settings$width === undefined ? 'inherit' : _settings$width;
-            var id = _settings.id;
-            var controls = _settings.controls;
+            var _settings = this._settings,
+                _settings$height = _settings.height,
+                height = _settings$height === undefined ? 'inherit' : _settings$height,
+                _settings$width = _settings.width,
+                width = _settings$width === undefined ? 'inherit' : _settings$width,
+                id = _settings.id,
+                controls = _settings.controls;
 
             var hasControls = 1;
 
@@ -18259,9 +18311,9 @@ var YouTube = exports.YouTube = function () {
     }, {
         key: 'addEventListeners',
         value: function addEventListeners(iVXjsBus) {
-            var stateData = this._stateData;
-            var player = this.player;
-            var videoEventNames = this.videoEventNames;
+            var stateData = this._stateData,
+                player = this.player,
+                videoEventNames = this.videoEventNames;
 
             var self = this;
             var timeUpdateId = void 0;
@@ -18374,7 +18426,7 @@ var YouTube = exports.YouTube = function () {
     return YouTube;
 }();
 
-},{"../../../constants/video.events.js":377}],423:[function(require,module,exports){
+},{"../../../constants/video.events.js":376}],422:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -18419,7 +18471,7 @@ var _class = function () {
 
 exports.default = _class;
 
-},{}],424:[function(require,module,exports){
+},{}],423:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -18453,9 +18505,9 @@ var _class = function () {
     _createClass(_class, [{
         key: 'warn',
         value: function warn(message) {
-            var show = this.show;
-            var LoggingMessages = this.LoggingMessages;
-            var Bus = this.Bus;
+            var show = this.show,
+                LoggingMessages = this.LoggingMessages,
+                Bus = this.Bus;
 
             var warnMessage = LoggingMessages.WARN;
             var warnPayload = {
@@ -18472,10 +18524,10 @@ var _class = function () {
     }, {
         key: 'error',
         value: function error(_error) {
-            var type = arguments.length <= 1 || arguments[1] === undefined ? "DEFAULT" : arguments[1];
-            var show = this.show;
-            var ErrorMessages = this.ErrorMessages;
-            var Bus = this.Bus;
+            var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "DEFAULT";
+            var show = this.show,
+                ErrorMessages = this.ErrorMessages,
+                Bus = this.Bus;
 
             var errorTypeMessage = ErrorMessages[type];
             var message = _error.message;
@@ -18504,9 +18556,9 @@ var _class = function () {
     }, {
         key: 'log',
         value: function log(message) {
-            var show = this.show;
-            var LoggingMessages = this.LoggingMessages;
-            var Bus = this.Bus;
+            var show = this.show,
+                LoggingMessages = this.LoggingMessages,
+                Bus = this.Bus;
 
             var logMessage = LoggingMessages.LOG;
             var logPayload = {
@@ -18520,9 +18572,9 @@ var _class = function () {
     }, {
         key: 'trace',
         value: function trace(stack) {
-            var show = this.show;
-            var LoggingMessages = this.LoggingMessages;
-            var Bus = this.Bus;
+            var show = this.show,
+                LoggingMessages = this.LoggingMessages,
+                Bus = this.Bus;
 
             var stackPayLoad = {
                 stack: stack,
@@ -18542,14 +18594,14 @@ var _class = function () {
 
 exports.default = _class;
 
-},{"../constants/errors.js":365,"../constants/logging.js":373}],425:[function(require,module,exports){
+},{"../constants/errors.js":364,"../constants/logging.js":372}],424:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -18812,8 +18864,8 @@ var ObjectParsers = exports.ObjectParsers = function () {
     }, {
         key: 'isUnique',
         value: function isUnique() {
-            var collection = arguments.length <= 0 || arguments[0] === undefined ? [] : arguments[0];
-            var keys = arguments.length <= 1 || arguments[1] === undefined ? [] : arguments[1];
+            var collection = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+            var keys = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
 
             var hasUnique = {
                 isUnique: true,
@@ -18849,4 +18901,4 @@ var ObjectParsers = exports.ObjectParsers = function () {
 
 ;
 
-},{}]},{},[301]);
+},{}]},{},[300]);
