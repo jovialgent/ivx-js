@@ -8454,6 +8454,7 @@ var VideoStateController = function VideoStateController($rootScope, $state, iVX
     cuePoints = setUpCuePoints(cuePoints);
 
     iVXjsBus.once(videoEventNames.CAN_PLAY, function stateVideoCanPlay(player) {
+        console.log("GOT HERE?");
         var transitionAnimation = onVideoReady.find(function (event, index) {
             return event.eventName === "animateElement" && event.args.element === ".video-state-container";
         });
@@ -11233,7 +11234,8 @@ var CreateInlineVideo = function () {
 		key: 'isiOS',
 		value: function isiOS() {
 			var userAgent = navigator.userAgent || navigator.vendor || window.opera;
-			return userAgent.match(/iPhone/i);
+			console.log(userAgent);
+			return userAgent.match(/iPhone/i) || userAgent.match(/iPad/i);
 		}
 	}, {
 		key: 'isMobile',
