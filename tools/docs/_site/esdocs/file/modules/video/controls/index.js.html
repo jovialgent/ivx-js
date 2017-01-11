@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../../">
+  <title data-ice="title">modules/video/controls/index.js | API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  <a href="./manual/index.html" data-ice="manualHeaderLink">Manual</a>
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/index.js~Modules.html">Modules</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/setup.js~Setup.html">Setup</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">data</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/data/processor.js~DataProcessor.html">DataProcessor</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/data/registered-modules.js~RegisteredDataModules.html">RegisteredDataModules</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">data/ivx-io</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/data/ivx-io/actions.js~iVXioActions.html">iVXioActions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/data/ivx-io/enhancer.inputs.buttons.js~iVXioInputButtonEnhancer.html">iVXioInputButtonEnhancer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/data/ivx-io/enhancer.inputs.js~iVXioInputEnhancer.html">iVXioInputEnhancer</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/data/ivx-io/enhancer.states.inputs.js~iVXioEnhanceInputStates.html">iVXioEnhanceInputStates</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/data/ivx-io/enhancer.states.js~iVXioEnhanceStates.html">iVXioEnhanceStates</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/data/ivx-io/enhancer.states.utilities.js~iVXioStateEnhancerUtilities.html">iVXioStateEnhancerUtilities</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/data/ivx-io/enhancer.states.video.js~iVXioEnhanceVideoStates.html">iVXioEnhanceVideoStates</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/data/ivx-io/index.js~iVXio.html">iVXio</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/data/ivx-io/rules.js~iVXioRules.html">iVXioRules</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">data/ivx-js</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/data/ivx-js/actions.js~Actions.html">Actions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/data/ivx-js/index.js~iVXjsData.html">iVXjsData</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/data/ivx-js/rules.js~Rules.html">Rules</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">ui</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/registered-modules.js~RegisteredUIModules.html">RegisteredUIModules</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">ui/bootstrap</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/bootstrap/buttons.js~Buttons.html">Buttons</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/bootstrap/checkbox.js~Checkbox.html">Checkbox</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/bootstrap/date.js~Date.html">Date</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/bootstrap/datetime-local.js~DatetimeLocal.html">DatetimeLocal</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/bootstrap/email.js~Email.html">Email</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/bootstrap/form.js~Form.html">Form</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/bootstrap/index.js~BootstrapUI.html">BootstrapUI</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/bootstrap/messages.js~ErrorMessages.html">ErrorMessages</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/bootstrap/number.js~Number.html">Number</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/bootstrap/options.js~Options.html">Options</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/bootstrap/radio.js~Radio.html">Radio</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/bootstrap/state.input.js~InputState.html">InputState</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/bootstrap/state.video.js~VideoState.html">VideoState</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/bootstrap/style.js~Style.html">Style</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/bootstrap/text.js~Text.html">Text</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/bootstrap/textarea.js~Textarea.html">Textarea</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/bootstrap/url.js~Url.html">Url</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/bootstrap/video.controls.js~video.html">video</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">ui/default</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/default/anchor.js~Anchor.html">Anchor</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/default/buttons.js~Buttons.html">Buttons</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/default/checkbox.js~Checkbox.html">Checkbox</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/default/date.js~Date.html">Date</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/default/datetime-local.js~DatetimeLocal.html">DatetimeLocal</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/default/email.js~Email.html">Email</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/default/form.js~Form.html">Form</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/default/index.js~DefaultUI.html">DefaultUI</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/default/messages.js~ErrorMessages.html">ErrorMessages</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/default/number.js~Number.html">Number</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/default/options.js~Options.html">Options</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/default/radio.js~Radio.html">Radio</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/default/state.input.js~InputState.html">InputState</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/default/state.navigation.js~NavigationState.html">NavigationState</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/default/state.video.js~VideoState.html">VideoState</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/default/style.js~Style.html">Style</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/default/text.js~Text.html">Text</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/default/textarea.js~Textarea.html">Textarea</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/default/url.js~Url.html">Url</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/default/video.controls.js~video.html">video</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">ui/semantic-ui</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/semantic-ui/anchor.js~Anchor.html">Anchor</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/semantic-ui/buttons.js~Buttons.html">Buttons</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/semantic-ui/card.js~CardTemplates.html">CardTemplates</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/semantic-ui/checkbox.js~Checkbox.html">Checkbox</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/semantic-ui/date.js~Date.html">Date</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/semantic-ui/datetime-local.js~DatetimeLocal.html">DatetimeLocal</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/semantic-ui/dropdown.js~Dropdown.html">Dropdown</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/semantic-ui/email.js~Email.html">Email</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/semantic-ui/form.js~Form.html">Form</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/semantic-ui/index.js~SemanticUI.html">SemanticUI</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/semantic-ui/messages.js~ErrorMessages.html">ErrorMessages</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/semantic-ui/number.js~Number.html">Number</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/semantic-ui/options.js~Options.html">Options</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/semantic-ui/radio.js~Radio.html">Radio</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/semantic-ui/state.input.js~InputState.html">InputState</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/semantic-ui/state.navigation.js~NavigationState.html">NavigationState</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/semantic-ui/state.video.js~VideoState.html">VideoState</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/semantic-ui/style.js~Style.html">Style</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/semantic-ui/text.js~Text.html">Text</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/semantic-ui/textarea.js~Textarea.html">Textarea</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/semantic-ui/url.js~Url.html">Url</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/semantic-ui/video.controls.js~video.html">video</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">ui/utilities</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/ui/utilities/attributes.js~AttributeTags.html">AttributeTags</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">validation</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/validation/processor.js~ValidationProcessor.html">ValidationProcessor</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/validation/registered-modules.js~RegisteredValidationModules.html">RegisteredValidationModules</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">validation/ivx-js-validation</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/validation/ivx-js-validation/config.js~ConfigValidation.html">ConfigValidation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/validation/ivx-js-validation/config.states.js~ConfigStatesValidation.html">ConfigStatesValidation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/validation/ivx-js-validation/experience.js~ExperienceValidation.html">ExperienceValidation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/validation/ivx-js-validation/index.js~iVXjsValidation.html">iVXjsValidation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/validation/ivx-js-validation/modules.js~ModuleValidation.html">ModuleValidation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/validation/ivx-js-validation/validation.js~Validation.html">Validation</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">validation/schema</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/validation/schema/index.js~Schema.html">Schema</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/validation/schema/schema.input-state.js~InputStateSchema.html">InputStateSchema</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/validation/schema/schema.js~Schema.html">Schema</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/validation/schema/schema.state.js~BasicStateSchema.html">BasicStateSchema</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">video</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/video/registered-modules.js~RegisteredVideoModules.html">RegisteredVideoModules</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/video/settings.js~settings.html">settings</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">video/controls</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/video/controls/events.js~events.html">events</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/video/controls/index.js~Controls.html">Controls</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">video/types</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/video/types/html5.js~Html5.html">Html5</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/video/types/index.js~VideoTypeCore.html">VideoTypeCore</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/video/types/vimeo.js~Vimeo.html">Vimeo</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/modules/video/types/youTube.js~YouTube.html">YouTube</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">modules/video/controls/index.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import ControlEvents from &apos;./events.js&apos;;
+import Settings from &apos;../settings.js&apos;;
+
+let theseSettings = new Settings();
+let controlNames = theseSettings.PlayerControlEvents;
+
+export class Controls extends ControlEvents {
+    constructor() {
+        super();
+        this.currentVolume = 0.5;
+        this.controlEventNames = controlNames;
+    }
+
+    dispose(iVXjsBus) {
+
+        iVXjsBus.removeListener(this.controlEventNames.timeUpdate, this.updateTime);
+        iVXjsBus.removeListener(this.controlEventNames.playing, this.whilePlaying);
+
+    }
+
+    adjustVolume(event) {
+        let {volumeBar, muteControls, currentVolume, volumeBarCurrentVolumeClasses, unmuteClasses, muteClasses} = this;
+        let {offsetWidth: width, offsetLeft: left, offsetParent } = volumeBar;
+        let {offsetLeft : parentLeft = 0 } = offsetParent;
+        
+        let currentVolumeSpan = this.getElementByClasses(volumeBar.children, [volumeBarCurrentVolumeClasses]);
+        let { pageX: x } = event;
+        let trueX = (x - (left + parentLeft));
+        let volumeLevel = (trueX / width);
+        let muteControlsClasses = [muteClasses, unmuteClasses];
+        let muteIcon = this.getElementByClasses(muteControls.children, muteControlsClasses);
+
+        muteIcon.className = unmuteClasses;
+
+        this.currentVolume = volumeLevel;
+
+        currentVolumeSpan.style.width = `${volumeLevel * 100}%`;
+
+        this.setVolume(volumeLevel);
+
+    }
+
+    scrub(event) {
+        let {currentTimeInfo, scrubBar, scrubBarTimeLapseClasses} = this;
+        let {offsetWidth: width, offsetLeft : left, offsetParent = {} } = scrubBar;
+       
+        let {offsetLeft : parentLeft } = offsetParent;
+        let { pageX: x } = event;
+        let trueX = (x - (left+parentLeft));
+       
+        let scrubToTime = this.duration * (trueX / width);
+        let currentTimeObject = this.convertSecondsToParts(scrubToTime);
+        let currentTimeStamp = this.createTimeStamp(currentTimeObject);
+
+        currentTimeInfo.innerHTML = `${currentTimeStamp}`;
+
+        let searchClasses = [scrubBarTimeLapseClasses]
+        let timelapsed = this.getElementByClasses(scrubBar.children, searchClasses);
+
+        timelapsed.style.width = `${(trueX / width) * 100}%`;
+
+        this.seek(scrubToTime);
+
+    }
+
+
+
+    setPlayPause(event) {
+        let {playPauseControls, playClasses, pauseClasses} = this;
+        let searchClasses = [playClasses, pauseClasses]
+
+        let playPauseIcon = this.getElementByClasses(playPauseControls.children, searchClasses);
+        switch (playPauseIcon.className) {
+            case playClasses:
+                playPauseIcon.className = pauseClasses;
+                this.play();
+                break;
+            case pauseClasses:
+                playPauseIcon.className = playClasses;
+                this.pause();
+                break;
+            default:
+
+                break;
+        }
+
+
+    }
+
+    setMute(event) {
+        let {muteControls, muteClasses, unmuteClasses, volumeBar, volumeBarCurrentVolumeClasses} = this;
+        let muteControlsClasses = [muteClasses, unmuteClasses];
+        let muteIcon = this.getElementByClasses(muteControls.children, muteControlsClasses);
+        let currentVolumeSpan = this.getElementByClasses(volumeBar.children, [volumeBarCurrentVolumeClasses]);
+
+        switch (muteIcon.className) {
+            case unmuteClasses:
+                muteIcon.className = muteClasses;
+                this.setVolume(0);
+                currentVolumeSpan.style.width = `0%`;
+                break;
+            case muteClasses:
+                muteIcon.className = unmuteClasses;
+                this.setVolume(this.currentVolume);
+                currentVolumeSpan.style.width = `${this.currentVolume * 100}%`;
+                break;
+            default:
+                break;
+        }
+
+
+    }
+
+    onReadyToPlay(player, stateData) {
+        let {volumeBar, volumeBarCurrentVolumeClasses} = this;
+        let self = this;
+        let currentVolumeSpan = this.getElementByClasses(volumeBar.children, [volumeBarCurrentVolumeClasses]);
+        currentVolumeSpan.style.width = `${self.currentVolume * 100}%`;
+
+        this.setVolume(self.currentVolume);
+        
+       
+
+        this.getDuration((duration) =&gt; {
+            let {totalTimeInfo, currentTimeInfo, scrubBar} = self;
+            let durationTimeObject = self.convertSecondsToParts(duration);
+            let durationTimeStamp = self.createTimeStamp(durationTimeObject);
+            self.duration = duration;
+
+            if (totalTimeInfo) totalTimeInfo.innerHTML = `/${durationTimeStamp}`;
+            if (currentTimeInfo) currentTimeInfo.innerHTML = `00:00`;
+            if (scrubBar) scrubBar.children[0].style.width = `0%`;
+        });
+    }
+
+    onTimeUpdate(player) {
+        let {currentTimeInfo, scrubBar, scrubBarTimeLapseClasses} = this;
+        let {currentTime: seconds} = player;
+        seconds = seconds &gt; this.duration ? 0 : seconds;
+        let currentTimeObject = this.convertSecondsToParts(seconds);
+        let currentTimeStamp = this.createTimeStamp(currentTimeObject);
+        
+        
+        let timeLapsed =  seconds / this.duration;
+        if (currentTimeInfo) currentTimeInfo.innerHTML = `${currentTimeStamp}`;
+        let searchClasses = [scrubBarTimeLapseClasses];
+        
+       
+
+        if (scrubBar) {
+            let timelapsed = this.getElementByClasses(scrubBar.children, searchClasses);
+
+            timelapsed.style.width = `${timeLapsed * 100}%`;
+        }
+    }
+
+    onPlaying() {
+        let {playPauseControls, playClasses, pauseClasses} = this;
+        let searchClasses = [playClasses, pauseClasses]
+
+        let playPauseIcon = this.getElementByClasses(
+            playPauseControls.children,
+            searchClasses
+        );
+
+        playPauseIcon.className = pauseClasses;
+        this.play();
+    }
+    
+    onPaused(){
+        
+        let {playPauseControls, playClasses, pauseClasses} = this;
+        let searchClasses = [playClasses, pauseClasses]
+
+        let playPauseIcon = this.getElementByClasses(
+            playPauseControls.children,
+            searchClasses
+        );
+
+        playPauseIcon.className = playClasses;
+        this.pause();
+    }
+
+
+
+    addEventListeners(iVXjsBus) {
+        this.iVXjsBus = iVXjsBus;
+        let self = this;
+        let {scrubBar, volumeBar, playPauseControls, muteControls} = this;
+
+
+        volumeBar.addEventListener(&apos;mousedown&apos;, (event) =&gt; {
+            self.adjustVolume(event);
+        });
+
+        scrubBar.addEventListener(&apos;click&apos;, (event) =&gt; {
+            self.scrub(event);
+        });
+
+        playPauseControls.addEventListener(&apos;mouseup&apos;, (event) =&gt; {
+            self.setPlayPause(event);
+        });
+
+        muteControls.addEventListener(&apos;click&apos;, (event) =&gt; {
+            self.setMute(event);
+        });
+
+
+        iVXjsBus.once(this.controlEventNames.canPlay, canPlayCallBack);
+
+        function canPlayCallBack(player, _stateData) {
+            self.onReadyToPlay(player, _stateData);
+        }
+
+        this.updateTime = iVXjsBus.on(this.controlEventNames.timeUpdate, updateTime);
+
+        function updateTime(player) {
+            self.onTimeUpdate(player);
+        }
+        
+        this.whilePaused = iVXjsBus.on(this.controlEventNames.paused, whilePaused);
+        
+        function whilePaused(player){
+            self.onPaused(player);
+        }
+        
+        
+
+        this.updateTime = this.updateTime ? this.updateTime : updateTime;
+
+        this.whilePlaying = iVXjsBus.on(this.controlEventNames.playing, whilePlaying);
+
+        function whilePlaying() {
+            self.onPlaying();
+        }
+    }
+    
+    
+
+    getElementByClasses(elements, classes) {
+        let elementArray = elements instanceof Array ? 
+        elements :
+        Array.from(elements);
+        let thisElement;
+        
+
+        classes.forEach((className, index) =&gt; {
+            if (!className) return;
+            if (thisElement) return;
+
+            thisElement = elementArray.find((element, index) =&gt; {
+                return element.className.indexOf(className) &gt;= 0;
+            })
+        });
+
+        return thisElement;
+
+    }
+
+    createTimeStamp(timeObject) {
+
+        let {hours, remainingMinutes: minutes, remainingSeconds: seconds} = timeObject;
+        let hourString = &apos;&apos;;
+        let minuteString = minutes &lt; 10 ?
+            `0${minutes}:` :
+            `${minutes}:`;
+        let secondString = seconds &lt; 10 ?
+            `0${seconds}` :
+            `${seconds}`;
+
+        if (hours &gt; 0) {
+            hourString = hours &lt; 10 ?
+                `0${hours}:` :
+                `${hours}:`;
+        };
+
+        return `${hourString}${minuteString}${secondString}`;
+
+    }
+
+    convertSecondsToParts(seconds) {
+        let minutes = Math.floor(seconds / 60);
+        let timeInformation = {
+            minutes: minutes,
+            hours: Math.floor(minutes / 60),
+            remainingSeconds: Math.floor(seconds % 60),
+            remainingMinutes: Math.floor(minutes % 60),
+            seconds: seconds
+        }
+
+        return timeInformation;
+    }
+};</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.4.7)</span></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>
