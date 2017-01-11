@@ -8454,7 +8454,6 @@ var VideoStateController = function VideoStateController($rootScope, $state, iVX
     cuePoints = setUpCuePoints(cuePoints);
 
     iVXjsBus.once(videoEventNames.CAN_PLAY, function stateVideoCanPlay(player) {
-        console.log("GOT HERE?");
         var transitionAnimation = onVideoReady.find(function (event, index) {
             return event.eventName === "animateElement" && event.args.element === ".video-state-container";
         });
@@ -10213,12 +10212,12 @@ var VideoState = function () {
             iElm.html(videoFramework.html);
             $compile(iElm.contents())($scope);
 
-            if (createInlineVideo.isMobile()) {
+            if (createInlineVideo.isMobile() || createInlineVideo.isiOS()) {
                 (function () {
                     var videoEventNames = new _videoEvents2.default();
                     $timeout(function () {
                         iVXjsBus.emit(videoEventNames.CAN_PLAY);
-                    }, 1);
+                    }, 500);
                 })();
             }
         };
@@ -11234,7 +11233,6 @@ var CreateInlineVideo = function () {
 		key: 'isiOS',
 		value: function isiOS() {
 			var userAgent = navigator.userAgent || navigator.vendor || window.opera;
-			console.log(userAgent);
 			return userAgent.match(/iPhone/i) || userAgent.match(/iPad/i);
 		}
 	}, {
