@@ -68,7 +68,8 @@ class CreateInlineVideo {
 
 	isiOS() {
 		var userAgent = navigator.userAgent || navigator.vendor || window.opera;
-		return userAgent.match(/iPhone/i);
+		console.log(userAgent);
+		return userAgent.match(/iPhone/i) || userAgent.match(/iPad/i);
 	}
 
 	isMobile() {

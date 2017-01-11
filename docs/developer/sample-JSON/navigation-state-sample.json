@@ -13,6 +13,7 @@
         "onExit": [],
         "next": [],
         "links": [{
+            "id" : "link-1",
             "href" : "http://www.google.com",
             "attributes" : {
                 "target" : "_blank"
