@@ -6,6 +6,8 @@ var fs = require('fs');
 var argv = require('minimist')(process.argv.slice(2));
 var output = argv.output;
 var input = argv.input;
+var packageJSON = require('../../package.json');
+
 var inputMap = {
     data: {
         "ivx-io": "src/modules/data/ivx-io/index.js",
@@ -46,8 +48,8 @@ function setup() {
         debug: true,
         plugin: [watchify, errorify]
     })
-        .transform("babelify", { presets: ["es2015"] })
-        .transform({ global: true }, 'uglifyify');
+        .transform("babelify", { presets: ["es2015"] });
+        // .transform({ global: true }, 'uglifyify');
 
     console.log("INPUT:", inputPath);
     console.log("OUTPUT:", outputPath);

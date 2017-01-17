@@ -8,9 +8,9 @@ import { Options } from "./options.js";
 import { Textarea } from './textarea.js';
 import { Password } from './password.js';
 import { File } from "./file.js";
-
 import { Range } from "./range.js";
 import { Radio } from './radio.js';
+import { Style } from "./style.js";
 import { Number } from './number.js';
 import { Email } from './email.js';
 import { Date } from './date.js';
@@ -47,6 +47,7 @@ export class MaterializeUI {
         this.textarea = Textarea;
         this.range = Range;
         this.radio = Radio;
+        this.style = new Style();
         this.number = Number;
         this.states = {
             input: InputState,

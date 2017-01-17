@@ -11,6 +11,7 @@ class OptionsInput {
         this.scope = {
             inputData: '=inputData'
         }
+        
         this.controller = OptionsInputController;
         this.controllerAs = 'vm';
         this.replace = true;

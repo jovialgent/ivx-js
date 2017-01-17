@@ -65,7 +65,7 @@ export class iVXio {
         reject();
         return;
       }
-
+ 
       iVX(experienceHostSettings)
         .then(
         (iVX) => {
@@ -124,7 +124,7 @@ if (angular && angular.module('ivx-js')) {
     .constant('iVXjs.data.iVXio', initializeiVXIO);
 }
 
-function initializeiVXIO(settings) {
+function initializeiVXIO(settings = {}) {
   settings.module = iVXio;
 
   return settings;

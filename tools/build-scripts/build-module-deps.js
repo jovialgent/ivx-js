@@ -32,9 +32,14 @@ if (output === 'cdn') {
     var path = "build/cdn/ivx-js/" + packageJSON.version;
 
     buildFiles(path);
-
 }
 
+
+if (output === 'tools') {
+    var path = "tools/modules/" + packageJSON.version;
+
+    buildFiles(path);
+}
 
 
 

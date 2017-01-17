@@ -12,6 +12,7 @@ import { Email } from './email.js';
 import { Date } from './date.js';
 import { Url } from './url.js';
 import { DatetimeLocal } from './datetime-local.js';
+import { Style } from "./style.js";
 
 //States
 import { InputState } from './state.input.js';
@@ -37,6 +38,7 @@ export class BootstrapUI {
         this.textarea = Textarea;
         this.radio = Radio;
         this.number = Number;
+        this.style = new Style();
         this.states = {
             input: InputState,
             video: VideoState,
