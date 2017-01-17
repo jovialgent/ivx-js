@@ -10,6 +10,7 @@ import { Email } from './email.js';
 import { Number } from './number.js';
 import { Options } from "./options.js";
 import { Radio } from "./radio.js";
+import { Style } from "./style.js";
 import { Text } from './text.js';
 import { Textarea } from './textarea.js';
 import { Url } from './url.js';
@@ -38,6 +39,7 @@ export class SemanticUI {
         this.number = Number;
         this.options = Options;
         this.radio = Radio;    
+        this.style = new Style();
         this.text = Text;
         this.textarea = Textarea;
         this.url = Url;

@@ -28,6 +28,8 @@ import NavigationState from './directives/state.navigation.js';
 import FormInput from './directives/input.form.js';
 import TextInput from './directives/input.text.js';
 import Anchors from './directives/ui.anchor.js';
+import CascadingOptions from './directives/ui.cascading-options.js';
+
 import ButtonsInput from './directives/input.buttons.js';
 import EmailInput from './directives/input.email.js';
 import UrlInput from './directives/input.url.js';
@@ -88,6 +90,7 @@ angular
     .directive('ivxjsRadioInput', RadioInput)
     .directive('ivxjsButtonsInput', ButtonsInput)
     .directive('ivxjsAnchor', Anchors)
+    .directive('ivxjsCascadingOptionsInput', CascadingOptions)
 
     .directive('ivxjsOptionsInput', OptionsInput)
     .directive('ivxjsEmailInput', EmailInput)

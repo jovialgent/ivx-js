@@ -7,7 +7,7 @@ import Email from "./email.js";
 import Url from "./url.js";
 import Checkbox from "./checkbox.js";
 import Options from "./options.js";
-
+import CascadingOptions from "./cascading-options.js"
 
 
 export default class {
@@ -55,7 +55,8 @@ export default class {
             Email,
             Url,
             Checkbox,
-            Options
+            Options,
+            CascadingOptions
         }
     }
 }
