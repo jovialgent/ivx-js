@@ -60,7 +60,8 @@
     "tools:sandbox:watch-es6-project-js": "node_modules/.bin/watchify tools/sandbox/project/js/index.js -o tools/sandbox/public/js/project.js  -t [ babelify --presets [ es2015 ] ] -v --debug",
     "tools:sandbox:watch-es6-project-js:compress": "node_modules/.bin/watchify -g uglifyify tools/sandbox/project/js/index.js -o tools/sandbox/public/js/project.min.js  -t [ babelify --presets [ es2015 ] ]",
     "tools:sandbox:watch-project-less": "node_modules/.bin/watch \"npm run tools:sandbox:project:make-css\" \"tools/sandbox/project/less\"",
-    "tools:sandbox:watch-project-less:compress": "node_modules/.bin/watch \"npm run tools:sandbox:project:make-css:compress\" \"tools/sandbox/project/less\""
+    "tools:sandbox:watch-project-less:compress": "node_modules/.bin/watch \"npm run tools:sandbox:project:make-css:compress\" \"tools/sandbox/project/less\"",
+    "start" : "npm run tools:sandbox:start:es6-project"
   },
   "author": "",
   "license": "ISC",
