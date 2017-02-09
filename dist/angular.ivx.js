@@ -8085,7 +8085,6 @@ var OptionsInputController = function (_InputControllerHelpe) {
         };
 
         $timeout(function () {
-
             if (attributes.required) {
                 $scope.$parent.formInput[name].$setValidity('required', experienceValue && experienceValue.length > 0);
                 $scope.$parent.formInput[name].$error.required = true;
