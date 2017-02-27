@@ -4,7 +4,7 @@
   "description": "An interactive experience src. ",
   "main": "index.js",
   "scripts": {
-    "build": "node_modules/.bin/npm-run-all  \"github:build:cdn\" ",
+    "build": "node_modules/.bin/npm-run-all  \"github:build:cdn\" \"github:build:tools\" ",
     "demo:all:update-js": "node_modules/.bin/npm-run-all \"demo:module-injection:update-js\" \"demo:hello-world:update-js\" \"demo:iphone-inline:update-js\" \"demo:ivx-io:update-js\"  \"demo:set-up-a-404-state:update-js\"  \"demo:templates:update-js\" ",
     "demo:hello-world:update-js": "node_modules/.bin/copyfiles -u 1 dist/*.js demos/hello-world/js/lib",
     "demo:iphone-inline:update-js": "node_modules/.bin/copyfiles -u 1 dist/*.js demos/iphone-inline/js/lib",
@@ -29,6 +29,7 @@
     "docs:developer:update-sample-json": "node_modules/.bin/watch \"npm run docs:developer:move-sample-json\" \"docs/developer/sample-json\"",
     "docs:watch-files": "node_modules/.bin/watch \"npm run dev:create-docs\" \"src\"",
     "github:build:cdn": "node tools/build-scripts/build-module-deps.js --output cdn",
+    "github:build:tools" : "node tools/build-scripts/build-module-deps.js --output tools",
     "modules:data:watch-module:firebase:compress": "node tools/build-scripts/watch-module-deps.js --output sandbox --input data.firebase",
     "modules:ui:watch-module:materialize:compress": "node tools/build-scripts/watch-module-deps.js --output sandbox --input ui.materialize",
     "test": "npm run test:start:karma:single-run",
@@ -61,7 +62,8 @@
     "tools:sandbox:watch-es6-project-js:compress": "node_modules/.bin/watchify -g uglifyify tools/sandbox/project/js/index.js -o tools/sandbox/public/js/project.min.js  -t [ babelify --presets [ es2015 ] ]",
     "tools:sandbox:watch-project-less": "node_modules/.bin/watch \"npm run tools:sandbox:project:make-css\" \"tools/sandbox/project/less\"",
     "tools:sandbox:watch-project-less:compress": "node_modules/.bin/watch \"npm run tools:sandbox:project:make-css:compress\" \"tools/sandbox/project/less\"",
-    "start" : "npm run tools:sandbox:start:es6-project"
+    "setup" : "npm run tools:sandbox:create",
+    "start": "npm run tools:sandbox:start"
   },
   "author": "",
   "license": "ISC",
@@ -105,6 +107,7 @@
     "watchify": "3.7.0"
   },
   "dependencies": {
-    "errorify": "^0.3.1"
+    "errorify": "^0.3.1",
+    "semver": "^5.3.0"
   }
 }

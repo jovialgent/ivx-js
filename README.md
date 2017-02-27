@@ -16,6 +16,32 @@ experience and this "Getting Started" will focus on that implementation.
 * Clone this repository or download zip
 * Via npm `npm install ivx-js-angular --save`
 
+### CDN Links 
+
+```
+
+<!-- Data Modules -->
+
+<!-- iVX-io Module
+<script src="https://060adad2995367c8e229-2340761377b5351a53198a462113b619.ssl.cf2.rackcdn.com/ivx-js/0.7.0/iVXjs.data.ivx-io.min.js"></script>
+<script src="https://060adad2995367c8e229-2340761377b5351a53198a462113b619.ssl.cf2.rackcdn.com/ivx-js/0.7.0/iVXjs.data.firebase.min.js"></script>
+
+
+
+
+<!-- UI Modules -->
+
+<!-- Bootstrap UI Module -->
+<script src="https://060adad2995367c8e229-2340761377b5351a53198a462113b619.ssl.cf2.rackcdn.com/ivx-js/0.7.0/iVXjs.ui.bootstrap.min.js"></script>
+
+<!-- Materialize UI Module -->
+<script src="https://060adad2995367c8e229-2340761377b5351a53198a462113b619.ssl.cf2.rackcdn.com/ivx-js/0.7.0/iVXjs.ui.materialize.min.js"></script>
+
+<!-- Semantic UI UI Module -->
+<script src="https://060adad2995367c8e229-2340761377b5351a53198a462113b619.ssl.cf2.rackcdn.com/ivx-js/0.7.0/iVXjs.ui.semantic-ui.min.js"></script>
+
+```
+
 ### iVXjs Angular's Dependencies
 
 The Angular iVXjs instance--iVXjs for this documentation--has the following script dependencies:

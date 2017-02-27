@@ -7709,19 +7709,17 @@ var AppRun = function AppRun($rootScope, $state, $window, $transitions, $http, i
         }
 
         if ($state.current.data.restricted) {
-            (function () {
 
-                var navigateBackState = iVXjs.experience.config.pageNotFoundState ? iVXjs.experience.config.pageNotFoundState : iVXjs.experience.config.defaultState;
-                var restrictRedirect = iVXjs.experience.rules(navigateBackState);
+            var navigateBackState = iVXjs.experience.config.pageNotFoundState ? iVXjs.experience.config.pageNotFoundState : iVXjs.experience.config.defaultState;
+            var restrictRedirect = iVXjs.experience.rules(navigateBackState);
 
-                if (iVXjs.experience.isRestricted) {
-                    iVXjs.experience.isRestricted().then(function (restricted) {
-                        if (restricted) {
-                            $state.go(restrictRedirect);
-                        }
-                    });
-                }
-            })();
+            if (iVXjs.experience.isRestricted) {
+                iVXjs.experience.isRestricted().then(function (restricted) {
+                    if (restricted) {
+                        $state.go(restrictRedirect);
+                    }
+                });
+            }
         }
     }]);
 
@@ -7735,14 +7733,12 @@ var AppRun = function AppRun($rootScope, $state, $window, $transitions, $http, i
         var currentState = $state.current;
 
         if (!currentState.data) {
-            (function () {
-                var defaultStateRules = iVXjs.experience.config.defaultState;
-                var defaultStateId = iVXjs.experience.rules(defaultStateRules);
+            var defaultStateRules = iVXjs.experience.config.defaultState;
+            var defaultStateId = iVXjs.experience.rules(defaultStateRules);
 
-                currentState.data = iVXjs.config.states.find(function (state) {
-                    return state.id === defaultStateId;
-                });
-            })();
+            currentState.data = iVXjs.config.states.find(function (state) {
+                return state.id === defaultStateId;
+            });
         }
 
         iVXjsBus.emit(stateEventNames.GET_STATE, currentState);
@@ -10310,12 +10306,10 @@ var VideoState = function () {
             $compile(iElm.contents())($scope);
 
             if (createInlineVideo.isMobile() || createInlineVideo.isiOS()) {
-                (function () {
-                    var videoEventNames = new _videoEvents2.default();
-                    $timeout(function () {
-                        iVXjsBus.emit(videoEventNames.CAN_PLAY);
-                    }, 500);
-                })();
+                var videoEventNames = new _videoEvents2.default();
+                $timeout(function () {
+                    iVXjsBus.emit(videoEventNames.CAN_PLAY);
+                }, 500);
             }
         };
     }

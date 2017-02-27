@@ -2,11 +2,21 @@ var fs = require('fs');
 var browserify = require('browserify');
 var minimist = require("minimist");
 var argv = require('minimist')(process.argv.slice(2));
+var semver = require('semver');
 var output = argv.output;
 var input = argv.input;
 var version = argv.version;
 var packageJSON = require('../../package.json');
-
+var moduleFiles = fs.readdirSync('tools/modules');
+var cleanedModuleFileNames = moduleFiles.reduce(function (legitFiles, moduleFileName, index) {
+    if (semver.valid(moduleFileName)) {
+        legitFiles.push(moduleFileName)
+    }
+    return legitFiles;
+}, []);
+var recentFolderVersion = cleanedModuleFileNames.sort(compareVersion)[0];
+var newFolderVersion = semver.inc(recentFolderVersion, 'patch');
+var newVersion = semver.gt(packageJSON.version, newFolderVersion) ? packageJSON.version : newFolderVersion;
 var modules = {
     data: {
         "ivx-io": "src/modules/data/ivx-io/index.js",
@@ -29,21 +39,32 @@ var mkdirp = require('mkdirp');
 
 
 if (output === 'cdn') {
-    var path = "build/cdn/ivx-js/" + packageJSON.version;
+     var path = "build/cdn/ivx-js/" + newVersion;
 
     buildFiles(path);
 }
 
 
 if (output === 'tools') {
-    var path = "tools/modules/" + packageJSON.version;
+   var path = "tools/modules/" + newVersion;
 
     buildFiles(path);
 }
 
+function compareVersion(versionFolderA, versionFolderB) {
+    if (semver.lt(versionFolderA, versionFolderB)) {
+        return 1;
+    }
+    if (semver.gt(versionFolderA, versionFolderB)) {
+        return -1;
+    }
+    // a must be equal to b
+    return 0;
+}
 
 
-function buildFiles(path) {
+
+function buildFiles(path, cb) {
     mkdirp(path, function () {
         moduleTypes.forEach(function (moduleType, index) {
             var moduleNames = Object.keys(modules[moduleType]);
