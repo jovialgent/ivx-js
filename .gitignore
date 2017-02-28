@@ -53,5 +53,6 @@ influence
 docs/esdocs
 docs/tests
 tools/sandbox
+public
 build
 .hgtags

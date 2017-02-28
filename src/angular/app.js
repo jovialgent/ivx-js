@@ -151,7 +151,7 @@ angular
 myIVXjs.Bus.on(iVXjsConfigEvents.VALIDATED, (iVXjs) => {
     let stateAudio = new iVXjs.audio('body', 'state-audio');
     let experienceAudio = new iVXjs.audio('body', 'experience-audio');
-    
+
     angular
         .module('ivx-js')
         .constant('ivxjs.modules.video', iVXjs.video)

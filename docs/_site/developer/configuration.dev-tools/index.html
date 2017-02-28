@@ -1,0 +1,288 @@
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+
+<meta charset="utf-8">
+
+
+
+<!-- begin SEO -->
+
+
+
+
+
+
+
+
+
+<title>iVXjs</title>
+
+
+
+
+
+
+
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="iVXjs">
+<meta property="og:title" content="iVXjs">
+
+
+  <link rel="canonical" href="https://influencetech.github.io/ivx-js/developer/configuration.dev-tools/">
+  <meta property="og:url" content="https://influencetech.github.io/ivx-js/developer/configuration.dev-tools/">
+
+
+
+
+
+
+
+  
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "Person",
+      "name" : "Influence Technology",
+      "url" : "https://influencetech.github.io/ivx-js",
+      "sameAs" : null
+    }
+  </script>
+
+
+
+
+
+
+<!-- end SEO -->
+
+
+<link href="https://influencetech.github.io/ivx-js/feed.xml" type="application/atom+xml" rel="alternate" title="iVXjs Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="https://influencetech.github.io/ivx-js/assets/css/main.css">
+
+<meta http-equiv="cleartype" content="on">
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use http://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+  </head>
+
+  <body>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <button><div class="navicon"></div></button>
+        <ul class="visible-links">
+          <li class="masthead__menu-item masthead__menu-item--lg"><a href="https://influencetech.github.io/ivx-js/">iVXjs</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://influencetech.github.io/ivx-js/developer/tutorial.hello-world">Getting Started</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://influencetech.github.io/ivx-js/developer/tutorials">Tutorials</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://influencetech.github.io/ivx-js/developer/configuration">Configuration and Features</a></li>
+          
+        </ul>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    
+
+
+
+
+
+<div id="main" role="main">
+  
+
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    
+    
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        <h1 id="dev-tools">Dev Tools</h1>
+
+<aside class="sidebar__right">
+<nav class="toc">
+    <header><h4 class="nav__title"><i class="fa fa-file-text"></i> On This Page</h4></header>
+<ul class="toc__menu" id="markdown-toc">
+  <li><a href="#dev-tools" id="markdown-toc-dev-tools">Dev Tools</a>    <ul>
+      <li><a href="#overview" id="markdown-toc-overview">Overview</a></li>
+      <li><a href="#requirements" id="markdown-toc-requirements">Requirements</a></li>
+      <li><a href="#interactive-tutorial" id="markdown-toc-interactive-tutorial">Interactive Tutorial</a></li>
+      <li><a href="#npm-run-setup" id="markdown-toc-npm-run-setup">npm run setup</a></li>
+      <li><a href="#npm-start" id="markdown-toc-npm-start">npm start</a></li>
+    </ul>
+  </li>
+</ul>
+
+  </nav>
+</aside>
+
+<h2 id="overview">Overview</h2>
+
+<p>Development on the iVXjs Library could be difficult. To help streamline the process, there is an 
+internal build tools that allows developers the ability run a local server and continuously 
+build out as they develop. This documentation will go over some basic CLI commands that can get you 
+started.</p>
+
+<h2 id="requirements">Requirements</h2>
+
+<p>To get started you will need to get node that supports ES6. To figure out which version meets this requirement you can 
+go to this site <a href="http://node.green/">node.green</a></p>
+
+<p>After a suitable nodejs version is download, make sure to run <code class="highlighter-rouge">npm install</code>.</p>
+
+<h2 id="interactive-tutorial">Interactive Tutorial</h2>
+
+<p>For an interactive guide on contributing and developing on iVXjs, go to the <a href="https://influencetech.github.io/ivx-js/developer/tutorial.color-input">Favorite Color Tutorial</a></p>
+
+<h2 id="npm-run-setup">npm run setup</h2>
+
+<p><strong>Description</strong></p>
+
+<p>Sets up and generates static files into a <code class="highlighter-rouge">public</code> forlder at the root. This should run only when the public folder needs to be reset or initially. The static files generated are
+meant to support the <em>Favorite Color Tutorial</em>.</p>
+
+<h2 id="npm-start">npm start</h2>
+
+<p><strong>Description</strong></p>
+
+<p>Watches the source code for updates and adds them to both the <code class="highlighter-rouge">public/js</code> and the <code class="highlighter-rouge">dist</code> folders with a local webserver. This command is meant to help 
+make it easier for developers to develop on the library.</p>
+
+<p><strong>Special Note</strong></p>
+
+<p>All iVXjs related code and the index.html file are autogenerated by this command. So, if you have various html files serving up local instances, it is advised 
+to copy/duplicate those in another folder.</p>
+
+<p><strong>Flags</strong></p>
+
+<ul>
+  <li><code class="highlighter-rouge">--ui "MODULE NAME"</code> - Watches the source for this UI module and injects all dependencies into the index.html file in the public folder</li>
+  <li><code class="highlighter-rouge">--data "MODULE NAME"</code> - Watches the source for this data module and injects all dependencies into the index.html file in the public folder</li>
+  <li><code class="highlighter-rouge">--validation "MODULE NAME"</code> - Watches the source for this validation module and injects all dependencies into the index.html file in the public folder</li>
+  <li><code class="highlighter-rouge">--analytics "MODULE NAME"</code> - Watches the source for this analytics module and injects all dependencies into the index.html file in the public folder</li>
+</ul>
+
+<p><strong>Example</strong></p>
+
+<p>If as a developer, I wanted to work on the Firebase data module and the Semantic UI module the command I would use is:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>npm start --ui "semantic-ui" --data "firebase"
+</code></pre>
+</div>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+
+
+        
+      </footer>
+
+      
+
+      
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+    
+    
+    
+    
+    <li><a href="https://influencetech.github.io/ivx-js/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2017 Influence Technology. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+      </footer>
+    </div>
+
+    <script src="https://influencetech.github.io/ivx-js/assets/js/main.min.js"></script>
+
+
+
+
+
+  </body>
+</html>
+

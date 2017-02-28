@@ -1,0 +1,1307 @@
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+
+<meta charset="utf-8">
+
+
+
+<!-- begin SEO -->
+
+
+
+
+
+
+
+
+
+<title>iVXjs</title>
+
+
+
+
+
+
+
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="iVXjs">
+<meta property="og:title" content="iVXjs">
+
+
+  <link rel="canonical" href="https://influencetech.github.io/ivx-js/developer/tutorial.color-input/">
+  <meta property="og:url" content="https://influencetech.github.io/ivx-js/developer/tutorial.color-input/">
+
+
+
+
+
+
+
+  
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "Person",
+      "name" : "Influence Technology",
+      "url" : "https://influencetech.github.io/ivx-js",
+      "sameAs" : null
+    }
+  </script>
+
+
+
+
+
+
+<!-- end SEO -->
+
+
+<link href="https://influencetech.github.io/ivx-js/feed.xml" type="application/atom+xml" rel="alternate" title="iVXjs Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="https://influencetech.github.io/ivx-js/assets/css/main.css">
+
+<meta http-equiv="cleartype" content="on">
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use http://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+  </head>
+
+  <body>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <button><div class="navicon"></div></button>
+        <ul class="visible-links">
+          <li class="masthead__menu-item masthead__menu-item--lg"><a href="https://influencetech.github.io/ivx-js/">iVXjs</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://influencetech.github.io/ivx-js/developer/tutorial.hello-world">Getting Started</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://influencetech.github.io/ivx-js/developer/tutorials">Tutorials</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="https://influencetech.github.io/ivx-js/developer/configuration">Configuration and Features</a></li>
+          
+        </ul>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    
+
+
+
+
+
+<div id="main" role="main">
+  
+
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    
+    
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        <h1 id="favorite-color-tutorial">Favorite Color Tutorial</h1>
+
+<aside class="sidebar__right">
+<nav class="toc">
+    <header><h4 class="nav__title"><i class="fa fa-file-text"></i> On This Page</h4></header>
+<ul class="toc__menu" id="markdown-toc">
+  <li><a href="#favorite-color-tutorial" id="markdown-toc-favorite-color-tutorial">Favorite Color Tutorial</a>    <ul>
+      <li><a href="#overview" id="markdown-toc-overview">Overview</a>        <ul>
+          <li><a href="#ivxjs-core-and-modules" id="markdown-toc-ivxjs-core-and-modules">iVXjs Core and Modules</a>            <ul>
+              <li><a href="#core-library" id="markdown-toc-core-library">Core Library</a>                <ul>
+                  <li><a href="#appjs" id="markdown-toc-appjs">app.js</a></li>
+                  <li><a href="#processorjs" id="markdown-toc-processorjs">processor.js</a></li>
+                </ul>
+              </li>
+              <li><a href="#modules" id="markdown-toc-modules">Modules</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li><a href="#getting-started" id="markdown-toc-getting-started">Getting Started</a></li>
+      <li><a href="#contribution-tutorial-input-type-color" id="markdown-toc-contribution-tutorial-input-type-color">Contribution Tutorial: Input Type Color</a></li>
+      <li><a href="#step-1-change-the-json-spec" id="markdown-toc-step-1-change-the-json-spec">Step 1: Change the JSON spec</a></li>
+      <li><a href="#step-2-create-the-colorjs-file-in-the-ui-module-and-angular-js" id="markdown-toc-step-2-create-the-colorjs-file-in-the-ui-module-and-angular-js">Step 2: Create the color.js file in the UI Module and Angular JS</a></li>
+      <li><a href="#step-3-set-up-the-directive-file-inputcolorjs" id="markdown-toc-step-3-set-up-the-directive-file-inputcolorjs">Step 3: Set up the directive file input.color.js</a>        <ul>
+          <li><a href="#imports" id="markdown-toc-imports">Imports</a></li>
+          <li><a href="#class-definition" id="markdown-toc-class-definition">Class Definition</a></li>
+          <li><a href="#directive-set-up" id="markdown-toc-directive-set-up">Directive Set Up</a>            <ul>
+              <li><a href="#template" id="markdown-toc-template">template</a></li>
+              <li><a href="#transclude" id="markdown-toc-transclude">transclude</a></li>
+              <li><a href="#restrict" id="markdown-toc-restrict">restrict</a></li>
+              <li><a href="#require" id="markdown-toc-require">require</a></li>
+              <li><a href="#replace" id="markdown-toc-replace">replace</a></li>
+              <li><a href="#scope" id="markdown-toc-scope">scope</a></li>
+              <li><a href="#controller" id="markdown-toc-controller">controller</a></li>
+              <li><a href="#controlleras" id="markdown-toc-controlleras">controllerAs</a></li>
+              <li><a href="#link" id="markdown-toc-link">link</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li><a href="#step-4-creating-the-link-function-in-our-direcitve" id="markdown-toc-step-4-creating-the-link-function-in-our-direcitve">Step 4: Creating the Link Function in our direcitve</a>        <ul>
+          <li><a href="#variables" id="markdown-toc-variables">Variables</a></li>
+          <li><a href="#label-validation" id="markdown-toc-label-validation">Label Validation</a></li>
+          <li><a href="#initializing-the-input-class" id="markdown-toc-initializing-the-input-class">Initializing the Input Class</a></li>
+          <li><a href="#compiling-the-html-from-the-ui-module" id="markdown-toc-compiling-the-html-from-the-ui-module">Compiling the HTML from the UI Module</a></li>
+          <li><a href="#adding-this-to-the-inputcolorjs-directive-file" id="markdown-toc-adding-this-to-the-inputcolorjs-directive-file">Adding this to the input.color.js directive file</a></li>
+        </ul>
+      </li>
+      <li><a href="#step-5-setting-up-the-inputcolorjs-controller-file" id="markdown-toc-step-5-setting-up-the-inputcolorjs-controller-file">Step 5: Setting Up the input.color.js controller file</a>        <ul>
+          <li><a href="#imports-1" id="markdown-toc-imports-1">Imports</a></li>
+          <li><a href="#class" id="markdown-toc-class">Class</a></li>
+          <li><a href="#setting-up-the-controller-in-the-inputcolorjs" id="markdown-toc-setting-up-the-controller-in-the-inputcolorjs">Setting up the controller in the input.color.js</a></li>
+        </ul>
+      </li>
+      <li><a href="#step-6-registering-the-module-to-the-appjs" id="markdown-toc-step-6-registering-the-module-to-the-appjs">Step 6: Registering the module to the app.js</a></li>
+      <li><a href="#step-6-changing-the-ui-module-input-class-from-text-to-color" id="markdown-toc-step-6-changing-the-ui-module-input-class-from-text-to-color">Step 6: Changing the UI Module Input Class from text to color</a></li>
+      <li><a href="#step-7-setting-up-the-colorjs-file-in-the-default-ui-module-folder" id="markdown-toc-step-7-setting-up-the-colorjs-file-in-the-default-ui-module-folder">Step 7: Setting up the color.js file in the Default UI Module folder</a>        <ul>
+          <li><a href="#imports-2" id="markdown-toc-imports-2">imports</a></li>
+          <li><a href="#globals" id="markdown-toc-globals">Globals</a></li>
+          <li><a href="#class-setup" id="markdown-toc-class-setup">Class Setup</a>            <ul>
+              <li><a href="#contructor" id="markdown-toc-contructor">Contructor</a></li>
+              <li><a href="#uiclasses-and-uiattributes" id="markdown-toc-uiclasses-and-uiattributes">uiClasses and uiAttributes</a></li>
+              <li><a href="#html" id="markdown-toc-html">html</a></li>
+            </ul>
+          </li>
+          <li><a href="#add-these-to-the-colorjs-file" id="markdown-toc-add-these-to-the-colorjs-file">Add these to the color.js file.</a></li>
+        </ul>
+      </li>
+      <li><a href="#step-8-register-the-color-input-to-the-ui-module" id="markdown-toc-step-8-register-the-color-input-to-the-ui-module">Step 8: Register the color input to the UI Module</a></li>
+      <li><a href="#step-8-adding-the-input-html" id="markdown-toc-step-8-adding-the-input-html">Step 8: Adding the input html</a>        <ul>
+          <li><a href="#variables-1" id="markdown-toc-variables-1">Variables</a></li>
+          <li><a href="#setting-up-the-html" id="markdown-toc-setting-up-the-html">Setting up the HTML</a></li>
+          <li><a href="#adding-the-html-from-text-to-color" id="markdown-toc-adding-the-html-from-text-to-color">Adding the HTML from text to color</a></li>
+        </ul>
+      </li>
+      <li><a href="#conclusion" id="markdown-toc-conclusion">Conclusion</a></li>
+    </ul>
+  </li>
+</ul>
+
+  </nav>
+</aside>
+
+<h2 id="overview">Overview</h2>
+
+<p>The iVXjs library has a lot of cool functionality out of the box, but there will be time you, as a 
+developer would like to contribute to our library (which is cool!). So, to make it easier for you to 
+add to the library, this tutorial is to show you how to add a new component to the UI module for 
+iVXjs and some best practices. This tutorial is meant for anyone to jump in, but some core ideas 
+of iVXjs could help development. These ideas are as followed:</p>
+
+<ul>
+  <li>States</li>
+  <li>Input State</li>
+  <li>HTML State</li>
+  <li>Inputs</li>
+</ul>
+
+<h3 id="ivxjs-core-and-modules">iVXjs Core and Modules</h3>
+
+<p>If you have used iVXjs before, you may have encountered using the core library–in most cases angular.ivx.js–and
+modules–such as UI modules such as Bootstrap. But, what you may have not encountered is how these modules work and 
+how the library uses them. So, let’s take a moment and go over some core concepts of the core library and the modules.</p>
+
+<h4 id="core-library">Core Library</h4>
+
+<p>The core library can be found in the folder <em>src/core</em>. This core folder holds two files <em>app.js</em> and <em>processor.js</em></p>
+
+<h5 id="appjs">app.js</h5>
+
+<p>This file holds the main function, <code class="highlighter-rouge">init()</code>, which does all the initializing. This function adds some very high level 
+components such as Logging and also pulls in a Setup class which handles all the set up for the modules.</p>
+
+<p>This file also registers core functions and information to the iVXjs object which holds the information to 
+run actions within a rendering library such as angularjs.</p>
+
+<h5 id="processorjs">processor.js</h5>
+
+<p>The processor.js file processes actions and events. Before this was with the data module, but this processor 
+was used enough by all the modules that moving it to this folder makes sense. Essentially, this class takes any 
+event defined through the JSON and either resolves it in a promise or fires it on the bus. This processor can be used 
+by developers to ensure different events get fired on the shared bus or a short cut run actions.</p>
+
+<h4 id="modules">Modules</h4>
+
+<p>Modules are components that run various parts of an iVXjs experience. Each module has a singular purpose and 
+often has specific requirements. The modules can be broken up into six categories:</p>
+
+<ul>
+  <li>analytics - Modules that help with sending analytics to third parties outside the experience such as Google.</li>
+  <li>audio - Modules that play sounds and voice over for various experiences</li>
+  <li>data - Handles how data is collected and initialized. Often, this module will be hooked up to a third party that
+stores these interactions</li>
+  <li>ui - Generates the various UI templates used throughout the experience. These UI templates are unique to the 
+UI framework being used such as bootstrap.</li>
+  <li>validation - Validates the JSON Spec using various validation methods such as Schema</li>
+  <li>video - Video modules to hook up the iVXjs event bus to various video players.</li>
+</ul>
+
+<p>Working on each of these modules have seperate requirements, but for this tutorial we will be focusing on working the UI module.
+The UI module’s development process is similar to the others, but it will show how everything interacts within 
+the source.</p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<p>To get started you will need to get node that supports ES6. To figure out which version meets this requirement you can 
+go to this site <a href="http://node.green/">node.green</a></p>
+
+<p>After getting node, clone or pull the <a href="https://github.com/influencetech/ivx-js">iVXjs library from Github</a>. Then open up the root 
+folder on the command line and run these commands :</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>npm install
+npm run setup
+</code></pre>
+</div>
+
+<p>What will happen is the following:</p>
+
+<ul>
+  <li>A <em>public</em> folder will appear at the root and generate a files that will run a mini server</li>
+  <li>All the compiled and minified files for every module and library will be autogenerated and put in both the <em>dist</em> and <em>public/js</em> folders
+    <ul>
+      <li>Note: (this may take some time)</li>
+    </ul>
+  </li>
+  <li>Various HTML templates, CSS and other assets will move to the folders to run a local experience</li>
+</ul>
+
+<p>After setup is done, run these commands</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>npm start
+</code></pre>
+</div>
+
+<p>Wait a little bit while the process recompiles some core code and if successful, you should see this:</p>
+
+<p><img src="http://7ec6c34bd581cf260bd4-5e5c5681f11da11c86c8fda2bebcf3ce.r26.cf2.rackcdn.com/Successful%20Load.png" alt="Successful Load" /></p>
+
+<h2 id="contribution-tutorial-input-type-color">Contribution Tutorial: Input Type Color</h2>
+
+<p>Currently, the UI module only supports the following input types: text, phone, url, textarea, date, date-time, checkbox, 
+email, buttons, and radio. Let’s say though you would like to add the HTML5 input type <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/color">color</a>
+to the UI modules to use in an experience. If we look at our sample story right now, we will see a text field called “Favorite Color”:</p>
+
+<p><img src="http://7ec6c34bd581cf260bd4-5e5c5681f11da11c86c8fda2bebcf3ce.r26.cf2.rackcdn.com/Successful%20Load.png" alt="Successful Load" /></p>
+
+<p>The goal of this tutorial is to be able to change the type of this input from “text” to “color” and the 
+input state renders something that looks like this:</p>
+
+<p><img src="http://7ec6c34bd581cf260bd4-5e5c5681f11da11c86c8fda2bebcf3ce.r26.cf2.rackcdn.com/Final%20Screen.png" alt="Finished" /></p>
+
+<h2 id="step-1-change-the-json-spec">Step 1: Change the JSON spec</h2>
+
+<p>A good practice is to start at the JSON level when contributing. Since iVXjs is data driven, you should start 
+with figuring out you want the JSON to look like at the end and change the project to reflect that.</p>
+
+<p>In this case we want to change this data:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"favorite-color"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"favoriteColor"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"text"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Favorite Color"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"settings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"width"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1/2"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"container"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+        </span><span class="nt">"input"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"attributes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"placeholder"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Enter your favorite color..."</span><span class="w">
+        
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"errors"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>And change it to this:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"favorite-color"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"favoriteColor"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"color"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Favorite Color"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"settings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"width"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1/2"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"container"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+        </span><span class="nt">"input"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"attributes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"placeholder"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Enter your favorite color..."</span><span class="w">
+        
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"errors"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>If we do this change to our <em>project.json</em> file in the current project, we will see that the favorite 
+color text box disappeared:</p>
+
+<p><img src="http://7ec6c34bd581cf260bd4-5e5c5681f11da11c86c8fda2bebcf3ce.r26.cf2.rackcdn.com/Disappeared.png" alt="Disappeared" /></p>
+
+<p>This is because we haven’t defined it in angular and set it up in the UI module.</p>
+
+<h2 id="step-2-create-the-colorjs-file-in-the-ui-module-and-angular-js">Step 2: Create the color.js file in the UI Module and Angular JS</h2>
+
+<p>Now, let’s set up the files that will be used to create the color input in the UI module. To do this follow the steps:</p>
+
+<ul>
+  <li>Add a file named <em>color.js</em> as the new input in the Default UI Module (src/modules/ui/default)</li>
+</ul>
+
+<p><img src="http://7ec6c34bd581cf260bd4-5e5c5681f11da11c86c8fda2bebcf3ce.r26.cf2.rackcdn.com/UI%20File%20Path%20image.png" alt="UI Path" /></p>
+
+<ul>
+  <li>Add a file named <em>input.color.js</em> to both the angular’s controllers and directives folders:</li>
+</ul>
+
+<p><img src="http://7ec6c34bd581cf260bd4-5e5c5681f11da11c86c8fda2bebcf3ce.r26.cf2.rackcdn.com/Angular%20Add%20File.png" alt="Angular Path" /></p>
+
+<h2 id="step-3-set-up-the-directive-file-inputcolorjs">Step 3: Set up the directive file input.color.js</h2>
+
+<p>Since this module is a UI module, it is good practice to start at the render library level.
+In this case, we should start with Angular’s directives and controllers and set up those to render.</p>
+
+<p>Much of the work for this type of input is done in other modules so let’s use a very similar
+directive file and analyze what we need and don’t need from it. In this case I will use the file 
+<a href="https://github.com/influencetech/ivx-js/blob/master/src/angular/directives/input.text.js"><em>input.text.js</em> file</a> as a 
+reference.</p>
+
+<p>Let’s break down the  file a little bit:</p>
+
+<h3 id="imports">Imports</h3>
+
+<p>The first import <em>createFactoryFunction</em> is a utility function that converts ES6 classes into Angular 1.6 factory functions.
+This is required to use only for services, controllers and directives that need to be converted to Factory Functions.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>import createFactoryFunction from '../utilities/create-factory-function.js';
+</code></pre>
+</div>
+
+<p>The second import is an instance of the controller for this directive. Note how we bring in the whole factory function from the 
+the controller.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>import TextInputController from '../controllers/input.text.js';
+</code></pre>
+</div>
+
+<p>The third import is a utility class used for inputs. Specifically, this will find and set up all possible ng-errors and ng-attributes 
+required to run this input successfully.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>import { ErrorMessages } from '../utilities/messages.error.js';
+</code></pre>
+</div>
+
+<p>So, in our <em>input.color.js</em> file let’s add these imports but change the controller to the one we defined in the controllers:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>import createFactoryFunction from '../utilities/create-factory-function.js';
+import ColorInputController from '../controllers/input.color.js';
+import { ErrorMessages } from '../utilities/messages.error.js';
+</code></pre>
+</div>
+
+<h3 id="class-definition">Class Definition</h3>
+
+<p>Since we are using ES6, we will be taking advantage of class definition for this directive. Using a directive as a class requires some
+adjustments, but do follow very familiar structures.</p>
+
+<p>Let’s take a look at the constructor:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>export class TextInput{
+    constructor($compile, $filter, iVXjs, iVXjsUIModule, pullInTemplate)
+</code></pre>
+</div>
+
+<p>If you notice, you see some familiar angular directive and services. This constructor is exactly like the function 
+in a factory function.</p>
+
+<p>The injection for these modules happens below the class definition:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>TextInput.$inject = ['$compile', '$filter', 'iVXjs', 'ivxjs.modules.ui', 'pullInTemplate'];
+</code></pre>
+</div>
+
+<p>How converts these two elements in to a factory function is to call <code class="highlighter-rouge">createFactoryFunction()</code> with the 
+class with the $inject property and export this as default:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>export default createFactoryFunction(TextInput);
+</code></pre>
+</div>
+
+<p>All these calls and set up will transform the class into something like this:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>['$compile', '$filter', 'iVXjs', 'ivxjs.modules.ui', 'pullInTemplate', 
+    function($compile, $filter, iVXjs, iVXjsUIModule, pullInTemplate){
+
+    }
+]
+</code></pre>
+</div>
+
+<p>So, following these settings lets now add our <em>ColorInput</em> class:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>import createFactoryFunction from '../utilities/create-factory-function.js';
+import ColorInputController from '../controllers/input.color.js';
+import { ErrorMessages } from '../utilities/messages.error.js';
+
+export class ColorInput{
+    constructor($compile, $filter, iVXjs, iVXjsUIModule, pullInTemplate){
+
+    }
+}
+
+ColorInput.$inject = ['$compile', '$filter', 'iVXjs', 'ivxjs.modules.ui', 'pullInTemplate'];
+
+export default createFactoryFunction(ColorInput);
+</code></pre>
+</div>
+
+<h3 id="directive-set-up">Directive Set Up</h3>
+
+<p>Looking inside in the constructor for the directive you will see some familiar looking properties you find in 
+most angularjs directive definitions. Typically, these are returned as an object inside the directive factory 
+functions. If you would like a more indepth on each property look at the 
+<a href="https://docs.angularjs.org/guide/directive">AngularJS Directive Documentation</a>.</p>
+
+<p>So let’s go over each of the properties and explain why they are set this way.</p>
+
+<h4 id="template">template</h4>
+
+<p>The template property refers to a property in the class called templateHTML defining this input:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>this.template = this.templateHTML;
+</code></pre>
+</div>
+
+<h4 id="transclude">transclude</h4>
+
+<p>We set transclude to true so we can pass down variables inside if needed</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>this.transclude = true;
+</code></pre>
+</div>
+
+<h4 id="restrict">restrict</h4>
+<p>Since this UI component should just be an element, let’s restrict it to an element</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>this.restrict = "E";
+</code></pre>
+</div>
+
+<h4 id="require">require</h4>
+<p>To validate and use other services, it is required that the iVXjs Form Input is above this 
+one.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>this.require = "^ivxjsFormInput";
+</code></pre>
+</div>
+
+<h4 id="replace">replace</h4>
+<p>Replaces the element so the directive definition isn’t there. This is for ease of use</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>this.replace = true;
+</code></pre>
+</div>
+
+<h4 id="scope">scope</h4>
+<p>The only thing that should passed down is input data. This data is the data defined in 
+the JSON.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>this.scope = {
+    inputData: '=inputData'
+}
+</code></pre>
+</div>
+
+<h4 id="controller">controller</h4>
+
+<p>The controller’s value should be value Controller Function which is created in the 
+<em>input.text.js</em> in the controller:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code> this.controller = TextInputController;
+</code></pre>
+</div>
+
+<h4 id="controlleras">controllerAs</h4>
+
+<p>As a good practice, we should mask the controller as “vm” to imply a seperation
+of $scope and controller</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>this.controllerAs = 'vm';
+</code></pre>
+</div>
+
+<h4 id="link">link</h4>
+
+<p>We will get to the link function in the next step and explain a little more of that. But,
+for the time being lets just add an empty one we will fill in the next step.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>this.link = ($scope, iElm, iAttrs, controller) =&gt; {
+
+}
+</code></pre>
+</div>
+
+<p>All these settings will be needed in our ColorInput directive so let’s add it. We will need to change the controller 
+though to point to the ColorInputController instead of the TextInputController. So, now our direcitve <em>input.color.js</em> file 
+should look like this:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>import createFactoryFunction from '../utilities/create-factory-function.js';
+import ColorInputController from '../controllers/input.color.js';
+import { ErrorMessages } from '../utilities/messages.error.js';
+
+export class ColorInput{
+    constructor($compile, $filter, iVXjs, iVXjsUIModule, pullInTemplate){
+        this.template = this.templateHTML;
+        this.transclude = true;
+        this.restrict = 'E';
+        this.require = "^ivxjsFormInput";
+        this.replace = true;
+        this.scope = {
+            inputData: '=inputData'
+        }
+        this.controller = ColorInputController;
+        this.controllerAs = 'vm';
+        this.link = ($scope, iElm, iAttrs, controller) =&gt; {
+         
+        }
+    }
+}
+
+ColorInput.$inject = ['$compile', '$filter', 'iVXjs', 'ivxjs.modules.ui', 'pullInTemplate'];
+
+export default createFactoryFunction(ColorInput);
+</code></pre>
+</div>
+
+<h2 id="step-4-creating-the-link-function-in-our-direcitve">Step 4: Creating the Link Function in our direcitve</h2>
+
+<p>All the rendering for this element is in the link function of our directive. To get an idea of 
+how to translate the input data into a rendered data, let’s go through the link function in the 
+<em>input.text.js</em> directive file.</p>
+
+<h3 id="variables">Variables</h3>
+
+<p>We will need the following variables defined:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>let {inputData: input} = $scope;
+let {id, name, errors = {}, labelHTML, label = $filter('stringParsers')('startCase', id), attributes = {}, type, settings = {}} = input;
+let errorMessages = new ErrorMessages(input, errors, attributes);
+let tagHTML = `ng-blur="vm.onChange(inputValue)" ng-model="inputValue"`;
+</code></pre>
+</div>
+
+<p>The first thing we do is pull out the input information from the $scope. In this case we put it in a variable called 
+<code class="highlighter-rouge">input</code> using ES6’s destructuring.</p>
+
+<p>Destructuring the <code class="highlighter-rouge">input</code> variable even further we pull out some information. Each bit of information is as follows:</p>
+
+<ul>
+  <li>id - Id of this input. Used to target inputs for style and animations</li>
+  <li>errors - Error messages for various validation</li>
+  <li>name - The name attribute that will also be the key for data that is saved</li>
+  <li>label - The label (if not defined) will be generated using a special filter that converts the id into start case word</li>
+  <li>attributes - Other attributes for this input like required</li>
+  <li>type - type of input. In case of this file it will be text</li>
+  <li>settings - Various style settings for this input.</li>
+</ul>
+
+<p>The next variable <code class="highlighter-rouge">errorMessages</code> are the error messages for various input validation. Also, it sets up the tags to 
+support the validation.</p>
+
+<p><code class="highlighter-rouge">tagHTML</code> is a variable that holds any special tags to add to the input. In this case, it is passing the directive <code class="highlighter-rouge">ng-change</code> to 
+tell the input to run the various onChange events defined in the JSON specs. This is necessary to set information.</p>
+
+<h3 id="label-validation">Label Validation</h3>
+
+<p>The next two lines sets up the label</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>input.label = labelHTML ? labelHTML : label;
+input = pullInTemplate.convertLabel($filter('stringParsers')('startCase', id), input, $scope);
+</code></pre>
+</div>
+
+<p>This is to make sure this input is pulled in through a label, sanitized HTML or a template url.</p>
+
+<h3 id="initializing-the-input-class">Initializing the Input Class</h3>
+
+<p>The next part sets up the iVXjs UI Module class to pull in the input data and creates a new Text Input 
+instance.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>let uiTextObj = {
+    input: input,
+    settings: settings,
+    tags: tagHTML,
+    errors: errorMessages
+};
+let text = new iVXjsUIModule.text(uiTextObj);
+</code></pre>
+</div>
+
+<p>If you notice, this iVXjsUIModule is passed through Angular injection than directly pulled in from the library. This 
+is because these classes are created during the set up process and can automatically change based on the UI set up.</p>
+
+<h3 id="compiling-the-html-from-the-ui-module">Compiling the HTML from the UI Module</h3>
+
+<p>Now, to render the input we will now use Angular’s $compile directive and render the HTML returned from the UI Module. To do
+this we must set the element’s HTML to the HTML returned from the iVXjsUIModule and then compile it with the $scope:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>iElm.html(text.html);
+$compile(iElm.contents())($scope);
+</code></pre>
+</div>
+
+<h3 id="adding-this-to-the-inputcolorjs-directive-file">Adding this to the input.color.js directive file</h3>
+<p>Since we still haven’t defined this iVXjsUIModule in the default module code, we will just copy 
+all of these settings directly and use the text for the time being.</p>
+
+<p>So the file should look like this:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>import createFactoryFunction from '../utilities/create-factory-function.js';
+import ColorInputController from '../controllers/input.color.js';
+import { ErrorMessages } from '../utilities/messages.error.js';
+
+export class ColorInput {
+    constructor($compile, $filter, iVXjs, iVXjsUIModule, pullInTemplate) {
+        this.template = this.templateHTML;
+        this.transclude = true;
+        this.restrict = 'E';
+        this.require = "^ivxjsFormInput";
+        this.replace = true;
+        this.scope = {
+            inputData: '=inputData'
+        }
+        this.controller = ColorInputController;
+        this.controllerAs = 'vm';
+        this.link = ($scope, iElm, iAttrs, controller) =&gt; {
+            let {inputData: input} = $scope;
+            let {id, name, errors = {}, labelHTML, label = $filter('stringParsers')('startCase', id), attributes = {}, type, settings = {}} = input;
+            let errorMessages = new ErrorMessages(input, errors, attributes);
+            let tagHTML = `ng-blur="vm.onChange(inputValue)" ng-model="inputValue"`
+
+            input.label = labelHTML ? labelHTML : label;
+            input = pullInTemplate.convertLabel($filter('stringParsers')('startCase', id), input, $scope);
+
+            let uiTextObj = {
+                input: input,
+                settings: settings,
+                tags: tagHTML,
+                errors: errorMessages
+            };
+            let text = new iVXjsUIModule.text(uiTextObj);
+
+            iElm.html(text.html);
+
+            $compile(iElm.contents())($scope);
+        }
+    }
+}
+
+ColorInput.$inject = ['$compile', '$filter', 'iVXjs', 'ivxjs.modules.ui', 'pullInTemplate'];
+
+export default createFactoryFunction(ColorInput);
+</code></pre>
+</div>
+
+<h2 id="step-5-setting-up-the-inputcolorjs-controller-file">Step 5: Setting Up the input.color.js controller file</h2>
+
+<p>Like with the directive file, let’s take a look at the <em>input.text.js</em> file in the controllers 
+folder.</p>
+
+<h3 id="imports-1">Imports</h3>
+
+<p>There are two imports:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>import createFactoryFunction from '../utilities/create-factory-function.js';
+import { InputControllerHelper } from '../utilities/input-controller.js';
+</code></pre>
+</div>
+
+<p>The first one is the factory function creator function. The second one though is 
+a special utility class. This class sets up the controllers for most inputs.</p>
+
+<h3 id="class">Class</h3>
+
+<p>The class is set up very similar like the directive, but in this case there is a 
+key difference. Let’s look at the class definition:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>class TextInputController extends InputControllerHelper  {
+	constructor($scope, iVXjs, iVXjsActions) {
+        super($scope, iVXjs, iVXjsActions);     
+    }
+}
+</code></pre>
+</div>
+
+<p>The class is very small right? Well, this is because using inheritance we can actually 
+set up the controller from the <code class="highlighter-rouge">InputControllerHelper</code> class. That class handles and sets 
+up the controller in a uniformed fashion. The main use of this is to make sure that when the input 
+changes that it runs all the actions assigned to the input properly.</p>
+
+<p>Note, we must pass the services and directives injected into the parents class to run properly.</p>
+
+<h3 id="setting-up-the-controller-in-the-inputcolorjs">Setting up the controller in the input.color.js</h3>
+
+<p>Since we don’t have any special validation for the color input, we can just reuse the set up in this file for 
+our colors. So the controller file should look like this:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>import createFactoryFunction from '../utilities/create-factory-function.js';
+import { InputControllerHelper } from '../utilities/input-controller.js';
+
+class ColorInputController extends InputControllerHelper  {
+	constructor($scope, iVXjs, iVXjsActions) {
+        super($scope, iVXjs, iVXjsActions);     
+	}
+}
+
+ColorInputController.$inject = ['$scope', 'iVXjs', 'ivxjs.actions'];
+
+export default createFactoryFunction(ColorInputController)
+</code></pre>
+</div>
+
+<h2 id="step-6-registering-the-module-to-the-appjs">Step 6: Registering the module to the app.js</h2>
+
+<p>Now that we have all the directive and controller files set up, we will need to register the Color input 
+directive to the iVXjs module. To register do the following:</p>
+
+<ul>
+  <li>Find the Inputs import files and add the <code class="highlighter-rouge">ColorInput</code> class</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>// Inputs
+import FormInput from './directives/input.form.js';
+import TextInput from './directives/input.text.js';
+import Anchors from './directives/ui.anchor.js';
+import CascadingOptions from './directives/ui.cascading-options.js';
+import ColorInput from "./directives/input.color.js" // Color Import Statement 
+import ButtonsInput from './directives/input.buttons.js';
+import EmailInput from './directives/input.email.js';
+import UrlInput from './directives/input.url.js';
+import DateInput from './directives/input.date.js';
+import DateTimeLocalInput from './directives/input.datetime-local.js';
+import OptionsInput from './directives/input.options.js';
+import RadioInput from './directives/input.radio.js';
+import CheckboxInput from './directives/input.checkbox.js';
+import NumberInput from './directives/input.number.js';
+import TextareaInput from './directives/input.textarea.js';
+</code></pre>
+</div>
+<ul>
+  <li>Register the directive in the module declaration under directives.</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>.directive('ivxjsFormInput', FormInput)
+.directive('ivxjsTextInput', TextInput)
+.directive('ivxjsRadioInput', RadioInput)
+.directive('ivxjsButtonsInput', ButtonsInput)
+.directive('ivxjsAnchor', Anchors)
+.directive('ivxjsCascadingOptionsInput', CascadingOptions)
+.directive('ivxjsColorInput', ColorInput) //The name of the directive must follow "ivxjsTypeInput"
+.directive('ivxjsOptionsInput', OptionsInput)
+.directive('ivxjsEmailInput', EmailInput)
+.directive('ivxjsUrlInput', UrlInput)
+.directive('ivxjsDateInput', DateInput)
+.directive('ivxjsDatetimeLocalInput', DateTimeLocalInput)
+.directive('ivxjsCheckboxInput', CheckboxInput)
+.directive('ivxjsNumberInput', NumberInput)
+.directive('ivxjsTextareaInput', TextareaInput)
+</code></pre>
+</div>
+
+<p>If you followed the steps correctly your “Favorite Color” input should reappear and look like it did initially.</p>
+
+<p><img src="http://7ec6c34bd581cf260bd4-5e5c5681f11da11c86c8fda2bebcf3ce.r26.cf2.rackcdn.com/Successful%20Load.png" alt="Success" /></p>
+
+<h2 id="step-6-changing-the-ui-module-input-class-from-text-to-color">Step 6: Changing the UI Module Input Class from text to color</h2>
+
+<p>This means that we set up the controller and directive correctly. So, now let’s update the directive to use the 
+UI Module <code class="highlighter-rouge">ColorInput</code> class.</p>
+
+<ul>
+  <li>Go to the <em>input.color.js</em> directive file</li>
+  <li>Go to the link function and find this code</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>let uiTextObj = {
+    input: input,
+    settings: settings,
+    tags: tagHTML,
+    errors: errorMessages
+};
+let text = new iVXjsUIModule.text(uiTextObj);
+
+iElm.html(text.html);
+</code></pre>
+</div>
+
+<ul>
+  <li>Change the code to pull in the iVXjsUiModule.color</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>let uiColorObj = {
+    input: input,
+    settings: settings,
+    tags: tagHTML,
+    errors: errorMessages
+};
+let color = new iVXjsUIModule.color(uiColorObj);
+
+iElm.html(color.html);
+</code></pre>
+</div>
+
+<p>Changing this code will remove the color input again and error out on the console. This is good! This means 
+that it using a UI Module not defined. So, let’s define it!</p>
+
+<h2 id="step-7-setting-up-the-colorjs-file-in-the-default-ui-module-folder">Step 7: Setting up the color.js file in the Default UI Module folder</h2>
+
+<p>Like with the directive and controller files, let’s use the text input file, <em>text.js</em>, in the default UI module folder
+to see if we can pull code from it to set up. Before we do let’s go over some of the parts</p>
+
+<h3 id="imports-2">imports</h3>
+
+<p>The file imports three classes:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>import { Style } from "./style";
+import { ErrorMessages } from "./messages.js";
+import { AttributeTags } from "../utilities/attributes.js";
+</code></pre>
+</div>
+
+<p>The three classes serve the following purposes:</p>
+
+<ul>
+  <li>Style - brings in functions that sets the style for this input. Primarily used to set up container classes to set up 
+the form in a grid</li>
+  <li>ErrorMessages - Generates the HTML for displaying error messages based on the Framework imported</li>
+  <li>AttributeTags - Generates the attributes HTML for the input</li>
+</ul>
+
+<h3 id="globals">Globals</h3>
+
+<p>Initializes a global style instance to use in the class:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>let style = new Style();
+</code></pre>
+</div>
+
+<h3 id="class-setup">Class Setup</h3>
+
+<p>The <code class="highlighter-rouge">Text</code> class used to generate the HTML have the following settings</p>
+
+<h4 id="contructor">Contructor</h4>
+
+<p>The constructor takes two arguments:</p>
+
+<ul>
+  <li>inputObj: Information to render this input element</li>
+  <li>errorMessages: Since some frameworks might not have a specific way to display errors, this makes 
+sure something does appear when they do</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>constructor(inputObj = {}, errorMessages = ErrorMessages) {
+}
+</code></pre>
+</div>
+
+<p>Inside the constructor, we take the settings from the <code class="highlighter-rouge">inputObj</code> variable and add its 
+contents to various properties of the class:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code> let {input = {}, settings = {}, tags = {}, errors = {}} = inputObj;
+
+this.input = input; //All input information 
+this.settings = settings; //All input settings 
+this.tags = tags; //Tags to put on the input 
+this.errors = errors; //Error triggers 
+this.errorMessages = errorMessages; //Error Message Generator
+this.attributeTags = AttributeTags; //Attribute Tag Generator
+</code></pre>
+</div>
+
+<h4 id="uiclasses-and-uiattributes">uiClasses and uiAttributes</h4>
+
+<p>These are classes and attributes defined from the UI Framework to add to all inputs. In this case, since no 
+framework is defined, these properties return an empty string</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>get uiClasses() {
+    return ''
+}
+
+get uiAttributes() {
+    return ''
+}
+</code></pre>
+</div>
+
+<h4 id="html">html</h4>
+
+<p>This property is the template HTML that gets rendered from all the input data that is passed down. 
+We will define all of the properties in the a future step so, for now we will just add it to the class</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>get html(){
+
+}
+</code></pre>
+</div>
+
+<h3 id="add-these-to-the-colorjs-file">Add these to the color.js file.</h3>
+
+<p>For the most part, we can take all of these properties without <code class="highlighter-rouge">html</code> to get started with out color input. 
+So our <em>color.js</em> file should look like this:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>import { Style } from "./style";
+import { ErrorMessages } from "./messages.js";
+import { AttributeTags } from "../utilities/attributes.js";
+
+let style = new Style();
+
+export class Color {
+    constructor(inputObj = {}, errorMessages = ErrorMessages) {
+        let {input = {}, settings = {}, tags = {}, errors = {}} = inputObj;
+
+        this.input = input;
+        this.settings = settings;
+        this.tags = tags;
+        this.errors = errors;
+        this.errorMessages = errorMessages;
+        this.attributeTags = AttributeTags;
+    }
+
+    get uiClasses() {
+        return ''
+    }
+
+    get uiAttributes() {
+        return ''
+    }
+
+    get html() {
+       
+    }
+}
+</code></pre>
+</div>
+
+<h2 id="step-8-register-the-color-input-to-the-ui-module">Step 8: Register the color input to the UI Module</h2>
+
+<p>Before we go forward, to make sure we are setting things up correctly, let’s register this 
+class to the Default UI Module.</p>
+
+<ul>
+  <li>Open the <em>index.js</em> file in the UI Default Module</li>
+  <li>Add the necessary import statement to bring in the <code class="highlighter-rouge">Color</code> input class</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>// Form/Input HTML
+import { Form } from './form.js';
+import { Anchor } from './anchor.js';
+import { Buttons } from './buttons.js';
+import { Checkbox } from './checkbox.js';
+import { Color } from "./color.js"; // Input here
+import { Date } from './date.js';
+import { DatetimeLocal } from './datetime-local.js';
+import { Email } from './email.js';
+import { Number } from './number.js';
+import { Options } from "./options.js";
+import { Radio } from "./radio.js";
+import { Style } from "./style.js";
+import { Text } from './text.js';
+import { Textarea } from './textarea.js';
+import { Url } from './url.js';
+</code></pre>
+</div>
+
+<ul>
+  <li>Add it as a property to the class in the <em>index.js</em> class’s constructor</li>
+</ul>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>constructor() {
+        this.form = Form;
+        this.anchor = Anchor;
+        this.buttons = Buttons;
+        this.checkbox = Checkbox;
+        this.color = Color;
+        this.date = Date;
+        this.datetimeLocal = DatetimeLocal;
+        this.email = Email;
+        this.number = Number;
+        this.options = Options;
+        this.radio = Radio;    
+        this.style = new Style();
+        this.text = Text;
+        this.textarea = Textarea;
+        this.url = Url;
+        this.videoControls = VideoControls;
+        this.states = {
+            input : InputState,
+            video : VideoState,
+            navigation: NavigationState
+        }
+    }
+</code></pre>
+</div>
+
+<p>Doing this will remove the error from the console, but the element shouldn’t appear. So, let’s 
+add the HTML</p>
+
+<h2 id="step-8-adding-the-input-html">Step 8: Adding the input html</h2>
+
+<p>Let’s break down how the <code class="highlighter-rouge">Text</code> class’s html is set up</p>
+
+<h3 id="variables-1">Variables</h3>
+
+<p>Here are the variables defined:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>let {input, settings, tags, errors, uiClasses, uiAttributes} = this;
+let {label = '', labelHTML, name = '', id = ''} = input;
+let {input: inputSettings = {}, showLabel = true} = settings;
+let {classes = ''} = inputSettings;
+</code></pre>
+</div>
+
+<p>The first variables before classes are pulling all the input data from the JSON. Below that the classes 
+for this input are defined:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>classes = `${classes} ${uiClasses}`;
+</code></pre>
+</div>
+
+<p>These classes are classes passed down from the JSON and any classes that are global to the framework. 
+These will be added to the input element directly.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>let {messages: errorMessages = [], attributes: errorAttributes = '', nonValidate = [], tags: errorTags = ''} = errors;
+let errorHTML = new this.errorMessages(errorMessages).html;
+let nonValidateAttributesHTML = new this.attributeTags(errorAttributes, nonValidate).html;
+
+nonValidateAttributesHTML = `${nonValidateAttributesHTML} ${uiAttributes}`;
+</code></pre>
+</div>
+
+<p>This sets up all thhe error messages and attribute tags for this element. For the most part, this is standard and 
+shouldn’t change.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>if (labelHTML) label = labelHTML;
+</code></pre>
+</div>
+
+<p>Replaces the label with the <code class="highlighter-rouge">labelHTML</code> passed from the JSON.</p>
+
+<h3 id="setting-up-the-html">Setting up the HTML</h3>
+
+<p>After initializing and rendering the various components for the HTML, the text input pulls in these settings 
+and attaches them correctly. Let’s look at the template string for this element:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>let inputHTML = ` 
+    &lt;label for='${name}'&gt; ${label} &lt;/label&gt;
+    &lt;input class="${classes}"  id="${id}" name="${name}"  type="text" ${nonValidateAttributesHTML}   ${errorTags} ${tags}&gt;
+    ${errorHTML}
+`;
+
+return `${inputHTML}`;
+</code></pre>
+</div>
+
+<p>The various parts are as follows:</p>
+
+<ul>
+  <li>label - The label is wrapped in a <code class="highlighter-rouge">&lt;label&gt;</code> tag</li>
+  <li>classes - Classes are added to the class attribute</li>
+  <li>id - Id is assigend to the id attribute</li>
+  <li>name - Name set to name attribute. This will be used by angular for the setting values</li>
+  <li>type - type of input</li>
+  <li>nonValidateAttrubtesHTML - All attributes that don’t require validation. Generated by the attribute tags service</li>
+  <li>errorTags - Render level error tags to generate tag messages</li>
+  <li>tags - additional tags that need to be added</li>
+  <li>errorHTML - The rendered error display messages for when the input is wrong for validation</li>
+</ul>
+
+<p>After this whole <code class="highlighter-rouge">inputHTML</code> is set up, we return it as the template HTML</p>
+
+<h3 id="adding-the-html-from-text-to-color">Adding the HTML from text to color</h3>
+
+<p>For the most part, since color and text are similar we can use the same html in this section. 
+The key change thous is on the input is to change “text” to “color”. So our final <em>color.js</em> file 
+should look like this:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>import { Style } from "./style";
+import { ErrorMessages } from "./messages.js";
+import { AttributeTags } from "../utilities/attributes.js";
+
+let style = new Style();
+
+export class Color {
+    constructor(inputObj = {}, errorMessages = ErrorMessages) {
+        let {input = {}, settings = {}, tags = {}, errors = {}} = inputObj;
+
+        this.input = input;
+        this.settings = settings;
+        this.tags = tags;
+        this.errors = errors;
+        this.errorMessages = errorMessages;
+        this.attributeTags = AttributeTags;
+    }
+
+    get uiClasses() {
+        return ''
+    }
+
+    get uiAttributes() {
+        return ''
+    }
+
+    get html() {
+        let {input, settings, tags, errors, uiClasses, uiAttributes} = this;
+        let {label = '', labelHTML, name = '', id = ''} = input;
+        let {input: inputSettings = {}, showLabel = true} = settings;
+        let {classes = ''} = inputSettings;
+
+        classes = `${classes} ${uiClasses}`;
+
+        let {messages: errorMessages = [], attributes: errorAttributes = '', nonValidate = [], tags: errorTags = ''} = errors;
+        let errorHTML = new this.errorMessages(errorMessages).html;
+        let nonValidateAttributesHTML = new this.attributeTags(errorAttributes, nonValidate).html;
+
+        nonValidateAttributesHTML = `${nonValidateAttributesHTML} ${uiAttributes}`;
+
+        if (labelHTML) label = labelHTML;
+
+        let inputHTML = ` 
+            &lt;label for='${name}'&gt; ${label} &lt;/label&gt;
+            &lt;input class="${classes}"  id="${id}" name="${name}"  type="color" ${nonValidateAttributesHTML}   ${errorTags} ${tags}&gt;
+            ${errorHTML}
+       `;
+
+        return `${inputHTML}`;
+    }
+}
+</code></pre>
+</div>
+
+<p>Once you added this it should look like the final result:</p>
+
+<p><img src="http://7ec6c34bd581cf260bd4-5e5c5681f11da11c86c8fda2bebcf3ce.r26.cf2.rackcdn.com/Final%20Screen.png" alt="Final Image" /></p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>As you can see from above, the library is very systematic in how to update the various modules and also there is enough
+in the library to help guide you to how to use it. This is the main goal for contributing, that rather than keep rebuilding the 
+wheel, you build upon the existing foundation.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+
+
+        
+      </footer>
+
+      
+
+      
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+    
+    
+    
+    
+    <li><a href="https://influencetech.github.io/ivx-js/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2017 Influence Technology. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+      </footer>
+    </div>
+
+    <script src="https://influencetech.github.io/ivx-js/assets/js/main.min.js"></script>
+
+
+
+
+
+  </body>
+</html>
+

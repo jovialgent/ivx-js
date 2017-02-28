@@ -1,0 +1,109 @@
+{
+    "metadata": {
+        "title": "Developer Story"
+    },
+    "defaultState": [
+        {
+            "stateId": "welcome-page"
+        }
+    ],
+    "states": [
+        {
+            "id": "welcome-page",
+            "name": "Welcome Page",
+            "url": "/",
+            "type": "input",
+            "header": {
+                "templateUrl": "templates/welcome-header.html"
+            },
+            "footer": {},
+            "onEnter": [],
+            "onExit": [],
+            "onSubmit": [],
+            "form": {
+                "classes": "",
+                "submit": {}
+            },
+            "next": [{
+                "stateId" : "thank-you"
+            }],
+            "inputs": [
+                {
+                    "id": "first-name",
+                    "name": "firstName",
+                    "type": "text",
+                    "label": "First Name",
+                    "settings": {
+                        "width": "1/2",
+                        "container": {},
+                        "input": {}
+                    },
+                    "attributes": {
+                        "placeholder": "Enter your first name..."
+                    },
+                    "errors": {}
+                },
+                {
+                    "id": "last-name",
+                    "name": "lastName",
+                    "type": "text",
+                    "label": "Last Name",
+                    "settings": {
+                        "width": "1/2",
+                        "container": {},
+                        "input": {}
+                    },
+                    "attributes": {
+                        "placeholder": "Enter your last name..."
+                    },
+                    "errors": {}
+                },
+                {
+                    "id": "email",
+                    "name": "email",
+                    "type": "email",
+                    "label": "Email",
+                    "settings": {
+                        "width": "1/2",
+                        "container": {},
+                        "input": {}
+                    },
+                    "attributes": {
+                         "placeholder": "Type your email here..."
+                    },
+                    "errors": {}
+                },
+                {
+                    "id": "favorite-color",
+                    "name": "favoriteColor",
+                    "type": "text",
+                    "label": "Favorite Color",
+                    "settings": {
+                        "width": "1/2",
+                        "container": {},
+                        "input": {}
+                    },
+                    "attributes": {
+                        "placeholder": "Enter your favorite color..."
+                       
+                    },
+                    "errors": {}
+                }
+            ]
+        },
+       {
+        "id": "thank-you",
+        "name": "Thank You",
+        "url": "/thank-you",
+        "type": "html",
+        "templateUrl" : "templates/thank-you.html",
+        "onEnter": [],
+        "onExit": [],
+        "onTimeout" : [],
+        "next": [
+
+        ]
+    }
+        
+    ]
+}

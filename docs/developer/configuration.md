@@ -14,6 +14,13 @@ iVXjs has to offer
 {: .btn .btn--inverse}
 [JSON Specs](https://influencetech.github.io/ivx-js/developer/configuration.json-specs)
 
+## CDN Paths 
+
+Don't want to have local files? Pull in the CDNs of the library here:
+
+{: .btn .btn--inverse}
+[CDN Paths](https://influencetech.github.io/ivx-js/developer/configuration.cdn-paths)
+
 ## Video Players
 
 Incorporate the various Video Players the iVXjs Video State 
@@ -38,3 +45,9 @@ can allow your app to communicate with an iVXjs Experience.
 
 {: .btn .btn--inverse}
 [Events](https://influencetech.github.io/ivx-js/developer/usage.events)
+
+## Dev Tools 
+Developing on iVXjs is easy once you get the right tools
+
+{: .btn .btn--inverse}
+[Dev-Tools](https://influencetech.github.io/ivx-js/developer/configuration.dev-tools)

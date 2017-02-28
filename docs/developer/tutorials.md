@@ -31,6 +31,11 @@ a variety of states.
 {: .btn .btn--inverse}
 [Templates](https://influencetech.github.io/ivx-js/developer/tutorial.templates)
 
+## Favorite Color Tutorial 
+Want to contribute to this amazing library? Then use this tutorial to learn how 
+to run an instance and add the HTML5 color module to the Default UI Module 
+[Favorite Color](https://influencetech.github.io/ivx-js/developer/tutorial.color-input)
+
 ## Set Up a 404 State
 
 Want to make sure your user keeps on the right track? Use 404 States

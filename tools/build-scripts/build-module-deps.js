@@ -6,17 +6,7 @@ var semver = require('semver');
 var output = argv.output;
 var input = argv.input;
 var version = argv.version;
-var packageJSON = require('../../package.json');
-var moduleFiles = fs.readdirSync('tools/modules');
-var cleanedModuleFileNames = moduleFiles.reduce(function (legitFiles, moduleFileName, index) {
-    if (semver.valid(moduleFileName)) {
-        legitFiles.push(moduleFileName)
-    }
-    return legitFiles;
-}, []);
-var recentFolderVersion = cleanedModuleFileNames.sort(compareVersion)[0];
-var newFolderVersion = semver.inc(recentFolderVersion, 'patch');
-var newVersion = semver.gt(packageJSON.version, newFolderVersion) ? packageJSON.version : newFolderVersion;
+var newVersion = translateVersion(version);
 var modules = {
     data: {
         "ivx-io": "src/modules/data/ivx-io/index.js",
@@ -41,28 +31,19 @@ var mkdirp = require('mkdirp');
 if (output === 'cdn') {
      var path = "build/cdn/ivx-js/" + newVersion;
 
-    buildFiles(path);
+    // buildFiles(path);
 }
 
 
 if (output === 'tools') {
    var path = "tools/modules/" + newVersion;
 
-    buildFiles(path);
+    // buildFiles(path);
 }
 
-function compareVersion(versionFolderA, versionFolderB) {
-    if (semver.lt(versionFolderA, versionFolderB)) {
-        return 1;
-    }
-    if (semver.gt(versionFolderA, versionFolderB)) {
-        return -1;
-    }
-    // a must be equal to b
-    return 0;
+function translateVersion(version){
+    return version;
 }
-
-
 
 function buildFiles(path, cb) {
     mkdirp(path, function () {

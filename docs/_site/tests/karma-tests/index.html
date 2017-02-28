@@ -94,7 +94,7 @@ body { background-color: #eeeeee; padding: 0; margin: 5px; overflow-y: scroll; }
 </head>
 
 <body id="HTMLReporter" class="html-reporter">
-<h1>Tested in Chrome 54.0.2840 (Mac OS X 10.12.0) on Wed Oct 19 2016</h1>
+<h1>Tested in PhantomJS 2.1.1 (Mac OS X 0.0.0) on Mon Feb 27 2017</h1>
 
 <div class="alert">
 
@@ -102,7 +102,7 @@ body { background-color: #eeeeee; padding: 0; margin: 5px; overflow-y: scroll; }
 
   
   <span class="passingAlert bar"><span class="fold-buttons"><a href="#" onclick="fold();">Fold</a> | 
-  <a href="#" onclick="unfold();">Unfold</a></span>195 specs, 0 failed, 2 pending</span>
+  <a href="#" onclick="unfold();">Unfold</a></span>193 specs, 0 failed, 2 pending</span>
   
 
 
@@ -273,52 +273,41 @@ body { background-color: #eeeeee; padding: 0; margin: 5px; overflow-y: scroll; }
     </div>
   
     <div class="suite passed">
-      <span class="description">iVXioRules #getProgressValue</span>
+      <span class="description">iVXioEvaluator #storyEvents</span>
     
       <div class="specSummary passed">
-      <span class="description">should return with the correct value based on the progress</span>
+      <span class="description">should call storyEvents if either the keyword or type is storyEvents</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should evaluate true if event has been fired</span>
       </div>
     
     </div>
   
     <div class="suite passed">
-      <span class="description">iVXioRules #evaluateRule</span>
+      <span class="description">iVXioEvaluator #fired</span>
     
       <div class="specSummary passed">
-      <span class="description">should return true if there are no rules in the navObj</span>
-      </div>
-    
-      <div class="specSummary passed">
-      <span class="description">should return true if the rule is empty in the navObj</span>
-      </div>
-    
-      <div class="specSummary passed">
-      <span class="description">should still evaluate if rule is expression.</span>
-      </div>
-    
-      <div class="specSummary passed">
-      <span class="description">should use the progressMap if the when statement is equal to &quot;when&quot;.</span>
-      </div>
-    
-      <div class="specSummary passed">
-      <span class="description">should use the experience data if the when is an input key.</span>
+      <span class="description">should return true if the event is fired in the events argument</span>
       </div>
     
     </div>
   
     <div class="suite passed">
-      <span class="description">iVXioRules #processRules</span>
+      <span class="description">iVXioEvaluator #notFired</span>
     
       <div class="specSummary passed">
-      <span class="description">should return the last stateId if none before it doesn't evaluate to true</span>
+      <span class="description">should return true if the event is not fired in the events argument</span>
       </div>
     
-      <div class="specSummary passed">
-      <span class="description">should return the  stateId if an input key is defined in the rule.</span>
-      </div>
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">iVXioEvaluator #progress</span>
     
       <div class="specSummary passed">
-      <span class="description">should return the  stateId if the progress evaluates correctly.</span>
+      <span class="description">should evaluate the rule based on the current progress</span>
       </div>
     
     </div>
@@ -473,6 +462,154 @@ body { background-color: #eeeeee; padding: 0; margin: 5px; overflow-y: scroll; }
     </div>
   
     <div class="suite passed">
+      <span class="description">Evaluator #evaluate</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should make the condition operator &quot;and&quot; if no condition operator is present.</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should evaluate true of all conditions are true with condition operator &quot;and&quot;</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should evaluate true of at least one condition are true with condition operator &quot;or&quot;</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should evaluate true if none of the condition are true with condition operator &quot;not&quot;</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should call the custom evaluator with the rule if it exists</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should call the evaluator function defined in the class is if key is a valid evaluator function</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should call the evaluator function defined in the class is if type is a function.</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should return a true value if rule is true.</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Evaluator #input</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should evaluate the correctly from data from the experience</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Evaluator #and</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should return true if all values are true</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should return false if at least one value is false</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Evaluator #or</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should return true if at least one value is true</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should return false if at none are true</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Evaluator #not</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should return true if at least no value is true</span>
+      </div>
+    
+      <div class="specSummary passed">
+      <span class="description">should return false if at least one are true</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Evaluator #lte</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should evaluate true if the first argument is less than or equal to second argument</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Evaluator #lt</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should evaluate true if the first argument is less than to second argument</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Evaluator #gte</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should evaluate true if the first argument is greater than or equal to second argument</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Evaluator #gt</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should evaluate true if the first argument is great than to second argument</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Evaluator #equals</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should evaluate true both are the same</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Evaluator #notEquals</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should evaluate true both are the different</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">Evaluator #in</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should evaluate true if an element is in an array.</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
       <span class="description">iVXjsData #setUpExperience</span>
     
       <div class="specSummary passed">
@@ -511,27 +648,6 @@ body { background-color: #eeeeee; padding: 0; margin: 5px; overflow-y: scroll; }
     
       <div class="specSummary passed">
       <span class="description">should call this promises reject if XHR's readyState is 4 and XHR's status is not 200.</span>
-      </div>
-    
-    </div>
-  
-    <div class="suite passed">
-      <span class="description">Rules #evaluateRules</span>
-    
-      <div class="specSummary passed">
-      <span class="description">should evaluate true if the rule is true</span>
-      </div>
-    
-      <div class="specSummary passed">
-      <span class="description">should evaluate true if no rule exists</span>
-      </div>
-    
-      <div class="specSummary passed">
-      <span class="description">should evaluate true if rule is empty</span>
-      </div>
-    
-      <div class="specSummary passed">
-      <span class="description">should evaluate false if the rule is false</span>
       </div>
     
     </div>
@@ -1173,109 +1289,6 @@ body { background-color: #eeeeee; padding: 0; margin: 5px; overflow-y: scroll; }
     </div>
   
     <div class="suite passed">
-      <span class="description">Comparator #compare</span>
-    
-      <div class="specSummary passed">
-      <span class="description">should return if true if values are true for the compare parts</span>
-      </div>
-    
-    </div>
-  
-    <div class="suite passed">
-      <span class="description">Comparator #lte</span>
-    
-      <div class="specSummary passed">
-      <span class="description">should return true if lhs is less than or equal to rhs</span>
-      </div>
-    
-      <div class="specSummary passed">
-      <span class="description">should return false if lhs is greater than rhs.</span>
-      </div>
-    
-      <div class="specSummary passed">
-      <span class="description">should return false if lhs or rhs is not a number.</span>
-      </div>
-    
-    </div>
-  
-    <div class="suite passed">
-      <span class="description">Comparator #gte</span>
-    
-      <div class="specSummary passed">
-      <span class="description">should return true if lhs is greater than or equal to rhs</span>
-      </div>
-    
-      <div class="specSummary passed">
-      <span class="description">should return false if lhs is less than rhs.</span>
-      </div>
-    
-      <div class="specSummary passed">
-      <span class="description">should return false if lhs or rhs is not a number.</span>
-      </div>
-    
-    </div>
-  
-    <div class="suite passed">
-      <span class="description">Comparator #lt</span>
-    
-      <div class="specSummary passed">
-      <span class="description">should return true if lhs is less to rhs</span>
-      </div>
-    
-      <div class="specSummary passed">
-      <span class="description">should return false if lhs is greater or equal to rhs.</span>
-      </div>
-    
-      <div class="specSummary passed">
-      <span class="description">should return false if lhs or rhs is not a number.</span>
-      </div>
-    
-    </div>
-  
-    <div class="suite passed">
-      <span class="description">Comparator #gt</span>
-    
-      <div class="specSummary passed">
-      <span class="description">should return true if lhs is greater than rhs</span>
-      </div>
-    
-      <div class="specSummary passed">
-      <span class="description">should return false if lhs is less than or equal to rhs.</span>
-      </div>
-    
-      <div class="specSummary passed">
-      <span class="description">should return false if lhs or rhs is not a number.</span>
-      </div>
-    
-    </div>
-  
-    <div class="suite passed">
-      <span class="description">Comparator #equals</span>
-    
-      <div class="specSummary passed">
-      <span class="description">should return true if the lhs and rhs are equal</span>
-      </div>
-    
-      <div class="specSummary passed">
-      <span class="description">should return false if the lhs and rhs are not equal</span>
-      </div>
-    
-    </div>
-  
-    <div class="suite passed">
-      <span class="description">Comparator #notEquals</span>
-    
-      <div class="specSummary passed">
-      <span class="description">should return true if the lhs and rhs are not equal</span>
-      </div>
-    
-      <div class="specSummary passed">
-      <span class="description">should return false if the lhs and rhs are equal</span>
-      </div>
-    
-    </div>
-  
-    <div class="suite passed">
       <span class="description">Simple Iterate #constructor</span>
     
       <div class="specSummary passed">
@@ -1293,6 +1306,15 @@ body { background-color: #eeeeee; padding: 0; margin: 5px; overflow-y: scroll; }
     
       <div class="specSummary passed">
       <span class="description">should return nothing if the iterator is done.</span>
+      </div>
+    
+    </div>
+  
+    <div class="suite passed">
+      <span class="description">TypeValidator #isFunction</span>
+    
+      <div class="specSummary passed">
+      <span class="description">should return true if function</span>
       </div>
     
     </div>
