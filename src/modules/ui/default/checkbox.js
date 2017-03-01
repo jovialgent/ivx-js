@@ -105,7 +105,7 @@ export class Checkbox {
         if (labelHTML) label = labelHTML;
 
         return `
-            <label class="${classes}">
+            <label for="${id}" class="${classes}">
                <input ${attributes}>
                ${label}
             </label>

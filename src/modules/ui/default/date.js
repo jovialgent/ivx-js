@@ -113,7 +113,7 @@ export class Date {
         nonValidateAttributesHTML = `${nonValidateAttributesHTML} ${uiAttributes}`;
         
         let inputHTML = ` 
-            <label> ${label} </label>
+            <label for="${id}"> ${label} </label>
             <input class="${classes}"  id="${id}" name="${name}"  type="date" ${nonValidateAttributesHTML}   ${errorTags} ${tags}>
             ${errorHTML}
        `;

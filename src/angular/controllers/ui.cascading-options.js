@@ -32,6 +32,7 @@ class CascadingOptionsInputController extends InputControllerHelper {
             let depth = currentKey.split('~').length - 1;
 
             vm.finalValue = currentKey;
+
             if(nextItems && nextItems.length)
                 vm.finalValue = nextItems[0].key
 
@@ -42,6 +43,7 @@ class CascadingOptionsInputController extends InputControllerHelper {
                 vm.currentSelection[depth + 1] = {
                     key: nextItems[0].key
                 }
+
                 // sets next options
                 tree.options[depth + 1] = nextItems;
             }
@@ -52,8 +54,8 @@ class CascadingOptionsInputController extends InputControllerHelper {
             if (depth < tree.labels.length - 1) {
                 iVXjsBus.emit('update-view', tree);
             }
-            vm.onChange(vm.finalValue);
-                
+
+            vm.onChange(vm.finalValue);                
         }
     }
 }

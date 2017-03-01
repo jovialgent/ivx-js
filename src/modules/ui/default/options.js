@@ -54,7 +54,7 @@ export class Options {
         }, '')
 
         let inputHTML = ` 
-             <label>${label}</label>             
+             <label for="${id}">${label}</label>             
                <select class="${classes}"  id="${id}" name="${name}"${nonValidateAttributesHTML} ${errorTags} ${tags}>
                   ${defaultOptionTag}
                   ${optionsHTML}

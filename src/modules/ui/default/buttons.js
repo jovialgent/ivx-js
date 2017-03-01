@@ -94,7 +94,7 @@ export class Buttons {
             }
         });
         let errorMessages = new this.errorMessages(buttonErrorMessages).html;
-        let {label = '', labelHTML = '', showLabel = false} = input;
+        let {label = '', labelHTML = '', showLabel = false, id} = input;
         let buttonsHTML = buttons.reduce((html, button, index) => {
             let { label, attrHTML = '', classes = "" } = button;
 
@@ -106,7 +106,7 @@ export class Buttons {
 
         if ((labelHTML.length > 0 || label.length > 0) && showLabel) {
             labelHTML = labelHTML ? labelHTML : label;
-            labelHTML = `<label>${labelHTML}</label>`
+            labelHTML = `<label for="${id}">${labelHTML}</label>`
         }
 
         return `

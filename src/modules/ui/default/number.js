@@ -115,7 +115,7 @@ export class Number {
         if (labelHTML) label = labelHTML;
         
         let inputHTML = ` 
-            <label> ${label} </label>
+            <label for="${id}"> ${label} </label>
             <input class="${classes}"  name="${name}"  type="number" ${nonValidateAttributesHTML}   ${errorTags} ${tags}>
             ${errorHTML}
        `;

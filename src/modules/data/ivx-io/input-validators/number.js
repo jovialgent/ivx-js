@@ -1,26 +1,28 @@
-export default class{
-    constructor(inputData, storyInputData){
-        let {attributes = {}} = storyInputData;
-        let {max=Number.MAX_SAFE_INTEGER,min=Number.MIN_SAFE_INTEGER, step = 1} = attributes;
+export default class {
+    constructor(jsonInputData, storyInputData = {}) {
+        this.jsonInputData = Object.assign({}, jsonInputData);
+        this.storyInputData = Object.assign({}, storyInputData);
 
-        this.inputData = inputData;
-        this.MIN = parseInt(min);
-        this.STEP = parseInt(step);
-        this.MAX = parseInt(max);
-        this.TYPE = "number";
     }
 
-    get input(){
-        let {inputData, TYPE, MIN, MAX, STEP} = this;
-        let rawInputData = JSON.parse(JSON.stringify(inputData));
-        let {attributes = {}} = rawInputData;
-        let {min,max,step} = attributes;
+    get input() {
+        let {jsonInputData, storyInputData} = this;
+        let {attributes: storyInputAttributes = {}} = storyInputData;
+        let {attributes: jsonInputAttributes = {}} = jsonInputData;
+        let {max: storyMaxAttribute = Number.MAX_SAFE_INTEGER, min: storyMinAttribute = Number.MIN_SAFE_INTEGER, step: storyStepAttribute = 1} = storyInputAttributes;
+        let {max: jsonMaxAttribute = Number.MIN_SAFE_INTEGER, min: jsonMinAttribute = Number.MAX_SAFE_INTEGER, step: jsonStepAttribute = 1} = jsonInputAttributes;
+        let useStoryMin = jsonMinAttribute > storyMinAttribute;
+        let useStoryMax = jsonMaxAttribute < storyMaxAttribute;
+        let useStoryStep = typeof storyStepAttribute !== 'undefined';
 
-        rawInputData.type = TYPE;
-        rawInputData.attributes.min = min >= MIN ? min : MIN;
-        rawInputData.attributes.max = max <= MAX ? max : MAX;
-        rawInputData.attributes.step = step ? step : STEP;
-        
-        return rawInputData;
+        jsonInputData.type = "number";
+        jsonInputData.attributes = Object.assign({},
+        jsonInputData.attributes, {
+           min : new Number(useStoryMin? storyMinAttribute : jsonMinAttribute).valueOf(), 
+           max : new Number(useStoryMax ? storyMaxAttribute : jsonMaxAttribute).valueOf(), 
+           step : new Number(useStoryStep ? storyStepAttribute : jsonStepAttribute).valueOf(), 
+        });
+
+        return jsonInputData;
     }
 }

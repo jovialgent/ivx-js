@@ -38,7 +38,7 @@ export class Textarea {
         label = showLabel ? label : '';
 
         let inputHTML = ` 
-            <label> ${label} </label>
+            <label for="${id}"> ${label} </label>
             <textarea class="${classes} ${uiClasses}"  id="${id}" name="${name}" ${uiAttributes}   ${nonValidateAttributesHTML}   ${errorTags} ${tags}>
             </textarea>
             ${errorHTML}

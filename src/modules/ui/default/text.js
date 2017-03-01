@@ -41,7 +41,7 @@ export class Text {
         if (labelHTML) label = labelHTML;
 
         let inputHTML = ` 
-            <label> ${label} </label>
+            <label for="${id}"> ${label} </label>
             <input class="${classes}"  id="${id}" name="${name}"  type="text" ${nonValidateAttributesHTML}   ${errorTags} ${tags}>
             ${errorHTML}
        `;

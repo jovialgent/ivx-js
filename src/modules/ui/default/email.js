@@ -115,7 +115,7 @@ export class Email {
         if (labelHTML) label = labelHTML;
 
         let inputHTML = ` 
-            <label> ${label} </label>
+            <label for="${id}"> ${label} </label>
             <input class="${classes}"  id="${id}" name="${name}"  type="email" ${nonValidateAttributesHTML}   ${errorTags} ${tags}>
             ${errorHTML}
        `;

@@ -15,11 +15,12 @@ export class Checkbox extends DefaultCheckbox {
     }
 
     renderCheckboxContainer(classes, attributes) {
-        let {input} = this;
+        let {input = {}} = this;
+        let {id} = input;
         let {label} = input;
         return `
          <div class="${classes}">
-             <label>    
+             <label for="${id}">    
                 <input ${attributes} type="checkbox">
                 ${label}
             </label>

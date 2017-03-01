@@ -16,7 +16,8 @@ export default class extends iVXjsConstants {
             SET_UP : "set-up",
             IVX_IO : new iVXioConstants().IVX_IO,
             DEFAULT : "default",
-            ASSERT : "assert"
+            ASSERT : "assert",
+            EXPERIENCE: "experience"
         };
 
         this.addNames(eventNames);

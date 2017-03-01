@@ -1,15 +1,14 @@
 export default class{
-    constructor(inputData){
-        this.inputData = inputData;
-        this.TYPE = "url";
+   constructor(jsonInputData, storyInputData = {}){
+        this.jsonInputData = Object.assign({}, jsonInputData);
+        this.storyInputData = Object.assign({}, storyInputData);
     }
 
     get input(){
-        let {inputData, TYPE} = this;
-        let rawInputData = JSON.parse(JSON.stringify(inputData));
+        let {jsonInputData, storyInputData} = this;
         
-        rawInputData.type = TYPE;
+        jsonInputData.type = "url";
 
-        return rawInputData;
+        return jsonInputData;
     }
 }

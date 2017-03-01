@@ -40,7 +40,7 @@ export class Options extends DefaultOptions{
                   ${defaultOptionTag}
                   ${optionsHTML}
                </select>
-               <label>${label}</label> 
+               <label for="${id}">${label}</label> 
                ${errorHTML}`;
 
         return `${inputHTML}`;

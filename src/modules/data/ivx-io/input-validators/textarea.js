@@ -1,22 +1,25 @@
-export default class{
-    constructor(inputData, storyInputData = {}){
-        let {attributes = {}} = storyInputData;
-        let {minlength = 0, maxlength = 1024} = attributes; 
+export default class {
+    constructor(jsonInputData, storyInputData = {}) {
+        this.jsonInputData = Object.assign({}, jsonInputData);
+        this.storyInputData = Object.assign({}, storyInputData);
 
-        this.inputData = inputData;
-        this.MAX_LENGTH = parseInt(maxlength);
-        this.MIN_LENGTH = parseInt(minlength);
-        this.TYPE = "textarea";
     }
 
-    get input(){
-        let {inputData, MAX_LENGTH, MIN_LENGTH, TYPE} = this;
-        let rawInputData = JSON.parse(JSON.stringify(inputData));
-        
-        rawInputData.attributes.maxlength = MAX_LENGTH;
-        rawInputData.attributes.minlength = MIN_LENGTH;
-        rawInputData.type = TYPE;
-        
-        return rawInputData;
+    get input() {
+        let {jsonInputData, storyInputData} = this;
+        let maxCharacters = 1024;
+        let {attributes: storyInputAttributes = {}} = storyInputData;
+        let {attributes: jsonInputAttributes = {}} = jsonInputData;  
+        let {maxlength: storyMaxLengthAttribute = maxCharacters, minlength: storyMinLengthAttribute} = storyInputAttributes;
+        let {maxlength: jsonMaxLengthAttribute = maxCharacters, minlength: jsonMinLengthAttribute = 0} = jsonInputAttributes;
+      
+        jsonInputData.type = "text";
+        jsonInputData.attributes = Object.assign({},
+            jsonInputData.attributes, {
+                maxlength: new Number(storyMaxLengthAttribute < maxCharacters ? storyMaxLengthAttribute :  jsonMaxLengthAttribute).valueOf(),
+                minlength: new Number(typeof storyMinLengthAttribute !== 'undefined' ? storyMinLengthAttribute : jsonMinLengthAttribute).valueOf()
+            });
+
+        return jsonInputData;
     }
 }

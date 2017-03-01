@@ -1,16 +1,16 @@
 export default class{
-    constructor(inputData, storyInputData = {}){
-        this.inputData = inputData;
-        this.TYPE = "cascading-options";
-        this.DATATREE = storyInputData.dataTree;
+    constructor(jsonInputData, storyInputData = {}){
+        this.jsonInputData = jsonInputData;
+        this.storyInputData = storyInputData;
     }
 
     get input(){
-        let {inputData, TYPE, DATATREE} = this;
-        let rawInputData = JSON.parse(JSON.stringify(inputData));
+        let {storyInputData = {}, jsonInputData ={}} = this;
+        let rawInputData = Object.assign({}, jsonInputData);
+        let newStoryInputData = Object.assign({}, storyInputData);
         
-        rawInputData.type = TYPE;
-        rawInputData.dataTree = DATATREE;
+        rawInputData.type = "cascading-options";
+        rawInputData.dataTree = newStoryInputData.dataTree;
         
         return rawInputData;
     }

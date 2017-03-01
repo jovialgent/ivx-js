@@ -36,7 +36,7 @@ export class Url {
         if(labelHTML) label = labelHTML;
         
         let inputHTML = ` 
-            <label> ${label} </label>
+            <label for="${id}"> ${label} </label>
             <input class="${classes} ${uiClasses}" ${uiAttributes}  id="${id}" name="${name}"  type="url" ${nonValidateAttributesHTML}   ${errorTags} ${tags}>
             ${errorHTML}
        `;

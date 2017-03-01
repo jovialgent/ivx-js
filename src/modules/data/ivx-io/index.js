@@ -65,6 +65,10 @@ export class iVXio {
         reject();
         return;
       }
+
+      self.Bus.once(iVXioErrors.EXPERIENCE, (error)=>{
+        reject(error);
+      })
  
       iVX(experienceHostSettings)
         .then(
@@ -80,9 +84,11 @@ export class iVXio {
           let experience = objectParser.merge(defaultActions, iVX.experience);
           let modifiedActions = new iVXioActions(experience, this.iVXjsLog);
           let {ui: storyUI, validation: storyValidation} = iVX.experience.story.data;
+
           iVX.experience.story.data.metadata = iVX.experience.story.data.metadata ? iVX.experience.story.data.metadata : {};
+          
           let rules = new iVXioRules(experience, customRules).rules;
-          let states = new InputValidator(iVX.experience.story.data.states, iVX.experience.story.inputs).states;
+          let states = new InputValidator(iVX.experience.story.data.states, iVX.experience.story.inputs, self, reject).states;
 
 
           experience.whiteList = [

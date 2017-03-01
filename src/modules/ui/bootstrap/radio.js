@@ -14,9 +14,11 @@ export class Radio extends DefaultRadio {
         return ''
     }
 
-    renderRadioHTML(attrHTML, label){        
+    renderRadioHTML(attrHTML, label){ 
+        let {input ={}} =this;
+        let {id} = input;       
         return ` 
-        <label>
+        <label for="${id}">
             <input type="radio" ${attrHTML}>
             ${label}
         </label>

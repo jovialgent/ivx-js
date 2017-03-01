@@ -115,7 +115,7 @@ export class DatetimeLocal {
         if (labelHTML) label = labelHTML;
 
         let inputHTML = ` 
-            <label> ${label} </label>
+            <label for="${id}"> ${label} </label>
             <input class="${classes}"  id="${id}" name="${name}"  type="datetime-local" ${nonValidateAttributesHTML}   ${errorTags} ${tags}>
             ${errorHTML}
        `;
