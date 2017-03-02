@@ -13,7 +13,7 @@ const allValidationModules = Object.keys(validationModuleConfigurations);
 module.exports.generateSettings = (coreDest, moduleDest, watch) => {
     return generateFiles().map(fileConfig => {
         let newFileConfig = Immutable.Map(fileConfig);
-        let {src} = newFileConfig.toJS();
+        let { src } = newFileConfig.toJS();
 
         if (src.indexOf('angular') >= 0) {
             newFileConfig = newFileConfig.set('dest', coreDest);
@@ -26,18 +26,18 @@ module.exports.generateSettings = (coreDest, moduleDest, watch) => {
     })
 }
 
-module.exports.generateSelectedModules = (coreDest, moduleDest, modules, watch)=>{
-     let allModuleSettings = getModuleSettings(modules);
-     let {moduleNames = {}} = allModuleSettings;
-     let {ui, data, validation, analytics} = moduleNames; 
-     let uiModules = ui ? [ui] : ['basic'];
-     let dataModules = data ? [data] : [];
-     let validationModules = validation ? [validation] : [];
-     let analyticsModules = analytics ? [analytics] : [];
+module.exports.generateSelectedModules = (coreDest, moduleDest, modules, watch) => {
+    let allModuleSettings = getModuleSettings(modules);
+    let { moduleNames = {} } = allModuleSettings;
+    let { ui, data, validation, analytics } = moduleNames;
+    let uiModules = ui ? [ui] : ['basic'];
+    let dataModules = data ? [data] : [];
+    let validationModules = validation ? [validation] : [];
+    let analyticsModules = analytics ? [analytics] : [];
 
-     return generateFiles(uiModules, dataModules, validationModules, analyticsModules).map(fileConfig => {
+    return generateFiles(uiModules, dataModules, validationModules, analyticsModules).map(fileConfig => {
         let newFileConfig = Immutable.Map(fileConfig);
-        let {src} = newFileConfig.toJS();
+        let { src } = newFileConfig.toJS();
 
         if (src.indexOf('angular') >= 0) {
             newFileConfig = newFileConfig.set('dest', coreDest);
@@ -65,29 +65,29 @@ function getModuleSettings(modules) {
 
         if (dataModuleConfigurations[moduleName]) {
             moduleNames.data = moduleName;
-            
+
             newCongurations = newCongurations.set('data', dataModuleConfigurations[moduleName]);
         }
 
         if (analyticModuleConfigurations[moduleName]) {
             moduleNames.analytics = moduleName;
-            
+
 
             newCongurations = newCongurations.set('analytics', analyticModuleConfigurations[moduleName]);
         }
 
         if (validationModuleConfigurations[moduleName]) {
             moduleNames.validation = moduleName;
-            
+
             newCongurations = newCongurations.set('validation', validationModuleConfigurations[moduleName]);
         }
 
         newCongurations = newCongurations.set('moduleNames', moduleNames);
 
         return newCongurations.toJS();
-    }, { 
-        moduleNames : {}
-    });
+    }, {
+            moduleNames: {}
+        });
 }
 
 
@@ -139,7 +139,7 @@ function uiModuleConfigs(uiModules) {
     return uiModules.reduce((configs, uiModule) => {
         let configArray = [];
 
-        if (uiModule !== 'basic') {
+        if (uiModule !== 'basic' && typeof uiModule !== 'undefined') {
             configArray = [generateUIModuleConfig(uiModule, false), generateUIModuleConfig(uiModule, true)]
         }
 
@@ -168,10 +168,16 @@ function generateUIModuleConfig(uiModule, minified) {
 
 function dataModuleConfigs(dataModules) {
     return dataModules.reduce((configs, dataModule) => {
-        return [].concat(configs, [
-            generateDataModuleConfig(dataModule, false),
-            generateDataModuleConfig(dataModule, true)
-        ]);
+        let configArray = [];
+
+        if (typeof dataModule !== 'undefined') {
+            configArray = [
+                generateDataModuleConfig(dataModule, false),
+                generateDataModuleConfig(dataModule, true)
+            ];
+        }
+
+        return [].concat(configs, configArray);
     }, []);
 }
 
@@ -196,10 +202,16 @@ function generateDataModuleConfig(dataModule, minified) {
 
 function analyticModuleConfigs(analyticModules) {
     return analyticModules.reduce((configs, analyticModule) => {
-        return [].concat(configs, [
-            generateAnalyticModuleConfig(analyticModule, false),
-            generateAnalyticModuleConfig(analyticModule, true)
-        ]);
+        let configArray = [];
+
+        if (typeof analyticModule !== 'undefined') {
+            configArray = [
+                generateAnalyticModuleConfig(analyticModule, false),
+                generateAnalyticModuleConfig(analyticModule, true)
+            ];
+        }
+
+        return [].concat(configs, configArray);
     }, []);
 }
 
@@ -224,10 +236,16 @@ function generateAnalyticModuleConfig(analyticModule, minified) {
 
 function validationModuleConfigs(validationModules) {
     return validationModules.reduce((configs, validationModule) => {
-        return [].concat(configs, [
-            generateValidationModuleConfig(validationModule, false),
-            generateValidationModuleConfig(validationModule, true)
-        ]);
+        let configArray = [];
+
+        if (typeof validationModule !== 'undefined') {
+            configArray = [
+                generateValidationModuleConfig(validationModule, false),
+                generateValidationModuleConfig(validationModule, true)
+            ];
+        }
+
+        return [].concat(configs, configArray);
     }, []);
 }
 
