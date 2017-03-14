@@ -206,7 +206,7 @@ export class Html5 {
         }, "");
 
         return `
-            <video  width="100%" ${attrHTML}>
+            <video  width="100%" ${attrHTML} onclick="this.paused ? this.play() : this.pause();">
                 ${sourceTags}
                 ${trackTags}
             </video>`;

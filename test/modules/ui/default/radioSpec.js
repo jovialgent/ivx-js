@@ -3,7 +3,7 @@ import { Radio } from '../../../../src/modules/ui/default/radio.js';
 describe('Default Radio', () => {
     describe('#html', () => {
 
-        it('should create a radio input', () => {
+        xit('should create a radio input', () => {
             let radioInput = new Radio({
                 input: {
                     id : 'test',

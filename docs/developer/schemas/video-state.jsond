@@ -30,6 +30,11 @@
 					"type" : "string",
 					"description" : "Filepath to the video file to play in the HTML5 video element. Is required if there are no 'sources', 'vimeoId', or 'youtubeId' is defined"
 				},
+				"poster" : {
+					"name" : "Poster Image",
+					"type" ; "string",
+					"description" : "Filepath to a poster image to appear above the video (HTML5 Only)"
+				},
 				"youtubeId" : {
 					"name" : "Youtube Video Id",
 					"type" : "string",

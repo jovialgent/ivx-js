@@ -17,9 +17,11 @@ export class Radio {
         return radiosHTML;
     };
 
-    uiRadioButtonContainer(radioHTML, uiClasses) {
+    uiRadioButtonContainer(radioHTML, uiClasses, value = "") {
+        let {id} = this.input;
+
         return ` 
-        <label class="${uiClasses}">
+        <label for="${id}${value.length > 0 ? '-'+value: ''}" class="${uiClasses}">
         ${radioHTML}
         </label>`;
     }
@@ -47,15 +49,15 @@ export class Radio {
 
         if (inputLableHTML) inputLabel = inputLableHTML;
 
-        let radiosHTML = radios.reduce((html, radio) => {
-            let {label, attrHTML = '', classes = ''} = radio;
+        let radiosHTML = radios.reduce((html, radio, index) => {
+            let {label, attrHTML = '', classes = '', value} = radio;
 
             attrHTML = `${attrHTML} ${errorTags}`;
 
-            let radioHTML = self.renderRadioHTML(attrHTML, label);
+            let radioHTML = self.renderRadioHTML(attrHTML, label, input.radioButtons[index].value);
 
             return `${html}
-            ${self.uiRadioButtonContainer(radioHTML, `${uiClasses} ${classes}`)}`;
+            ${self.uiRadioButtonContainer(radioHTML, `${uiClasses} ${classes}`, input.radioButtons[index].value)}`;
         }, inputLabel);
         let errorHTML = new this.errorMessages(errorMessages).html;
         let allRadioButtonsHTML = `

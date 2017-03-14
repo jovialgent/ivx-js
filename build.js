@@ -5,6 +5,7 @@ let argv = require('minimist')(process.argv.slice(2), {
     ui: "basic"
 });
 
+
 const TemplateCache = require('./tools/builder/$templateCache.js');
 const Less = require("./tools/builder/less.js");
 const Pipe = require("./tools/builder/pipe.js");
@@ -32,16 +33,19 @@ class Builder {
     }
 
     get buildPaths() {
+        const tcProps = require('teamcity-properties');
+        const buildNumber = tcProps.build.number ? tcProps.build.number : "";
+
         return {
             root: "",
             dir: [
-                "build/cdn/ivx-js",
+                "build/cdn/ivx-js" + buildNumber,
             ],
             postBuild: () => {
 
             },
             app: [].concat(
-                ivxjsAppSettings.generateSettings('build/cdn/ivx-js', false, false)
+                ivxjsAppSettings.generateSettings('build/cdn/ivx-js' + buildNumber, false, false)
             ),
             assets: []
         }
@@ -77,7 +81,7 @@ class Builder {
                 "dist/modules"
             ],
             postBuild: () => {
-               
+
             },
             app: [].concat(
                 ivxjsAppSettings.generateSettings('dist', 'dist/modules', false),
@@ -114,7 +118,7 @@ class Builder {
 
     __run(config) {
         let self = this;
-        let {root, dir, postBuild = () => { }} = config;
+        let { root, dir, postBuild = () => { } } = config;
 
         createDirectory(dir, root, () => {
             self.__runBuild(config)
@@ -127,7 +131,7 @@ class Builder {
     }
 
     __runBuild(config) {
-        let {templates, styles, vendor = {}, app = [], assets, root, dir} = config;
+        let { templates, styles, vendor = {}, app = [], assets, root, dir } = config;
         let DevToolsConfig = new DevTools().config;
         if (this.isLocal) {
             let indexHTMLTemplate = new htmlCreator(DevToolsConfig.project.index.src, DevToolsConfig.project.index.dest, argv._).build();
@@ -144,7 +148,7 @@ class Builder {
 
     __processAssets(assets) {
         let assetsPromise = assets.map(assetData => {
-            let {src, dest, options} = assetData;
+            let { src, dest, options } = assetData;
 
             return new Pipe(src, dest, options).build();
         });
@@ -153,10 +157,10 @@ class Builder {
     }
 
     __processVendorResources(vendorConfig) {
-        let {styles = {}, scripts = {}} = vendorConfig;
-        let {src: stylesSrc, dest: stylesDest, options: stylesOptions = {}} = styles;
-        let {preprocessor = ''} = stylesOptions;
-        let {src: scriptsSrc, dest: scriptsDest, options: scriptsOptions = {}} = scripts;
+        let { styles = {}, scripts = {} } = vendorConfig;
+        let { src: stylesSrc, dest: stylesDest, options: stylesOptions = {} } = styles;
+        let { preprocessor = '' } = stylesOptions;
+        let { src: scriptsSrc, dest: scriptsDest, options: scriptsOptions = {} } = scripts;
         let stylesPromise, scriptPromise;
 
         if (preprocessor === 'less') {

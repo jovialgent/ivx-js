@@ -347,7 +347,7 @@ Settings for the date input type
 
 _Sample Data_
 
-[input-date-data-sample.json]({% include base_path %}/developer/sample-json/input-date-data-sample.json)
+[input-date-data-sample.json]({% include base_path %}/developer/sample-JSON/input-date-data-sample.json)
 
 _Schema_
 

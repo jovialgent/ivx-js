@@ -146,8 +146,8 @@ class HTMLCreator {
     }
 
     replaceUIDeps(html, currentFramework, theme) {
-        let {ivxjs, js, css, injector, directive, configFunction} = currentFramework;
-        let uiCSS = this.createCSSLinkTags([css, theme]);
+        let {ivxjs, js, css, fonts, injector, directive, configFunction} = currentFramework;
+        let uiCSS = this.createCSSLinkTags([css, theme, fonts]);
         let uiJS = this.createScript([js, ivxjs]);
 
         let newHTML = html.replace('[UI-SCRIPT]', uiJS).replace('[UI-CSS]', uiCSS)

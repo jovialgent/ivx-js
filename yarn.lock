@@ -3633,6 +3633,10 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
+properties@~1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/properties/-/properties-1.2.1.tgz#0ee97a7fc020b1a2a55b8659eda4aa8d869094bd"
+
 proxy-middleware@latest:
   version "0.15.0"
   resolved "https://registry.yarnpkg.com/proxy-middleware/-/proxy-middleware-0.15.0.tgz#a3fdf1befb730f951965872ac2f6074c61477a56"
@@ -4372,6 +4376,12 @@ tar@~2.2.1:
     block-stream "*"
     fstream "^1.0.2"
     inherits "2"
+
+teamcity-properties@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/teamcity-properties/-/teamcity-properties-1.1.0.tgz#45f5dd50f110ca692e0520d7b98d848d5a290680"
+  dependencies:
+    properties "~1.2.1"
 
 tfunk@^3.0.1:
   version "3.1.0"

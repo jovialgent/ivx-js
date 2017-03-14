@@ -21,7 +21,7 @@ export class Checkbox extends DefaultCheckbox {
         return `
          <div class="${classes}">
             <input ${attributes} >
-             <label>    
+             <label for="${input.id}">    
                 ${label}
             </label>
          </div>`

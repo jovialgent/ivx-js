@@ -37,10 +37,12 @@ export class Radio extends DefaultRadio {
         return '';
     }
 
-    renderRadioHTML(attrHTML, label) {
+    renderRadioHTML(attrHTML, label, value) {
+        let {input} = this;
+        let {id} = input;
         return `
           <input type="radio" ${attrHTML}>
-                   <label>   
+            <label for="${id}${value.length > 0 ? '-'+value: ''}">   
                      ${label}
           </label>
           `;

@@ -21,7 +21,8 @@ module.exports = {
         injector: "iVXjs.ui.materialize",
         directive: "iVXjsUIMaterialize",
         configFunction: "ui : iVXjsUIMaterialize()",
-        css: "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css"
+        css: "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css",
+        fonts : "http://fonts.googleapis.com/icon?family=Material+Icons"
     },
     basic : {
         js : "",
@@ -29,6 +30,7 @@ module.exports = {
         injector : "",
         directive :"",
         configFunction : "",
-        css : "css/style.css"
+        css : "css/style.css",
+        fonts :"https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"
     }
 }

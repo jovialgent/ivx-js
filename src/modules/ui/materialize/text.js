@@ -32,7 +32,7 @@ export class Text extends DefaultText{
             <input ${nonValidateAttributesHTML} class="${classes}"  id="${id}" name="${name}"  type="text"    ${errorTags} ${tags}>
            
             ${errorHTML}
-             <label for="${name}"> ${label} </label>
+             <label for="${id}"> ${label} </label>
        `;
 
         return `${inputHTML}`;

@@ -78,7 +78,7 @@ describe('iVXioInputValidators', ()=>{
         });
 
 
-        it("should be text area", () =>{
+        xit("should be text area", () =>{
            let testInput = validatedStates[0].inputs[6];
            
            expect(testInput.type).toEqual("textarea");      
