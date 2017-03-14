@@ -55,6 +55,7 @@
     "immutable": "^3.8.1",
     "live-server": "^1.2.0",
     "lodash": "^4.17.4",
+    "pkgcloud": "^1.4.0",
     "semver": "^5.3.0",
     "teamcity-properties": "^1.1.0",
     "watch-glob": "^0.1.3"

@@ -56,3 +56,5 @@ tools/sandbox
 public
 build
 .hgtags
+
+test.js
