@@ -45,13 +45,13 @@ class Builder {
         return {
             root: "",
             dir: [
-                "build/cdn/ivx-js" + buildNumber,
+                "build/cdn/ivx-js/" + buildNumber,
             ],
             postBuild: () => {
 
             },
             app: [].concat(
-                ivxjsAppSettings.generateSettings('build/cdn/ivx-js' + buildNumber, false, false)
+                ivxjsAppSettings.generateSettings('build/cdn/ivx-js/' + buildNumber, false, false)
             ),
             assets: []
         }
