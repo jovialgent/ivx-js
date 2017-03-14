@@ -32,9 +32,15 @@ class Builder {
         }
     }
 
+    /* 
+     * THIS IS FOR CDN BUILDING 
+     * TO RUN A LOCAL BUILD RUN COMMAND: 
+     * npm run setup
+     */ 
     get buildPaths() {
+        
         const tcProps = require('teamcity-properties');
-        const buildNumber = tcProps.build.number ? tcProps.build.number : "";
+        const buildNumber = tcProps['build.number'] ? tcProps['build.number'] : "";
 
         return {
             root: "",
