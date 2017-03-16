@@ -59,7 +59,7 @@ export class ErrorMessages {
     }
 
     get nonAngular() {
-        return ['min', 'max', 'readonly', 'placeholder', 'step', 'readonly']
+        return ['min', 'max', 'readonly', 'placeholder', 'step', 'readonly', 'style']
     }
 
     get nonValidate() {
