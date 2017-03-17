@@ -15,7 +15,7 @@ export class CascadingOptions {
 
         this.link = ($scope, iElm, iAttrs, controller) => {
             let {inputData: input} = $scope;
-            let defaultOptionTag = `<option value="">Select an option...</option>`;
+            let defaultOptionTag = `Select an option...`;
 
             updateView(controller.tree);
 
@@ -43,7 +43,7 @@ export class CascadingOptions {
                             width: input.width,
                             label,
                         },
-                        defaultDisplay: defaultOptionTag,
+                        defaultDisplay: label,
                         settings: {},
                         tags: tagHTML,
                         errors: {}
