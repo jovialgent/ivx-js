@@ -30,8 +30,6 @@ export class CascadingOptions {
 
                 html = options.map((selectableOptions, depth, options) => {
 
-                    console.log(options)
-
                     let label = labels[depth];
                     let tagHTML = `
                            ng-change='vm.modelUpdated(vm.currentSelection[${depth}])'
@@ -52,10 +50,12 @@ export class CascadingOptions {
                     };
 
                     let selectorHTML = new iVXjsUIModule.options(uiOptionsObj).html;
+                    let {settings = {}} = input;
+                    let {input : inputSettings = {}} = settings;
 
                     return {
                         html: `<div class='ivxjs-grid-1-1'>${selectorHTML}</div>`,
-                        settings: input.settings.input
+                        settings: inputSettings
                     }
                 });
 

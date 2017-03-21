@@ -27,6 +27,9 @@ class CascadingOptionsInputController extends InputControllerHelper {
         vm.tree = tree;
 
         vm.modelUpdated = (selectedItem) => {
+            if(selectedItem === null) return;
+
+
             let { tree = {} } = vm;
             let { options = [], keys = [] } = tree;
             let { key: currentKey, items: nextItems } = selectedItem;
