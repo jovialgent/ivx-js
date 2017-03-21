@@ -1,7 +1,7 @@
 //Utilities
 import iVXPageSetUp from './utilities/container-setup.js';
-import {StringParsers} from './filters/string-parsers.js';
-import {ObjectParsers} from '../utilities/type-parsers.js';
+import { StringParsers } from './filters/string-parsers.js';
+import { ObjectParsers } from '../utilities/type-parsers.js';
 import AngularEventNames from '../constants/angular.events.js';
 import iVXjsConfigEventNames from '../constants/iVXjs.config.events.js';
 import iVXjsConstants from "../constants/registered-constants.js";
@@ -52,7 +52,7 @@ import StandardVideoControls from './directives/video.controls.standard.js';
 
 //Services
 import Actions from './services/actions.js';
-import {BusService as Bus} from './services/bus.js';
+import { BusService as Bus } from './services/bus.js';
 import CreateInlineVideo from './services/ios-inline-video.js';
 import PullInTemplate from './services/template-renderer.js';
 
@@ -69,12 +69,15 @@ import AppConfig from './app.config.js';
 // Run
 import AppRun from './app.run.js';
 
-angular
-    .module('ivx-js', [
-        'ui.router',
-        'ngSanitize',
+let {iVXjsGlobalConfigs = {}} = window;
+let {modules = []} = iVXjsGlobalConfigs;
+let deps = [].concat([
+    'ui.router',
+    'ngSanitize',
+], modules);
 
-    ])
+angular
+    .module('ivx-js', deps)
 
     //Providers
     .provider('iVXjsSetup', iVXjsSetup)
@@ -124,7 +127,7 @@ angular
     .directive('ivxAnimate', AnimateElement)
     .directive('ivxGoToState', GoToState)
     .directive('ivxEvent', RaiseiVXjsEvent)
-    
+
     //Services
     .service('ivxjs.actions', Actions)
     .service('createInlineVideo', CreateInlineVideo)
@@ -164,13 +167,13 @@ myIVXjs.Bus.on(iVXjsConfigEvents.VALIDATED, (iVXjs) => {
         angular.module('ivx-js').directive(key, value);
     });
 
-     if(iVXjs.experience.addEventListeners){
+    if (iVXjs.experience.addEventListeners) {
         iVXjs.experience.addEventListeners(iVXjs.Bus, iVXjs.experience);
     }
 
 
     var pageSetup = new iVXPageSetUp(iVXjs.config.selector, iVXjs.config.template);
-   
+
     angular.bootstrap(iVXjs.config.bootstrapSelector ? document.querySelector(iVXjs.config.bootstrapSelector) : document, ['ivx-js']);
     iVXjs.Bus.emit(angularEventNames.BOOTSTRAPPED);
 });

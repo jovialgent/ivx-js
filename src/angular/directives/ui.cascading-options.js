@@ -30,6 +30,8 @@ export class CascadingOptions {
 
                 html = options.map((selectableOptions, depth, options) => {
 
+                    console.log(options)
+
                     let label = labels[depth];
                     let tagHTML = `
                            ng-change='vm.modelUpdated(vm.currentSelection[${depth}])'

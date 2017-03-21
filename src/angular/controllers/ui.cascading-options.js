@@ -6,9 +6,12 @@ class CascadingOptionsInputController extends InputControllerHelper {
         super($scope, iVXjs, iVXjsActions);
 
         let vm = this;
-        let {inputData} = $scope;
-        let {tree = inputData.dataTree} = vm;
-        
+        let { inputData } = $scope;
+        let { tree = inputData.dataTree } = vm;
+        let { name } = inputData;
+        let { data } = iVXjs.experience;
+
+
         tree.options = [];
 
         if (tree.isStatic)
@@ -23,17 +26,15 @@ class CascadingOptionsInputController extends InputControllerHelper {
         }]
         vm.tree = tree;
 
-        iVXjsBus.emit('update-view', tree);
-
         vm.modelUpdated = (selectedItem) => {
-            let {tree = {}} = vm;
-            let {options = [], keys = []} = tree;
-            let {key: currentKey, items: nextItems} = selectedItem;
+            let { tree = {} } = vm;
+            let { options = [], keys = [] } = tree;
+            let { key: currentKey, items: nextItems } = selectedItem;
             let depth = currentKey.split('~').length - 1;
 
             vm.finalValue = currentKey;
 
-            if(nextItems && nextItems.length)
+            if (nextItems && nextItems.length)
                 vm.finalValue = nextItems[0].key
 
             vm.currentSelection[depth] = selectedItem;
@@ -55,8 +56,50 @@ class CascadingOptionsInputController extends InputControllerHelper {
                 iVXjsBus.emit('update-view', tree);
             }
 
-            vm.onChange(vm.finalValue);                
+            vm.onChange(vm.finalValue);
         }
+
+        if (data[name] && data[name].split) {
+            let selections = data[name].split('~');
+            let firstSelection = selections[0];
+            let restOfSelections = selections.slice(1);
+            let fullPath = firstSelection;
+            let nextItems = [];
+
+            fullPath = '';
+
+            vm.currentSelection = selections.map((selection, index) => {
+                fullPath = `${index > 0 ? fullPath + "~" : ''}${selection}`;
+                return {
+                    key: fullPath
+                }
+            });
+
+
+            let currentOptions = vm.currentSelection.reduce((options, currentSelection, depth)=>{
+                let depthOptions = options[depth];
+                let nextOptions = depthOptions.find(depthOption =>{
+                    return depthOption.key === currentSelection.key;
+                });
+
+                if(nextOptions && nextOptions.items && nextOptions.items.length && nextOptions.items.length >= 1){
+                    options = [].concat(options, [nextOptions.items]);
+                }
+
+                return options;
+
+            }, vm.tree.options);
+
+            vm.tree.options = currentOptions;
+
+        }
+
+
+
+        iVXjsBus.emit('update-view', tree);
+
+
+
     }
 }
 
