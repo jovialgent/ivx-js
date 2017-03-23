@@ -7,101 +7,193 @@ class CascadingOptionsInputController extends InputControllerHelper {
 
         let vm = this;
         let { inputData } = $scope;
-        let { tree = inputData.dataTree } = vm;
-        let { name } = inputData;
+        let currentTree = Object.assign({}, inputData.dataTree);
+        let { name, attributes = {} } = inputData;
+        let { required: cascadeRequired = false } = attributes;
         let { data } = iVXjs.experience;
+        let { labels, items, isStatic } = currentTree;
 
+        vm.viewSettings = {
+            labels: currentTree.labels,
+            options: [currentTree.items],
+            isStatic
+        };
 
-        tree.options = [];
+        console.dir(currentTree);
 
-        if (tree.isStatic)
-            tree.labels.forEach((v, i) => {
-                tree.options[i] = [];
-            })
+        vm.currentSelection = [];
+        vm.currentTree = currentTree;
 
-        tree.options[0] = tree.items;
+        
+        vm.modelUpdate = (selectedItem) => {
+            let { isStatic, options } = vm.viewSettings;
+            let mustBeAnswered = cascadeRequired || isStatic;
 
-        vm.currentSelection = [{
-            key: ""
-        }]
-        vm.tree = tree;
+            if (selectedItem) {
+                let hasItems = selectedItem && selectedItem.items && selectedItem.items.length && selectedItem.items.length > 0;
 
-        vm.modelUpdated = (selectedItem) => {
-            if(selectedItem === null) return;
+                if (mustBeAnswered && !hasItems) {
+                    let finalKeyParts = selectedItem.key.split('~');
+                    let editSelections = options.map((option, index) => {
+                        let hasSelection = typeof vm.currentSelection[index] !== 'undefined';
 
+                        if (hasSelection) {
+                            let hasKey = vm.currentSelection[index].key ? vm.currentSelection[index].key : false;
+                            let tooFar = hasKey && hasKey.split("~").length > finalKeyParts.length ? true : false;
 
-            let { tree = {} } = vm;
-            let { options = [], keys = [] } = tree;
-            let { key: currentKey, items: nextItems } = selectedItem;
-            let depth = currentKey.split('~').length - 1;
+                            return tooFar ? {} : vm.currentSelection[index];
+                        } else {
+                            return {}
+                        }
+                    });
 
-            vm.finalValue = currentKey;
+                    let newOptions = options.map((option, index) => {
+                        let hasSelection = typeof vm.currentSelection[index] !== 'undefined';
 
-            if (nextItems && nextItems.length)
-                vm.finalValue = nextItems[0].key
+                        if (hasSelection) {
+                            let hasKey = vm.currentSelection[index].key ? vm.currentSelection[index].key : false;
+                            let tooFar = hasKey && hasKey.split("~").length > finalKeyParts.length ? true : false;
 
-            vm.currentSelection[depth] = selectedItem;
+                            return tooFar ? [] : option;
+                        } else {
+                            return []
+                        }
+                    });
 
-            if (depth < tree.labels.length - 1 && nextItems) {
+                    vm.viewSettings = Object.assign({}, vm.viewSettings, {
+                        options: newOptions
+                    })
+                    vm.currentSelection = editSelections;
+                    vm.onChange(selectedItem.key);
 
-                vm.currentSelection[depth + 1] = {
-                    key: nextItems[0].key
+                    updateModel();
+                    return;
+                } else if (!mustBeAnswered) {
+                    vm.onChange(selectedItem.key);
+
                 }
-
-                // sets next options
-                tree.options[depth + 1] = nextItems;
             }
+            let makeNull = false;
 
-            //attaches tree to view-model
-            vm.tree = tree;
+            let editSelections = options.map((option, index) => {
+                let hasSelection = typeof vm.currentSelection[index] !== 'undefined' && vm.currentSelection[index].items;
 
-            if (depth < tree.labels.length - 1) {
-                iVXjsBus.emit('update-view', tree);
-            }
-
-            vm.onChange(vm.finalValue);
-        }
-
-        if (data[name] && data[name].split) {
-            let selections = data[name].split('~');
-            let firstSelection = selections[0];
-            let restOfSelections = selections.slice(1);
-            let fullPath = firstSelection;
-            let nextItems = [];
-
-            fullPath = '';
-
-            vm.currentSelection = selections.map((selection, index) => {
-                fullPath = `${index > 0 ? fullPath + "~" : ''}${selection}`;
-                return {
-                    key: fullPath
+                if (hasSelection && !makeNull) {
+                    return vm.currentSelection[index];
+                } else {
+                    makeNull = true;
+                    return;
                 }
             });
 
-
-            let currentOptions = vm.currentSelection.reduce((options, currentSelection, depth)=>{
-                let depthOptions = options[depth];
-                let nextOptions = depthOptions.find(depthOption =>{
-                    return depthOption.key === currentSelection.key;
-                });
-
-                if(nextOptions && nextOptions.items && nextOptions.items.length && nextOptions.items.length >= 1){
-                    options = [].concat(options, [nextOptions.items]);
-                }
-
-                return options;
-
-            }, vm.tree.options);
-
-            vm.tree.options = currentOptions;
-
+            vm.currentSelection = editSelections;
+            updateModel();
         }
 
+        vm.viewSettings = initializeViewSettings(vm.viewSettings, vm.currentTree, data[name]);
 
+        updateModel();
 
-        iVXjsBus.emit('update-view', tree);
+        function initializeViewSettings(oldViewSettings, currentTree, key) {
+            let newViewSettings = Object.assign({}, oldViewSettings);
+            let { options, labels } = newViewSettings;
+            let newOptions = createStaticOptions(labels, options[0]);
 
+            newViewSettings = Object.assign({}, newViewSettings, {
+                options: newOptions
+            });
 
+            if (key && key.split) {
+                let oldOptions = [].concat(options);
+                let sections = key.split('~');
+                let fullPath = '';
+                let currentItems = [].concat(items);
+                let selections = sections.reduce((theseSections, section, index) => {
+                    if (index === 0) {
+                        fullPath = section;
+                    } else {
+                        fullPath = `${fullPath}~${section}`
+                    }
+
+                    let currentItem = currentItems.find(item => {
+                        return item.key === fullPath;
+                    });
+
+                    currentItems = [].concat(currentItem.items);
+
+                    return [].concat(theseSections, currentItem);
+                }, []);
+
+                vm.currentSelection = selections;
+
+                let editSelections = newViewSettings.options.map((option, index) => {
+                    let hasSelection = typeof vm.currentSelection[index] !== 'undefined';
+
+                    if (hasSelection) {
+                        return vm.currentSelection[index];
+                    } else {
+                        return {
+
+                        }
+                    }
+                });
+
+                vm.currentSelection = editSelections;
+
+                vm.isValid = true;
+            }
+
+            return newViewSettings;
+
+            function createStaticOptions(labels, defaultOptions) {
+                return labels.map((label, index) => {
+                    if (index === 0) {
+                        return defaultOptions;
+                    }
+                    return []
+                });
+            }
+        }
+
+        function updateModel() {
+            let oldViewSettings = Object.assign({}, vm.viewSettings);
+            let { options, labels, isStatic } = oldViewSettings;
+            let selections = [].concat(vm.currentSelection);
+            let keepAdding = true;
+            let newOptions = selections.reduce((currentOptions, selection, depth) => {
+                let editOptions = [].concat(currentOptions);
+
+                keepAdding = selection;
+
+                if (keepAdding) {
+                    console.log(selection.items);
+                    if (selection && selection.items && selection.items.length > 0) {
+                        editOptions = currentOptions
+                            .slice(0, 1)
+                            .concat(currentOptions.slice(1, depth + 1))
+                            .concat([selection.items])
+                            .concat(currentOptions.slice(depth + 2));
+                    }
+                } else {
+                    if (depth < labels.length - 1) {
+                        editOptions = currentOptions
+                            .slice(0, 1)
+                            .concat(currentOptions.slice(1, depth + 1))
+                            .concat([[]])
+                            .concat(currentOptions.slice(depth + 2));
+                    }
+                }
+
+                return editOptions;
+            }, options);
+
+            let newViewSettings = Object.assign({}, vm.viewSettings, {
+                options: newOptions
+            })
+
+            vm.viewSettings = newViewSettings;
+            iVXjsBus.emit('update-view', newViewSettings);
+        }
 
     }
 }
