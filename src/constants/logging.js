@@ -9,7 +9,8 @@ export default class extends iVXjsConstants{
             ERROR : "error",
             WARN : "warn",
             TRACE : "trace",
-            LOG :""
+            LOG :"",
+            DEBUG: "debug"
         }
 
         this.addNames(logTypes);

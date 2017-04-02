@@ -26,6 +26,7 @@ export class Html5 {
     }
 
     seek(newTime) {
+        
         this.player.currentTime = newTime;
     }
 
@@ -74,7 +75,7 @@ export class Html5 {
     }
 
     addEventListeners(iVXjsBus) {
-        let {videoEventNames, iVXjsLog} = this;;
+        let { videoEventNames, iVXjsLog } = this;;
         let self = this;
 
         this.iVXjsBus = iVXjsBus;
@@ -100,17 +101,17 @@ export class Html5 {
         this.setOnEnd();
 
         this.player.addEventListener('error', function (event) {
-            let {settings} = self;
-            let {src,sources=[]} = settings;
+            let { settings } = self;
+            let { src, sources = [] } = settings;
             let sourceString = "";
 
-            if(src){
+            if (src) {
                 sourceString = `Failed to load video with filepath: ${src}`;
-            } 
+            }
 
-            if(sources){
-                sourceString = sources.reduce((sourceList, sourcePath, index)=>{
-                    if(index === 0){
+            if (sources) {
+                sourceString = sources.reduce((sourceList, sourcePath, index) => {
+                    if (index === 0) {
                         return `${sourceList}${sourcePath.src}`;
                     }
 
@@ -138,7 +139,13 @@ export class Html5 {
         }
 
         function seekOnEvent(currentTime) {
-            self.seek(currentTime);
+            let { seconds } = currentTime;
+
+            if (seconds) {
+                self.seek(seconds);
+            } else {
+                self.seek(currentTime[0].seconds);
+            }
         }
 
         function durationOnEvent() {
@@ -151,7 +158,7 @@ export class Html5 {
     }
 
     dispose(iVXjsBus) {
-        let {videoEventNames} = this;
+        let { videoEventNames } = this;
         let self = this;
         let eventNameMap = {
             play: videoEventNames.PLAY,
@@ -171,8 +178,8 @@ export class Html5 {
     }
 
     get html() {
-        let {isiOS = false} = this.stateData;
-        let {tracks = [], sources = [], controls = true} = this.settings;
+        let { isiOS = false } = this.stateData;
+        let { tracks = [], sources = [], controls = true } = this.settings;
         let tags = ['tracks', 'sources', 'autoplay'];
         let justAttrs = ['controls'];
 

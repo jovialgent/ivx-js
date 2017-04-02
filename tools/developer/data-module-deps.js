@@ -12,5 +12,12 @@ module.exports = {
         directive: "iVXjsDataiVXIO",
         configFunction: "data : iVXjsDataiVXIO()",
         ivxjs: "js/modules/iVXjs.data.ivx-io.min.js"
+    },
+    webtasks : {
+        js : "",
+        injector : "iVXjs.data.webtasks",
+        directive: "iVXjsDataWebtasks",
+        configFunction : "data : iVXjsDataWebtasks({baseUrl : baseUrl})",
+        ivxjs : "js/modules/iVXjs.data.webtasks.min.js"
     }
 }

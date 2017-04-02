@@ -4,7 +4,7 @@ import StateEventNames from '../constants/state.events.js';
 import AngularEventNames from '../constants/angular.events.js';
 
 class AppRun {
-    constructor($rootScope, $state, $window, $transitions, $http, iVXjs, iVXjsBus, iVXjsActions, iVXjsConstants) {
+    constructor($rootScope, $state, $window, $transitions, $http, iVXjs, iVXjsBus, iVXjsActions, iVXjsConstants, EventStore) {
         if (!iVXjs || !iVXjs.config) return;
 
         let {metadata = {}, templates} = iVXjs.config;
@@ -16,6 +16,8 @@ class AppRun {
         $rootScope.pageTitle = title;
         $rootScope.ogImage = image;
         $rootScope.ogDescription = description;
+
+        EventStore.run();
         
         iVXjs.Bus.on(stateEventNames.GO, (state) => {
             let evalState = state;
@@ -35,7 +37,7 @@ class AppRun {
             let { data } = $state.current;
             iVXjs.Bus.emit(stateEventNames.CHANGE, $state.current);
             
-            if (data.audio) {
+            if (data.audio && data.audio.src) {
                 data.audio.id = 'state-audio';
 
                 iVXjsBus.emit(audioEventNames.SET_UP, data.audio);
@@ -89,6 +91,6 @@ class AppRun {
     }
 }
 
-AppRun.$inject = ['$rootScope', '$state', '$window', '$transitions', '$http', 'iVXjs', 'ivxjs.bus', 'ivxjs.actions', 'ivxjs.constants'];
+AppRun.$inject = ['$rootScope', '$state', '$window', '$transitions', '$http', 'iVXjs', 'ivxjs.bus', 'ivxjs.actions', 'ivxjs.constants', 'EventStore'];
 
 export default createFactoryFunction(AppRun);

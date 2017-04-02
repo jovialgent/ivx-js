@@ -1,4 +1,4 @@
-import {TypeValidator} from '../utilities/type-parsers.js';
+import { TypeValidator } from '../utilities/type-parsers.js';
 
 let typeValidator = new TypeValidator();
 
@@ -6,11 +6,12 @@ export class ActionProcessor {
     constructor(iVXjs) {
 
         this.iVXjs = iVXjs;
-    
+
     }
 
     resolveActions(actionArray, callback) {
         let self = this;
+        let { log } = this.iVXjs;
 
         if (typeValidator.isEmpty(actionArray)) {
 
@@ -19,8 +20,24 @@ export class ActionProcessor {
 
         }
 
+        console.log(actionArray);
+
         let promises = actionArray.map((actionObj) => {
             self.iVXjs.Bus.emit(actionObj.eventName, actionObj.args);
+
+            if (!typeValidator.isEmpty(actionObj.args)) {
+                log.debug(`Event ${actionObj.eventName} was fired.`, {
+                    group: true,
+                    messages: Object.keys(actionObj.args).map((key, index) => {
+                        return {
+                            message: `${key}:${actionObj.args[key]}`,
+                            data: actionObj.args[key]
+                        }
+                    })
+                });
+            } else {
+                log.debug(`Event ${actionObj.eventName}`);
+            }
 
             if (self.iVXjs.actions && self.iVXjs.actions[actionObj.eventName]) {
 

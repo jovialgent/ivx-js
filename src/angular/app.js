@@ -6,6 +6,7 @@ import AngularEventNames from '../constants/angular.events.js';
 import iVXjsConfigEventNames from '../constants/iVXjs.config.events.js';
 import iVXjsConstants from "../constants/registered-constants.js";
 import { iVXjs } from '../core/app.js';
+import EventStore from '../core/event-store.js';
 
 let stringParser = new StringParsers();
 let objectParsers = new ObjectParsers();
@@ -69,8 +70,8 @@ import AppConfig from './app.config.js';
 // Run
 import AppRun from './app.run.js';
 
-let {iVXjsGlobalConfigs = {}} = window;
-let {modules = []} = iVXjsGlobalConfigs;
+let { iVXjsGlobalConfigs = {} } = window;
+let { modules = [] } = iVXjsGlobalConfigs;
 let deps = [].concat([
     'ui.router',
     'ngSanitize',
@@ -78,7 +79,6 @@ let deps = [].concat([
 
 angular
     .module('ivx-js', deps)
-
     //Providers
     .provider('iVXjsSetup', iVXjsSetup)
 
@@ -86,6 +86,7 @@ angular
     .constant('iVXjs', myIVXjs)
     .constant('ivxjs.constants', new iVXjsConstants())
     //.constant('YT', YT)
+    .constant('EventStore', new EventStore(myIVXjs))
 
     // Inputs
     .directive('ivxjsFormInput', FormInput)
@@ -94,7 +95,6 @@ angular
     .directive('ivxjsButtonsInput', ButtonsInput)
     .directive('ivxjsAnchor', Anchors)
     .directive('ivxjsCascadingOptionsInput', CascadingOptions)
-
     .directive('ivxjsOptionsInput', OptionsInput)
     .directive('ivxjsEmailInput', EmailInput)
     .directive('ivxjsUrlInput', UrlInput)
@@ -162,6 +162,7 @@ myIVXjs.Bus.on(iVXjsConfigEvents.VALIDATED, (iVXjs) => {
         .constant('ivxjs.log', iVXjs.log)
         .constant('ivxjs.modules.audio', stateAudio)
         .constant('ivxjs.modules.audio.experience', experienceAudio)
+        .c
 
     objectParsers.mapKeys(iVXjs.ui.angular, (value, key) => {
         angular.module('ivx-js').directive(key, value);
@@ -173,6 +174,10 @@ myIVXjs.Bus.on(iVXjsConfigEvents.VALIDATED, (iVXjs) => {
 
 
     var pageSetup = new iVXPageSetUp(iVXjs.config.selector, iVXjs.config.template);
+
+    angular
+        .module('ivx-js')
+        .constant('ExperienceContainer', pageSetup.selector);
 
     angular.bootstrap(iVXjs.config.bootstrapSelector ? document.querySelector(iVXjs.config.bootstrapSelector) : document, ['ivx-js']);
     iVXjs.Bus.emit(angularEventNames.BOOTSTRAPPED);

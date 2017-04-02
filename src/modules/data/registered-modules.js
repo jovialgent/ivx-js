@@ -1,5 +1,6 @@
 import { iVXio } from './ivx-io/index.js';
 import { iVXjsData } from './ivx-js/index.js';
+import { WebtasksData } from "./webtasks/index.js";
 
 /**
  * Holds instances of all available data modules that 
@@ -26,5 +27,7 @@ export class RegisteredDataModules  {
          * @type {iVXjsData}
          */   
         this.iVXjs = iVXjsData;
+
+        this.WebtasksData = WebtasksData;
     }   
 };

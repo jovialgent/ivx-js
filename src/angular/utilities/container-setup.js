@@ -9,6 +9,7 @@ export default class {
 
         if (element) {
             element.setAttribute('ui-view', '');
+            this.selector = element;
             return;
         }
 

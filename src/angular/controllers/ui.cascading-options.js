@@ -18,13 +18,8 @@ class CascadingOptionsInputController extends InputControllerHelper {
             options: [currentTree.items],
             isStatic
         };
-
-        console.dir(currentTree);
-
         vm.currentSelection = [];
         vm.currentTree = currentTree;
-
-        
         vm.modelUpdate = (selectedItem) => {
             let { isStatic, options } = vm.viewSettings;
             let mustBeAnswered = cascadeRequired || isStatic;

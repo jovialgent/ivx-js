@@ -26,6 +26,6 @@ export default class {
     }
 
     seek(seconds) {
-        this.iVXjsBus.emit(this.controlEventNames.SEEK, seconds);
+        this.iVXjsBus.emit(this.controlEventNames.SEEK, {seconds});
     }
 }

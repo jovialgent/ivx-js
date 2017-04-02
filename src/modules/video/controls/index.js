@@ -133,7 +133,7 @@ export class Controls extends ControlEvents {
 
     onTimeUpdate(player) {
         let {currentTimeInfo, scrubBar, scrubBarTimeLapseClasses} = this;
-        let {currentTime: seconds} = player;
+        let {currentTime: seconds} = player[0];
 
         seconds = seconds > this.duration ? 0 : seconds;
          

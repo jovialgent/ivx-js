@@ -72,12 +72,19 @@ export class Actions {
      * 
      */
     animateElement(eventObj) {
-        let {element} = eventObj;
+        let {element, type} = eventObj;
         let animationElements = document.querySelectorAll(element);
 
         if (!animationElements || animationElements.length <= 0) return;
 
         animationElements = Array.from(animationElements);
+
+        console.log(element);
+
+        if(type === 'tween'){
+            console.log("GOT HERE?");
+            return;
+        }
 
         animationElements.forEach((animationElement, index) => {
             animationElement = this.setElementClasses(animationElement, eventObj);
@@ -149,6 +156,14 @@ export class Actions {
         });
 
         return audioClipPromise;
+    }
+
+    clearData(eventObj){
+        let {keys} = eventObj;
+        let self = this;
+        keys.forEach(key =>{
+            self.data[key] = undefined;
+        })
     }
 
     setData(eventObj) {
