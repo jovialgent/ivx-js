@@ -7,8 +7,8 @@ class AppRun {
     constructor($rootScope, $state, $window, $transitions, $http, iVXjs, iVXjsBus, iVXjsActions, iVXjsConstants) {
         if (!iVXjs || !iVXjs.config) return;
 
-        let {metadata = {}, templates} = iVXjs.config;
-        let {title = 'iVX Story Player', description, image} = metadata;
+        let { metadata = {}, templates } = iVXjs.config;
+        let { title = 'iVX Story Player', description, image } = metadata;
         let audioEventNames = new AudioEventNames();
         let stateEventNames = new StateEventNames();
         let angularEventNames = new AngularEventNames();
@@ -16,14 +16,14 @@ class AppRun {
         $rootScope.pageTitle = title;
         $rootScope.ogImage = image;
         $rootScope.ogDescription = description;
-        
+
         iVXjs.Bus.on(stateEventNames.GO, (state) => {
             let evalState = state;
-            
+
             if (Array.isArray(state)) {
                 evalState = state[0];
             }
-            
+
             $state.go(evalState.stateId);
         });
 
@@ -33,8 +33,9 @@ class AppRun {
 
         $transitions.onSuccess({ to: '*' }, ['$state', 'ivxjs.modules.audio', ($state, iVXjsAudio) => {
             let { data } = $state.current;
+
             iVXjs.Bus.emit(stateEventNames.CHANGE, $state.current);
-            
+
             if (data.audio) {
                 data.audio.id = 'state-audio';
 
@@ -44,7 +45,7 @@ class AppRun {
             }
 
             if ($state.current.data.restricted) {
-               
+
                 let navigateBackState = iVXjs.experience.config.pageNotFoundState ? iVXjs.experience.config.pageNotFoundState : iVXjs.experience.config.defaultState;
                 let restrictRedirect = iVXjs.experience.rules(navigateBackState);
 
@@ -66,17 +67,17 @@ class AppRun {
             }
         });
 
-        iVXjsBus.on(stateEventNames.REQUEST_STATE, () =>{
+        iVXjsBus.on(stateEventNames.REQUEST_STATE, () => {
             let currentState = $state.current;
-            
-            if(!currentState.data){
+
+            if (!currentState.data) {
                 let defaultStateRules = iVXjs.experience.config.defaultState;
                 let defaultStateId = iVXjs.experience.rules(defaultStateRules);
 
-                currentState.data = iVXjs.config.states.find((state)=>{
+                currentState.data = iVXjs.config.states.find((state) => {
                     return state.id === defaultStateId;
                 });
-            } 
+            }
 
             iVXjsBus.emit(stateEventNames.GET_STATE, currentState);
         });

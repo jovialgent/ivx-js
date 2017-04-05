@@ -25,7 +25,16 @@ class NavigationState {
 			let thisNavigationState = new iVXjsModules.states.navigation(data, linkSection);
 
 			$scope.experience = iVXjs.experience.data;
+
 			$timeout(() => {
+
+
+			}, 1000)
+
+			iElm.html(thisNavigationState.html);
+			$compile(iElm.contents())($scope, (compiled) => {
+				iElm.html(compiled);
+				
 				let transitionAnimation = onLinksReady.find((event, index) => {
 					return event.eventName === "animateElement" && event.args.element === ".navigation-state-container";
 				});
@@ -37,24 +46,20 @@ class NavigationState {
 							element: ".navigation-state-container",
 							animationClasses: "show"
 						}
-					})
+					});
 				}
-				
+
 				iVXjsActions.resolveActions(onLinksReady, () => {
 					if (audio && audio.src) {
 						iVXjsBus.emit(audioEventNames.PLAY);
 					}
-
 				})
-			}, 1)
-
-			iElm.html(thisNavigationState.html);
-			$compile(iElm.contents())($scope);
+			});
 		}
 	}
 
 	get templateHTML() {
-		return `<div class="navigation-state-container"></div>`;
+		return `<div  class="navigation-state-container"></div>`;
 	};
 }
 
