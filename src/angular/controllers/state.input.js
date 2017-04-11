@@ -19,29 +19,7 @@ class InputStateController {
         };
 
         $timeout(() => {
-            if (iVXjsUIModule.initializeInput) {
-                iVXjsUIModule.initializeInput();
-            };
-
-            let hasTransition = onInputReady.find((event, index) =>{
-                return event.eventName === "animateElement" && event.args.element === ".input-state-container";
-            });
-
-            if(!hasTransition){
-                onInputReady.push({
-                    eventName : "animateElement",
-                    args : {
-                        element : ".input-state-container",
-                        animationClasses : "show"
-                    }
-                })
-            }
-
-            iVXjsActions.resolveActions(onInputReady, () => {
-                if (audio && audio.src) {
-                    iVXjsBus.emit(audioEventNames.PLAY);
-                }
-            })
+            
         }, 1);
     }
 }

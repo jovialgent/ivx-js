@@ -54,7 +54,10 @@ class VideoState {
             $scope.experience = iVXjs.experience.data;
 
             iElm.html(videoFramework.html);
-            $compile(iElm.contents())($scope);
+           
+            $compile(iElm.contents())($scope, (compiled)=>{
+                iElm.html(compiled); 
+            });
 
             if(createInlineVideo.isMobile() || createInlineVideo.isiOS()){
                 let videoEventNames = new VideoEventConstants();

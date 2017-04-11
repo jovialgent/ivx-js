@@ -82,6 +82,8 @@ export class Actions {
         if (type === 'tween') {
             let { tweens } = eventObj;
 
+            console.log(animationElements);
+
             this.animation.runTweens(tweens, this);
 
             return;

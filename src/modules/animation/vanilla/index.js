@@ -1,4 +1,5 @@
 
+
 export default class {
     constructor() {
         this.canAnimate = anime ? true : false;
@@ -9,8 +10,9 @@ export default class {
         let { EasingFunctions } = this;
         let self = this;
 
+        
         anime({
-            targets: document.querySelectorAll('#celeste-colour-story > div > div > div.animate-1'),
+            targets: document.querySelectorAll('.animate-1'),
             translateX: {
                 value: 250,
                 duration: 800

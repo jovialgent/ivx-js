@@ -1,6 +1,9 @@
 import createFactoryFunction from '../utilities/create-factory-function.js';
 import HtmlStateController from '../controllers/state.html.js';
 import AudioEventNames from "../../constants/audio.events.js";
+import HttpEventNames from '../../constants/http.events.js';
+
+const HTTPEvents = new HttpEventNames();
 
 class HtmlState {
     constructor($state, $http, $compile, $sce, $timeout, iVXjs, iVXjsActions, iVXjsAudio, iVXjsBus) {
@@ -11,7 +14,7 @@ class HtmlState {
         this.controller = HtmlStateController;
         this.controllerAs = 'vm';
         this.link = function ($scope, iElm, iAttrs, controller) {
-            let {id, html, templateUrl, onCompile = [], audio} = $state.current.data;
+            let { id, html, templateUrl, onCompile = [], audio } = $state.current.data;
             let audioEventNames = new AudioEventNames();
 
             if (templateUrl) {
@@ -41,12 +44,25 @@ class HtmlState {
                     })
                 }
 
-                iVXjsActions.resolveActions(onCompile, () => {
-                    if (audio && audio.src) {
-                        iVXjsBus.emit(audioEventNames.PLAY);
-                    }
+                if (templateUrl) {
+                    iVXjsBus.once(HTTPEvents.RESPONSE_SUCCESS, () => {
+                        iVXjsActions.resolveActions(onCompile, () => {
+                            if (audio && audio.src) {
+                                iVXjsBus.emit(audioEventNames.PLAY);
+                            }
 
-                })
+                        })
+                    })
+                } else {
+                    iVXjsActions.resolveActions(onCompile, () => {
+                        if (audio && audio.src) {
+                            iVXjsBus.emit(audioEventNames.PLAY);
+                        }
+
+                    })
+                }
+
+
             }, 1);
             $compile(iElm.contents())($scope);
         }
