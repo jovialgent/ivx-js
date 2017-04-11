@@ -62,6 +62,7 @@ export class iVXjs {
          * @type {object} 
          */
         this.config = processedData.config;
+       
 
         if(this.selector){
             this.config.selector = this.selector;

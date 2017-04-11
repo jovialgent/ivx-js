@@ -4,7 +4,7 @@ import StateEventNames from '../constants/state.events.js';
 import AngularEventNames from '../constants/angular.events.js';
 
 class AppRun {
-    constructor($rootScope, $state, $window, $transitions, $http, iVXjs, iVXjsBus, iVXjsActions, iVXjsConstants, EventStore) {
+    constructor($rootScope, $state, $window, $transitions, $http, iVXjs, iVXjsBus, iVXjsActions, iVXjsConstants) {
         if (!iVXjs || !iVXjs.config) return;
 
         let {metadata = {}, templates} = iVXjs.config;
@@ -17,7 +17,8 @@ class AppRun {
         $rootScope.ogImage = image;
         $rootScope.ogDescription = description;
 
-        EventStore.run();
+     
+        iVXjs.experience.EventStore.run();
         
         iVXjs.Bus.on(stateEventNames.GO, (state) => {
             let evalState = state;
@@ -91,6 +92,6 @@ class AppRun {
     }
 }
 
-AppRun.$inject = ['$rootScope', '$state', '$window', '$transitions', '$http', 'iVXjs', 'ivxjs.bus', 'ivxjs.actions', 'ivxjs.constants', 'EventStore'];
+AppRun.$inject = ['$rootScope', '$state', '$window', '$transitions', '$http', 'iVXjs', 'ivxjs.bus', 'ivxjs.actions', 'ivxjs.constants'];
 
 export default createFactoryFunction(AppRun);

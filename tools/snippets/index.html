@@ -3,12 +3,107 @@
 
 <head>
     <title ng-bind="pageTitle">Loading</title>
-    <style>.show{-webkit-animation:showState .1s;-moz-animation:showState .1s;-o-animation:showState .1s;animation:showState .1s;opacity:1}.hide{-webkit-animation:hideState .1s;-moz-animation:hideState .1s;-o-animation:hideState .1s;animation:hideState .1s;opacity:0}@-webkit-keyframes hideState{0%{opacity:1}100%{opacity:0;display:none;visibility:hidden}}@-moz-keyframes hideState{0%{opacity:1}100%{opacity:0;display:none;visibility:hidden}}@-o-keyframes hideState{0%{opacity:1}100%{opacity:0;display:none;visibility:hidden}}@keyframes hideState{0%{opacity:1}100%{opacity:0;display:none;visibility:hidden}}lesshat-selector{-lh-property:0}@-webkit-keyframes showState{0%{opacity:0}100%{opacity:1}}@-moz-keyframes showState{0%{opacity:0}100%{opacity:1}}@-o-keyframes showState{0%{opacity:0}100%{opacity:1}}@keyframes showState{0%{opacity:0}100%{opacity:1}}
+    <style>
+        .show {
+            -webkit-animation: showState .1s;
+            -moz-animation: showState .1s;
+            -o-animation: showState .1s;
+            animation: showState .1s;
+            opacity: 1
+        }
+        
+        .hide {
+            opacity: 0
+        }
+        
+        @-webkit-keyframes hideState {
+            0% {
+                opacity: 1
+            }
+            100% {
+                opacity: 0;
+                display: none;
+                visibility: hidden
+            }
+        }
+        
+        @-moz-keyframes hideState {
+            0% {
+                opacity: 1
+            }
+            100% {
+                opacity: 0;
+                display: none;
+                visibility: hidden
+            }
+        }
+        
+        @-o-keyframes hideState {
+            0% {
+                opacity: 1
+            }
+            100% {
+                opacity: 0;
+                display: none;
+                visibility: hidden
+            }
+        }
+        
+        @keyframes hideState {
+            0% {
+                opacity: 1
+            }
+            100% {
+                opacity: 0;
+                display: none;
+                visibility: hidden
+            }
+        }
+        
+        lesshat-selector {
+            -lh-property: 0
+        }
+        
+        @-webkit-keyframes showState {
+            0% {
+                opacity: 0
+            }
+            100% {
+                opacity: 1
+            }
+        }
+        
+        @-moz-keyframes showState {
+            0% {
+                opacity: 0
+            }
+            100% {
+                opacity: 1
+            }
+        }
+        
+        @-o-keyframes showState {
+            0% {
+                opacity: 0
+            }
+            100% {
+                opacity: 1
+            }
+        }
+        
+        @keyframes showState {
+            0% {
+                opacity: 0
+            }
+            100% {
+                opacity: 1
+            }
+        }
     </style>
-    
+
     [UI-CSS]
 
-  
+
 
 </head>
 
@@ -29,6 +124,8 @@
     <!-- ngSanitize -->
     <script src='https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.5.6/angular-sanitize.min.js'></script>
 
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.js'></script>
+
 
     <!-- Optional Video State Player Deps -->
 
@@ -42,11 +139,8 @@
     <!-- Angular iVXjs Library -->
     <script src="js/angular.ivx.js"></script>
 
-    [DATA-SCRIPT]
-    [VALIDATION-SCRIPT]
-    [ANALYTIC-SCRIPT]
-    [UI-SCRIPT]
-    
+    [DATA-SCRIPT] [VALIDATION-SCRIPT] [ANALYTIC-SCRIPT] [UI-SCRIPT]
+
     <script>
         angular
             .module('app', ['ivx-js'])

@@ -1,6 +1,5 @@
 export default class {
-    constructor(iVXjs) {
-        this.iVXjs = iVXjs;
+    constructor() {
         this.animations = [];
         this.timeData = {}
 

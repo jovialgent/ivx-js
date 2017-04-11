@@ -86,7 +86,6 @@ angular
     .constant('iVXjs', myIVXjs)
     .constant('ivxjs.constants', new iVXjsConstants())
     //.constant('YT', YT)
-    .constant('EventStore', new EventStore(myIVXjs))
 
     // Inputs
     .directive('ivxjsFormInput', FormInput)

@@ -20,8 +20,6 @@ export class ActionProcessor {
 
         }
 
-        console.log(actionArray);
-
         let promises = actionArray.map((actionObj) => {
             self.iVXjs.Bus.emit(actionObj.eventName, actionObj.args);
 
