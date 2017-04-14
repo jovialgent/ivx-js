@@ -40,11 +40,37 @@ export default class {
         Bus.emit(LoggingMessages.ERROR, errorPayload);
     }
 
-    debug(message){
-        let {show} = this;
+    debug(message, options = {}) {
+        let { show, LoggingMessages, Bus } = this;
+        let logMessage = LoggingMessages.DEBUG;
+        let self = this;
+        let { group = false } = options;
 
-        if(show){
-            this.log(`DEBUG: ${message}`)
+        if (group && show) {
+            let { messages } = options;
+
+            console.groupCollapsed(`${logMessage}: ${message}`)
+
+            messages.forEach(message => {
+                let { title, message : logMesage } = message;
+
+                if (title) {
+                    console.log(title);
+                    self.createMessage(logMesage);
+                } else {
+                    self.createMessage(logMesage);
+                }
+            })
+            console.groupEnd();
+
+            Bus.emit(logMessage, message, options);
+
+            return;
+        }
+
+        if (show) {
+            console.log(`${logMessage}:${message}`);
+            Bus.emit(logMessage, message);
         }
     }
 
@@ -58,6 +84,15 @@ export default class {
 
         console.log(`${logMessage}: ${message}`);
         Bus.emit(logMessage, logPayload);
+    }
+
+     createMessage(message) {
+        if ((message !== null && typeof message === 'object') || Array.isArray(message)) {
+            console.dir(message);
+        } else {
+            console.log(message);
+        }
+
     }
 
     trace(stack) {
