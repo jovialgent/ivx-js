@@ -75,6 +75,7 @@ export class iVXjs {
         this.experience = processedData.experience;
         this.experience.rules = processedData.rules;
         this.experience.Bus = this.Bus;
+        this.experience.Log = this.log;
         this.experience.processor = new ActionProcessor(this);
         this.experience.config = this.config;
 

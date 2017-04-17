@@ -32,8 +32,8 @@ export class Actions {
      * @return {HTMLNode} the element with the classes replaced.  
      */
     setElementClasses(element, eventObj) {
-        let {animationClasses = ""} = eventObj;
-        let {animationClass: oldAnimationClass} = element;
+        let { animationClasses = "" } = eventObj;
+        let { animationClass: oldAnimationClass } = element;
 
         if (element.className.indexOf(animationClasses) >= 0) {
             return;
@@ -55,7 +55,7 @@ export class Actions {
     }
 
     goToNextState(eventObj) {
-        let {next: navArray} = eventObj;
+        let { next: navArray } = eventObj;
         let self = this;
         let nextState = this.rules(navArray);
         let deferred = new Promise((resolve, reject) => {
@@ -72,7 +72,7 @@ export class Actions {
      * 
      */
     animateElement(eventObj) {
-        let {element} = eventObj;
+        let { element } = eventObj;
         let animationElements = document.querySelectorAll(element);
 
         if (!animationElements || animationElements.length <= 0) return;
@@ -115,15 +115,15 @@ export class Actions {
     }
 
     goToState(eventObj, iVXjsBus) {
-        let {state} = eventObj;
-        
+        let { state } = eventObj;
+
         if (iVXjsBus) {
             iVXjsBus.emit(this.stateEventNames.GO, eventObj);
         }
     }
 
     playAudioClip(eventObj) {
-        let {audioEventNames} = this;
+        let { audioEventNames } = this;
         let self = this;
 
         if (eventObj) {
@@ -152,10 +152,20 @@ export class Actions {
     }
 
     setData(eventObj) {
-        let {key, value} = eventObj;
+        let { key, value } = eventObj;
         let self = this;
         let setDataPromise = new Promise((resolve, reject) => {
             self.data[key] = value;
+
+            self.Log.debug(`Current Experience Data`, {
+                group: true,
+                messages: Object.keys(self.data).map((dataKey, index) => {
+                    return {
+                        message: `${dataKey}:${self.data[dataKey]}`,
+                        data: self.data[dataKey]
+                    }
+                })
+            }, self.data);
             resolve(self);
         })
 

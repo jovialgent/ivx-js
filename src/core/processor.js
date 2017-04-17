@@ -32,9 +32,9 @@ export class ActionProcessor {
                             data: actionObj.args[key]
                         }
                     })
-                });
+                }, actionObj);
             } else {
-                log.debug(`Event ${actionObj.eventName}`);
+                log.debug(`Event ${actionObj.eventName}`, {}, actionObj);
             }
 
 

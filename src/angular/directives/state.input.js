@@ -46,7 +46,11 @@ class InputState {
                     })
                 }
 
+                iVXjs.log.debug(`onInputReady Started`, {}, { state: data, source: 'onInputReady', status: 'started', actions: onInputReady, timestamp: Date.now() });
+
                 iVXjsActions.resolveActions(onInputReady, () => {
+                    iVXjs.log.debug(`onInputReady Completed`, {}, { state: data, source: 'onInputReady', status: 'completed', actions: onInputReady, timestamp: Date.now() });
+
                     if (audio && audio.src) {
                         iVXjsBus.emit(audioEventNames.PLAY);
                     }

@@ -34,7 +34,7 @@ class NavigationState {
 			iElm.html(thisNavigationState.html);
 			$compile(iElm.contents())($scope, (compiled) => {
 				iElm.html(compiled);
-				
+
 				let transitionAnimation = onLinksReady.find((event, index) => {
 					return event.eventName === "animateElement" && event.args.element === ".navigation-state-container";
 				});
@@ -49,10 +49,14 @@ class NavigationState {
 					});
 				}
 
+				iVXjs.log.debug(`onLinksReady Started`, {}, { state: data, source: 'onLinksReady', status: 'started', actions: onLinksReady, timestamp: Date.now() });
+
 				iVXjsActions.resolveActions(onLinksReady, () => {
 					if (audio && audio.src) {
 						iVXjsBus.emit(audioEventNames.PLAY);
 					}
+
+					iVXjs.log.debug(`onLinksReady Completed`, {}, { state: data, source: 'onLinksReady', status: 'completed', actions: onLinksReady, timestamp: Date.now() });
 				})
 			});
 		}

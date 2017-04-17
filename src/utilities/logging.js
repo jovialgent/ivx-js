@@ -40,7 +40,7 @@ export default class {
         Bus.emit(LoggingMessages.ERROR, errorPayload);
     }
 
-    debug(message, options = {}) {
+    debug(message, options = {}, data={}) {
         let { show, LoggingMessages, Bus } = this;
         let logMessage = LoggingMessages.DEBUG;
         let self = this;
@@ -63,14 +63,14 @@ export default class {
             })
             console.groupEnd();
 
-            Bus.emit(logMessage, message, options);
+            Bus.emit(logMessage, message, options, data);
 
             return;
         }
 
         if (show) {
             console.log(`${logMessage}:${message}`);
-            Bus.emit(logMessage, message);
+            Bus.emit(logMessage, message, {}, data);
         }
     }
 

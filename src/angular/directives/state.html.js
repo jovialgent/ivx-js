@@ -11,7 +11,7 @@ class HtmlState {
         this.controller = HtmlStateController;
         this.controllerAs = 'vm';
         this.link = function ($scope, iElm, iAttrs, controller) {
-            let {id, html, templateUrl, onCompile = [], audio} = $state.current.data;
+            let { id, html, templateUrl, onCompile = [], audio } = $state.current.data;
             let audioEventNames = new AudioEventNames();
 
             if (templateUrl) {
@@ -41,7 +41,10 @@ class HtmlState {
                     })
                 }
 
+                iVXjs.log.debug(`onCompile Started`, {}, { state: $state.current.data, source: 'onCompile', status: 'started', actions: onCompile, timestamp: Date.now() });
+
                 iVXjsActions.resolveActions(onCompile, () => {
+                    iVXjs.log.debug(`onCompile Completed`, {}, { state: $state.current.data, source: 'onCompile', status: 'completed', actions: onCompile, timestamp: Date.now() });
                     if (audio && audio.src) {
                         iVXjsBus.emit(audioEventNames.PLAY);
                     }
