@@ -35,7 +35,11 @@ class AnchorController {
 			}
 		});
 
+
+
 		this.iVXjsAudio.audioElement.play();
+		this.iVXjsAudio.audioElement.pause();
+
 	}
 }
 
