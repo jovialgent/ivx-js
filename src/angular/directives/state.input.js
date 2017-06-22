@@ -4,7 +4,7 @@ import AudioEventNames from "../../constants/audio.events.js";
 
 
 class InputState {
-    constructor($state, $compile, $sce, iVXjs, iVXjsActions, iVXjsUIModule, pullInTemplate) {
+    constructor($state, $compile, $sce, iVXjs, iVXjsActions, iVXjsUIModule, pullInTemplate, iVXjsBus) {
         this.template = this.templateHTML;
         this.replace = true;
         this.restrict = 'E';
@@ -64,6 +64,6 @@ class InputState {
     };
 }
 
-InputState.$inject = ['$state', '$compile', '$sce', 'iVXjs', 'ivxjs.actions', 'ivxjs.modules.ui', 'pullInTemplate'];
+InputState.$inject = ['$state', '$compile', '$sce', 'iVXjs', 'ivxjs.actions', 'ivxjs.modules.ui', 'pullInTemplate', 'ivxjs.bus'];
 
 export default createFactoryFunction(InputState);

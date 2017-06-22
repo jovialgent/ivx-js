@@ -56,6 +56,7 @@ export class ActionProcessor {
                 callback();
             })
             .catch(function (err) {
+
                 console.error('iVXjs: NOT ALL ACTIONS RESOLVED');
                 console.dir(err);
                 self.iVXjs.Bus.emit('iVXjs:iVXio:error:event-not-fired', err);
