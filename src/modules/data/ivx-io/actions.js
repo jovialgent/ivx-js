@@ -62,9 +62,9 @@ export class iVXioActions {
      * 
      */
     formatDateForPlatform(key, date) {
-        let {inputs} = this.experience.story;
+        let { inputs } = this.experience.story;
         let input = inputs[key];
-        let {display} = input;
+        let { display } = input;
 
         switch (display) {
             case "Date":
@@ -95,7 +95,7 @@ export class iVXioActions {
      */
     recordEvent(eventArgs) {
         if (typeof eventArgs === 'object') {
-            let {customEvent} = eventArgs;
+            let { customEvent } = eventArgs;
 
             try {
                 return this.experience.recordEvent(customEvent);
@@ -116,7 +116,7 @@ export class iVXioActions {
      */
     setConverted(eventArgs) {
         if (typeof eventArgs === 'object') {
-            let {label} = eventArgs;
+            let { label } = eventArgs;
 
             try {
                 return this.experience.setConverted(label);
@@ -155,12 +155,14 @@ export class iVXioActions {
      */
     setData(eventArgs) {
         if (typeof eventArgs === 'object') {
-            let {key, value} = eventArgs;
+            let { key, value } = eventArgs;
             let self = this;
-            
-            if(typeof this.experience.data[key] === 'undefined' || this.experience.data[key] === null){
-                this.experience.Bus.emit('iVXjs:iVXio:error:event-not-fired', eventArgs, {message:"iVXjs Error Message: Input not found"});
-                this.iVXjsLog.error({ message : 'iVXjs Error Message: Input not found'}, "IVX_IO");
+            let { debugHost = false } = this.experience;
+            let inputNotFound = typeof this.experience.data[key] === 'undefined' || this.experience.data[key] === null
+
+            if (!debugHost && inputNotFound) {
+                this.experience.Bus.emit('iVXjs:iVXio:error:event-not-fired', eventArgs, { message: "iVXjs Error Message: Input not found" });
+                this.iVXjsLog.error({ message: 'iVXjs Error Message: Input not found' }, "IVX_IO");
                 return;
             }
 
@@ -171,7 +173,24 @@ export class iVXioActions {
             }
 
             try {
-                return this.experience.setData(key, value);
+                return this.experience.setData(key, value)
+                    .then((test) => {
+                        let { data } = self.experience;
+
+                        if (debugHost) {
+                            self.experience.data[key] = value;
+                        }
+
+                        self.experience.Log.debug(`Current Experience Data`, {
+                            group: true,
+                            messages: Object.keys(data).map((dataKey, index) => {
+                                return {
+                                    message: `${dataKey}:${data[dataKey]}`,
+                                    data: data[dataKey]
+                                }
+                            })
+                        }, data);
+                    });
             } catch (e) {
                 this.experience.Bus.emit(iVXioErrors.EVENT_NOT_FIRED, eventArgs, e);
                 this.iVXjsLog.error(e);
@@ -189,7 +208,7 @@ export class iVXioActions {
      */
     setMilestone(eventArgs) {
         if (typeof eventArgs === 'object') {
-            let {milestone} = eventArgs;
+            let { milestone } = eventArgs;
 
             try {
                 return this.experience.setMilestone(milestone);

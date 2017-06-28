@@ -19,8 +19,6 @@ class CascadingOptionsInputController extends InputControllerHelper {
             isStatic
         };
 
-        console.dir(currentTree);
-
         vm.currentSelection = [];
         vm.currentTree = currentTree;
 
@@ -166,7 +164,6 @@ class CascadingOptionsInputController extends InputControllerHelper {
                 keepAdding = selection;
 
                 if (keepAdding) {
-                    console.log(selection.items);
                     if (selection && selection.items && selection.items.length > 0) {
                         editOptions = currentOptions
                             .slice(0, 1)

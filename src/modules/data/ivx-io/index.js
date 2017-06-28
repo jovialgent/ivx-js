@@ -73,12 +73,14 @@ export class iVXio {
       iVX(experienceHostSettings)
         .then(
         (iVX) => {
+          console.log(iVX.experience);
           if (!iVX || !iVX.experience || !iVX.experience.story || !iVX.experience.story.data) {
             window.setTimeout(() => {
               self.Bus.emit(iVXioErrors.PLATFORM_UNAVAILABLE, {});
             }, 100);
             return;
           }
+
           let {experience: experienceSettings = {}, rules: customRules} = iVXjsSettings;
           let defaultActions = objectParser.merge(new iVXjsActions(), experienceSettings);
           let experience = objectParser.merge(defaultActions, iVX.experience);
@@ -90,6 +92,7 @@ export class iVXio {
           let rules = new iVXioRules(experience, customRules).rules;
           let states = new InputValidator(iVX.experience.story.data.states, iVX.experience.story.inputs, self, reject).states;
 
+          experience.debugHost = experienceHostSettings.debug;
 
           experience.whiteList = [
             'self',
