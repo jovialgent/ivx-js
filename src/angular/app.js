@@ -6,6 +6,7 @@ import AngularEventNames from '../constants/angular.events.js';
 import iVXjsConfigEventNames from '../constants/iVXjs.config.events.js';
 import iVXjsConstants from "../constants/registered-constants.js";
 import { iVXjs } from '../core/app.js';
+import factoryFunctionCreator from "./utilities/create-factory-function";
 
 let stringParser = new StringParsers();
 let objectParsers = new ObjectParsers();
@@ -85,6 +86,7 @@ angular
     // Constants
     .constant('iVXjs', myIVXjs)
     .constant('ivxjs.constants', new iVXjsConstants())
+    .constant('factoryFunctionCreator', factoryFunctionCreator)
     //.constant('YT', YT)
 
     // Inputs

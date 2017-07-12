@@ -5,6 +5,8 @@ import { TypeValidator, ObjectParsers } from '../../../utilities/type-parsers.js
 import { assert } from '../../../utilities/asserts.js';
 import InputValidator from "./input-validators/index.js";
 import iVXioErrorNames from '../../../constants/iVXio.errors.js';
+import factoryFunctionCreator from "./components/factory-function-creator";
+import iVXioComponents from "./components/index";
 
 let typeValidator = new TypeValidator()
 let objectParser = new ObjectParsers()
@@ -66,14 +68,13 @@ export class iVXio {
         return;
       }
 
-      self.Bus.once(iVXioErrors.EXPERIENCE, (error)=>{
+      self.Bus.once(iVXioErrors.EXPERIENCE, (error) => {
         reject(error);
       })
- 
+
       iVX(experienceHostSettings)
         .then(
         (iVX) => {
-          console.log(iVX.experience);
           if (!iVX || !iVX.experience || !iVX.experience.story || !iVX.experience.story.data) {
             window.setTimeout(() => {
               self.Bus.emit(iVXioErrors.PLATFORM_UNAVAILABLE, {});
@@ -81,14 +82,14 @@ export class iVXio {
             return;
           }
 
-          let {experience: experienceSettings = {}, rules: customRules} = iVXjsSettings;
+          let { experience: experienceSettings = {}, rules: customRules } = iVXjsSettings;
           let defaultActions = objectParser.merge(new iVXjsActions(), experienceSettings);
           let experience = objectParser.merge(defaultActions, iVX.experience);
           let modifiedActions = new iVXioActions(experience, this.iVXjsLog);
-          let {ui: storyUI, validation: storyValidation} = iVX.experience.story.data;
+          let { ui: storyUI, validation: storyValidation } = iVX.experience.story.data;
 
           iVX.experience.story.data.metadata = iVX.experience.story.data.metadata ? iVX.experience.story.data.metadata : {};
-          
+
           let rules = new iVXioRules(experience, customRules).rules;
           let states = new InputValidator(iVX.experience.story.data.states, iVX.experience.story.inputs, self, reject).states;
 
@@ -128,9 +129,11 @@ export class iVXio {
 module.export = initializeiVXIO;
 
 if (angular && angular.module('ivx-js')) {
-  angular
-    .module('ivx-js')
-    .constant('iVXjs.data.iVXio', initializeiVXIO);
+  let app = angular.module('ivx-js');
+
+  app.constant('iVXjs.data.iVXio', initializeiVXIO);
+
+  new iVXioComponents(app, { factoryFunctionCreator });
 }
 
 function initializeiVXIO(settings = {}) {
