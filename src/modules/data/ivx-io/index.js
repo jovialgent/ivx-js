@@ -91,7 +91,7 @@ export class iVXio {
           iVX.experience.story.data.metadata = iVX.experience.story.data.metadata ? iVX.experience.story.data.metadata : {};
 
           let rules = new iVXioRules(experience, customRules).rules;
-          let states = new InputValidator(iVX.experience.story.data.states, iVX.experience.story.inputs, self, reject).states;
+          let states = new InputValidator(iVX.experience.story.data.states, iVX.experience.story.inputs, self, reject, experienceHostSettings.debug).states;
 
           experience.debugHost = experienceHostSettings.debug;
 
@@ -128,12 +128,21 @@ export class iVXio {
 
 module.export = initializeiVXIO;
 
-if (angular && angular.module('ivx-js')) {
-  let app = angular.module('ivx-js');
+if (angular) {
+  let app = angular.module('ivx-input-validator', []);
 
-  app.constant('iVXjs.data.iVXio', initializeiVXIO);
+  app.constant('validator', InputValidator);
 
-  new iVXioComponents(app, { factoryFunctionCreator });
+  try {
+    let app = angular.module('ivx-js');
+
+    app.constant('iVXjs.data.iVXio', initializeiVXIO);
+
+    new iVXioComponents(app, { factoryFunctionCreator });
+  } catch (e) {
+    console.warn('The iVXio Data Module is not attached to the iVXjs module. If this is correct, ignore this warning.')
+    console.warn(e);
+  }
 }
 
 function initializeiVXIO(settings = {}) {
