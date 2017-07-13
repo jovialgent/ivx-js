@@ -5,18 +5,22 @@ import createFactoryFunction from '../utilities/create-factory-function.js';
 class RaiseiVXjsEvent {
     constructor(iVXjs, iVXjsBus) {
         this.restrict = 'A';
-        this.controller = ["iVXjs", (iVXjs)=>{
-            
+        this.scope = {
+            ivxEventArgs: "=ivxEventArgs",
+            ivxEvent: "@ivxEvent"
+        }
+        this.controller = ["iVXjs", (iVXjs) => {
+
         }];
         this.link = ($scope, iElm, iAttrs, controller) => {
-            iElm[0].addEventListener('click', (event) =>{
+            iElm[0].addEventListener('click', (event) => {
                 event.preventDefault();
-                
-                let {ivxEvent : eventName} = iAttrs;
-                
-                iVXjsBus.emit(eventName);
+
+                let { ivxEventArgs: args = {}, ivxEvent: eventName } = $scope;
+
+                iVXjsBus.emit(eventName, args);
             }, false);
-        }        
+        }
     }
 
 }

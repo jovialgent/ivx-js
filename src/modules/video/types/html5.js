@@ -1,9 +1,10 @@
-import { ObjectParsers } from "../../../utilities/type-parsers.js";
+import { ObjectParsers, TypeValidator } from "../../../utilities/type-parsers.js";
 import PlayerSettings from "../settings.js";
 import VideoEventNames from "../../../constants/video.events.js";
 
 let thisObjectParsers = new ObjectParsers();
 let playerSettings = new PlayerSettings();
+let typeValidator = new TypeValidator();
 
 export class Html5 {
     constructor(container, settings, stateData = {}, iVXjsLog) {
@@ -33,11 +34,23 @@ export class Html5 {
         this.iVXjsBus.emit(this.videoEventNames.SET_DURATION, this.player.duration);
     }
 
-    setVolume(volume) {
+    setVolume(volumeObj) {
+        let volume = volumeObj;
+
+        if (typeValidator.isObject(volumeObj)) {
+            volume = volumeObj.volume;
+        }
+
         this.player.volume = volume;
     }
 
-    seek(currentTime) {
+    seek(currentTimeObj) {
+        let currentTime = currentTimeObj;
+
+        if (typeValidator.isObject(currentTimeObj)) {
+            currentTime = currentTimeObj.currentTime;
+        }
+
         this.player.currentTime = currentTime
     }
 
@@ -74,7 +87,7 @@ export class Html5 {
     }
 
     addEventListeners(iVXjsBus) {
-        let {videoEventNames, iVXjsLog} = this;;
+        let { videoEventNames, iVXjsLog } = this;;
         let self = this;
 
         this.iVXjsBus = iVXjsBus;
@@ -100,17 +113,17 @@ export class Html5 {
         this.setOnEnd();
 
         this.player.addEventListener('error', function (event) {
-            let {settings} = self;
-            let {src,sources=[]} = settings;
+            let { settings } = self;
+            let { src, sources = [] } = settings;
             let sourceString = "";
 
-            if(src){
+            if (src) {
                 sourceString = `Failed to load video with filepath: ${src}`;
-            } 
+            }
 
-            if(sources){
-                sourceString = sources.reduce((sourceList, sourcePath, index)=>{
-                    if(index === 0){
+            if (sources) {
+                sourceString = sources.reduce((sourceList, sourcePath, index) => {
+                    if (index === 0) {
                         return `${sourceList}${sourcePath.src}`;
                     }
 
@@ -138,6 +151,7 @@ export class Html5 {
         }
 
         function seekOnEvent(currentTime) {
+
             self.seek(currentTime);
         }
 
@@ -151,7 +165,7 @@ export class Html5 {
     }
 
     dispose(iVXjsBus) {
-        let {videoEventNames} = this;
+        let { videoEventNames } = this;
         let self = this;
         let eventNameMap = {
             play: videoEventNames.PLAY,
@@ -171,8 +185,8 @@ export class Html5 {
     }
 
     get html() {
-        let {isiOS = false} = this.stateData;
-        let {tracks = [], sources = [], controls = true} = this.settings;
+        let { isiOS = false } = this.stateData;
+        let { tracks = [], sources = [], controls = true } = this.settings;
         let tags = ['tracks', 'sources', 'autoplay'];
         let justAttrs = ['controls'];
 

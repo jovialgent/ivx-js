@@ -1,4 +1,7 @@
 import VideoEventNames from "../../../constants/video.events.js";
+import { TypeValidator } from "../../../utilities/type-parsers.js";
+
+let typeValidator = new TypeValidator();
 
 export class YouTube {
     constructor(container, settings, stateData, iVXjsLog) {
@@ -12,7 +15,7 @@ export class YouTube {
     }
 
     createPlayer() {
-        let { height = 'inherit', width = 'inherit', id, controls} = this._settings;
+        let { height = 'inherit', width = 'inherit', id, controls } = this._settings;
         let hasControls = 1;
 
         if (typeof controls === 'string') {
@@ -32,7 +35,7 @@ export class YouTube {
     }
 
     dispose(iVXjsBus) {
-        let {videoEventNames} = this;
+        let { videoEventNames } = this;
         let self = this;
         let eventNameMap = {
             play: videoEventNames.PLAY,
@@ -55,23 +58,23 @@ export class YouTube {
     }
 
     addEventListeners(iVXjsBus) {
-        let {_stateData: stateData, player, videoEventNames} = this;
+        let { _stateData: stateData, player, videoEventNames } = this;
         let self = this;
         let timeUpdateId;
         let numberofTimeupdates = 0;
 
         player.addEventListener('onError', (event) => {
             let messages = {
-                2 : `The request contains an invalid parameter value. For example, this error occurs if you specify a video ID that does not have 11 characters, or if the video ID contains invalid characters, such as exclamation points or asterisks.`,
-                5 : `The requested content cannot be played in an HTML5 player or another error related to the HTML5 player has occurred.`,
-                100 : `The video requested was not found. This error occurs when a video has been removed (for any reason) or has been marked as private.`,
-                101 : `The owner of the requested video does not allow it to be played in embedded players.`,
-                150 : `The video requested was not found. This error occurs when a video has been removed (for any reason) or has been marked as private.`
+                2: `The request contains an invalid parameter value. For example, this error occurs if you specify a video ID that does not have 11 characters, or if the video ID contains invalid characters, such as exclamation points or asterisks.`,
+                5: `The requested content cannot be played in an HTML5 player or another error related to the HTML5 player has occurred.`,
+                100: `The video requested was not found. This error occurs when a video has been removed (for any reason) or has been marked as private.`,
+                101: `The owner of the requested video does not allow it to be played in embedded players.`,
+                150: `The video requested was not found. This error occurs when a video has been removed (for any reason) or has been marked as private.`
             };
             let errorObj = {
-                message : messages[event.data]
+                message: messages[event.data]
             };
-            
+
             self.iVXjsLog.error(errorObj, "VIDEO");
         })
 
@@ -129,7 +132,13 @@ export class YouTube {
             iVXjsBus.emit(videoEventNames.SET_DURATION, player.getDuration());
         }
 
-        function volumeOnEvent(volume) {
+        function volumeOnEvent(volumeObj) {
+            let volume = volumeObj;
+
+            if (typeValidator.isObject(volumeObj)) {
+                volume = volumeObj.volume;
+            }
+
             player.setVolume(volume * 100);
         }
 
@@ -147,8 +156,15 @@ export class YouTube {
             }, 50);
         }
 
-        function seekOnEvent(currentTime) {
+        function seekOnEvent(currentTimeObj) {
             clearInterval(self.timeUpdateId);
+            
+            let currentTime = currentTimeObj;
+
+            if (typeValidator.isObject(currentTimeObj)) {
+                currentTime = currentTimeObj.currentTime;
+            }
+            
             player.seekTo(currentTime);
         }
 

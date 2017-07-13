@@ -6,7 +6,7 @@ class FormInputController {
 
         this.formController = {};
         this.onSubmit = ($event) => {
-            let {formInput} = $scope;
+            let { formInput } = $scope;
 
             $scope.onSubmit(formInput);
         }

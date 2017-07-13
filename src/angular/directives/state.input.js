@@ -2,7 +2,6 @@ import createFactoryFunction from '../utilities/create-factory-function.js';
 import InputStateController from '../controllers/state.input.js';
 import AudioEventNames from "../../constants/audio.events.js";
 
-
 class InputState {
     constructor($state, $compile, $sce, iVXjs, iVXjsActions, iVXjsUIModule, pullInTemplate, iVXjsBus) {
         this.template = this.templateHTML;

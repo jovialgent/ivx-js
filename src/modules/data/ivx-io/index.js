@@ -137,6 +137,8 @@ if (angular) {
     let app = angular.module('ivx-js');
 
     app.constant('iVXjs.data.iVXio', initializeiVXIO);
+    app.constant('validator', InputValidator);
+
 
     new iVXioComponents(app, { factoryFunctionCreator });
   } catch (e) {

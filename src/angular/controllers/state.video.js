@@ -81,7 +81,6 @@ class VideoStateController {
 
                 if (timeAt <= currentTime && (always || !fired)) {
                     cuePoint.fired = true;
-                    iVXjsBus.emit(cuePoint.eventName);
                 
                     iVXjs.log.debug(`Cuepoint ${index} Started`, {}, { cuePoint, index, source: 'cuePoint', status: 'started', timestamp: Date.now() });
                     

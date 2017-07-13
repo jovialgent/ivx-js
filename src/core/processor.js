@@ -58,7 +58,17 @@ export class ActionProcessor {
             .catch(function (err) {
 
                 console.error('iVXjs: NOT ALL ACTIONS RESOLVED');
-                console.dir(err);
+                console.error(err);
+                console.log("Actions Not Resolved:");
+                log.debug(`One or all of the following events were not fired:`, {
+                    group: true,
+                    messages: Object.keys(actionObj.args).map((key, index) => {
+                        return {
+                            message: `${key}:${actionObj.args[key]}`,
+                            data: actionObj.args[key]
+                        }
+                    })
+                }, actionObj);
                 self.iVXjs.Bus.emit('iVXjs:iVXio:error:event-not-fired', err);
             });
     }

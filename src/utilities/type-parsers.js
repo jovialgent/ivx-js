@@ -7,6 +7,11 @@ export class TypeValidator {
         return Object.prototype.toString;
     }
 
+    isObject(value) {
+        const type = typeof value;
+        return value != null && (type == 'object' || type == 'function')
+    }
+
     isUndefined(obj) {
         return obj === undefined || obj === null;
     }
@@ -15,7 +20,7 @@ export class TypeValidator {
         return this.toString.call(obj) === '[object String]';
     }
 
-    isFunction(obj){
+    isFunction(obj) {
         return obj && this.toString.call(obj) === '[object Function]';
     }
 
