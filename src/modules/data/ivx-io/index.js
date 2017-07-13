@@ -7,6 +7,7 @@ import InputValidator from "./input-validators/index.js";
 import iVXioErrorNames from '../../../constants/iVXio.errors.js';
 import factoryFunctionCreator from "./components/factory-function-creator";
 import iVXioComponents from "./components/index";
+import iVXioServices from "./services/index";
 
 let typeValidator = new TypeValidator()
 let objectParser = new ObjectParsers()
@@ -141,6 +142,7 @@ if (angular) {
 
 
     new iVXioComponents(app, { factoryFunctionCreator });
+    new iVXioServices(app, {factoryFunctionCreator });
   } catch (e) {
     console.warn('The iVXio Data Module is not attached to the iVXjs module. If this is correct, ignore this warning.')
     console.warn(e);

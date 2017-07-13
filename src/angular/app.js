@@ -7,6 +7,7 @@ import iVXjsConfigEventNames from '../constants/iVXjs.config.events.js';
 import iVXjsConstants from "../constants/registered-constants.js";
 import { iVXjs } from '../core/app.js';
 import factoryFunctionCreator from "./utilities/create-factory-function";
+import Services from "./services/index";
 
 let stringParser = new StringParsers();
 let objectParsers = new ObjectParsers();
@@ -70,15 +71,19 @@ import AppConfig from './app.config.js';
 // Run
 import AppRun from './app.run.js';
 
-let {iVXjsGlobalConfigs = {}} = window;
-let {modules = []} = iVXjsGlobalConfigs;
+let { iVXjsGlobalConfigs = {} } = window;
+let { modules = [] } = iVXjsGlobalConfigs;
 let deps = [].concat([
     'ui.router',
     'ngSanitize',
 ], modules);
 
-angular
-    .module('ivx-js', deps)
+
+
+var app = angular
+    .module('ivx-js', deps);
+
+    app
 
     //Providers
     .provider('iVXjsSetup', iVXjsSetup)
@@ -151,6 +156,9 @@ angular
 
     //Run
     .run(AppRun);
+
+new Services(app, { factoryFunctionCreator });
+
 
 // Bootstrap App
 myIVXjs.Bus.on(iVXjsConfigEvents.VALIDATED, (iVXjs) => {

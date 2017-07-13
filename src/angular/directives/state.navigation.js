@@ -3,7 +3,7 @@ import AudioEventNames from "../../constants/audio.events.js";
 
 
 class NavigationState {
-	constructor($state, $rootScope, $compile, $timeout, iVXjs, iVXjsModules, iVXjsBus, iVXjsAudio, iVXjsActions, pullInTemplate) {
+	constructor($state, $rootScope, $compile, $timeout, iVXjs, iVXjsModules, iVXjsBus, iVXjsAudio, iVXjsActions, pullInTemplate, ivxExperienceScope) {
 		this.template = this.templateHTML;
 		this.restrict = 'E';
 		this.replace = true;
@@ -24,7 +24,7 @@ class NavigationState {
 
 			let thisNavigationState = new iVXjsModules.states.navigation(data, linkSection);
 
-			$scope.experience = iVXjs.experience.data;
+			  $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
 
 			$timeout(() => {
 
@@ -67,6 +67,6 @@ class NavigationState {
 	};
 }
 
-NavigationState.$inject = ['$state', '$rootScope', '$compile', '$timeout', 'iVXjs', 'ivxjs.modules.ui', 'ivxjs.bus', 'ivxjs.modules.audio', 'ivxjs.actions', 'pullInTemplate'];
+NavigationState.$inject = ['$state', '$rootScope', '$compile', '$timeout', 'iVXjs', 'ivxjs.modules.ui', 'ivxjs.bus', 'ivxjs.modules.audio', 'ivxjs.actions', 'pullInTemplate', "ivxExperienceScope"];
 
 export default createFactoryFunction(NavigationState);

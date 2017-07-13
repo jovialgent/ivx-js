@@ -2,7 +2,7 @@ import createFactoryFunction from '../utilities/create-factory-function.js';
 import AnchorController from '../controllers/ui.anchor.js';
 
 export class Anchor {
-	constructor($compile, iVXjs, iVXjsUIModule, pullInTemplate) {
+	constructor($compile, iVXjs, iVXjsUIModule, pullInTemplate, ivxExperienceScope) {
 		this.template = this.templateHTML;
 		this.restrict = 'E';
 		this.scope = {
@@ -11,9 +11,9 @@ export class Anchor {
 		this.controller = AnchorController;
 		this.controllerAs = 'vm';
 		this.replace = true;
-		this.link = function($scope, iElm, iAttrs, controller) {
-			let {anchorInfo} = $scope;
-			let {attributes = {}} = anchorInfo;
+		this.link = function ($scope, iElm, iAttrs, controller) {
+			let { anchorInfo } = $scope;
+			let { attributes = {} } = anchorInfo;
 
 			attributes['ng-click'] = `vm.onLinkClick($event)`;
 			anchorInfo.attributes = attributes;
@@ -22,8 +22,9 @@ export class Anchor {
 			anchorInfo = pullInTemplate.convertLabel(anchorInfo.href, anchorInfo, $scope)
 
 			let thisAnchor = new iVXjsUIModule.anchor(anchorInfo);
-			
-			$scope.experience = iVXjs.experience.data;
+
+			$scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
+
 
 			iElm.html(thisAnchor.html);
 			$compile(iElm.contents())($scope);
@@ -35,6 +36,6 @@ export class Anchor {
 	}
 }
 
-Anchor.$inject = ['$compile', 'iVXjs', 'ivxjs.modules.ui', 'pullInTemplate'];
+Anchor.$inject = ['$compile', 'iVXjs', 'ivxjs.modules.ui', 'pullInTemplate', "ivxExperienceScope"];
 
 export default createFactoryFunction(Anchor);

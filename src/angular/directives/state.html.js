@@ -3,7 +3,7 @@ import HtmlStateController from '../controllers/state.html.js';
 import AudioEventNames from "../../constants/audio.events.js";
 
 class HtmlState {
-    constructor($state, $http, $compile, $sce, $timeout, iVXjs, iVXjsActions, iVXjsAudio, iVXjsBus) {
+    constructor($state, $http, $compile, $sce, $timeout, iVXjs, iVXjsActions, iVXjsAudio, iVXjsBus, ivxExperienceScope) {
         this.template = this.templateHTML;
         this.restrict = 'E';
         this.replace = true;
@@ -24,7 +24,9 @@ class HtmlState {
                 iElm.html(html);
             }
 
-            $scope.experience = iVXjs.experience.data;
+
+
+            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
 
             $timeout(() => {
                 let hasTransition = onCompile.find((event, index) => {
@@ -60,6 +62,6 @@ class HtmlState {
     };
 }
 
-HtmlState.$inject = ['$state', '$http', '$compile', '$sce', '$timeout', 'iVXjs', 'ivxjs.actions', 'ivxjs.modules.audio', 'ivxjs.bus'];
+HtmlState.$inject = ['$state', '$http', '$compile', '$sce', '$timeout', 'iVXjs', 'ivxjs.actions', 'ivxjs.modules.audio', 'ivxjs.bus', "ivxExperienceScope"];
 
 export default createFactoryFunction(HtmlState);

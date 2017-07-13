@@ -4,7 +4,7 @@ import VideoEventConstants from "../../constants/video.events.js";
 
 
 class VideoState {
-    constructor($compile, $state, $sce, $timeout, iVXjs, iVXjsBus, iVXjsUIModule, createInlineVideo, pullInTemplate) {
+    constructor($compile, $state, $sce, $timeout, iVXjs, iVXjsBus, iVXjsUIModule, createInlineVideo, pullInTemplate, ivxExperienceScope) {
         this.template = this.templateHTML;
         this.restrict = 'E';
         this.replace = true;
@@ -12,12 +12,12 @@ class VideoState {
         this.controller = VideoStateController
         this.controllerAs = 'vm';
         this.link = ($scope, iElm, iAttrs, controller) => {
-            let {data} = angular.copy($state.current);
+            let { data } = angular.copy($state.current);
 
             controller.stateData = data;
 
-            let {id, playerType = "html5", playerSettings = {}, cuePoints = [], personalizations = [], header = {}, footer = {}} = data;
-            let {vimeoId, youtubeId, inlineSrc, iphoneInline = false} = playerSettings;
+            let { id, playerType = "html5", playerSettings = {}, cuePoints = [], personalizations = [], header = {}, footer = {} } = data;
+            let { vimeoId, youtubeId, inlineSrc, iphoneInline = false } = playerSettings;
             let controlsHTML = ``;
 
             if (typeof playerSettings.controls === 'string') {
@@ -32,10 +32,9 @@ class VideoState {
                 data.isIphone = true;
             }
 
-
             let personalizationsHTML = personalizations.reduce((personalizationHTML, thisPersonalization, index) => {
                 thisPersonalization = pullInTemplate.convertTemplateUrlToHtml(thisPersonalization, $scope);
-                
+
                 let { defaultAnimationClass = 'hide', html, id } = thisPersonalization;
 
                 return `${personalizationHTML} <div id="${id}" class="${defaultAnimationClass}">${html}</div> `
@@ -51,19 +50,19 @@ class VideoState {
 
             let videoFramework = new iVXjsUIModule.states.video(videoPlayerHTML, data);
 
-            $scope.experience = iVXjs.experience.data;
+            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
 
             iElm.html(videoFramework.html);
-           
-            $compile(iElm.contents())($scope, (compiled)=>{
-                iElm.html(compiled); 
+
+            $compile(iElm.contents())($scope, (compiled) => {
+                iElm.html(compiled);
             });
 
-            if(createInlineVideo.isMobile() || createInlineVideo.isiOS()){
+            if (createInlineVideo.isMobile() || createInlineVideo.isiOS()) {
                 let videoEventNames = new VideoEventConstants();
-                $timeout(()=>{
+                $timeout(() => {
                     iVXjsBus.emit(videoEventNames.CAN_PLAY);
-                },500);
+                }, 500);
             }
         }
     }
@@ -73,6 +72,6 @@ class VideoState {
     }
 }
 
-VideoState.$inject = ['$compile', '$state', '$sce', '$timeout', 'iVXjs', 'ivxjs.bus', 'ivxjs.modules.ui', 'createInlineVideo', 'pullInTemplate'];
+VideoState.$inject = ['$compile', '$state', '$sce', '$timeout', 'iVXjs', 'ivxjs.bus', 'ivxjs.modules.ui', 'createInlineVideo', 'pullInTemplate', 'ivxExperienceScope'];
 
 export default createFactoryFunction(VideoState);

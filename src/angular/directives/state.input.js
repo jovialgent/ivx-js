@@ -3,7 +3,7 @@ import InputStateController from '../controllers/state.input.js';
 import AudioEventNames from "../../constants/audio.events.js";
 
 class InputState {
-    constructor($state, $compile, $sce, iVXjs, iVXjsActions, iVXjsUIModule, pullInTemplate, iVXjsBus) {
+    constructor($state, $compile, $sce, iVXjs, iVXjsActions, iVXjsUIModule, pullInTemplate, iVXjsBus, ivxExperienceScope) {
         this.template = this.templateHTML;
         this.replace = true;
         this.restrict = 'E';
@@ -20,7 +20,7 @@ class InputState {
 
             let inputStateFramework = new iVXjsUIModule.states.input(formSection, data);
 
-            $scope.experience = iVXjs.experience.data;
+            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
             controller.formSettings = formSettings;
 
             iElm.html(inputStateFramework.html);
@@ -63,6 +63,6 @@ class InputState {
     };
 }
 
-InputState.$inject = ['$state', '$compile', '$sce', 'iVXjs', 'ivxjs.actions', 'ivxjs.modules.ui', 'pullInTemplate', 'ivxjs.bus'];
+InputState.$inject = ['$state', '$compile', '$sce', 'iVXjs', 'ivxjs.actions', 'ivxjs.modules.ui', 'pullInTemplate', 'ivxjs.bus', "ivxExperienceScope"];
 
 export default createFactoryFunction(InputState);
