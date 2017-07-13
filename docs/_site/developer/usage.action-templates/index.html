@@ -167,6 +167,13 @@
       <li><a href="#ivxjs-raise-event" id="markdown-toc-ivxjs-raise-event">iVXjs Raise Event</a></li>
     </ul>
   </li>
+  <li><a href="#ivxio-action-templates" id="markdown-toc-ivxio-action-templates">iVXio Action Templates</a>    <ul>
+      <li><a href="#ivxio-set-milestone" id="markdown-toc-ivxio-set-milestone">iVXio Set Milestone</a></li>
+      <li><a href="#ivxio-record-event" id="markdown-toc-ivxio-record-event">iVXio Record Event</a></li>
+      <li><a href="#ivxio-set-completed" id="markdown-toc-ivxio-set-completed">iVXio Set Completed</a></li>
+      <li><a href="#ivxio-set-converted" id="markdown-toc-ivxio-set-converted">iVXio Set Converted</a></li>
+    </ul>
+  </li>
 </ul>
 
   </nav>
@@ -222,7 +229,57 @@ within the application when the element is clicked</p>
 
 <p><em>Usage</em></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>&lt;ANY ivx-event="[iVXjsEVENT-NAME]"&gt;&lt;/ANY&gt;
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;ANY ivx-event="[iVXjsEVENT-NAME]" ivx-event-args="{ARG1 : ARGVALUE-1, ARG2 : ARG-VALUE-2, etc...}&gt;&lt;/ANY&gt;
+</code></pre>
+</div>
+
+<h1 id="ivxio-action-templates">iVXio Action Templates</h1>
+
+<h2 id="ivxio-set-milestone">iVXio Set Milestone</h2>
+
+<p><em>Description</em></p>
+
+<p>Sets a milestone in the iVX Platform</p>
+
+<p><em>Usage</em></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;ANY ivx-set-milestone="[MILESTONE]"&gt;&lt;/ANY&gt;    
+</code></pre>
+</div>
+
+<h2 id="ivxio-record-event">iVXio Record Event</h2>
+
+<p><em>Description</em></p>
+
+<p>Sets fires an event on the iVX Platform</p>
+
+<p><em>Usage</em></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;ANY ivx-record-event="[EVENT-KEY]"&gt;&lt;/ANY&gt; 
+</code></pre>
+</div>
+
+<h2 id="ivxio-set-completed">iVXio Set Completed</h2>
+
+<p><em>Description</em></p>
+
+<p>Sets this iVX experience to Completed</p>
+
+<p><em>Usage</em></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;ANY ivx-set-completed&gt;&lt;/ANY&gt;    
+</code></pre>
+</div>
+
+<h2 id="ivxio-set-converted">iVXio Set Converted</h2>
+
+<p><em>Description</em></p>
+
+<p>Sets this iVX experience to Converted with a conversion label.</p>
+
+<p><em>Usage</em></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;ANY ivx-set-converted="[CONVERSION LABEL]"&gt;Set Converted&lt;/ANY&gt;&lt;/ANY&gt;
 </code></pre>
 </div>
 

@@ -74,6 +74,20 @@ _Payload_
 
 None 
 
+_JSON_
+
+```
+{
+    "eventName" : "iVXjs:audio:mute"
+}
+```
+
+_Action Template_
+
+```
+<ANY ivx-event="iVXjs:audio:mute"></ANY>
+```
+
 ## iVXjs:audio:pause 
 
 _Description_ 
@@ -84,6 +98,20 @@ _Payload_
 
 None 
 
+_JSON_
+
+```
+{
+    "eventName" : "iVXjs:audio:pause"
+}
+```
+
+_Action Template_
+
+```
+<ANY ivx-event="iVXjs:audio:pause"></ANY>
+```
+
 ## iVXjs:audio:play
 
 _Description_
@@ -93,6 +121,20 @@ Plays the audio
 _Payload_ 
 
 None 
+
+_JSON_
+
+```
+{
+    "eventName" : "iVXjs:audio:play"
+}
+```
+
+_Action Template_
+
+```
+<ANY ivx-event="iVXjs:audio:play"></ANY>
+```
 
 ## iVXjs:audio:time-update
 
@@ -113,6 +155,20 @@ Unmutes and sets the audio back to the original volume
 _Payload_ 
 
 None 
+
+_JSON_
+
+```
+{
+    "eventName" : "iVXjs:audio:unmute"
+}
+```
+
+_Action Template_
+
+```
+<ANY ivx-event="iVXjs:audio:unmute"></ANY>
+```
 
 # Config Events
 
@@ -241,6 +297,8 @@ _Payload_
     }
 }
 ```
+
+
 
 ## iVXjs:log:error 
 
@@ -390,6 +448,7 @@ player - current instant of this video player.
 
 stateData - state data where this player exists.
 
+
 ## iVXjs:video:dispose
 
 _Description_ 
@@ -431,6 +490,20 @@ _Payload_
 
 None 
 
+_JSON_
+
+```
+{
+    "eventName" : "iVXjs:video:mute"
+}
+```
+
+_Action Template_
+
+```
+<ANY ivx-event="iVXjs:video:mute"></ANY>
+```
+
 ## iVXjs:video:pause
 
 _Description_ 
@@ -440,6 +513,20 @@ Pauses the current video.
 _Payload_ 
 
 None 
+
+_JSON_
+
+```
+{
+    "eventName" : "iVXjs:video:pause"
+}
+```
+
+_Action Template_
+
+```
+<ANY ivx-event="iVXjs:video:pause"></ANY>
+```
 
 ## iVXjs:video:play 
 
@@ -451,6 +538,20 @@ _Payload_
 
 None 
 
+_JSON_
+
+```
+{
+    "eventName" : "iVXjs:video:play"
+}
+```
+
+_Action Template_
+
+```
+<ANY ivx-event="iVXjs:video:play"></ANY>
+```
+
 ## iVXjs:video:seek
 
 _Description_ 
@@ -461,9 +562,32 @@ _Payload_
 
 ```
 {
-    "type": "number", 
-    "description" : "The time to seek in seconds"
+    "type": "object", 
+    "properties: {
+       "currentTime" : {
+           "type" : "number",
+            "description" : "The time to seek in seconds"
+       }
+    }
+   
 }
+```
+
+_JSON_
+
+```
+{
+    "eventName" : "iVXjs:video:seek",
+    "args" : {
+        "currentTime" : TIME_IN_SECONDS
+    }
+}
+```
+
+_Action Template_
+
+```
+<ANY ivx-event="iVXjs:video:seek" ivx-event-args="{currentTime : SECONDS}"></ANY>
 ```
 
 ## iVXjs:video:set-duration 
@@ -491,11 +615,34 @@ _Payload_
 
 ```
 {
-    "type" : "number",
-    "min" : 0,
-    "max" : 1,
-    "description" : "The volume to set between 0-1
+    "type": "object", 
+    "properties: {
+       "volume" : {
+           "type" : "number",
+            "description" : "The volume to set",
+            "min" : 0,
+            "max" : 1
+       }
+    }
+   
 }
+```
+
+_JSON_
+
+```
+{
+    "eventName" : "iVXjs:video:set-volume",
+    "args" : {
+        "volume" : VOLUME_AMOUNT
+    }
+}
+```
+
+_Action Template_
+
+```
+<ANY ivx-event="iVXjs:video:volume" ivx-event-args="{volume : VOLUME_AMOUNT}"></ANY>
 ```
 
 ## iVXjs:video:time-update 
@@ -523,6 +670,22 @@ set.
 _Payload_ 
 
 None 
+
+_JSON_
+
+```
+{
+    "eventName" : "iVXjs:video:unmute"
+}
+```
+
+_Action Template_
+
+```
+<ANY ivx-event="iVXjs:video:unmute"></ANY>
+```
+
+
 
 # Angular Specific Events 
 

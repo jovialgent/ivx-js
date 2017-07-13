@@ -2,7 +2,6 @@ import createFactoryFunction from '../utilities/create-factory-function.js';
 import VideoStateController from '../controllers/state.video.js';
 import VideoEventConstants from "../../constants/video.events.js";
 
-
 class VideoState {
     constructor($compile, $state, $sce, $timeout, iVXjs, iVXjsBus, iVXjsUIModule, createInlineVideo, pullInTemplate, ivxExperienceScope) {
         this.template = this.templateHTML;
