@@ -126,8 +126,7 @@ export class InputStateSchema {
                                         }
                                     },
                                     "width": {
-                                        "type": "string",
-                                        "pattern": "/[1-9]*\/[1-9]*/"
+                                        "type": "string"
                                     }
                                 }
                             },

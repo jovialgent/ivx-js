@@ -63,7 +63,7 @@ class Builder {
             dir: [],
             postBuild: () => {
                 liveServer.start({
-                    port: 3030,
+                    port: 3000,
                     host: '127.0.0.1',
                     root: 'public'
                 })

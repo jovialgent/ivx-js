@@ -1,34 +1,34 @@
-export class HTMLStateSchema{
-    constructor(state){
+export class HTMLStateSchema {
+    constructor(state) {
         this.state = state;
     }
 
-    validate(){
+    validate() {
         return tv4.validateMultiple(this.state, this.schema);
     }
 
-    get requiredProperties(){
+    get requiredProperties() {
         return ["html"]
     }
 
-    get schema(){
+    get schema() {
         return {
-            "type" : "object",
-            "properties" : {
-                "html" : {
-                    "type" : "string"
+            "type": "object",
+            "properties": {
+                "html": {
+                    "type": "string"
                 },
-                "templateUrl" : {
-                    "type" : "string"
+                "templateUrl": {
+                    "type": "string"
                 },
-                "timeoutInMs":{
-                    "type" : "number"
+                "timeoutInMs": {
+                    "type": "number"
                 }
             },
-            "oneOf" : [{
-                "required" : ["html"]
-            },{
-                "required" : ["templateUrl"]
+            "oneOf": [{
+                "required": ["html"]
+            }, {
+                "required": ["templateUrl"]
             }]
         }
     }
