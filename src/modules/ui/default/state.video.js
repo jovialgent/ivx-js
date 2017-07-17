@@ -14,7 +14,7 @@ export class VideoState {
     get html() {
         let {playerSection = '', data = { name: '' }} = this;
         let {header: headerSettings = {}, footer: footerSettings = {}, section: sectionSettings = {}} = data;
-        let {classes: headerClasses = '', html: headerHTML = `<h1>${data.name}</h1>`} = headerSettings;
+        let {classes: headerClasses = '', html: headerHTML = ``} = headerSettings;
         let {classes: sectionClasses = '' } = sectionSettings;
         let {classes: footerClasses = '', html: footerHTML = ''} = footerSettings;
 

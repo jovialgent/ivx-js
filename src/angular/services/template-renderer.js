@@ -38,11 +38,6 @@ export class PullInTemplate {
 			data.footer = footer;
 		}
 
-		if(!header.html){
-			header.html = `<h1>${data.name}</h1>`;
-			data.header = header;
-		}
-
 		return data;
 	}
 

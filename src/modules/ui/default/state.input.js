@@ -17,7 +17,7 @@ export class InputState {
     get html() {
         let {formSection, data, defaultFooterClasses, defaultHeaderClasses, defaultSectionClasses} = this;
         let {header = {}, footer = {}, section = {}} = data;
-        let {classes: headerClasses = '', html: headerHTML = `<h1>${data.name}</h1>`} = header;
+        let {classes: headerClasses = '', html: headerHTML = ``} = header;
         let {classes: sectionClasses = '' } = section;
         let {classes: footerClasses = '', html: footerHTML = ''} = footer;
 
