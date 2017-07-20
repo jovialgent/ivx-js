@@ -3,7 +3,7 @@ import { AttributeTags } from "../utilities/attributes.js";
 
 export class Radio {
     constructor(radioInputObj, errorMessages = ErrorMessages) {
-        let {input = {}, radios = [], errors = {}, settings = {}} = radioInputObj;
+        let { input = {}, radios = [], errors = {}, settings = {} } = radioInputObj;
 
         this.radios = radios;
         this.errors = errors;
@@ -18,17 +18,21 @@ export class Radio {
     };
 
     uiRadioButtonContainer(radioHTML, uiClasses, value = "") {
-        let {id} = this.input;
+        let { id } = this.input;
+        let currentId = `${id}${value.length > 0 ? '-' + value : ''}`; 
 
         return ` 
-        <label for="${id}${value.length > 0 ? '-'+value: ''}" class="${uiClasses}">
+        <label for="${currentId}" class="${uiClasses}">
         ${radioHTML}
         </label>`;
     }
 
-    renderRadioHTML(attrHTML, label) {
+    renderRadioHTML(attrHTML, label, value) {
+        let { id } = this.input;
+        let currentId = `${id}${value.length > 0 ? '-' + value : ''}`;
+
         return ` 
-            <input type="radio" ${attrHTML}>
+            <input type="radio" id="${currentId}" ${attrHTML}>
             ${label}`;
     }
 
@@ -41,16 +45,16 @@ export class Radio {
     }
 
     get html() {
-        let {errors, radios, settings, input, uiClasses} = this;
-        let {messages: errorMessages, tags: errorTags = ""} = errors;
+        let { errors, radios, settings, input, uiClasses } = this;
+        let { messages: errorMessages, tags: errorTags = "" } = errors;
         let self = this;
-        let {label: inputLabel, labelHTML: inputLableHTML} = input;
-        let { showLabel = true} = settings;
+        let { label: inputLabel, labelHTML: inputLableHTML } = input;
+        let { showLabel = true } = settings;
 
         if (inputLableHTML) inputLabel = inputLableHTML;
 
         let radiosHTML = radios.reduce((html, radio, index) => {
-            let {label, attrHTML = '', classes = '', value} = radio;
+            let { label, attrHTML = '', classes = '', value } = radio;
 
             attrHTML = `${attrHTML} ${errorTags}`;
 

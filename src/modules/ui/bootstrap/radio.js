@@ -14,12 +14,14 @@ export class Radio extends DefaultRadio {
         return ''
     }
 
-    renderRadioHTML(attrHTML, label){ 
+    renderRadioHTML(attrHTML, label, value){ 
         let {input ={}} =this;
         let {id} = input;       
+        let currentId = `${id}${value.length > 0 ? '-' + value : ''}`;
+
         return ` 
-        <label for="${id}">
-            <input type="radio" ${attrHTML}>
+        <label for="${currentId}">
+            <input type="radio" id="${currentId}" ${attrHTML}>
             ${label}
         </label>
         `       
