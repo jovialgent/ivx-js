@@ -22,6 +22,8 @@ export class ErrorMessages {
             let tag = nonAngular.indexOf(attributeKey) >= 0 ?
                 `${attributeKey}="${attributeValue}"` :
                 `ng-${angularErrorMap[attributeKey]} = "${attributeValue}" `;
+
+
             return `${tags} ${tag}`;
         }, '');
     }
@@ -33,6 +35,10 @@ export class ErrorMessages {
         let errorMessages = Object.keys(attributes).map((attributeKey, index) => {
             let message = errors && errors[attributeKey] ? errors[attributeKey] : defaultMessages[attributeKey];
             let attrHTML = `ng-show="($parent.formInput['${inputName}'].$dirty || $parent.formInput.$submitted) && $parent.formInput['${inputName}'].$error.${angularErrorMap[attributeKey]}"`;
+
+            if(inputType === 'radio'){
+               attrHTML = `ng-show="($parent.formInput.$submitted) && !radioSelected"`;
+            }
 
             return {
                 message: message,

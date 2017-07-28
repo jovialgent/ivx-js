@@ -26,7 +26,7 @@ class RadioInput {
             input.label = label ? label : $filter('stringParsers')('startCase', id);
             input = pullInTemplate.convertLabel($filter('stringParsers')('startCase', id), input, $scope);
 
-            let errorMessages = new ErrorMessages(name, errors, attributes);
+            let errorMessages = new ErrorMessages(input, errors, attributes);
             let inputRadioButtonData = radioButtons.map((radioButton, index) => {
                 radioButton = pullInTemplate.convertLabel('', radioButton, $scope);
                 
