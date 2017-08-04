@@ -68,7 +68,7 @@
                 "name": "Conditions",
                 "type": "array",
                 "description": "The conditions/rules to be evaluate to a boolean.",
-                "required" : true,
+                "required": true,
                 "items": {
                   "type": "object",
                   "name": "Condition Settings",
@@ -100,10 +100,10 @@
                       "description": "The value to evaluate the data found in the 'key'.",
                       "required": true
                     },
-                    "type" : {
-                      "name" : "Condition Type",
-                      "type" : "string",
-                      "description" : "Type of comparison. By default, it is input meaning it looks for any data input in the experience object. However, some data modules may use this to indicate a special kind of condition"
+                    "type": {
+                      "name": "Condition Type",
+                      "type": "string",
+                      "description": "Type of comparison. By default, it is input meaning it looks for any data input in the experience object. However, some data modules may use this to indicate a special kind of condition"
                     }
                   }
                 }
@@ -112,14 +112,14 @@
                 "name": "Rule Key",
                 "type": "string",
                 "description": "The key from the experience.data object or a keyword the rule function uses to get the correct data.",
-                "specialNote" : "This is depreciated. Use the conditionOperator and conditions for rule evaluation in the future",
+                "specialNote": "This is depreciated. Use the conditionOperator and conditions for rule evaluation in the future",
                 "required": true
               },
               "is": {
                 "name": "Rule Comparer",
                 "type": "string",
                 "description": "The type of comparison this key will be evaluated against the value",
-                "specialNote" : "This is depreciated. Use the conditionOperator and conditions for rule evaluation in the future",
+                "specialNote": "This is depreciated. Use the conditionOperator and conditions for rule evaluation in the future",
                 "enum": [
                   "lt",
                   "lte",
@@ -134,7 +134,7 @@
                 "name": "Rule Value",
                 "type": "any",
                 "description": "The value to evaluate the data found in the 'key'.",
-                "specialNote" : "This is depreciated. Use the conditionOperator and conditions for rule evaluation in the future",
+                "specialNote": "This is depreciated. Use the conditionOperator and conditions for rule evaluation in the future",
                 "required": true
               }
             }
@@ -168,23 +168,23 @@
             "description": "Events to fire at a specific time during an audio clip.",
             "properties": {
               "timeAt": {
-			  	"name" : "Time At",
+                "name": "Time At",
                 "type": "number",
                 "description": "Time in the audio at which this event should fire.",
                 "required": true
               },
               "once": {
-			  	"name" : "Once",
+                "name": "Once",
                 "type": "boolean",
                 "description": "Indicates that this event should fire once (just in case the audio loops)"
               },
               "eventName": {
-			  	"name" : "State Audio Event Name",
+                "name": "State Audio Event Name",
                 "type": "string",
                 "description": "The event to be fired."
               },
               "args": {
-			  	"name" : "State Audio Event Arguments",
+                "name": "State Audio Event Arguments",
                 "type": "object",
                 "description": "Arguments for this event."
               }
@@ -220,10 +220,22 @@
         }
       }
     },
+    "section": {
+      "type": "object",
+      "name": "Section",
+      "description": "Contains all the settings for the section (the wrapper around state specific features like forms, links and video",
+      "properties": {
+        "classes": {
+          "name": "Section CSS Class Names",
+          "type": "string",
+          "description": "Classes to be added to the section part of the state. Primarily used for UI frameworks and targeting specific elements."
+        }
+      }
+    },
     "footer": {
       "type": "object",
       "name": "Footer",
-      "description": "Contains all the settings for the footer which appears before the main section of the state.",
+      "description": "Contains all the settings for the footer which appears after the main section of the state.",
       "properties": {
         "templateUrl": {
           "name": "Footer's Template URL Path",
