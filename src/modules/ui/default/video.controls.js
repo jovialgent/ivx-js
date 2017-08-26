@@ -1,120 +1,139 @@
-import {Controls} from '../../video/controls/index.js';
+import { Controls } from '../../video/controls/index.js';
+import ElementUtilities from "../utilities/element";
 
 export default class extends Controls {
     constructor(container) {
         super();
-        
-        if(container.html instanceof Function){
+
+        if (container.html instanceof Function) {
             container.html(this.html);
-            
         } else {
             var div = document.createElement('div');
             div.innerHTML = this.html;
-          
+
             container.appendChild(div);
         }
-        
+
         let {
             playPauseControlsClasses,
             totalTimeInfoClasses,
             currentTimeInfoClasses,
             scrubBarClasses,
             muteControlsClasses,
-            volumeBarClasses            
+            volumeBarClasses
         } = this;
-        
+
         this.container = container;
         this.playPauseControls = document.getElementById("video-controls-play-pause");
         this.totalTimeInfo = document.getElementById("video-controls-total-time");
-        this.currentTimeInfo =  document.getElementById("video-controls-current-time");
+        this.currentTimeInfo = document.getElementById("video-controls-current-time");
         this.scrubBar = document.getElementById("video-controls-scrub-bar");
         this.muteControls = document.getElementById("video-controls-mute-controls");
         this.volumeBar = document.getElementById("video-controls-volume-bar");
-           
     }
-    
-    get playPauseControlsClasses(){
+
+    get playPauseControlsClasses() {
         return 'play-pause';
     }
-    
-    get totalTimeInfoClasses(){
+
+    get totalTimeInfoClasses() {
         return 'duration';
     }
-    
-    get currentTimeInfoClasses(){
+
+    get currentTimeInfoClasses() {
         return 'current-time';
     }
-    
-    get scrubBarClasses(){
+
+    get scrubBarClasses() {
         return 'scrub-bar';
     }
-    
-    get muteControlsClasses(){
+
+    get muteControlsClasses() {
         return 'mute'
     }
-    
-    get volumeBarClasses(){
+
+    get volumeBarClasses() {
         return 'volume-bar'
     }
-    
-    get playClasses(){
+
+    get playClasses() {
         return 'fa fa-play';
     }
-    
-    get pauseClasses(){
+
+    get pauseClasses() {
         return 'fa fa-pause';
     }
-    
-    get unmuteClasses(){
+
+    get unmuteClasses() {
         return 'fa fa-volume-up';
     }
-    
-    get muteClasses(){
+
+    get muteClasses() {
         return 'fa fa-volume-off';
     }
-    
-    get scrubBarTimeLapseClasses(){
+
+    get scrubBarTimeLapseClasses() {
         return `time-lapsed`
     }
-    
-    get volumeBarCurrentVolumeClasses(){
+
+    get volumeBarCurrentVolumeClasses() {
         return 'current-volume';
     }
-    
-    get playPauseButtonHTML(){
-        let {playClasses : play} = this;
-        let {playPauseControlsClasses : playPauseControls} = this;
+
+    get chapterButtonClasses() {
+        return 'chapter-button';
+    }
+
+    get chapterListClasses() {
+        return "chapter-list";
+    }
+
+    get chapterListItemClasses() {
+        return "chapter-list-item";
+    }
+
+    get chapterActiveClasses() {
+        return "active";
+    }
+
+    get chapterInActiveClasses() {
+        return "inactive"
+    }
+
+    get playPauseButtonHTML() {
+        let { playClasses: play } = this;
+        let { playPauseControlsClasses: playPauseControls } = this;
         return `
         <button id="video-controls-play-pause" class="${playPauseControls}">
             <i class='${play}'></i>
         </button>`
     }
-       
-    get scrubBarHTML(){
+
+    get scrubBarHTML() {
         return `
              <div id="video-controls-scrub-bar" class="${this.scrubBarClasses}">
                 <div class="${this.scrubBarTimeLapseClasses}"></div>
             </div>
         `
     }
-    
-    get timestampHTML(){
+
+    get timestampHTML() {
         return `
         <span id="video-controls-current-time" class="${this.currentTimeInfoClasses}"></span>
         <span id="video-controls-total-time" class="${this.totalTimeInfoClasses}"></span>
         `;
     }
-    
-    get muteButtonHTML(){
-        let {unmuteClasses : unmute, muteControlsClasses} = this;
+
+    get muteButtonHTML() {
+        let { unmuteClasses: unmute, muteControlsClasses } = this;
         return `
             <button id="video-controls-mute-controls" class="${muteControlsClasses}">
                 <i class="${unmute}"></i>
             </button>
         `
     }
-    
-    get volumeBarHTML(){
+
+    get volumeBarHTML() {
         return `
             <div  id="video-controls-volume-bar" class="${this.volumeBarClasses}">
                 <div class="${this.volumeBarCurrentVolumeClasses}"></div>
@@ -122,8 +141,198 @@ export default class extends Controls {
         `
     }
 
+    get trackListSelectContainerClasses() {
+        return 'track-list-select-container'
+    }
+
+    get trackListSelectClasses() {
+        return 'track-list-select';
+    }
+
+    get trackListSelectActiveClasses() {
+        return 'active';
+    }
+
+    get trackListSelectInactiveClasses() {
+        return 'inactive'
+    }
+
+    get closeCaptionButtonClasses() {
+        return 'close-caption-button';
+    }
+
+    get closeCaptionButtonActiveClasses() {
+        return 'active';
+    }
+
+    get closeCaptionButtonInactiveClasses() {
+        return 'inactive';
+    }
+
+    get closeCaptionButtonIconClasses() {
+        return 'close-caption-button-icon fa fa-cc'
+    }
+
+    get closeCaptionButtonIconContent() {
+        return "";
+    }
+
+    createPlayerSpecificControls(opts) {
+        let { player } = opts;
+        let { textTracks = [] } = player;
+        let html = ``;
+        let { container, chapterButtonClasses, chapterListClasses } = this;
+
+        if (textTracks.length > 0) {
+            let chapterElement = this.createChapterContainer(textTracks);
+            let trackSelectElement = this.createTrackSelect(textTracks);
+
+            if (chapterElement) {
+                ElementUtilities.append(container, chapterElement);
+            }
+
+            if (trackSelectElement) {
+                ElementUtilities.append(container, trackSelectElement);
+            }
+        }
+    }
+
+    createTrackSelect(textTracks) {
+        let self = this;
+        let {
+            trackListSelectContainerClasses, trackListSelectClasses,
+            trackListSelectActiveClasses, trackListSelectInactiveClasses, closeCaptionButtonIconContent,
+            closeCaptionButtonClasses, closeCaptionButtonActiveClasses, closeCaptionButtonInactiveClasses, closeCaptionButtonIconClasses
+        } = self;
+        let languageTracks = Array.from(textTracks).reduce((currentLanguageTracks, textTrack) => {
+            if (textTrack.kind === 'captions' || textTrack.kind === 'subtitles') {
+                currentLanguageTracks = currentLanguageTracks.concat([textTrack]);
+            }
+
+            return currentLanguageTracks;
+        }, []);
+
+        if (languageTracks.length > 0) {
+            let trackListContainer = document.createElement('div');
+            let trackListSelect = document.createElement('select');
+            let languageSelected = false;
+            let ccToggle = document.createElement('button');
+            let ccToggleIcon = document.createElement('i');
+
+            ElementUtilities.addClassesToElement(ccToggle, closeCaptionButtonClasses);
+            ElementUtilities.addClassesToElement(ccToggleIcon, closeCaptionButtonIconClasses);
+
+            ccToggleIcon.innerHTML = closeCaptionButtonIconContent
+
+            ElementUtilities.append(ccToggle, ccToggleIcon);
+
+            languageTracks.forEach(languageTrack => {
+                let { srclang, label, trackId, mode } = languageTrack;
+                let languageTrackOption = document.createElement('option');
+
+                Object.assign(languageTrackOption, {
+                    value: trackId,
+                    innerHTML: label && label.length > 0 ? label : srclang
+                });
+
+                trackListSelect.appendChild(languageTrackOption);
+
+                if (mode === 'showing') {
+                    Object.assign(trackListSelect, {
+                        value: trackId
+                    });
+                    languageSelected = true;
+                }
+            });
+
+            trackListSelect.addEventListener('change', (evt) => {
+                const { target = {} } = evt;
+                const { value: trackId = "" } = target;
+
+                self.changeCurrentTrack(trackId);
+            });
+
+            ccToggle.addEventListener('click', (evt) => {
+                const { value: trackId } = trackListSelect;
+                const isInactive = ElementUtilities.hasClass(ccToggle, closeCaptionButtonInactiveClasses);
+
+                if (isInactive) {
+                    ElementUtilities.removeClassesFromElement(trackListSelect, trackListSelectInactiveClasses);
+                    ElementUtilities.removeClassesFromElement(ccToggle, closeCaptionButtonInactiveClasses);
+                    ElementUtilities.addClassesToElement(trackListSelect, trackListSelectActiveClasses);
+                    ElementUtilities.addClassesToElement(ccToggle, closeCaptionButtonActiveClasses);
+                    self.changeCurrentTrack(trackId);
+                } else {
+                    ElementUtilities.removeClassesFromElement(trackListSelect, trackListSelectActiveClasses);
+                    ElementUtilities.removeClassesFromElement(ccToggle, closeCaptionButtonActiveClasses);
+                    ElementUtilities.addClassesToElement(trackListSelect, trackListSelectInactiveClasses);
+                    ElementUtilities.addClassesToElement(ccToggle, closeCaptionButtonInactiveClasses);
+                    self.changeCurrentTrack("");
+                }
+            });
+
+            ElementUtilities.addClassesToElement(trackListSelect, trackListSelectClasses);
+            ElementUtilities.addClassesToElement(trackListSelect, languageSelected ? trackListSelectActiveClasses : trackListSelectInactiveClasses);
+            ElementUtilities.addClassesToElement(trackListContainer, trackListSelectContainerClasses);
+            ElementUtilities.addClassesToElement(ccToggle, languageSelected ? closeCaptionButtonActiveClasses : closeCaptionButtonInactiveClasses);
+            ElementUtilities.append(trackListContainer, ccToggle);
+
+            if (languageTracks.length > 1) {
+                ElementUtilities.append(trackListContainer, trackListSelect);
+            }
+
+            return trackListContainer;
+        }
+
+        return false;
+    }
+
+
+
+    createChapterContainer(textTracks) {
+        let { chapterButtonClasses, chapterListClasses, chapterActiveClasses, chapterInActiveClasses, chapterListItemClasses } = this;
+        let chapterTrack = Array.from(textTracks).find(textTrack => {
+            return textTrack.kind === 'chapters';
+        });
+        let self = this;
+
+        if (chapterTrack) {
+            let chapterListEl = document.createElement('ol');
+            let { cues = [] } = chapterTrack;
+
+            Array.from(cues).forEach((cue, index) => {
+                let { id, text, startTime } = cue;
+                let chapterContainerEl = document.createElement('li');
+                let chapterButtonEl = document.createElement('button');
+
+                chapterButtonEl.id = `${id}-select`;
+                chapterButtonEl.className = chapterButtonClasses;
+                chapterButtonEl.innerHTML = text;
+
+                ElementUtilities.append(chapterContainerEl, chapterButtonEl);
+                
+                chapterContainerEl.id = id;
+                chapterContainerEl.className = `${chapterListItemClasses} ${index === 0 ? chapterActiveClasses : chapterInActiveClasses}`;
+
+                ElementUtilities.append(chapterListEl, chapterContainerEl);
+                
+                chapterButtonEl.addEventListener('click', () => {
+                    self.seek(startTime);
+                    self.play();
+                });
+            });
+
+            chapterListEl.className = chapterListClasses;
+
+            return chapterListEl;
+        }
+
+        return false;
+
+    }
+
     get html() {
-        
+
         let {
             playPauseButtonHTML,
             scrubBarHTML,

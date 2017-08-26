@@ -31,6 +31,7 @@ class VideoStateController {
     constructor($rootScope, $state, iVXjsActions, iVXjsBus, iVXjs) {
         let { playerSettings, onVideoEnd = [], onVideoReady = [], next, cuePoints = [] } = $state.current.data;
         let { autoplay = false } = playerSettings;
+        let self = this;
         let videoEventNames = new VideoEventConstants();
 
         cuePoints = setUpCuePoints(cuePoints);
@@ -52,6 +53,7 @@ class VideoStateController {
 
             iVXjs.log.debug(`onVideoReady Started`, {}, { state: $state.current.data, source: 'onVideoReady', status: 'started', actions: onVideoReady, timestamp: Date.now() });
 
+          
 
             iVXjsActions.resolveActions(onVideoReady, () => {
                 if (autoplay) {
@@ -61,6 +63,7 @@ class VideoStateController {
 
                 iVXjs.log.debug(`onVideoReady Completed`, {}, { state: $state.current.data, source: 'onVideoReady', status: 'completed', actions: onVideoReady, timestamp: Date.now() });
 
+                self.getActiveCues(player)                
             });
         });
         iVXjsBus.once(videoEventNames.ENDED, function stateVideoEnded() {
@@ -91,6 +94,11 @@ class VideoStateController {
             });
 
         });
+    }
+
+    getActiveCues(player){
+        let {textTracks = []} = player;
+        let activeCues = [];
     }
 }
 

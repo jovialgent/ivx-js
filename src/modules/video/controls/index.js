@@ -1,17 +1,22 @@
 import ControlEvents from './events.js';
 import VideoEventNames from "../../../constants/video.events.js";
+import TrackEventNames from "../../../constants/tracks.events.js";
+import TrackCuesEventNames from "../../../constants/tracks.cues.events.js";
 
 export class Controls extends ControlEvents {
     constructor() {
         super();
         this.currentVolume = 0.5;
         this.controlEventNames = new VideoEventNames();
+        this.trackEventNames = new TrackEventNames();
+        this.trackCuesEventName = new TrackCuesEventNames();
     }
 
     dispose(iVXjsBus) {
         iVXjsBus.removeListener(this.controlEventNames.TIME_UPDATE, this.updateTime);
         iVXjsBus.removeListener(this.controlEventNames.PLAYING, this.whilePlaying);
         iVXjsBus.removeListener(this.controlEventNames.CAN_PLAY, this.canPlayCallback);
+        iVXjsBus.removeListener(this.trackCuesEventName.ON_CHAPTER_START, this.chapterChange);
     }
 
     getAbsolutePosition(element) {
@@ -28,11 +33,11 @@ export class Controls extends ControlEvents {
     }
 
     adjustVolume(event) {
-        let {volumeBar, muteControls, currentVolume, volumeBarCurrentVolumeClasses, unmuteClasses, muteClasses} = this;
-        let {offsetWidth: width } = volumeBar;
+        let { volumeBar, muteControls, currentVolume, volumeBarCurrentVolumeClasses, unmuteClasses, muteClasses } = this;
+        let { offsetWidth: width } = volumeBar;
         let currentVolumeSpan = this.getElementByClasses(volumeBar.children, [volumeBarCurrentVolumeClasses]);
         let absolutePosition = this.getAbsolutePosition(volumeBar);
-        let {x: absoluteX} = absolutePosition;
+        let { x: absoluteX } = absolutePosition;
         let { pageX: x } = event;
         let trueX = (x - (absoluteX));
         let volumeLevel = (trueX / width);
@@ -47,10 +52,10 @@ export class Controls extends ControlEvents {
     }
 
     scrub(event) {
-        let {currentTimeInfo, scrubBar, scrubBarTimeLapseClasses} = this;
-        let {offsetWidth: width} = scrubBar;
+        let { currentTimeInfo, scrubBar, scrubBarTimeLapseClasses } = this;
+        let { offsetWidth: width } = scrubBar;
         let absolutePosition = this.getAbsolutePosition(scrubBar);
-        let {x: absoluteX} = absolutePosition;
+        let { x: absoluteX } = absolutePosition;
         let { pageX: x } = event;
         let trueX = (x - (absoluteX));
         let scrubToTime = this.duration * (trueX / width);
@@ -66,10 +71,10 @@ export class Controls extends ControlEvents {
     }
 
     setPlayPause(event) {
-        let {playPauseControls, playClasses, pauseClasses} = this;
+        let { playPauseControls, playClasses, pauseClasses } = this;
         let searchClasses = [playClasses, pauseClasses];
         let playPauseIcon = this.getElementByClasses(playPauseControls.children, searchClasses);
-        
+
         switch (playPauseIcon.className) {
             case playClasses:
                 playPauseIcon.className = pauseClasses;
@@ -78,7 +83,7 @@ export class Controls extends ControlEvents {
                 break;
             case pauseClasses:
                 playPauseIcon.className = playClasses;
-                
+
                 this.pause();
                 break;
             default:
@@ -87,7 +92,7 @@ export class Controls extends ControlEvents {
     }
 
     setMute(event) {
-        let {muteControls, muteClasses, unmuteClasses, volumeBar, volumeBarCurrentVolumeClasses} = this;
+        let { muteControls, muteClasses, unmuteClasses, volumeBar, volumeBarCurrentVolumeClasses } = this;
         let muteControlsClasses = [muteClasses, unmuteClasses];
         let muteIcon = this.getElementByClasses(muteControls.children, muteControlsClasses);
         let currentVolumeSpan = this.getElementByClasses(volumeBar.children, [volumeBarCurrentVolumeClasses]);
@@ -96,13 +101,13 @@ export class Controls extends ControlEvents {
             case unmuteClasses:
                 muteIcon.className = muteClasses;
                 currentVolumeSpan.style.width = `0%`;
-                
+
                 this.setVolume(0);
                 break;
             case muteClasses:
                 muteIcon.className = unmuteClasses;
                 currentVolumeSpan.style.width = `${this.currentVolume * 100}%`;
-            
+
                 this.setVolume(this.currentVolume);
                 break;
             default:
@@ -111,15 +116,15 @@ export class Controls extends ControlEvents {
     }
 
     onReadyToPlay(player, stateData) {
-        let {volumeBar, volumeBarCurrentVolumeClasses} = this;
+        let { volumeBar, volumeBarCurrentVolumeClasses } = this;
         let self = this;
         let currentVolumeSpan = this.getElementByClasses(volumeBar.children, [volumeBarCurrentVolumeClasses]);
-        
+
         currentVolumeSpan.style.width = `${self.currentVolume * 100}%`;
-        
+
         this.setVolume(self.currentVolume);
         this.getDuration((duration) => {
-            let {totalTimeInfo, currentTimeInfo, scrubBar} = self;
+            let { totalTimeInfo, currentTimeInfo, scrubBar } = self;
             let durationTimeObject = self.convertSecondsToParts(duration);
             let durationTimeStamp = self.createTimeStamp(durationTimeObject);
 
@@ -132,28 +137,28 @@ export class Controls extends ControlEvents {
     }
 
     onTimeUpdate(player) {
-        let {currentTimeInfo, scrubBar, scrubBarTimeLapseClasses} = this;
-        let {currentTime: seconds} = player;
+        let { currentTimeInfo, scrubBar, scrubBarTimeLapseClasses } = this;
+        let { currentTime: seconds } = player;
 
         seconds = seconds > this.duration ? 0 : seconds;
-         
+
         let currentTimeObject = this.convertSecondsToParts(seconds);
         let currentTimeStamp = this.createTimeStamp(currentTimeObject);
         let timeLapsed = seconds / this.duration;
 
         if (currentTimeInfo) currentTimeInfo.innerHTML = `${currentTimeStamp}`;
-        
+
         let searchClasses = [scrubBarTimeLapseClasses];
-        
+
         if (scrubBar) {
             let timelapsedElement = this.getElementByClasses(scrubBar.children, searchClasses);
-             
+
             timelapsedElement.style.width = `${timeLapsed * 100}%`;
         }
     }
 
     onPlaying() {
-        let {playPauseControls, playClasses, pauseClasses} = this;
+        let { playPauseControls, playClasses, pauseClasses } = this;
         let searchClasses = [playClasses, pauseClasses]
         let playPauseIcon = this.getElementByClasses(
             playPauseControls.children,
@@ -166,7 +171,7 @@ export class Controls extends ControlEvents {
     }
 
     onPaused() {
-        let {playPauseControls, playClasses, pauseClasses} = this;
+        let { playPauseControls, playClasses, pauseClasses } = this;
         let searchClasses = [playClasses, pauseClasses]
         let playPauseIcon = this.getElementByClasses(
             playPauseControls.children,
@@ -174,21 +179,22 @@ export class Controls extends ControlEvents {
         );
 
         playPauseIcon.className = playClasses;
-        
+
         this.pause();
     }
 
     addEventListeners(iVXjsBus) {
         let self = this;
-        let {scrubBar, volumeBar, playPauseControls, muteControls} = this;
+        let { scrubBar, volumeBar, playPauseControls, muteControls, trackCuesEventName } = this;
 
         this.iVXjsBus = iVXjsBus;
         this.updateTime = iVXjsBus.on(this.controlEventNames.TIME_UPDATE, updateTime);
         this.whilePaused = iVXjsBus.on(this.controlEventNames.PAUSED, whilePaused);
         this.whilePlaying = iVXjsBus.on(this.controlEventNames.PLAYING, whilePlaying);
-        this.canPlayCallback =  iVXjsBus.on(this.controlEventNames.CAN_PLAY, canPlayCallBack);
+        this.canPlayCallback = iVXjsBus.on(this.controlEventNames.CAN_PLAY, canPlayCallBack);
+        this.chapterChange = iVXjsBus.on(this.trackCuesEventName.ON_CHAPTER_START, chapterChange);
         this.updateTime = this.updateTime ? this.updateTime : updateTime;
-        
+
         volumeBar.addEventListener('mousedown', (event) => {
             self.adjustVolume(event);
         });
@@ -202,11 +208,35 @@ export class Controls extends ControlEvents {
             self.setMute(event);
         });
 
-       
+        this.iVXjsBus.once(this.controlEventNames.CAN_PLAY, (player) => {
+            self.createPlayerSpecificControls({ player })
+        });
+
+        function chapterChange(cue) {
+            const { chapterActiveClasses, chapterListItemClasses, chapterInActiveClasses } = self;
+            const chapterList = Array.from(document.getElementsByClassName(chapterListItemClasses));
+            const { id: currentChapterId } = cue;
+
+            chapterList.forEach(chapterListItem => {
+                let { id: chapterId } = chapterListItem;
+
+                if (chapterId === currentChapterId) {
+                    chapterListItem.classList.remove(chapterInActiveClasses);
+                    chapterListItem.classList.add(chapterActiveClasses);
+                    return;
+                }
+
+               
+                    chapterListItem.classList.remove(chapterActiveClasses);
+                    chapterListItem.classList.add(chapterInActiveClasses);
+                
+            });
+        };
+
         function canPlayCallBack(player, _stateData) {
             self.onReadyToPlay(player, _stateData);
         }
-       
+
         function updateTime(player) {
             self.onTimeUpdate(player);
         }
@@ -239,7 +269,7 @@ export class Controls extends ControlEvents {
     }
 
     createTimeStamp(timeObject) {
-        let {hours, remainingMinutes: minutes, remainingSeconds: seconds} = timeObject;
+        let { hours, remainingMinutes: minutes, remainingSeconds: seconds } = timeObject;
         let hourString = '';
         let minuteString = minutes < 10 ?
             `0${minutes}:` :

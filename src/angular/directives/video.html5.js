@@ -27,7 +27,8 @@ class HTML5VideoPlayer {
 
             let thisVideoPlayer = new iVXjsVideoModule.html5(iElm.find('div'), settings, stateData, iVXjsLog);
 
-            thisVideoPlayer.addEventListeners(iVXjsBus);
+            thisVideoPlayer.addEventListeners(iVXjsBus, settings
+            );
             $timeout(() => {
                 if (createInlineVideo.isiOS() && iphoneInline) {
                     createInlineVideo.makeInlineVideo(iElm.find('video')[0], iElm.find('div')[0], $scope);

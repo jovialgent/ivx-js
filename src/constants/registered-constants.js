@@ -6,7 +6,10 @@ import iVXioErrors from './iVXio.errors.js';
 import iVXjsConfigEvents from './iVXjs.config.events.js';
 import LoggingEventNames from './logging.js';
 import StateEvents from './state.events.js';
+import TracksEvents from './tracks.events.js';
+import TrackCuesEvents from './tracks.cues.events.js';
 import VideoEvents from "./video.events.js";
+
 
 export default class {
     constructor() {
@@ -44,6 +47,11 @@ export default class {
         this.LOGGING = {
             EVENTS: new LoggingEventNames()
         };
+
+        this.TRACKS  = {
+            EVENTS : new TracksEvents(),
+            CUES : new TrackCuesEvents()
+        }
 
         // State
         this.STATE = {

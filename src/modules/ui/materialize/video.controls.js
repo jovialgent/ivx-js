@@ -66,6 +66,54 @@ export default class extends DefaultVideoControls {
         `;
     }
 
+    get chapterButtonClasses() {
+        return 'chapter-button btn waves-effect waves-light';
+    }
+
+    get chapterActiveClasses() {
+        return "active";
+    }
+
+    get chapterInActiveClasses() {
+        return "inactive"
+    }
+
+    get trackListSelectContainerClasses() {
+        return 'track-list-select-container input-field'
+    }
+
+    get trackListSelectClasses() {
+        return 'track-list-select browser-default';
+    }
+
+    get trackListSelectActiveClasses() {
+        return 'active';
+    }
+
+    get trackListSelectInactiveClasses() {
+        return 'inactive'
+    }
+
+    get closeCaptionButtonClasses() {
+        return 'close-caption-button btn-floating waves-effect waves-light';
+    }
+
+    get closeCaptionButtonActiveClasses() {
+        return 'active';
+    }
+
+    get closeCaptionButtonInactiveClasses() {
+        return 'inactive';
+    }
+
+    get closeCaptionButtonIconClasses() {
+        return 'close-caption-button-icon closed material-icons'
+    }
+
+    get closeCaptionButtonIconContent(){
+        return "closed_caption"
+    }
+
 
     adjustVolume(event) {
         let {volumeBar, muteControls, currentVolume, volumeBarCurrentVolumeClasses, unmuteClasses, muteClasses} = this;

@@ -269,6 +269,10 @@ _Sample Data_
 
 [video-state-sample.json]({{page.source}}developer/sample-JSON/video-state-sample.json)
 
+_Sample Data With Cues_
+
+[video-state-sample-with-cues.json]({{page.source}}developer/sample-JSON/video-state-sample-with-cues.json)
+
 _Schema_
 
 [video-state.jsond]({{page.source}}developer/schemas/video-state.jsond)

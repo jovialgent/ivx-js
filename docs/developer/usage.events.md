@@ -685,7 +685,80 @@ _Action Template_
 <ANY ivx-event="iVXjs:video:unmute"></ANY>
 ```
 
+# Track Cues Events
 
+_Overview_
+
+These events fire when you add track cues to the player settings. These cues 
+are for subtitles and close caption, but also chapters and metadata. 
+
+## iVXjs:tracks:on-track-change
+
+_Description_
+
+This fires whenever a language track is changed on the video. This is helpful if you 
+need the content in an experience to change to another language.
+
+_Payload_
+
+```
+{
+    "name" : "Current Tracks",
+    "type" : "object",
+    "properties" : {
+        oldTrack: {
+            type : "object",
+            description: "The previous track that was changed from"
+        },
+
+        currentTrack: {
+            type : "object",
+            description: "The current track that was changed to."
+        }
+    }
+}
+```
+
+## iVXjs:tracks:cues:on-enter
+
+_Description_
+
+Fires whenever a cue is started. Note, for tracks with kind caption, or subtitles, the cue 
+that is sent is the track that is showing. All other kinds always gets passed down.
+
+_Payload_
+
+The cue that was started. The payload properties depends on the kind (See JSON Spec Documentation for details)
+
+## iVXjs:tracks:cues:on-exit
+
+_Description_
+
+Fires whenever a cue finishes. Note, this doesn't fire for caption kind of track.
+
+_Payload_
+
+Sends the track that is currently finishing
+
+## iVXjs:tracks:cues:on-chapter-start
+
+_Description_
+
+Fires whenever a new chapter begins.
+
+_Payload_
+
+Cue containing all the chapter information
+
+## iVXjs:tracks:cues:on-chapter-end
+
+_Description_
+
+Fires whenever a chapter ends
+
+_Payload_
+
+Cue containing all the chapter info that ended
 
 # Angular Specific Events 
 

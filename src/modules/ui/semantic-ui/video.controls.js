@@ -49,6 +49,50 @@ export default class extends DefaultVideoControls {
         return `bar`;
     }
 
+    get chapterButtonClasses() {
+        return 'ui button chapter-button';
+    }
+
+    get chapterListClasses() {
+        return "ui ordered list";
+    }
+
+    get chapterListItemClasses(){
+        return "item";
+    }
+
+    get trackListSelectContainerClasses() {
+        return 'track-list-select-container'
+    }
+
+    get trackListSelectClasses() {
+        return 'track-list-select ui dropdown';
+    }
+
+    get trackListSelectActiveClasses() {
+        return 'active';
+    }
+
+    get trackListSelectInactiveClasses() {
+        return 'inactive'
+    }
+
+    get closeCaptionButtonClasses() {
+        return 'close-caption-button ui icon button';
+    }
+
+    get closeCaptionButtonActiveClasses() {
+        return 'active';
+    }
+
+    get closeCaptionButtonInactiveClasses() {
+        return 'inactive';
+    }
+
+    get closeCaptionButtonIconClasses() {
+        return 'close-caption-button-icon closed captioning icon'
+    }
+
     get scrubBarHTML() {
         return `      
           <div id="video-controls-scrub-bar" class="${this.scrubBarClasses}">

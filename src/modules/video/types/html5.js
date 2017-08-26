@@ -1,6 +1,9 @@
 import { ObjectParsers, TypeValidator } from "../../../utilities/type-parsers.js";
 import PlayerSettings from "../settings.js";
 import VideoEventNames from "../../../constants/video.events.js";
+import TrackCuesService from "./html5.cues";
+import TrackEventNames from "../../../constants/tracks.events.js";
+
 
 let thisObjectParsers = new ObjectParsers();
 let playerSettings = new PlayerSettings();
@@ -11,6 +14,8 @@ export class Html5 {
         this.settings = settings;
         this.stateData = stateData;
         this.videoEventNames = new VideoEventNames();
+        this.TrackCuesService = TrackCuesService;
+        this.trackEventNames = new TrackEventNames();
 
         container.html(this.html);
 
@@ -86,11 +91,35 @@ export class Html5 {
         })
     }
 
-    addEventListeners(iVXjsBus) {
-        let { videoEventNames, iVXjsLog } = this;;
+    addEventListeners(iVXjsBus, settings = {}) {
+        let { videoEventNames, trackEventNames, iVXjsLog } = this;
+        let { tracks } = settings;
         let self = this;
 
         this.iVXjsBus = iVXjsBus;
+
+        if (tracks) {
+            this.currentTrack = this.TrackCuesService.addTracks({
+                tracks,
+                video: this.player,
+                iVXjsBus
+            });
+            this.oldTrack = this.currentTrack;
+            this.player.textTracks.onchange = (evt) => {
+                let { currentTrack: oldTrack } = self;
+                let { currentTarget: currentTracks = [] } = evt;
+                let currentTrack = Array.from(currentTracks).find((currentTrack) => {
+                    return (currentTrack.kind === 'subtitles' || currentTrack.kind === 'captions') && currentTrack.mode === 'showing';
+                });
+
+                Object.assign(self, {
+                    oldTrack,
+                    currentTrack
+                });
+
+                self.iVXjsBus.emit(trackEventNames.ON_TRACK_CHANGE, { oldTrack, currentTrack })
+            }
+        }
 
         // Get custom iVXjsBus Function
         this.playOnEvent = iVXjsBus.on(videoEventNames.PLAY, playOnEvent);
@@ -100,6 +129,9 @@ export class Html5 {
         this.seekOnEvent = iVXjsBus.on(videoEventNames.SEEK, seekOnEvent);
         this.playingOnEvent = iVXjsBus.on(videoEventNames.PLAYING, playingOnEvent);
 
+        //Track Events
+        this.changeCurrentTrackOnEvent = iVXjsBus.on(trackEventNames.CHANGE_CURRENT_TRACK, changeCurrentTrack);
+
         // If it doesn't have a custom function, add the default one so the Bus can dispose of it.
         this.playOnEvent = this.playOnEvent ? this.playOnEvent : playOnEvent;
         this.pauseOnEvent = this.pauseOnEvent ? this.pauseOnEvent : pauseOnEvent;
@@ -107,6 +139,7 @@ export class Html5 {
         this.durationOnEvent = this.durationOnEvent ? this.durationOnEvent : durationOnEvent;
         this.volumeOnEvent = this.volumeOnEvent ? this.volumeOnEvent : volumeOnEvent;
         this.playingOnEvent = this.playingOnEvent ? this.playingOnEvent : playingOnEvent;
+        this.changeCurrentTrack = this.changeCurrentTrack ? this.changeCurrentTrack : changeCurrentTrack;
 
         this.setOnReady();
         this.setTimeUpdate();
@@ -151,7 +184,6 @@ export class Html5 {
         }
 
         function seekOnEvent(currentTime) {
-
             self.seek(currentTime);
         }
 
@@ -162,10 +194,25 @@ export class Html5 {
         function volumeOnEvent(volume) {
             self.setVolume(volume);
         }
+
+        function changeCurrentTrack(trackId){
+            let {textTracks} = self.player;
+            
+            Array.from(textTracks).forEach(textTrack=>{
+                let {kind, trackId : currentTrackId} = textTrack;
+                let isCaptions = (kind === 'captions' || kind === 'subtitles');
+                
+                if(isCaptions){
+                    Object.assign(textTrack, {
+                        mode : trackId === currentTrackId ? 'showing' : 'disabled'
+                    })
+                }
+            });
+        }
     }
 
     dispose(iVXjsBus) {
-        let { videoEventNames } = this;
+        let { videoEventNames, trackEventNames } = this;
         let self = this;
         let eventNameMap = {
             play: videoEventNames.PLAY,
@@ -173,7 +220,8 @@ export class Html5 {
             seek: videoEventNames.SEEK,
             duration: videoEventNames.GET_DURATION,
             volume: videoEventNames.SET_VOLUME,
-            playing: videoEventNames.PLAYING
+            playing: videoEventNames.PLAYING,
+            changeCurrentTrack : trackEventNames.CHANGE_CURRENT_TRACK
         };
         let eventsToDispose = Object.keys(eventNameMap);
 
@@ -203,6 +251,12 @@ export class Html5 {
             return `${thisAttrHTML} ${key}="${value}"`
         }, "");
         let trackTags = tracks.reduce((trackHTML, trackSettings, index) => {
+            let { content = "", cues = [] } = trackSettings;
+
+            if (content.length > 0 || cues.length > 0) {
+                return trackHTML;
+            }
+
             let trackAttrHTML = thisObjectParsers.reduce(trackSettings, (attrHTML, value, key) => {
                 return `${attrHTML} ${key}="${value}"`;
             }, "")

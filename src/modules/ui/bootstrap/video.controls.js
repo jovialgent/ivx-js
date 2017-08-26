@@ -41,6 +41,42 @@ export default class extends DefaultVideoControls {
         return `bar`
     }
 
+    get chapterButtonClasses() {
+        return 'btn chapter-button';
+    }
+
+    get trackListSelectContainerClasses() {
+        return 'track-list-select-container'
+    }
+
+    get trackListSelectClasses() {
+        return 'track-list-select form-control';
+    }
+
+    get trackListSelectActiveClasses() {
+        return 'active';
+    }
+
+    get trackListSelectInactiveClasses() {
+        return 'inactive'
+    }
+
+    get closeCaptionButtonClasses() {
+        return 'close-caption-button btn btn-default';
+    }
+
+    get closeCaptionButtonActiveClasses() {
+        return 'active';
+    }
+
+    get closeCaptionButtonInactiveClasses() {
+        return 'inactive';
+    }
+
+    get closeCaptionButtonIconClasses() {
+        return 'close-caption-button-icon glyphicon glyphicon-subtitles'
+    }
+
     get scrubBarHTML() {
         return `
             <div id="video-controls-scrub-bar" class="progress ${this.scrubBarClasses}">

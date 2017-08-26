@@ -216,6 +216,14 @@
       <li><a href="#ivxjsvideounmute" id="markdown-toc-ivxjsvideounmute">iVXjs:video:unmute</a></li>
     </ul>
   </li>
+  <li><a href="#track-cues-events" id="markdown-toc-track-cues-events">Track Cues Events</a>    <ul>
+      <li><a href="#ivxjstrackson-track-change" id="markdown-toc-ivxjstrackson-track-change">iVXjs:tracks:on-track-change</a></li>
+      <li><a href="#ivxjstrackscueson-enter" id="markdown-toc-ivxjstrackscueson-enter">iVXjs:tracks:cues:on-enter</a></li>
+      <li><a href="#ivxjstrackscueson-exit" id="markdown-toc-ivxjstrackscueson-exit">iVXjs:tracks:cues:on-exit</a></li>
+      <li><a href="#ivxjstrackscueson-chapter-start" id="markdown-toc-ivxjstrackscueson-chapter-start">iVXjs:tracks:cues:on-chapter-start</a></li>
+      <li><a href="#ivxjstrackscueson-chapter-end" id="markdown-toc-ivxjstrackscueson-chapter-end">iVXjs:tracks:cues:on-chapter-end</a></li>
+    </ul>
+  </li>
   <li><a href="#angular-specific-events" id="markdown-toc-angular-specific-events">Angular Specific Events</a>    <ul>
       <li><a href="#ivxjsangularbootstrapped" id="markdown-toc-ivxjsangularbootstrapped">iVXjs:angular:bootstrapped</a></li>
       <li><a href="#ivxjsangulartemplate-not-found" id="markdown-toc-ivxjsangulartemplate-not-found">iVXjs:angular:template-not-found</a></li>
@@ -905,6 +913,81 @@ set.</p>
 <div class="highlighter-rouge"><pre class="highlight"><code>&lt;ANY ivx-event="iVXjs:video:unmute"&gt;&lt;/ANY&gt;
 </code></pre>
 </div>
+
+<h1 id="track-cues-events">Track Cues Events</h1>
+
+<p><em>Overview</em></p>
+
+<p>These events fire when you add track cues to the player settings. These cues 
+are for subtitles and close caption, but also chapters and metadata.</p>
+
+<h2 id="ivxjstrackson-track-change">iVXjs:tracks:on-track-change</h2>
+
+<p><em>Description</em></p>
+
+<p>This fires whenever a language track is changed on the video. This is helpful if you 
+need the content in an experience to change to another language.</p>
+
+<p><em>Payload</em></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"name"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Current Tracks"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"properties"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="err">oldTrack:</span><span class="w"> </span><span class="err">{</span><span class="w">
+            </span><span class="err">type</span><span class="w"> </span><span class="err">:</span><span class="w"> </span><span class="nt">"object"</span><span class="err">,</span><span class="w">
+            </span><span class="err">description</span><span class="p">:</span><span class="w"> </span><span class="s2">"The previous track that was changed from"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+
+        </span><span class="err">currentTrack</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="err">type</span><span class="w"> </span><span class="err">:</span><span class="w"> </span><span class="nt">"object"</span><span class="err">,</span><span class="w">
+            </span><span class="err">description</span><span class="p">:</span><span class="w"> </span><span class="s2">"The current track that was changed to."</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="err">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<h2 id="ivxjstrackscueson-enter">iVXjs:tracks:cues:on-enter</h2>
+
+<p><em>Description</em></p>
+
+<p>Fires whenever a cue is started. Note, for tracks with kind caption, or subtitles, the cue 
+that is sent is the track that is showing. All other kinds always gets passed down.</p>
+
+<p><em>Payload</em></p>
+
+<p>The cue that was started. The payload properties depends on the kind (See JSON Spec Documentation for details)</p>
+
+<h2 id="ivxjstrackscueson-exit">iVXjs:tracks:cues:on-exit</h2>
+
+<p><em>Description</em></p>
+
+<p>Fires whenever a cue finishes. Note, this doesn’t fire for caption kind of track.</p>
+
+<p><em>Payload</em></p>
+
+<p>Sends the track that is currently finishing</p>
+
+<h2 id="ivxjstrackscueson-chapter-start">iVXjs:tracks:cues:on-chapter-start</h2>
+
+<p><em>Description</em></p>
+
+<p>Fires whenever a new chapter begins.</p>
+
+<p><em>Payload</em></p>
+
+<p>Cue containing all the chapter information</p>
+
+<h2 id="ivxjstrackscueson-chapter-end">iVXjs:tracks:cues:on-chapter-end</h2>
+
+<p><em>Description</em></p>
+
+<p>Fires whenever a chapter ends</p>
+
+<p><em>Payload</em></p>
+
+<p>Cue containing all the chapter info that ended</p>
 
 <h1 id="angular-specific-events">Angular Specific Events</h1>
 

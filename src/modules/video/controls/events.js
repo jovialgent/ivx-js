@@ -28,4 +28,8 @@ export default class {
     seek(seconds) {
         this.iVXjsBus.emit(this.controlEventNames.SEEK, seconds);
     }
+
+    changeCurrentTrack(trackId){
+        this.iVXjsBus.emit(this.trackEventNames.CHANGE_CURRENT_TRACK, trackId);
+    }
 }
