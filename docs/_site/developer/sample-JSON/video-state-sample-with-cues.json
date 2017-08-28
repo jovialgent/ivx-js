@@ -55,11 +55,7 @@
                                 "id": "meta1",
                                 "start": 0,
                                 "end": 3,
-                                "payload": {
-                                    "data": {
-                                        "test": 123
-                                    }
-                                }
+                                "payload": "{\"test\":123}"
                             }
                         ],
                         "label": "Metadata",

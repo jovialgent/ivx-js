@@ -146,39 +146,21 @@ export default {
     createMetadataCue(metadataCueObject) {
         let { id, start, end, payload } = metadataCueObject;
         let cue = {};
-        let { data, text } = payload;
 
         if (window.VTTCue) {
-
-            cue = new VTTCue(start, end, "metadata");
-
-            if (data) {
-                cue = Object.assign(cue, {
-                    data,
-                    id
-                })
-            }
-
-            if (text) {
-                cue.text = text;
-            }
+            cue = new VTTCue(start, end, payload);
+            cue = Object.assign(cue, {
+                id
+            });
 
             return cue;
         }
 
         if (window.TextTrackCue) {
             cue = new TextTrackCue(start, end, payload);
-
-            if (data) {
-                cue = Object.assign(cue, {
-                    data,
-                    id
-                })
-            }
-
-            if (text) {
-                cue.text = text;
-            }
+            cue = Object.assign(cue, {
+                id
+            });
 
             return cue;
         }
@@ -264,7 +246,7 @@ export default {
             newCue.line = line;
         }
 
-        if(vertical){
+        if (vertical) {
             newCue.vertical = vertical;
         }
 
@@ -274,7 +256,7 @@ export default {
 
     createCue(cueObject) {
         let { start, end, payload } = cueObject;
-        
+
         if (window.VTTCue) {
             let vttCue = new VTTCue(start, end, payload);
 

@@ -66,7 +66,7 @@ export class Setup {
         let {iVXjsLog, settings} = this;
         let {data = {}, analytics} = settings;
         let {module: dataModule = iVXjsData} = data;
-
+        
         this.setupData(dataModule)
             .then(
             function validateExperience(experienceData) {
@@ -101,6 +101,7 @@ export class Setup {
      * @return {Promise} - resolves once all validation of this data is finished.
      */
     runValidation(experienceData) {
+        let {settings} = this;
         let {validation: ValidationModule = iVXjsValidation} = experienceData;
 
         return new ValidationModule(experienceData);

@@ -118,7 +118,7 @@
                                         "payload" : {
                                             "name" : "Payload",
                                             "type" : "string",
-                                            "description" : "It is the payload for this cue. The payload content does different things based on their kind. Their kinds and the payload meaning is ass follows: <ul><li>Captions: Caption content that appears on the video</li><li>Subtitles: Subtitle content that appears on the video</li><li>Chapter: Renders a  chapter label. If standard controls are on, this will appear as the label for the chapter buttons.</li><li>Meta: Instead of a string, the payload takes an object called data and will attach that data to the cue. (See example in JSON)</li> </ul>",
+                                            "description" : "It is the payload for this cue. The payload content does different things based on their kind. Their kinds and the payload meaning is ass follows: <ul><li>Captions: Caption content that appears on the video</li><li>Subtitles: Subtitle content that appears on the video</li><li>Chapter: Renders a  chapter label. If standard controls are on, this will appear as the label for the chapter buttons.</li><li>Metadata: A string that can be anything from a JSON, HTML, text, etc. </li> </ul>",
                                             "required" : true
                                         },
                                         "position" : {
@@ -153,7 +153,7 @@
                                 "enum": [
                                     "subtitles",
                                     "captions",
-                                    "meta",
+                                    "metadata",
                                     "chapters"
                                 ]
                             },

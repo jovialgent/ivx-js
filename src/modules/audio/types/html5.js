@@ -1,4 +1,4 @@
-import { ObjectParsers } from "../../../utilities/type-parsers.js";
+import { ObjectParsers, TypeValidator } from "../../../utilities/type-parsers.js";
 import AudioEventNames from "../../../constants/audio.events.js";
 
 export class Html5 {
@@ -9,6 +9,7 @@ export class Html5 {
         this.id = id;
         this.audioElement = audioElement;
         this.audioElement.setAttribute('id', id);
+        this.validator = new TypeValidator();
 
         document.querySelector(selector).appendChild(audioElement);
     }
@@ -36,7 +37,7 @@ export class Html5 {
     }
 
     setVolume(volume) {
-        if(!volume) return;
+        if(!volume || !this.validator.isNumber(volume)) return;
         this.audioElement.volume = volume;
         this.currentVolume = volume;
     }

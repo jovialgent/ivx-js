@@ -48,6 +48,9 @@ export class VideoStateSchema {
                             "items": [{
                                 "type": "object",
                                 "properties": {
+                                    "id" : {
+                                        "type" : "string"
+                                    },
                                     "src": {
                                         "type": "string"
                                     },
@@ -56,9 +59,43 @@ export class VideoStateSchema {
                                     },
                                     "default": {
                                         "type": "boolean"
-                                    }
-                                },
-                                "required": ["src"]
+                                    },
+                                    "cues" : {
+                                        "type" : "array",
+                                        "items" : [{
+                                            "type" : "object",
+                                            "properties" : {
+                                                "id" : {
+                                                    "type" : "string"
+                                                },
+                                                "start" : {
+                                                    "type" : "number"
+                                                },
+                                                "end" : {
+                                                    "type" : "number"
+                                                },
+                                                "payload" : {
+                                                    "type" : "string"
+                                                },
+                                                "align" : {
+                                                    "type" : "string"
+                                                },
+                                                "position" : {
+                                                    "type" : "string"
+                                                },
+                                                "size" : {
+                                                    "type" : "string"
+                                                },
+                                                "vertical" : {
+                                                    "type" : "string"
+                                                }
+                                            },
+                                            "required": ["id", "start", "end", "payload"]
+                                        }]
+                                    },
+                                    "required" : ["id", "kind"]
+                                    
+                                }
                             }]
                         }
                     },

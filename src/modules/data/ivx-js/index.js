@@ -14,7 +14,7 @@ export class iVXjsData {
     }
 
     setUpExperience(configData, enhanceResolve) {
-        let {config, data = {}, experience: modifiedExperience, rules: customRules, ui = 'default', validation = 'iVXjsValidation'} = this.iVXjsSettings;
+        let {config, data = {}, experience: modifiedExperience, rules: customRules, ui = 'default', validation} = this.iVXjsSettings;
         let experience = defaultActions;
         let {modules: configModules = {}} = configData;
         let {ui: configUI = ui, validation: configValidation = validation} = configModules;
@@ -25,6 +25,7 @@ export class iVXjsData {
 
         let enhanced = {
             experience: experience,
+            validation,
             rules: new Rules(experience, customRules).rules,
             config: configData
         };
