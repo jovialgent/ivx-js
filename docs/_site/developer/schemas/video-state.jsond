@@ -83,6 +83,34 @@
                         "type": "object",
                         "description": "Settings for the track element",
                         "properties": {
+                            "id": {
+                                "name": "Track Id",
+                                "type": "string",
+                                "description": "Unique track identifier used in selecting tracks from the track collection and choosing languages.",
+                                "required": true
+                            },
+                            "kind": {
+                                "name": "Track Tag Kind",
+                                "type": "string",
+                                "required": true,
+                                "description": "Kind of track such as chapter",
+                                "enum": [
+                                    "subtitles",
+                                    "captions",
+                                    "metadata",
+                                    "chapters"
+                                ]
+                            },
+                            "default": {
+                                "name": "Is Default Track",
+                                "type": "boolean",
+                                "description": "Determines if this track is the default track for this video"
+                            },
+                            "label": {
+                                "name": "Label",
+                                "type": "string",
+                                "description": "Label for the track. This will appear in the language select dropdown"
+                            },
                             "src": {
                                 "name": "Track Tag Source",
                                 "type": "string",
@@ -101,66 +129,57 @@
                                             "name": "Cue Id",
                                             "type": "string",
                                             "description": "Unique identifier for this cue. Used primarily for selecting tracks and chapters",
-                                            "required" : true
+                                            "required": true
                                         },
-                                        "start" : {
-                                            "name" : "Start Time",
-                                            "type" : "number",
-                                            "description"  :"Time in seconds where this cue starts in the video",
-                                            "required" : true
+                                        "start": {
+                                            "name": "Start Time",
+                                            "type": "number",
+                                            "description": "Time in seconds where this cue starts in the video",
+                                            "required": true
                                         },
-                                        "end" : {
-                                            "name" : "End Time",
-                                            "type" : "number",
-                                            "description" : "Time in seconds where this cue ends in the video",
-                                            "required" : true
+                                        "end": {
+                                            "name": "End Time",
+                                            "type": "number",
+                                            "description": "Time in seconds where this cue ends in the video",
+                                            "required": true
                                         },
-                                        "payload" : {
-                                            "name" : "Payload",
-                                            "type" : "string",
-                                            "description" : "It is the payload for this cue. The payload content does different things based on their kind. Their kinds and the payload meaning is ass follows: <ul><li>Captions: Caption content that appears on the video</li><li>Subtitles: Subtitle content that appears on the video</li><li>Chapter: Renders a  chapter label. If standard controls are on, this will appear as the label for the chapter buttons.</li><li>Metadata: A string that can be anything from a JSON, HTML, text, etc. </li> </ul>",
-                                            "required" : true
+                                        "payload": {
+                                            "name": "Payload",
+                                            "type": "string",
+                                            "description": "It is the payload for this cue. The payload content does different things based on their kind. Their kinds and the payload meaning is ass follows: <ul><li>Captions: Caption content that appears on the video</li><li>Subtitles: Subtitle content that appears on the video</li><li>Chapter: Renders a  chapter label. If standard controls are on, this will appear as the label for the chapter buttons.</li><li>Metadata: A string that can be anything from a JSON, HTML, text, etc. </li> </ul>",
+                                            "required": true
                                         },
-                                        "position" : {
-                                            "name" : "Position",
-                                            "type" : "string",
-                                            "description" : "Specifies where the text will appear horizontally. If vertical is set, where the text appears vertically. The value is a percent that ranges from 0% to 100%. 0% means to the left. 100% means to the right."     
+                                        "position": {
+                                            "name": "Position",
+                                            "type": "string",
+                                            "description": "Specifies where the text will appear horizontally. If vertical is set, where the text appears vertically. The value is a percent that ranges from 0% to 100%. 0% means to the left. 100% means to the right."
                                         },
-                                        "size" : {
-                                            "name" : "Size",
-                                            "type" : "string",
-                                            "description" : "Specifies the width of the text area. If vertical is set, it determines the width. The value is a percent from 0% to 100%. 100% means full width. 50% means half width."
+                                        "size": {
+                                            "name": "Size",
+                                            "type": "string",
+                                            "description": "Specifies the width of the text area. If vertical is set, it determines the width. The value is a percent from 0% to 100%. 100% means full width. 50% means half width."
                                         },
-                                        "align" : {
-                                            "name" : "Align",
-                                            "type" : "string",
-                                            "description" : "Specicifies the alignment of the text. Text is aligned within the space given by the size cue setting if it is set.",
-                                            "enum" : ["start", "middle", "end"]
+                                        "align": {
+                                            "name": "Align",
+                                            "type": "string",
+                                            "description": "Specicifies the alignment of the text. Text is aligned within the space given by the size cue setting if it is set.",
+                                            "enum": [
+                                                "start",
+                                                "middle",
+                                                "end"
+                                            ]
                                         },
-                                        "vertical" : {
-                                            "name" : "Vertical",
-                                            "type" : "string",
-                                            "description" : "Indicates that the text will be displayed vertically rather than horizontally, such as in some Asian languages.",
-                                            "enum" : ["rl", "lr"]
+                                        "vertical": {
+                                            "name": "Vertical",
+                                            "type": "string",
+                                            "description": "Indicates that the text will be displayed vertically rather than horizontally, such as in some Asian languages.",
+                                            "enum": [
+                                                "rl",
+                                                "lr"
+                                            ]
                                         }
                                     }
                                 }
-                            },
-                            "kind": {
-                                "name": "Track Tag Kind",
-                                "type": "string",
-                                "description": "Kind of track such as chapter",
-                                "enum": [
-                                    "subtitles",
-                                    "captions",
-                                    "metadata",
-                                    "chapters"
-                                ]
-                            },
-                            "default": {
-                                "name": "Is Default Tag",
-                                "type": "boolean",
-                                "description": "Determines if this track is the default track for this video"
                             }
                         }
                     }
