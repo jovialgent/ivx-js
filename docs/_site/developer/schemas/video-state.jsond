@@ -177,6 +177,11 @@
                                                 "rl",
                                                 "lr"
                                             ]
+                                        },
+                                        "line" : {
+                                            "name" : "Line",
+                                            "type" : "string",
+                                            "description" : "Indicates where the text appears vertically. If vertical is set, line specifies where text appears horizontally. Can be either 0 to 1 number"
                                         }
                                     }
                                 }
