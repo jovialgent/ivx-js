@@ -243,7 +243,7 @@ export default {
         }
 
         if (line) {
-            newCue.line = line.indexOf('%') >= 0 ? this._convertPercentToDecimal(line) : line;
+            newCue.line = line.indexOf && line.indexOf('%') >= 0 ? this._convertPercentToDecimal(line) : line;
         }
 
         if (vertical) {
