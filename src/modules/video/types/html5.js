@@ -3,6 +3,7 @@ import PlayerSettings from "../settings.js";
 import VideoEventNames from "../../../constants/video.events.js";
 import TrackCuesService from "./html5.cues";
 import TrackEventNames from "../../../constants/tracks.events.js";
+import TrackCueEventNames from "../../../constants/tracks.cues.events.js";
 
 
 let thisObjectParsers = new ObjectParsers();
@@ -16,6 +17,8 @@ export class Html5 {
         this.videoEventNames = new VideoEventNames();
         this.TrackCuesService = TrackCuesService;
         this.trackEventNames = new TrackEventNames();
+        this.trackCuesEventNames = new TrackCueEventNames();
+
 
         container.html(this.html);
 
@@ -92,7 +95,7 @@ export class Html5 {
     }
 
     addEventListeners(iVXjsBus, settings = {}) {
-        let { videoEventNames, trackEventNames, iVXjsLog } = this;
+        let { videoEventNames, trackEventNames, trackCuesEventNames, iVXjsLog } = this;
         let { tracks } = settings;
         let self = this;
 
@@ -131,6 +134,7 @@ export class Html5 {
 
         //Track Events
         this.changeCurrentTrackOnEvent = iVXjsBus.on(trackEventNames.CHANGE_CURRENT_TRACK, changeCurrentTrack);
+        this.changeChapter = iVXjsBus.on(trackCuesEventNames.CHANGE_CHAPTER, changeCurrentChapter);
 
         // If it doesn't have a custom function, add the default one so the Bus can dispose of it.
         this.playOnEvent = this.playOnEvent ? this.playOnEvent : playOnEvent;
@@ -195,24 +199,71 @@ export class Html5 {
             self.setVolume(volume);
         }
 
-        function changeCurrentTrack(trackId){
-            let {textTracks} = self.player;
-            
-            Array.from(textTracks).forEach(textTrack=>{
-                let {kind, trackId : currentTrackId} = textTrack;
-                let isCaptions = (kind === 'captions' || kind === 'subtitles');
-                
-                if(isCaptions){
-                    Object.assign(textTrack, {
-                        mode : trackId === currentTrackId ? 'showing' : 'disabled'
-                    })
-                }
+        function changeCurrentChapter(opts) {
+            let { chapterId = "" } = opts;
+            let {player = {}}  = self;
+            let trackArray = Array.from(player.textTracks);
+            let chapterTrack = trackArray.find(track=>{
+                let {kind = ""} = track;
+
+                return kind === 'chapters';
             });
+            
+            if(chapterTrack){
+                let {cues = []} = chapterTrack;
+                let newChapterCue = Array.from(cues).find(cue=>{
+                    let {chapterId : currentChapterId} = cue;
+
+                    return currentChapterId === chapterId;
+                });
+
+                if(newChapterCue){
+                    let {startTime} = newChapterCue;
+
+                    self.seek(startTime);
+                }
+            }
+        }
+
+        function changeCurrentTrack(opts) {
+            let { trackId = "" } = opts;
+            let { textTracks } = self.player;
+            let trackArray = Array.from(textTracks);
+
+            if (trackId.length <= 0) {
+                trackArray.forEach((track) => {
+                    Object.assign(track, {
+                        mode: "hidden"
+                    });
+                });
+
+                return;
+            }
+
+            let newTrack = trackArray.find(textTrack => {
+                let { kind, trackId: currentTrackId } = textTrack;
+                let isCaptions = (kind === 'captions' || kind === 'subtitles');
+
+                return isCaptions && currentTrackId === trackId;
+            });
+
+            if (newTrack) {
+                trackArray.forEach(textTrack => {
+                    let { kind, trackId: currentTrackId } = textTrack;
+                    let isCaptions = (kind === 'captions' || kind === 'subtitles');
+
+                    if (isCaptions) {
+                        Object.assign(textTrack, {
+                            mode: currentTrackId === trackId ? "showing" : "hidden"
+                        });
+                    }
+                });
+            }
         }
     }
 
     dispose(iVXjsBus) {
-        let { videoEventNames, trackEventNames } = this;
+        let { videoEventNames, trackEventNames, trackCuesEventNames } = this;
         let self = this;
         let eventNameMap = {
             play: videoEventNames.PLAY,
@@ -221,7 +272,8 @@ export class Html5 {
             duration: videoEventNames.GET_DURATION,
             volume: videoEventNames.SET_VOLUME,
             playing: videoEventNames.PLAYING,
-            changeCurrentTrack : trackEventNames.CHANGE_CURRENT_TRACK
+            changeCurrentTrack: trackEventNames.CHANGE_CURRENT_TRACK,
+            changeChapter: trackCuesEventNames.CHANGE_CHAPTER
         };
         let eventsToDispose = Object.keys(eventNameMap);
 

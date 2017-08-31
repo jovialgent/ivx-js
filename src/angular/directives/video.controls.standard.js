@@ -16,11 +16,8 @@ class StandardControls {
             let standardControls = new iVXjsUI.videoControls(iElm.find('div'), iVXjsBus);
 
             controller.controls = standardControls;
-
-           
-            standardControls.addEventListeners(iVXjsBus);   
             
-                
+            standardControls.addEventListeners(iVXjsBus);
         }
     }
 

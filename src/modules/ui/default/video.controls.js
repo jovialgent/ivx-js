@@ -197,6 +197,71 @@ export default class extends Controls {
         }
     }
 
+    getTrackArray() {
+        let { player } = this;
+        let { textTracks } = player;
+        let trackArray = Array.from(textTracks);
+
+        return trackArray;
+    }
+
+    isLanguageTrack(track, trackId) {
+        let { trackId: testTrackId, kind } = track;
+
+        return testTrackId === trackId && (kind === 'captions' || kind === 'subtitles');
+    }
+
+    getTrack(trackId, predicate) {
+        const self = this;
+        const trackArray = this.getTrackArray();
+
+        return trackArray.find(currentTrack => {
+            let { trackId: currentTrackId } = currentTrack;
+
+            return predicate ? predicate(currentTrack, trackId) : self.isLanguageTrack(currentTrack, trackId);
+        })
+    }
+
+    updateTrackSelector(trackId) {
+        let {
+            trackListSelectContainerClasses, trackListSelectClasses,
+            trackListSelectActiveClasses, trackListSelectInactiveClasses, closeCaptionButtonIconContent,
+            player,
+            closeCaptionButtonClasses, closeCaptionButtonActiveClasses, closeCaptionButtonInactiveClasses, closeCaptionButtonIconClasses
+        } = this;
+        let { trackListSelect = {}, ccToggle = {} } = this;
+        let selectedLanguageTrack = this.getTrack(trackId);
+        let { childNodes: options = [] } = trackListSelect;
+
+        if (options.length > 1) {
+            let hasOption = Array.from(options).find(option => {
+                let { value: currentTrackId } = option;
+
+                return trackId === currentTrackId;
+            });
+
+            if (hasOption) {
+                Object.assign(trackListSelect, {
+                    value: trackId
+                });
+
+                ElementUtilities.removeClassesFromElement(trackListSelect, trackListSelectInactiveClasses);
+                ElementUtilities.addClassesToElement(trackListSelect, trackListSelectActiveClasses);
+            } else {
+                ElementUtilities.removeClassesFromElement(trackListSelect, trackListSelectActiveClasses);   
+                ElementUtilities.addClassesToElement(trackListSelect, trackListSelectInactiveClasses);
+            }
+        }
+
+        if (selectedLanguageTrack) {
+            ElementUtilities.removeClassesFromElement(ccToggle, closeCaptionButtonInactiveClasses);
+            ElementUtilities.addClassesToElement(ccToggle, closeCaptionButtonActiveClasses);
+        } else {
+            ElementUtilities.removeClassesFromElement(ccToggle, closeCaptionButtonActiveClasses);
+            ElementUtilities.addClassesToElement(ccToggle, closeCaptionButtonInactiveClasses);
+        }
+    }
+
     createTrackSelect(textTracks) {
         let self = this;
         let {
@@ -253,23 +318,10 @@ export default class extends Controls {
             });
 
             ccToggle.addEventListener('click', (evt) => {
-                const { value: trackId } = trackListSelect;
-                const isInactive = ElementUtilities.hasClass(ccToggle, closeCaptionButtonInactiveClasses);
-
-                if (isInactive) {
-                    ElementUtilities.removeClassesFromElement(trackListSelect, trackListSelectInactiveClasses);
-                    ElementUtilities.removeClassesFromElement(ccToggle, closeCaptionButtonInactiveClasses);
-                    ElementUtilities.addClassesToElement(trackListSelect, trackListSelectActiveClasses);
-                    ElementUtilities.addClassesToElement(ccToggle, closeCaptionButtonActiveClasses);
-                    self.changeCurrentTrack(trackId);
-                } else {
-                    ElementUtilities.removeClassesFromElement(trackListSelect, trackListSelectActiveClasses);
-                    ElementUtilities.removeClassesFromElement(ccToggle, closeCaptionButtonActiveClasses);
-                    ElementUtilities.addClassesToElement(trackListSelect, trackListSelectInactiveClasses);
-                    ElementUtilities.addClassesToElement(ccToggle, closeCaptionButtonInactiveClasses);
-                    self.changeCurrentTrack("");
-                }
+                self.toggleCC();
             });
+
+            this.ccToggle = ccToggle;
 
             ElementUtilities.addClassesToElement(trackListSelect, trackListSelectClasses);
             ElementUtilities.addClassesToElement(trackListSelect, languageSelected ? trackListSelectActiveClasses : trackListSelectInactiveClasses);
@@ -279,12 +331,39 @@ export default class extends Controls {
 
             if (languageTracks.length > 1) {
                 ElementUtilities.append(trackListContainer, trackListSelect);
+
+                this.trackListSelect = trackListSelect;
             }
 
             return trackListContainer;
         }
 
         return false;
+    }
+
+    toggleCC() {
+        let {
+            trackListSelectContainerClasses, trackListSelectClasses,
+            trackListSelectActiveClasses, trackListSelectInactiveClasses, closeCaptionButtonIconContent,
+            closeCaptionButtonClasses, closeCaptionButtonActiveClasses, closeCaptionButtonInactiveClasses, closeCaptionButtonIconClasses
+        } = this;
+        const { trackListSelect = {}, ccToggle = {} } = this;
+        const { value: trackId } = trackListSelect;
+        const isInactive = ElementUtilities.hasClass(ccToggle, closeCaptionButtonInactiveClasses);
+
+        if (isInactive) {
+            ElementUtilities.removeClassesFromElement(trackListSelect, trackListSelectInactiveClasses);
+            ElementUtilities.removeClassesFromElement(ccToggle, closeCaptionButtonInactiveClasses);
+            ElementUtilities.addClassesToElement(trackListSelect, trackListSelectActiveClasses);
+            ElementUtilities.addClassesToElement(ccToggle, closeCaptionButtonActiveClasses);
+            this.changeCurrentTrack(trackId);
+        } else {
+            ElementUtilities.removeClassesFromElement(trackListSelect, trackListSelectActiveClasses);
+            ElementUtilities.removeClassesFromElement(ccToggle, closeCaptionButtonActiveClasses);
+            ElementUtilities.addClassesToElement(trackListSelect, trackListSelectInactiveClasses);
+            ElementUtilities.addClassesToElement(ccToggle, closeCaptionButtonInactiveClasses);
+            this.changeCurrentTrack("");
+        }
     }
 
 
@@ -310,12 +389,12 @@ export default class extends Controls {
                 chapterButtonEl.innerHTML = text;
 
                 ElementUtilities.append(chapterContainerEl, chapterButtonEl);
-                
+
                 chapterContainerEl.id = id;
                 chapterContainerEl.className = `${chapterListItemClasses} ${index === 0 ? chapterActiveClasses : chapterInActiveClasses}`;
 
                 ElementUtilities.append(chapterListEl, chapterContainerEl);
-                
+
                 chapterButtonEl.addEventListener('click', () => {
                     self.seek(startTime);
                     self.play();

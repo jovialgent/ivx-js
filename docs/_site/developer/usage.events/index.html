@@ -218,6 +218,8 @@
   </li>
   <li><a href="#track-cues-events" id="markdown-toc-track-cues-events">Track Cues Events</a>    <ul>
       <li><a href="#ivxjstrackson-track-change" id="markdown-toc-ivxjstrackson-track-change">iVXjs:tracks:on-track-change</a></li>
+      <li><a href="#ivxjstrackschange-current-track" id="markdown-toc-ivxjstrackschange-current-track">iVXjs:tracks:change-current-track</a></li>
+      <li><a href="#ivxjstrackscueschange-chapter" id="markdown-toc-ivxjstrackscueschange-chapter">iVXjs:tracks:cues:change-chapter</a></li>
       <li><a href="#ivxjstrackscueson-enter" id="markdown-toc-ivxjstrackscueson-enter">iVXjs:tracks:cues:on-enter</a></li>
       <li><a href="#ivxjstrackscueson-exit" id="markdown-toc-ivxjstrackscueson-exit">iVXjs:tracks:cues:on-exit</a></li>
       <li><a href="#ivxjstrackscueson-chapter-start" id="markdown-toc-ivxjstrackscueson-chapter-start">iVXjs:tracks:cues:on-chapter-start</a></li>
@@ -946,6 +948,83 @@ need the content in an experience to change to another language.</p>
     </span><span class="p">}</span><span class="w">
 </span><span class="err">}</span><span class="w">
 </span></code></pre>
+</div>
+
+<h2 id="ivxjstrackschange-current-track">iVXjs:tracks:change-current-track</h2>
+
+<p><em>Description</em></p>
+
+<p>Sends a track id to set the current language track. This will only affects 
+different subtitles and caption tracks.</p>
+
+<p><em>Payload</em></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w"> 
+    </span><span class="nt">"properties: {
+       "</span><span class="err">trackId</span><span class="nt">" : {
+           "</span><span class="err">type</span><span class="nt">" : "</span><span class="err">string</span><span class="nt">",
+            "</span><span class="err">description</span><span class="nt">" : "</span><span class="err">Track</span><span class="w"> </span><span class="err">Id</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">select</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">track"</span><span class="w">
+       </span><span class="err">}</span><span class="w">
+    </span><span class="err">}</span><span class="w">
+   
+</span><span class="err">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><em>JSON</em></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"eventName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"iVXjs:tracks:change-current-track"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"args"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"trackId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"TRACK_ID"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><em>Action Template</em></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;ANY ivx-event="iVXjs:tracks:change-current-track" ivx-event-args="{trackId : 'TRACK_ID'}"&gt;&lt;/ANY&gt;
+</code></pre>
+</div>
+
+<h2 id="ivxjstrackscueschange-chapter">iVXjs:tracks:cues:change-chapter</h2>
+
+<p><em>Description</em></p>
+
+<p>Skips to the start of the chapter of the chapter with the matching id.</p>
+
+<p><em>Payload</em></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w"> 
+    </span><span class="nt">"properties: {
+       "</span><span class="err">chapterId</span><span class="nt">" : {
+           "</span><span class="err">type</span><span class="nt">" : "</span><span class="err">string</span><span class="nt">",
+            "</span><span class="err">description</span><span class="nt">" : "</span><span class="err">Chapter</span><span class="w"> </span><span class="err">Id</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">select</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">track"</span><span class="w">
+       </span><span class="err">}</span><span class="w">
+    </span><span class="err">}</span><span class="w">
+   
+</span><span class="err">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><em>JSON</em></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"eventName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"iVXjs:tracks:cues:change-chapter"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"args"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"chapterId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"CHAPTER_ID"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><em>Action Template</em></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;ANY ivx-event="iVXjs:tracks:cues:change-chapter" ivx-event-args="{chapterId : 'CHAPTER_ID'}"&gt;&lt;/ANY&gt;
+</code></pre>
 </div>
 
 <h2 id="ivxjstrackscueson-enter">iVXjs:tracks:cues:on-enter</h2>

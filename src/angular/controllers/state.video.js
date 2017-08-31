@@ -53,8 +53,6 @@ class VideoStateController {
 
             iVXjs.log.debug(`onVideoReady Started`, {}, { state: $state.current.data, source: 'onVideoReady', status: 'started', actions: onVideoReady, timestamp: Date.now() });
 
-          
-
             iVXjsActions.resolveActions(onVideoReady, () => {
                 if (autoplay) {
                     iVXjsBus.emit(videoEventNames.PLAY);

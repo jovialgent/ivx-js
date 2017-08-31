@@ -168,13 +168,14 @@ export default {
     },
 
     createChapterCue(chapterObject) {
-        let { id, start, end, payload } = chapterObject;
+        let { id, chapterId, start, end, payload } = chapterObject;
         let cue = {};
 
         if (window.VTTCue) {
             cue = new VTTCue(start, end, payload);
             cue = Object.assign(cue, {
-                id
+                id,
+                chapterId : chapterId ? chapterId : id
             })
 
             return cue;

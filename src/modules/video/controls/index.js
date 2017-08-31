@@ -17,6 +17,8 @@ export class Controls extends ControlEvents {
         iVXjsBus.removeListener(this.controlEventNames.PLAYING, this.whilePlaying);
         iVXjsBus.removeListener(this.controlEventNames.CAN_PLAY, this.canPlayCallback);
         iVXjsBus.removeListener(this.trackCuesEventName.ON_CHAPTER_START, this.chapterChange);
+        iVXjsBus.removeListener(this.trackEventNames.CHANGE_CURRENT_TRACK, this.trackChange)
+
     }
 
     getAbsolutePosition(element) {
@@ -193,6 +195,7 @@ export class Controls extends ControlEvents {
         this.whilePlaying = iVXjsBus.on(this.controlEventNames.PLAYING, whilePlaying);
         this.canPlayCallback = iVXjsBus.on(this.controlEventNames.CAN_PLAY, canPlayCallBack);
         this.chapterChange = iVXjsBus.on(this.trackCuesEventName.ON_CHAPTER_START, chapterChange);
+        this.trackChange = iVXjsBus.on(this.trackEventNames.CHANGE_CURRENT_TRACK, trackChange)
         this.updateTime = this.updateTime ? this.updateTime : updateTime;
 
         volumeBar.addEventListener('mousedown', (event) => {
@@ -210,15 +213,16 @@ export class Controls extends ControlEvents {
 
         this.iVXjsBus.once(this.controlEventNames.CAN_PLAY, (player) => {
             self.createPlayerSpecificControls({ player })
+            self.player = player;
         });
 
         function chapterChange(cue) {
             const { chapterActiveClasses, chapterListItemClasses, chapterInActiveClasses } = self;
             const chapterList = Array.from(document.getElementsByClassName(chapterListItemClasses));
-            const { id: currentChapterId } = cue;
+            const { chapterId: currentChapterId } = cue;
 
             chapterList.forEach(chapterListItem => {
-                let { id: chapterId } = chapterListItem;
+                let { id : chapterId } = chapterListItem;
 
                 if (chapterId === currentChapterId) {
                     chapterListItem.classList.remove(chapterInActiveClasses);
@@ -226,12 +230,16 @@ export class Controls extends ControlEvents {
                     return;
                 }
 
-               
-                    chapterListItem.classList.remove(chapterActiveClasses);
-                    chapterListItem.classList.add(chapterInActiveClasses);
-                
+                chapterListItem.classList.remove(chapterActiveClasses);
+                chapterListItem.classList.add(chapterInActiveClasses);
             });
         };
+
+        function trackChange(opts) {
+            let { trackId = "" } = opts;
+
+            self.updateTrackSelector(trackId)
+        }
 
         function canPlayCallBack(player, _stateData) {
             self.onReadyToPlay(player, _stateData);

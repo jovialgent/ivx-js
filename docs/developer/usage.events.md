@@ -719,6 +719,83 @@ _Payload_
 }
 ```
 
+## iVXjs:tracks:change-current-track
+
+_Description_
+
+Sends a track id to set the current language track. This will only affects 
+different subtitles and caption tracks.
+
+_Payload_ 
+
+```
+{
+    "type": "object", 
+    "properties: {
+       "trackId" : {
+           "type" : "string",
+            "description" : "Track Id to select the track"
+       }
+    }
+   
+}
+```
+
+_JSON_
+
+```
+{
+    "eventName" : "iVXjs:tracks:change-current-track",
+    "args" : {
+        "trackId" : "TRACK_ID"
+    }
+}
+```
+
+_Action Template_
+
+```
+<ANY ivx-event="iVXjs:tracks:change-current-track" ivx-event-args="{trackId : 'TRACK_ID'}"></ANY>
+```
+
+## iVXjs:tracks:cues:change-chapter
+
+_Description_
+
+Skips to the start of the chapter of the chapter with the matching id.
+
+_Payload_ 
+
+```
+{
+    "type": "object", 
+    "properties: {
+       "chapterId" : {
+           "type" : "string",
+            "description" : "Chapter Id to select the track"
+       }
+    }
+   
+}
+```
+
+_JSON_
+
+```
+{
+    "eventName" : "iVXjs:tracks:cues:change-chapter",
+    "args" : {
+        "chapterId" : "CHAPTER_ID"
+    }
+}
+```
+
+_Action Template_
+
+```
+<ANY ivx-event="iVXjs:tracks:cues:change-chapter" ivx-event-args="{chapterId : 'CHAPTER_ID'}"></ANY>
+```
+
 ## iVXjs:tracks:cues:on-enter
 
 _Description_
