@@ -248,7 +248,7 @@ export default class extends Controls {
                 ElementUtilities.removeClassesFromElement(trackListSelect, trackListSelectInactiveClasses);
                 ElementUtilities.addClassesToElement(trackListSelect, trackListSelectActiveClasses);
             } else {
-                ElementUtilities.removeClassesFromElement(trackListSelect, trackListSelectActiveClasses);   
+                ElementUtilities.removeClassesFromElement(trackListSelect, trackListSelectActiveClasses);
                 ElementUtilities.addClassesToElement(trackListSelect, trackListSelectInactiveClasses);
             }
         }
@@ -333,6 +333,8 @@ export default class extends Controls {
                 ElementUtilities.append(trackListContainer, trackListSelect);
 
                 this.trackListSelect = trackListSelect;
+            } else {
+                this.languageSelected = languageTracks[0].trackId;
             }
 
             return trackListContainer;
@@ -347,23 +349,36 @@ export default class extends Controls {
             trackListSelectActiveClasses, trackListSelectInactiveClasses, closeCaptionButtonIconContent,
             closeCaptionButtonClasses, closeCaptionButtonActiveClasses, closeCaptionButtonInactiveClasses, closeCaptionButtonIconClasses
         } = this;
-        const { trackListSelect = {}, ccToggle = {} } = this;
-        const { value: trackId } = trackListSelect;
+        const { trackListSelect, ccToggle = {}, languageSelected } = this;
+
         const isInactive = ElementUtilities.hasClass(ccToggle, closeCaptionButtonInactiveClasses);
 
         if (isInactive) {
-            ElementUtilities.removeClassesFromElement(trackListSelect, trackListSelectInactiveClasses);
             ElementUtilities.removeClassesFromElement(ccToggle, closeCaptionButtonInactiveClasses);
-            ElementUtilities.addClassesToElement(trackListSelect, trackListSelectActiveClasses);
             ElementUtilities.addClassesToElement(ccToggle, closeCaptionButtonActiveClasses);
-            this.changeCurrentTrack(trackId);
+
+            if (trackListSelect) {
+                let { value: trackId } = trackListSelect;
+
+                ElementUtilities.addClassesToElement(trackListSelect, trackListSelectActiveClasses);
+                ElementUtilities.removeClassesFromElement(trackListSelect, trackListSelectInactiveClasses);
+                this.changeCurrentTrack(trackId);
+            } else {
+                this.changeCurrentTrack(languageSelected);
+            }
+
         } else {
-            ElementUtilities.removeClassesFromElement(trackListSelect, trackListSelectActiveClasses);
             ElementUtilities.removeClassesFromElement(ccToggle, closeCaptionButtonActiveClasses);
-            ElementUtilities.addClassesToElement(trackListSelect, trackListSelectInactiveClasses);
             ElementUtilities.addClassesToElement(ccToggle, closeCaptionButtonInactiveClasses);
+
+            if (trackListSelect) {
+                ElementUtilities.removeClassesFromElement(trackListSelect, trackListSelectActiveClasses);
+                ElementUtilities.addClassesToElement(trackListSelect, trackListSelectInactiveClasses);
+            }
+
             this.changeCurrentTrack("");
         }
+
     }
 
 

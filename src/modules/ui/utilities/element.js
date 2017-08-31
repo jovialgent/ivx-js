@@ -1,22 +1,26 @@
 export default {
-    addClassesToElement(element, classes) {
+    addClassesToElement(element = {}, classes) {
         let classList = classes.split(' ');
+
+        if (!element.classList) return;
 
         classList.forEach(currentClass => {
             element.classList.add(currentClass);
         })
     },
 
-    removeClassesFromElement(element, classes) {
+    removeClassesFromElement(element = {}, classes) {
         let classList = classes.split(' ');
+
+        if (!element.classList) return;
 
         classList.forEach(currentClass => {
             element.classList.remove(currentClass);
         })
     },
 
-    hasClass(element, classes) {
-        return element.className.indexOf(classes) >= 0;
+    hasClass(element = {}, classes) {
+        return element.className && element.className.indexOf(classes) >= 0;
     },
 
     append(appendTo, element) {
