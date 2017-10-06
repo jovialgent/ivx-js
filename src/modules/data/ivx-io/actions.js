@@ -153,7 +153,7 @@ export class iVXioActions {
      * @param {string} eventArgs.value - experience data value to be set to.  
      * @return {Promise} - will indicate if this data was successfully updated to the platform.
      */
-    setData(eventArgs) {
+    setData(eventArgs) {        
         if (typeof eventArgs === 'object') {
             let { key, value } = eventArgs;
             let self = this;
