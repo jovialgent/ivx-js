@@ -6006,8 +6006,6 @@ app
 
 new _index2.default(app, { factoryFunctionCreator: _createFactoryFunction2.default });
 
-console.log("BUILDING ROCKS YEAH!!!!!!!!!!!!!");
-
 // Bootstrap App
 myIVXjs.Bus.on(iVXjsConfigEvents.VALIDATED, function (iVXjs) {
     var stateAudio = new iVXjs.audio('body', 'state-audio');
