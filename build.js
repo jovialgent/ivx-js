@@ -1,22 +1,15 @@
-let argv = require('minimist')(process.argv.slice(2), {
-    data: "basic",
-    analytics: "google",
-    validation: "basic",
-    ui: "basic"
-});
-
-
-const TemplateCache = require('./tools/builder/$templateCache.js');
-const Less = require("./tools/builder/less.js");
 const Pipe = require("./tools/builder/pipe.js");
-const appJsCreator = require('./tools/builder/app');
-const ivxjsAppSettings = require('./tools/developer/ivxjs-settings');
+const { argv } = require("yargs");
 const htmlCreator = require('./tools/developer/html-creator');
-const Immutable = require('immutable');
-const rimraf = require('rimraf');
+const appBuilder = require('./tools/builder/app');
 const mkdirp = require('mkdirp');
 const _ = require('lodash');
-const liveServer = require("live-server");
+const webpackConfig = require('./webpack.config.js');
+const colorsSupported = require('supports-color');
+const serve = require('browser-sync');
+const historyApiFallback = require('connect-history-api-fallback');
+const webpackDevMiddleware = require('webpack-dev-middleware');
+const webpackHotMiddleware = require('webpack-hot-middleware');
 
 class Builder {
     constructor(process) {
@@ -36,43 +29,21 @@ class Builder {
      * THIS IS FOR CDN BUILDING 
      * TO RUN A LOCAL BUILD RUN COMMAND: 
      * npm run setup
-     */ 
+     */
     get buildPaths() {
-        
-        const tcProps = require('teamcity-properties');
-        const buildNumber = tcProps['build.number'] ? tcProps['build.number'] : "";
-
         return {
-            root: "",
-            dir: [
-                "build/cdn/ivx-js/" + buildNumber,
-            ],
             postBuild: () => {
 
-            },
-            app: [].concat(
-                ivxjsAppSettings.generateSettings('build/cdn/ivx-js/' + buildNumber, false, false)
-            ),
-            assets: []
+            }
         }
     }
 
     get localBuildPaths() {
         return {
             root: "",
-            dir: [],
-            postBuild: () => {
-                liveServer.start({
-                    port: 8000,
-                    host: '127.0.0.1',
-                    root: 'public'
-                })
-            },
-            app: [].concat(
-                ivxjsAppSettings.generateSelectedModules('dist', 'dist/modules', argv._, true),
-                ivxjsAppSettings.generateSelectedModules('public/js', 'public/js/modules', argv._, true)
-            ),
-            assets: []
+            postBuild: (res) => {
+               
+            }
         }
     }
 
@@ -89,10 +60,6 @@ class Builder {
             postBuild: () => {
 
             },
-            app: [].concat(
-                ivxjsAppSettings.generateSettings('dist', 'dist/modules', false),
-                ivxjsAppSettings.generateSettings('public/js', 'public/js/modules', false)
-            ),
             assets: [{
                 src: "tools/snippets/project.json",
                 dest: "public/data"
@@ -128,31 +95,28 @@ class Builder {
 
         createDirectory(dir, root, () => {
             self.__runBuild(config)
-                .then(() => {
-                    postBuild();
+                .then((res) => {
+                    postBuild(res);
                 })
 
-        })
-
+        });
     }
 
     __runBuild(config) {
         let { templates, styles, vendor = {}, app = [], assets, root, dir } = config;
         let DevToolsConfig = new DevTools().config;
+        let self = this;
+
         if (this.isLocal) {
-            let indexHTMLTemplate = new htmlCreator(DevToolsConfig.project.index.src, DevToolsConfig.project.index.dest, argv._).build();
+            let indexHTMLTemplate = new htmlCreator(DevToolsConfig.project.index.src, DevToolsConfig.project.index.dest).build();
         }
-        let appPromises = appJsCreator.create(app);
+
         let assetsPromise = this.__processAssets(assets);
 
-        return Promise.all([].concat(assetsPromise, appPromises));
+        return Promise.all([].concat(appBuilder.create(webpackConfig), assetsPromise))
     }
 
-    __buildAppFiles(appConfig) {
-
-    }
-
-    __processAssets(assets) {
+    __processAssets(assets = []) {
         let assetsPromise = assets.map(assetData => {
             let { src, dest, options } = assetData;
 
@@ -160,22 +124,6 @@ class Builder {
         });
 
         return Promise.all(assetsPromise);
-    }
-
-    __processVendorResources(vendorConfig) {
-        let { styles = {}, scripts = {} } = vendorConfig;
-        let { src: stylesSrc, dest: stylesDest, options: stylesOptions = {} } = styles;
-        let { preprocessor = '' } = stylesOptions;
-        let { src: scriptsSrc, dest: scriptsDest, options: scriptsOptions = {} } = scripts;
-        let stylesPromise, scriptPromise;
-
-        if (preprocessor === 'less') {
-            stylesPromise = new Less(stylesSrc, stylesDest, stylesOptions).build();
-        }
-
-        scriptPromise = new Pipe(scriptsSrc, scriptsDest, scriptsOptions).build();
-
-        return Promise.all([scriptPromise, stylesPromise]);
     }
 }
 
@@ -219,7 +167,7 @@ class DevTools {
 }
 
 function createDirectory(paths, buildPath, cb) {
-    if (paths.length === 0) {
+    if (!paths || paths.length === 0) {
         cb();
         return;
     }

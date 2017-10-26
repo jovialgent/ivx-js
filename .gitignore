@@ -58,3 +58,4 @@ build
 .hgtags
 
 test.js
+dist

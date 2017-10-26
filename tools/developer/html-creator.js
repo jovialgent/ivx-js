@@ -1,3 +1,5 @@
+const { argv } = require('yargs');
+const { _: loadModules = [] } = argv;
 let fs = require('fs');
 let analytics = require('./analytics-module-deps');
 let data = require('./data-module-deps');
@@ -8,13 +10,13 @@ let colors = require('colors');
 const Immutable = require('immutable');
 
 class HTMLCreator {
-    constructor(src, dest, modules) {
+    constructor(src, dest) {
         let {
             data = false,
             analytics = false,
             validation = false,
             ui = "basic"
-        } = getModuleSettings(modules);
+        } = getModuleSettings(loadModules);
 
         this.data = data;
         this.analytics = analytics;

@@ -75,10 +75,8 @@ let { iVXjsGlobalConfigs = {} } = window;
 let { modules = [] } = iVXjsGlobalConfigs;
 let deps = [].concat([
     'ui.router',
-    'ngSanitize',
+    'ngSanitize'
 ], modules);
-
-
 
 var app = angular
     .module('ivx-js', deps);
@@ -158,7 +156,6 @@ var app = angular
     .run(AppRun);
 
 new Services(app, { factoryFunctionCreator });
-
 
 // Bootstrap App
 myIVXjs.Bus.on(iVXjsConfigEvents.VALIDATED, (iVXjs) => {
