@@ -1,4 +1,5 @@
 const Immutable = require('immutable');
+const {argv} = require('yargs');
 
 const uiModuleConfigurations = require('./ui-module-deps');
 const dataModuleConfigurations = require('./data-module-deps');
@@ -52,7 +53,10 @@ module.exports.generateSelectedModules = (coreDest, moduleDest, modules, watch) 
 
 module.exports.getModuleSettings = getModuleSettings;
 
-function getModuleSettings(modules) {
+function getModuleSettings() {
+    let {ui, validation, data, analytics} = argv;
+    let modules = [ui, validation, data, analytics];
+
     return modules.reduce((configurations, moduleName) => {
         let newCongurations = Immutable.Map(configurations);
         let moduleNames = newCongurations.get('moduleNames');

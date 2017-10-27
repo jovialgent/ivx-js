@@ -1,15 +1,10 @@
 const Pipe = require("./tools/builder/pipe.js");
 const { argv } = require("yargs");
 const htmlCreator = require('./tools/developer/html-creator');
-const appBuilder = require('./tools/builder/app');
 const mkdirp = require('mkdirp');
 const _ = require('lodash');
 const webpackConfig = require('./webpack.config.js');
-const colorsSupported = require('supports-color');
-const serve = require('browser-sync');
-const historyApiFallback = require('connect-history-api-fallback');
-const webpackDevMiddleware = require('webpack-dev-middleware');
-const webpackHotMiddleware = require('webpack-hot-middleware');
+const webpackDevConfig = require('./webpack.dev.config.js');
 
 class Builder {
     constructor(process) {
@@ -25,95 +20,48 @@ class Builder {
         }
     }
 
-    /* 
-     * THIS IS FOR CDN BUILDING 
-     * TO RUN A LOCAL BUILD RUN COMMAND: 
-     * npm run setup
-     */
-    get buildPaths() {
-        return {
-            postBuild: () => {
-
-            }
-        }
-    }
-
-    get localBuildPaths() {
-        return {
-            root: "",
-            postBuild: (res) => {
-               
-            }
-        }
-    }
-
-    get setUpPaths() {
-        return {
-            root: "",
-            dir: [
-                "public/css",
-                "public/js/modules",
-                "public/templates",
-                "public/data",
-                "dist/modules"
-            ],
-            postBuild: () => {
-
-            },
-            assets: [{
-                src: "tools/snippets/project.json",
-                dest: "public/data"
-            }, {
-                src: "tools/snippets/templates/*.html",
-                dest: "public/templates"
-            }, {
-                src: "tools/snippets/core.css",
-                dest: "public/css"
-            }, {
-                src: "tools/snippets/style.css",
-                dest: "public/css"
-            }]
-        }
-    }
-
     build() {
-        this.__run(this.buildPaths);
+        const libraryBuilder = require('./tools/builder/library');
 
+        libraryBuilder.create(webpackConfig);
     }
 
     local() {
-        this.__run(this.localBuildPaths);
+        new htmlCreator('tools/snippets/index.html', 'public').build();
     }
 
     setUp() {
-        this.__run(this.setUpPaths);
-    }
-
-    __run(config) {
-        let self = this;
-        let { root, dir, postBuild = () => { } } = config;
-
-        createDirectory(dir, root, () => {
-            self.__runBuild(config)
-                .then((res) => {
-                    postBuild(res);
-                })
-
-        });
-    }
-
-    __runBuild(config) {
-        let { templates, styles, vendor = {}, app = [], assets, root, dir } = config;
-        let DevToolsConfig = new DevTools().config;
-        let self = this;
-
-        if (this.isLocal) {
-            let indexHTMLTemplate = new htmlCreator(DevToolsConfig.project.index.src, DevToolsConfig.project.index.dest).build();
-        }
+        const dir = [
+            "public/css",
+            "public/js/modules",
+            "public/templates",
+            "public/data",
+            "dist/modules"
+        ];
+        const assets = [{
+            src: "tools/snippets/project.json",
+            dest: "public/data"
+        }, {
+            src: "tools/snippets/templates/*.html",
+            dest: "public/templates"
+        }, {
+            src: "tools/snippets/core.css",
+            dest: "public/css"
+        }, {
+            src: "tools/snippets/style.css",
+            dest: "public/css"
+        }, {
+            src: "tools/snippets/index.js",
+            dest: "public/"
+        }]
 
         let assetsPromise = this.__processAssets(assets);
 
-        return Promise.all([].concat(appBuilder.create(webpackConfig), assetsPromise))
+        createDirectory(dir, "", () => {
+            assetsPromise.then(() => {
+
+            });
+        });
     }
 
     __processAssets(assets = []) {

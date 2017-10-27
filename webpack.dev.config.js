@@ -4,9 +4,13 @@ const webpack = require('webpack');
 
 module.exports = {
     entry: {
-        dev : './public/index.js'
+        dev: './public/index.js'
     },
     devtool: 'inline-source-map',
+    devServer: {
+        contentBase: './public',
+        hot: true
+    },
     module: {
         rules: [
             {
@@ -33,20 +37,18 @@ module.exports = {
                 ]
             },
             {
-                test : /\.json$/,
-                use : [
+                test: /\.json$/,
+                use: [
                     'json-loader'
                 ]
             }
         ]
     },
-    devServer: {
-        contentBase: './public',
-        hot: true
-    },
+   
     plugins: [
-        new HtmlWebpackPlugin(),
-       
+        new HtmlWebpackPlugin({
+            filename: "public/index.html"
+        }),
         new webpack.NamedModulesPlugin(),
         new webpack.HotModuleReplacementPlugin()
     ],

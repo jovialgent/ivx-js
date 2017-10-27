@@ -16,15 +16,16 @@ class HTMLCreator {
             analytics = false,
             validation = false,
             ui = "basic"
-        } = getModuleSettings(loadModules);
+        } = getModuleSettings();
 
-        this.data = data;
-        this.analytics = analytics;
-        this.validation = validation;
-        this.ui = ui;
-
-        this.src = src;
-        this.dest = dest;
+        Object.assign(this,{
+            data,
+            analytics,
+            validation,
+            ui,
+            src,
+            dest
+        });
     }
 
     build() {
@@ -57,7 +58,7 @@ class HTMLCreator {
         let html = template;
 
         if (ui) {
-
+          
             let uiData = this.replaceUIDeps(html, ui === "basic" ? uiModuleDeps.basic : ui);
             let {injector, directive, configFunction, html: uiHTML} = uiData;
 
@@ -150,8 +151,7 @@ class HTMLCreator {
     replaceUIDeps(html, currentFramework, theme) {
         let {ivxjs, js, css, fonts, injector, directive, configFunction} = currentFramework;
         let uiCSS = this.createCSSLinkTags([css, theme, fonts]);
-        let uiJS = this.createScript([js, ivxjs]);
-
+        let uiJS = this.createScript([js]);
         let newHTML = html.replace('[UI-SCRIPT]', uiJS).replace('[UI-CSS]', uiCSS)
 
         return {

@@ -3,7 +3,6 @@ const MinifyPlugin = require("babel-minify-webpack-plugin");
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const WebpackCleanupPlugin = require('webpack-cleanup-plugin');
 const webpack = require('webpack');
-const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
 const path = require('path');
 const devtoolMin = "inline-source-map";
 const devtool = false;

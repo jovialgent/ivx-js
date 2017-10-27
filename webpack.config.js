@@ -1,11 +1,10 @@
 const {argv} = require('yargs');
 const {$0, local, setup} = argv;
-const middlewareModule = 'webpack-hot-middleware/client?reload=true';
 let configs = [];
 
-if(argv['should-build']){
+if(argv['should-build'] && !local){
     configs = require('./webpack.build.config');
-} else {
+}  else {
     configs = require('./webpack.dev.config');
 }
 

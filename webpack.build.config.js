@@ -11,8 +11,9 @@ try {
     ])
 } catch (err) {
     console.error("TEAMCITY DIDN'T BUILD");
-    console.error(err);
 }
+
+
 const allConfigs = [].concat(
     require('./webpack.angular.config'),
     require('./webpack.modules.config')
