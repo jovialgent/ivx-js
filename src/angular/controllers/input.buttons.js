@@ -9,6 +9,9 @@ class ButtonsInputController extends InputControllerHelper {
         let { $parent } = $scope;
         let { inputs, formInput, vm: parentController } = $parent;
 
+
+        this.buttons = input.buttons;
+
         this.onClick = ($event, button) => {
             $event.preventDefault()
 

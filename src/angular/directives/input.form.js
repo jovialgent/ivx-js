@@ -24,15 +24,13 @@ class FormInput {
             };
             let hideSubmit = false;
             let { inputs, formSettings = {}, formId } = $scope;
-            let formInputs = inputs.map((input) => {
+            let formInputs = inputs.map((input, index) => {
                 let { type, attributes, settings = {}, id } = input;
-                let inputString = JSON.stringify(input);
-
-                inputString = inputString.replace(/\'/g, `&#39;`);
+                
                 hideSubmit = shouldHideSubmit(inputs, type, attributes);
 
                 return {
-                    html: `<ivxjs-${type}-input class="ivxjs-grid-1-1" id="${id}" input-data='${inputString}'></ivxjs-${type}-input>\n`,
+                    html: `<ivxjs-${type}-input class="ivxjs-grid-1-1" id="${id}" input-data='inputs[${index}]'></ivxjs-${type}-input>\n`,
                     settings: settings
                 }
             });
