@@ -68,6 +68,6 @@ export class Bus {
 
 Bus.$inject = ['$rootScope', 'iVXjs'];
 
-let BusService = createFactoryFunction(Bus);
-
-export { BusService }
+export default angular.module('ivx-js.services.bus', [])
+    .service('ivxjs.bus', createFactoryFunction(Bus))
+    .name;

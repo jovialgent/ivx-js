@@ -15,18 +15,18 @@ class CheckboxInput {
         this.controller = CheckboxInputController;
         this.controllerAs = 'vm';
         this.link = ($scope, iElm, iAttrs, controller) => {
-            let {inputData: input} = $scope;
-            let {id, name, errors = {}, labelHTML, label, attributes = {}, settings = {}} = input;
+            let { inputData: input } = $scope;
+            let { id, name, errors = {}, labelHTML, label, attributes = {}, settings = {} } = input;
             let tagHTML = `ng-blur="vm.onChange(inputValue)" ng-model="inputValue"`;
 
             input.label = label ? label : $filter('stringParsers')('startCase', id);
             input = pullInTemplate.convertLabel($filter('stringParsers')('startCase', id), input, $scope);
 
             let checkboxUIObj = {
-                input : input,
-                tags : tagHTML,
-                settings : settings,
-                errors : new ErrorMessages(input, errors, attributes)
+                input: input,
+                tags: tagHTML,
+                settings: settings,
+                errors: new ErrorMessages(input, errors, attributes)
             };
             let checkBox = new iVXjsUIModule.checkbox(checkboxUIObj);
 
@@ -43,4 +43,7 @@ class CheckboxInput {
 
 CheckboxInput.$inject = ['$compile', '$filter', 'ivxjs.modules.ui', 'pullInTemplate'];
 
-export default createFactoryFunction(CheckboxInput);
+export default angular
+    .module('ivx-js.directives.input.checkbox', [])
+    .directive('ivxjsCheckboxInput', createFactoryFunction(CheckboxInput))
+    .name;

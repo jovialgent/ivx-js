@@ -15,8 +15,8 @@ class NumberInput {
         this.controller = NumberInputController;
         this.controllerAs = 'vm';
         this.link = ($scope, iElm, iAttrs, controller) => {
-            let {inputData: input} = $scope;
-            let {id, name, errors = {}, labelHTML, label, attributes = {}, type, settings = {}} = input;
+            let { inputData: input } = $scope;
+            let { id, name, errors = {}, labelHTML, label, attributes = {}, type, settings = {} } = input;
             let errorMessages = new ErrorMessages(input, errors, attributes);
             let tagHTML = `ng-blur="vm.onChange(inputValue)" ng-model="inputValue"`;
 
@@ -43,4 +43,7 @@ class NumberInput {
 
 NumberInput.$inject = ['$compile', '$filter', 'ivxjs.modules.ui', 'pullInTemplate'];
 
-export default createFactoryFunction(NumberInput);
+export default angular
+    .module('ivx-js.directives.input.number', [])
+    .directive('ivxjsNumberInput', createFactoryFunction(NumberInput))
+    .name;

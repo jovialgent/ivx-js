@@ -18,4 +18,4 @@ export default class {
         app
             .directive('ivxExperienceScope', factoryFunctionCreator(Service));
     }
-}
+} 

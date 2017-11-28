@@ -2,4 +2,4 @@ language: node_js
 node_js:
 - "node"
 script:
-- node_modules/.bin/karma start --reporters teamcity --single-run --browsers PhantomJS --colors false
+- node_modules/.bin/karma start --single-run --browsers PhantomJS --colors false

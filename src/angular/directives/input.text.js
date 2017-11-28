@@ -15,8 +15,8 @@ class TextInput {
         this.controller = TextInputController;
         this.controllerAs = 'vm';
         this.link = ($scope, iElm, iAttrs, controller) => {
-            let {inputData: input} = $scope;
-            let {id, name, errors = {}, labelHTML, label = $filter('stringParsers')('startCase', id), attributes = {}, type, settings = {}} = input;
+            let { inputData: input } = $scope;
+            let { id, name, errors = {}, labelHTML, label = $filter('stringParsers')('startCase', id), attributes = {}, type, settings = {} } = input;
             let errorMessages = new ErrorMessages(input, errors, attributes);
             let tagHTML = `ng-blur="vm.onChange(inputValue)" ng-model="inputValue"`
 
@@ -44,4 +44,7 @@ class TextInput {
 
 TextInput.$inject = ['$compile', '$filter', 'iVXjs', 'ivxjs.modules.ui', 'pullInTemplate'];
 
-export default createFactoryFunction(TextInput);
+export default angular
+    .module('ivx-js.directives.input.text', [])
+    .directive('ivxjsTextInput', createFactoryFunction(TextInput))
+    .name;

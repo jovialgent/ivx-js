@@ -1,3 +1,5 @@
+import factoryFunctionCreator from "../utilities/create-factory-function";
+
 export class Service {
     constructor(iVXjs) {
 
@@ -5,8 +7,8 @@ export class Service {
     }
 
     setScopeExperience(experience) {
-        let {data} = experience;
-        
+        let { data } = experience;
+
         return {
             data
         }
@@ -15,11 +17,6 @@ export class Service {
 
 Service.$inject = ['iVXjs'];
 
-export default class {
-    constructor(app, opts) {
-        let { factoryFunctionCreator } = opts;
-
-        app
-            .service('ivxExperienceScope', factoryFunctionCreator(Service));
-    }
-}
+export default angular.module('ivx-js.services.scope-experience', [])
+    .service('ivxExperienceScope', factoryFunctionCreator(Service))
+    .name;

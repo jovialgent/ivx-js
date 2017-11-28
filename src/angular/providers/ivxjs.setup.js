@@ -5,13 +5,13 @@ class iVXjsSetup {
 
     }
 
-    $get(){ 
+    $get() {
 
     }
 
     setDefaultUrl($urlRouterProvider, defaultState, iVXjs) {
         let defaultStateID = iVXjs.rules(defaultState);
-        let {url} = iVXjs.config.states.find((state) => { return state.id === defaultStateID });
+        let { url } = iVXjs.config.states.find((state) => { return state.id === defaultStateID });
 
         $urlRouterProvider
             .otherwise(url);
@@ -19,18 +19,18 @@ class iVXjsSetup {
 
     createStates($stateProvider, states) {
         states.forEach((state, index) => {
-            let {type, id, url, onEnter = [], onExit = []} = state;
+            let { type, id, url, onEnter = [], onExit = [] } = state;
 
             $stateProvider.state(id, {
                 url: url,
                 data: state,
                 template: `<ivxjs-${type}-state></ivxjs-${type}-state>`,
                 onEnter: ['$rootScope', 'ivxjs.actions', 'ivxjs.bus', ($rootScope, iVXjsActions, iVXjsBus) => {
-                    iVXjsActions.resolveActions(onEnter, () => {});
+                    iVXjsActions.resolveActions(onEnter, () => { });
                 }],
                 onExit: ['$rootScope', 'ivxjs.actions', 'ivxjs.bus', ($rootScope, iVXjsActions, iVXjsBus) => {
                     iVXjsBus.emit('iVX:video:dispose');
-                    iVXjsActions.resolveActions(onExit, () => {});
+                    iVXjsActions.resolveActions(onExit, () => { });
                 }]
             });
         });
@@ -39,4 +39,6 @@ class iVXjsSetup {
 
 iVXjsSetup.$inject = [];
 
-export default createFactoryFunction(iVXjsSetup)
+export default angular.module('ivx-js.providers.set-up', [])
+    .provider('iVXjsSetup', createFactoryFunction(iVXjsSetup))
+    .name;

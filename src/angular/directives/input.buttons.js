@@ -15,13 +15,13 @@ class ButtonsInput {
         this.controller = ButtonInputController;
         this.controllerAs = 'vm';
         this.link = ($scope, iElm, iAttrs, controller) => {
-            let {inputData: input} = $scope;
-            let {id, name, labelHTML, label = '', errors = { required: 'Must click to continue.' }, skipSettings = { label: "Skip" }, buttons, attributes = {}, settings = {}} = input;            
+            let { inputData: input } = $scope;
+            let { id, name, labelHTML, label = '', errors = { required: 'Must click to continue.' }, skipSettings = { label: "Skip" }, buttons, attributes = {}, settings = {} } = input;
             let inputButtonData = buttons.map((button, index) => {
                 button = pullInTemplate.convertLabel(button.value, button, $scope);
-                
+
                 let buttonString = angular.toJson(button);
-                let {label, labelHTML, value, classes = ''} = button;
+                let { label, labelHTML, value, classes = '' } = button;
 
                 label = labelHTML ? labelHTML : label;
 
@@ -34,29 +34,29 @@ class ButtonsInput {
             });
 
             input = pullInTemplate.convertLabel($filter('stringParsers')('startCase', id), input, $scope);
-            
+
             if (!attributes.required) {
-                let {label, labelHTML, value, classes = ''} = skipSettings;
-                
+                let { label, labelHTML, value, classes = '' } = skipSettings;
+
                 label = labelHTML ? labelHTML : label;
-                
+
                 inputButtonData.push({
                     label: label,
-                    classes : classes,
-                    attrHTML : ''
+                    classes: classes,
+                    attrHTML: ''
                 })
             };
-            
+
             let dataUIObj = {
-                buttons : inputButtonData,
-                input : input,
+                buttons: inputButtonData,
+                input: input,
                 errors: new ErrorMessages(name, errors, attributes),
             };
             let thisButtonsInput = new iVXjsUIModule.buttons(inputButtonData, input);
             let inputContainer = iElm.find('div');
-            
+
             controller.iVXjs = iVXjs;
-            
+
             iElm.html(thisButtonsInput.html);
             $compile(iElm.contents())($scope);
         }
@@ -69,4 +69,7 @@ class ButtonsInput {
 
 ButtonsInput.$inject = ['$compile', '$filter', 'iVXjs', 'ivxjs.modules.ui', 'pullInTemplate'];
 
-export default createFactoryFunction(ButtonsInput);
+export default angular
+    .module('ivx-js.directives.input.button', [])
+    .directive('ivxjsButtonsInput', createFactoryFunction(ButtonsInput))
+    .name;
