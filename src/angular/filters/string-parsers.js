@@ -27,3 +27,14 @@ export class StringParsers {
         return tempString[0].toUpperCase() + tempString.substring(1);
     }
 }
+
+const stringParser = new StringParsers();
+
+export default angular.module('ivx-js.filters.string-parsers', [])
+    .filter('stringParsers', ['$rootScope',
+        ($rootScope) => {
+            return (name, text) => {
+                return stringParser[name](text);
+            }
+        }])
+    .name;

@@ -15,7 +15,7 @@ class VimeoVideoPlayer {
         this.link = ($scope, iElm, iAttrs, controller) => {
             if (!iVXjsVideoModule.vimeo) return;
 
-            let {settings,stateData} = $scope;
+            let { settings, stateData } = $scope;
 
             stateData = {
                 id: stateData.id,
@@ -23,13 +23,13 @@ class VimeoVideoPlayer {
                 name: stateData.name
             };
             settings.id = settings.vimeoId;
-            
+
             let VimeoPlayer = new iVXjsVideoModule.vimeo(iElm.find('div'), settings, stateData, iVXjsLog);
-            
+
             VimeoPlayer.addEventListeners(iVXjsBus);
-    
+
             controller.player = VimeoPlayer;
-    
+
             $compile(iElm.contents())($scope);
         }
     }
@@ -44,4 +44,7 @@ class VimeoVideoPlayer {
 
 VimeoVideoPlayer.$inject = ['$rootScope', '$compile', '$window', '$timeout', 'ivxjs.bus', 'ivxjs.log', 'ivxjs.modules.video', 'createInlineVideo'];
 
-export default createFactoryFunction(VimeoVideoPlayer);
+export default angular
+    .module('ivx-js.directives.video.vimeo', [])
+    .directive('ivxjsVimeoVideoPlayer', createFactoryFunction(VimeoVideoPlayer))
+    .name;

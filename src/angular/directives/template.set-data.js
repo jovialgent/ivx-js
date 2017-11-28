@@ -51,4 +51,7 @@ class SetData {
 
 SetData.$inject = ['iVXjs'];
 
-export default createFactoryFunction(SetData);
+export default angular
+    .module('ivx-js.directives.template.set-data', [])
+    .directive('ivxSetData', createFactoryFunction(SetData))
+    .name;

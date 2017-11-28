@@ -27,4 +27,7 @@ class RaiseiVXjsEvent {
 
 RaiseiVXjsEvent.$inject = ['iVXjs', 'ivxjs.bus'];
 
-export default createFactoryFunction(RaiseiVXjsEvent);
+export default angular
+    .module('ivx-js.directives.template.raise-ivx-event', [])
+    .directive('ivxEvent', createFactoryFunction(RaiseiVXjsEvent))
+    .name;

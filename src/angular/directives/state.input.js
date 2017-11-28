@@ -65,4 +65,7 @@ class InputState {
 
 InputState.$inject = ['$state', '$compile', '$sce', 'iVXjs', 'ivxjs.actions', 'ivxjs.modules.ui', 'pullInTemplate', 'ivxjs.bus', "ivxExperienceScope"];
 
-export default createFactoryFunction(InputState);
+export default angular
+    .module('ivx-js.directives.state.input', [])
+    .directive('ivxjsInputState', createFactoryFunction(InputState))
+    .name;

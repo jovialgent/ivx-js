@@ -15,8 +15,8 @@ class TextAreaInput {
         this.controller = TextAreaInputController;
         this.controllerAs = 'vm';
         this.link = ($scope, iElm, iAttrs, controller) => {
-            let {inputData: input} = $scope;
-            let {id, name, errors = {}, labelHTML, label, attributes = {}, type, settings = {}} = input;
+            let { inputData: input } = $scope;
+            let { id, name, errors = {}, labelHTML, label, attributes = {}, type, settings = {} } = input;
             let errorMessages = new ErrorMessages(input, errors, attributes);
             let tagHTML = `ng-blur="vm.onChange(inputValue)" ng-model="inputValue"`;
 
@@ -43,4 +43,7 @@ class TextAreaInput {
 
 TextAreaInput.$inject = ['$compile', '$filter', 'ivxjs.modules.ui', 'pullInTemplate'];
 
-export default createFactoryFunction(TextAreaInput);
+export default angular
+    .module('ivx-js.directives.input.textarea', [])
+    .directive('ivxjsTextareaInput', createFactoryFunction(TextAreaInput))
+    .name;

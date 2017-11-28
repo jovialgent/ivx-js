@@ -14,8 +14,8 @@ class YoutubeVideoPlayer {
         this.link = ($scope, iElm, iAttrs, controller) => {
             if (!iVXjsVideoModule.youtube) return;
 
-            let {settings, stateData} = $scope;
-           
+            let { settings, stateData } = $scope;
+
             settings.id = settings.youtubeId;
             stateData = {
                 id: stateData.id,
@@ -52,4 +52,8 @@ class YoutubeVideoPlayer {
 
 YoutubeVideoPlayer.$inject = ['$rootScope', '$compile', '$window', 'ivxjs.bus', 'ivxjs.log', 'ivxjs.modules.video'];
 
-export default createFactoryFunction(YoutubeVideoPlayer);
+
+export default angular
+    .module('ivx-js.directives.video.youtube', [])
+    .directive('ivxjsYoutubeVideoPlayer', createFactoryFunction(YoutubeVideoPlayer))
+    .name;

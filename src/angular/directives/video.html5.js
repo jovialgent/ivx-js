@@ -13,9 +13,9 @@ class HTML5VideoPlayer {
         this.controller = HTML5VideoController;
         this.controllerAs = 'vm';
         this.link = ($scope, iElm, iAttrs, controller) => {
-            let {settings, stateData} = $scope;
-            let {playerSettings = {}} = stateData;
-            let {iphoneInline = false} = playerSettings;
+            let { settings, stateData } = $scope;
+            let { playerSettings = {} } = stateData;
+            let { iphoneInline = false } = playerSettings;
             let videoEventNames = new VideoEventConstants();
 
             stateData = {
@@ -49,4 +49,7 @@ class HTML5VideoPlayer {
 
 HTML5VideoPlayer.$inject = ['$compile', '$timeout', 'ivxjs.modules.video', 'ivxjs.bus', 'ivxjs.log', 'createInlineVideo'];
 
-export default createFactoryFunction(HTML5VideoPlayer);
+export default angular
+    .module('ivx-js.directives.video.html5', [])
+    .directive('ivxjsHtml5VideoPlayer', createFactoryFunction(HTML5VideoPlayer))
+    .name;
