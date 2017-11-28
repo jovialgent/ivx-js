@@ -88,21 +88,14 @@ module.exports = function (config) {
 
         browserify: {
             debug: true,
-            transform: [['babelify', { presets: ['es2015'] }], istanbul({
-                ignore: ['node_modules/**', 'test/**'],
-                instrumenterConfig: { embedSource: true },
-                report: {
-                    dir: "docs/tests/coverage"
-                }
-
-            })]
+            transform: [['babelify', { presets: ['es2015'] }]]
         },
 
 
         // test results reporter to use
         // possible values: 'dots', 'progress'
         // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-        reporters: ['mocha', 'coverage', 'html'],
+        reporters: ['mocha', 'html'],
 
         // the default configuration 
         htmlReporter: {
@@ -124,10 +117,10 @@ module.exports = function (config) {
         // web server port
         port: 9876,
 
-        coverageReporter: {
-            type: "html",
-            dir: "docs/tests/coverage/"
-        },
+        // coverageReporter: {
+        //     type: "html",
+        //     dir: "docs/tests/coverage/"
+        // },
 
 
         // enable / disable colors in the output (reporters and logs)
