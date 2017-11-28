@@ -13,10 +13,12 @@ class NavigationState {
         this.link = function ($scope, iElm, iAttrs, controller) {
             let { data } = $state.current;
             let { links = [], header = {}, footer = {}, audio, onLinksReady = [] } = data;
+
+            $scope.links = links;
+
             let linkSection = links.reduce((html, link, index) => {
-                let linkString = angular.toJson(link);
                 return `${html}
-                    <ivxjs-anchor anchor-info='${linkString}'></ivxjs-anchor>`;
+                    <ivxjs-anchor anchor-info='links[${index}]'></ivxjs-anchor>`;
             }, '');
             let audioEventNames = new AudioEventNames();
 

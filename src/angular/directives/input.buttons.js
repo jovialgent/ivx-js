@@ -17,17 +17,17 @@ class ButtonsInput {
         this.link = ($scope, iElm, iAttrs, controller) => {
             let { inputData: input } = $scope;
             let { id, name, labelHTML, label = '', errors = { required: 'Must click to continue.' }, skipSettings = { label: "Skip" }, buttons, attributes = {}, settings = {} } = input;
+
             let inputButtonData = buttons.map((button, index) => {
                 button = pullInTemplate.convertLabel(button.value, button, $scope);
 
-                let buttonString = angular.toJson(button);
                 let { label, labelHTML, value, classes = '' } = button;
 
                 label = labelHTML ? labelHTML : label;
 
                 return {
                     label: label,
-                    attrHTML: `ng-click='vm.onClick($event, ${buttonString})'`,
+                    attrHTML: `ng-click='vm.onClick($event, vm.buttons[${index}])'`,
                     classes: classes
 
                 }
