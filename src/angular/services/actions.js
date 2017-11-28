@@ -7,7 +7,7 @@ let typeValidator = new TypeValidator();
 export class Actions extends ActionProcessor {
     constructor($rootScope, $state, $window, iVXjs, iVXjsBus) {
         super(iVXjs);
-        
+
         this.$rootScope = $rootScope;
         this.$state = $state;
         this.$window = $window;
@@ -37,4 +37,6 @@ export class Actions extends ActionProcessor {
 
 Actions.$inject = ['$rootScope', '$state', '$window', 'iVXjs', 'ivxjs.bus'];
 
-export default createFactoryFunction(Actions);
+export default angular.module('ivx-js.services.action', [])
+    .service('ivxjs.actions', createFactoryFunction(Actions))
+    .name;

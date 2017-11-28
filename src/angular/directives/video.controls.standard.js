@@ -7,7 +7,7 @@ let videoEventNames = new VideoEventNames();
 
 class StandardControls {
     constructor(iVXjsUI, iVXjsBus) {
-        this.template = this.templateHTML;        
+        this.template = this.templateHTML;
         this.restrict = 'E';
         this.scope = {}
         this.controller = StandardControlsController
@@ -16,7 +16,7 @@ class StandardControls {
             let standardControls = new iVXjsUI.videoControls(iElm.find('div'), iVXjsBus);
 
             controller.controls = standardControls;
-            
+
             standardControls.addEventListeners(iVXjsBus);
         }
     }
@@ -28,4 +28,7 @@ class StandardControls {
 
 StandardControls.$inject = ['ivxjs.modules.ui', 'ivxjs.bus'];
 
-export default createFactoryFunction(StandardControls);
+export default angular
+    .module('ivx-js.directives.video.standard-controls', [])
+    .directive('ivxjsStandardVideoControls', createFactoryFunction(StandardControls))
+    .name;

@@ -15,12 +15,12 @@ class RadioInput {
         this.controller = RadioInputController;
         this.controllerAs = 'vm';
         this.link = ($scope, iElm, iAttrs, controller) => {
-            let {inputData: input} = $scope;
-            let {id, errors = {}, name, labelHTML, label, attributes = {}, radioButtons = [], settings = {}} = input;
+            let { inputData: input } = $scope;
+            let { id, errors = {}, name, labelHTML, label, attributes = {}, radioButtons = [], settings = {} } = input;
             let radioErrorRequired = '';
 
             if (attributes.required) {
-              radioErrorRequired  = `required="!radioSelected"`;
+                radioErrorRequired = `required="!radioSelected"`;
             }
 
             input.label = label ? label : $filter('stringParsers')('startCase', id);
@@ -29,10 +29,10 @@ class RadioInput {
             let errorMessages = new ErrorMessages(input, errors, attributes);
             let inputRadioButtonData = radioButtons.map((radioButton, index) => {
                 radioButton = pullInTemplate.convertLabel('', radioButton, $scope);
-                
-                let {label, labelHTML, value, classes = ''} = radioButton;
-                
-                if(labelHTML) label = labelHTML;
+
+                let { label, labelHTML, value, classes = '' } = radioButton;
+
+                if (labelHTML) label = labelHTML;
 
                 return {
                     label: label,
@@ -41,12 +41,12 @@ class RadioInput {
 
                 }
             });
-            
+
             let uiRadioObj = {
-                input : input,
-                radios : inputRadioButtonData,
-                errors : errorMessages,
-                settings : settings,
+                input: input,
+                radios: inputRadioButtonData,
+                errors: errorMessages,
+                settings: settings,
             };
             let thisRadiosInput = new iVXjsUIModule.radio(uiRadioObj);
 
@@ -62,4 +62,8 @@ class RadioInput {
 
 RadioInput.$inject = ['$compile', '$filter', 'ivxjs.modules.ui', 'pullInTemplate'];
 
-export default createFactoryFunction(RadioInput);
+
+export default angular
+    .module('ivx-js.directives.input.radio', [])
+    .directive('ivxjsRadioInput', createFactoryFunction(RadioInput))
+    .name;

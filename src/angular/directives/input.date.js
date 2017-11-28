@@ -17,7 +17,7 @@ class DateInput {
         this.controllerAs = 'vm';
         this.link = ($scope, iElm, iAttrs, controller) => {
             let { inputData: input } = $scope;
-            let {id,name,errors = {},labelHTML,label,attributes = {},settings = {}} = input;
+            let { id, name, errors = {}, labelHTML, label, attributes = {}, settings = {} } = input;
 
             if (attributes.min) {
                 let dateMin = new DateParser(attributes.min).formatForDateInput();
@@ -61,4 +61,7 @@ class DateInput {
 
 DateInput.$inject = ['$compile', '$filter', 'iVXjs', 'ivxjs.modules.ui', 'pullInTemplate'];
 
-export default createFactoryFunction(DateInput);
+export default angular
+    .module('ivx-js.directives.input.date', [])
+    .directive('ivxjsDateInput', createFactoryFunction(DateInput))
+    .name;

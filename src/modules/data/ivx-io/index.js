@@ -142,7 +142,7 @@ if (angular) {
 
 
     new iVXioComponents(app, { factoryFunctionCreator });
-    new iVXioServices(app, {factoryFunctionCreator });
+    new iVXioServices(app, { factoryFunctionCreator });
   } catch (e) {
     console.warn('The iVXio Data Module is not attached to the iVXjs module. If this is correct, ignore this warning.')
     console.warn(e);

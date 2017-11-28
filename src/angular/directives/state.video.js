@@ -60,7 +60,7 @@ class VideoState {
                     let videoEventNames = new VideoEventConstants();
                     $timeout(() => {
                         let player = {};
-                        
+
                         if (playerType === 'html5') {
                             player = iElm.find('video')[0];
                         }
@@ -81,4 +81,7 @@ class VideoState {
 
 VideoState.$inject = ['$compile', '$state', '$sce', '$timeout', 'iVXjs', 'ivxjs.bus', 'ivxjs.modules.ui', 'createInlineVideo', 'pullInTemplate', 'ivxExperienceScope'];
 
-export default createFactoryFunction(VideoState);
+export default angular
+    .module('ivx-js.directives.state.video', [])
+    .directive('ivxjsVideoState', createFactoryFunction(VideoState))
+    .name;

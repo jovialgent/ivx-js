@@ -124,4 +124,7 @@ export class CascadingOptions {
 
 CascadingOptions.$inject = ['$compile', '$timeout', 'iVXjs', 'ivxjs.bus', 'ivxjs.modules.ui'];
 
-export default createFactoryFunction(CascadingOptions);
+export default angular
+    .module('ivx-js.directives.ui.cascading-options', [])
+    .directive('ivxjsCascadingOptionsInput', createFactoryFunction(CascadingOptions))
+    .name;

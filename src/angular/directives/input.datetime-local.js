@@ -16,11 +16,11 @@ class DateTimeLocalInput {
         this.controller = DateTimeLocalInputController;
         this.controllerAs = 'vm';
         this.link = ($scope, iElm, iAttrs, controller) => {
-            let {inputData: input} = $scope;
-            let {id, name, errors = {}, labelHTML, label, attributes = {}, settings = {}} = input;
+            let { inputData: input } = $scope;
+            let { id, name, errors = {}, labelHTML, label, attributes = {}, settings = {} } = input;
 
             input.label = label ? label : $filter('stringParsers')('startCase', id)
-            
+
             if (attributes.min) {
                 let dateMin = new DateParser(attributes.min).formatForDateTimeLocalInput();
                 attributes.min = `${dateMin}`;
@@ -57,4 +57,7 @@ class DateTimeLocalInput {
 
 DateTimeLocalInput.$inject = ['$compile', '$filter', 'ivxjs.modules.ui', 'pullInTemplate'];
 
-export default createFactoryFunction(DateTimeLocalInput);
+export default angular
+    .module('ivx-js.directives.input.datetime-local', [])
+    .directive('ivxjsDatetimeLocalInput', createFactoryFunction(DateTimeLocalInput))
+    .name;

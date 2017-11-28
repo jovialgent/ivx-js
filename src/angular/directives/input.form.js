@@ -23,17 +23,17 @@ class FormInput {
                 return hideSubmitOnType[type];
             };
             let hideSubmit = false;
-            let {inputs, formSettings = {}, formId} = $scope;
+            let { inputs, formSettings = {}, formId } = $scope;
             let formInputs = inputs.map((input) => {
-                let {type, attributes, settings = {}, id} = input;
+                let { type, attributes, settings = {}, id } = input;
                 let inputString = JSON.stringify(input);
 
                 inputString = inputString.replace(/\'/g, `&#39;`);
                 hideSubmit = shouldHideSubmit(inputs, type, attributes);
-                
+
                 return {
                     html: `<ivxjs-${type}-input class="ivxjs-grid-1-1" id="${id}" input-data='${inputString}'></ivxjs-${type}-input>\n`,
-                    settings : settings
+                    settings: settings
                 }
             });
 
@@ -44,12 +44,12 @@ class FormInput {
 
             let additionalTagHTML = `ng-submit="vm.onSubmit($event)"`
             let thisFormInputs = new iVXjsUIModule.form(
-                formInputs, 
-                'formInput', 
-                additionalTagHTML, 
+                formInputs,
+                'formInput',
+                additionalTagHTML,
                 formSettings
             );
-         
+
             iElm.html(thisFormInputs.html);
 
             $compile(iElm.contents())($scope);
@@ -63,4 +63,7 @@ class FormInput {
 
 FormInput.$inject = ['$compile', '$filter', 'ivxjs.modules.ui', 'pullInTemplate'];
 
-export default createFactoryFunction(FormInput);
+export default angular
+    .module('ivx-js.directives.input.form', [])
+    .directive('ivxjsFormInput', createFactoryFunction(FormInput))
+    .name;

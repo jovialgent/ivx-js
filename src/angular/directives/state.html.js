@@ -64,4 +64,7 @@ class HtmlState {
 
 HtmlState.$inject = ['$state', '$http', '$compile', '$sce', '$timeout', 'iVXjs', 'ivxjs.actions', 'ivxjs.modules.audio', 'ivxjs.bus', "ivxExperienceScope"];
 
-export default createFactoryFunction(HtmlState);
+export default angular
+    .module('ivx-js.directives.state.html', [])
+    .directive('ivxjsHtmlState', createFactoryFunction(HtmlState))
+    .name;
