@@ -175,7 +175,7 @@ export default {
             cue = new VTTCue(start, end, payload);
             cue = Object.assign(cue, {
                 id,
-                chapterId : chapterId ? chapterId : id
+                chapterId: chapterId ? chapterId : id
             })
 
             return cue;
@@ -224,6 +224,12 @@ export default {
         return parseFloat(percentValue) / 100;
     },
 
+    _convertPercentToInteger(percentString) {
+        let percentValue = percentString.replace("%", "");
+
+        return parseFloat(percentValue);
+    },
+
     addVTTCueStyles(opts) {
         let { vttCue: oldCue, cueObject } = opts;
         let { id, position, line, size, align, vertical } = cueObject;
@@ -240,7 +246,7 @@ export default {
         }
 
         if (size) {
-            newCue.size = this._convertPercentToDecimal(size);
+            newCue.size = this._convertPercentToInteger(size);
         }
 
         if (line) {
@@ -252,7 +258,6 @@ export default {
         }
 
         return newCue;
-
     },
 
     createCue(cueObject) {

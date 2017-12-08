@@ -27,7 +27,7 @@ export class Html5 {
     }
 
     play() {
-        this.player.play();
+        this.playLoader = this.player.play();
     }
 
     pause() {
@@ -201,24 +201,24 @@ export class Html5 {
 
         function changeCurrentChapter(opts) {
             let { chapterId = "" } = opts;
-            let {player = {}}  = self;
+            let { player = {} } = self;
             let trackArray = Array.from(player.textTracks);
-            let chapterTrack = trackArray.find(track=>{
-                let {kind = ""} = track;
+            let chapterTrack = trackArray.find(track => {
+                let { kind = "" } = track;
 
                 return kind === 'chapters';
             });
-            
-            if(chapterTrack){
-                let {cues = []} = chapterTrack;
-                let newChapterCue = Array.from(cues).find(cue=>{
-                    let {chapterId : currentChapterId} = cue;
+
+            if (chapterTrack) {
+                let { cues = [] } = chapterTrack;
+                let newChapterCue = Array.from(cues).find(cue => {
+                    let { chapterId: currentChapterId } = cue;
 
                     return currentChapterId === chapterId;
                 });
 
-                if(newChapterCue){
-                    let {startTime} = newChapterCue;
+                if (newChapterCue) {
+                    let { startTime } = newChapterCue;
 
                     self.seek(startTime);
                 }

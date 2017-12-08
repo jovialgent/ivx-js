@@ -18,9 +18,8 @@ class AnchorController {
 
 		if (attributes.target !== '_blank') {
 			$event.preventDefault();
-		}
-
-
+        }
+        
 		iVXjs.log.debug(`Link with href ${href} onLinkClick Start`, {}, { anchor: this.anchorInfo, source: 'onClick', status: 'started', actions: onClickEvents, timestamp: Date.now() });
 
 
