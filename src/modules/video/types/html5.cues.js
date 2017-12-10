@@ -200,13 +200,13 @@ export default {
         let cleanedProperties = propertyKeys.reduce(
             (cleaned, key, index) => {
                 let percentString = percents[key];
-                let decimalValue = self._convertPercentToDecimal(percentString);
+                let decimalValue = self._convertPercentToInteger(percentString);
                 let newProperty = {};
 
                 if (isNaN(decimalValue)) {
                     newProperty[key] = percentString;
                 } else {
-                    newProperty[key] = decimalValue * multiplier;
+                    newProperty[key] = decimalValue;
                 }
 
                 Object.assign(cleaned, newProperty);
@@ -216,12 +216,6 @@ export default {
         );
 
         return cleanedProperties;
-    },
-
-    _convertPercentToDecimal(percentString) {
-        let percentValue = percentString.replace("%", "");
-
-        return parseFloat(percentValue) / 100;
     },
 
     _convertPercentToInteger(percentString) {
@@ -242,7 +236,7 @@ export default {
         }
 
         if (position) {
-            newCue.position = this._convertPercentToDecimal(position);
+            newCue.position = this._convertPercentToInteger(position);
         }
 
         if (size) {
@@ -250,7 +244,7 @@ export default {
         }
 
         if (line) {
-            newCue.line = line.indexOf && line.indexOf('%') >= 0 ? this._convertPercentToDecimal(line) : line;
+            newCue.line = line.indexOf && line.indexOf('%') >= 0 ? this._convertPercentToInteger(line) : line;
         }
 
         if (vertical) {
