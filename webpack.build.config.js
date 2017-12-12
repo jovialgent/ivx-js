@@ -1,6 +1,5 @@
 
-const buildPaths = ["dist"];
-
+let buildPaths = ["dist"];
 
 try {
     const tcProps = require('teamcity-properties');
@@ -10,7 +9,8 @@ try {
         "build/cdn/ivx-js/" + buildNumber,
     ])
 } catch (err) {
-    console.error("TEAMCITY DIDN'T BUILD");
+    console.error("Teamcity didn't build due to the following errors:");
+    console.error(err);
 }
 
 
