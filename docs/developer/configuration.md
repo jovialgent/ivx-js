@@ -21,6 +21,14 @@ Don't want to have local files? Pull in the CDNs of the library here:
 {: .btn .btn--inverse}
 [CDN Paths](https://influencetech.github.io/ivx-js/developer/configuration.cdn-paths)
 
+## Google Analytics
+
+Using Google Analytics is a quick way to add tracking to your iVXjs Experience.
+Click the link below to learn more!
+
+{: .btn .btn--inverse}
+[Google Analytics](https://influencetech.github.io/ivx-js/developer/usage.google-analytics)
+
 ## Video Players
 
 Incorporate the various Video Players the iVXjs Video State 
