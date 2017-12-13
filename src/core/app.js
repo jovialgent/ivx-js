@@ -1,10 +1,11 @@
 require("babel-polyfill");
 let EventEmitter = require('events');
 
-import {Setup} from '../modules/setup.js';
+import { Setup } from '../modules/setup.js';
 import Logging from "../utilities/logging.js";
 import iVXjsConfigEventNames from "../constants/iVXjs.config.events.js";
-import {ActionProcessor} from './processor.js';
+import { ActionProcessor } from './processor.js';
+import Constants from "../constants/registered-constants";
 
 let iVXjsConfigEvents = new iVXjsConfigEventNames();
 
@@ -26,6 +27,7 @@ export class iVXjs {
          * @type {EventEmitter}
          */
         this.Bus = new EventEmitter();
+        this.constants = new Constants();
 
     }
 
@@ -63,7 +65,7 @@ export class iVXjs {
          */
         this.config = processedData.config;
 
-        if(this.selector){
+        if (this.selector) {
             this.config.selector = this.selector;
         }
 
@@ -117,13 +119,13 @@ export class iVXjs {
      */
     init(settings) {
         let self = this;
-        let {debug = true} = settings;
-     
-        if(settings.selector){     
+        let { debug = true } = settings;
+
+        if (settings.selector) {
             this.selector = settings.selector;
         }
 
-        if(settings.routeFunction){
+        if (settings.routeFunction) {
             this.routeFunction = settings.routeFunction;
         }
 
@@ -138,7 +140,7 @@ export class iVXjs {
                     resolve(self);
                 });
         });
-        
+
         return initPromise;
     }
 

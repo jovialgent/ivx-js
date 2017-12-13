@@ -1,0 +1,69 @@
+{
+    "name": "Google Analytics Send Event",
+    "description": "Settings for how to send iVXjs ",
+    "type": "object",
+    "properties": {
+        "eventName": {
+            "type": "string",
+            "name": "Event Name",
+            "description": "Indicates to run the Analytics Run Event action.",
+            "required": true,
+            "enum": [
+                "sendEvent"
+            ]
+        },
+        "args": {
+            "type": "object",
+            "name": "sendEvent Arguments",
+            "description": "Events to raise for actions. There are many combinations for settings to send to Google Analytics, but these are typical. For more information you can look here:  <a href='https://developers.google.com/analytics/devguides/collection/analyticsjs/events'>Google Analytics Events</a>",
+            "required": true,
+            "properties": {
+                "tracker" : {
+                    "name" : "Tracker",
+                    "type" : "string",
+                    "description" : "Specifies which tracker to send this event to. This is useful if there are multiple trackers. If it is missing, it fires for the tracker attached to this iVXjs Google Analytics Module",
+                    "required" : false
+                },
+                "hitType": {
+                    "name": "Hit Type",
+                    "type": "string",
+                    "description": "The type of data or action being sent to Google Analytics. For events you can use 'event'.",
+                    "required": true,
+                    "enum": [
+                        "event"
+                    ]
+                },
+                "customEvent": {
+                    "name": "Custom Event",
+                    "type": "string",
+                    "description": "The event to raise in the platform",
+                    "required": true
+                },
+                "eventCategory": {
+                    "name": "Event Category",
+                    "type": "string",
+                    "description": "Typically the object that was interacted with (e.g. 'Video')",
+                    "required": true
+                },
+                "eventAction": {
+                    "name" : "Event Action",
+                    "type": "string",
+                    "description": "The type of interaction (e.g. 'play')",
+                    "required": true
+                },
+                "eventLabel": {
+                    "name": "Event Label",
+                    "type": "string",
+                    "description": "Useful for categorizing events (e.g. 'Fall Campaign')",
+                    "required": false
+                },
+                "eventValue" : {
+                    "name": "Event Value",
+                    "type": "number",
+                    "description": "A numeric value associated with the event (e.g. 42)",
+                    "required": false   
+                }
+            }
+        }
+    }
+}

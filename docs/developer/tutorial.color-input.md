@@ -581,7 +581,7 @@ directive to the iVXjs module. To register do the following:
 
 * Find the Inputs import files and add the `ColorInput` class
 
-```
+```javascript
 // Inputs
 import FormInput from './directives/input.form.js';
 import TextInput from './directives/input.text.js';
@@ -631,7 +631,7 @@ UI Module `ColorInput` class.
 * Go to the *input.color.js* directive file 
 * Go to the link function and find this code 
 
-```
+```javascript
 let uiTextObj = {
     input: input,
     settings: settings,
@@ -645,7 +645,7 @@ iElm.html(text.html);
 
 * Change the code to pull in the iVXjsUiModule.color 
 
-```
+```javascript
 let uiColorObj = {
     input: input,
     settings: settings,
@@ -669,7 +669,7 @@ to see if we can pull code from it to set up. Before we do let's go over some of
 
 The file imports three classes: 
 
-```
+```javascript
 import { Style } from "./style";
 import { ErrorMessages } from "./messages.js";
 import { AttributeTags } from "../utilities/attributes.js";
@@ -686,7 +686,7 @@ the form in a grid
 
 Initializes a global style instance to use in the class:
 
-```
+```javascript
 let style = new Style();
 ```
 
@@ -702,7 +702,7 @@ The constructor takes two arguments:
 * errorMessages: Since some frameworks might not have a specific way to display errors, this makes 
 sure something does appear when they do
 
-```
+```javascript
 constructor(inputObj = {}, errorMessages = ErrorMessages) {
 }
 ```
@@ -710,7 +710,7 @@ constructor(inputObj = {}, errorMessages = ErrorMessages) {
 Inside the constructor, we take the settings from the `inputObj` variable and add its 
 contents to various properties of the class: 
 
-```
+```javascript
  let {input = {}, settings = {}, tags = {}, errors = {}} = inputObj;
 
 this.input = input; //All input information 
@@ -726,7 +726,7 @@ this.attributeTags = AttributeTags; //Attribute Tag Generator
 These are classes and attributes defined from the UI Framework to add to all inputs. In this case, since no 
 framework is defined, these properties return an empty string 
 
-```
+```javascript
 get uiClasses() {
     return ''
 }
@@ -741,7 +741,7 @@ get uiAttributes() {
 This property is the template HTML that gets rendered from all the input data that is passed down. 
 We will define all of the properties in the a future step so, for now we will just add it to the class 
 
-```
+```javascript
 get html(){
 
 }
@@ -752,7 +752,7 @@ get html(){
 For the most part, we can take all of these properties without `html` to get started with out color input. 
 So our *color.js* file should look like this:
 
-```
+```javascript
 import { Style } from "./style";
 import { ErrorMessages } from "./messages.js";
 import { AttributeTags } from "../utilities/attributes.js";
@@ -793,7 +793,7 @@ class to the Default UI Module.
 * Open the *index.js* file in the UI Default Module 
 * Add the necessary import statement to bring in the `Color` input class 
 
-```
+```javascript
 // Form/Input HTML
 import { Form } from './form.js';
 import { Anchor } from './anchor.js';
@@ -814,7 +814,7 @@ import { Url } from './url.js';
 
 * Add it as a property to the class in the *index.js* class's constructor 
 
-```
+```javascript
 constructor() {
         this.form = Form;
         this.anchor = Anchor;
@@ -851,7 +851,7 @@ Let's break down how the `Text` class's html is set up
 
 Here are the variables defined: 
 
-```
+```javascript
 let {input, settings, tags, errors, uiClasses, uiAttributes} = this;
 let {label = '', labelHTML, name = '', id = ''} = input;
 let {input: inputSettings = {}, showLabel = true} = settings;
@@ -861,7 +861,7 @@ let {classes = ''} = inputSettings;
 The first variables before classes are pulling all the input data from the JSON. Below that the classes 
 for this input are defined: 
 
-```
+```javascript
 classes = `${classes} ${uiClasses}`;
 ```
 
@@ -879,7 +879,7 @@ nonValidateAttributesHTML = `${nonValidateAttributesHTML} ${uiAttributes}`;
 This sets up all thhe error messages and attribute tags for this element. For the most part, this is standard and 
 shouldn't change. 
 
-```
+```javascript
 if (labelHTML) label = labelHTML;
 ```
 
@@ -890,7 +890,7 @@ Replaces the label with the `labelHTML` passed from the JSON.
 After initializing and rendering the various components for the HTML, the text input pulls in these settings 
 and attaches them correctly. Let's look at the template string for this element: 
 
-```
+```javascript
 let inputHTML = ` 
     <label for='${name}'> ${label} </label>
     <input class="${classes}"  id="${id}" name="${name}"  type="text" ${nonValidateAttributesHTML}   ${errorTags} ${tags}>
@@ -920,7 +920,7 @@ For the most part, since color and text are similar we can use the same html in 
 The key change thous is on the input is to change "text" to "color". So our final *color.js* file 
 should look like this: 
 
-```
+```javascript
 import { Style } from "./style";
 import { ErrorMessages } from "./messages.js";
 import { AttributeTags } from "../utilities/attributes.js";

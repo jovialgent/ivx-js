@@ -14,30 +14,37 @@ export class Google extends DefaultAnalytics {
     }
 
     init(experienceData) {
-        let {iVXjs, settings} = this;
+        let { iVXjs, settings } = this;
         this.experienceData = experienceData;
         this.assertModule = new Assert(iVXjs.log);
         this.log = iVXjs.log;
 
-        let {config = {}} = experienceData;
-        let {metadata = {}} = config;
-        let {trackingId} = metadata;
-        let {plugins = []} = settings;
+        let { config = {} } = experienceData;
+        let { metadata = {} } = config;
+        let { trackingId } = metadata;
+        let { plugins = [], name = 'ivxjsTracker' } = settings;
 
         settings.trackingId = trackingId ? trackingId : settings.trackingId;
 
         this.assertModule.assert(settings.trackingId, "Tracking Id", "make sure to add a tracking id");
 
+        this.experienceData.experience.analytics = {
+            name
+        }
+
+        settings.name = name;
+
         ga('create', settings);
+
         plugins.forEach((plugin, index) => {
             ga('require', plugin);
         });
-        ga('send', 'pageview');
+        ga(`${name}.send`, 'pageview');
 
         iVXjs.Bus.on(stateEventNames.CHANGE, (state) => {
-            let {url} = state;
+            let { url } = state;
 
-            ga('send', {
+            ga(`${name}.send`, {
                 hitType: 'pageview',
                 page: url
             });
@@ -46,26 +53,43 @@ export class Google extends DefaultAnalytics {
     }
 
     get experience() {
-        let {experienceData} = this;
+        let { experienceData } = this;
 
         experienceData.experience.sendEvent = this.sendEvent;
+        experienceData.experience.setAnalyticsData = this.setAnalyticsData;
 
         return experienceData;
     }
 
     sendEvent(args) {
-        let {settings = {}, log} = this;
-        let {tracker} = settings;
+        let { settings = {}, log, analytics = {} } = this;
+        let { tracker } = args
+
         let sendEventPromise = new Promise((resolve, reject) => {
+
             args.hitCallback = () => {
                 resolve();
             }
 
-            tracker = tracker ? `${tracker}.` : "";
+            tracker = tracker ? `${tracker}.` : `${analytics.name}.`;
+
+            delete args.tracker;
+
             ga(`${tracker}send`, args);
         });
 
         return sendEventPromise;
+    }
+
+    setAnalyticsData(args) {
+        let { settings = {}, log, analytics = {} } = this;
+        let { tracker, key, value } = args
+        let setActionName = tracker ? `${tracker}.set` : `${analytics.name}.set`;
+
+        console.log(key, value);
+
+        ga(setActionName, key, value);
+
     }
 }
 

@@ -1,0 +1,10 @@
+{
+    "eventName": "sendEvent",
+    "args": {
+        "tracker" : "ivxjsTracker"
+        "hitType": "event",
+        "eventCategory": "Video",
+        "eventAction": "play",
+        "eventLabel": "test.mp4"
+    }
+}
