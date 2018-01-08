@@ -28,7 +28,7 @@ class OptionsInput {
 
             input.label = input.label ? input.label : $filter('stringParsers')('startCase', id);
             input = pullInTemplate.convertLabel($filter('stringParsers')('startCase', id), input, $scope);
-            input.options = [];
+   
 
             if (attributes.required || defaultDisplay) {
                 defaultOptionTag = defaultDisplay ?
