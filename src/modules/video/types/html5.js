@@ -12,57 +12,94 @@ let typeValidator = new TypeValidator();
 
 export class Html5 {
     constructor(container, settings, stateData = {}, iVXjsLog) {
-        this.settings = settings;
-        this.stateData = stateData;
-        this.videoEventNames = new VideoEventNames();
-        this.TrackCuesService = TrackCuesService;
-        this.trackEventNames = new TrackEventNames();
-        this.trackCuesEventNames = new TrackCueEventNames();
 
+        Object.assign(this, {
+            settings,
+            stateData,
+            videoEventNames: new VideoEventNames(),
+            TrackCuesService,
+            trackEventNames: new TrackEventNames(),
+            trackCuesEventNames: new TrackCueEventNames(),
+            stateData,
+            iVXjsLog
+        })
 
         container.html(this.html);
 
         this.player = container[0].getElementsByTagName("VIDEO")[0];
-        this.iVXjsLog = iVXjsLog;
     }
 
-    play() {
-        this.playLoader = this.player.play();
-    }
+    play(args = {}) {
+        const { playerId } = args;
+        const { id } = this.settings;
 
-    pause() {
-        this.player.pause();
-    }
+        if (!playerId) {
+            this.player.play();
 
-    seek(newTime) {
-        this.player.currentTime = newTime;
-    }
-
-    getDuration() {
-        this.iVXjsBus.emit(this.videoEventNames.SET_DURATION, this.player.duration);
-    }
-
-    setVolume(volumeObj) {
-        let volume = volumeObj;
-
-        if (typeValidator.isObject(volumeObj)) {
-            volume = volumeObj.volume;
+            return;
         }
 
-        this.player.volume = volume;
+
+        if (playerId === id) {
+            this.playLoader = this.player.play();
+        }
     }
 
-    seek(currentTimeObj) {
-        let currentTime = currentTimeObj;
+    pause(args = {}) {
+        const { playerId } = args;
+        const { id } = this.settings;
 
-        if (typeValidator.isObject(currentTimeObj)) {
-            currentTime = currentTimeObj.currentTime;
+        if (!playerId) {
+            this.player.pause();
+
+            return;
         }
 
-        this.player.currentTime = currentTime
+
+        if (playerId === id) {
+            this.player.pause();
+        }
     }
 
-    playing() { }
+    getDuration(args = {}) {
+        const { playerId } = args;
+        const { id } = this.settings;
+
+        if (id && playerId === id) {
+            this.iVXjsBus.emit(this.videoEventNames.SET_DURATION, {
+                playerId,
+                duration: this.player.duration,
+            });
+        }
+    }
+
+    setVolume(args = {}) {
+        const { playerId, volume } = args;
+        const { id } = this.settings;
+
+        if (!playerId) {
+            this.player.volume = volume;
+            return;
+        }
+
+        if (playerId === id) {
+            this.player.volume = volume;
+        }
+    }
+
+    seek(args) {
+        const { currentTime, playerId } = args;
+        const { id } = this.settings;
+
+        if (!playerId) {
+            this.player.currentTime = currentTime
+            return;
+        }
+
+        if (playerId === id) {
+            this.player.currentTime = currentTime
+        }
+    }
 
     setOnReady() {
         let self = this;
@@ -130,7 +167,6 @@ export class Html5 {
         this.volumeOnEvent = iVXjsBus.on(videoEventNames.SET_VOLUME, volumeOnEvent);
         this.durationOnEvent = iVXjsBus.on(videoEventNames.GET_DURATION, durationOnEvent);
         this.seekOnEvent = iVXjsBus.on(videoEventNames.SEEK, seekOnEvent);
-        this.playingOnEvent = iVXjsBus.on(videoEventNames.PLAYING, playingOnEvent);
 
         //Track Events
         this.changeCurrentTrackOnEvent = iVXjsBus.on(trackEventNames.CHANGE_CURRENT_TRACK, changeCurrentTrack);
@@ -142,7 +178,6 @@ export class Html5 {
         this.seekOnEvent = this.seekOnEvent ? this.seekOnEvent : seekOnEvent;
         this.durationOnEvent = this.durationOnEvent ? this.durationOnEvent : durationOnEvent;
         this.volumeOnEvent = this.volumeOnEvent ? this.volumeOnEvent : volumeOnEvent;
-        this.playingOnEvent = this.playingOnEvent ? this.playingOnEvent : playingOnEvent;
         this.changeCurrentTrack = this.changeCurrentTrack ? this.changeCurrentTrack : changeCurrentTrack;
 
         this.setOnReady();
@@ -175,28 +210,25 @@ export class Html5 {
             iVXjsLog.error(errorObj, "VIDEO");
         }, true);
 
-        function playOnEvent() {
-            self.play();
+        function playOnEvent(args) {
+            self.play(args);
         }
 
-        function pauseOnEvent() {
-            self.pause();
+        function pauseOnEvent(args) {
+            self.pause(args);
         }
 
-        function playingOnEvent() {
-            self.playing();
-        }
 
         function seekOnEvent(currentTime) {
             self.seek(currentTime);
         }
 
-        function durationOnEvent() {
-            self.getDuration()
+        function durationOnEvent(args) {
+            self.getDuration(args)
         }
 
-        function volumeOnEvent(volume) {
-            self.setVolume(volume);
+        function volumeOnEvent(args) {
+            self.setVolume(args);
         }
 
         function changeCurrentChapter(opts) {
@@ -271,7 +303,6 @@ export class Html5 {
             seek: videoEventNames.SEEK,
             duration: videoEventNames.GET_DURATION,
             volume: videoEventNames.SET_VOLUME,
-            playing: videoEventNames.PLAYING,
             changeCurrentTrack: trackEventNames.CHANGE_CURRENT_TRACK,
             changeChapter: trackCuesEventNames.CHANGE_CHAPTER
         };
@@ -285,10 +316,9 @@ export class Html5 {
     }
 
     get html() {
-        let { isiOS = false } = this.stateData;
-        let { tracks = [], sources = [], controls = true } = this.settings;
+        let { tracks = [], sources = [], controls = true, isiOS = false } = this.settings;
         let tags = ['tracks', 'sources', 'autoplay'];
-        let justAttrs = ['controls'];
+        let justAttrs = ['controls', 'isiOS'];
 
         if (typeof this.settings.controls === 'string' || !controls) {
             delete this.settings.controls;

@@ -2,8 +2,8 @@ import { Controls } from '../../video/controls/index.js';
 import ElementUtilities from "../utilities/element";
 
 export default class extends Controls {
-    constructor(container) {
-        super();
+    constructor(container, playerId) {
+        super(playerId);
 
         if (container.html instanceof Function) {
             container.html(this.html);

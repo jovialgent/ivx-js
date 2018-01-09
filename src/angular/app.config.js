@@ -14,7 +14,7 @@ class AppConfig {
         let { experience } = iVXjs;
         let { templates = [] } = iVXjs.config;
         let defaultStateID = iVXjs.rules(iVXjs.config.defaultState);
-        let { url } = iVXjs.config.states.find((state) => { return state.id === defaultStateID });
+        let { url } = iVXjs.config.states.find((state) => { return state.id === defaultStateID }) || {};
 
         if (experience.whiteList) {
             $sceDelegateProvider.resourceUrlWhitelist(experience.whiteList);

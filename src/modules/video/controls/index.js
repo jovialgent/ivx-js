@@ -4,12 +4,16 @@ import TrackEventNames from "../../../constants/tracks.events.js";
 import TrackCuesEventNames from "../../../constants/tracks.cues.events.js";
 
 export class Controls extends ControlEvents {
-    constructor() {
-        super();
-        this.currentVolume = 0.5;
-        this.controlEventNames = new VideoEventNames();
-        this.trackEventNames = new TrackEventNames();
-        this.trackCuesEventName = new TrackCuesEventNames();
+    constructor(playerId) {
+        super(playerId);
+
+        Object.assign(this, {
+            playerId,
+            currentVolume: 0.5,
+            controlEventNames: new VideoEventNames(),
+            trackEventNames: new TrackEventNames(),
+            trackCuesEventName: new TrackCuesEventNames()
+        })
     }
 
     dispose(iVXjsBus) {
@@ -18,7 +22,6 @@ export class Controls extends ControlEvents {
         iVXjsBus.removeListener(this.controlEventNames.CAN_PLAY, this.canPlayCallback);
         iVXjsBus.removeListener(this.trackCuesEventName.ON_CHAPTER_START, this.chapterChange);
         iVXjsBus.removeListener(this.trackEventNames.CHANGE_CURRENT_TRACK, this.trackChange)
-
     }
 
     getAbsolutePosition(element) {
@@ -117,7 +120,7 @@ export class Controls extends ControlEvents {
         }
     }
 
-    onReadyToPlay(player, stateData) {
+    onReadyToPlay(player) {
         let { volumeBar, volumeBarCurrentVolumeClasses } = this;
         let self = this;
         let currentVolumeSpan = this.getElementByClasses(volumeBar.children, [volumeBarCurrentVolumeClasses]);
@@ -222,7 +225,7 @@ export class Controls extends ControlEvents {
             const { chapterId: currentChapterId } = cue;
 
             chapterList.forEach(chapterListItem => {
-                let { id : chapterId } = chapterListItem;
+                let { id: chapterId } = chapterListItem;
 
                 if (chapterId === currentChapterId) {
                     chapterListItem.classList.remove(chapterInActiveClasses);
@@ -238,23 +241,33 @@ export class Controls extends ControlEvents {
         function trackChange(opts) {
             let { trackId = "" } = opts;
 
-            self.updateTrackSelector(trackId)
+            if (player.id === self.playerId) {
+                self.updateTrackSelector(trackId)
+            }
         }
 
-        function canPlayCallBack(player, _stateData) {
-            self.onReadyToPlay(player, _stateData);
+        function canPlayCallBack(player) {
+            if (player.id === self.playerId) {
+                self.onReadyToPlay(player);
+            }
         }
 
         function updateTime(player) {
-            self.onTimeUpdate(player);
+            if (player.id === self.playerId) {
+                self.onTimeUpdate(player);
+            }
         }
 
         function whilePaused(player) {
-            self.onPaused(player);
+            if (player.id === self.playerId) {
+                self.onPaused(player);
+            }
         }
 
-        function whilePlaying() {
-            self.onPlaying();
+        function whilePlaying(player) {
+            if (player.id === self.playerId) {
+                self.onPlaying();
+            }
         }
     }
 
