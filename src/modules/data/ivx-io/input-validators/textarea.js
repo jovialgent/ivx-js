@@ -13,7 +13,7 @@ export default class {
         let {maxlength: storyMaxLengthAttribute = maxCharacters, minlength: storyMinLengthAttribute} = storyInputAttributes;
         let {maxlength: jsonMaxLengthAttribute = maxCharacters, minlength: jsonMinLengthAttribute = 0} = jsonInputAttributes;
       
-        jsonInputData.type = "text";
+        jsonInputData.type = "textarea";
         jsonInputData.attributes = Object.assign({},
             jsonInputData.attributes, {
                 maxlength: new Number(storyMaxLengthAttribute < maxCharacters ? storyMaxLengthAttribute :  jsonMaxLengthAttribute).valueOf(),
