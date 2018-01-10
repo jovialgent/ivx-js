@@ -18,7 +18,7 @@ class VideoState {
             let { id, playerType = "html5", playerSettings = {}, cuePoints = [], personalizations = [], header = {}, footer = {} } = data;
             let { vimeoId, youtubeId, inlineSrc, iphoneInline = false } = playerSettings;
             let controlsHTML = ``;
-            const playerId = `${id}-video-player`;
+            const playerId = playerSettings.id ? playerSettings.id :`${id}-video-player`;
 
             if (typeof playerSettings.controls === 'string') {
                 controlsHTML = `<ivxjs-${playerSettings.controls}-video-controls player-id='${playerId}'></ivxjs-${playerSettings.controls}-video-controls>`;

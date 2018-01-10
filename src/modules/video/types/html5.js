@@ -146,6 +146,8 @@ export class Html5 {
             });
             this.oldTrack = this.currentTrack;
             this.player.textTracks.onchange = (evt) => {
+                const { id: playerId } = this.settings;
+
                 let { currentTrack: oldTrack } = self;
                 let { currentTarget: currentTracks = [] } = evt;
                 let currentTrack = Array.from(currentTracks).find((currentTrack) => {
@@ -157,7 +159,7 @@ export class Html5 {
                     currentTrack
                 });
 
-                self.iVXjsBus.emit(trackEventNames.ON_TRACK_CHANGE, { oldTrack, currentTrack })
+                self.iVXjsBus.emit(trackEventNames.ON_TRACK_CHANGE, { playerId, oldTrack, currentTrack })
             }
         }
 
@@ -232,7 +234,7 @@ export class Html5 {
         }
 
         function changeCurrentChapter(opts) {
-            let { chapterId = "" } = opts;
+            let { chapterId = "", playerId } = opts;
             let { player = {} } = self;
             let trackArray = Array.from(player.textTracks);
             let chapterTrack = trackArray.find(track => {
@@ -258,38 +260,44 @@ export class Html5 {
         }
 
         function changeCurrentTrack(opts) {
-            let { trackId = "" } = opts;
+            let { trackId = "", playerId } = opts;
             let { textTracks } = self.player;
             let trackArray = Array.from(textTracks);
 
-            if (trackId.length <= 0) {
-                trackArray.forEach((track) => {
-                    Object.assign(track, {
-                        mode: "hidden"
+            if (!playerId) runTrackChange();
+            if (playerId === self.player.id) runTrackChange();
+
+            function runTrackChange() {
+
+                if (trackId.length <= 0) {
+                    trackArray.forEach((track) => {
+                        Object.assign(track, {
+                            mode: "hidden"
+                        });
                     });
-                });
 
-                return;
-            }
+                    return;
+                }
 
-            let newTrack = trackArray.find(textTrack => {
-                let { kind, trackId: currentTrackId } = textTrack;
-                let isCaptions = (kind === 'captions' || kind === 'subtitles');
-
-                return isCaptions && currentTrackId === trackId;
-            });
-
-            if (newTrack) {
-                trackArray.forEach(textTrack => {
+                let newTrack = trackArray.find(textTrack => {
                     let { kind, trackId: currentTrackId } = textTrack;
                     let isCaptions = (kind === 'captions' || kind === 'subtitles');
 
-                    if (isCaptions) {
-                        Object.assign(textTrack, {
-                            mode: currentTrackId === trackId ? "showing" : "hidden"
-                        });
-                    }
+                    return isCaptions && currentTrackId === trackId;
                 });
+
+                if (newTrack) {
+                    trackArray.forEach(textTrack => {
+                        let { kind, trackId: currentTrackId } = textTrack;
+                        let isCaptions = (kind === 'captions' || kind === 'subtitles');
+
+                        if (isCaptions) {
+                            Object.assign(textTrack, {
+                                mode: currentTrackId === trackId ? "showing" : "hidden"
+                            });
+                        }
+                    });
+                }
             }
         }
     }

@@ -214,34 +214,53 @@ export class Controls extends ControlEvents {
             self.setMute(event);
         });
 
-        this.iVXjsBus.once(this.controlEventNames.CAN_PLAY, (player) => {
-            self.createPlayerSpecificControls({ player })
-            self.player = player;
+        const canPlayListener = this.iVXjsBus.on(this.controlEventNames.CAN_PLAY, (player) => {
+            if (player.id === self.playerId) {
+                self.createPlayerSpecificControls({ player })
+                self.player = player;
+                self.iVXjsBus.removeListener(this.controlEventNames.CAN_PLAY, canPlayListener);
+            }
+
         });
 
-        function chapterChange(cue) {
-            const { chapterActiveClasses, chapterListItemClasses, chapterInActiveClasses } = self;
-            const chapterList = Array.from(document.getElementsByClassName(chapterListItemClasses));
-            const { chapterId: currentChapterId } = cue;
+        function test(player) {
 
-            chapterList.forEach(chapterListItem => {
-                let { id: chapterId } = chapterListItem;
+        }
 
-                if (chapterId === currentChapterId) {
-                    chapterListItem.classList.remove(chapterInActiveClasses);
-                    chapterListItem.classList.add(chapterActiveClasses);
-                    return;
-                }
+        function chapterChange(args) {
+            const { cue, playerId } = args;
 
-                chapterListItem.classList.remove(chapterActiveClasses);
-                chapterListItem.classList.add(chapterInActiveClasses);
-            });
+            if (!playerId) changeChapter();
+            if (playerId === self.playerId) changeChapter();
+
+            function changeChapter() {
+                const { chapterActiveClasses, chapterListItemClasses, chapterInActiveClasses } = self;
+                const chapterListContainer = document.getElementById(`${self.playerId}-chapter-list`);
+                const { chapterId: currentChapterId } = cue;
+
+                if (!chapterListContainer) return;
+
+                const chapterList = Array.from(chapterListContainer.children);
+
+                chapterList.forEach(chapterListItem => {
+                    let { id: chapterId } = chapterListItem;
+
+                    if (chapterId.indexOf(currentChapterId) >= 0) {
+                        chapterListItem.classList.remove(chapterInActiveClasses);
+                        chapterListItem.classList.add(chapterActiveClasses);
+                        return;
+                    }
+
+                    chapterListItem.classList.remove(chapterActiveClasses);
+                    chapterListItem.classList.add(chapterInActiveClasses);
+                });
+            }
         };
 
         function trackChange(opts) {
-            let { trackId = "" } = opts;
+            let { trackId = "", playerId } = opts;
 
-            if (player.id === self.playerId) {
+            if (playerId === self.playerId) {
                 self.updateTrackSelector(trackId)
             }
         }
