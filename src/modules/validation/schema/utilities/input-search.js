@@ -26,8 +26,6 @@ export default class{
         
     }
 
-
-
     get inputs(){
         let {config} = this;
         let inputsFromRules = this.getInputsFromRules(config.defaultState);
