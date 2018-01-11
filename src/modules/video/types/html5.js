@@ -29,7 +29,7 @@ export class Html5 {
         this.player = container[0].getElementsByTagName("VIDEO")[0];
     }
 
-    play(args = {}) {
+    play(args) {
         const { playerId } = args;
         const { id } = this.settings;
 
@@ -77,6 +77,8 @@ export class Html5 {
         const { playerId, volume } = args;
         const { id } = this.settings;
 
+        if (!typeValidator.isNumber(volume)) return;
+
         if (!playerId) {
             this.player.volume = volume;
             return;
@@ -87,7 +89,7 @@ export class Html5 {
         }
     }
 
-    seek(args) {
+    seek(args = {}) {
         const { currentTime, playerId } = args;
         const { id } = this.settings;
 
@@ -212,11 +214,11 @@ export class Html5 {
             iVXjsLog.error(errorObj, "VIDEO");
         }, true);
 
-        function playOnEvent(args) {
+        function playOnEvent(args = {}) {
             self.play(args);
         }
 
-        function pauseOnEvent(args) {
+        function pauseOnEvent(args = {}) {
             self.pause(args);
         }
 
@@ -225,11 +227,11 @@ export class Html5 {
             self.seek(currentTime);
         }
 
-        function durationOnEvent(args) {
+        function durationOnEvent(args = {}) {
             self.getDuration(args)
         }
 
-        function volumeOnEvent(args) {
+        function volumeOnEvent(args = {}) {
             self.setVolume(args);
         }
 
@@ -325,8 +327,8 @@ export class Html5 {
 
     get html() {
         let { tracks = [], sources = [], controls = true, isiOS = false } = this.settings;
-        let tags = ['tracks', 'sources', 'autoplay'];
-        let justAttrs = ['controls', 'isiOS'];
+        let tags = ['tracks', 'sources', 'isiOS', 'autoplay'];
+        let justAttrs = ['controls'];
 
         if (typeof this.settings.controls === 'string' || !controls) {
             delete this.settings.controls;

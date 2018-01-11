@@ -27,8 +27,10 @@ class HTML5VideoPlayer {
 
             settings = Object.assign(settings, {
                 isiOS: createInlineVideo.isiOS(),
-                id : playerId
-            })
+                id: playerId
+            });
+
+            controller.playerId = playerId;
 
             let thisVideoPlayer = new iVXjsVideoModule.html5(iElm.find('div'), settings, stateData, iVXjsLog);
 

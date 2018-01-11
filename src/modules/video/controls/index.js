@@ -193,7 +193,9 @@ export class Controls extends ControlEvents {
         let { scrubBar, volumeBar, playPauseControls, muteControls, trackCuesEventName } = this;
 
         this.iVXjsBus = iVXjsBus;
-        this.updateTime = iVXjsBus.on(this.controlEventNames.TIME_UPDATE, updateTime);
+        this.updateTime = iVXjsBus.on(this.controlEventNames.TIME_UPDATE, player => {
+            updateTime(player);
+        });
         this.whilePaused = iVXjsBus.on(this.controlEventNames.PAUSED, whilePaused);
         this.whilePlaying = iVXjsBus.on(this.controlEventNames.PLAYING, whilePlaying);
         this.canPlayCallback = iVXjsBus.on(this.controlEventNames.CAN_PLAY, canPlayCallBack);
@@ -223,11 +225,7 @@ export class Controls extends ControlEvents {
 
         });
 
-        function test(player) {
-
-        }
-
-        function chapterChange(args) {
+        function chapterChange(args = {}) {
             const { cue, playerId } = args;
 
             if (!playerId) changeChapter();

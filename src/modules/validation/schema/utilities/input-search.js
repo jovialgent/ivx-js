@@ -32,8 +32,5 @@ export default class{
         let {config} = this;
         let inputsFromRules = this.getInputsFromRules(config.defaultState);
         let inputsFromStates = this.getInputsFromStates(config.states);
-
-        console.dir(inputsFromRules);
-
     }
 }

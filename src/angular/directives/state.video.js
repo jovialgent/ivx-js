@@ -40,6 +40,7 @@ class VideoState {
                 return `${personalizationHTML} <div id="${id}" class="${defaultAnimationClass}">${html}</div> `
             }, "");
 
+            controller.playerId = playerId;
 
             let videoPlayerHTML = `
                <ivxjs-${playerType}-video-player player-id='${playerId}' settings="vm.stateData.playerSettings" state-data="vm.stateData"></ivxjs-${playerType}-video-player>

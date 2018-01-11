@@ -12,12 +12,15 @@ export class Vimeo {
         this._settings = settings;
         this._stateData = stateData;
 
+        this.playerId = settings.playerId;
+
         let { id, width, loop } = settings;
         let options = { id, width, loop };
 
         container.html(this.html);
 
-        this.player = new window.Vimeo.Player('player1', options);
+        this.player = new window.Vimeo.Player(settings.playerId, options);
+        this.player.id = settings.playerId;
         this.videoEventNames = new VideoEventNames();
         this.iVXjsLog = iVXjsLog
     }
@@ -96,6 +99,7 @@ export class Vimeo {
 
         self.player.on('timeupdate', (vimeoPlayInfo) => {
             vimeoPlayInfo.currentTime = vimeoPlayInfo.seconds;
+            vimeoPlayInfo.id = self.playerId;
 
             iVXjsBus.emit(videoEventNames.TIME_UPDATE, vimeoPlayInfo);
         });
@@ -105,47 +109,54 @@ export class Vimeo {
         });
 
         self.player.on('loaded', () => {
-            iVXjsBus.emit(videoEventNames.CAN_PLAY, self);
+            iVXjsBus.emit(videoEventNames.CAN_PLAY, self.player);
         })
 
-        function playOnEvent() {
-            self.player.play();
+        function playOnEvent(args = {}) {
+            const { playerId } = args;
+
+            if (!playerId) self.player.play();
+            if (playerId === self.player.id) self.player.play();
         }
 
-        function pauseOnEvent() {
-            self.player.pause();
+        function pauseOnEvent(args = {}) {
+            const { playerId } = args;
+
+            if (!playerId) self.player.pause();
+            if (playerId === self.player.id) self.player.pause();
         }
 
-        function volumeOnEvent(volumeObj) {
-            let volume = volumeObj;
+        function volumeOnEvent(args = {}) {
+            let { volume, playerId } = args;
 
-            if (typeValidator.isObject(volumeObj)) {
-                volume = volumeObj.volume;
+            if (!playerId) self.player.setVolume(volume);
+            if (playerId === self.player.id) self.player.setVolume(volume);
+        }
+
+        function seekOnEvent(args = {}) {
+            let { currentTime, playerId } = args;
+
+            if (!playerId) self.player.setCurrentTime(currentTime);
+            if (playerId === self.player.id) self.player.setCurrentTime(currentTime);
+        }
+
+        function durationOnEvent(args = {}) {
+            const { playerId } = args;
+
+            if (playerId === self.player.id) {
+                self.player
+                    .getDuration()
+                    .then((duration) => {
+                        iVXjsBus.emit(videoEventNames.SET_DURATION, {
+                            playerId,
+                            duration
+                        });
+                    });
             }
-            
-            self.player.setVolume(volume);
-        }
-
-        function seekOnEvent(currentTimeObj) {
-            let currentTime = currentTimeObj;
-
-            if (typeValidator.isObject(currentTimeObj)) {
-                currentTime = currentTimeObj.currentTime;
-            }
-
-            self.player.setCurrentTime(currentTime);
-        }
-
-        function durationOnEvent() {
-            self.player
-                .getDuration()
-                .then((duration) => {
-                    iVXjsBus.emit(videoEventNames.SET_DURATION, duration);
-                });
         }
     }
 
     get html() {
-        return `<div id="player1" data-vimeo-autoplay="false" data-vimeo-loop="false"></div>`;
+        return `<div id="${this.playerId}" class="player1 vimeo-player" data-vimeo-autoplay="false" data-vimeo-loop="false"></div>`;
     }
 }

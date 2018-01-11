@@ -6,8 +6,12 @@ class YoutubeVideoPlayerController {
         let self = this;
         let videoEventNames = new VideoEventNames();
 
-        iVXjsBus.once(videoEventNames.DISPOSE, function disposeYouTubePlayer() {
-            self.player.dispose(iVXjsBus);
+        const disposeEvent = iVXjsBus.on(videoEventNames.DISPOSE, (player) => {
+            if (self.playerId === player.id) {
+                self.player.dispose(iVXjsBus);
+                iVXjsBus.removeListener(videoEventNames.DISPOSE, disposeEvent);
+                player.destroy()
+            }
         });
     }
 }
