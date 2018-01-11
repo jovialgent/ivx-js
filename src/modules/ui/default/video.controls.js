@@ -5,7 +5,6 @@ export default class extends Controls {
     constructor(container, playerId) {
         super(playerId);
 
-
         if (container.html instanceof Function) {
             container.html(this.html);
         } else {

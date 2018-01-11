@@ -125,7 +125,10 @@ export class Controls extends ControlEvents {
         let self = this;
         let currentVolumeSpan = this.getElementByClasses(volumeBar.children, [volumeBarCurrentVolumeClasses]);
 
-        currentVolumeSpan.style.width = `${self.currentVolume * 100}%`;
+        if(currentVolumeSpan){
+            currentVolumeSpan.style.width = `${self.currentVolume * 100}%`;
+        }
+
 
         this.setVolume(self.currentVolume);
         this.getDuration((duration) => {

@@ -1,11 +1,11 @@
 import VideoSettings from '../settings.js';
 
 export default class {
-    contructor() {
-
+    contructor(playerId) {
         Object.assign(this, {
             volume: 0,
-            currenttime: 0
+            currenttime: 0,
+            playerId
         });
     }
 

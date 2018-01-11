@@ -1379,9 +1379,7 @@ var _class = function () {
                     newConfigData.templates = result;
 
                     $.support.cors = true;
-                    $.get(result[0]).then(function (html) {
-                        console.log(html);
-                    });
+                    $.get(result[0]).then(function (html) {});
 
                     resolve(newConfigData);
                 }, function (error) {

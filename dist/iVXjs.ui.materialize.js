@@ -2993,10 +2993,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var _class = function (_Controls) {
     _inherits(_class, _Controls);
 
-    function _class(container) {
+    function _class(container, playerId) {
         _classCallCheck(this, _class);
 
-        var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
+        var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, playerId));
 
         if (container.html instanceof Function) {
             container.html(_this.html);
@@ -3016,12 +3016,12 @@ var _class = function (_Controls) {
 
 
         _this.container = container;
-        _this.playPauseControls = document.getElementById("video-controls-play-pause");
-        _this.totalTimeInfo = document.getElementById("video-controls-total-time");
-        _this.currentTimeInfo = document.getElementById("video-controls-current-time");
-        _this.scrubBar = document.getElementById("video-controls-scrub-bar");
-        _this.muteControls = document.getElementById("video-controls-mute-controls");
-        _this.volumeBar = document.getElementById("video-controls-volume-bar");
+        _this.playPauseControls = document.getElementById(playerId + '-video-controls-play-pause');
+        _this.totalTimeInfo = document.getElementById(playerId + '-video-controls-total-time');
+        _this.currentTimeInfo = document.getElementById(playerId + '-video-controls-current-time');
+        _this.scrubBar = document.getElementById(playerId + '-video-controls-scrub-bar');
+        _this.muteControls = document.getElementById(playerId + '-video-controls-mute-controls');
+        _this.volumeBar = document.getElementById(playerId + '-video-controls-volume-bar');
         return _this;
     }
 
@@ -3164,6 +3164,9 @@ var _class = function (_Controls) {
                 var ccToggle = document.createElement('button');
                 var ccToggleIcon = document.createElement('i');
 
+                trackListContainer.setAttribute('id', self.playerId + '-track-list');
+                ccToggle.setAttribute('id', self.playerId + '-cc-toggle');
+
                 _element2.default.addClassesToElement(ccToggle, closeCaptionButtonClasses);
                 _element2.default.addClassesToElement(ccToggleIcon, closeCaptionButtonIconClasses);
 
@@ -3282,7 +3285,8 @@ var _class = function (_Controls) {
                 chapterListClasses = this.chapterListClasses,
                 chapterActiveClasses = this.chapterActiveClasses,
                 chapterInActiveClasses = this.chapterInActiveClasses,
-                chapterListItemClasses = this.chapterListItemClasses;
+                chapterListItemClasses = this.chapterListItemClasses,
+                playerId = this.playerId;
 
             var chapterTrack = Array.from(textTracks).find(function (textTrack) {
                 return textTrack.kind === 'chapters';
@@ -3291,6 +3295,9 @@ var _class = function (_Controls) {
 
             if (chapterTrack) {
                 var chapterListEl = document.createElement('ol');
+
+                chapterListEl.setAttribute('id', this.playerId + '-chapter-list');
+
                 var _chapterTrack$cues = chapterTrack.cues,
                     cues = _chapterTrack$cues === undefined ? [] : _chapterTrack$cues;
 
@@ -3309,7 +3316,7 @@ var _class = function (_Controls) {
 
                     _element2.default.append(chapterContainerEl, chapterButtonEl);
 
-                    chapterContainerEl.id = id;
+                    chapterContainerEl.id = id + '-chapter-seclect-container';
                     chapterContainerEl.className = chapterListItemClasses + ' ' + (index === 0 ? chapterActiveClasses : chapterInActiveClasses);
 
                     _element2.default.append(chapterListEl, chapterContainerEl);
@@ -3415,33 +3422,41 @@ var _class = function (_Controls) {
     }, {
         key: 'playPauseButtonHTML',
         get: function get() {
-            var play = this.playClasses;
+            var play = this.playClasses,
+                playerId = this.playerId;
             var playPauseControls = this.playPauseControlsClasses;
 
-            return '\n        <button id="video-controls-play-pause" class="' + playPauseControls + '">\n            <i class=\'' + play + '\'></i>\n        </button>';
+            return '\n        <button id="' + playerId + '-video-controls-play-pause" class="' + playPauseControls + '">\n            <i class=\'' + play + '\'></i>\n        </button>';
         }
     }, {
         key: 'scrubBarHTML',
         get: function get() {
-            return '\n             <div id="video-controls-scrub-bar" class="' + this.scrubBarClasses + '">\n                <div class="' + this.scrubBarTimeLapseClasses + '"></div>\n            </div>\n        ';
+            var playerId = this.playerId;
+
+            return '\n             <div id="' + playerId + '-video-controls-scrub-bar" class="' + this.scrubBarClasses + '">\n                <div class="' + this.scrubBarTimeLapseClasses + '"></div>\n            </div>\n        ';
         }
     }, {
         key: 'timestampHTML',
         get: function get() {
-            return '\n        <span id="video-controls-current-time" class="' + this.currentTimeInfoClasses + '"></span>\n        <span id="video-controls-total-time" class="' + this.totalTimeInfoClasses + '"></span>\n        ';
+            var playerId = this.playerId;
+
+            return '\n        <span id="' + playerId + '-video-controls-current-time" class="' + this.currentTimeInfoClasses + '"></span>\n        <span id="' + playerId + '-video-controls-total-time" class="' + this.totalTimeInfoClasses + '"></span>\n        ';
         }
     }, {
         key: 'muteButtonHTML',
         get: function get() {
             var unmute = this.unmuteClasses,
-                muteControlsClasses = this.muteControlsClasses;
+                muteControlsClasses = this.muteControlsClasses,
+                playerId = this.playerId;
 
-            return '\n            <button id="video-controls-mute-controls" class="' + muteControlsClasses + '">\n                <i class="' + unmute + '"></i>\n            </button>\n        ';
+            return '\n            <button id="' + playerId + '-video-controls-mute-controls" class="' + muteControlsClasses + '">\n                <i class="' + unmute + '"></i>\n            </button>\n        ';
         }
     }, {
         key: 'volumeBarHTML',
         get: function get() {
-            return '\n            <div  id="video-controls-volume-bar" class="' + this.volumeBarClasses + '">\n                <div class="' + this.volumeBarCurrentVolumeClasses + '"></div>\n            </div> \n        ';
+            var playerId = this.playerId;
+
+            return '\n            <div  id="' + playerId + '-video-controls-volume-bar" class="' + this.volumeBarClasses + '">\n                <div class="' + this.volumeBarCurrentVolumeClasses + '"></div>\n            </div> \n        ';
         }
     }, {
         key: 'trackListSelectContainerClasses',
@@ -3547,15 +3562,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Controls = exports.Controls = function (_ControlEvents) {
     _inherits(Controls, _ControlEvents);
 
-    function Controls() {
+    function Controls(playerId) {
         _classCallCheck(this, Controls);
 
-        var _this = _possibleConstructorReturn(this, (Controls.__proto__ || Object.getPrototypeOf(Controls)).call(this));
+        var _this = _possibleConstructorReturn(this, (Controls.__proto__ || Object.getPrototypeOf(Controls)).call(this, playerId));
 
-        _this.currentVolume = 0.5;
-        _this.controlEventNames = new _videoEvents2.default();
-        _this.trackEventNames = new _tracksEvents2.default();
-        _this.trackCuesEventName = new _tracksCuesEvents2.default();
+        Object.assign(_this, {
+            playerId: playerId,
+            currentVolume: 0.5,
+            controlEventNames: new _videoEvents2.default(),
+            trackEventNames: new _tracksEvents2.default(),
+            trackCuesEventName: new _tracksCuesEvents2.default()
+        });
         return _this;
     }
 
@@ -3690,7 +3708,7 @@ var Controls = exports.Controls = function (_ControlEvents) {
         }
     }, {
         key: "onReadyToPlay",
-        value: function onReadyToPlay(player, stateData) {
+        value: function onReadyToPlay(player) {
             var volumeBar = this.volumeBar,
                 volumeBarCurrentVolumeClasses = this.volumeBarCurrentVolumeClasses;
 
@@ -3771,6 +3789,8 @@ var Controls = exports.Controls = function (_ControlEvents) {
     }, {
         key: "addEventListeners",
         value: function addEventListeners(iVXjsBus) {
+            var _this2 = this;
+
             var self = this;
             var scrubBar = this.scrubBar,
                 volumeBar = this.volumeBar,
@@ -3780,7 +3800,9 @@ var Controls = exports.Controls = function (_ControlEvents) {
 
 
             this.iVXjsBus = iVXjsBus;
-            this.updateTime = iVXjsBus.on(this.controlEventNames.TIME_UPDATE, updateTime);
+            this.updateTime = iVXjsBus.on(this.controlEventNames.TIME_UPDATE, function (player) {
+                updateTime(player);
+            });
             this.whilePaused = iVXjsBus.on(this.controlEventNames.PAUSED, whilePaused);
             this.whilePlaying = iVXjsBus.on(this.controlEventNames.PLAYING, whilePlaying);
             this.canPlayCallback = iVXjsBus.on(this.controlEventNames.CAN_PLAY, canPlayCallBack);
@@ -3801,57 +3823,85 @@ var Controls = exports.Controls = function (_ControlEvents) {
                 self.setMute(event);
             });
 
-            this.iVXjsBus.once(this.controlEventNames.CAN_PLAY, function (player) {
-                self.createPlayerSpecificControls({ player: player });
-                self.player = player;
+            var canPlayListener = this.iVXjsBus.on(this.controlEventNames.CAN_PLAY, function (player) {
+                if (player.id === self.playerId) {
+                    self.createPlayerSpecificControls({ player: player });
+                    self.player = player;
+                    self.iVXjsBus.removeListener(_this2.controlEventNames.CAN_PLAY, canPlayListener);
+                }
             });
 
-            function chapterChange(cue) {
-                var chapterActiveClasses = self.chapterActiveClasses,
-                    chapterListItemClasses = self.chapterListItemClasses,
-                    chapterInActiveClasses = self.chapterInActiveClasses;
-
-                var chapterList = Array.from(document.getElementsByClassName(chapterListItemClasses));
-                var currentChapterId = cue.chapterId;
+            function chapterChange() {
+                var args = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+                var cue = args.cue,
+                    playerId = args.playerId;
 
 
-                chapterList.forEach(function (chapterListItem) {
-                    var chapterId = chapterListItem.id;
+                if (!playerId) changeChapter();
+                if (playerId === self.playerId) changeChapter();
+
+                function changeChapter() {
+                    var chapterActiveClasses = self.chapterActiveClasses,
+                        chapterListItemClasses = self.chapterListItemClasses,
+                        chapterInActiveClasses = self.chapterInActiveClasses;
+
+                    var chapterListContainer = document.getElementById(self.playerId + "-chapter-list");
+                    var currentChapterId = cue.chapterId;
 
 
-                    if (chapterId === currentChapterId) {
-                        chapterListItem.classList.remove(chapterInActiveClasses);
-                        chapterListItem.classList.add(chapterActiveClasses);
-                        return;
-                    }
+                    if (!chapterListContainer) return;
 
-                    chapterListItem.classList.remove(chapterActiveClasses);
-                    chapterListItem.classList.add(chapterInActiveClasses);
-                });
+                    var chapterList = Array.from(chapterListContainer.children);
+
+                    chapterList.forEach(function (chapterListItem) {
+                        var chapterId = chapterListItem.id;
+
+
+                        if (chapterId.indexOf(currentChapterId) >= 0) {
+                            chapterListItem.classList.remove(chapterInActiveClasses);
+                            chapterListItem.classList.add(chapterActiveClasses);
+                            return;
+                        }
+
+                        chapterListItem.classList.remove(chapterActiveClasses);
+                        chapterListItem.classList.add(chapterInActiveClasses);
+                    });
+                }
             };
 
             function trackChange(opts) {
                 var _opts$trackId = opts.trackId,
-                    trackId = _opts$trackId === undefined ? "" : _opts$trackId;
+                    trackId = _opts$trackId === undefined ? "" : _opts$trackId,
+                    playerId = opts.playerId;
 
 
-                self.updateTrackSelector(trackId);
+                if (playerId === self.playerId) {
+                    self.updateTrackSelector(trackId);
+                }
             }
 
-            function canPlayCallBack(player, _stateData) {
-                self.onReadyToPlay(player, _stateData);
+            function canPlayCallBack(player) {
+                if (player.id === self.playerId) {
+                    self.onReadyToPlay(player);
+                }
             }
 
             function updateTime(player) {
-                self.onTimeUpdate(player);
+                if (player.id === self.playerId) {
+                    self.onTimeUpdate(player);
+                }
             }
 
             function whilePaused(player) {
-                self.onPaused(player);
+                if (player.id === self.playerId) {
+                    self.onPaused(player);
+                }
             }
 
-            function whilePlaying() {
-                self.onPlaying();
+            function whilePlaying(player) {
+                if (player.id === self.playerId) {
+                    self.onPlaying();
+                }
             }
         }
     }, {
@@ -3938,41 +3988,81 @@ var _class = function () {
     _createClass(_class, [{
         key: 'contructor',
         value: function contructor() {
-            this.volume = 0;
-            this.currenttime = 0;
+
+            Object.assign(this, {
+                volume: 0,
+                currenttime: 0
+            });
         }
     }, {
         key: 'play',
         value: function play() {
-            this.iVXjsBus.emit(this.controlEventNames.PLAY);
+            var playerId = this.playerId;
+
+
+            this.iVXjsBus.emit(this.controlEventNames.PLAY, {
+                playerId: playerId
+            });
         }
     }, {
         key: 'pause',
         value: function pause() {
-            this.iVXjsBus.emit(this.controlEventNames.PAUSE);
+            var playerId = this.playerId;
+
+
+            this.iVXjsBus.emit(this.controlEventNames.PAUSE, {
+                playerId: playerId
+            });
         }
     }, {
         key: 'getDuration',
         value: function getDuration(cb) {
-            this.iVXjsBus.once(this.controlEventNames.SET_DURATION, function (duration) {
-                cb(duration);
+            var playerId = this.playerId;
+
+
+            this.iVXjsBus.once(this.controlEventNames.SET_DURATION, function (eventObj) {
+                var eventPlayerId = eventObj.playerId,
+                    duration = eventObj.duration;
+
+
+                if (eventPlayerId === playerId) {
+                    cb(duration);
+                }
             });
-            this.iVXjsBus.emit(this.controlEventNames.GET_DURATION);
+
+            this.iVXjsBus.emit(this.controlEventNames.GET_DURATION, {
+                playerId: playerId
+            });
         }
     }, {
         key: 'setVolume',
         value: function setVolume(volume) {
-            this.iVXjsBus.emit(this.controlEventNames.SET_VOLUME, volume);
+            var playerId = this.playerId;
+
+
+            this.iVXjsBus.emit(this.controlEventNames.SET_VOLUME, {
+                volume: volume,
+                playerId: playerId
+            });
         }
     }, {
         key: 'seek',
         value: function seek(seconds) {
-            this.iVXjsBus.emit(this.controlEventNames.SEEK, seconds);
+            var playerId = this.playerId;
+
+
+            this.iVXjsBus.emit(this.controlEventNames.SEEK, {
+                currentTime: seconds,
+                playerId: playerId
+            });
         }
     }, {
         key: 'changeCurrentTrack',
         value: function changeCurrentTrack(trackId) {
-            this.iVXjsBus.emit(this.trackEventNames.CHANGE_CURRENT_TRACK, { trackId: trackId });
+            var playerId = this.playerId;
+
+
+            this.iVXjsBus.emit(this.trackEventNames.CHANGE_CURRENT_TRACK, { trackId: trackId, playerId: playerId });
         }
     }]);
 
