@@ -21,7 +21,8 @@ export class Html5 {
             trackEventNames: new TrackEventNames(),
             trackCuesEventNames: new TrackCueEventNames(),
             stateData,
-            iVXjsLog
+            iVXjsLog,
+            currentVolume: 0.5
         })
 
         container.html(this.html);
@@ -33,15 +34,10 @@ export class Html5 {
         const { playerId } = args;
         const { id } = this.settings;
 
-        if (!playerId) {
+        if (!playerId || playerId === id) {
             this.player.play();
 
             return;
-        }
-
-
-        if (playerId === id) {
-            this.playLoader = this.player.play();
         }
     }
 
@@ -49,15 +45,10 @@ export class Html5 {
         const { playerId } = args;
         const { id } = this.settings;
 
-        if (!playerId) {
+        if (!playerId || playerId === id) {
             this.player.pause();
 
             return;
-        }
-
-
-        if (playerId === id) {
-            this.player.pause();
         }
     }
 
@@ -79,13 +70,31 @@ export class Html5 {
 
         if (!typeValidator.isNumber(volume)) return;
 
-        if (!playerId) {
+        if (!playerId || playerId === id) {
             this.player.volume = volume;
+            this.currentVolume = volume;
             return;
         }
+    }
 
-        if (playerId === id) {
-            this.player.volume = volume;
+    mute(args = {}) {
+        const { playerId, volume } = args;
+        const { id } = this.settings;
+
+        if (!playerId || playerId === id) {
+            this.player.volume = 0;
+            return;
+        }
+    }
+
+    unmute(args = {}) {
+        const { playerId, volume } = args;
+        const { id } = this.settings;
+
+
+        if (!playerId || playerId === id) {
+            this.player.volume = this.currentVolume;
+            return;
         }
     }
 
@@ -93,13 +102,9 @@ export class Html5 {
         const { currentTime, playerId } = args;
         const { id } = this.settings;
 
-        if (!playerId) {
+        if (!playerId || playerId === id) {
             this.player.currentTime = currentTime
             return;
-        }
-
-        if (playerId === id) {
-            this.player.currentTime = currentTime
         }
     }
 
@@ -139,6 +144,7 @@ export class Html5 {
         let self = this;
 
         this.iVXjsBus = iVXjsBus;
+        this.currentVolume = this.player.volume;
 
         if (tracks) {
             this.currentTrack = this.TrackCuesService.addTracks({
@@ -169,6 +175,8 @@ export class Html5 {
         this.playOnEvent = iVXjsBus.on(videoEventNames.PLAY, playOnEvent);
         this.pauseOnEvent = iVXjsBus.on(videoEventNames.PAUSE, pauseOnEvent);
         this.volumeOnEvent = iVXjsBus.on(videoEventNames.SET_VOLUME, volumeOnEvent);
+        this.muteOnEvent = iVXjsBus.on(videoEventNames.MUTE, muteOnEvent);
+        this.unmuteOnEvent = iVXjsBus.on(videoEventNames.UNMUTE, unmuteOnEvent);
         this.durationOnEvent = iVXjsBus.on(videoEventNames.GET_DURATION, durationOnEvent);
         this.seekOnEvent = iVXjsBus.on(videoEventNames.SEEK, seekOnEvent);
 
@@ -235,28 +243,42 @@ export class Html5 {
             self.setVolume(args);
         }
 
+        function muteOnEvent(args = {}) {
+            self.mute(args);
+        }
+
+        function unmuteOnEvent(args = {}) {
+            self.unmute(args);
+        }
+
         function changeCurrentChapter(opts) {
             let { chapterId = "", playerId } = opts;
             let { player = {} } = self;
-            let trackArray = Array.from(player.textTracks);
-            let chapterTrack = trackArray.find(track => {
-                let { kind = "" } = track;
 
-                return kind === 'chapters';
-            });
+            if (!playerId || playerId === player.id) {
+                let trackArray = Array.from(player.textTracks);
+                let chapterTrack = trackArray.find(track => {
+                    let { kind = "" } = track;
 
-            if (chapterTrack) {
-                let { cues = [] } = chapterTrack;
-                let newChapterCue = Array.from(cues).find(cue => {
-                    let { chapterId: currentChapterId } = cue;
-
-                    return currentChapterId === chapterId;
+                    return kind === 'chapters';
                 });
 
-                if (newChapterCue) {
-                    let { startTime } = newChapterCue;
+                if (chapterTrack) {
+                    let { cues = [] } = chapterTrack;
+                    let newChapterCue = Array.from(cues).find(cue => {
+                        let { chapterId: currentChapterId } = cue;
 
-                    self.seek(startTime);
+                        return currentChapterId === chapterId;
+                    });
+
+                    if (newChapterCue) {
+                        let { startTime } = newChapterCue;
+
+                        self.seek({
+                            currentTime : startTime,
+                            playerId
+                        });
+                    }
                 }
             }
         }
@@ -266,8 +288,7 @@ export class Html5 {
             let { textTracks } = self.player;
             let trackArray = Array.from(textTracks);
 
-            if (!playerId) runTrackChange();
-            if (playerId === self.player.id) runTrackChange();
+            if (!playerId || playerId === self.player.id) runTrackChange();
 
             function runTrackChange() {
 
@@ -313,6 +334,8 @@ export class Html5 {
             seek: videoEventNames.SEEK,
             duration: videoEventNames.GET_DURATION,
             volume: videoEventNames.SET_VOLUME,
+            mute: videoEventNames.MUTE,
+            unmute: videoEventNames.UNMUTE,
             changeCurrentTrack: trackEventNames.CHANGE_CURRENT_TRACK,
             changeChapter: trackCuesEventNames.CHANGE_CHAPTER
         };

@@ -666,7 +666,35 @@ This logging service will fire events depending on what gets logged through the 
 
 <p><em>Overview</em></p>
 
-<p>These events are triggered while a video state is loaded or while a video is playing.</p>
+<p>These events are triggered while a video state is loaded or while a video is playing. A video player
+on the page can be uniquely targeted by giving events a <code class="highlighter-rouge">playerId</code> property. Here is an example video state that has an id:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"states"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+        </span><span class="err">...</span><span class="w">
+        </span><span class="nt">"type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"video"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"playerSettings"</span><span class="p">:{</span><span class="w">
+            </span><span class="nt">"id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"target-player-id"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+        </span><span class="err">...</span><span class="w">
+    </span><span class="p">}]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>So if you wanted to target the player event, <code class="highlighter-rouge">iVXjs:video:mute</code>, when you enter a state
+you could do it this way:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"onEnter"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+        </span><span class="nt">"eventName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"iVXjs:video:mute"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"args"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"playerId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"target-player-id"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
 
 <h2 id="ivxjsvideocan-play">iVXjs:video:can-play</h2>
 
@@ -715,13 +743,14 @@ performs other tasks to remove this video player from the page</p>
 
 <p><em>Description</em></p>
 
-<p>Mutes the current video.</p>
+<p>Indicates to mute a video player on the page. If it has arguments of <code class="highlighter-rouge">playerId</code>, it mutes the player with the matching id. 
+If the <code class="highlighter-rouge">playerId</code> missing, this will mute all videos currently on the page.</p>
 
 <p><em>Payload</em></p>
 
 <p>None</p>
 
-<p><em>JSON</em></p>
+<p><em>JSON For all Video Players</em></p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
     </span><span class="nt">"eventName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"iVXjs:video:mute"</span><span class="w">
@@ -729,9 +758,26 @@ performs other tasks to remove this video player from the page</p>
 </span></code></pre>
 </div>
 
-<p><em>Action Template</em></p>
+<p><em>JSON For Specific Video Player</em></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"eventName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"iVXjs:video:mute"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"args"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"playerId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"TARGET_PLAYER_ID"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><em>Action Template For All Video Players</em></p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>&lt;ANY ivx-event="iVXjs:video:mute"&gt;&lt;/ANY&gt;
+</code></pre>
+</div>
+
+<p><em>Action Template For Target Video Player</em></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;ANY ivx-event="iVXjs:video:mute" ivx-event-args="{playerId : 'TARGET_PLAYER_ID'}"&gt;&lt;/ANY&gt;
 </code></pre>
 </div>
 
@@ -739,13 +785,14 @@ performs other tasks to remove this video player from the page</p>
 
 <p><em>Description</em></p>
 
-<p>Pauses the current video.</p>
+<p>Indicates to pause a video player on the page. If it has arguments of <code class="highlighter-rouge">playerId</code>, it pauses the player with the matching id. 
+If <code class="highlighter-rouge">playerId</code> is missing, this will pause all videos currently on the page.</p>
 
 <p><em>Payload</em></p>
 
 <p>None</p>
 
-<p><em>JSON</em></p>
+<p><em>JSON For all Video Players</em></p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
     </span><span class="nt">"eventName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"iVXjs:video:pause"</span><span class="w">
@@ -753,9 +800,26 @@ performs other tasks to remove this video player from the page</p>
 </span></code></pre>
 </div>
 
-<p><em>Action Template</em></p>
+<p><em>JSON For Specific Video Player</em></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"eventName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"iVXjs:video:pause"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"args"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"playerId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"TARGET_PLAYER_ID"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><em>Action Template For All Video Players</em></p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>&lt;ANY ivx-event="iVXjs:video:pause"&gt;&lt;/ANY&gt;
+</code></pre>
+</div>
+
+<p><em>Action Template For Target Video Player</em></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;ANY ivx-event="iVXjs:video:pause" ivx-event-args="{playerId : 'TARGET_PLAYER_ID'}"&gt;&lt;/ANY&gt;
 </code></pre>
 </div>
 
@@ -763,13 +827,14 @@ performs other tasks to remove this video player from the page</p>
 
 <p><em>Description</em></p>
 
-<p>Plays the current video.</p>
+<p>Indicates to play a video player on the page. If it has arguments of <code class="highlighter-rouge">playerId</code>, it plays the player with the matching id. 
+If <code class="highlighter-rouge">playerId</code> is missing, this will play all videos currently on the page.</p>
 
 <p><em>Payload</em></p>
 
 <p>None</p>
 
-<p><em>JSON</em></p>
+<p><em>JSON For all Video Players</em></p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
     </span><span class="nt">"eventName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"iVXjs:video:play"</span><span class="w">
@@ -777,9 +842,26 @@ performs other tasks to remove this video player from the page</p>
 </span></code></pre>
 </div>
 
-<p><em>Action Template</em></p>
+<p><em>JSON For Specific Video Player</em></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"eventName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"iVXjs:video:play"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"args"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"playerId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"TARGET_PLAYER_ID"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><em>Action Template For All Video Players</em></p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>&lt;ANY ivx-event="iVXjs:video:play"&gt;&lt;/ANY&gt;
+</code></pre>
+</div>
+
+<p><em>Action Template For Target Video Player</em></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;ANY ivx-event="iVXjs:video:play" ivx-event-args="{playerId : 'TARGET_PLAYER_ID'}"&gt;&lt;/ANY&gt;
 </code></pre>
 </div>
 
@@ -787,7 +869,8 @@ performs other tasks to remove this video player from the page</p>
 
 <p><em>Description</em></p>
 
-<p>Sets the current video to the time in seconds</p>
+<p>Indicates to go to a time in the video player on the page. If it has arguments of <code class="highlighter-rouge">playerId</code>, it sets the time to
+the player with the matching id. If missing, this will set the time for all videos currently on the page.</p>
 
 <p><em>Payload</em></p>
 
@@ -804,7 +887,7 @@ performs other tasks to remove this video player from the page</p>
 </span></code></pre>
 </div>
 
-<p><em>JSON</em></p>
+<p><em>JSON For all Video Players</em></p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
     </span><span class="nt">"eventName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"iVXjs:video:seek"</span><span class="p">,</span><span class="w">
@@ -815,9 +898,27 @@ performs other tasks to remove this video player from the page</p>
 </span></code></pre>
 </div>
 
-<p><em>Action Template</em></p>
+<p><em>JSON For Specific Video Player</em></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>&lt;ANY ivx-event="iVXjs:video:seek" ivx-event-args="{currentTime : SECONDS}"&gt;&lt;/ANY&gt;
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"eventName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"iVXjs:video:seek"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"args"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"playerId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"TARGET_PLAYER_ID"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"currentTime"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="err">TIME_IN_SECONDS</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><em>Action Template For All Video Players</em></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;ANY ivx-event="iVXjs:video:seek" ivx-event-args="{currentTime : TIME_IN_SECONDS}"&gt;&lt;/ANY&gt;
+</code></pre>
+</div>
+
+<p><em>Action Template For Target Video Player</em></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;ANY ivx-event="iVXjs:video:seek" ivx-event-args="{currentTime : TIME_IN_SECONDS, playerId : 'TARGET_PLAYER_ID'}"&gt;&lt;/ANY&gt;
 </code></pre>
 </div>
 
@@ -840,7 +941,8 @@ performs other tasks to remove this video player from the page</p>
 
 <p><em>Description</em></p>
 
-<p>Sets the current video’s volume. Range: 0 to 1;</p>
+<p>Indicates to set the volume of the video for a video player on the page. If it has arguments of “playerId”, it sets the volume to
+the player with the matching id. If missing, this will set the volume for all videos currently on the page.</p>
 
 <p><em>Payload</em></p>
 
@@ -859,7 +961,7 @@ performs other tasks to remove this video player from the page</p>
 </span></code></pre>
 </div>
 
-<p><em>JSON</em></p>
+<p><em>JSON For all Video Players</em></p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
     </span><span class="nt">"eventName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"iVXjs:video:set-volume"</span><span class="p">,</span><span class="w">
@@ -870,9 +972,27 @@ performs other tasks to remove this video player from the page</p>
 </span></code></pre>
 </div>
 
-<p><em>Action Template</em></p>
+<p><em>JSON For Specific Video Player</em></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>&lt;ANY ivx-event="iVXjs:video:volume" ivx-event-args="{volume : VOLUME_AMOUNT}"&gt;&lt;/ANY&gt;
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"eventName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"iVXjs:video:set-volume"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"args"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"playerId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"TARGET_PLAYER_ID"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"volume"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="err">VOLUME_AMOUNT</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><em>Action Template For All Video Players</em></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;ANY ivx-event="iVXjs:video:set-volume" ivx-event-args="{volume : VOLUME_AMOUNT}"&gt;&lt;/ANY&gt;
+</code></pre>
+</div>
+
+<p><em>Action Template For Target Video Player</em></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;ANY ivx-event="iVXjs:video:set-volume" ivx-event-args="{volume : VOLUME_AMOUNT, playerId : 'TARGET_PLAYER_ID'}"&gt;&lt;/ANY&gt;
 </code></pre>
 </div>
 
@@ -889,20 +1009,22 @@ during videos.</p>
 
 <p>player.currentTime - current time of this video player;</p>
 
+<p>player.id - the specific player id of the update.</p>
+
 <p>stateData - state data where this player exists.</p>
 
 <h2 id="ivxjsvideounmute">iVXjs:video:unmute</h2>
 
 <p><em>Description</em></p>
 
-<p>Unmutes the current video and sets the volume to the last volume 
-set.</p>
+<p>Indicates to unmute, return the volume to the last volume amount it was set, a video player on the page. If it has arguments of <code class="highlighter-rouge">playerId</code>, 
+it unmute the player with the matching id. If <code class="highlighter-rouge">playerId</code> is missing, this will mute all videos currently on the page.</p>
 
 <p><em>Payload</em></p>
 
 <p>None</p>
 
-<p><em>JSON</em></p>
+<p><em>JSON For all Video Players</em></p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
     </span><span class="nt">"eventName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"iVXjs:video:unmute"</span><span class="w">
@@ -910,9 +1032,26 @@ set.</p>
 </span></code></pre>
 </div>
 
-<p><em>Action Template</em></p>
+<p><em>JSON For Specific Video Player</em></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"eventName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"iVXjs:video:unmute"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"args"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"playerId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"TARGET_PLAYER_ID"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><em>Action Template For All Video Players</em></p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>&lt;ANY ivx-event="iVXjs:video:unmute"&gt;&lt;/ANY&gt;
+</code></pre>
+</div>
+
+<p><em>Action Template For Target Video Player</em></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;ANY ivx-event="iVXjs:video:unmute" ivx-event-args="{playerId : 'TARGET_PLAYER_ID'}"&gt;&lt;/ANY&gt;
 </code></pre>
 </div>
 
@@ -954,8 +1093,9 @@ need the content in an experience to change to another language.</p>
 
 <p><em>Description</em></p>
 
-<p>Sends a track id to set the current language track. This will only affects 
-different subtitles and caption tracks.</p>
+<p>Sends a track id to set the current language track. If the <code class="highlighter-rouge">playerId</code> argument 
+is in the payload, it will change the track for the specific player. Otherwise,
+it will change the tracks for all players on the page.</p>
 
 <p><em>Payload</em></p>
 
@@ -971,21 +1111,38 @@ different subtitles and caption tracks.</p>
 </span><span class="err">}</span><span class="w">
 </span></code></pre>
 </div>
-
-<p><em>JSON</em></p>
+<p><em>JSON For all Video Players</em></p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
     </span><span class="nt">"eventName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"iVXjs:tracks:change-current-track"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"args"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+         </span><span class="nt">"trackId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"TRACK_ID"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><em>JSON For Specific Video Player</em></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"eventName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"iVXjs:tracks:change-current-track"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"args"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"playerId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"TARGET_PLAYER_ID"</span><span class="p">,</span><span class="w">
         </span><span class="nt">"trackId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"TRACK_ID"</span><span class="w">
     </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 </div>
 
-<p><em>Action Template</em></p>
+<p><em>Action Template For All Video Players</em></p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>&lt;ANY ivx-event="iVXjs:tracks:change-current-track" ivx-event-args="{trackId : 'TRACK_ID'}"&gt;&lt;/ANY&gt;
+</code></pre>
+</div>
+
+<p><em>Action Template For Target Video Player</em></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;ANY ivx-event="iVXjs:tracks:change-current-track" ivx-event-args="{trackId : 'TRACK_ID', playerId : 'TARGET_PLAYER_ID'}"&gt;&lt;/ANY&gt;
 </code></pre>
 </div>
 
@@ -993,7 +1150,9 @@ different subtitles and caption tracks.</p>
 
 <p><em>Description</em></p>
 
-<p>Skips to the start of the chapter of the chapter with the matching id.</p>
+<p>Skips to the start of the chapter of the chapter with the matching id. If the argument <code class="highlighter-rouge">playerId</code> is present,
+then it will skip to the chapter of a specific player. Otherwise, it will skip to any video that has 
+the matching chapter id.</p>
 
 <p><em>Payload</em></p>
 
@@ -1010,10 +1169,10 @@ different subtitles and caption tracks.</p>
 </span></code></pre>
 </div>
 
-<p><em>JSON</em></p>
+<p><em>JSON For all Video Players</em></p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
-    </span><span class="nt">"eventName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"iVXjs:tracks:cues:change-chapter"</span><span class="p">,</span><span class="w">
+   </span><span class="nt">"eventName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"iVXjs:tracks:cues:change-chapter"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"args"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="nt">"chapterId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"CHAPTER_ID"</span><span class="w">
     </span><span class="p">}</span><span class="w">
@@ -1021,9 +1180,27 @@ different subtitles and caption tracks.</p>
 </span></code></pre>
 </div>
 
-<p><em>Action Template</em></p>
+<p><em>JSON For Specific Video Player</em></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"eventName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"iVXjs:tracks:cues:change-chapter"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"args"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"playerId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"TARGET_PLAYER_ID"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"chapterId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"CHAPTER_ID"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p><em>Action Template For All Video Players</em></p>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>&lt;ANY ivx-event="iVXjs:tracks:cues:change-chapter" ivx-event-args="{chapterId : 'CHAPTER_ID'}"&gt;&lt;/ANY&gt;
+</code></pre>
+</div>
+
+<p><em>Action Template For Target Video Player</em></p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;ANY ivx-event="iVXjs:tracks:cues:change-chapter" ivx-event-args="{chapterId : 'CHAPTER_ID', playerId : 'PLAYER_ID'}"&gt;&lt;/ANY&gt;
 </code></pre>
 </div>
 
@@ -1181,7 +1358,7 @@ will fire when this happens.</p>
   </ul>
 </div>
 
-<div class="page__footer-copyright">&copy; 2017 Influence Technology. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+<div class="page__footer-copyright">&copy; 2018 Influence Technology. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
       </footer>
     </div>
 

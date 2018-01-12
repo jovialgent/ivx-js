@@ -23,6 +23,7 @@ export class Vimeo {
         this.player.id = settings.playerId;
         this.videoEventNames = new VideoEventNames();
         this.iVXjsLog = iVXjsLog
+        this.currentVolume = 0.5;
     }
 
     createPlayer() {
@@ -43,7 +44,9 @@ export class Vimeo {
             duration: videoEventNames.GET_DURATION,
             volume: videoEventNames.SET_VOLUME,
             playing: videoEventNames.PLAYING,
-            ended: videoEventNames.ENDED
+            ended: videoEventNames.ENDED,
+            mute: videoEventNames.MUTE,
+            unmute: videoEventNames.UNMUTE
         };
         let eventsToDispose = Object.keys(eventNameMap);
 
@@ -84,6 +87,8 @@ export class Vimeo {
         self.playOnEvent = iVXjsBus.on(videoEventNames.PLAY, playOnEvent);
         self.seekOnEvent = iVXjsBus.on(videoEventNames.SEEK, seekOnEvent);
         self.volumeOnEvent = iVXjsBus.on(videoEventNames.SET_VOLUME, volumeOnEvent);
+        self.muteOnEvent = iVXjsBus.on(videoEventNames.MUTE, muteOnEvent);
+        self.unmuteOnEvent = iVXjsBus.on(videoEventNames.UNMUTE, unmuteOnEvent);
 
         self.durationOnEvent = typeof self.durationOnEvent === 'function' ? self.durationOnEvent : durationOnEvent;
         self.pauseOnEvent = typeof self.pauseOnEvent === 'function' ? self.pauseOnEvent : pauseOnEvent;
@@ -93,7 +98,7 @@ export class Vimeo {
 
         deferred.then(() => {
             self.player.ready().then(() => {
-                iVXjsBus.emit(videoEventNames.CAN_PLAY, self.player);
+                iVXjsBus.emit(videoEventNames.CAN_PLAY, self.player, self.stateData);
             });
         })
 
@@ -101,7 +106,7 @@ export class Vimeo {
             vimeoPlayInfo.currentTime = vimeoPlayInfo.seconds;
             vimeoPlayInfo.id = self.playerId;
 
-            iVXjsBus.emit(videoEventNames.TIME_UPDATE, vimeoPlayInfo);
+            iVXjsBus.emit(videoEventNames.TIME_UPDATE, vimeoPlayInfo, self.stateData);
         });
 
         self.player.on('ended', () => {
@@ -109,28 +114,50 @@ export class Vimeo {
         });
 
         self.player.on('loaded', () => {
-            iVXjsBus.emit(videoEventNames.CAN_PLAY, self.player);
+            iVXjsBus.emit(videoEventNames.CAN_PLAY, self.player, self.stateData);
         })
+
+       
 
         function playOnEvent(args = {}) {
             const { playerId } = args;
 
-            if (!playerId) self.player.play();
-            if (playerId === self.player.id) self.player.play();
+            if (!playerId || playerId === self.player.id) {
+                self.player.play();
+            }
         }
 
         function pauseOnEvent(args = {}) {
             const { playerId } = args;
 
-            if (!playerId) self.player.pause();
-            if (playerId === self.player.id) self.player.pause();
+            if (!playerId || playerId === self.player.id) {
+                self.player.pause();
+            }
         }
 
         function volumeOnEvent(args = {}) {
-            let { volume, playerId } = args;
+            const { volume, playerId } = args;
 
-            if (!playerId) self.player.setVolume(volume);
-            if (playerId === self.player.id) self.player.setVolume(volume);
+            if (!playerId || playerId === self.player.id) {
+                self.player.setVolume(volume);
+                self.currentVolume = volume;
+            }
+        }
+
+        function muteOnEvent(args = {}) {
+            const { playerId } = args;
+
+            if (!playerId || playerId === self.player.id) {
+                self.player.setVolume(0);
+            }
+        }
+
+        function unmuteOnEvent(args = {}) {
+            const { playerId } = args;
+
+            if (!playerId || playerId === self.player.id) {
+                self.player.setVolume(self.currentVolume);
+            }
         }
 
         function seekOnEvent(args = {}) {

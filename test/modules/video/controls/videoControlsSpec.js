@@ -288,7 +288,7 @@ describe('Video Controls', () => {
 
             spyOn(videoControls, 'setVolume');
 
-            videoControls.setMute({});
+            videoControls.toggleMute({});
 
             expect(videoControls.setVolume).toHaveBeenCalledWith(0);
 
@@ -300,9 +300,9 @@ describe('Video Controls', () => {
             }];
 
             spyOn(videoControls, 'setVolume');
-            videoControls.setMute({});
+            videoControls.toggleMute({});
             expect(videoControls.setVolume).toHaveBeenCalledWith(0);
-            videoControls.setMute({});
+            videoControls.toggleMute({});
             expect(videoControls.setVolume).toHaveBeenCalledWith(0.5);
 
         });
@@ -316,7 +316,7 @@ describe('Video Controls', () => {
 
             spyOn(videoControls, 'play');
 
-            videoControls.setPlayPause({});
+            videoControls.togglePlayPause({});
 
             expect(videoControls.play).toHaveBeenCalled();
 
@@ -329,7 +329,7 @@ describe('Video Controls', () => {
 
             spyOn(videoControls, 'pause');
 
-            videoControls.setPlayPause({});
+            videoControls.togglePlayPause({});
 
             expect(videoControls.pause).toHaveBeenCalled();
 

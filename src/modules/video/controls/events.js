@@ -11,7 +11,7 @@ export default class {
 
     play() {
         const { playerId } = this;
-
+        
         this.iVXjsBus.emit(this.controlEventNames.PLAY, {
             playerId
         });

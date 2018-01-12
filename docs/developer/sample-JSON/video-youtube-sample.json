@@ -15,6 +15,7 @@
         "next": [],
         "onVideoEnd": [],
         "playerSettings": {
+            "id" : "youtube-video-player",
             "controls": "standard",
             "youtubeId"  : "4f09VdXex3A"
         },
