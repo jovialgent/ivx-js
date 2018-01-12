@@ -8,28 +8,37 @@ class HTML5VideoPlayer {
         this.restrict = 'E';
         this.scope = {
             settings: "=settings",
+            playerId: "@playerId",
             stateData: "=stateData"
         };
         this.controller = HTML5VideoController;
         this.controllerAs = 'vm';
         this.link = ($scope, iElm, iAttrs, controller) => {
-            let { settings, stateData } = $scope;
-            let { playerSettings = {} } = stateData;
-            let { iphoneInline = false } = playerSettings;
+            let { settings: playerSettings, stateData = {}, playerId } = $scope;
+            let { playerSettings: statePlayerSettings } = stateData;
             let videoEventNames = new VideoEventConstants();
+            let settings = {};
 
-            stateData = {
-                id: stateData.id,
-                name: stateData.name,
-                url: stateData.url,
-                isiOS: createInlineVideo.isiOS()
+            if (statePlayerSettings) {
+                settings = statePlayerSettings;
+            } else {
+                settings = playerSettings;
             }
+
+            settings = Object.assign(settings, {
+                isiOS: createInlineVideo.isiOS(),
+                id: playerId
+            });
+
+            controller.playerId = playerId;
 
             let thisVideoPlayer = new iVXjsVideoModule.html5(iElm.find('div'), settings, stateData, iVXjsLog);
 
-            thisVideoPlayer.addEventListeners(iVXjsBus, settings
-            );
+            thisVideoPlayer.addEventListeners(iVXjsBus, settings);
+
             $timeout(() => {
+                let { iphoneInline = false } = settings;
+
                 if (createInlineVideo.isiOS() && iphoneInline) {
                     createInlineVideo.makeInlineVideo(iElm.find('video')[0], iElm.find('div')[0], $scope);
                     createInlineVideo.emitCanPlay(iElm.find('video')[0]);

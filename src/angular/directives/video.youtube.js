@@ -6,6 +6,7 @@ class YoutubeVideoPlayer {
         this.template = this.templateHTML;
         this.restrict = 'E';
         this.scope = {
+            playerId: "@playerId",
             settings: "=settings",
             stateData: "=stateData"
         }
@@ -14,18 +15,26 @@ class YoutubeVideoPlayer {
         this.link = ($scope, iElm, iAttrs, controller) => {
             if (!iVXjsVideoModule.youtube) return;
 
-            let { settings, stateData } = $scope;
+            let { settings = {}, stateData = {}, playerId } = $scope;
+            const { youtubeId } = settings;
 
-            settings.id = settings.youtubeId;
+            const playerSettings = Object.assign({},
+                settings,
+                {
+                    playerId,
+                    id: youtubeId
+                });
+
             stateData = {
                 id: stateData.id,
                 url: stateData.url,
                 name: stateData.name
             };
 
-            let YouTubePlayer = new iVXjsVideoModule.youtube(iElm.find('div'), settings, stateData, iVXjsLog);
+            let YouTubePlayer = new iVXjsVideoModule.youtube(iElm.find('div'), playerSettings, stateData, iVXjsLog);
 
             controller.player = YouTubePlayer;
+            controller.playerId = playerId;
 
             $compile(iElm.contents())($scope);
 
@@ -45,7 +54,7 @@ class YoutubeVideoPlayer {
     get templateHTML() {
         return `
            <div class="youtube-player-container">
-               <div id="youtube-player"></div>
+               <div id="{{playerId}}"></div>
            </div>`;
     }
 }

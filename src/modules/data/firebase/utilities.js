@@ -99,7 +99,6 @@ export default class {
                 $.support.cors = true;
                 $.get(result[0])
                     .then((html) => {
-                        console.log(html);
                     })
 
                 resolve(newConfigData);

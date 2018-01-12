@@ -1,8 +1,8 @@
 import DefaultVideoControls from '../default/video.controls.js';
 
 export default class extends DefaultVideoControls {
-    constructor(container, iVXjsBus) {
-        super(container, iVXjsBus);
+    constructor(container, playerId) {
+        super(container, playerId);
     }
 
     get totalTimeInfoClasses() {
@@ -45,7 +45,7 @@ export default class extends DefaultVideoControls {
 
     get scrubBarHTML() {
         return `
-            <div id="video-controls-scrub-bar" class="progress ${this.scrubBarClasses}">
+            <div id="${this.playerId}-video-controls-scrub-bar" class="progress ${this.scrubBarClasses}">
                 <div class="determinate bar"></div>
             </div>
             ${this.timestampHTML}
@@ -59,8 +59,8 @@ export default class extends DefaultVideoControls {
     
     get volumeBarHTML(){
         return `
-            <div id="video-controls-volume-bar" class="progress ${this.volumeBarClasses}">
-                <div id="video-controls-scrub-bar" class="${this.volumeBarCurrentVolumeClasses}"></div>
+            <div id="${this.playerId}-video-controls-volume-bar" class="progress ${this.volumeBarClasses}">
+                <div id="${this.playerId}-video-controls-current-volume" class="${this.volumeBarCurrentVolumeClasses}"></div>
             </div>
             
         `;
@@ -138,8 +138,8 @@ export default class extends DefaultVideoControls {
         let {playClasses : play, pauseClasses : pause} = this;
         let {playPauseControlsClasses : playPauseControls} = this;
         return `
-        <div id="play-button-container"  class="left-align">
-            <button id="video-controls-play-pause" class="${playPauseControls}">
+        <div id="${this.playerId}-play-button-container"  class="left-align">
+            <button id="${this.playerId}-video-controls-play-pause" class="${playPauseControls}">
                 <i class='material-icons'>${play}</i>
             </button>
         </div>`
@@ -148,8 +148,8 @@ export default class extends DefaultVideoControls {
     get timestampHTML(){
         return `
         <div class="center-align">
-        <span id="video-controls-current-time" class="${this.currentTimeInfoClasses}"></span>
-        <span id="video-controls-total-time" class="${this.totalTimeInfoClasses}"></span>
+        <span id="${this.playerId}-video-controls-current-time" class="${this.currentTimeInfoClasses}"></span>
+        <span id="${this.playerId}-video-controls-total-time" class="${this.totalTimeInfoClasses}"></span>
         </div>
         `;
     }
@@ -180,6 +180,8 @@ export default class extends DefaultVideoControls {
         let muteControlsClasses = [muteClasses, unmuteClasses];
         let muteIcon = this.getElementByClasses(muteControls.children, ["material-icons"]);
         let currentVolumeSpan = this.getElementByClasses(volumeBar.children, [volumeBarCurrentVolumeClasses]);
+
+        console.log(muteControls);
 
         switch (muteIcon.innerHTML) {
             case unmuteClasses:
@@ -228,8 +230,8 @@ export default class extends DefaultVideoControls {
     get muteButtonHTML(){
         let {unmuteClasses : unmute, muteControlsClasses} = this;
         return `
-        <div id="mute-button-container" class="left-align">
-            <button id="video-controls-mute-controls" class="${muteControlsClasses}">
+        <div id="${this.playerId}-mute-button-container" class="left-align">
+            <button id="${this.playerId}-video-controls-mute-controls" class="${muteControlsClasses}">
                <i class='material-icons'>${unmute}</i>
             </button>
         </div>

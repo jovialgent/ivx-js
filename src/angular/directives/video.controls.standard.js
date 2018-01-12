@@ -9,13 +9,17 @@ class StandardControls {
     constructor(iVXjsUI, iVXjsBus) {
         this.template = this.templateHTML;
         this.restrict = 'E';
-        this.scope = {}
+        this.scope = {
+            playerId: "@playerId"
+        }
         this.controller = StandardControlsController
         this.controllerAs = 'vm'
         this.link = ($scope, iElm, iAttrs, controller) => {
-            let standardControls = new iVXjsUI.videoControls(iElm.find('div'), iVXjsBus);
+            const { playerId } = $scope;
+            let standardControls = new iVXjsUI.videoControls(iElm.find('div'), playerId);
 
             controller.controls = standardControls;
+            controller.playerId = playerId;
 
             standardControls.addEventListeners(iVXjsBus);
         }
