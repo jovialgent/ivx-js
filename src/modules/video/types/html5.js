@@ -35,7 +35,9 @@ export class Html5 {
         const { id } = this.settings;
 
         if (!playerId || playerId === id) {
-            this.player.play();
+            if (this.player.paused) {
+                this.player.play();
+            }
 
             return;
         }
@@ -46,7 +48,9 @@ export class Html5 {
         const { id } = this.settings;
 
         if (!playerId || playerId === id) {
-            this.player.pause();
+            if (!this.player.paused) {
+                this.player.pause();
+            }
 
             return;
         }
@@ -275,7 +279,7 @@ export class Html5 {
                         let { startTime } = newChapterCue;
 
                         self.seek({
-                            currentTime : startTime,
+                            currentTime: startTime,
                             playerId
                         });
                     }

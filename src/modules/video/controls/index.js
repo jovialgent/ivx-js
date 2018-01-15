@@ -141,8 +141,6 @@ export class Controls extends ControlEvents {
         muteIcon.className = muteClasses;
         currentVolumeSpan.style.width = `0%`;
 
-        console.log(muteIcon.className);
-
         this.setVolume(0);
     }
 
@@ -177,7 +175,6 @@ export class Controls extends ControlEvents {
         if (currentVolumeSpan) {
             currentVolumeSpan.style.width = `${self.currentVolume * 100}%`;
         }
-
 
         this.setVolume(self.currentVolume);
         this.getDuration((duration) => {
@@ -223,8 +220,6 @@ export class Controls extends ControlEvents {
         );
 
         playPauseIcon.className = pauseClasses;
-
-        this.play();
     }
 
     onPaused() {
@@ -236,8 +231,6 @@ export class Controls extends ControlEvents {
         );
 
         playPauseIcon.className = playClasses;
-
-        this.pause();
     }
 
     addEventListeners(iVXjsBus) {
@@ -345,15 +338,11 @@ export class Controls extends ControlEvents {
         function mute(args = {}) {
             const { playerId } = args;
 
-            console.log(playerId, self.playerId);
-
             if (!playerId || playerId === self.playerId) self.mute();
         }
 
         function unmute(args) {
             const { playerId } = args;
-
-            console.log(playerId, self.playerId);
 
             if (!playerId || playerId === self.playerId) self.unmute();
         }
