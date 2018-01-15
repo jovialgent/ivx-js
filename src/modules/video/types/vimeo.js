@@ -96,28 +96,28 @@ export class Vimeo {
         self.seekOnEvent = typeof self.seekOnEvent === 'function' ? self.seekOnEvent : seekOnEvent;
         self.volumeOnEvent = typeof self.volumeOnEvent === 'function' ? self.volumeOnEvent : volumeOnEvent;
 
-        deferred.then(() => {
-            self.player.ready().then(() => {
-                iVXjsBus.emit(videoEventNames.CAN_PLAY, self.player, self.stateData);
-            });
-        })
-
         self.player.on('timeupdate', (vimeoPlayInfo) => {
             vimeoPlayInfo.currentTime = vimeoPlayInfo.seconds;
             vimeoPlayInfo.id = self.playerId;
+            self.player.getPaused()
+                .then(paused => {
+                    if (paused) {
+                        iVXjsBus.emit(videoEventNames.PAUSED, self.player);
+                    } else {
+                        iVXjsBus.emit(videoEventNames.PLAYING, self.player);
+                    }
+                });
 
             iVXjsBus.emit(videoEventNames.TIME_UPDATE, vimeoPlayInfo, self.stateData);
         });
 
         self.player.on('ended', () => {
-            iVXjsBus.emit(videoEventNames.ENDED, self);
+            iVXjsBus.emit(videoEventNames.ENDED, self.player);
         });
 
         self.player.on('loaded', () => {
             iVXjsBus.emit(videoEventNames.CAN_PLAY, self.player, self.stateData);
-        })
-
-       
+        });
 
         function playOnEvent(args = {}) {
             const { playerId } = args;
