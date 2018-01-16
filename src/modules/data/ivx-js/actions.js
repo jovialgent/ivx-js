@@ -117,6 +117,8 @@ export class Actions {
     goToState(eventObj, iVXjsBus) {
         let { state } = eventObj;
 
+        console.log(eventObj);
+
         if (iVXjsBus) {
             iVXjsBus.emit(this.stateEventNames.GO, eventObj);
         }

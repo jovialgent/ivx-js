@@ -110,6 +110,10 @@ class VideoStateController {
                 });
             }
         });
+
+        this.runTemplate = ()=>{
+            console.log("GOT HERE");
+        }
     }
 
     getActiveCues(player) {

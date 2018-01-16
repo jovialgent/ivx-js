@@ -7,18 +7,24 @@ class VideoState {
         this.template = this.templateHTML;
         this.restrict = 'E';
         this.replace = true;
-        this.scope = {}
+        this.scope = {
+            stateData: "=stateData"
+        }
         this.controller = VideoStateController
         this.controllerAs = 'vm';
         this.link = ($scope, iElm, iAttrs, controller) => {
-            let { data } = angular.copy($state.current);
+            let data = angular.copy($scope.stateData);
 
-            controller.stateData = data;
+            controller.stateData = $scope.stateData;
 
             let { id, playerType = "html5", playerSettings = {}, cuePoints = [], personalizations = [], header = {}, footer = {} } = data;
             let { vimeoId, youtubeId, inlineSrc, iphoneInline = false } = playerSettings;
             let controlsHTML = ``;
-            const playerId = playerSettings.id ? playerSettings.id :`${id}-video-player`;
+            const playerId = playerSettings.id ? playerSettings.id : `${id}-video-player`;
+
+            console.log(playerId);
+
+            console.log(id);
 
             if (typeof playerSettings.controls === 'string') {
                 controlsHTML = `<ivxjs-${playerSettings.controls}-video-controls player-id='${playerId}'></ivxjs-${playerSettings.controls}-video-controls>`;
@@ -45,7 +51,8 @@ class VideoState {
             let videoPlayerHTML = `
                <ivxjs-${playerType}-video-player player-id='${playerId}' settings="vm.stateData.playerSettings" state-data="vm.stateData"></ivxjs-${playerType}-video-player>
                ${controlsHTML}
-               ${personalizationsHTML}`;
+               ${personalizationsHTML}
+            `;
 
             data = pullInTemplate.convertHeaderFooter(header, footer, data, controller);
 

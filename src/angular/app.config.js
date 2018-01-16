@@ -6,10 +6,11 @@ import StateEvents from "../constants/state.events.js";
 let stateEvents = new StateEvents();
 
 class AppConfig {
-    constructor($stateProvider, $urlRouterProvider, $locationProvider, $compileProvider, $httpProvider, $sceDelegateProvider, $provide, iVXjs) {
+    constructor($stateProvider, $urlRouterProvider, $locationProvider, $compileProvider, $httpProvider, $sceDelegateProvider, $provide, iVXjs, stateCreatorProvider) {
         if (!iVXjs.config) return;
 
-        this.createStates($stateProvider, iVXjs.config.states);
+
+        stateCreatorProvider.create($stateProvider, iVXjs)
 
         let { experience } = iVXjs;
         let { templates = [] } = iVXjs.config;
@@ -94,6 +95,6 @@ class AppConfig {
     }
 }
 
-AppConfig.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider', '$compileProvider', '$httpProvider', '$sceDelegateProvider', '$provide', 'iVXjs'];
+AppConfig.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider', '$compileProvider', '$httpProvider', '$sceDelegateProvider', '$provide', 'iVXjs', 'ivxjsStateCreatorProvider'];
 
 export default createFactoryFunction(AppConfig);
