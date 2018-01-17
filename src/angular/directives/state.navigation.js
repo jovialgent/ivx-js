@@ -7,11 +7,13 @@ class NavigationState {
         this.template = this.templateHTML;
         this.restrict = 'E';
         this.replace = true;
-        this.scope = {};
+        this.scope = {
+            stateData: "=stateData"
+        };
         this.controller = ['$scope', ($scope) => { }];
         this.controllerAs = 'vm';
         this.link = function ($scope, iElm, iAttrs, controller) {
-            let { data } = $state.current;
+            let data = angular.copy($scope.stateData);
             let { links = [], header = {}, footer = {}, audio, onLinksReady = [] } = data;
 
             $scope.links = links;

@@ -6,7 +6,7 @@
   "scripts": {
     "build": "node build.js --should-build",
     "setup": "node build.js --should-build --setup",
-    "webpack-dev-server": "node_modules/.bin/webpack-dev-server --open",
+    "webpack-dev-server": "node_modules/.bin/webpack-dev-server --open --public localhost:8080",
     "local-build": "node build.js --should-build --local --ui=$UI --data=$DATA --validation=$VALIDATION --analytics=$ANALYTICS",
     "start": "node_modules/.bin/npm-run-all -p webpack-dev-server local-build",
     "test": "node_modules/.bin/karma start karma.conf.js"
@@ -23,6 +23,8 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-es2015": "^6.24.1",
     "babelify": "^8.0.0",
+    "browser-sync": "^2.23.5",
+    "browser-sync-webpack-plugin": "^1.2.0",
     "browserify": "^14.5.0",
     "browserify-istanbul": "^3.0.1",
     "copy-webpack-plugin": "^4.2.0",

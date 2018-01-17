@@ -134,6 +134,7 @@ export class YouTube {
             if (!playerId || playerId === self.playerId) playVideo();
 
             function playVideo() {
+                console.log("play", playerId)
                 player.playVideo();
                 clearInterval(self.timeUpdateId);
             }

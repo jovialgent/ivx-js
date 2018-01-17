@@ -1,3 +1,5 @@
+import uniqBy from "lodash/uniqBy";
+
 
 class StateCreator {
     constructor() {
@@ -14,6 +16,8 @@ class StateCreator {
         const self = this;
         const { states = [] } = iVXjs.config;
 
+        self.iVXjs = iVXjs;
+
         Object.assign(this, {
             iVXjs,
             $stateProvider,
@@ -21,6 +25,20 @@ class StateCreator {
         })
 
         self._createParentStates();
+    }
+
+    buildDefaultUrl(iVXjs, defaultStateId) {
+        const defaultStateIdParts = defaultStateId.split('.');
+        const defaultUrl = defaultStateIdParts.reduce((url, stateIdPart, index) => {
+            const state = iVXjs.config.states.find(state => state.id === stateIdPart);
+
+            if (!state) return url;
+            if (index === 0) return state.url;
+
+            return `${url}${state.url}`;
+        }, ``);
+
+        return defaultUrl;
     }
 
     _generateStateData(state) {
@@ -87,9 +105,6 @@ class StateCreator {
                         });
                     }],
                 onExit: ['$rootScope', '$state', 'ivxjs.actions', 'iVXjs', 'ivxjs.bus', ($rootScope, $state, iVXjsActions, iVXjs, iVXjsBus) => {
-                    if ($state.current.data.player) {
-                        //  iVXjsBus.emit(videoEventNames.DISPOSE, $state.current.data.player);
-                    }
                     iVXjs.log.debug('On Exit Actions Start', {}, { source: 'onExit', status: 'started', actions: onEnter });
                     iVXjsActions.resolveActions(onExit, () => {
                         iVXjs.log.debug('On Exit Events Actions Resolved', {}, { source: 'onExit', actions: onExit, status: 'completed', timestamp: Date.now() });
@@ -105,23 +120,41 @@ class StateCreator {
         this._createRouterSpec(stateSpec, parentData, state.viewName);
     }
 
-    addViews(embeddedStates) {
+    addViews(embeddedStates, parentTemplate) {
+        const { iVXjs } = this;
+        const self = this;
+        const { valid = true, invalidViews = {} } = this._getInvalidEmbeddSettings(embeddedStates)
+
         if (!embeddedStates) return;
 
-        const self = this;
+        if (!valid) {
+            this.iVXjs.log.error({
+                message: `Embedded States are invalid`,
+            }, "SET_UP");
 
-        embeddedStates.forEach(embeddedState => {
-            self._addUIViewToView(embeddedState);
+            return;
+        }
+
+        embeddedStates.forEach((embeddedStateDef, index) => {
+            self._addUIViewToParent(parentTemplate, embeddedStateDef);
         });
     }
 
-    _addUIViewToView(embeddedState) {
-        const { element: selector = "" } = embeddedState;
-        const uiViewComponent = document.querySelector(selector);
+    _getInvalidEmbeddSettings(embeddedStates) {
+        return {
+            valid: true
+        };
+    }
 
-        if (uiViewComponent) {
-            uiViewComponent.setAttribute('ui-view', embeddedState.stateId);
-        }
+    _addUIViewToParent(parentView, embeddedState) {
+        const { appendTo, viewName, classes = "" } = embeddedState;
+
+        if (document.querySelector(`#${viewName}`)) return;
+
+        const uiContainer = angular.element(document.querySelector(appendTo));
+        const view = angular.element(`<div class="${classes}" id="${viewName}" ui-view="${viewName}"></div>`);
+
+        uiContainer.append(view);
     }
 
 
@@ -143,7 +176,7 @@ class StateCreator {
 
         views[`${viewName}@${parentId}`] = {
             template: `<ivxjs-${type}-state state-data="embeddedStateData" class="hide"></ivxjs-${type}-state>`,
-            controller : ['$scope', ($scope)=>{
+            controller: ['$scope', ($scope) => {
                 $scope.embeddedStateData = state;
             }]
         }
@@ -160,14 +193,7 @@ class StateCreator {
                         iVXjs.log.debug('On Enter Actions Resolved', {}, { source: 'onEnter', actions: onEnter, status: 'completed', timestamp: Date.now() });
                     });
                 }],
-            controller: ["$scope", ($scope) => {
-                $scope.test = "TEST"
-            }],
             onExit: ['$rootScope', '$state', 'ivxjs.actions', 'iVXjs', 'ivxjs.bus', ($rootScope, $state, iVXjsActions, iVXjs, iVXjsBus) => {
-                if ($state.current.data.player) {
-                    // iVXjsBus.emit(videoEventNames.DISPOSE, $state.current.data.player);
-                }
-
                 iVXjs.log.debug('On Exit Actions Start', {}, { source: 'onExit', status: 'started', actions: onEnter });
                 iVXjsActions.resolveActions(onExit, () => {
                     iVXjs.log.debug('On Exit Events Actions Resolved', {}, { source: 'onExit', actions: onExit, status: 'completed', timestamp: Date.now() });
@@ -187,6 +213,10 @@ export default function () {
             }
         }
     }];
+
+    this.buildDefaultUrl = (iVXjs, defaultStateId) => {
+        return stateCreator.buildDefaultUrl(iVXjs, defaultStateId);
+    }
 
     this.create = ($stateProvider, iVXjs) => {
         stateCreator.create($stateProvider, iVXjs);

@@ -14,7 +14,7 @@ export class Vimeo {
 
         this.playerId = settings.playerId;
 
-        let { id, width, loop } = settings;
+        let { id, width, loop = false } = settings;
         let options = { id, width, loop };
 
         container.html(this.html);
@@ -112,6 +112,7 @@ export class Vimeo {
         });
 
         self.player.on('ended', () => {
+            console.log("GOT HERE?");
             iVXjsBus.emit(videoEventNames.ENDED, self.player);
         });
 

@@ -3,7 +3,7 @@ import VideoStateController from '../controllers/state.video.js';
 import VideoEventConstants from "../../constants/video.events.js";
 
 class VideoState {
-    constructor($compile, $state, $sce, $timeout, iVXjs, iVXjsBus, iVXjsUIModule, createInlineVideo, pullInTemplate, ivxExperienceScope) {
+    constructor($compile, $state, $sce, $timeout, iVXjs, iVXjsBus, iVXjsUIModule, createInlineVideo, pullInTemplate, ivxExperienceScope, iVXjsStateCreator) {
         this.template = this.templateHTML;
         this.restrict = 'E';
         this.replace = true;
@@ -17,17 +17,13 @@ class VideoState {
 
             controller.stateData = $scope.stateData;
 
-            let { id, playerType = "html5", playerSettings = {}, cuePoints = [], personalizations = [], header = {}, footer = {} } = data;
+            let { id, playerType = "html5", playerSettings = {}, embeddedStates = [], embedded, cuePoints = [], personalizations = [], header = {}, footer = {} } = data;
             let { vimeoId, youtubeId, inlineSrc, iphoneInline = false } = playerSettings;
             let controlsHTML = ``;
             const playerId = playerSettings.id ? playerSettings.id : `${id}-video-player`;
 
-            console.log(playerId);
-
-            console.log(id);
-
             if (typeof playerSettings.controls === 'string') {
-                controlsHTML = `<ivxjs-${playerSettings.controls}-video-controls player-id='${playerId}'></ivxjs-${playerSettings.controls}-video-controls>`;
+                controlsHTML = `<ivxjs-${playerSettings.controls}-video-controls id="${playerId}-controls" player-id='${playerId}'></ivxjs-${playerSettings.controls}-video-controls>`;
             }
 
             if (vimeoId) playerType = 'vimeo';
@@ -49,7 +45,7 @@ class VideoState {
             controller.playerId = playerId;
 
             let videoPlayerHTML = `
-               <ivxjs-${playerType}-video-player player-id='${playerId}' settings="vm.stateData.playerSettings" state-data="vm.stateData"></ivxjs-${playerType}-video-player>
+               <ivxjs-${playerType}-video-player id="${playerId}" player-id='${playerId}' settings="vm.stateData.playerSettings" state-data="vm.stateData"></ivxjs-${playerType}-video-player>
                ${controlsHTML}
                ${personalizationsHTML}
             `;
@@ -61,6 +57,10 @@ class VideoState {
             $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
 
             iElm.html(videoFramework.html);
+
+            if(!embedded && embeddedStates.length > 0){
+               iVXjsStateCreator.addViews(embeddedStates, iElm);
+            }
 
             $compile(iElm.contents())($scope, (compiled) => {
                 iElm.html(compiled);
@@ -88,7 +88,7 @@ class VideoState {
     }
 }
 
-VideoState.$inject = ['$compile', '$state', '$sce', '$timeout', 'iVXjs', 'ivxjs.bus', 'ivxjs.modules.ui', 'createInlineVideo', 'pullInTemplate', 'ivxExperienceScope'];
+VideoState.$inject = ['$compile', '$state', '$sce', '$timeout', 'iVXjs', 'ivxjs.bus', 'ivxjs.modules.ui', 'createInlineVideo', 'pullInTemplate', 'ivxExperienceScope', 'ivxjsStateCreator'];
 
 export default angular
     .module('ivx-js.directives.state.video', [])

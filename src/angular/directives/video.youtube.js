@@ -25,12 +25,6 @@ class YoutubeVideoPlayer {
                     id: youtubeId
                 });
 
-            stateData = {
-                id: stateData.id,
-                url: stateData.url,
-                name: stateData.name
-            };
-
             let YouTubePlayer = new iVXjsVideoModule.youtube(iElm.find('div'), playerSettings, stateData, iVXjsLog);
 
             controller.player = YouTubePlayer;
