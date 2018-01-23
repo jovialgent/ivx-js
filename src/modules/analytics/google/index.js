@@ -86,7 +86,10 @@ export class Google extends DefaultAnalytics {
         let { tracker, key, value } = args
         let setActionName = tracker ? `${tracker}.set` : `${analytics.name}.set`;
 
+        console.log(key, value);
+
         ga(setActionName, key, value);
+
     }
 }
 

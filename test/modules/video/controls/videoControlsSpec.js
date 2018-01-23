@@ -2,11 +2,9 @@ import {Controls} from '../../../../src/modules/video/controls/index.js';
 import VideoSettings from '../../../../src/modules/video/settings.js';
 
 describe('Video Controls', () => {
-    let scrubBar, muteControls, volumeBar, totalTimeInfo, playPauseControls, currentTimeInfo, fakeBus, videoControls, playerId;
+    let scrubBar, muteControls, volumeBar, totalTimeInfo, playPauseControls, currentTimeInfo, fakeBus, videoControls;
 
     beforeEach(() => {
-        playerId = Math.random().toString(36).substring(2,15);
-
         fakeBus = {
             on: function (eventName, obj) {
 
@@ -96,7 +94,6 @@ describe('Video Controls', () => {
 
 
         videoControls = new Controls();
-        videoControls.playerId = playerId;
         videoControls.muteControls = muteControls;
         videoControls.playPauseControls = playPauseControls;
         videoControls.volumeBar = volumeBar;
@@ -288,7 +285,7 @@ describe('Video Controls', () => {
 
             spyOn(videoControls, 'setVolume');
 
-            videoControls.toggleMute({});
+            videoControls.setMute({});
 
             expect(videoControls.setVolume).toHaveBeenCalledWith(0);
 
@@ -300,9 +297,9 @@ describe('Video Controls', () => {
             }];
 
             spyOn(videoControls, 'setVolume');
-            videoControls.toggleMute({});
+            videoControls.setMute({});
             expect(videoControls.setVolume).toHaveBeenCalledWith(0);
-            videoControls.toggleMute({});
+            videoControls.setMute({});
             expect(videoControls.setVolume).toHaveBeenCalledWith(0.5);
 
         });
@@ -316,7 +313,7 @@ describe('Video Controls', () => {
 
             spyOn(videoControls, 'play');
 
-            videoControls.togglePlayPause({});
+            videoControls.setPlayPause({});
 
             expect(videoControls.play).toHaveBeenCalled();
 
@@ -329,7 +326,7 @@ describe('Video Controls', () => {
 
             spyOn(videoControls, 'pause');
 
-            videoControls.togglePlayPause({});
+            videoControls.setPlayPause({});
 
             expect(videoControls.pause).toHaveBeenCalled();
 

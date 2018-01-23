@@ -1,8 +1,8 @@
 import DefaultVideoControls from '../default/video.controls.js';
 
 export default class extends DefaultVideoControls {
-    constructor(container, playerId) {
-        super(container, playerId);
+    constructor(container, iVXjsBus) {
+        super(container, iVXjsBus);
     }
 
     get totalTimeInfoClasses() {
@@ -79,7 +79,7 @@ export default class extends DefaultVideoControls {
 
     get scrubBarHTML() {
         return `
-            <div id="${this.playerId}-video-controls-scrub-bar" class="progress ${this.scrubBarClasses}">
+            <div id="video-controls-scrub-bar" class="progress ${this.scrubBarClasses}">
                 <div id="scrub-bar-progress-container" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="min-width: 0;">
                     <div id="scrub-bar-timestamp-label" class="label">${this.timestampHTML}</div>
                 </div>
@@ -97,7 +97,7 @@ export default class extends DefaultVideoControls {
     
     get volumeBarHTML(){
         return `
-            <div id="${this.playerId}-video-controls-volume-bar" class="progress ${this.volumeBarClasses}">
+            <div id="video-controls-volume-bar" class="progress ${this.volumeBarClasses}">
                 <div class="${this.volumeBarCurrentVolumeClasses}"></div>
             </div> 
         `
@@ -107,8 +107,8 @@ export default class extends DefaultVideoControls {
         let {playClasses : play} = this;
         let {playPauseControlsClasses : playPauseControls} = this;
         return `
-        <div id="${this.playerId}-play-button-container">
-            <button id="${this.playerId}-video-controls-play-pause" class="${playPauseControls}">
+        <div id="play-button-container">
+            <button id="video-controls-play-pause" class="${playPauseControls}">
                 <i class='${play}'></i>
             </button>
         <div>`
@@ -117,8 +117,8 @@ export default class extends DefaultVideoControls {
     get muteButtonHTML(){
         let {unmuteClasses : unmute, muteControlsClasses} = this;
         return `
-        <div id="${this.playerId}-mute-button-container">
-            <button id="${this.playerId}-video-controls-mute-controls" class="${muteControlsClasses}">
+        <div id="mute-button-container">
+            <button id="video-controls-mute-controls" class="${muteControlsClasses}">
                 <i class="${unmute}"></i>
             </button>
         </div>

@@ -10,21 +10,19 @@ export class YouTube {
         this.intervals = [];
         this.videoEventNames = new VideoEventNames();
         this.iVXjsLog = iVXjsLog;
-        this.playerId = settings.playerId;
-        this.currentVolume = 0.6
 
         container.html(this.html);
     }
 
     createPlayer() {
-        let { height = 'inherit', width = 'inherit', id, controls, playerId } = this._settings;
+        let { height = 'inherit', width = 'inherit', id, controls } = this._settings;
         let hasControls = 1;
 
         if (typeof controls === 'string') {
             hasControls = 0;
         }
 
-        this.player = new YT.Player(this.playerId, {
+        this.player = new YT.Player(`youtube-player`, {
             height: height,
             width: width,
             videoId: id,
@@ -34,10 +32,6 @@ export class YouTube {
                 autohide: 1
             }
         });
-
-        this.player.id = playerId;
-
-
     }
 
     dispose(iVXjsBus) {
@@ -50,9 +44,7 @@ export class YouTube {
             duration: videoEventNames.GET_DURATION,
             volume: videoEventNames.SET_VOLUME,
             playing: videoEventNames.PLAYING,
-            ended: videoEventNames.ENDED,
-            mute: videoEventNames.MUTE,
-            unmute: videoEventNames.UNMUTE
+            ended: videoEventNames.ENDED
         };
         let eventsToDispose = Object.keys(eventNameMap);
 
@@ -66,7 +58,7 @@ export class YouTube {
     }
 
     addEventListeners(iVXjsBus) {
-        let { _stateData: stateData, player, videoEventNames, playerId } = this;
+        let { _stateData: stateData, player, videoEventNames } = this;
         let self = this;
         let timeUpdateId;
         let numberofTimeupdates = 0;
@@ -108,8 +100,6 @@ export class YouTube {
             function onYouTubeOnReady() {
                 self.playOnEvent = iVXjsBus.on(videoEventNames.PLAY, playOnEvent);
                 self.pauseOnEvent = iVXjsBus.on(videoEventNames.PAUSE, pauseOnEvent);
-                self.muteOnEvent = iVXjsBus.on(videoEventNames.MUTE, muteOnEvent);
-                self.unmmuteOnEvent = iVXjsBus.on(videoEventNames.UNMUTE, unmuteOnEvent);
                 self.volumeOnEvent = iVXjsBus.on(videoEventNames.SET_VOLUME, volumeOnEvent);
                 self.durationOnEvent = iVXjsBus.on(videoEventNames.GET_DURATION, durationOnEvent);
                 self.seekOnEvent = iVXjsBus.on(videoEventNames.SEEK, seekOnEvent);
@@ -124,103 +114,58 @@ export class YouTube {
                 self.pausedOnEvent = typeof self.pausedOnEvent === 'function' ? self.pausedOnEvent : pausedOnEvent;
                 self.endedOnEvent = typeof self.endedOnEvent === 'function' ? self.endedOnEvent : endedOnEvent;
                 self.playingOnEvent = typeof self.playingOnEvent === 'function' ? self.playingOnEvent : playingOnEvent;
-                iVXjsBus.emit(videoEventNames.CAN_PLAY, player, self.stateData);
+                iVXjsBus.emit(videoEventNames.CAN_PLAY, player);
             });
 
 
-        function playOnEvent(args = {}) {
-            const { playerId } = args;
-
-            if (!playerId || playerId === self.playerId) playVideo();
-
-            function playVideo() {
-                player.playVideo();
-                clearInterval(self.timeUpdateId);
-            }
+        function playOnEvent() {
+            player.playVideo();
+            clearInterval(self.timeUpdateId);
         }
 
-        function pauseOnEvent(args = {}) {
-            const { playerId } = args;
-
-            if (!playerId || playerId === self.playerId) pauseVideo()
-
-            function pauseVideo() {
-                player.pauseVideo();
-                clearInterval(self.timeUpdateId);
-            }
+        function pauseOnEvent() {
+            player.pauseVideo();
+            clearInterval(self.timeUpdateId);
         }
 
-        function durationOnEvent(args = {}) {
-            const { playerId } = args;
-
-            if (playerId === self.playerId) setDuration();
-
-            function setDuration() {
-                iVXjsBus.emit(videoEventNames.SET_DURATION, {
-                    playerId,
-                    duration: player.getDuration()
-                });
-            }
+        function durationOnEvent() {
+            iVXjsBus.emit(videoEventNames.SET_DURATION, player.getDuration());
         }
 
-        function volumeOnEvent(args = {}) {
-            const { playerId, volume } = args;
+        function volumeOnEvent(volumeObj) {
+            let volume = volumeObj;
 
-            if (!playerId || playerId === self.playerId) setVolume();
-
-            function setVolume() {
-                self.currentVolume = volume;
-                player.setVolume(volume * 100);
+            if (typeValidator.isObject(volumeObj)) {
+                volume = volumeObj.volume;
             }
+
+            player.setVolume(volume * 100);
         }
 
-        function muteOnEvent(args = {}) {
-            const { playerId } = args;
+        function playingOnEvent() {
+            player.currentTime = player.getCurrentTime();
 
-            if (!playerId || playerId === self.playerId) setVolume();
+            iVXjsBus.emit(videoEventNames.TIME_UPDATE, player);
 
-            function setVolume() {
-                player.setVolume(0);
-            }
-        }
+            let currentNumber = numberofTimeupdates;
 
-        function unmuteOnEvent(args = {}) {
-            const { playerId } = args;
-
-            if (!playerId || playerId === self.playerId) setVolume();
-
-            function setVolume() {
-                player.setVolume(self.currentVolume * 100);
-            }
-        }
-
-        function playingOnEvent(player) {
-            if (player.id === self.playerId) {
+            self.timeUpdateId = setInterval(() => {
                 player.currentTime = player.getCurrentTime();
 
                 iVXjsBus.emit(videoEventNames.TIME_UPDATE, player);
-
-                let currentNumber = numberofTimeupdates;
-
-                self.timeUpdateId = setInterval(() => {
-                    player.currentTime = player.getCurrentTime();
-
-                    iVXjsBus.emit(videoEventNames.TIME_UPDATE, player, stateData);
-                }, 50);
-            }
+            }, 50);
         }
 
-        function seekOnEvent(args = {}) {
+        function seekOnEvent(currentTimeObj) {
             clearInterval(self.timeUpdateId);
+            
+            let currentTime = currentTimeObj;
 
-            const { playerId, currentTime } = args;
-
-            if (!playerId || playerId === self.playerId) seek()
-
-            function seek() {
-                player.seekTo(currentTime);
-                clearInterval(self.timeUpdateId);
+            if (typeValidator.isObject(currentTimeObj)) {
+                currentTime = currentTimeObj.currentTime;
             }
+            
+            player.seekTo(currentTime);
         }
 
         function pausedOnEvent() {
@@ -233,6 +178,6 @@ export class YouTube {
     }
 
     get html() {
-        return `<div id="${this.playerId}" class='youtube-player'></div>`;
+        return `<div id="youtube-player"></div>`;
     }
 }

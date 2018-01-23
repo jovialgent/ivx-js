@@ -1,8 +1,8 @@
 import DefaultVideoControls from '../default/video.controls.js';
 
 export default class extends DefaultVideoControls {
-    constructor(container, playerId) {
-        super(container, playerId);
+    constructor(container, iVXjsBus) {
+        super(container);
     }
 
     get totalTimeInfoClasses() {
@@ -95,7 +95,7 @@ export default class extends DefaultVideoControls {
 
     get scrubBarHTML() {
         return `      
-          <div id="${this.playerId}-video-controls-scrub-bar" class="${this.scrubBarClasses}">
+          <div id="video-controls-scrub-bar" class="${this.scrubBarClasses}">
                 <div style="min-width:0" class="${this.scrubBarTimeLapseClasses}">
                      
                 </div>
@@ -108,7 +108,7 @@ export default class extends DefaultVideoControls {
 
     get volumeBarHTML(){
         return `
-            <div id="${this.playerId}-video-controls-volume-bar" class="progress ${this.volumeBarClasses}">
+            <div id="video-controls-volume-bar" class="progress ${this.volumeBarClasses}">
                 <div style="min-width:0" class="${this.volumeBarCurrentVolumeClasses}"></div>
             </div>`;
     }

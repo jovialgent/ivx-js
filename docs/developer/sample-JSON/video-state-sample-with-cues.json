@@ -17,7 +17,6 @@
             "next": [],
             "onVideoEnd": [],
             "playerSettings": {
-                "id" : "html5-video-player",
                 "controls": "standard",
                 "autoplay": false,
                 "playsinline": true,

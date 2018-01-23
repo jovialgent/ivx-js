@@ -15,7 +15,6 @@
         "next": [],
         "onVideoEnd": [],
         "playerSettings": {
-            "id" : "html5-video-player",
             "controls": "standard",
             "sources": [{
                 "src": "http://clips.vorwaerts-gmbh.de/VfE_html5.mp4",
