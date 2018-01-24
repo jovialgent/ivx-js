@@ -32,4 +32,13 @@ export default class {
     changeCurrentTrack(trackId){
         this.iVXjsBus.emit(this.trackEventNames.CHANGE_CURRENT_TRACK, {trackId});
     }
+
+    mute(){
+        this.iVXjsBus.emit(this.controlEventNames.MUTE);
+    }
+
+    
+    unmute(){
+        this.iVXjsBus.emit(this.controlEventNames.UNMUTE);
+    }
 }

@@ -40,6 +40,8 @@ export class YouTube {
         let eventNameMap = {
             play: videoEventNames.PLAY,
             pause: videoEventNames.PAUSE,
+            mute : videoEventNames.MUTE,
+            unmute : videoEventNames.UNMUTE,
             seek: videoEventNames.SEEK,
             duration: videoEventNames.GET_DURATION,
             volume: videoEventNames.SET_VOLUME,
@@ -101,6 +103,8 @@ export class YouTube {
                 self.playOnEvent = iVXjsBus.on(videoEventNames.PLAY, playOnEvent);
                 self.pauseOnEvent = iVXjsBus.on(videoEventNames.PAUSE, pauseOnEvent);
                 self.volumeOnEvent = iVXjsBus.on(videoEventNames.SET_VOLUME, volumeOnEvent);
+                self.muteOnEvent = iVXjsBus.on(videoEventNames.MUTE, muteOnEvent);
+                self.unmuteOnEvent = iVXjsBus.on(videoEventNames.UNMUTE, unmuteOnEvent);
                 self.durationOnEvent = iVXjsBus.on(videoEventNames.GET_DURATION, durationOnEvent);
                 self.seekOnEvent = iVXjsBus.on(videoEventNames.SEEK, seekOnEvent);
                 self.pausedOnEvent = iVXjsBus.on(videoEventNames.PAUSED, pausedOnEvent);
@@ -126,6 +130,14 @@ export class YouTube {
         function pauseOnEvent() {
             player.pauseVideo();
             clearInterval(self.timeUpdateId);
+        }
+
+        function muteOnEvent() {
+            player.mute();
+        }
+
+        function unmuteOnEvent() {
+            player.unMute();
         }
 
         function durationOnEvent() {
@@ -158,13 +170,13 @@ export class YouTube {
 
         function seekOnEvent(currentTimeObj) {
             clearInterval(self.timeUpdateId);
-            
+
             let currentTime = currentTimeObj;
 
             if (typeValidator.isObject(currentTimeObj)) {
                 currentTime = currentTimeObj.currentTime;
             }
-            
+
             player.seekTo(currentTime);
         }
 
