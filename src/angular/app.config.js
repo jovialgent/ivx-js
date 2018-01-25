@@ -14,7 +14,7 @@ class AppConfig {
         let { experience } = iVXjs;
         let { templates = [] } = iVXjs.config;
         let defaultStateID = iVXjs.rules(iVXjs.config.defaultState);
-        let { url } = iVXjs.config.states.find((state) => { return state.id === defaultStateID });
+        let { url } = iVXjs.config.states.find((state) => { return state.id === defaultStateID }) || {};
 
         if (experience.whiteList) {
             $sceDelegateProvider.resourceUrlWhitelist(experience.whiteList);
@@ -80,8 +80,10 @@ class AppConfig {
                             iVXjs.log.debug('On Enter Actions Resolved', {}, { source: 'onEnter', actions: onEnter, status: 'completed', timestamp : Date.now() });
                         });
                     }],
-                onExit: ['$rootScope', 'ivxjs.actions', 'iVXjs', 'ivxjs.bus', ($rootScope, iVXjsActions, iVXjs, iVXjsBus) => {
-                    iVXjsBus.emit(videoEventNames.DISPOSE);
+                onExit: ['$rootScope', '$state', 'ivxjs.actions', 'iVXjs', 'ivxjs.bus', ($rootScope, $state, iVXjsActions, iVXjs, iVXjsBus) => {
+                    if($state.current.data.player){
+                        iVXjsBus.emit(videoEventNames.DISPOSE, $state.current.data.player);
+                    }
                     iVXjs.log.debug('On Exit Actions Start', {}, { source: 'onExit', status: 'started', actions: onEnter });
                     iVXjsActions.resolveActions(onExit, () => {
                         iVXjs.log.debug('On Exit Events Actions Resolved', {}, { source: 'onExit', actions: onExit, status: 'completed', timestamp : Date.now() });

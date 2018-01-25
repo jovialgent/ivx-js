@@ -7,6 +7,7 @@ class VimeoVideoPlayer {
         this.restrict = 'E';
         this.replace = true;
         this.scope = {
+            playerId: "@playerId",
             settings: "=settings",
             stateData: "=stateData"
         }
@@ -15,16 +16,21 @@ class VimeoVideoPlayer {
         this.link = ($scope, iElm, iAttrs, controller) => {
             if (!iVXjsVideoModule.vimeo) return;
 
-            let { settings, stateData } = $scope;
+            let { settings = {}, stateData = {}, playerId } = $scope;
 
             stateData = {
                 id: stateData.id,
                 url: stateData.url,
                 name: stateData.name
             };
-            settings.id = settings.vimeoId;
 
-            let VimeoPlayer = new iVXjsVideoModule.vimeo(iElm.find('div'), settings, stateData, iVXjsLog);
+            const playerSettings = Object.assign({},
+                settings, {
+                    playerId,
+                    id : settings.vimeoId
+                });
+           
+            let VimeoPlayer = new iVXjsVideoModule.vimeo(iElm.find('div'), playerSettings, stateData, iVXjsLog);
 
             VimeoPlayer.addEventListeners(iVXjsBus);
 

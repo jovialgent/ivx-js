@@ -36,66 +36,84 @@ class VideoStateController {
 
         cuePoints = setUpCuePoints(cuePoints);
 
-        iVXjsBus.once(videoEventNames.CAN_PLAY, function stateVideoCanPlay(player) {
-            let transitionAnimation = onVideoReady.find((event, index) => {
-                return event.eventName === "animateElement" && event.args.element === ".video-state-container";
-            });
+        const playerCanPlay = iVXjsBus.on(videoEventNames.CAN_PLAY, function stateVideoCanPlay(player) {
+            const { playerId } = self;
 
-            if (!transitionAnimation) {
-                onVideoReady.push({
-                    eventName: "animateElement",
-                    args: {
-                        element: ".video-state-container",
-                        animationClasses: "show"
+            if (player.id === playerId) {
+                let transitionAnimation = onVideoReady.find((event, index) => {
+                    return event.eventName === "animateElement" && event.args.element === ".video-state-container";
+                });
+
+                if (!transitionAnimation) {
+                    onVideoReady.push({
+                        eventName: "animateElement",
+                        args: {
+                            element: ".video-state-container",
+                            animationClasses: "show"
+                        }
+                    })
+                }
+
+                $state.current.data.player = player;
+
+                iVXjs.log.debug(`onVideoReady Started`, {}, { state: $state.current.data, source: 'onVideoReady', status: 'started', actions: onVideoReady, timestamp: Date.now() });
+
+                iVXjsActions.resolveActions(onVideoReady, () => {
+                    if (autoplay) {
+                        iVXjsBus.emit(videoEventNames.PLAY, {
+                            playerId
+                        });
+                        iVXjsBus.emit(videoEventNames.ADD_PLAYING_CLASS, {
+                            playerId
+                        });
                     }
-                })
+
+                    iVXjs.log.debug(`onVideoReady Completed`, {}, { state: $state.current.data, source: 'onVideoReady', status: 'completed', actions: onVideoReady, timestamp: Date.now() });
+
+                    self.getActiveCues(player)
+                    iVXjsBus.removeListener(videoEventNames.CAN_PLAY, playerCanPlay);
+                });
+
             }
-
-            iVXjs.log.debug(`onVideoReady Started`, {}, { state: $state.current.data, source: 'onVideoReady', status: 'started', actions: onVideoReady, timestamp: Date.now() });
-
-            iVXjsActions.resolveActions(onVideoReady, () => {
-                if (autoplay) {
-                    iVXjsBus.emit(videoEventNames.PLAY);
-                    iVXjsBus.emit(videoEventNames.ADD_PLAYING_CLASS);
-                }
-
-                iVXjs.log.debug(`onVideoReady Completed`, {}, { state: $state.current.data, source: 'onVideoReady', status: 'completed', actions: onVideoReady, timestamp: Date.now() });
-
-                self.getActiveCues(player)                
-            });
         });
-        iVXjsBus.once(videoEventNames.ENDED, function stateVideoEnded() {
-            iVXjsBus.emit(videoEventNames.DISPOSE);
-            
-            iVXjs.log.debug(`onVideoEnd Actions`, {}, { state: $state.current.data, source: 'onVideoEnd', status: 'completed', actions: onVideoEnd, timestamp: Date.now() });
+        const videoEnded = iVXjsBus.on(videoEventNames.ENDED, function stateVideoEnded(player) {
+            if (player.id === self.playerId) {
+                iVXjsBus.emit(videoEventNames.DISPOSE, player);
 
-            iVXjsActions.resolveThenNavigate(onVideoEnd, next);
+                iVXjs.log.debug(`onVideoEnd Actions`, {}, { state: $state.current.data, source: 'onVideoEnd', status: 'completed', actions: onVideoEnd, timestamp: Date.now() });
+
+                iVXjsActions.resolveThenNavigate(onVideoEnd, next);
+                iVXjsBus.removeListener(videoEventNames.TIME_UPDATE, self.timeUpdateEvent);
+                iVXjsBus.removeListener(videoEventNames.ENDED, videoEnded);
+            }
         });
-        iVXjsBus.on(videoEventNames.TIME_UPDATE, function cuePointsOnUpdate(player, stateData) {
-            let { currentTime } = player;
 
-            if (cuePoints.length <= 0) return;
+        this.timeUpdateEvent = iVXjsBus.on(videoEventNames.TIME_UPDATE, function cuePointsOnUpdate(player, stateData) {
+            if (player.id === self.playerId) {
+                let { currentTime } = player;
 
-            cuePoints.forEach((cuePoint, index) => {
-                let { timeAt, fired = false, always = false } = cuePoint;
-                let timeUntil = Math.abs(cuePoint.timeAt - currentTime);
+                if (cuePoints.length <= 0) return;
 
-                if (timeAt <= currentTime && (always || !fired)) {
-                    cuePoint.fired = true;
-                
-                    iVXjs.log.debug(`Cuepoint ${index} Started`, {}, { cuePoint, index, source: 'cuePoint', status: 'started', timestamp: Date.now() });
-                    
-                    iVXjsActions.resolveActions([cuePoint], () => {
-                        iVXjs.log.debug(`Cuepoint ${index} Completed`, {}, { cuePoint, index, source: 'cuePoint', status: 'completed', timestamp: Date.now() });
-                    });
-                }
-            });
+                cuePoints.forEach((cuePoint, index) => {
+                    let { timeAt, fired = false, always = false } = cuePoint;
+                    let timeUntil = Math.abs(cuePoint.timeAt - currentTime);
 
+                    if (timeAt <= currentTime && (always || !fired)) {
+                        cuePoint.fired = true;
+
+                        iVXjs.log.debug(`Cuepoint ${index} Started`, {}, { cuePoint, index, source: 'cuePoint', status: 'started', timestamp: Date.now() });
+
+                        iVXjsActions.resolveActions([cuePoint], () => {
+                            iVXjs.log.debug(`Cuepoint ${index} Completed`, {}, { cuePoint, index, source: 'cuePoint', status: 'completed', timestamp: Date.now() });
+                        });
+                    }
+                });
+            }
         });
     }
 
-    getActiveCues(player){
-        let {textTracks = []} = player;
+    getActiveCues(player) {
+        let { textTracks = [] } = player;
         let activeCues = [];
     }
 }

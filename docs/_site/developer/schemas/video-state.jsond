@@ -9,6 +9,11 @@
             "required": true,
             "description": "The player settings for the video player types. Depending on the settings, it will create the appropriate video players to support the settings. Though none of the elements are required, there needs to be at least src, sources, vimeoId, or youtubeId.",
             "properties": {
+                "id": {
+                    "name": "Player Id",
+                    "type" : "string",
+                    "description" : "This will set the id for the player and only events with the match playerId in their args fire with this player. This is useful if you would like to create player specific controls when you have multiple video players on the page."
+                },
                 "autoplay": {
                     "name": "Autoplay",
                     "type": "boolean",
