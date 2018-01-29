@@ -23,9 +23,9 @@ export class InputState {
 
         return `
             <section class="${sectionClasses} ${defaultSectionClasses}" id="${data.id}">
-                 <header class="${headerClasses} ${defaultHeaderClasses}">${headerHTML}</header>
+                 <header class="${headerClasses} ${defaultHeaderClasses} ivx-header">${headerHTML}</header>
                 ${formSection}
-                <footer class="${footerClasses} ${defaultFooterClasses}">${footerHTML}</footer>
+                <footer class="${footerClasses} ${defaultFooterClasses} ivx-footer">${footerHTML}</footer>
             </section>`;
     }
 }

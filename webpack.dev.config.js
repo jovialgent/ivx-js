@@ -1,14 +1,23 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
+const { argv } = require('yargs');
+const { $0, local, setup, contentBase } = argv;
+let configs = [];
+
+console.log(contentBase);
+
+const publicPath = `public${contentBase ? "/" + contentBase : ""}`;
+
+console.log(publicPath);
 
 module.exports = {
     entry: {
-        dev: './public/index.js'
+        dev: `./${publicPath}/index.js`
     },
     devtool: 'inline-source-map',
     devServer: {
-        contentBase: './public',
+        contentBase: `./${publicPath}`,
         hot: true
     },
     module: {
@@ -31,10 +40,36 @@ module.exports = {
                 ]
             },
             {
+                test : /\.less$/,
+                use : [
+                    'style-loader',
+                    'css-loader',
+                    'less-loader'
+                ]
+            },
+            {
                 test: /\.html$/,
                 use: [
                     'raw-loader'
                 ]
+            },
+            {
+                test: /\.(woff|woff2|ttf|eot)$/,
+                loader: "file-loader",
+                options: {
+                    name: '[name].[ext]',
+                    publicPath: '',
+                    outputPath: 'fonts/'
+                }
+            },
+            {
+                test: /\.(jpe?g|gif|png|svg)$/,
+                loader: "file-loader",
+                options: {
+                    name: '[name].[ext]',
+                    publicPath: '',
+                    outputPath: 'images/'
+                }
             },
             {
                 test: /\.json$/,
@@ -44,16 +79,16 @@ module.exports = {
             }
         ]
     },
-   
+
     plugins: [
         new HtmlWebpackPlugin({
-            filename: "public/index.html"
+            filename: `${publicPath}/index.html`
         }),
         new webpack.NamedModulesPlugin(),
         new webpack.HotModuleReplacementPlugin()
     ],
     output: {
         filename: '[name].bundle.js',
-        path: path.resolve(__dirname, 'public')
+        path: path.resolve(__dirname, `${publicPath}`)
     }
 };

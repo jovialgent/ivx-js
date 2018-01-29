@@ -44,7 +44,7 @@ export class Radio extends DefaultRadio {
 
         return `
           <input type="radio" id="${currentId}" ${attrHTML}>
-            <label for="${currentId}">   
+            <label class="ivx-input-label" for="${currentId}">   
                      ${label}
           </label>
           `;

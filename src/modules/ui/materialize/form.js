@@ -11,20 +11,25 @@ export class Form extends DefaultForm {
     }
 
     get submitButtonHTML() {
-        let {submit = {}} = this;
-        let {label: submitLabel = "Submit", labelHTML: submitLabelHTML, input: submitInput = {}, container: submitContainer = {}, attributes = ''} = submit;
+        let {submit = {},  beforeClasses : defaultBeforeClasses, afterClasses : defaultAfterClasses} = this;
+        let {label: submitLabel = "Submit", labelHTML: submitLabelHTML, input: submitInput = {}, container: submitContainer = {}, attributes = '',beforeHtml : beforeSettings = {}, afterHtml : afterSettings = {}} = submit;
         let {classes: submitInputClasses = ""} = submitInput;
         let {classes: submitContainerClasses = ""} = submitContainer;
+        
+        const {html : beforeHtml = "", classes : beforeClasses = ""} = beforeSettings;
+        const {html : afterHtml = "", classes : afterClasses = ""} = afterSettings;
 
         submitLabel = submitLabelHTML ? submitLabelHTML : submitLabel;
 
         let submitHTML = submitLabel.length >= 0 ?
             `
             
-                <div class="col s12 ${submitContainerClasses}">
+                <div class="col s12 ${submitContainerClasses} ivx-input-container ivx-input-submit-button">
+                    <div class="${beforeClasses} ${defaultBeforeClasses}">${beforeHtml}</div>
                     <button class="btn ${submitInputClasses}" type='submit'>
                         ${submitLabel}
                     </button>
+                    <div class="${afterClasses} ${defaultAfterClasses}">${afterHtml}</div>
                 </div>
          
             ` : '';
