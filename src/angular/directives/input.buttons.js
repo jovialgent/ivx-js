@@ -16,8 +16,7 @@ class ButtonsInput {
         this.controllerAs = 'vm';
         this.link = ($scope, iElm, iAttrs, controller) => {
             let { inputData: input } = $scope;
-            let { id, name, labelHTML, label = '', errors = { required: 'Must click to continue.' }, skipSettings = { label: "Skip" }, buttons, attributes = {}, settings = {} } = input;
-
+            let { id, name, labelHTML, label = '', errors = { required: 'Must click to continue.' }, skip = { label: "Skip" }, buttons, attributes = {}, settings = {} } = input;
             let inputButtonData = buttons.map((button, index) => {
                 button = pullInTemplate.convertLabel(button.value, button, $scope);
 
@@ -34,16 +33,21 @@ class ButtonsInput {
             });
 
             input = pullInTemplate.convertLabel($filter('stringParsers')('startCase', id), input, $scope);
+            input.beforeHtml = pullInTemplate.convertTemplateUrlToHtml(input.beforeHtml, $scope);
+            input.afterHtml = pullInTemplate.convertTemplateUrlToHtml(input.afterHtml, $scope);
 
             if (!attributes.required) {
-                let { label, labelHTML, value, classes = '' } = skipSettings;
+                skip = pullInTemplate.convertLabel('Skip', skip, $scope);
+
+                let { label, labelHTML, value, classes = '' } = skip;
 
                 label = labelHTML ? labelHTML : label;
 
+                console.log(skip);
+
                 inputButtonData.push({
-                    label: label,
-                    classes: classes,
-                    attrHTML: ''
+                    label,
+                    classes
                 })
             };
 

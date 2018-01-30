@@ -36,7 +36,8 @@ class Builder {
             "public/js/modules",
             "public/templates",
             "public/data",
-            "dist/modules"
+            "dist/modules",
+            "public/features"
         ];
         const assets = [{
             src: "tools/snippets/project.json",

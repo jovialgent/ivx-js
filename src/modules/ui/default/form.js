@@ -57,6 +57,15 @@ export class Form {
         return 'row'
     }
 
+    
+    get beforeClasses(){
+        return 'ivx-input-before ivx-input-before-submit-button';
+    }
+
+    get afterClasses(){
+        return 'ivx-input-after ivx-input-after-submit-button';
+    }
+
     /**
      * Renders the HTML to render the 
      * @example
@@ -83,20 +92,25 @@ export class Form {
      * @type {string}
      */
     get submitButtonHTML() {
-        let {submit = {}} = this;
-        let {label: submitLabel = "Submit", labelHTML: submitLabelHTML, input: submitInput = {}, container: submitContainer = {}, attributes = ''} = submit;
+        let {submit = {}, beforeClasses : defaultBeforeClasses, afterClasses : defaultAfterClasses} = this;
+        let {label: submitLabel = "Submit", labelHTML: submitLabelHTML, input: submitInput = {}, container: submitContainer = {}, attributes = '', beforeHtml : beforeSettings = {}, afterHtml : afterSettings = {}} = submit;
         let {classes: submitInputClasses = ""} = submitInput;
         let {classes: submitContainerClasses = ""} = submitContainer;
+
+        const {html : beforeHtml = "", classes : beforeClasses = ""} = beforeSettings;
+        const {html : afterHtml = "", classes : afterClasses = ""} = afterSettings;
 
         submitLabel = submitLabelHTML ? submitLabelHTML : submitLabel;
 
         let submitHTML = submitLabel.length >= 0 ?
             `
             <div class="ivxjs-grid-1-1 ${submitContainerClasses}">
-            <button class="${submitInputClasses}" type='submit' ${attributes}>
+                <div class="${beforeClasses} ${defaultBeforeClasses}">${beforeHtml}</div>
+                <button class="${submitInputClasses} ivx-input ivx-input-submit-button" type='submit' ${attributes}>
                     ${submitLabel}
                 </button>
-                </div>
+                <div class="${afterClasses} ${defaultAfterClasses}">${afterHtml}</div>
+            </div>
                 ` : '';
 
         return submitHTML;
@@ -118,6 +132,9 @@ export class Form {
         if (!settings.hideSubmit) {
             inputHTML.push({
                 settings: submit,
+                input : {
+                    type : "submit-button"
+                },
                 html: this.submitButtonHTML
             });
         }
@@ -126,7 +143,7 @@ export class Form {
 
         return `
             ${label}
-            <form id="${formId}-form" class="${formClasses} ${configFormClasses}" novalidate name="${name}" ${additionalAttrHTML}>                
+            <form id="${formId}-form" class="${formClasses} ${configFormClasses} ivx-form" novalidate name="${name}" ${additionalAttrHTML}>                
                 ${contents}
             </form>
         `;

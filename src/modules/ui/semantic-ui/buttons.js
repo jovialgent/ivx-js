@@ -7,7 +7,7 @@ export class Buttons extends DefaultButtons {
     }
     
     get buttonClasses() {
-        return 'ui button';
+        return 'ui button ivx-input-buttons ivx-input';
     }
 
 };

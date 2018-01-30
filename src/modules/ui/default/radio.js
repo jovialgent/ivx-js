@@ -19,10 +19,10 @@ export class Radio {
 
     uiRadioButtonContainer(radioHTML, uiClasses, value = "") {
         let { id } = this.input;
-        let currentId = `${id}${value.length > 0 ? '-' + value : ''}`; 
+        let currentId = `${id}${value.length > 0 ? '-' + value : ''}`;
 
         return ` 
-        <label for="${currentId}" class="${uiClasses}">
+        <label for="${currentId}" class="${uiClasses} ivx-input-label ivx-input-label-radio">
         ${radioHTML}
         </label>`;
     }
@@ -32,7 +32,7 @@ export class Radio {
         let currentId = `${id}${value.length > 0 ? '-' + value : ''}`;
 
         return ` 
-            <input type="radio" id="${currentId}" ${attrHTML}>
+            <input class="ivx-input ivx-input-radio" type="radio" id="${currentId}" ${attrHTML}>
             ${label}`;
     }
 
@@ -44,12 +44,24 @@ export class Radio {
         return ''
     }
 
+    get beforeClasses() {
+        return 'ivx-input-before ivx-input-before-radio';
+    }
+
+    get afterClasses() {
+        return 'ivx-input-after ivx-input-after-radio';
+    }
+
     get html() {
-        let { errors, radios, settings, input, uiClasses } = this;
+        let { errors, radios, settings, input, uiClasses, beforeClasses: defaultBeforeClasses, afterClasses: defaultAfterClasses } = this;
         let { messages: errorMessages, tags: errorTags = "" } = errors;
         let self = this;
-        let { label: inputLabel, labelHTML: inputLableHTML } = input;
+        let { label: inputLabel, labelHTML: inputLableHTML, beforeHtml: beforeSettings = {}, afterHtml: afterSettings = {} } = input;
         let { showLabel = true } = settings;
+
+        const { html: beforeHtml = "", classes: beforeClasses = "" } = beforeSettings;
+        const { html: afterHtml ="", classes: afterClasses = "" } = afterSettings;
+
 
         if (inputLableHTML) inputLabel = inputLableHTML;
 
@@ -65,8 +77,11 @@ export class Radio {
         }, inputLabel);
         let errorHTML = new this.errorMessages(errorMessages).html;
         let allRadioButtonsHTML = `
+        <div class="${beforeClasses} ${defaultBeforeClasses}">${beforeHtml}</div>
              ${radiosHTML}
-             ${errorHTML}`;
+             ${errorHTML}
+        <div class="${afterClasses} ${defaultAfterClasses}">${afterHtml}</div>
+             `;
 
         return this.uiRadioGroup(allRadioButtonsHTML);
     }
