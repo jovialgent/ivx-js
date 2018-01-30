@@ -59,15 +59,15 @@ export class Buttons {
      * @type {String}
      */
     get buttonClasses() {
-        return 'ivx-input';
+        return 'ivx-input ivx-input-buttons';
     }
 
     get beforeClasses(){
-        return 'ivx-input-before';
+        return 'ivx-input-before ivx-input-before-buttons';
     }
 
     get afterClasses(){
-        return 'ivx-input-after';
+        return 'ivx-input-after ivx-input-after-buttons';
     }
 
     /**
@@ -119,7 +119,7 @@ export class Buttons {
 
         if ((labelHTML.length > 0 || label.length > 0) && showLabel) {
             labelHTML = labelHTML ? labelHTML : label;
-            labelHTML = `<label class="ivx-input-label" for="${id}">${labelHTML}</label>`
+            labelHTML = `<label class="ivx-input-label ivx-input-label-buttons" for="${id}">${labelHTML}</label>`
         }
 
         return `

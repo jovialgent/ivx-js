@@ -82,11 +82,11 @@ export class Date {
     }
 
     get beforeClasses(){
-        return 'ivx-input-before';
+        return 'ivx-input-before ivx-input-before-date';
     }
 
     get afterClasses(){
-        return 'ivx-input-after';
+        return 'ivx-input-after ivx-input-after-date';
     }
 
     /**
@@ -127,8 +127,8 @@ export class Date {
         
         let inputHTML = ` 
             <div class="${beforeClasses} ${defaultBeforeClasses}">${beforeHtml}</div>
-            <label class="ivx-input-label" for="${id}"> ${label} </label>
-            <input class="${classes} ivx-input"  id="${id}" name="${name}"  type="date" ${nonValidateAttributesHTML}   ${errorTags} ${tags}>
+            <label class="ivx-input-label ivx-input-label-date" for="${id}"> ${label} </label>
+            <input class="${classes} ivx-input ivx-input-date"  id="${id}" name="${name}"  type="date" ${nonValidateAttributesHTML}   ${errorTags} ${tags}>
             ${errorHTML}
             <div class="${afterClasses} ${defaultAfterClasses}">${afterHtml}</div>
        `;

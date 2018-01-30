@@ -82,11 +82,11 @@ export class Email {
     }
 
     get beforeClasses(){
-        return 'ivx-input-before';
+        return 'ivx-input-before ivx-input-before-email';
     }
 
     get afterClasses(){
-        return 'ivx-input-after';
+        return 'ivx-input-after ivx-input-after-email';
     }
 
     /**
@@ -127,8 +127,8 @@ export class Email {
 
         let inputHTML = ` 
             <div class="${beforeClasses} ${defaultBeforeClasses}">${beforeHtml}</div>
-            <label class="ivx-input-label" for="${id}"> ${label} </label>
-            <input class="${classes} ivx-input"  id="${id}" name="${name}"  type="email" ${nonValidateAttributesHTML}   ${errorTags} ${tags}>
+            <label class="ivx-input-label ivx-input-label-email" for="${id}"> ${label} </label>
+            <input class="${classes} ivx-input ivx-input-email"  id="${id}" name="${name}"  type="email" ${nonValidateAttributesHTML}   ${errorTags} ${tags}>
             ${errorHTML}
             <div class="${afterClasses} ${defaultAfterClasses}">${afterHtml}</div>
        `;

@@ -22,7 +22,7 @@ export class Radio {
         let currentId = `${id}${value.length > 0 ? '-' + value : ''}`;
 
         return ` 
-        <label for="${currentId}" class="${uiClasses} ivx-input-label">
+        <label for="${currentId}" class="${uiClasses} ivx-input-label ivx-input-label-radio">
         ${radioHTML}
         </label>`;
     }
@@ -32,7 +32,7 @@ export class Radio {
         let currentId = `${id}${value.length > 0 ? '-' + value : ''}`;
 
         return ` 
-            <input class="ivx-input" type="radio" id="${currentId}" ${attrHTML}>
+            <input class="ivx-input ivx-input-radio" type="radio" id="${currentId}" ${attrHTML}>
             ${label}`;
     }
 
@@ -45,11 +45,11 @@ export class Radio {
     }
 
     get beforeClasses() {
-        return 'ivx-input-before';
+        return 'ivx-input-before ivx-input-before-radio';
     }
 
     get afterClasses() {
-        return 'ivx-input-after';
+        return 'ivx-input-after ivx-input-after-radio';
     }
 
     get html() {

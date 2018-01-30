@@ -7,11 +7,11 @@ export class Form extends DefaultForm {
     }
 
     get beforeClasses(){
-        return 'ivx-input-before';
+        return 'ivx-input-before ivx-input-before-submit-button';
     }
 
     get afterClasses(){
-        return 'ivx-input-after';
+        return 'ivx-input-after ivx-input-after-submit-button';
     }
     
     get submitButtonHTML() {        
@@ -28,9 +28,9 @@ export class Form extends DefaultForm {
         let submitHTML = submitLabel.length >= 0 ?
             `
             <div class="row">
-                <div class="col-md-12 ${submitContainerClasses} ivx-input-container ivx-input-submit-button">
+                <div class="col-md-12 ${submitContainerClasses} ivx-input-container ivx-input-container-submit-button">
                     <div class="${beforeClasses} ${defaultBeforeClasses}">${beforeHtml}</div>
-                    <button class="btn ${submitInputClasses}" type='submit'>
+                    <button class="btn ${submitInputClasses} ivx-input ivx-input-submit-button" type='submit'>
                         ${submitLabel}
                     </button>
                     <div class="${afterClasses} ${defaultAfterClasses}">${afterHtml}</div>

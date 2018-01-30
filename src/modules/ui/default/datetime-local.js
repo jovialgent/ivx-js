@@ -82,11 +82,11 @@ export class DatetimeLocal {
     }
 
     get beforeClasses(){
-        return 'ivx-input-before';
+        return 'ivx-input-before ivx-input-before-datetime-local';
     }
 
     get afterClasses(){
-        return 'ivx-input-after';
+        return 'ivx-input-after ivx-input-after-datetime-local';
     }
 
     /**
@@ -128,8 +128,8 @@ export class DatetimeLocal {
 
         let inputHTML = ` 
             <div class="${beforeClasses} ${defaultBeforeClasses}">${beforeHtml}</div>
-            <label class="ivx-input-label" for="${id}"> ${label} </label>
-            <input class="${classes} ivx-input"  id="${id}" name="${name}"  type="datetime-local" ${nonValidateAttributesHTML}   ${errorTags} ${tags}>
+            <label class="ivx-input-label ivx-input-label-datetime-local" for="${id}"> ${label} </label>
+            <input class="${classes} ivx-input ivx-input-datetime-local"  id="${id}" name="${name}"  type="datetime-local" ${nonValidateAttributesHTML}   ${errorTags} ${tags}>
             ${errorHTML}
             <div class="${afterClasses} ${defaultAfterClasses}">${afterHtml}</div>
        `;

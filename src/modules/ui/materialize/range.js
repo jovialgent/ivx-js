@@ -79,11 +79,11 @@ export class Range {
     }
 
     get beforeClasses(){
-        return 'ivx-input-before';
+        return 'ivx-input-before ivx-input-before-range';
     }
 
     get afterClasses(){
-        return 'ivx-input-after';
+        return 'ivx-input-after ivx-input-after-range';
     }
 
     /**
@@ -125,9 +125,9 @@ export class Range {
         let inputHTML = ` 
         <div class="${beforeClasses} ${defaultBeforeClasses}">${beforeHtml}</div>
             <p class="range-field">
-            <input class="${classes} ivx-input"  name="${name}"  type="range" ${nonValidateAttributesHTML}   ${errorTags} ${tags}>
+            <input class="${classes} ivx-input ivx-input-range"  name="${name}"  type="range" ${nonValidateAttributesHTML}   ${errorTags} ${tags}>
            </p>
-           <label class="ivx-input-label for="${name}"> ${label} </label>
+           <label class="ivx-input-label ivx-input-label-range for="${name}"> ${label} </label>
             ${errorHTML}
             <div class="${afterClasses} ${defaultAfterClasses}">${afterHtml}</div>
        `;

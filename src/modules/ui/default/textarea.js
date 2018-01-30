@@ -25,11 +25,11 @@ export class Textarea {
     }
 
     get beforeClasses() {
-        return 'ivx-input-before';
+        return 'ivx-input-before ivx-input-before-textarea';
     }
 
     get afterClasses() {
-        return 'ivx-input-after';
+        return 'ivx-input-after ivx-input-after-textarea';
     }
 
     get html() {
@@ -50,8 +50,8 @@ export class Textarea {
 
         let inputHTML = ` 
         <div class="${beforeClasses} ${defaultBeforeClasses}">${beforeHtml}</div>
-            <label class="ivx-input-label" for="${id}"> ${label} </label>
-            <textarea class="${classes} ${uiClasses} ivx-input"  id="${id}" name="${name}" ${uiAttributes}   ${nonValidateAttributesHTML}   ${errorTags} ${tags}>
+            <label class="ivx-input-label ivx-input-label-textarea" for="${id}"> ${label} </label>
+            <textarea class="${classes} ${uiClasses} ivx-input ivx-input-textarea"  id="${id}" name="${name}" ${uiAttributes}   ${nonValidateAttributesHTML}   ${errorTags} ${tags}>
             </textarea>
             ${errorHTML}
             <div class="${afterClasses} ${defaultAfterClasses}">${afterHtml}</div>

@@ -19,8 +19,8 @@ export class Checkbox extends DefaultCheckbox {
         let {label} = input;
         return `
             <div class="input-field">
-            <input style="position:absolute; left:0; z-index:9999; margin:17px 26px; cursor:pointer;" type="checkbox" ${attributes}>
-            <label class="ivx-input-label" for="${input.id}"> ${label}</label>   
+            <input class="ivx-input ivx-input-checkbox" style="position:absolute; left:0; z-index:9999; margin:17px 26px; cursor:pointer;" type="checkbox" ${attributes}>
+            <label class="ivx-input-label ivx-input-label-checkbox" for="${input.id}"> ${label}</label>   
             </div>
         `
     }

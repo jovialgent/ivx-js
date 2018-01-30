@@ -30,7 +30,7 @@ export class Style {
 
             let semanticUIwidth = columnNames[Math.round(numericWidth * columnNames.length) - 1];
 
-            html = html.replace('ivxjs-grid-1-1', `${semanticUIwidth} wide field ${classes} ivx-input-container ivx-input-${type}`);
+            html = html.replace('ivxjs-grid-1-1', `${semanticUIwidth} wide field ${classes} ivx-input-container ivx-input-container-${type}`);
             contentHTML = `${contentHTML}${html}`;
 
             if (currentWidthTotal >= 1) {

@@ -59,11 +59,11 @@ export class Form {
 
     
     get beforeClasses(){
-        return 'ivx-input-before';
+        return 'ivx-input-before ivx-input-before-submit-button';
     }
 
     get afterClasses(){
-        return 'ivx-input-after';
+        return 'ivx-input-after ivx-input-after-submit-button';
     }
 
     /**
@@ -106,7 +106,7 @@ export class Form {
             `
             <div class="ivxjs-grid-1-1 ${submitContainerClasses}">
                 <div class="${beforeClasses} ${defaultBeforeClasses}">${beforeHtml}</div>
-                <button class="${submitInputClasses} ivx-input" type='submit' ${attributes}>
+                <button class="${submitInputClasses} ivx-input ivx-input-submit-button" type='submit' ${attributes}>
                     ${submitLabel}
                 </button>
                 <div class="${afterClasses} ${defaultAfterClasses}">${afterHtml}</div>

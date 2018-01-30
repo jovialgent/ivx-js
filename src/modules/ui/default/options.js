@@ -26,11 +26,11 @@ export class Options {
     }
 
     get beforeClasses(){
-        return 'ivx-input-before';
+        return 'ivx-input-before ivx-input-before-options';
     }
 
     get afterClasses(){
-        return 'ivx-input-after';
+        return 'ivx-input-after ivx-input-after-options';
     }
 
     get html() {
@@ -66,8 +66,8 @@ export class Options {
 
         let inputHTML = ` 
              <div class="${beforeClasses} ${defaultBeforeClasses}">${beforeHtml}</div>
-             <label class="ivx-input-label" for="${id}">${label}</label>             
-               <select class="${classes} ivx-input"  id="${id}" name="${name}"${nonValidateAttributesHTML} ${errorTags} ${tags}>
+             <label class="ivx-input-label ivx-input-label-options" for="${id}">${label}</label>             
+               <select class="${classes} ivx-input ivx-input-options"  id="${id}" name="${name}"${nonValidateAttributesHTML} ${errorTags} ${tags}>
                   ${defaultOptionTag}
                   ${optionsHTML}
                </select>

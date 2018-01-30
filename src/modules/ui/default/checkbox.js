@@ -105,19 +105,19 @@ export class Checkbox {
         if (labelHTML) label = labelHTML;
 
         return `
-            <label for="${id}" class="${classes} ivx-input-label">
-               <input class="ivx-input" ${attributes}>
+            <label for="${id}" class="${classes} ivx-input-label ivx-input-label-buttons">
+               <input class="ivx-input ivx-input-checkbox" ${attributes}>
                ${label}
             </label>
         `;
     }
 
     get beforeClasses(){
-        return 'ivx-input-before';
+        return 'ivx-input-before ivx-input-before-checkbox';
     }
 
     get afterClasses(){
-        return 'ivx-input-after';
+        return 'ivx-input-after ivx-input-after-checkbox';
     }
 
     /**

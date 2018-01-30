@@ -25,11 +25,11 @@ export class Url {
     }
 
     get beforeClasses(){
-        return 'ivx-input-before';
+        return 'ivx-input-before ivx-input-before-url';
     }
 
     get afterClasses(){
-        return 'ivx-input-after';
+        return 'ivx-input-after ivx-input-after-url';
     }
 
 
@@ -50,8 +50,8 @@ export class Url {
         
         let inputHTML = ` 
         <div class="${beforeClasses} ${defaultBeforeClasses}">${beforeHtml}</div>
-            <label class="ivx-input-label" for="${id}"> ${label} </label>
-            <input class="ivx-input" class="${classes} ${uiClasses}" ${uiAttributes}  id="${id}" name="${name}"  type="url" ${nonValidateAttributesHTML}   ${errorTags} ${tags}>
+            <label class="ivx-input-label ivx-input-label-url" for="${id}"> ${label} </label>
+            <input class="ivx-input ivx-input-url" class="${classes} ${uiClasses}" ${uiAttributes}  id="${id}" name="${name}"  type="url" ${nonValidateAttributesHTML}   ${errorTags} ${tags}>
             ${errorHTML}
         <div class="${afterClasses} ${defaultAfterClasses}">${afterHtml}</div>
        `;

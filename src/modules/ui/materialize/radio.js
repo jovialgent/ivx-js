@@ -24,8 +24,8 @@ export class Radio extends DefaultRadio {
     renderRadioHTML(attrHTML, label, value){     
         let {id} = this.input;   
         return ` 
-            <input class="ivx-input" name="${id}${value.length > 0 ? '-'+value: ''}"" type="radio" id="${id}${value.length > 0 ? '-'+value: ''}" ${attrHTML}>
-            <label class="ivx-input-label" for="${id}${value.length > 0 ? '-'+value: ''}">${label}</label>
+            <input class="ivx-input ivx-input-radio" name="${id}${value.length > 0 ? '-'+value: ''}"" type="radio" id="${id}${value.length > 0 ? '-'+value: ''}" ${attrHTML}>
+            <label class="ivx-input-label ivx-input-label-radio" for="${id}${value.length > 0 ? '-'+value: ''}">${label}</label>
         `;     
     }
 

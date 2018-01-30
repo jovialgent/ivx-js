@@ -5,11 +5,8 @@ const { argv } = require('yargs');
 const { $0, local, setup, contentBase } = argv;
 let configs = [];
 
-console.log(contentBase);
-
 const publicPath = `public${contentBase ? "/" + contentBase : ""}`;
 
-console.log(publicPath);
 
 module.exports = {
     entry: {

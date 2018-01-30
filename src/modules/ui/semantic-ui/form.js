@@ -24,7 +24,7 @@ export class Form extends DefaultForm {
         submitLabel = submitLabelHTML ? submitLabelHTML : submitLabel;
 
         let submitHTML = submitLabel.length >= 0 ?
-            `<div class="sixteen field wide ${submitContainerClasses} ivx-input-container ivx-input-submit-button">
+            `<div class="sixteen field wide ${submitContainerClasses} ivx-input-container ivx-input-container-submit-button">
                 <div class="${beforeClasses} ${defaultBeforeClasses}">${beforeHtml}</div>
                 <button class="ui button ${submitInputClasses}" type='submit'>
                     ${submitLabel}

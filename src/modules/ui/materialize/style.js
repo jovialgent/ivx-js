@@ -20,7 +20,7 @@ export class Style {
             let bootstrapWidthStyleName = columnNames[Math.round(numericWidth * columnNames.length) - 1];
 
 
-            html = html.replace('ivxjs-grid-1-1', `ivx-input-container input-field ivx-input-${type}  ${bootstrapWidthStyleName} ${classes}`);
+            html = html.replace('ivxjs-grid-1-1', `ivx-input-container input-field ivx-input-container-${type}  ${bootstrapWidthStyleName} ${classes}`);
             contentHTML = `${contentHTML}${html}`;
 
             if (currentWidthTotal >= 1) {

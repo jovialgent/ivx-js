@@ -24,9 +24,9 @@ export class Form extends DefaultForm {
         let submitHTML = submitLabel.length >= 0 ?
             `
             
-                <div class="col s12 ${submitContainerClasses} ivx-input-container ivx-input-submit-button">
+                <div class="col s12 ${submitContainerClasses} ivx-input-container ivx-input-container-submit-button">
                     <div class="${beforeClasses} ${defaultBeforeClasses}">${beforeHtml}</div>
-                    <button class="btn ${submitInputClasses}" type='submit'>
+                    <button class="btn ${submitInputClasses} ivx-input ivx-input-submit-button" type='submit'>
                         ${submitLabel}
                     </button>
                     <div class="${afterClasses} ${defaultAfterClasses}">${afterHtml}</div>

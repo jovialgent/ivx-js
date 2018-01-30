@@ -22,7 +22,7 @@ export class Style {
             let { width = '1', container = {} } = settings;
             let { classes = '' } = container;
             
-            classes = `${classes} ${containerClasses} ivx-input-${type}`
+            classes = `${classes} ${containerClasses} ivx-input-container-${type}`
 
             let thisWidth = self.getWidth(width);
 

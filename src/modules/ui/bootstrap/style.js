@@ -19,7 +19,7 @@ export class Style {
             
             let bootstrapWidthStyleName = columnNames[Math.round(numericWidth * columnNames.length) - 1];
            
-            html = html.replace('ivxjs-grid-1-1', `form-group ${bootstrapWidthStyleName} ${classes} ivx-input-container ivx-input-${type}`);
+            html = html.replace('ivxjs-grid-1-1', `form-group ${bootstrapWidthStyleName} ${classes} ivx-input-container ivx-input-container-${type}`);
             contentHTML = `${contentHTML}${html}`;
 
             if (currentWidthTotal >= 1) {
