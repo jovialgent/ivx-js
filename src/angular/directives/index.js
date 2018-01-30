@@ -37,6 +37,8 @@ import SetData from './template.set-data';
 import AnimateElement from './template.animate-element';
 import GoToState from './template.go-to-state';
 import RaiseiVXjsEvent from './template.raise-ivxjs-event';
+import RemoveClasses from "./template.remove-classes";
+import AddClasses from "./template.add-classes";
 
 export default angular.module('ivx-js.directives',[
     InputState,
@@ -59,6 +61,8 @@ export default angular.module('ivx-js.directives',[
     AnimateElement,
     GoToState,
     RaiseiVXjsEvent,
+    RemoveClasses,
+    AddClasses,
     SetData,
     Anchors,
     CascadingOptions,

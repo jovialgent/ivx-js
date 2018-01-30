@@ -555,6 +555,42 @@ _animateElement Event Properties_
 
 <div id="event-ivxjs-animateElement-schema" class="json-schema-table-container" data-json-src="{{page.source}}developer/schemas/event-ivxjs-animateElement.jsond"></div>
 
+## addClasses
+
+_Description_
+
+Adds classes to any element on the page. This is helpful when you would like to change styles based on certain triggers but don't need them to animate. 
+
+_Sample Data_
+
+[event-ivxjs-addClasses.json]({{page.source}}developer/sample-JSON/event-ivxjs-addClasses.json)
+
+_Schema_
+
+[event-ivxjs-addClasses.jsond]({{page.source}}developer/schemas/event-ivxjs-addClasses.jsond)
+
+_addClasses Event Properties_
+
+<div id="event-ivxjs-addClasses-schema" class="json-schema-table-container" data-json-src="{{page.source}}developer/schemas/event-ivxjs-addClasses.jsond"></div>
+
+## removeClasses
+
+_Description_
+
+Removes classes from any element on the page. This is helpful when you would like to change styles based on certain triggers but don't need them to animate. 
+
+_Sample Data_
+
+[event-ivxjs-removeClasses.json]({{page.source}}developer/sample-JSON/event-ivxjs-removeClasses.json)
+
+_Schema_
+
+[event-ivxjs-removeClasses.jsond]({{page.source}}developer/schemas/event-ivxjs-removeClasses.jsond)
+
+_addClasses Event Properties_
+
+<div id="event-ivxjs-removeClasses-schema" class="json-schema-table-container" data-json-src="{{page.source}}developer/schemas/event-ivxjs-removeClasses.jsond"></div>
+
 ## goToNextState
 
 _Description_
