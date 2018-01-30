@@ -24,6 +24,30 @@ _Usage_
 <ANY ivx-animate="{[ELEMENT], [ANIMATION CLASS]}"></ANY>
 ```
 
+## Add Classes 
+
+_Description_
+
+When clicked, this will add classes to the selector in this object.
+
+_Usage_
+
+```
+ <ANY ivx-add-classes="{element:'ELEMENT', classes: 'CLASSES_TO_ADD'}"></ANY>
+```
+
+## Remove Classes 
+
+_Description_
+
+When clicked, this will remove classes to the selector in this object.
+
+_Usage_
+
+```
+<ANY ivx-remove-classes="{element:'ELEMENT', classes: 'CLASSES_TO_REMOVE'}"></ANY>
+```
+
 ## Go To State
 
 _Description_

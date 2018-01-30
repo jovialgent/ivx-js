@@ -1,0 +1,7 @@
+{
+    "eventName": "removeClasses",
+    "args": {
+        "element": "",
+        "classes": ""
+    }
+}

@@ -54,6 +54,45 @@ export class Actions {
         return element;
     }
 
+    addClasses(eventObj) {
+        const { element: selector, classes = "" } = eventObj;
+        const elements = this._getArrayFromAllSelector(selector);
+        const classNames = this._getClassNames(classes);
+
+        elements.forEach(element => {
+            classNames.forEach(className => {
+                element.classList.add(className);
+            });
+        });
+    }
+
+    removeClasses(eventObj) {
+        const { element: selector, classes = "" } = eventObj;
+        const elements = this._getArrayFromAllSelector(selector);
+        const classNames = this._getClassNames(classes);
+
+        elements.forEach(element => {
+            classNames.forEach(className => {
+                element.classList.remove(className);
+            });
+        });
+    }
+
+    _getClassNames(classes = "") {
+        if (!classes || !classes.split) return;
+
+        return classes.split(' ');
+    }
+
+
+    _getArrayFromAllSelector(selector) {
+        const elements = document.querySelectorAll(selector);
+
+        if (!elements || elements.length <= 0) return [];
+
+        return Array.from(elements);
+    }
+
     goToNextState(eventObj) {
         let { next: navArray } = eventObj;
         let self = this;
@@ -67,6 +106,8 @@ export class Actions {
 
         return deferred;
     }
+
+
 
     /**
      * 
