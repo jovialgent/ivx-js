@@ -47,8 +47,7 @@ export class Rules {
                     },
                     "required" : this.rulesRequired
                 }
-            },
-             "required" : ["stateId"]
+            }
         }
 
     }

@@ -43,8 +43,6 @@ class ButtonsInput {
 
                 label = labelHTML ? labelHTML : label;
 
-                console.log(skip);
-
                 inputButtonData.push({
                     label,
                     classes
