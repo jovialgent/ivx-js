@@ -228,11 +228,11 @@
         "cuePoints": {
             "name": "Video Event Cue Points",
             "type": "array",
-            "description": "An array of cuepoints data which will tell what event to fire and when during a video",
+            "description": "An array of cuepoints data which will tell what event to fire and when during a video.",
             "items": {
                 "name": "Video Cue Point Settings",
                 "type": "object",
-                "description": "Settings for the cue point",
+                "description": "A cuePoints are similar to events and actions but with two properties: timeAt and endAt. These properties allow the developer to say when in a video these actions and events should occur. The action will only fire though if the video is playing, so if the user scrubs or the developer skips to another part of the video, the events will not fire.",
                 "properties": {
                     "eventName": {
                         "name": "Cue Point Event Name",
@@ -248,13 +248,17 @@
                     "timeAt": {
                         "name": "Cue Point Time",
                         "type": "number",
-                        "description": "Time in seconds where this event is fired",
-                        "required": true
+                        "description": "Time in seconds where this event is fired. If there is not an endAt property, the action will fire only if the videos internal clock is within 0.2 seconds of the time."
+                    },
+                    "endAt": {
+                        "name" : "End At Time",
+                        "type" : "number",
+                        "description" : "Time where the cuepoint ends. This means if a user scrubs or starts after this time, the event will not fire. Used with timeAt, it creates a window where an event should fire. Without a timeAt property, it will fire at least once from the beginning to this time."
                     },
                     "always": {
                         "name": "Always Fire",
                         "type": "boolean",
-                        "description": "By default, an event only fires once. If the event needs to fire whenever the video is at the point in the video, this needs to be true."
+                        "description": "By default, a cuepoint event only fires once. If the event needs to fire whenever the video is at the point in the video, this needs to be true."
                     }
                 }
             }

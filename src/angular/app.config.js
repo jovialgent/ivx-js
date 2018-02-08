@@ -6,19 +6,21 @@ import StateEvents from "../constants/state.events.js";
 let stateEvents = new StateEvents();
 
 class AppConfig {
-    constructor($stateProvider, $urlRouterProvider, $locationProvider, $compileProvider, $httpProvider, $sceDelegateProvider, $provide, iVXjs) {
+    constructor($stateProvider, $urlRouterProvider, $locationProvider, $compileProvider, $httpProvider, $sceDelegateProvider, $provide, iVXjs, stateCreatorProvider) {
         if (!iVXjs.config) return;
 
-        this.createStates($stateProvider, iVXjs.config.states);
+
+        stateCreatorProvider.create($stateProvider, iVXjs)
 
         let { experience } = iVXjs;
         let { templates = [] } = iVXjs.config;
         let defaultStateID = iVXjs.rules(iVXjs.config.defaultState);
-        let { url } = iVXjs.config.states.find((state) => { return state.id === defaultStateID }) || {};
+        let url = stateCreatorProvider.buildDefaultUrl(iVXjs, defaultStateID);
 
         if (experience.whiteList) {
             $sceDelegateProvider.resourceUrlWhitelist(experience.whiteList);
         }
+
 
         $urlRouterProvider
             .otherwise(($injector, $location) => {
@@ -71,13 +73,13 @@ class AppConfig {
                             iVXjs.experience.actions = iVXjsActions;
                         }
 
-                        iVXjs.log.debug('On Enter Actions Start', {}, { source: 'onEnter', status: 'started', actions: onEnter, timestamp : Date.now() });
+                        iVXjs.log.debug('On Enter Actions Start', {}, { source: 'onEnter', status: 'started', actions: onEnter, timestamp: Date.now() });
 
 
                         $rootScope.stateID = id;
 
                         iVXjsActions.resolveActions(onEnter, () => {
-                            iVXjs.log.debug('On Enter Actions Resolved', {}, { source: 'onEnter', actions: onEnter, status: 'completed', timestamp : Date.now() });
+                            iVXjs.log.debug('On Enter Actions Resolved', {}, { source: 'onEnter', actions: onEnter, status: 'completed', timestamp: Date.now() });
                         });
                     }],
                 onExit: ['$rootScope', '$state', 'ivxjs.actions', 'iVXjs', 'ivxjs.bus', ($rootScope, $state, iVXjsActions, iVXjs, iVXjsBus) => {
@@ -86,7 +88,7 @@ class AppConfig {
                     }
                     iVXjs.log.debug('On Exit Actions Start', {}, { source: 'onExit', status: 'started', actions: onEnter });
                     iVXjsActions.resolveActions(onExit, () => {
-                        iVXjs.log.debug('On Exit Events Actions Resolved', {}, { source: 'onExit', actions: onExit, status: 'completed', timestamp : Date.now() });
+                        iVXjs.log.debug('On Exit Events Actions Resolved', {}, { source: 'onExit', actions: onExit, status: 'completed', timestamp: Date.now() });
                     });
                 }]
             });
@@ -94,6 +96,6 @@ class AppConfig {
     }
 }
 
-AppConfig.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider', '$compileProvider', '$httpProvider', '$sceDelegateProvider', '$provide', 'iVXjs'];
+AppConfig.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider', '$compileProvider', '$httpProvider', '$sceDelegateProvider', '$provide', 'iVXjs', 'ivxjsStateCreatorProvider'];
 
 export default createFactoryFunction(AppConfig);

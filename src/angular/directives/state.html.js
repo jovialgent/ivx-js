@@ -7,11 +7,14 @@ class HtmlState {
         this.template = this.templateHTML;
         this.restrict = 'E';
         this.replace = true;
-        this.scope = {};
+        this.scope = {
+            stateData : "=stateData"
+        };
         this.controller = HtmlStateController;
         this.controllerAs = 'vm';
         this.link = function ($scope, iElm, iAttrs, controller) {
-            let { id, html, templateUrl, onCompile = [], audio } = $state.current.data;
+            let data = angular.copy($scope.stateData);
+            let { id, html, templateUrl, onCompile = [], audio } = data;
             let audioEventNames = new AudioEventNames();
 
             if (templateUrl) {

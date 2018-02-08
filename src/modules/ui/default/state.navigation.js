@@ -32,12 +32,12 @@ export class NavigationState {
         let linkContainerAttributeHTML = new AttributeTags(linkContainerAttributes, Object.keys(linkContainerAttributes)).html;
 
         return `
-            <section class="${sectionClasses} ${defaultSectionClasses}" id="${data.id}">
-                 <header class="${headerClasses} ${defaultHeaderClasses}">${headerHTML}</header>
+            <section class="${sectionClasses} ${defaultSectionClasses} ivx-state-section ivx-state-navigation-section" id="${data.id}">
+                 <header class="${headerClasses} ${defaultHeaderClasses} ivx-state-header ivx-state-navigation-header">${headerHTML}</header>
                  <div class='${defaultLinkContainerClasses} ${linkContainerClasses}' ${linkContainerAttributeHTML}>
                     ${linkSection}
                 </div>
-                <footer class="${footerClasses} ${defaultFooterClasses}">${footerHTML}</footer>
+                <footer class="${footerClasses} ${defaultFooterClasses} ivx-state-footer ivx-state-navigation-footer">${footerHTML}</footer>
             </section>`;
     }
 }

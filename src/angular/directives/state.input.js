@@ -7,11 +7,13 @@ class InputState {
         this.template = this.templateHTML;
         this.replace = true;
         this.restrict = 'E';
-        this.scope = {}
+        this.scope = {
+            stateData : "=stateData"
+        }
         this.controller = InputStateController;
         this.controllerAs = 'vm';
         this.link = function ($scope, iElm, iAttrs, controller) {
-            let { data } = $state.current;
+            let data = angular.copy($scope.stateData);
             let { headerHTML, footerHTML = '', onInputReady = [], form: formSettings = {}, header = {}, footer = {}, audio } = data;
             let audioEventNames = new AudioEventNames();
             let formSection = `<ivxjs-form-input inputs='vm.inputs' form-id='vm.id' on-submit='vm.onSubmit' form-settings="vm.formSettings"></ivxjs-form-input>`;

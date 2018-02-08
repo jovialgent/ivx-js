@@ -140,9 +140,19 @@ export class VideoStateSchema {
                             "timeAt" : {
                                 "type" : "number",
                                 "minimum" : 0
+                            },
+                            "endAt" : {
+                                "type" : "number",
+                                "minimum" : 0
+                            },
+                            "eventName" : {
+                                "type" : "string"
+                            },
+                            "args" : {
+                                "type" : "object"
                             }
                         },
-                        "required" : ["timeAt"]
+                        "required" : ["eventName"]
                     }
                 }
             },

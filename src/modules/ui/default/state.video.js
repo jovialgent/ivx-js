@@ -19,10 +19,10 @@ export class VideoState {
         let {classes: footerClasses = '', html: footerHTML = ''} = footerSettings;
 
         return `
-            <section class="${sectionClasses}" id="${data.id}">
-                <header class="${headerClasses}">${headerHTML}</header>
+            <section class="${sectionClasses} ivx-state-section ivx-state-video-section" id="${data.id}">
+                <header class="${headerClasses} ivx-state-header ivx-state-video-header">${headerHTML}</header>
                 ${playerSection}
-                <footer class="${footerClasses}">${footerHTML}</footer>
+                <footer class="${footerClasses} ivx-state-footer ivx-state-video-footer">${footerHTML}</footer>
             </section>`;
     }
 }

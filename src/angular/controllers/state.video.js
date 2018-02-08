@@ -1,5 +1,8 @@
 import createFactoryFunction from '../utilities/create-factory-function.js';
 import VideoEventConstants from "../../constants/video.events.js";
+import { TypeValidator } from "../../utilities/type-parsers";
+
+const typeValidator = new TypeValidator();
 
 function setUpCuePoints(cuePoints) {
     let cuePointsTemp = sortCuePoints(cuePoints);
@@ -95,10 +98,7 @@ class VideoStateController {
                 if (cuePoints.length <= 0) return;
 
                 cuePoints.forEach((cuePoint, index) => {
-                    let { timeAt, fired = false, always = false } = cuePoint;
-                    let timeUntil = Math.abs(cuePoint.timeAt - currentTime);
-
-                    if (timeAt <= currentTime && (always || !fired)) {
+                    if (self.shouldFire(cuePoint, player)) {
                         cuePoint.fired = true;
 
                         iVXjs.log.debug(`Cuepoint ${index} Started`, {}, { cuePoint, index, source: 'cuePoint', status: 'started', timestamp: Date.now() });
@@ -110,6 +110,20 @@ class VideoStateController {
                 });
             }
         });
+    }
+
+    shouldFire(cuePoint, player) {
+        const { currentTime, paused } = player;
+        const { timeAt = 0, endAt, fired = false, always = false } = cuePoint;
+        const canFire = (!fired || always) && !paused;
+
+        if (typeValidator.isUndefined(endAt)) {
+            const timeUntil = Math.abs(timeAt - currentTime);
+
+            return timeUntil <= 0.2 && canFire;
+        }
+
+        return (timeAt <= currentTime && endAt >= currentTime) && canFire;
     }
 
     getActiveCues(player) {

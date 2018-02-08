@@ -181,8 +181,6 @@ export default class extends DefaultVideoControls {
         let muteIcon = this.getElementByClasses(muteControls.children, ["material-icons"]);
         let currentVolumeSpan = this.getElementByClasses(volumeBar.children, [volumeBarCurrentVolumeClasses]);
 
-        console.log(muteControls);
-
         switch (muteIcon.innerHTML) {
             case unmuteClasses:
                 muteIcon.innerHTML = muteClasses;
