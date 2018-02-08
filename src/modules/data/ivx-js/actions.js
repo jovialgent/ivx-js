@@ -32,24 +32,29 @@ export class Actions {
      * @return {HTMLNode} the element with the classes replaced.  
      */
     setElementClasses(element, eventObj) {
-        let { animationClasses = "" } = eventObj;
-        let { animationClass: oldAnimationClass } = element;
-
-        if (element.className.indexOf(animationClasses) >= 0) {
-            return;
-        }
+        const { animationClasses = "" } = eventObj;
+        const { animationClass: oldAnimationClass = "" } = element;
+        const classesToAdd = animationClasses.split(" ");
+        const classesToRemove = oldAnimationClass.split(" ");
 
         if (element.className.indexOf('hide') >= 0) {
             element.className = element.className.replace('hide', animationClasses);
             return;
         }
 
-        if (oldAnimationClass) {
-            element.className = element.className.replace(oldAnimationClass, '');
-        }
+        classesToRemove.forEach(classToRemove => {
+            if (classToRemove.length > 0) {
+                element.classList.remove(classesToRemove);
+            }
+        });
+
+        classesToAdd.forEach(classToAdd => {
+            if (classToAdd.length > 0) {
+                element.classList.add(classToAdd);
+            }
+        });
 
         element.animationClass = animationClasses;
-        element.className = `${element.className} ${animationClasses}`;
 
         return element;
     }

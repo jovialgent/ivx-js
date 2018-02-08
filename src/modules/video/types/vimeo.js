@@ -97,18 +97,19 @@ export class Vimeo {
         self.volumeOnEvent = typeof self.volumeOnEvent === 'function' ? self.volumeOnEvent : volumeOnEvent;
 
         self.player.on('timeupdate', (vimeoPlayInfo) => {
-            vimeoPlayInfo.currentTime = vimeoPlayInfo.seconds;
-            vimeoPlayInfo.id = self.playerId;
             self.player.getPaused()
                 .then(paused => {
+                    vimeoPlayInfo.currentTime = vimeoPlayInfo.seconds;
+                    vimeoPlayInfo.id = self.playerId;
+                    vimeoPlayInfo.paused = paused;
+    
                     if (paused) {
                         iVXjsBus.emit(videoEventNames.PAUSED, self.player);
                     } else {
                         iVXjsBus.emit(videoEventNames.PLAYING, self.player);
                     }
+                    iVXjsBus.emit(videoEventNames.TIME_UPDATE, vimeoPlayInfo, self.stateData);
                 });
-
-            iVXjsBus.emit(videoEventNames.TIME_UPDATE, vimeoPlayInfo, self.stateData);
         });
 
         self.player.on('ended', () => {

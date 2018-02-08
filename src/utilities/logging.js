@@ -1,4 +1,4 @@
-import LoggingMessages from  '../constants/logging.js';
+import LoggingMessages from '../constants/logging.js';
 import ErrorMessages from '../constants/errors.js';
 
 export default class {
@@ -10,7 +10,7 @@ export default class {
     }
 
     warn(message) {
-        let {show, LoggingMessages, Bus} = this;
+        let { show, LoggingMessages, Bus } = this;
         let warnMessage = LoggingMessages.WARN;
         let warnPayload = {
             message: message,
@@ -25,22 +25,32 @@ export default class {
     }
 
     error(error, type = "DEFAULT") {
-        let {show, ErrorMessages, Bus} = this;
+        let { show, ErrorMessages, Bus } = this;
         let errorTypeMessage = ErrorMessages[type];
-        let {message} = error;
+        let { message, messages } = error;
         let errorPayload = {
             message: message,
-            type : errorTypeMessage,
+            type: errorTypeMessage,
             error: error,
             timestamp: new Date()
         }
 
         console.error(`${errorTypeMessage}: ${message}`);
+
+        if (messages) {
+            this.debug("Errors caused by the following data", {
+                group: true,
+                messages
+            });
+        }
+
         Bus.emit(errorTypeMessage, error);
         Bus.emit(LoggingMessages.ERROR, errorPayload);
+
+        // throw Error(message);
     }
 
-    debug(message, options = {}, data={}) {
+    debug(message, options = {}, data = {}) {
         let { show, LoggingMessages, Bus } = this;
         let logMessage = LoggingMessages.DEBUG;
         let self = this;
@@ -52,7 +62,7 @@ export default class {
             console.groupCollapsed(`${logMessage}: ${message}`)
 
             messages.forEach(message => {
-                let { title, message : logMesage } = message;
+                let { title, message: logMesage } = message;
 
                 if (title) {
                     console.log(title);
@@ -75,7 +85,7 @@ export default class {
     }
 
     log(message) {
-        let {show, LoggingMessages, Bus} = this;
+        let { show, LoggingMessages, Bus } = this;
         let logMessage = LoggingMessages.LOG;
         let logPayload = {
             message: message,
@@ -86,7 +96,7 @@ export default class {
         Bus.emit(logMessage, logPayload);
     }
 
-     createMessage(message) {
+    createMessage(message) {
         if ((message !== null && typeof message === 'object') || Array.isArray(message)) {
             console.dir(message);
         } else {
@@ -96,7 +106,7 @@ export default class {
     }
 
     trace(stack) {
-        let {show, LoggingMessages, Bus} = this;
+        let { show, LoggingMessages, Bus } = this;
         let stackPayLoad = {
             stack: stack,
             timestamp: new Date()

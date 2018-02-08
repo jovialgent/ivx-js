@@ -93,9 +93,11 @@ export class YouTube {
                         iVXjsBus.emit(videoEventNames.ENDED, player, stateData);
                         break;
                     case 1:
+                        player.paused = false;
                         iVXjsBus.emit(videoEventNames.PLAYING, player, stateData)
                         break;
                     case 2:
+                        player.paused = true;
                         iVXjsBus.emit(videoEventNames.PAUSED, player, stateData);
                         break;
                     case 3:
