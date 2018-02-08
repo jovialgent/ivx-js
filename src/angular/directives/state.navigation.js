@@ -7,11 +7,13 @@ class NavigationState {
         this.template = this.templateHTML;
         this.restrict = 'E';
         this.replace = true;
-        this.scope = {};
+        this.scope = {
+            stateData: "="
+        };
         this.controller = ['$scope', ($scope) => { }];
         this.controllerAs = 'vm';
         this.link = function ($scope, iElm, iAttrs, controller) {
-            let { data } = $state.current;
+            let data = angular.copy($scope.stateData);
             let { links = [], header = {}, footer = {}, audio, onLinksReady = [] } = data;
 
             $scope.links = links;
@@ -28,14 +30,11 @@ class NavigationState {
 
             $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
 
-            $timeout(() => {
-
-
-            }, 1000)
-
             iElm.html(thisNavigationState.html);
+            
             $compile(iElm.contents())($scope, (compiled) => {
                 iElm.html(compiled);
+
 
                 let transitionAnimation = onLinksReady.find((event, index) => {
                     return event.eventName === "animateElement" && event.args.element === ".navigation-state-container";

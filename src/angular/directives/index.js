@@ -28,6 +28,9 @@ import YoutubePlayer from './video.youtube';
 import HTML5Player from './video.html5';
 import VimeoPlayer from './video.vimeo';
 
+//Embedded Views
+import EmbeddedViewInline from "./embeded-view.inline";
+
 // Video Controls
 
 import StandardVideoControls from './video.controls.standard';
@@ -53,6 +56,7 @@ export default angular.module('ivx-js.directives',[
     RadioInput,
     TextInput,
     TextareaInput,
+    EmbeddedViewInline,
     UrlInput,
     HTMLState,
     InputState,

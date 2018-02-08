@@ -3,20 +3,29 @@ import { HTMLObject } from './html-object';
 
 export default class States {
     constructor(config) {
-        this.rulesSchema = new Rules(config).schema;
-        this.generalHTMLSchema = new HTMLObject().generalHTMLSchema;
-        this.config = config;
-
+        Object.assign(this, {
+            generalHTMLSchema: new HTMLObject().generalHTMLSchema,
+            rulesSchema: new Rules(config).schema,
+            config
+        });
     }
 
     get stateRequired() {
         return ['id', 'name', 'appendTo', 'type']
     }
 
-    get stateIdEnums() {
-        return config.states.map(state => {
-            return state.id;
-        })
+    get types(){
+        return ['inline']
+    }
+
+    get stateIdEnum() {
+        return this.config.states.reduce((stateIds, state) => {
+            if (state.embedded) {
+                stateIds = [].concat(stateIds, [state.id]);
+            }
+
+            return stateIds;
+        }, [])
     }
 
     get stateProperties() {
@@ -31,7 +40,7 @@ export default class States {
             },
             "type": {
                 "type": "string",
-                "enum": ["inline"]
+                "enum": this.types
             },
             "appendTo": {
                 "type": "string"
@@ -40,8 +49,15 @@ export default class States {
                 "type": "array",
                 "items": {
                     "type": "object",
-                    "properties" : {
-                        
+                    "properties": {
+                        "stateId": {
+                            "type": "string",
+                            "enum": this.stateIdEnum
+                        },
+                        "next": {
+                            "type": "array",
+                            "items": this.rulesSchema
+                        }
                     }
                 }
             }
@@ -55,5 +71,6 @@ export default class States {
             "properties": this.stateProperties,
             "required": this.stateRequired
         }
+
     }
 }

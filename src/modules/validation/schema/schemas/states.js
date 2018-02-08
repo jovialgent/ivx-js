@@ -6,8 +6,7 @@ export class States {
     constructor(config) {
         this.rulesSchema = new Rules(config).schema;
         this.generalHTMLSchema = new HTMLObject().generalHTMLSchema;
-        this.embeddedViewsSchema = new EmbeddedViewsSchema().shcema;
-
+        this.embeddedViewsSchema = new EmbeddedViewsSchema(config).schema;
     }
 
     get stateRequired() {

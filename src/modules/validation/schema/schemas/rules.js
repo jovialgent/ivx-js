@@ -27,10 +27,7 @@ export class Rules {
             return stateIds;
         }, []);
 
-        console.log(stateIds);
-
         return stateIds;
-
     }
 
     get rulesRequired() {
@@ -43,8 +40,7 @@ export class Rules {
             "name": "Rule Schema",
             "properties": {
                 "stateId": {
-                    "type": "string",
-                    "enum": this.stateIdEnums
+                    "type": "string"
                 },
                 "rules": {
                     "type": "array"
