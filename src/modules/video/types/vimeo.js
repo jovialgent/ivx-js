@@ -102,7 +102,7 @@ export class Vimeo {
                     vimeoPlayInfo.currentTime = vimeoPlayInfo.seconds;
                     vimeoPlayInfo.id = self.playerId;
                     vimeoPlayInfo.paused = paused;
-    
+
                     if (paused) {
                         iVXjsBus.emit(videoEventNames.PAUSED, self.player);
                     } else {
@@ -117,6 +117,13 @@ export class Vimeo {
         });
 
         self.player.on('loaded', () => {
+            const { classes = "" } = self._settings;
+            const iFrame = document.querySelector('#' + self.playerId + ' iframe');
+
+            if (iFrame) {
+                iFrame.className = `${iFrame.className} ${classes}`;
+            }
+
             iVXjsBus.emit(videoEventNames.CAN_PLAY, self.player, self.stateData);
         });
 
