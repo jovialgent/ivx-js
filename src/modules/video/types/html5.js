@@ -365,6 +365,7 @@ export class Html5 {
         let attrHTML = thisObjectParsers.reduce(this.settings, (thisAttrHTML, value, key) => {
             if (tags.indexOf(key) >= 0) return thisAttrHTML;
             if (justAttrs.indexOf(key) >= 0) return `${thisAttrHTML} ${key}`;
+            if (key === 'classes') return `${thisAttrHTML} class="${value}"`;
 
             return `${thisAttrHTML} ${key}="${value}"`
         }, "");
