@@ -64,8 +64,6 @@ export class Actions {
         const elements = this._getArrayFromAllSelector(selector);
         const classNames = this._getClassNames(classes);
 
-        console.log(elements);
-
         elements.forEach(element => {
             
             classNames.forEach(className => {

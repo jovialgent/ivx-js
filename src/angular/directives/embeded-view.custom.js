@@ -1,7 +1,7 @@
 import createFactoryFunction from '../utilities/create-factory-function.js';
-import controller from '../controllers/embedded-view.inline.js';
+import controller from '../controllers/embedded-view.custom.js';
 
-class EmbeddedViewInline {
+class EmbeddedViewCustom {
     constructor($compile, $filter, iVXjs, iVXjsUIModule, pullInTemplate) {
         Object.assign(this, {
             template: this.templateHTML,
@@ -20,15 +20,14 @@ class EmbeddedViewInline {
 
     get templateHTML() {
         return `
-     
             <div class="ivx-embbeded-view ivx-embedded-view-inline" id="{{viewData.id}}"  ng-class="viewData.classes" ui-view="{{viewData.id}}"></div>
        `
     }
 }
 
-EmbeddedViewInline.$inject = ['$compile', '$filter', 'iVXjs', 'ivxjs.modules.ui', 'pullInTemplate'];
+EmbeddedViewCustom.$inject = ['$compile', '$filter', 'iVXjs', 'ivxjs.modules.ui', 'pullInTemplate'];
 
 export default angular
-    .module('ivx-js.directives.embedded.inline', [])
-    .directive('ivxjsEmbeddedViewInline', createFactoryFunction(EmbeddedViewInline))
+    .module('ivx-js.directives.embedded.custom', [])
+    .directive('ivxjsEmbeddedViewCustom', createFactoryFunction(EmbeddedViewCustom))
     .name;

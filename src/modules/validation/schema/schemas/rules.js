@@ -19,8 +19,11 @@ export class Rules {
                     const allParentChildStateIds = embeddedStates.map(embeddedState => {
                         return `${currentStateId}.${embeddedState.stateId}`;
                     });
+                    const allRelativeChildStateIds = embeddedStates.map(embeddedState => {
+                        return `^.${embeddedState.stateId}`;
+                    });
 
-                    stateIds = [].concat(stateIds, allParentChildStateIds);
+                    stateIds = [].concat(stateIds, allParentChildStateIds, allRelativeChildStateIds, ['^']);
                 });
             }
 

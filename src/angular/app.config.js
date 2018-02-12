@@ -6,14 +6,14 @@ import StateEvents from "../constants/state.events.js";
 let stateEvents = new StateEvents();
 
 class AppConfig {
-    constructor($stateProvider, $urlRouterProvider, $locationProvider, $compileProvider, $httpProvider, $sceDelegateProvider, $provide, iVXjs, iVXjsStateGeneratorProvider) {
+    constructor($stateProvider, $urlRouterProvider, $locationProvider, $compileProvider, $httpProvider, $sceDelegateProvider, $provide, iVXjs, stateGeneratorProvider) {
         if (!iVXjs.config) return;
 
-        iVXjsStateGeneratorProvider.create($stateProvider, iVXjs);
+        stateGeneratorProvider.create($stateProvider, iVXjs);
 
         let { experience } = iVXjs;
         let defaultStateID = iVXjs.rules(iVXjs.config.defaultState);
-        let url = iVXjsStateGeneratorProvider.buildDefaultUrl(iVXjs, defaultStateID);
+        let url = stateGeneratorProvider.buildDefaultUrl(iVXjs, defaultStateID);
 
         if (experience.whiteList) {
             $sceDelegateProvider.resourceUrlWhitelist(experience.whiteList);
@@ -52,6 +52,6 @@ class AppConfig {
 
 }
 
-AppConfig.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider', '$compileProvider', '$httpProvider', '$sceDelegateProvider', '$provide', 'iVXjs', 'iVXjsStateGeneratorProvider'];
+AppConfig.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider', '$compileProvider', '$httpProvider', '$sceDelegateProvider', '$provide', 'iVXjs', 'stateGeneratorProvider'];
 
 export default createFactoryFunction(AppConfig);

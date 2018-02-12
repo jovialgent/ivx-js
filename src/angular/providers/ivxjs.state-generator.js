@@ -1,6 +1,6 @@
 import createFactoryFunction from '../utilities/create-factory-function.js';
 
-class iVXjsStateGenerator {
+class stateGenerator {
     constructor() {
 
     }
@@ -11,15 +11,17 @@ class iVXjsStateGenerator {
             addViews: (embeddedViews, parentTemplate) => {
                 embeddedViews.forEach((embeddedView, index) => {
                     const { appendTo, id, type } = embeddedView;
-                    console.log(parentTemplate);
-                    const uiContainer = angular.element(parentTemplate.find(appendTo));
+                    const domNode = document.querySelector(appendTo);
+
+                    if (!domNode) {
+                        self.iVXjs.log.warn(`Can't find element with selector, "${appendTo}" to embedded this view. Check to make sure you have this element defined in either your header, footer or is an element in the existing state.`);
+                        return;
+                    }
+
+                    const uiContainer = angular.element(domNode);
                     const view = angular.element(`<ivxjs-embedded-view-${type} view-data="stateData.embeddedViews[${index}]"></ivxjs-embedded-view-${type}>`);
 
-                    console.log(uiContainer);
-
                     uiContainer.append(view);
-
-                    console.log(uiContainer);
                 });
             }
         }
@@ -202,8 +204,8 @@ class iVXjsStateGenerator {
     }
 }
 
-iVXjsStateGenerator.$inject = [];
+stateGenerator.$inject = [];
 
 export default angular.module('ivx-js.providers.set-up', [])
-    .provider('iVXjsStateGenerator', createFactoryFunction(iVXjsStateGenerator))
+    .provider('stateGenerator', createFactoryFunction(stateGenerator))
     .name;

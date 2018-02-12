@@ -15,7 +15,7 @@ export default class States {
     }
 
     get types(){
-        return ['inline']
+        return ['custom']
     }
 
     get stateIdEnum() {
@@ -25,7 +25,7 @@ export default class States {
             }
 
             return stateIds;
-        }, [])
+        }, ['^'])
     }
 
     get stateProperties() {

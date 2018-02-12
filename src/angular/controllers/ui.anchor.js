@@ -8,13 +8,20 @@ class AnchorController {
         this.iVXjs = iVXjs;
     }
 
-    onLinkClick($event) {
+    onLinkClick($event = {}) {
+        const { currentTarget = {} } = $event;
+        const { href: targetHref } = currentTarget;
         let { iVXjs } = this;
-        let { onClick: onClickEvents = [], attributes = {}, href } = this.anchorInfo;
+        let { onClick: onClickEvents = [], attributes = {}, href: anchorHref } = this.anchorInfo;
         let self = this;
         let hasGoToNextState = onClickEvents.find((clickEvent, index) => {
             return clickEvent.eventName === 'goToNextState';
         });
+        let href = anchorHref;
+
+        if (attributes['ui-sref'] && targetHref) href = targetHref;
+        else iVXjs.log.warn(`The state defined in the ui-sref, "${attributes['ui-sref']}", is not valid. Defaulting to the href in the anchor definition.`)
+
 
         if (attributes.target !== '_blank') {
             $event.preventDefault();
@@ -33,8 +40,6 @@ class AnchorController {
                 self.$window.location = href;
             }
         });
-
-
 
         this.iVXjsAudio.audioElement.play();
         this.iVXjsAudio.audioElement.pause();

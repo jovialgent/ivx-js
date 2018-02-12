@@ -3,7 +3,7 @@ import InputStateController from '../controllers/state.input.js';
 import AudioEventNames from "../../constants/audio.events.js";
 
 class InputState {
-    constructor($state, $compile, $sce, $timeout, iVXjs, iVXjsActions, iVXjsUIModule, pullInTemplate, iVXjsBus, ivxExperienceScope, iVXjsStateGenerator) {
+    constructor($state, $compile, $sce, $timeout, iVXjs, iVXjsActions, iVXjsUIModule, pullInTemplate, iVXjsBus, ivxExperienceScope, stateGenerator) {
         this.template = this.templateHTML;
         this.replace = true;
         this.restrict = 'E';
@@ -28,7 +28,7 @@ class InputState {
             iElm.html(inputStateFramework.html);
 
             if (!embedded && embeddedViews.length > 0) {
-                iVXjsStateGenerator.addViews(embeddedViews, iElm);
+                stateGenerator.addViews(embeddedViews, iElm);
             }
 
             $compile(iElm.contents())($scope, (compiled) => {
@@ -87,7 +87,7 @@ class InputState {
     };
 }
 
-InputState.$inject = ['$state', '$compile', '$sce', '$timeout', 'iVXjs', 'ivxjs.actions', 'ivxjs.modules.ui', 'pullInTemplate', 'ivxjs.bus', "ivxExperienceScope", "iVXjsStateGenerator"];
+InputState.$inject = ['$state', '$compile', '$sce', '$timeout', 'iVXjs', 'ivxjs.actions', 'ivxjs.modules.ui', 'pullInTemplate', 'ivxjs.bus', "ivxExperienceScope", "stateGenerator"];
 
 export default angular
     .module('ivx-js.directives.state.input', [])

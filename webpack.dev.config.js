@@ -37,11 +37,16 @@ module.exports = {
                 ]
             },
             {
-                test : /\.less$/,
-                use : [
+                test: /\.less$/,
+                use: [
                     'style-loader',
                     'css-loader',
-                    'less-loader'
+                    {
+                        loader: 'less-loader',
+                        options: {
+                            paths: [path.resolve(__dirname, "node_modules")]
+                        }
+                    }
                 ]
             },
             {

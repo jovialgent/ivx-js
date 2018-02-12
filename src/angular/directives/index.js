@@ -29,7 +29,7 @@ import HTML5Player from './video.html5';
 import VimeoPlayer from './video.vimeo';
 
 //Embedded Views
-import EmbeddedViewInline from "./embeded-view.inline";
+import EmbeddedViewCustom from "./embeded-view.custom";
 
 // Video Controls
 
@@ -56,7 +56,7 @@ export default angular.module('ivx-js.directives',[
     RadioInput,
     TextInput,
     TextareaInput,
-    EmbeddedViewInline,
+    EmbeddedViewCustom,
     UrlInput,
     HTMLState,
     InputState,
