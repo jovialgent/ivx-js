@@ -10,12 +10,12 @@
         "local-build": "node build.js --should-build --local --ui=$UI --data=$DATA --validation=$VALIDATION --analytics=$ANALYTICS",
         "start": "node_modules/.bin/npm-run-all -p webpack-dev-server local-build",
         "test": "node_modules/.bin/karma start karma.conf.js",
-        "example-add-class-action": "node_modules/.bin/webpack-dev-server --open --content-base='add-class-action'",
-        "example-before-after-content": "node_modules/.bin/webpack-dev-server --open --content-base='before-after-content'",
-        "example-embedded-states": "node_modules/.bin/webpack-dev-server --open --content-base='embedded-states'",
-        "example-end-at": "node_modules/.bin/webpack-dev-server --open --content-base='end-at'",
-        "example-state-id-validation": "node_modules/.bin/webpack-dev-server --open --content-base='state-id-validation'",
-        "example-add-class-property-to-video": "node_modules/.bin/webpack-dev-server --open --content-base='add-class-property-to-video'"
+        "example-add-class-action": "node_modules/.bin/webpack-dev-server --open --content-base=add-class-action",
+        "example-before-after-content": "node_modules/.bin/webpack-dev-server --open --content-base=before-after-content",
+        "example-embedded-states": "node_modules/.bin/webpack-dev-server --open --content-base=embedded-states",
+        "example-end-at": "node_modules/.bin/webpack-dev-server --open --content-base=end-at",
+        "example-state-id-validation": "node_modules/.bin/webpack-dev-server --open --content-base=state-id-validation",
+        "example-add-class-property-to-video": "node_modules/.bin/webpack-dev-server --open --content-base=add-class-property-to-video"
     },
     "author": "",
     "license": "ISC",
