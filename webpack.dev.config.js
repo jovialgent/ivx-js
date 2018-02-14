@@ -2,7 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const { argv } = require('yargs');
-const { $0, local, setup, contentBase : example } = argv;
+const { $0, local, setup, contentBase: example } = argv;
 let configs = [];
 
 const publicPath = `public/examples/${example}`;
@@ -21,13 +21,18 @@ module.exports = {
         rules: [
             {
                 test: /\.js$/,
-                exclude: /(node_modules|bower_components)/,
-                use: {
+                use: [{
+                    loader: 'ng-annotate-loader',
+                    options: { explicitOnly: false }
+                },
+                {
                     loader: 'babel-loader',
                     options: {
                         presets: ['env']
+
                     }
-                }
+                }],
+                exclude: [/src\/lib/, /node_modules/]
             },
             {
                 test: /\.css$/,

@@ -139,6 +139,8 @@ var TypeValidator = exports.TypeValidator = function () {
     }, {
         key: 'isUndefined',
         value: function isUndefined(obj) {
+            var undefined = void 0;
+
             return obj === undefined || obj === null;
         }
     }, {
@@ -543,7 +545,11 @@ var _class = function () {
                     return self[lhs](lhs, is, rhs);
                 }
 
-                return self[type](lhs, is, rhs);
+                if (self[type]) {
+                    return self[type](lhs, is, rhs);
+                }
+
+                return false;
             });
 
             return this[conditionOperator](evaluateConditions);
@@ -555,7 +561,11 @@ var _class = function () {
 
             var lhsValue = experience.data[lhs];
 
-            return this[is](lhsValue, rhs);
+            if (this[is]) {
+                return this[is](lhsValue, rhs);
+            }
+
+            return false;
         }
     }, {
         key: "and",
@@ -776,26 +786,82 @@ var Actions = exports.Actions = function () {
         value: function setElementClasses(element, eventObj) {
             var _eventObj$animationCl = eventObj.animationClasses,
                 animationClasses = _eventObj$animationCl === undefined ? "" : _eventObj$animationCl;
-            var oldAnimationClass = element.animationClass;
+            var _element$animationCla = element.animationClass,
+                oldAnimationClass = _element$animationCla === undefined ? "" : _element$animationCla;
 
-
-            if (element.className.indexOf(animationClasses) >= 0) {
-                return;
-            }
+            var classesToAdd = animationClasses.split(" ");
+            var classesToRemove = oldAnimationClass.split(" ");
 
             if (element.className.indexOf('hide') >= 0) {
                 element.className = element.className.replace('hide', animationClasses);
                 return;
             }
 
-            if (oldAnimationClass) {
-                element.className = element.className.replace(oldAnimationClass, '');
-            }
+            classesToRemove.forEach(function (classToRemove) {
+                if (classToRemove.length > 0) {
+                    element.classList.remove(classesToRemove);
+                }
+            });
+
+            classesToAdd.forEach(function (classToAdd) {
+                if (classToAdd.length > 0) {
+                    element.classList.add(classToAdd);
+                }
+            });
 
             element.animationClass = animationClasses;
-            element.className = element.className + " " + animationClasses;
 
             return element;
+        }
+    }, {
+        key: "addClasses",
+        value: function addClasses(eventObj) {
+            var selector = eventObj.element,
+                _eventObj$classes = eventObj.classes,
+                classes = _eventObj$classes === undefined ? "" : _eventObj$classes;
+
+            var elements = this._getArrayFromAllSelector(selector);
+            var classNames = this._getClassNames(classes);
+
+            elements.forEach(function (element) {
+                classNames.forEach(function (className) {
+                    element.classList.add(className);
+                });
+            });
+        }
+    }, {
+        key: "removeClasses",
+        value: function removeClasses(eventObj) {
+            var selector = eventObj.element,
+                _eventObj$classes2 = eventObj.classes,
+                classes = _eventObj$classes2 === undefined ? "" : _eventObj$classes2;
+
+            var elements = this._getArrayFromAllSelector(selector);
+            var classNames = this._getClassNames(classes);
+
+            elements.forEach(function (element) {
+                classNames.forEach(function (className) {
+                    element.classList.remove(className);
+                });
+            });
+        }
+    }, {
+        key: "_getClassNames",
+        value: function _getClassNames() {
+            var classes = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
+
+            if (!classes || !classes.split) return;
+
+            return classes.split(' ');
+        }
+    }, {
+        key: "_getArrayFromAllSelector",
+        value: function _getArrayFromAllSelector(selector) {
+            var elements = document.querySelectorAll(selector);
+
+            if (!elements || elements.length <= 0) return [];
+
+            return Array.from(elements);
         }
     }, {
         key: "goToNextState",
@@ -1587,6 +1653,7 @@ if (angular) {
 
     _app.constant('iVXjs.data.iVXio', initializeiVXIO);
     _app.constant('validator', _index2.default);
+    _app.constant('iVXjsDataiVXio', _index2.default);
 
     new _index4.default(_app, { factoryFunctionCreator: _factoryFunctionCreator2.default });
     new _index6.default(_app, { factoryFunctionCreator: _factoryFunctionCreator2.default });
@@ -2067,7 +2134,8 @@ var _class = function () {
                 Bus = this.Bus;
 
             var errorTypeMessage = ErrorMessages[type];
-            var message = _error.message;
+            var message = _error.message,
+                messages = _error.messages;
 
             var errorPayload = {
                 message: message,
@@ -2077,8 +2145,18 @@ var _class = function () {
             };
 
             console.error(errorTypeMessage + ': ' + message);
+
+            if (messages) {
+                this.debug("Errors caused by the following data", {
+                    group: true,
+                    messages: messages
+                });
+            }
+
             Bus.emit(errorTypeMessage, _error);
             Bus.emit(_logging2.default.ERROR, errorPayload);
+
+            // throw Error(message);
         }
     }, {
         key: 'debug',
@@ -2340,7 +2418,11 @@ var _class = function (_Evaluator) {
                 return noEventFired(is, events, experience);
             }
 
-            return this[is](storyEvent, events);
+            if (this[is]) {
+                return this[is](storyEvent, events);
+            }
+
+            return false;
 
             function noEventFired(is, events, experience) {
                 var isFired = is === 'fired';
@@ -2396,7 +2478,11 @@ var _class = function (_Evaluator) {
             var progressValue = progressMap[_progress];
             var evaluateProgress = currentProgressValue > currentMilestoneValue ? currentProgressValue : currentMilestoneValue;
 
-            return this[is](evaluateProgress, progressValue);
+            if (this[is]) {
+                return this[is](evaluateProgress, progressValue);
+            }
+
+            return false;
 
             function isStoryProgress(progress) {
                 return progress === 'Started' || progress === 'Completed' || progress === 'Converted';
@@ -3364,7 +3450,7 @@ var _class = function () {
                 jsonMinLengthAttribute = _jsonInputAttributes$2 === undefined ? 0 : _jsonInputAttributes$2;
 
 
-            jsonInputData.type = "text";
+            jsonInputData.type = "textarea";
             jsonInputData.attributes = Object.assign({}, jsonInputData.attributes, {
                 maxlength: new Number(storyMaxLengthAttribute < maxCharacters ? storyMaxLengthAttribute : jsonMaxLengthAttribute).valueOf(),
                 minlength: new Number(typeof storyMinLengthAttribute !== 'undefined' ? storyMinLengthAttribute : jsonMinLengthAttribute).valueOf()
@@ -3908,9 +3994,7 @@ var Service = exports.Service = function () {
 
     _createClass(Service, [{
         key: 'setScopeExperience',
-        value: function setScopeExperience(experience) {
-            console.log("GOT TO IVXIO SERVICE");
-        }
+        value: function setScopeExperience(experience) {}
     }]);
 
     return Service;

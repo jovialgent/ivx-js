@@ -139,6 +139,8 @@ var TypeValidator = exports.TypeValidator = function () {
     }, {
         key: 'isUndefined',
         value: function isUndefined(obj) {
+            var undefined = void 0;
+
             return obj === undefined || obj === null;
         }
     }, {
@@ -543,7 +545,11 @@ var _class = function () {
                     return self[lhs](lhs, is, rhs);
                 }
 
-                return self[type](lhs, is, rhs);
+                if (self[type]) {
+                    return self[type](lhs, is, rhs);
+                }
+
+                return false;
             });
 
             return this[conditionOperator](evaluateConditions);
@@ -555,7 +561,11 @@ var _class = function () {
 
             var lhsValue = experience.data[lhs];
 
-            return this[is](lhsValue, rhs);
+            if (this[is]) {
+                return this[is](lhsValue, rhs);
+            }
+
+            return false;
         }
     }, {
         key: "and",
@@ -776,26 +786,82 @@ var Actions = exports.Actions = function () {
         value: function setElementClasses(element, eventObj) {
             var _eventObj$animationCl = eventObj.animationClasses,
                 animationClasses = _eventObj$animationCl === undefined ? "" : _eventObj$animationCl;
-            var oldAnimationClass = element.animationClass;
+            var _element$animationCla = element.animationClass,
+                oldAnimationClass = _element$animationCla === undefined ? "" : _element$animationCla;
 
-
-            if (element.className.indexOf(animationClasses) >= 0) {
-                return;
-            }
+            var classesToAdd = animationClasses.split(" ");
+            var classesToRemove = oldAnimationClass.split(" ");
 
             if (element.className.indexOf('hide') >= 0) {
                 element.className = element.className.replace('hide', animationClasses);
                 return;
             }
 
-            if (oldAnimationClass) {
-                element.className = element.className.replace(oldAnimationClass, '');
-            }
+            classesToRemove.forEach(function (classToRemove) {
+                if (classToRemove.length > 0) {
+                    element.classList.remove(classesToRemove);
+                }
+            });
+
+            classesToAdd.forEach(function (classToAdd) {
+                if (classToAdd.length > 0) {
+                    element.classList.add(classToAdd);
+                }
+            });
 
             element.animationClass = animationClasses;
-            element.className = element.className + " " + animationClasses;
 
             return element;
+        }
+    }, {
+        key: "addClasses",
+        value: function addClasses(eventObj) {
+            var selector = eventObj.element,
+                _eventObj$classes = eventObj.classes,
+                classes = _eventObj$classes === undefined ? "" : _eventObj$classes;
+
+            var elements = this._getArrayFromAllSelector(selector);
+            var classNames = this._getClassNames(classes);
+
+            elements.forEach(function (element) {
+                classNames.forEach(function (className) {
+                    element.classList.add(className);
+                });
+            });
+        }
+    }, {
+        key: "removeClasses",
+        value: function removeClasses(eventObj) {
+            var selector = eventObj.element,
+                _eventObj$classes2 = eventObj.classes,
+                classes = _eventObj$classes2 === undefined ? "" : _eventObj$classes2;
+
+            var elements = this._getArrayFromAllSelector(selector);
+            var classNames = this._getClassNames(classes);
+
+            elements.forEach(function (element) {
+                classNames.forEach(function (className) {
+                    element.classList.remove(className);
+                });
+            });
+        }
+    }, {
+        key: "_getClassNames",
+        value: function _getClassNames() {
+            var classes = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
+
+            if (!classes || !classes.split) return;
+
+            return classes.split(' ');
+        }
+    }, {
+        key: "_getArrayFromAllSelector",
+        value: function _getArrayFromAllSelector(selector) {
+            var elements = document.querySelectorAll(selector);
+
+            if (!elements || elements.length <= 0) return [];
+
+            return Array.from(elements);
         }
     }, {
         key: "goToNextState",
@@ -1379,9 +1445,7 @@ var _class = function () {
                     newConfigData.templates = result;
 
                     $.support.cors = true;
-                    $.get(result[0]).then(function (html) {
-                        console.log(html);
-                    });
+                    $.get(result[0]).then(function (html) {});
 
                     resolve(newConfigData);
                 }, function (error) {
@@ -1832,7 +1896,7 @@ var FirebaseData = exports.FirebaseData = function () {
 module.export = initializeFirebase;
 
 if (angular && angular.module('ivx-js')) {
-    angular.module('ivx-js').constant('iVXjs.data.firebase', initializeFirebase).provider('iVXjsFirebaseUtilities', function iVXjsFirebaseUtilitiesProvider() {
+    angular.module('ivx-js').constant('iVXjs.data.firebase', initializeFirebase).constant('iVXjsDataFirebase', initializeFirebase).provider('iVXjsFirebaseUtilities', function iVXjsFirebaseUtilitiesProvider() {
         this.utilities = new _utilities2.default();
         this.$get = function () {};
     });
@@ -2329,7 +2393,7 @@ var _class = function () {
                     var errorMessage = error.message;
                     // ...
 
-                    console.log(error.code);
+                    // console.log(error.code);
                 });
             }
 
