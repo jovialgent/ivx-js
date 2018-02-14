@@ -2,10 +2,10 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const { argv } = require('yargs');
-const { $0, local, setup, contentBase } = argv;
+const { $0, local, setup, contentBase : example } = argv;
 let configs = [];
 
-const publicPath = `public${contentBase ? "/" + contentBase : ""}`;
+const publicPath = `public/examples/${example}`;
 
 
 module.exports = {
