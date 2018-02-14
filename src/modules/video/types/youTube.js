@@ -235,6 +235,8 @@ export class YouTube {
     }
 
     get html() {
-        return `<div id="${this.playerId}" class='youtube-player'></div>`;
+        const { classes = "" } = this._settings;
+
+        return `<div id="${this.playerId}" class='youtube-player ${classes}'></div>`;
     }
 }

@@ -30,6 +30,11 @@
                         "standard"
                     ]
                 },
+                "classes" : {
+                    "name" : "Classes",
+                    "type" : ["string"],
+                    "description" : "Classes to be added to the video player. Each class should be seperated by a space. These classes will be put on the Video element for HTML5, and the iFrames for YouTube and Vimeo."
+                },
                 "attributes": {
                     "name": "Attributes",
                     "type": "object",
