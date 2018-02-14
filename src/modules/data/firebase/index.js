@@ -251,6 +251,7 @@ if (angular && angular.module('ivx-js')) {
     angular
         .module('ivx-js')
         .constant('iVXjs.data.firebase', initializeFirebase)
+        .constant('iVXjsDataFirebase', initializeFirebase)
         .provider('iVXjsFirebaseUtilities', function iVXjsFirebaseUtilitiesProvider() {
             this.utilities = new FirebaseUtilities();
             this.$get = () => { };
