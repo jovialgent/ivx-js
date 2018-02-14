@@ -15,6 +15,7 @@
         "example-embedded-states": "node_modules/.bin/webpack-dev-server --open --content-base=embedded-states",
         "example-end-at": "node_modules/.bin/webpack-dev-server --open --content-base=end-at",
         "example-state-id-validation": "node_modules/.bin/webpack-dev-server --open --content-base=state-id-validation",
+        "example-basic-video-experience": "node_modules/.bin/webpack-dev-server --open --content-base=basic-video-experience",
         "example-add-class-property-to-video": "node_modules/.bin/webpack-dev-server --open --content-base=add-class-property-to-video"
     },
     "author": "",
@@ -58,6 +59,7 @@
         "less-loader": "^4.0.5",
         "lodash": "^4.17.4",
         "materialize-css": "^1.0.0-alpha.3",
+        "ng-annotate-loader": "^0.6.1",
         "raw-loader": "^0.5.1",
         "semantic-ui-css": "^2.2.12",
         "style-loader": "^0.19.0",

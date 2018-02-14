@@ -95,7 +95,8 @@ module.export = initializeGoogle;
 if (angular && angular.module('ivx-js')) {
     angular
         .module('ivx-js')
-        .constant('iVXjs.analytics.google', initializeGoogle);
+        .constant('iVXjs.analytics.google', initializeGoogle)
+        .constant('iVXjsAnalyticsGoogle', initializeGoogle)
 }
 
 function initializeGoogle(settings = {}, iVXjs) {
