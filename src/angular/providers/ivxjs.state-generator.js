@@ -19,7 +19,7 @@ class stateGenerator {
                     }
 
                     const uiContainer = angular.element(domNode);
-                    const view = angular.element(`<ivxjs-embedded-view-${type} view-data="stateData.embeddedViews[${index}]"></ivxjs-embedded-view-${type}>`);
+                    const view = angular.element(`<ivxjs-embedded-view-${type} id="${id}" view-data="stateData.embeddedViews[${index}]"></ivxjs-embedded-view-${type}>`);
 
                     uiContainer.append(view);
                 });

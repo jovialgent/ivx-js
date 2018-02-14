@@ -17,14 +17,22 @@ class AppRun {
         $rootScope.ogImage = image;
         $rootScope.ogDescription = description;
 
-        iVXjs.Bus.on(stateEventNames.GO, (state) => {
-            let evalState = state;
+        iVXjs.Bus.on(stateEventNames.GO, (state = {}) => {
+            let evalState = state || {};
 
             if (Array.isArray(state)) {
                 evalState = state[0];
             }
 
-            $state.go(evalState.stateId);
+            const { route, stateId = "" } = evalState;
+            const goToStateId = route ? route : stateId;
+
+            console.log(goToStateId);
+        
+            if (goToStateId.length > 0) {
+                console.dir($state);
+                $state.go(goToStateId);
+            }
         });
 
         $rootScope.$on("$includeContentError", function (event, args) {

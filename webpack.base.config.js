@@ -87,7 +87,7 @@ class BaseWebpackConfig {
                         test: /\.js$/,
                         exclude: /(node_modules|bower_components)/,
                         use: {
-                            loader: 'babel-loader',
+                            loader: ['ng-annotate-loader','babel-loader'],
                             options: {
                                 presets: ['env']
                             }

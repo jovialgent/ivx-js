@@ -54,17 +54,17 @@ export class Rules {
      */
     processRules(navArray = []) {
 
-        if(!Array.isArray(navArray)){
+        if (!Array.isArray(navArray)) {
             navArray = [];
         }
-        
+
         let self = this;
         let stateSelect = navArray.find((navObj) => {
-            let {rule} = navObj;
+            let { rule } = navObj;
 
-            if(typeValidator.isEmpty(rule)) return true;
+            if (typeValidator.isEmpty(rule)) return true;
 
-            let {conditions, conditionOperator = "and"} = rule;
+            let { conditions, conditionOperator = "and" } = rule;
 
             if (!conditions) {
                 rule.conditionOperator = conditionOperator;
@@ -72,8 +72,10 @@ export class Rules {
             }
 
             return self.evaluator.evaluate(rule);
-        });
+        }) || {};
 
-        return stateSelect ? stateSelect.stateId : '';
+        const { stateId = '', route } = stateSelect;
+
+        return route ? route : stateId;
     }
 }

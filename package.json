@@ -6,7 +6,7 @@
   "scripts": {
     "build": "node build.js --should-build",
     "setup": "node build.js --should-build --setup",
-    "webpack-dev-server": "node_modules/.bin/webpack-dev-server --open --content-base=$BUILD_PATH",
+    "webpack-dev-server": "node_modules/.bin/webpack-dev-server --open --content-base=$EXAMPLE",
     "local-build": "node build.js --should-build --local --ui=$UI --data=$DATA --validation=$VALIDATION --analytics=$ANALYTICS",
     "start": "node_modules/.bin/npm-run-all -p webpack-dev-server local-build",
     "test": "node_modules/.bin/karma start karma.conf.js"
@@ -52,6 +52,7 @@
     "less-loader": "^4.0.5",
     "lodash": "^4.17.4",
     "materialize-css": "^1.0.0-alpha.3",
+    "ng-annotate-loader": "^0.6.1",
     "raw-loader": "^0.5.1",
     "semantic-ui-css": "^2.2.12",
     "style-loader": "^0.19.0",

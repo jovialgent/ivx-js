@@ -18,7 +18,11 @@ export class Actions extends ActionProcessor {
     navigateToNextState(nextArray) {
         if (typeValidator.isEmpty(nextArray)) return;
 
-        this.$state.go(this.iVXjs.rules(nextArray));
+        const route = this.iVXjs.rules(nextArray);
+
+        if(!typeValidator.isEmpty(route)){
+            this.$state.go(route);
+        }
     }
 
     resolveThenNavigate(actionArray, nextArray) {
