@@ -39,7 +39,7 @@ class AppRun {
             iVXjs.Bus.emit(angularEventNames.TEMPLATE_NOT_FOUND, event);
         });
 
-        $transitions.onSuccess({ to: '*' }, ['$state', 'ivxjs.modules.audio', ($state, iVXjsAudio) => {
+        $transitions.onSuccess({ to: '*.*' }, ['$state', 'ivxjs.modules.audio', ($state, iVXjsAudio) => {
             let { data } = $state.current;
 
             iVXjs.Bus.emit(stateEventNames.CHANGE, $state.current);
