@@ -3,7 +3,7 @@ import HTML5VideoController from '../controllers/video.html5.js';
 import VideoEventConstants from "../../constants/video.events.js";
 
 class HTML5VideoPlayer {
-    constructor($compile, $timeout, iVXjsVideoModule, iVXjsBus, iVXjsLog, createInlineVideo) {
+    constructor($compile, $timeout, iVXjsVideoModule, iVXjsBus, iVXjsLog, createInlineVideo, iVXjsVideoService, iVXjs) {
         this.template = this.templateHTML;
         this.restrict = 'E';
         this.scope = {
@@ -21,6 +21,7 @@ class HTML5VideoPlayer {
 
             if (statePlayerSettings) {
                 settings = statePlayerSettings;
+                settings.cuePoints = statePlayerSettings.cuePoints ? statePlayerSettings.cuePoints : stateData.cuePoints;
             } else {
                 settings = playerSettings;
             }
@@ -48,6 +49,13 @@ class HTML5VideoPlayer {
             controller.player = thisVideoPlayer;
 
             $compile(iElm.contents())($scope);
+
+            const cuepointFunction = iVXjsVideoService.createCuePointListener(thisVideoPlayer.player.id, settings.cuePoints);
+
+            $scope.$on('$destroy', () => {
+                thisVideoPlayer.dispose(iVXjsBus);
+                iVXjsVideoService.removeCuePointListener(cuepointFunction);
+            });
         };
     }
 
@@ -56,7 +64,7 @@ class HTML5VideoPlayer {
     }
 }
 
-HTML5VideoPlayer.$inject = ['$compile', '$timeout', 'ivxjs.modules.video', 'ivxjs.bus', 'ivxjs.log', 'createInlineVideo'];
+HTML5VideoPlayer.$inject = ['$compile', '$timeout', 'ivxjs.modules.video', 'ivxjs.bus', 'ivxjs.log', 'createInlineVideo', 'iVXjsVideoService', 'iVXjs'];
 
 export default angular
     .module('ivx-js.directives.video.html5', [])

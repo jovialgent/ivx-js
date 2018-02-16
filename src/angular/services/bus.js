@@ -5,6 +5,7 @@ let typeValidator = new TypeValidator();
 
 export class Bus {
     constructor($rootScope, iVXjs) {
+        "ngInject";
         this.$rootScope = $rootScope;
         this.iVXjs = iVXjs;
     }
@@ -65,8 +66,7 @@ export class Bus {
     }
 }
 
-Bus.$inject = ['$rootScope', 'iVXjs'];
-
 export default angular.module('ivx-js.services.bus', [])
-    .service('ivxjs.bus', createFactoryFunction(Bus))
+    .service('ivxjs.bus', Bus)
+    .service('iVXjsBus', Bus)
     .name;
