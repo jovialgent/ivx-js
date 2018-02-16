@@ -55,8 +55,6 @@ class HTML5VideoPlayer {
             $scope.$on('$destroy', () => {
                 thisVideoPlayer.dispose(iVXjsBus);
                 iVXjsVideoService.removeCuePointListener(cuepointFunction);
-                
-                console.dir(iVXjs.Bus);
             });
         };
     }

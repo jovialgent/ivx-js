@@ -34,7 +34,7 @@ class VideoService {
         iVXjsBus.removeListener(this.videoEventNames.TIME_UPDATE, cuePointFunction);
     }
 
-    createCuePointListener(playerId, cuePoints) {
+    createCuePointListener(playerId, cuePoints = []) {
         const { iVXjs, iVXjsBus, iVXjsActions } = this;
         const self = this;
 

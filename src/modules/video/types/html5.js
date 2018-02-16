@@ -345,7 +345,6 @@ export class Html5 {
         let eventsToDispose = Object.keys(eventNameMap);
 
         eventsToDispose.forEach((eventNameToDispose, index) => {
-            console.log(self[`${eventNameToDispose}OnEvent`]);
             if (!self[`${eventNameToDispose}OnEvent`]) return;
 
             iVXjsBus.removeListener(eventNameMap[eventNameToDispose], self[`${eventNameToDispose}OnEvent`])

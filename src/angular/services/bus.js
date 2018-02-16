@@ -66,10 +66,7 @@ export class Bus {
     }
 }
 
-const ngInjectableService = angular.module('ivx-js.services.bus.injectable', [])
-    .service('iVXjsBus', Bus)
-    .name;
-
-export default angular.module('ivx-js.services.bus', [ngInjectableService])
+export default angular.module('ivx-js.services.bus', [])
     .service('ivxjs.bus', Bus)
+    .service('iVXjsBus', Bus)
     .name;

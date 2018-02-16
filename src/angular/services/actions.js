@@ -37,10 +37,7 @@ export class Actions extends ActionProcessor {
     }
 }
 
-const ngInjectableService = angular.module('ivx-js.services.actions.injectable', [])
-    .service('iVXjsActions', Actions)
-    .name;
-
-export default angular.module('ivx-js.services.action', [ngInjectableService])
+export default angular.module('ivx-js.services.action', [])
     .service('ivxjs.actions', Actions)
+    .service('iVXjsActions', Actions)
     .name;

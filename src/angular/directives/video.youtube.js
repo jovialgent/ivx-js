@@ -15,9 +15,10 @@ class YoutubeVideoPlayer {
         this.link = ($scope, iElm, iAttrs, controller) => {
             if (!iVXjsVideoModule.youtube) return;
 
-            let { settings = {}, stateData = {}, playerId } = $scope;
+            let { settings = {}, stateData: passedStateData = {}, playerId } = $scope;
             const { youtubeId } = settings;
             let cuepointFunction;
+            const stateData = Object.assign({}, passedStateData);
 
             const playerSettings = Object.assign({},
                 settings,
@@ -26,11 +27,6 @@ class YoutubeVideoPlayer {
                     id: youtubeId
                 });
 
-            stateData = {
-                id: stateData.id,
-                url: stateData.url,
-                name: stateData.name
-            };
 
             if (stateData.cuePoints) {
                 playerSettings.cuePoints = stateData.cuePoints;
@@ -52,16 +48,14 @@ class YoutubeVideoPlayer {
             function init() {
                 YouTubePlayer.createPlayer();
                 YouTubePlayer.addEventListeners(iVXjsBus);
-                cuepointFunction = iVXjsVideoService.createCuePointListener(YouTubePlayer.player.id, playerSettings.cuePoints);
+                cuepointFunction = iVXjsVideoService.createCuePointListener(playerId, playerSettings.cuePoints);
 
             }
 
             $scope.$on("$destroy", () => {
                 YouTubePlayer.dispose(iVXjsBus);
                 iVXjsVideoService.removeCuePointListener(cuepointFunction);
-
-                console.dir(iVXjs.Bus);
-            })
+            });
         }
     }
 
