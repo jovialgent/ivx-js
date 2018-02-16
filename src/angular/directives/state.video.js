@@ -15,12 +15,12 @@ class VideoState {
         this.link = ($scope, iElm, iAttrs, controller) => {
             let data = angular.copy($scope.stateData);
 
-            controller.stateData = $scope.stateData;
+            controller.stateData = data;
 
             let { id, playerType = "html5", playerSettings = {}, embeddedStates = [], embedded, cuePoints = [], personalizations = [], header = {}, footer = {} } = data;
             let { vimeoId, youtubeId, inlineSrc, iphoneInline = false } = playerSettings;
             let controlsHTML = ``;
-            const playerId = playerSettings.id ? playerSettings.id :`${id}-video-player`;
+            const playerId = playerSettings.id ? playerSettings.id : `${id}-video-player`;
 
             if (typeof playerSettings.controls === 'string') {
                 controlsHTML = `<ivxjs-${playerSettings.controls}-video-controls player-id='${playerId}'></ivxjs-${playerSettings.controls}-video-controls>`;
@@ -58,8 +58,8 @@ class VideoState {
 
             iElm.html(videoFramework.html);
 
-            if(!embedded && embeddedStates.length > 0){
-               iVXjsStateCreator.addViews(embeddedStates, iElm);
+            if (!embedded && embeddedStates.length > 0) {
+                iVXjsStateCreator.addViews(embeddedStates, iElm);
             }
 
             $compile(iElm.contents())($scope, (compiled) => {

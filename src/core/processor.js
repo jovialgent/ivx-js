@@ -56,7 +56,7 @@ export class ActionProcessor {
                 callback();
             })
             .catch(function (err) {
-
+                
                 log.debug(`One or all of the following events were not fired:`, {
                     group: true,
                     messages: Object.keys(actionObj.args).map((key, index) => {

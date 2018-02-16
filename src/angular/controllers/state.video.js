@@ -31,7 +31,7 @@ function sortCuePoints(cuePoints) {
 }
 
 class VideoStateController {
-    constructor($rootScope, $state, iVXjsActions, iVXjsBus, iVXjs) {
+    constructor($rootScope, $state, iVXjsActions, iVXjsBus, iVXjs, iVXjsVideoService) {
         let { playerSettings, onVideoEnd = [], onVideoReady = [], next, cuePoints = [] } = $state.current.data;
         let { autoplay = false } = playerSettings;
         let self = this;
@@ -60,7 +60,7 @@ class VideoStateController {
                 $state.current.data.player = player;
 
                 iVXjs.log.debug(`onVideoReady Started`, {}, { state: $state.current.data, source: 'onVideoReady', status: 'started', actions: onVideoReady, timestamp: Date.now() });
-
+                
                 iVXjsActions.resolveActions(onVideoReady, () => {
                     if (autoplay) {
                         iVXjsBus.emit(videoEventNames.PLAY, {
@@ -72,8 +72,6 @@ class VideoStateController {
                     }
 
                     iVXjs.log.debug(`onVideoReady Completed`, {}, { state: $state.current.data, source: 'onVideoReady', status: 'completed', actions: onVideoReady, timestamp: Date.now() });
-
-                    self.getActiveCues(player)
                     iVXjsBus.removeListener(videoEventNames.CAN_PLAY, playerCanPlay);
                 });
 
@@ -81,57 +79,16 @@ class VideoStateController {
         });
         const videoEnded = iVXjsBus.on(videoEventNames.ENDED, function stateVideoEnded(player) {
             if (player.id === self.playerId) {
-                iVXjsBus.emit(videoEventNames.DISPOSE, player);
-
                 iVXjs.log.debug(`onVideoEnd Actions`, {}, { state: $state.current.data, source: 'onVideoEnd', status: 'completed', actions: onVideoEnd, timestamp: Date.now() });
-
                 iVXjsActions.resolveThenNavigate(onVideoEnd, next);
-                iVXjsBus.removeListener(videoEventNames.TIME_UPDATE, self.timeUpdateEvent);
                 iVXjsBus.removeListener(videoEventNames.ENDED, videoEnded);
             }
         });
 
-        this.timeUpdateEvent = iVXjsBus.on(videoEventNames.TIME_UPDATE, function cuePointsOnUpdate(player, stateData) {
-            if (player.id === self.playerId) {
-                let { currentTime } = player;
 
-                if (cuePoints.length <= 0) return;
-
-                cuePoints.forEach((cuePoint, index) => {
-                    if (self.shouldFire(cuePoint, player)) {
-                        cuePoint.fired = true;
-
-                        iVXjs.log.debug(`Cuepoint ${index} Started`, {}, { cuePoint, index, source: 'cuePoint', status: 'started', timestamp: Date.now() });
-
-                        iVXjsActions.resolveActions([cuePoint], () => {
-                            iVXjs.log.debug(`Cuepoint ${index} Completed`, {}, { cuePoint, index, source: 'cuePoint', status: 'completed', timestamp: Date.now() });
-                        });
-                    }
-                });
-            }
-        });
-    }
-
-    shouldFire(cuePoint, player) {
-        const { currentTime, paused } = player;
-        const { timeAt = 0, endAt, fired = false, always = false } = cuePoint;
-        const canFire = (!fired || always) && !paused;
-
-        if (typeValidator.isUndefined(endAt)) {
-            const timeUntil = Math.abs(timeAt - currentTime);
-
-            return timeUntil <= 0.2 && canFire;
-        }
-
-        return (timeAt <= currentTime && endAt >= currentTime) && canFire;
-    }
-
-    getActiveCues(player) {
-        let { textTracks = [] } = player;
-        let activeCues = [];
     }
 }
 
-VideoStateController.$inject = ['$rootScope', '$state', 'ivxjs.actions', 'ivxjs.bus', 'iVXjs'];
+VideoStateController.$inject = ['$rootScope', '$state', 'ivxjs.actions', 'ivxjs.bus', 'iVXjs', 'iVXjsVideoService'];
 
 export default createFactoryFunction(VideoStateController)
