@@ -72,6 +72,8 @@ export class Html5 {
         const { playerId, volume } = args;
         const { id } = this.settings;
 
+        if(this.player.muted) return;
+
         if (!typeValidator.isNumber(volume)) return;
 
         if (!playerId || playerId === id) {
@@ -106,7 +108,8 @@ export class Html5 {
         const { id } = this.settings;
 
         if (!playerId || playerId === id) {
-            this.player.currentTime = currentTime
+            this.player.currentTime = currentTime;
+            this.player.volume = this.currentVolume;
             return;
         }
     }

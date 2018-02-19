@@ -56,6 +56,7 @@ export class Controls extends ControlEvents {
         currentVolumeSpan.style.width = `${volumeLevel * 100}%`;
 
         this.currentVolume = volumeLevel;
+        this.sendUnmute();
         this.setVolume(volumeLevel);
     }
 
@@ -122,10 +123,10 @@ export class Controls extends ControlEvents {
 
         switch (muteIcon.className) {
             case unmuteClasses:
-                this.mute();
+                this.sendMute();
                 break;
             case muteClasses:
-                this.unmute();
+                this.sendUnmute();
                 break;
             default:
                 break;
@@ -140,8 +141,7 @@ export class Controls extends ControlEvents {
 
         muteIcon.className = muteClasses;
         currentVolumeSpan.style.width = `0%`;
-
-        this.setVolume(0);
+        this.muted = true;
     }
 
     unmute() {
@@ -153,10 +153,12 @@ export class Controls extends ControlEvents {
         muteIcon.className = unmuteClasses;
         currentVolumeSpan.style.width = `${this.currentVolume * 100}%`;
 
-        this.setVolume(this.currentVolume);
+        this.muted = false;
     }
 
     setVolumeBar(volume) {
+        if (this.muted) return;
+
         let { muteControls, muteClasses, unmuteClasses, volumeBar, volumeBarCurrentVolumeClasses } = this;
         let muteControlsClasses = [muteClasses, unmuteClasses];
         let muteIcon = this.getElementByClasses(muteControls.children, muteControlsClasses);
@@ -172,7 +174,7 @@ export class Controls extends ControlEvents {
         let self = this;
         let currentVolumeSpan = this.getElementByClasses(volumeBar.children, [volumeBarCurrentVolumeClasses]);
 
-        if (currentVolumeSpan) {
+        if (currentVolumeSpan && !this.muted) {
             currentVolumeSpan.style.width = `${self.currentVolume * 100}%`;
         }
 

@@ -25,6 +25,22 @@ export default class {
         });
     }
 
+    sendMute(){
+        const { playerId } = this;
+
+        this.iVXjsBus.emit(this.controlEventNames.MUTE, {
+            playerId
+        });
+    }
+
+    sendUnmute(){
+        const { playerId } = this;
+
+        this.iVXjsBus.emit(this.controlEventNames.UNMUTE, {
+            playerId
+        });
+    }
+
     getDuration(cb) {
         const { playerId } = this;
 
