@@ -1,5 +1,6 @@
 import VideoEventNames from "../../../constants/video.events.js";
 import { TypeValidator } from "../../../utilities/type-parsers.js";
+import VideoService from "./video";
 
 let typeValidator = new TypeValidator();
 
@@ -11,18 +12,15 @@ export class YouTube {
         this.videoEventNames = new VideoEventNames();
         this.iVXjsLog = iVXjsLog;
         this.playerId = settings.playerId;
-        this.currentVolume = 0.6
+        this.currentVolume = 0.6;
+        this.videoService = new VideoService();
 
         container.html(this.html);
     }
 
     createPlayer() {
         let { height = 'inherit', width = 'inherit', id, controls, playerId } = this._settings;
-        let hasControls = 1;
-
-        if (typeof controls === 'string') {
-            hasControls = 0;
-        }
+        let hasControls = this.videoService.showControls(controls) ? 1 : 0;
 
         this.player = new YT.Player(this.playerId, {
             height: height,
@@ -111,7 +109,7 @@ export class YouTube {
                 self.playOnEvent = iVXjsBus.on(videoEventNames.PLAY, playOnEvent);
                 self.pauseOnEvent = iVXjsBus.on(videoEventNames.PAUSE, pauseOnEvent);
                 self.muteOnEvent = iVXjsBus.on(videoEventNames.MUTE, muteOnEvent);
-                self.unmmuteOnEvent = iVXjsBus.on(videoEventNames.UNMUTE, unmuteOnEvent);
+                self.unmuteOnEvent = iVXjsBus.on(videoEventNames.UNMUTE, unmuteOnEvent);
                 self.volumeOnEvent = iVXjsBus.on(videoEventNames.SET_VOLUME, volumeOnEvent);
                 self.durationOnEvent = iVXjsBus.on(videoEventNames.GET_DURATION, durationOnEvent);
                 self.seekOnEvent = iVXjsBus.on(videoEventNames.SEEK, seekOnEvent);
