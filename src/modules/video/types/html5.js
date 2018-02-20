@@ -4,6 +4,7 @@ import VideoEventNames from "../../../constants/video.events.js";
 import TrackCuesService from "./html5.cues";
 import TrackEventNames from "../../../constants/tracks.events.js";
 import TrackCueEventNames from "../../../constants/tracks.cues.events.js";
+import Element from "../../../utilities/element";
 
 
 let thisObjectParsers = new ObjectParsers();
@@ -12,10 +13,12 @@ let typeValidator = new TypeValidator();
 
 export class Html5 {
     constructor(container, settings, stateData = {}, iVXjsLog) {
+        const containerElement = new Element(container);
 
         Object.assign(this, {
             settings,
             stateData,
+            container: containerElement,
             videoEventNames: new VideoEventNames(),
             TrackCuesService,
             trackEventNames: new TrackEventNames(),
@@ -23,11 +26,11 @@ export class Html5 {
             stateData,
             iVXjsLog,
             currentVolume: 0.5
-        })
+        });
 
-        container.html(this.html);
+        containerElement.html(this.html);
 
-        this.player = container[0].getElementsByTagName("VIDEO")[0];
+        this.player = containerElement.getElementsByTagName("VIDEO")[0];
     }
 
     play(args) {
@@ -72,7 +75,7 @@ export class Html5 {
         const { playerId, volume } = args;
         const { id } = this.settings;
 
-        if(this.player.muted) return;
+        if (this.player.muted) return;
 
         if (!typeValidator.isNumber(volume)) return;
 
@@ -118,14 +121,37 @@ export class Html5 {
         let self = this;
 
         this.player.addEventListener('pause', () => {
+            self.container.removeClass('ivx-video-playing');
+            self.container.addClass('ivx-video-paused');
             self.iVXjsBus.emit(self.videoEventNames.PAUSED, self.player);
         })
         this.player.addEventListener('canplay', () => {
+            self.container.addClass('ivx-video-paused ivx-video-unmuted');
             self.iVXjsBus.emit(self.videoEventNames.CAN_PLAY, self.player, self.stateData)
         });
         this.player.addEventListener('playing', () => {
-            self.iVXjsBus.emit(self.videoEventNames.PLAYING, self.player, self.stateData)
+            self.container.removeClass('ivx-video-paused');
+            self.container.addClass('ivx-video-playing');
+            self.iVXjsBus.emit(self.videoEventNames.PLAYING, self.player, self.stateData);
+
         });
+        this.player.addEventListener('seeking', () => {
+            self.container.addClass('ivx-video-seeking');
+        });
+        this.player.addEventListener('seeked', () => {
+            self.container.removeClass('ivx-video-seeking');
+        });
+        this.player.addEventListener('volumechange', () => {
+            const { muted = false } = self.player;
+
+            if (muted) {
+                self.container.removeClass('ivx-video-unmuted');
+                self.container.addClass('ivx-video-muted');
+            } else {
+                self.container.removeClass('ivx-video-muted');
+                self.container.addClass('ivx-video-unmuted');
+            }
+        })
     }
 
     setTimeUpdate() {

@@ -33,7 +33,7 @@ class HTML5VideoPlayer {
 
             controller.playerId = playerId;
 
-            let thisVideoPlayer = new iVXjsVideoModule.html5(iElm.find('div'), settings, stateData, iVXjsLog);
+            let thisVideoPlayer = new iVXjsVideoModule.html5(iElm.find('div')[0], settings, stateData, iVXjsLog);
 
             thisVideoPlayer.addEventListeners(iVXjsBus, settings);
 
