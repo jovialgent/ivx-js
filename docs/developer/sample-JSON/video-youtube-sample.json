@@ -1,25 +1,31 @@
 {
-
-    "defaultState": [{
-        "stateId": "youtube-video-state-test"
-    }],
-    "states": [{
-        "id": "youtube-video-state-test",
-        "name": "YouTube Video Test",
-        "url": "/youtube-video-test",
-        "type": "video",
-        "header": {},
-        "footer": {},
-        "onEnter": [],
-        "onExit": [],
-        "next": [],
-        "onVideoEnd": [],
-        "playerSettings": {
-            "id" : "youtube-video-player",
-            "controls": "standard",
-            "youtubeId"  : "4f09VdXex3A"
-        },
-        "personalizations": [],
-        "cuePoints": []
-    }]
+    "defaultState": [
+        {
+            "stateId": "youtube-video-state-test"
+        }
+    ],
+    "states": [
+        {
+            "id": "youtube-video-state-test",
+            "name": "YouTube Video Test",
+            "url": "/youtube-video-test",
+            "type": "video",
+            "header": {},
+            "footer": {},
+            "onEnter": [],
+            "onExit": [],
+            "next": [],
+            "onVideoEnd": [],
+            "playerSettings": {
+                "id": "youtube-video-player",
+                "controls": {
+                    "type": "standard",
+                    "classes": "custom-classes"
+                },
+                "youtubeId": "4f09VdXex3A"
+            },
+            "personalizations": [],
+            "cuePoints": []
+        }
+    ]
 }

@@ -1,25 +1,31 @@
 {
-
-    "defaultState": [{
-        "stateId": "vimeo-video-state-test"
-    }],
-    "states": [{
-        "id": "vimeo-video-state-test",
-        "name": "Vimeo Video Test",
-        "url": "/vimeo-video-test",
-        "type": "video",
-        "header": {},
-        "footer": {},
-        "onEnter": [],
-        "onExit": [],
-        "next": [],
-        "onVideoEnd": [],
-        "playerSettings": {
-            "id" : "vimeo-video-player",
-            "controls": "standard",
-            "vimeoId"  : "2345579"
-        },
-        "personalizations": [],
-        "cuePoints": []
-    }]
+    "defaultState": [
+        {
+            "stateId": "vimeo-video-state-test"
+        }
+    ],
+    "states": [
+        {
+            "id": "vimeo-video-state-test",
+            "name": "Vimeo Video Test",
+            "url": "/vimeo-video-test",
+            "type": "video",
+            "header": {},
+            "footer": {},
+            "onEnter": [],
+            "onExit": [],
+            "next": [],
+            "onVideoEnd": [],
+            "playerSettings": {
+                "id": "vimeo-video-player",
+                "controls": {
+                    "type": "standard",
+                    "classes": "custom-classes"
+                },
+                "vimeoId": "2345579"
+            },
+            "personalizations": [],
+            "cuePoints": []
+        }
+    ]
 }
