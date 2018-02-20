@@ -39,6 +39,7 @@ class VideoStateController {
 
         cuePoints = setUpCuePoints(cuePoints);
 
+       
         const playerCanPlay = iVXjsBus.on(videoEventNames.CAN_PLAY, function stateVideoCanPlay(player) {
             const { playerId } = self;
 
@@ -60,7 +61,7 @@ class VideoStateController {
                 $state.current.data.player = player;
 
                 iVXjs.log.debug(`onVideoReady Started`, {}, { state: $state.current.data, source: 'onVideoReady', status: 'started', actions: onVideoReady, timestamp: Date.now() });
-                
+
                 iVXjsActions.resolveActions(onVideoReady, () => {
                     if (autoplay) {
                         iVXjsBus.emit(videoEventNames.PLAY, {
@@ -77,11 +78,11 @@ class VideoStateController {
 
             }
         });
-        const videoEnded = iVXjsBus.on(videoEventNames.ENDED, function stateVideoEnded(player) {
+
+        this.videoEnded = iVXjsBus.on(videoEventNames.ENDED, function stateVideoEnded(player) {
             if (player.id === self.playerId) {
                 iVXjs.log.debug(`onVideoEnd Actions`, {}, { state: $state.current.data, source: 'onVideoEnd', status: 'completed', actions: onVideoEnd, timestamp: Date.now() });
                 iVXjsActions.resolveThenNavigate(onVideoEnd, next);
-                iVXjsBus.removeListener(videoEventNames.ENDED, videoEnded);
             }
         });
 

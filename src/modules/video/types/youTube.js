@@ -57,6 +57,7 @@ export class YouTube {
             duration: videoEventNames.GET_DURATION,
             volume: videoEventNames.SET_VOLUME,
             playing: videoEventNames.PLAYING,
+            paused: videoEventNames.PAUSED,
             ended: videoEventNames.ENDED,
             mute: videoEventNames.MUTE,
             unmute: videoEventNames.UNMUTE
@@ -78,6 +79,8 @@ export class YouTube {
         let self = this;
         let timeUpdateId;
         let numberofTimeupdates = 0;
+
+        
 
         player.addEventListener('onError', (event) => {
             let messages = {

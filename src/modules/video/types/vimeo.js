@@ -92,6 +92,7 @@ export class Vimeo {
             xhr.send();
         });
 
+    
         self.durationOnEvent = iVXjsBus.on(videoEventNames.GET_DURATION, durationOnEvent);
         self.pauseOnEvent = iVXjsBus.on(videoEventNames.PAUSE, pauseOnEvent);
         self.playOnEvent = iVXjsBus.on(videoEventNames.PLAY, playOnEvent);

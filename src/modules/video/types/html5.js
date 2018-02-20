@@ -123,10 +123,10 @@ export class Html5 {
     }
 
     setOnReady() {
-        const {videoClassNames} = this;
+        const { videoClassNames } = this;
         const self = this;
 
-       
+
         this.player.addEventListener('pause', () => {
             self.container.removeClass(videoClassNames.PLAYING);
             self.container.addClass(videoClassNames.PAUSED);
@@ -220,7 +220,7 @@ export class Html5 {
 
         //Track Events
         this.changeCurrentTrackOnEvent = iVXjsBus.on(trackEventNames.CHANGE_CURRENT_TRACK, changeCurrentTrack);
-        this.changeChapter = iVXjsBus.on(trackCuesEventNames.CHANGE_CHAPTER, changeCurrentChapter);
+        this.changeChapterOnEvent = iVXjsBus.on(trackCuesEventNames.CHANGE_CHAPTER, changeChapter);
 
         // If it doesn't have a custom function, add the default one so the Bus can dispose of it.
         this.playOnEvent = this.playOnEvent ? this.playOnEvent : playOnEvent;
@@ -228,7 +228,9 @@ export class Html5 {
         this.seekOnEvent = this.seekOnEvent ? this.seekOnEvent : seekOnEvent;
         this.durationOnEvent = this.durationOnEvent ? this.durationOnEvent : durationOnEvent;
         this.volumeOnEvent = this.volumeOnEvent ? this.volumeOnEvent : volumeOnEvent;
-        this.changeCurrentTrack = this.changeCurrentTrack ? this.changeCurrentTrack : changeCurrentTrack;
+        this.changeCurrentTrackOnEvent = this.changeCurrentTrackOnEvent ? this.changeCurrentTrackOnEvent : changeCurrentTrack;
+        this.changeChapterOnEvent = this.changeChapterOnEvent ? this.changeChapterOnEvent : changeChapter;
+
 
         this.setOnReady();
         this.setTimeUpdate();
@@ -289,7 +291,7 @@ export class Html5 {
             self.unmute(args);
         }
 
-        function changeCurrentChapter(opts) {
+        function changeChapter(opts) {
             let { chapterId = "", playerId } = opts;
             let { player = {} } = self;
 

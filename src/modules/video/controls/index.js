@@ -19,6 +19,7 @@ export class Controls extends ControlEvents {
     dispose(iVXjsBus) {
         iVXjsBus.removeListener(this.controlEventNames.TIME_UPDATE, this.updateTime);
         iVXjsBus.removeListener(this.controlEventNames.PLAYING, this.whilePlaying);
+        iVXjsBus.removeListener(this.controlEventNames.PAUSED, this.whilePaused);
         iVXjsBus.removeListener(this.controlEventNames.CAN_PLAY, this.canPlayCallback);
         iVXjsBus.removeListener(this.controlEventNames.MUTE, this.whileMuted);
         iVXjsBus.removeListener(this.controlEventNames.UNMUTE, this.whileUnmuted);

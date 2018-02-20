@@ -77,6 +77,12 @@ class VideoState {
                 }
             });
 
+            $scope.$on('$destroy', () => {
+                let videoEventNames = new VideoEventConstants();
+
+                iVXjsBus.removeListener(videoEventNames.ENDED, controller.videoEnded);
+            })
+
 
         }
     }
