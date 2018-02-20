@@ -1,6 +1,8 @@
 import createFactoryFunction from '../utilities/create-factory-function.js';
 import VimeoVideoPlayerController from '../controllers/video.vimeo.js';
 
+
+
 class VimeoVideoPlayer {
     constructor($rootScope, $compile, $window, $timeout, iVXjsBus, iVXjsLog, iVXjsVideoModule, createInlineVideo, iVXjsVideoService) {
         this.template = this.templateHTML;
@@ -31,8 +33,12 @@ class VimeoVideoPlayer {
                 playerSettings.cuePoints = stateData.cuePoints;
             }
 
+            console.dir();
+
           
-            let VimeoPlayer = new iVXjsVideoModule.vimeo(iElm.find('div'), playerSettings, stateData, iVXjsLog);
+            let VimeoPlayer = new iVXjsVideoModule.vimeo(iElm.find('div')[0], playerSettings, stateData, iVXjsLog, {
+                vimeoPlayerContainer : iElm[0]
+            });
 
             VimeoPlayer.addEventListeners(iVXjsBus);
 

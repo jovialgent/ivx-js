@@ -1,11 +1,15 @@
 import VideoEventNames from "../../../constants/video.events.js";
+import VideoClassNames from "../../../constants/video.classes.js";
 import { TypeValidator } from "../../../utilities/type-parsers.js";
+import Element from "../../../utilities/element.js";
 import VideoService from "./video";
 
 let typeValidator = new TypeValidator();
 
 export class YouTube {
     constructor(container, settings, stateData, iVXjsLog) {
+        const containerElement = new Element(container);
+
         this._settings = settings;
         this._stateData = stateData;
         this.intervals = [];
@@ -15,7 +19,12 @@ export class YouTube {
         this.currentVolume = 0.6;
         this.videoService = new VideoService();
 
-        container.html(this.html);
+        Object.assign(this, {
+            videoClassNames: new VideoClassNames(),
+            container: containerElement
+        });
+
+        containerElement.html(this.html);
     }
 
     createPlayer() {
@@ -55,6 +64,7 @@ export class YouTube {
         let eventsToDispose = Object.keys(eventNameMap);
 
         clearInterval(this.timeUpdateId);
+        clearInterval(this.mutedIntervalId);
 
         eventsToDispose.forEach((eventNameToDispose, index) => {
             if (!self[`${eventNameToDispose}OnEvent`]) return;
@@ -64,7 +74,7 @@ export class YouTube {
     }
 
     addEventListeners(iVXjsBus) {
-        let { _stateData: stateData, player, videoEventNames, playerId } = this;
+        let { _stateData: stateData, player, videoEventNames, playerId, videoClassNames } = this;
         let self = this;
         let timeUpdateId;
         let numberofTimeupdates = 0;
@@ -92,14 +102,20 @@ export class YouTube {
                         break;
                     case 1:
                         player.paused = false;
-                        iVXjsBus.emit(videoEventNames.PLAYING, player, stateData)
+                        iVXjsBus.emit(videoEventNames.PLAYING, player, stateData);
+                        self.container.removeClass(videoClassNames.PAUSED);
+                        self.container.removeClass(videoClassNames.SEEKING);
+                        self.container.addClass(videoClassNames.PLAYING);
                         break;
                     case 2:
                         player.paused = true;
+                        self.container.removeClass(videoClassNames.PLAYING);
+                        self.container.addClass(videoClassNames.PAUSED);
                         iVXjsBus.emit(videoEventNames.PAUSED, player, stateData);
                         break;
                     case 3:
                         iVXjsBus.emit(videoEventNames.BUFFERING, player, stateData);
+                        self.container.addClass(videoClassNames.SEEKING);
                         break;
                 }
             });
@@ -125,6 +141,8 @@ export class YouTube {
                 self.endedOnEvent = typeof self.endedOnEvent === 'function' ? self.endedOnEvent : endedOnEvent;
                 self.playingOnEvent = typeof self.playingOnEvent === 'function' ? self.playingOnEvent : playingOnEvent;
                 iVXjsBus.emit(videoEventNames.CAN_PLAY, player, self.stateData);
+                self.container.addClass(videoClassNames.PAUSED);
+                self._setMuted();
             });
 
 
@@ -230,6 +248,20 @@ export class YouTube {
         function endedOnEvent() {
             clearInterval(self.timeUpdateId);
         }
+    }
+
+    _setMuted() {
+        const { player, container, videoClassNames } = this;
+
+        this.mutedIntervalId = setInterval(() => {
+            if (player.isMuted()) {
+                container.removeClass(videoClassNames.UNMUTED);
+                container.addClass(videoClassNames.MUTED);
+            } else {
+                container.removeClass(videoClassNames.MUTED);
+                container.addClass(videoClassNames.UNMUTED);
+            }
+        }, 50);
     }
 
     get html() {

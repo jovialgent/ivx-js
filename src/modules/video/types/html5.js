@@ -1,6 +1,7 @@
 import { ObjectParsers, TypeValidator } from "../../../utilities/type-parsers.js";
 import PlayerSettings from "../settings.js";
 import VideoEventNames from "../../../constants/video.events.js";
+import VideoClassNames from "../../../constants/video.classes.js";
 import TrackCuesService from "./html5.cues";
 import TrackEventNames from "../../../constants/tracks.events.js";
 import TrackCueEventNames from "../../../constants/tracks.cues.events.js";
@@ -22,6 +23,7 @@ export class Html5 {
             stateData,
             container: containerElement,
             videoEventNames: new VideoEventNames(),
+            videoClassNames: new VideoClassNames(),
             TrackCuesService,
             trackEventNames: new TrackEventNames(),
             trackCuesEventNames: new TrackCueEventNames(),
@@ -121,38 +123,39 @@ export class Html5 {
     }
 
     setOnReady() {
-        let self = this;
+        const {videoClassNames} = this;
+        const self = this;
 
+       
         this.player.addEventListener('pause', () => {
-            self.container.removeClass('ivx-video-playing');
-            self.container.addClass('ivx-video-paused');
+            self.container.removeClass(videoClassNames.PLAYING);
+            self.container.addClass(videoClassNames.PAUSED);
             self.iVXjsBus.emit(self.videoEventNames.PAUSED, self.player);
         })
         this.player.addEventListener('canplay', () => {
-            self.container.addClass('ivx-video-paused ivx-video-unmuted');
+            self.container.addClass(videoClassNames.PAUSED);
             self.iVXjsBus.emit(self.videoEventNames.CAN_PLAY, self.player, self.stateData)
         });
         this.player.addEventListener('playing', () => {
-            self.container.removeClass('ivx-video-paused');
-            self.container.addClass('ivx-video-playing');
+            self.container.removeClass(videoClassNames.PAUSED);
+            self.container.addClass(videoClassNames.PLAYING);
             self.iVXjsBus.emit(self.videoEventNames.PLAYING, self.player, self.stateData);
-
         });
         this.player.addEventListener('seeking', () => {
-            self.container.addClass('ivx-video-seeking');
+            self.container.addClass(videoClassNames.SEEKING);
         });
         this.player.addEventListener('seeked', () => {
-            self.container.removeClass('ivx-video-seeking');
+            self.container.removeClass(videoClassNames.SEEKING);
         });
         this.player.addEventListener('volumechange', () => {
             const { muted = false } = self.player;
 
             if (muted) {
-                self.container.removeClass('ivx-video-unmuted');
-                self.container.addClass('ivx-video-muted');
+                self.container.removeClass(videoClassNames.UNMUTED);
+                self.container.addClass(videoClassNames.MUTED);
             } else {
-                self.container.removeClass('ivx-video-muted');
-                self.container.addClass('ivx-video-unmuted');
+                self.container.removeClass(videoClassNames.MUTED);
+                self.container.addClass(videoClassNames.UNMUTED);
             }
         })
     }

@@ -32,7 +32,7 @@ class YoutubeVideoPlayer {
                 playerSettings.cuePoints = stateData.cuePoints;
             }
 
-            let YouTubePlayer = new iVXjsVideoModule.youtube(iElm.find('div'), playerSettings, stateData, iVXjsLog);
+            let YouTubePlayer = new iVXjsVideoModule.youtube(iElm.find('div')[0], playerSettings, stateData, iVXjsLog);
 
             controller.player = YouTubePlayer;
             controller.playerId = playerId;
