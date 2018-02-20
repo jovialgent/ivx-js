@@ -34,6 +34,25 @@ class VideoService {
         iVXjsBus.removeListener(this.videoEventNames.TIME_UPDATE, cuePointFunction);
     }
 
+    getControlHTML(playerId, controls) {
+        let controlType = controls;
+        let controlsHTML = '';
+        let isControlObject = typeValidator.isObject(controls);
+        let hasStandardControl = typeValidator.isString(controls);
+
+        if (isControlObject) {
+            const { type } = controls;
+
+            controlType = type;
+        }
+
+        if (typeValidator.isString(controlType)) {
+            controlsHTML = `<ivxjs-${controlType}-video-controls control-settings="vm.controls" player-id='${playerId}'></ivxjs-${controlType}-video-controls>`;
+        }
+
+        return controlsHTML;
+    }
+
     createCuePointListener(playerId, cuePoints = []) {
         const { iVXjs, iVXjsBus, iVXjsActions } = this;
         const self = this;

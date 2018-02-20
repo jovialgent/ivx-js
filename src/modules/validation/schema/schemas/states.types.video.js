@@ -18,7 +18,16 @@ export class VideoStateSchema {
                             "type": "boolean"
                         },
                         "controls": {
-                            "type": ["boolean", "string"]
+                            "type": ["boolean", "string", "object"],
+                            "properties": {
+                                "type": {
+                                    "type": ["boolean", "string"]
+                                },
+                                "classes" : {
+                                    "type" : "string"
+                                },
+                                "required" : ["type"]
+                            }
                         },
                         "attributes": {
                             "type": "object"
@@ -48,8 +57,8 @@ export class VideoStateSchema {
                             "items": [{
                                 "type": "object",
                                 "properties": {
-                                    "id" : {
-                                        "type" : "string"
+                                    "id": {
+                                        "type": "string"
                                     },
                                     "src": {
                                         "type": "string"
@@ -60,54 +69,54 @@ export class VideoStateSchema {
                                     "default": {
                                         "type": "boolean"
                                     },
-                                    "cues" : {
-                                        "type" : "array",
-                                        "items" : [{
-                                            "type" : "object",
-                                            "properties" : {
-                                                "id" : {
-                                                    "type" : "string"
+                                    "cues": {
+                                        "type": "array",
+                                        "items": [{
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string"
                                                 },
-                                                "start" : {
-                                                    "type" : "number"
+                                                "start": {
+                                                    "type": "number"
                                                 },
-                                                "end" : {
-                                                    "type" : "number"
+                                                "end": {
+                                                    "type": "number"
                                                 },
-                                                "payload" : {
-                                                    "type" : "string"
+                                                "payload": {
+                                                    "type": "string"
                                                 },
-                                                "align" : {
-                                                    "type" : "string"
+                                                "align": {
+                                                    "type": "string"
                                                 },
-                                                "position" : {
-                                                    "type" : "string"
+                                                "position": {
+                                                    "type": "string"
                                                 },
-                                                "size" : {
-                                                    "type" : "string"
+                                                "size": {
+                                                    "type": "string"
                                                 },
-                                                "vertical" : {
-                                                    "type" : "string"
+                                                "vertical": {
+                                                    "type": "string"
                                                 }
                                             },
                                             "required": ["id", "start", "end", "payload"]
                                         }]
                                     },
-                                    "required" : ["id", "kind"]
-                                    
+                                    "required": ["id", "kind"]
+
                                 }
                             }]
                         }
                     },
                     "oneOf": [{
-                            "required": ["src"]
-                        }, {
-                            "required": ["sources"]
-                        }, {
-                            "required": ["vimeoId"]
-                        }, {
-                            "required": ["youtubeId"]
-                        }]
+                        "required": ["src"]
+                    }, {
+                        "required": ["sources"]
+                    }, {
+                        "required": ["vimeoId"]
+                    }, {
+                        "required": ["youtubeId"]
+                    }]
                 },
                 "personalizations": {
                     "type": "array",
@@ -124,35 +133,35 @@ export class VideoStateSchema {
                                 "type": "string"
                             }
                         },
-                        "required" : ["id"],
-                        "oneOf" : [{
-                            "required" : ["html"]
-                        },{
-                            "required" : ["templateUrl"]
+                        "required": ["id"],
+                        "oneOf": [{
+                            "required": ["html"]
+                        }, {
+                            "required": ["templateUrl"]
                         }]
                     }
                 },
-                "cuePoints" : {
-                    "type" : "array",
-                    "items" : {
-                        "type" : "object",
-                        "properties" : {
-                            "timeAt" : {
-                                "type" : "number",
-                                "minimum" : 0
+                "cuePoints": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "timeAt": {
+                                "type": "number",
+                                "minimum": 0
                             },
-                            "endAt" : {
-                                "type" : "number",
-                                "minimum" : 0
+                            "endAt": {
+                                "type": "number",
+                                "minimum": 0
                             },
-                            "eventName" : {
-                                "type" : "string"
+                            "eventName": {
+                                "type": "string"
                             },
-                            "args" : {
-                                "type" : "object"
+                            "args": {
+                                "type": "object"
                             }
                         },
-                        "required" : ["eventName"]
+                        "required": ["eventName"]
                     }
                 }
             },

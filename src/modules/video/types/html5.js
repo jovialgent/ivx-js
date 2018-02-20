@@ -5,11 +5,13 @@ import TrackCuesService from "./html5.cues";
 import TrackEventNames from "../../../constants/tracks.events.js";
 import TrackCueEventNames from "../../../constants/tracks.cues.events.js";
 import Element from "../../../utilities/element";
+import VideoService from "./video";
 
 
 let thisObjectParsers = new ObjectParsers();
 let playerSettings = new PlayerSettings();
 let typeValidator = new TypeValidator();
+
 
 export class Html5 {
     constructor(container, settings, stateData = {}, iVXjsLog) {
@@ -25,8 +27,9 @@ export class Html5 {
             trackCuesEventNames: new TrackCueEventNames(),
             stateData,
             iVXjsLog,
-            currentVolume: 0.5
-        });
+            currentVolume: 0.5,
+            videoService: new VideoService()
+        })
 
         containerElement.html(this.html);
 
@@ -384,11 +387,12 @@ export class Html5 {
         let { tracks = [], sources = [], controls = true, isiOS = false } = this.settings;
         let tags = ['tracks', 'sources', 'isiOS', 'autoplay'];
         let justAttrs = ['controls'];
+        let showControls = this.videoService.showControls(controls);
 
-        if (typeof this.settings.controls === 'string' || !controls) {
-            delete this.settings.controls;
-        } else {
+        if (showControls) {
             this.settings.controls = true;
+        } else {
+            delete this.settings.controls;
         }
 
         let attrHTML = thisObjectParsers.reduce(this.settings, (thisAttrHTML, value, key) => {
