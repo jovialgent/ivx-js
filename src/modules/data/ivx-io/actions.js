@@ -1,4 +1,5 @@
 import iVXioErrorNames from "../../../constants/iVXio.errors.js";
+import iVXioEventNames from "../../../constants/iVXio.events.js";
 import Logging from "../../../utilities/logging.js";
 
 let iVXioErrors = new iVXioErrorNames();
@@ -26,6 +27,7 @@ export class iVXioActions {
          */
         this.experience = experience;
         this.iVXjsLog = iVXjsLog;
+        this.eventNames = new iVXioEventNames();
     }
 
     /**
@@ -94,11 +96,20 @@ export class iVXioActions {
      * @return {Promise} - will indicate if this event was successfully recorded by the platform.
      */
     recordEvent(eventArgs) {
+        const self = this;
         if (typeof eventArgs === 'object') {
             let { customEvent } = eventArgs;
 
             try {
-                return this.experience.recordEvent(customEvent);
+                return this.experience.recordEvent(customEvent)
+                    .then(
+                        () => {
+                            self.experience.Bus.emit(self.eventNames.RECORD_EVENT, eventArgs);
+                        },
+                        () => {
+                            self.experience.Bus.emit(iVXioErrors.EVENT_NOT_FIRED, eventArgs, e);
+                            self.iVXjsLog.error(e, "IVX_IO");
+                        });
             } catch (e) {
                 this.experience.Bus.emit(iVXioErrors.EVENT_NOT_FIRED, eventArgs, e);
                 this.iVXjsLog.error(e, "IVX_IO");
@@ -153,7 +164,7 @@ export class iVXioActions {
      * @param {string} eventArgs.value - experience data value to be set to.  
      * @return {Promise} - will indicate if this data was successfully updated to the platform.
      */
-    setData(eventArgs) {        
+    setData(eventArgs) {
         if (typeof eventArgs === 'object') {
             let { key, value } = eventArgs;
             let self = this;
@@ -207,11 +218,20 @@ export class iVXioActions {
      * @return {Promise} - indicates if this milestone was set on the platform.
      */
     setMilestone(eventArgs) {
+        const self = this;
         if (typeof eventArgs === 'object') {
             let { milestone } = eventArgs;
 
             try {
-                return this.experience.setMilestone(milestone);
+                return this.experience.setMilestone(milestone)
+                    .then(
+                        () => {
+                            self.experience.Bus.emit(self.eventNames.SET_MILESTONE, eventArgs);
+                        },
+                        () => {
+                            self.experience.Bus.emit(iVXioErrors.EVENT_NOT_FIRED, eventArgs, e);
+                            self.iVXjsLog.error(e, "IVX_IO");
+                        });;
             } catch (e) {
                 this.experience.Bus.emit(iVXioErrors.EVENT_NOT_FIRED, eventArgs, e);
                 this.iVXjsLog.error(e, "IVX_IO");

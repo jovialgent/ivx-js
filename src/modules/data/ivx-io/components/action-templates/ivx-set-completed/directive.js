@@ -4,8 +4,12 @@ export class Directive {
             iElm[0].addEventListener('click', (event) => {
                 event.preventDefault();
 
-                iVXjs.experience.setComplete();
-
+                iVXjs.experience.actions.resolveActions([{
+                    eventName: "setComplete"
+                }], ()=>{
+                    
+                });
+                
             }, false);
         }
     }

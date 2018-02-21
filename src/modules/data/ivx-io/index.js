@@ -138,6 +138,7 @@ if (angular) {
     let app = angular.module('ivx-js');
 
     app.constant('iVXjs.data.iVXio', initializeiVXIO);
+    app.constant('iVXjsDataiVXio', initializeiVXIO);
     app.constant('validator', InputValidator);
     app.constant('iVXjsDataiVXio', InputValidator);
 

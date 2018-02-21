@@ -3,11 +3,17 @@ export class Directive {
         this.link = ($scope, iElm, iAttrs, controller) => {
             iElm[0].addEventListener('click', (event) => {
                 event.preventDefault();
+                let { ivxRecordEvent: customEvent } = iAttrs;
 
-                let { ivxRecordEvent: value } = iAttrs;
+                iVXjs.experience.actions.resolveActions([{
+                    eventName: "recordEvent",
+                    args: {
+                        customEvent
+                    }
+                }], () => {
 
-                iVXjs.experience.recordEvent(value);
-                
+                })
+
             }, false);
         }
     }

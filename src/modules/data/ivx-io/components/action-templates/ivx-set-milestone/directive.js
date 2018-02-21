@@ -4,10 +4,17 @@ export class Directive {
             iElm[0].addEventListener('click', (event) => {
                 event.preventDefault();
 
-                let { ivxSetMilestone: value } = iAttrs;
+                let { ivxSetMilestone: milestone } = iAttrs;
 
-                iVXjs.experience.setMilestone(value);
-                
+                iVXjs.experience.actions.resolveActions([{
+                    eventName: "setMilestone",
+                    args: {
+                        milestone
+                    }
+                }], () => {
+
+                })
+
             }, false);
         }
     }

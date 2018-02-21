@@ -4,6 +4,7 @@ import Errors from './errors.js';
 import HttpEvents from './http.events.js';
 import iVXioErrors from './iVXio.errors.js';
 import iVXjsConfigEvents from './iVXjs.config.events.js';
+import iVXioEvents from "./iVXio.events";
 import LoggingEventNames from './logging.js';
 import StateEvents from './state.events.js';
 import TracksEvents from './tracks.events.js';
@@ -40,7 +41,8 @@ export default class {
 
         // iVXio
         this.iVXio = {
-            ERRORS: new iVXioErrors()
+            ERRORS: new iVXioErrors(),
+            EVENTS: new iVXioEvents()
         };
 
         // Logging
@@ -48,9 +50,9 @@ export default class {
             EVENTS: new LoggingEventNames()
         };
 
-        this.TRACKS  = {
-            EVENTS : new TracksEvents(),
-            CUES : new TrackCuesEvents()
+        this.TRACKS = {
+            EVENTS: new TracksEvents(),
+            CUES: new TrackCuesEvents()
         }
 
         // State

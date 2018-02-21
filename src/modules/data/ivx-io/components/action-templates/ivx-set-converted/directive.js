@@ -4,9 +4,16 @@ export class Directive {
             iElm[0].addEventListener('click', (event) => {
                 event.preventDefault();
 
-                let { ivxSetConverted: value } = iAttrs;
+                let { ivxSetConverted: label } = iAttrs;
 
-                iVXjs.experience.setConverted(value);
+                iVXjs.experience.actions.resolveActions([{
+                    eventName: "setConverted",
+                    args: {
+                        label
+                    }
+                }], () => {
+
+                })
             }, false);
         }
     }
