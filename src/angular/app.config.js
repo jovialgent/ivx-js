@@ -83,9 +83,7 @@ class AppConfig {
                         });
                     }],
                 onExit: ['$rootScope', '$state', 'ivxjs.actions', 'iVXjs', 'ivxjs.bus', ($rootScope, $state, iVXjsActions, iVXjs, iVXjsBus) => {
-                    if($state.current.data.player){
-                        iVXjsBus.emit(videoEventNames.DISPOSE, $state.current.data.player);
-                    }
+                   
                     iVXjs.log.debug('On Exit Actions Start', {}, { source: 'onExit', status: 'started', actions: onEnter });
                     iVXjsActions.resolveActions(onExit, () => {
                         iVXjs.log.debug('On Exit Events Actions Resolved', {}, { source: 'onExit', actions: onExit, status: 'completed', timestamp: Date.now() });

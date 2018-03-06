@@ -10,6 +10,7 @@ import StateEvents from './state.events.js';
 import TracksEvents from './tracks.events.js';
 import TrackCuesEvents from './tracks.cues.events.js';
 import VideoEvents from "./video.events.js";
+import VideoClasses from "./video.classes.js";
 
 
 export default class {
@@ -62,7 +63,8 @@ export default class {
 
         // Video 
         this.VIDEO = {
-            EVENTS: new VideoEvents()
+            EVENTS: new VideoEvents(),
+            CLASSES : new VideoClasses()
         }
     }
 }

@@ -1,6 +1,8 @@
 import PlayerSettings from "../settings.js";
 import VideoEventNames from "../../../constants/video.events.js";
 import { TypeValidator } from "../../../utilities/type-parsers.js";
+import VideoClassNames from "../../../constants/video.classes.js";
+import Element from "../../../utilities/element";
 
 
 let playerSettings = new PlayerSettings();
@@ -8,7 +10,10 @@ let typeValidator = new TypeValidator();
 
 
 export class Vimeo {
-    constructor(container, settings, stateData, iVXjsLog) {
+    constructor(container, settings, stateData, iVXjsLog, opts = {}) {
+        const { vimeoPlayerContainer } = opts;
+        const videoContainerElement = new Element(container);
+        const containerElement = new Element(vimeoPlayerContainer);
         this._settings = settings;
         this._stateData = stateData;
 
@@ -17,13 +22,18 @@ export class Vimeo {
         let { id, width, loop } = settings;
         let options = { id, width, loop };
 
-        container.html(this.html);
+        videoContainerElement.html(this.html);
 
         this.player = new window.Vimeo.Player(settings.playerId, options);
         this.player.id = settings.playerId;
         this.videoEventNames = new VideoEventNames();
         this.iVXjsLog = iVXjsLog
         this.currentVolume = 0.5;
+
+        Object.assign(this, {
+            videoClassNames: new VideoClassNames(),
+            container: containerElement
+        })
     }
 
     createPlayer() {
@@ -58,7 +68,7 @@ export class Vimeo {
     }
 
     addEventListeners(iVXjsBus) {
-        let { _stateData: stateData, videoEventNames, _settings } = this;
+        let { _stateData: stateData, videoEventNames, _settings, container, videoClassNames } = this;
         let { id } = _settings;
         let self = this;
         let timeUpdateId;
@@ -82,6 +92,7 @@ export class Vimeo {
             xhr.send();
         });
 
+    
         self.durationOnEvent = iVXjsBus.on(videoEventNames.GET_DURATION, durationOnEvent);
         self.pauseOnEvent = iVXjsBus.on(videoEventNames.PAUSE, pauseOnEvent);
         self.playOnEvent = iVXjsBus.on(videoEventNames.PLAY, playOnEvent);
@@ -103,22 +114,43 @@ export class Vimeo {
                     vimeoPlayInfo.id = self.playerId;
                     vimeoPlayInfo.paused = paused;
 
-                    if (paused) {
-                        iVXjsBus.emit(videoEventNames.PAUSED, self.player);
-                    } else {
-                        iVXjsBus.emit(videoEventNames.PLAYING, self.player);
-                    }
                     iVXjsBus.emit(videoEventNames.TIME_UPDATE, vimeoPlayInfo, self.stateData);
                 });
         });
+
+        self.player.on('pause', () => {
+            self.container.addClass(videoClassNames.PAUSED);
+            self.container.removeClass(videoClassNames.PLAYING);
+            iVXjsBus.emit(videoEventNames.PAUSED, self.player);
+        })
+
+        self.player.on('play', () => {
+            self.container.removeClass(videoClassNames.PAUSED);
+            self.container.addClass(videoClassNames.PLAYING);
+            iVXjsBus.emit(videoEventNames.PLAYING, self.player);
+        })
 
         self.player.on('ended', () => {
             iVXjsBus.emit(videoEventNames.ENDED, self.player);
         });
 
+        self.player.on('volumechange', args => {
+            const { volume } = args;
+
+            if (volume <= 0) {
+                container.removeClass(videoClassNames.UNMUTED);
+                container.addClass(videoClassNames.MUTED);
+            } else {
+                container.removeClass(videoClassNames.MUTED);
+                container.addClass(videoClassNames.UNMUTED);
+            }
+        })
+
         self.player.on('loaded', () => {
             const { classes = "" } = self._settings;
             const iFrame = document.querySelector('#' + self.playerId + ' iframe');
+
+            self.container.addClass(videoClassNames.PAUSED);
 
             if (iFrame) {
                 iFrame.className = `${iFrame.className} ${classes}`;
