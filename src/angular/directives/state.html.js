@@ -3,7 +3,7 @@ import HtmlStateController from '../controllers/state.html.js';
 import AudioEventNames from "../../constants/audio.events.js";
 
 class HtmlState {
-    constructor($state, $http, $compile, $sce, $timeout, iVXjs, iVXjsActions, iVXjsAudio, iVXjsBus, ivxExperienceScope, stateGenerator) {
+    constructor($state, $http, $compile, $sce, $timeout, iVXjs, iVXjsActions, iVXjsAudio, iVXjsBus, ivxExperienceScope, iVXjsStateCreator) {
         this.template = this.templateHTML;
         this.restrict = 'E';
         this.replace = true;
@@ -34,7 +34,7 @@ class HtmlState {
                 iElm.html(html);
 
                 if (!embedded && embeddedViews.length > 0) {
-                    stateGenerator.addViews(embeddedViews, iElm);
+                    iVXjsStateCreator.addViews(embeddedViews, iElm);
                 }
 
                 $compile(iElm.contents())($scope, (compiled) => {
@@ -76,7 +76,7 @@ class HtmlState {
     };
 }
 
-HtmlState.$inject = ['$state', '$http', '$compile', '$sce', '$timeout', 'iVXjs', 'ivxjs.actions', 'ivxjs.modules.audio', 'ivxjs.bus', "ivxExperienceScope", "stateGenerator"];
+HtmlState.$inject = ['$state', '$http', '$compile', '$sce', '$timeout', 'iVXjs', 'ivxjs.actions', 'ivxjs.modules.audio', 'ivxjs.bus', "ivxExperienceScope", "iVXjsStateCreator"];
 
 export default angular
     .module('ivx-js.directives.state.html', [])

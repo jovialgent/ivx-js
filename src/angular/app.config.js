@@ -6,14 +6,14 @@ import StateEvents from "../constants/state.events.js";
 let stateEvents = new StateEvents();
 
 class AppConfig {
-    constructor($stateProvider, $urlRouterProvider, $locationProvider, $compileProvider, $httpProvider, $sceDelegateProvider, $provide, iVXjs, stateGeneratorProvider) {
+    constructor($stateProvider, $urlRouterProvider, $locationProvider, $compileProvider, $httpProvider, $sceDelegateProvider, $provide, iVXjs, iVXjsStateCreatorProvider) {
         if (!iVXjs.config) return;
 
-        stateGeneratorProvider.create($stateProvider, iVXjs);
+        iVXjsStateCreatorProvider.create($stateProvider, iVXjs);
 
         let { experience } = iVXjs;
         let defaultStateID = iVXjs.rules(iVXjs.config.defaultState);
-        let url = stateGeneratorProvider.buildDefaultUrl(iVXjs, defaultStateID);
+        let url = iVXjsStateCreatorProvider.buildDefaultUrl(iVXjs, defaultStateID);
 
         if (experience.whiteList) {
             $sceDelegateProvider.resourceUrlWhitelist(experience.whiteList);

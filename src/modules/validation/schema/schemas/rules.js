@@ -15,11 +15,11 @@ export class Rules {
 
             if (!isEmpty(embeddedViews)) {
                 embeddedViews.forEach(embeddedView => {
-                    const { states: embeddedStates } = embeddedView;
-                    const allParentChildStateIds = embeddedStates.map(embeddedState => {
+                    const { states: embeddedViews } = embeddedView;
+                    const allParentChildStateIds = embeddedViews.map(embeddedState => {
                         return `${currentStateId}.${embeddedState.stateId}`;
                     });
-                    const allRelativeChildStateIds = embeddedStates.map(embeddedState => {
+                    const allRelativeChildStateIds = embeddedViews.map(embeddedState => {
                         return `^.${embeddedState.stateId}`;
                     });
 

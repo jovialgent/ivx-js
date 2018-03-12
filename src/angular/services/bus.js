@@ -8,8 +8,6 @@ export class Bus {
         "ngInject";
         this.$rootScope = $rootScope;
         this.iVXjs = iVXjs;
-
-        console.dir(this.iVXjs.Bus);
     }
 
     eventNames() {

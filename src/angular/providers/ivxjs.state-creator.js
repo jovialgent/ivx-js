@@ -64,8 +64,8 @@ class stateGenerator {
 
     _generateStateData(state) {
         const self = this;
-        const { embeddedStates = [] } = state;
-        const embeddedStateData = embeddedStates.reduce((embeddedData, currentEmbeddedData, index) => {
+        const { embeddedViews = [] } = state;
+        const embeddedStateData = embeddedViews.reduce((embeddedData, currentEmbeddedData, index) => {
             const stateSpec = self._createiVXjsStateSpec(currentEmbeddedData);
 
             embeddedData[stateSpec.id] = stateSpec;
@@ -83,8 +83,8 @@ class stateGenerator {
 
     _generateStateData(state) {
         const self = this;
-        const { embeddedStates = [] } = state;
-        const embeddedStateData = embeddedStates.reduce((embeddedData, currentEmbeddedData, index) => {
+        const { embeddedViews = [] } = state;
+        const embeddedStateData = embeddedViews.reduce((embeddedData, currentEmbeddedData, index) => {
             const stateSpec = self._createiVXjsStateSpec(currentEmbeddedData);
 
             embeddedData[stateSpec.id] = stateSpec;
@@ -103,9 +103,9 @@ class stateGenerator {
     _createEmbeddedState(embeddedView, parentData) {
         const self = this;
         const { states = [] } = this.iVXjs.config;
-        const { states: embeddedStates = [] } = embeddedView;
+        const { states: embeddedViews = [] } = embeddedView;
 
-        embeddedStates.forEach(embeddedState => {
+        embeddedViews.forEach(embeddedState => {
             const embeddedStateData = states.find(state => state.id === embeddedState.stateId);
 
             this._createRouterSpec(embeddedView, parentData, embeddedStateData, embeddedState);

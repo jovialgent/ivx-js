@@ -3,7 +3,7 @@ import AudioEventNames from "../../constants/audio.events.js";
 
 
 class NavigationState {
-    constructor($state, $rootScope, $compile, $timeout, iVXjs, iVXjsModules, iVXjsBus, iVXjsAudio, iVXjsActions, pullInTemplate, ivxExperienceScope, stateGenerator) {
+    constructor($state, $rootScope, $compile, $timeout, iVXjs, iVXjsModules, iVXjsBus, iVXjsAudio, iVXjsActions, pullInTemplate, ivxExperienceScope, iVXjsStateCreator) {
         this.template = this.templateHTML;
         this.restrict = 'E';
         this.replace = true;
@@ -33,7 +33,7 @@ class NavigationState {
             iElm.html(thisNavigationState.html);
 
             if(!embedded && embeddedViews.length > 0){
-                stateGenerator.addViews(embeddedViews, iElm);
+                iVXjsStateCreator.addViews(embeddedViews, iElm);
             }
 
             $compile(iElm.contents())($scope, (compiled) => {
@@ -74,7 +74,7 @@ class NavigationState {
     };
 }
 
-NavigationState.$inject = ['$state', '$rootScope', '$compile', '$timeout', 'iVXjs', 'ivxjs.modules.ui', 'ivxjs.bus', 'ivxjs.modules.audio', 'ivxjs.actions', 'pullInTemplate', "ivxExperienceScope", 'stateGenerator'];
+NavigationState.$inject = ['$state', '$rootScope', '$compile', '$timeout', 'iVXjs', 'ivxjs.modules.ui', 'ivxjs.bus', 'ivxjs.modules.audio', 'ivxjs.actions', 'pullInTemplate', "ivxExperienceScope", 'iVXjsStateCreator'];
 
 export default angular
     .module('ivx-js.directives.state.navigation', [])
