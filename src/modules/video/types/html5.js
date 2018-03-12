@@ -1,33 +1,41 @@
 import { ObjectParsers, TypeValidator } from "../../../utilities/type-parsers.js";
 import PlayerSettings from "../settings.js";
 import VideoEventNames from "../../../constants/video.events.js";
+import VideoClassNames from "../../../constants/video.classes.js";
 import TrackCuesService from "./html5.cues";
 import TrackEventNames from "../../../constants/tracks.events.js";
 import TrackCueEventNames from "../../../constants/tracks.cues.events.js";
+import Element from "../../../utilities/element";
+import VideoService from "./video";
 
 
 let thisObjectParsers = new ObjectParsers();
 let playerSettings = new PlayerSettings();
 let typeValidator = new TypeValidator();
 
+
 export class Html5 {
     constructor(container, settings, stateData = {}, iVXjsLog) {
+        const containerElement = new Element(container);
 
         Object.assign(this, {
             settings,
             stateData,
+            container: containerElement,
             videoEventNames: new VideoEventNames(),
+            videoClassNames: new VideoClassNames(),
             TrackCuesService,
             trackEventNames: new TrackEventNames(),
             trackCuesEventNames: new TrackCueEventNames(),
             stateData,
             iVXjsLog,
-            currentVolume: 0.5
+            currentVolume: 0.5,
+            videoService: new VideoService()
         })
 
-        container.html(this.html);
+        containerElement.html(this.html);
 
-        this.player = container[0].getElementsByTagName("VIDEO")[0];
+        this.player = containerElement.getElementsByTagName("VIDEO")[0];
     }
 
     play(args) {
@@ -72,6 +80,8 @@ export class Html5 {
         const { playerId, volume } = args;
         const { id } = this.settings;
 
+        if (this.player.muted) return;
+
         if (!typeValidator.isNumber(volume)) return;
 
         if (!playerId || playerId === id) {
@@ -106,23 +116,48 @@ export class Html5 {
         const { id } = this.settings;
 
         if (!playerId || playerId === id) {
-            this.player.currentTime = currentTime
+            this.player.currentTime = currentTime;
+            this.player.volume = this.currentVolume;
             return;
         }
     }
 
     setOnReady() {
-        let self = this;
+        const { videoClassNames } = this;
+        const self = this;
+
 
         this.player.addEventListener('pause', () => {
+            self.container.removeClass(videoClassNames.PLAYING);
+            self.container.addClass(videoClassNames.PAUSED);
             self.iVXjsBus.emit(self.videoEventNames.PAUSED, self.player);
         })
         this.player.addEventListener('canplay', () => {
+            self.container.addClass(videoClassNames.PAUSED);
             self.iVXjsBus.emit(self.videoEventNames.CAN_PLAY, self.player, self.stateData)
         });
         this.player.addEventListener('playing', () => {
-            self.iVXjsBus.emit(self.videoEventNames.PLAYING, self.player, self.stateData)
+            self.container.removeClass(videoClassNames.PAUSED);
+            self.container.addClass(videoClassNames.PLAYING);
+            self.iVXjsBus.emit(self.videoEventNames.PLAYING, self.player, self.stateData);
         });
+        this.player.addEventListener('seeking', () => {
+            self.container.addClass(videoClassNames.SEEKING);
+        });
+        this.player.addEventListener('seeked', () => {
+            self.container.removeClass(videoClassNames.SEEKING);
+        });
+        this.player.addEventListener('volumechange', () => {
+            const { muted = false } = self.player;
+
+            if (muted) {
+                self.container.removeClass(videoClassNames.UNMUTED);
+                self.container.addClass(videoClassNames.MUTED);
+            } else {
+                self.container.removeClass(videoClassNames.MUTED);
+                self.container.addClass(videoClassNames.UNMUTED);
+            }
+        })
     }
 
     setTimeUpdate() {
@@ -185,7 +220,7 @@ export class Html5 {
 
         //Track Events
         this.changeCurrentTrackOnEvent = iVXjsBus.on(trackEventNames.CHANGE_CURRENT_TRACK, changeCurrentTrack);
-        this.changeChapter = iVXjsBus.on(trackCuesEventNames.CHANGE_CHAPTER, changeCurrentChapter);
+        this.changeChapterOnEvent = iVXjsBus.on(trackCuesEventNames.CHANGE_CHAPTER, changeChapter);
 
         // If it doesn't have a custom function, add the default one so the Bus can dispose of it.
         this.playOnEvent = this.playOnEvent ? this.playOnEvent : playOnEvent;
@@ -193,7 +228,9 @@ export class Html5 {
         this.seekOnEvent = this.seekOnEvent ? this.seekOnEvent : seekOnEvent;
         this.durationOnEvent = this.durationOnEvent ? this.durationOnEvent : durationOnEvent;
         this.volumeOnEvent = this.volumeOnEvent ? this.volumeOnEvent : volumeOnEvent;
-        this.changeCurrentTrack = this.changeCurrentTrack ? this.changeCurrentTrack : changeCurrentTrack;
+        this.changeCurrentTrackOnEvent = this.changeCurrentTrackOnEvent ? this.changeCurrentTrackOnEvent : changeCurrentTrack;
+        this.changeChapterOnEvent = this.changeChapterOnEvent ? this.changeChapterOnEvent : changeChapter;
+
 
         this.setOnReady();
         this.setTimeUpdate();
@@ -254,7 +291,7 @@ export class Html5 {
             self.unmute(args);
         }
 
-        function changeCurrentChapter(opts) {
+        function changeChapter(opts) {
             let { chapterId = "", playerId } = opts;
             let { player = {} } = self;
 
@@ -355,11 +392,12 @@ export class Html5 {
         let { tracks = [], sources = [], controls = true, isiOS = false } = this.settings;
         let tags = ['tracks', 'sources', 'isiOS', 'autoplay'];
         let justAttrs = ['controls'];
+        let showControls = this.videoService.showControls(controls);
 
-        if (typeof this.settings.controls === 'string' || !controls) {
-            delete this.settings.controls;
-        } else {
+        if (showControls) {
             this.settings.controls = true;
+        } else {
+            delete this.settings.controls;
         }
 
         let attrHTML = thisObjectParsers.reduce(this.settings, (thisAttrHTML, value, key) => {

@@ -207,5 +207,5 @@ class stateGenerator {
 stateGenerator.$inject = [];
 
 export default angular.module('ivx-js.providers.set-up', [])
-    .provider('stateGenerator', createFactoryFunction(stateGenerator))
+    .provider('iVXjsStateCreator', createFactoryFunction(stateGenerator))
     .name;

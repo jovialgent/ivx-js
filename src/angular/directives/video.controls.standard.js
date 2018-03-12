@@ -6,22 +6,33 @@ let videoEventNames = new VideoEventNames();
 
 
 class StandardControls {
-    constructor(iVXjsUI, iVXjsBus) {
+    constructor(iVXjsUI, iVXjsBus, iVXjs) {
         this.template = this.templateHTML;
         this.restrict = 'E';
         this.scope = {
-            playerId: "@playerId"
+            playerId: "@playerId",
+            controlSettings: "=controlSettings"
         }
         this.controller = StandardControlsController
         this.controllerAs = 'vm'
         this.link = ($scope, iElm, iAttrs, controller) => {
-            const { playerId } = $scope;
-            let standardControls = new iVXjsUI.videoControls(iElm.find('div'), playerId);
+            const { playerId, controlSettings } = $scope;
+            const { classes = '' } = controlSettings;
+
+            let videoControlContainer = iElm.find('div')[0];
+
+            videoControlContainer.className = `${videoControlContainer.className} ${classes}`;
+
+            let standardControls = new iVXjsUI.videoControls(videoControlContainer, playerId);
 
             controller.controls = standardControls;
             controller.playerId = playerId;
 
             standardControls.addEventListeners(iVXjsBus);
+
+            $scope.$on('$destroy', () => {
+                standardControls.dispose(iVXjsBus);
+            })
         }
     }
 
@@ -30,7 +41,7 @@ class StandardControls {
     }
 }
 
-StandardControls.$inject = ['ivxjs.modules.ui', 'ivxjs.bus'];
+StandardControls.$inject = ['ivxjs.modules.ui', 'ivxjs.bus', 'iVXjs'];
 
 export default angular
     .module('ivx-js.directives.video.standard-controls', [])

@@ -2,7 +2,7 @@ import createFactoryFunction from '../utilities/create-factory-function.js';
 import YoutubeVideoPlayerController from '../controllers/video.youtube.js';
 
 class YoutubeVideoPlayer {
-    constructor($rootScope, $compile, $window, iVXjsBus, iVXjsLog, iVXjsVideoModule) {
+    constructor($rootScope, $compile, $window, iVXjsBus, iVXjsLog, iVXjsVideoModule, iVXjsVideoService, iVXjs) {
         this.template = this.templateHTML;
         this.restrict = 'E';
         this.scope = {
@@ -15,8 +15,10 @@ class YoutubeVideoPlayer {
         this.link = ($scope, iElm, iAttrs, controller) => {
             if (!iVXjsVideoModule.youtube) return;
 
-            let { settings = {}, stateData = {}, playerId } = $scope;
+            let { settings = {}, stateData: passedStateData = {}, playerId } = $scope;
             const { youtubeId } = settings;
+            let cuepointFunction;
+            const stateData = Object.assign({}, passedStateData);
 
             const playerSettings = Object.assign({},
                 settings,
@@ -25,13 +27,12 @@ class YoutubeVideoPlayer {
                     id: youtubeId
                 });
 
-            stateData = {
-                id: stateData.id,
-                url: stateData.url,
-                name: stateData.name
-            };
 
-            let YouTubePlayer = new iVXjsVideoModule.youtube(iElm.find('div'), playerSettings, stateData, iVXjsLog);
+            if (stateData.cuePoints) {
+                playerSettings.cuePoints = stateData.cuePoints;
+            }
+
+            let YouTubePlayer = new iVXjsVideoModule.youtube(iElm.find('div')[0], playerSettings, stateData, iVXjsLog);
 
             controller.player = YouTubePlayer;
             controller.playerId = playerId;
@@ -47,7 +48,14 @@ class YoutubeVideoPlayer {
             function init() {
                 YouTubePlayer.createPlayer();
                 YouTubePlayer.addEventListeners(iVXjsBus);
+                cuepointFunction = iVXjsVideoService.createCuePointListener(playerId, playerSettings.cuePoints);
+
             }
+
+            $scope.$on("$destroy", () => {
+                YouTubePlayer.dispose(iVXjsBus);
+                iVXjsVideoService.removeCuePointListener(cuepointFunction);
+            });
         }
     }
 
@@ -59,7 +67,7 @@ class YoutubeVideoPlayer {
     }
 }
 
-YoutubeVideoPlayer.$inject = ['$rootScope', '$compile', '$window', 'ivxjs.bus', 'ivxjs.log', 'ivxjs.modules.video'];
+YoutubeVideoPlayer.$inject = ['$rootScope', '$compile', '$window', 'ivxjs.bus', 'ivxjs.log', 'ivxjs.modules.video', "iVXjsVideoService", "iVXjs"];
 
 
 export default angular

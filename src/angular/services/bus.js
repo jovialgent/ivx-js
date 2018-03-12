@@ -5,9 +5,11 @@ let typeValidator = new TypeValidator();
 
 export class Bus {
     constructor($rootScope, iVXjs) {
-        "ngInject"
+        "ngInject";
         this.$rootScope = $rootScope;
         this.iVXjs = iVXjs;
+
+        console.dir(this.iVXjs.Bus);
     }
 
     eventNames() {
@@ -65,8 +67,6 @@ export class Bus {
         this.iVXjs.Bus.removeListener(eventName, callback);
     }
 }
-
-Bus.$inject = ['$rootScope', 'iVXjs'];
 
 export default angular.module('ivx-js.services.bus', [])
     .service('ivxjs.bus', Bus)

@@ -52,6 +52,6 @@ class AppConfig {
 
 }
 
-AppConfig.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider', '$compileProvider', '$httpProvider', '$sceDelegateProvider', '$provide', 'iVXjs', 'stateGeneratorProvider'];
+AppConfig.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider', '$compileProvider', '$httpProvider', '$sceDelegateProvider', '$provide', 'iVXjs', 'iVXjsStateCreatorProvider'];
 
 export default createFactoryFunction(AppConfig);
