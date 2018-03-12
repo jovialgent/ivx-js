@@ -43,7 +43,12 @@ export class NavigationStateSchema{
                                 "type" : "array"
                             }
                         },
-                        "required" : ["href"]
+                        "oneOf": [{
+                            "required" : ["href"]
+                        }, {
+                            "required": ["route"]
+                        }],
+                       
                     }
                 }
             },

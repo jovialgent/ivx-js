@@ -17,6 +17,7 @@
         "example-state-id-validation": "node_modules/.bin/webpack-dev-server --open --content-base=state-id-validation",
         "example-basic-video-experience": "node_modules/.bin/webpack-dev-server --open --content-base=basic-video-experience",
         "example-basic-ivx-io-experience": "node_modules/.bin/webpack-dev-server --open --content-base=ivx-io-experience",
+        "example-basic-navigation-experience": "node_modules/.bin/webpack-dev-server --open --content-base=basic-navigation-experience",
         "example-add-class-property-to-video": "node_modules/.bin/webpack-dev-server --open --content-base=add-class-property-to-video"
     },
     "author": "",
