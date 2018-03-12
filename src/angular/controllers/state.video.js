@@ -80,7 +80,7 @@ class VideoStateController {
         });
 
         this.videoEnded = iVXjsBus.on(videoEventNames.ENDED, function stateVideoEnded(player) {
-            const { onVideoEnd = [] } = stateData;
+            const { onVideoEnd = [], next = [] } = self.stateData;
 
             if (player.id === self.playerId) {
                 iVXjs.log.debug(`onVideoEnd Actions`, {}, { state: self.stateData, source: 'onVideoEnd', status: 'completed', actions: onVideoEnd, timestamp: Date.now() });
