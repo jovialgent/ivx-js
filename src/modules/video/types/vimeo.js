@@ -151,6 +151,7 @@ export class Vimeo {
             const iFrame = document.querySelector('#' + self.playerId + ' iframe');
 
             self.container.addClass(videoClassNames.PAUSED);
+            self.container.addClass(videoClassNames.UNMUTED);
 
             if (iFrame) {
                 iFrame.className = `${iFrame.className} ${classes}`;

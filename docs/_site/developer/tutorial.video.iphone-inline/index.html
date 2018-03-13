@@ -19,7 +19,7 @@
 
 
 
-<title>iVXjs</title>
+<title>Inline Video for iPhone - iVXjs</title>
 
 
 
@@ -29,11 +29,11 @@
 
 <meta property="og:locale" content="en">
 <meta property="og:site_name" content="iVXjs">
-<meta property="og:title" content="iVXjs">
+<meta property="og:title" content="Inline Video for iPhone">
 
 
-  <link rel="canonical" href="https://influencetech.github.io/ivx-js/developer/tutorial.video.iphone-inline/">
-  <meta property="og:url" content="https://influencetech.github.io/ivx-js/developer/tutorial.video.iphone-inline/">
+  <link rel="canonical" href="http://localhost:4000/ivx-js/developer/tutorial.video.iphone-inline/">
+  <meta property="og:url" content="http://localhost:4000/ivx-js/developer/tutorial.video.iphone-inline/">
 
 
 
@@ -61,7 +61,7 @@
       "@context" : "http://schema.org",
       "@type" : "Person",
       "name" : "Influence Technology",
-      "url" : "https://influencetech.github.io/ivx-js",
+      "url" : "http://localhost:4000/ivx-js",
       "sameAs" : null
     }
   </script>
@@ -74,7 +74,7 @@
 <!-- end SEO -->
 
 
-<link href="https://influencetech.github.io/ivx-js/feed.xml" type="application/atom+xml" rel="alternate" title="iVXjs Feed">
+<link href="http://localhost:4000/ivx-js/feed.xml" type="application/atom+xml" rel="alternate" title="iVXjs Feed">
 
 <!-- http://t.co/dKP3o1e -->
 <meta name="HandheldFriendly" content="True">
@@ -86,7 +86,7 @@
 </script>
 
 <!-- For all browsers -->
-<link rel="stylesheet" href="https://influencetech.github.io/ivx-js/assets/css/main.css">
+<link rel="stylesheet" href="http://localhost:4000/ivx-js/assets/css/main.css">
 
 <meta http-equiv="cleartype" content="on">
     <!-- start custom head snippets -->
@@ -109,16 +109,16 @@
       <nav id="site-nav" class="greedy-nav">
         <button><div class="navicon"></div></button>
         <ul class="visible-links">
-          <li class="masthead__menu-item masthead__menu-item--lg"><a href="https://influencetech.github.io/ivx-js/">iVXjs</a></li>
+          <li class="masthead__menu-item masthead__menu-item--lg"><a href="http://localhost:4000/ivx-js/">iVXjs</a></li>
           
             
-            <li class="masthead__menu-item"><a href="https://influencetech.github.io/ivx-js/developer/tutorial.hello-world">Getting Started</a></li>
+            <li class="masthead__menu-item"><a href="http://localhost:4000/ivx-js/developer/tutorial.hello-world">Getting Started</a></li>
           
             
-            <li class="masthead__menu-item"><a href="https://influencetech.github.io/ivx-js/developer/tutorials">Tutorials</a></li>
+            <li class="masthead__menu-item"><a href="http://localhost:4000/ivx-js/developer/tutorials">Tutorials</a></li>
           
             
-            <li class="masthead__menu-item"><a href="https://influencetech.github.io/ivx-js/developer/configuration">Configuration and Features</a></li>
+            <li class="masthead__menu-item"><a href="http://localhost:4000/ivx-js/developer/configuration">Configuration and Features</a></li>
           
         </ul>
         <ul class="hidden-links hidden"></ul>
@@ -139,7 +139,7 @@
 
 
   <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
-    
+    <meta itemprop="headline" content="Inline Video for iPhone">
     
     
     
@@ -147,7 +147,8 @@
     <div class="page__inner-wrap">
       
         <header>
-          
+          <h1 class="page__title" itemprop="headline">Inline Video for iPhone
+</h1>
           
         </header>
       
@@ -207,9 +208,8 @@ library and iVXjs’s robust system for videos and personalizations.</p>
 <p>Follow the instructions for setting up an [<a href="https://influencetech.github.io/ivx-js/developer/tutorial.hello-world">angular.ivx.js</a> project but you will 
 include the following script tag to your script dependencies:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>&lt;script src='[PATH-TO-JS]/iphone-inline-video.browser.js'&gt;&lt;/script&gt;
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script src='[PATH-TO-JS]/iphone-inline-video.browser.js'&gt;&lt;/script&gt;
+</code></pre></div></div>
 
 <h2 id="using-the-json-to-indicate-inline-iphone">Using the JSON to indicate inline iPhone</h2>
 
@@ -229,32 +229,31 @@ to add.</p>
 
 <p>First let’s take a sample video state:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
-    </span><span class="err">...</span><span class="w">
-    </span><span class="err">{</span><span class="w">
-        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"html5-video-state-test"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"HTML5 Video Test"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/html5-video-test"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"video"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"header"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
-        </span><span class="nt">"footer"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
-        </span><span class="nt">"onEnter"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
-        </span><span class="nt">"onExit"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
-        </span><span class="nt">"next"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
-        </span><span class="nt">"onVideoEnd"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
-        </span><span class="nt">"playerSettings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-            </span><span class="nt">"controls"</span><span class="p">:</span><span class="w"> </span><span class="s2">"standard"</span><span class="p">,</span><span class="w">
-            </span><span class="nt">"sources"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
-                </span><span class="nt">"src"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://clips.vorwaerts-gmbh.de/VfE_html5.mp4"</span><span class="p">,</span><span class="w">
-                </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"video/mp4"</span><span class="w">
-            </span><span class="p">}]</span><span class="w">
-        </span><span class="p">},</span><span class="w">
-        </span><span class="nt">"personalizations"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
-        </span><span class="nt">"cuePoints"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
-    </span><span class="err">...</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+    ...
+    {
+        "id": "html5-video-state-test",
+        "name": "HTML5 Video Test",
+        "url": "/html5-video-test",
+        "type": "video",
+        "header": {},
+        "footer": {},
+        "onEnter": [],
+        "onExit": [],
+        "next": [],
+        "onVideoEnd": [],
+        "playerSettings": {
+            "controls": "standard",
+            "sources": [{
+                "src": "http://clips.vorwaerts-gmbh.de/VfE_html5.mp4",
+                "type": "video/mp4"
+            }]
+        },
+        "personalizations": [],
+        "cuePoints": []
+    ...
+}
+</code></pre></div></div>
 
 <p>If we ran this and loaded it on an iPhone it would look something like this:
 <img src="http://e8ddcf8725663d605209-8d8cc7c733bcfce1ecd11bbb8349e503.r95.cf2.rackcdn.com/tutorial/iphone-without-inline.png" alt="iPhone Initial" /></p>
@@ -268,46 +267,44 @@ to add.</p>
   <li>Find a the player settings in your video state</li>
 </ul>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
-    </span><span class="err">...</span><span class="w">
-    </span><span class="err">{</span><span class="w">
-        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"html5-video-state-test"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"HTML5 Video Test"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/html5-video-test"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"video"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"header"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
-        </span><span class="nt">"footer"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
-        </span><span class="nt">"onEnter"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
-        </span><span class="nt">"onExit"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
-        </span><span class="nt">"next"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
-        </span><span class="nt">"onVideoEnd"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
-        </span><span class="nt">"playerSettings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-            </span><span class="nt">"controls"</span><span class="p">:</span><span class="w"> </span><span class="s2">"standard"</span><span class="p">,</span><span class="w">
-            </span><span class="nt">"sources"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
-                </span><span class="nt">"src"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://clips.vorwaerts-gmbh.de/VfE_html5.mp4"</span><span class="p">,</span><span class="w">
-                </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"video/mp4"</span><span class="w">
-            </span><span class="p">}]</span><span class="w">
-        </span><span class="p">},</span><span class="w">
-        </span><span class="nt">"personalizations"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
-        </span><span class="nt">"cuePoints"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
-    </span><span class="err">...</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+    ...
+    {
+        "id": "html5-video-state-test",
+        "name": "HTML5 Video Test",
+        "url": "/html5-video-test",
+        "type": "video",
+        "header": {},
+        "footer": {},
+        "onEnter": [],
+        "onExit": [],
+        "next": [],
+        "onVideoEnd": [],
+        "playerSettings": {
+            "controls": "standard",
+            "sources": [{
+                "src": "http://clips.vorwaerts-gmbh.de/VfE_html5.mp4",
+                "type": "video/mp4"
+            }]
+        },
+        "personalizations": [],
+        "cuePoints": []
+    ...
+}
+</code></pre></div></div>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
-</span><span class="err">...</span><span class="w">
-</span><span class="nt">"playerSettings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="nt">"controls"</span><span class="p">:</span><span class="w"> </span><span class="s2">"standard"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"sources"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
-        </span><span class="nt">"src"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://clips.vorwaerts-gmbh.de/VfE_html5.mp4"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"video/mp4"</span><span class="w">
-    </span><span class="p">}]</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span><span class="err">...</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+...
+"playerSettings": {
+    "controls": "standard",
+    "sources": [{
+        "src": "http://clips.vorwaerts-gmbh.de/VfE_html5.mp4",
+        "type": "video/mp4"
+    }]
+}
+...
+}
+</code></pre></div></div>
 
 <ul>
   <li>Add the following data points to your player settings:
@@ -318,21 +315,20 @@ to add.</p>
   </li>
 </ul>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
-    </span><span class="err">...</span><span class="w">
-    </span><span class="nt">"playerSettings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nt">"controls"</span><span class="p">:</span><span class="w"> </span><span class="s2">"standard"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"sources"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
-            </span><span class="nt">"src"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://clips.vorwaerts-gmbh.de/VfE_html5.mp4"</span><span class="p">,</span><span class="w">
-            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"video/mp4"</span><span class="w">
-        </span><span class="p">}],</span><span class="w">
-        </span><span class="nt">"inlineSrc"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://clips.vorwaerts-gmbh.de/VfE_html5.mp4"</span><span class="p">,</span><span class="w">
-        </span><span class="err">"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="err">...</span><span class="w">
-</span><span class="err">}</span><span class="w">
-</span></code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+    ...
+    "playerSettings": {
+        "controls": "standard",
+        "sources": [{
+            "src": "http://clips.vorwaerts-gmbh.de/VfE_html5.mp4",
+            "type": "video/mp4"
+        }],
+        "inlineSrc": "http://clips.vorwaerts-gmbh.de/VfE_html5.mp4",
+        " : true
+    },
+    ...
+}
+</code></pre></div></div>
 <ul>
   <li>Refresh your page and press play and the video should play wihtout taking over the screen:
 <img src="http://e8ddcf8725663d605209-8d8cc7c733bcfce1ecd11bbb8349e503.r95.cf2.rackcdn.com/tutorial/iphone-inline-playing%20copy.png" alt="iphone inline player" /></li>
@@ -385,7 +381,7 @@ to add.</p>
     
     
     
-    <li><a href="https://influencetech.github.io/ivx-js/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    <li><a href="http://localhost:4000/ivx-js/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
   </ul>
 </div>
 
@@ -393,7 +389,7 @@ to add.</p>
       </footer>
     </div>
 
-    <script src="https://influencetech.github.io/ivx-js/assets/js/main.min.js"></script>
+    <script src="http://localhost:4000/ivx-js/assets/js/main.min.js"></script>
 
 
 

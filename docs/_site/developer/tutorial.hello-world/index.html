@@ -19,7 +19,7 @@
 
 
 
-<title>iVXjs</title>
+<title>Hello World using angular.ivx.js - iVXjs</title>
 
 
 
@@ -29,11 +29,11 @@
 
 <meta property="og:locale" content="en">
 <meta property="og:site_name" content="iVXjs">
-<meta property="og:title" content="iVXjs">
+<meta property="og:title" content="Hello World using angular.ivx.js">
 
 
-  <link rel="canonical" href="https://influencetech.github.io/ivx-js/developer/tutorial.hello-world/">
-  <meta property="og:url" content="https://influencetech.github.io/ivx-js/developer/tutorial.hello-world/">
+  <link rel="canonical" href="http://localhost:4000/ivx-js/developer/tutorial.hello-world/">
+  <meta property="og:url" content="http://localhost:4000/ivx-js/developer/tutorial.hello-world/">
 
 
 
@@ -61,7 +61,7 @@
       "@context" : "http://schema.org",
       "@type" : "Person",
       "name" : "Influence Technology",
-      "url" : "https://influencetech.github.io/ivx-js",
+      "url" : "http://localhost:4000/ivx-js",
       "sameAs" : null
     }
   </script>
@@ -74,7 +74,7 @@
 <!-- end SEO -->
 
 
-<link href="https://influencetech.github.io/ivx-js/feed.xml" type="application/atom+xml" rel="alternate" title="iVXjs Feed">
+<link href="http://localhost:4000/ivx-js/feed.xml" type="application/atom+xml" rel="alternate" title="iVXjs Feed">
 
 <!-- http://t.co/dKP3o1e -->
 <meta name="HandheldFriendly" content="True">
@@ -86,7 +86,7 @@
 </script>
 
 <!-- For all browsers -->
-<link rel="stylesheet" href="https://influencetech.github.io/ivx-js/assets/css/main.css">
+<link rel="stylesheet" href="http://localhost:4000/ivx-js/assets/css/main.css">
 
 <meta http-equiv="cleartype" content="on">
     <!-- start custom head snippets -->
@@ -109,16 +109,16 @@
       <nav id="site-nav" class="greedy-nav">
         <button><div class="navicon"></div></button>
         <ul class="visible-links">
-          <li class="masthead__menu-item masthead__menu-item--lg"><a href="https://influencetech.github.io/ivx-js/">iVXjs</a></li>
+          <li class="masthead__menu-item masthead__menu-item--lg"><a href="http://localhost:4000/ivx-js/">iVXjs</a></li>
           
             
-            <li class="masthead__menu-item"><a href="https://influencetech.github.io/ivx-js/developer/tutorial.hello-world">Getting Started</a></li>
+            <li class="masthead__menu-item"><a href="http://localhost:4000/ivx-js/developer/tutorial.hello-world">Getting Started</a></li>
           
             
-            <li class="masthead__menu-item"><a href="https://influencetech.github.io/ivx-js/developer/tutorials">Tutorials</a></li>
+            <li class="masthead__menu-item"><a href="http://localhost:4000/ivx-js/developer/tutorials">Tutorials</a></li>
           
             
-            <li class="masthead__menu-item"><a href="https://influencetech.github.io/ivx-js/developer/configuration">Configuration and Features</a></li>
+            <li class="masthead__menu-item"><a href="http://localhost:4000/ivx-js/developer/configuration">Configuration and Features</a></li>
           
         </ul>
         <ul class="hidden-links hidden"></ul>
@@ -139,7 +139,7 @@
 
 
   <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
-    
+    <meta itemprop="headline" content="Hello World using angular.ivx.js">
     
     
     
@@ -147,7 +147,8 @@
     <div class="page__inner-wrap">
       
         <header>
-          
+          <h1 class="page__title" itemprop="headline">Hello World using angular.ivx.js
+</h1>
           
         </header>
       
@@ -214,7 +215,7 @@ to set up</p>
   <li>Add the following HTML to the working project file:</li>
 </ul>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>&lt;!-- Angular application for this page --&gt;
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;!-- Angular application for this page --&gt;
 &lt;div ng-app="app"&gt;&lt;/div&gt;
 
 &lt;!-- Container for an iVXjs Experience --&gt;
@@ -255,8 +256,7 @@ angular
 &lt;script type="text/ng-template" id="helpful-links-header.html"&gt;
 	&lt;h1&gt;Now that you have seen it , create an experience of your own!&lt;/h1&gt;
 &lt;/script&gt;
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <ul>
   <li>Create a folder called <em>data</em></li>
@@ -264,129 +264,128 @@ angular
   <li>Copy the following contents into the <em>sample-experience.json</em> file:</li>
 </ul>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
-    </span><span class="nt">"defaultState"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-            </span><span class="nt">"stateId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"welcome-form"</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-    </span><span class="p">],</span><span class="w">
-    </span><span class="nt">"states"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"welcome-form"</span><span class="p">,</span><span class="w">
-            </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Welcome Form"</span><span class="p">,</span><span class="w">
-            </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/"</span><span class="p">,</span><span class="w">
-            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"input"</span><span class="p">,</span><span class="w">
-            </span><span class="nt">"header"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-                </span><span class="nt">"templateUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"form-header.html"</span><span class="w">
-            </span><span class="p">},</span><span class="w">
-            </span><span class="nt">"form"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-                </span><span class="nt">"classes"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-                </span><span class="nt">"submit"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-                    </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Get started!"</span><span class="w">
-                </span><span class="p">}</span><span class="w">
-            </span><span class="p">},</span><span class="w">
-            </span><span class="nt">"next"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-                </span><span class="p">{</span><span class="w">
-                    </span><span class="nt">"stateId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"video-sample"</span><span class="w">
-                </span><span class="p">}</span><span class="w">
-            </span><span class="p">],</span><span class="w">
-            </span><span class="nt">"inputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-                </span><span class="p">{</span><span class="w">
-                    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"full-name"</span><span class="p">,</span><span class="w">
-                    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fullName"</span><span class="p">,</span><span class="w">
-                    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"text"</span><span class="p">,</span><span class="w">
-                    </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Your name:"</span><span class="p">,</span><span class="w">
-                    </span><span class="nt">"settings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-                        </span><span class="nt">"container"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
-                        </span><span class="nt">"input"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
-                    </span><span class="p">},</span><span class="w">
-                    </span><span class="nt">"attributes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-                        </span><span class="nt">"placeholder"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Enter your name here..."</span><span class="p">,</span><span class="w">
-                        </span><span class="nt">"required"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
-                    </span><span class="p">}</span><span class="w">
-                </span><span class="p">}</span><span class="w">
-            </span><span class="p">]</span><span class="w">
-        </span><span class="p">},</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"video-sample"</span><span class="p">,</span><span class="w">
-            </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Video Sample"</span><span class="p">,</span><span class="w">
-            </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/video-sample"</span><span class="p">,</span><span class="w">
-            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"video"</span><span class="p">,</span><span class="w">
-            </span><span class="nt">"next"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-                </span><span class="p">{</span><span class="w">
-                    </span><span class="nt">"stateId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"helpful-links"</span><span class="w">
-                </span><span class="p">}</span><span class="w">
-            </span><span class="p">],</span><span class="w">
-            </span><span class="nt">"playerSettings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-                </span><span class="nt">"youtubeId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"oErhFh4AyZ0"</span><span class="w">
-            </span><span class="p">},</span><span class="w">
-            </span><span class="nt">"personalizations"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-                </span><span class="p">{</span><span class="w">
-                    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"name-personalization"</span><span class="p">,</span><span class="w">
-                    </span><span class="nt">"templateUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"name-personalization.html"</span><span class="w">
-                </span><span class="p">}</span><span class="w">
-            </span><span class="p">],</span><span class="w">
-            </span><span class="nt">"cuePoints"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-                </span><span class="p">{</span><span class="w">
-                    </span><span class="nt">"timeAt"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-                    </span><span class="nt">"eventName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"animateElement"</span><span class="p">,</span><span class="w">
-                    </span><span class="nt">"args"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-                        </span><span class="nt">"element"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#name-personalization"</span><span class="p">,</span><span class="w">
-                        </span><span class="nt">"animationClasses"</span><span class="p">:</span><span class="w"> </span><span class="s2">"show"</span><span class="w">
-                    </span><span class="p">}</span><span class="w">
-                </span><span class="p">},</span><span class="w">
-                </span><span class="p">{</span><span class="w">
-                    </span><span class="nt">"timeAt"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
-                    </span><span class="nt">"eventName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"animateElement"</span><span class="p">,</span><span class="w">
-                    </span><span class="nt">"args"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-                        </span><span class="nt">"element"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#name-personalization"</span><span class="p">,</span><span class="w">
-                        </span><span class="nt">"animationClasses"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hide"</span><span class="w">
-                    </span><span class="p">}</span><span class="w">
-                </span><span class="p">}</span><span class="w">
-            </span><span class="p">]</span><span class="w">
-        </span><span class="p">},</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-            </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"helpful-links"</span><span class="p">,</span><span class="w">
-            </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Helpful Links"</span><span class="p">,</span><span class="w">
-            </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/helpful-links"</span><span class="p">,</span><span class="w">
-            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"navigation"</span><span class="p">,</span><span class="w">
-            </span><span class="nt">"header"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-                </span><span class="nt">"templateUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"helpful-links-header.html"</span><span class="w">
-            </span><span class="p">},</span><span class="w">
-            </span><span class="nt">"links"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-                </span><span class="p">{</span><span class="w">
-                    </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://influencetech.github.io/ivx-js/developer/tutorial.hello-world/"</span><span class="p">,</span><span class="w">
-                    </span><span class="nt">"attributes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-                        </span><span class="nt">"target"</span><span class="p">:</span><span class="w"> </span><span class="s2">"_blank"</span><span class="w">
-                    </span><span class="p">},</span><span class="w">
-                    </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Getting Started with iVXjs"</span><span class="p">,</span><span class="w">
-                    </span><span class="nt">"classes"</span><span class="p">:</span><span class="w"> </span><span class="s2">"btn"</span><span class="p">,</span><span class="w">
-                    </span><span class="nt">"onClick"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
-                </span><span class="p">},</span><span class="w">
-                </span><span class="p">{</span><span class="w">
-                    </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://influencetech.github.io/ivx-js/developer/tutorials/"</span><span class="p">,</span><span class="w">
-                    </span><span class="nt">"attributes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-                        </span><span class="nt">"target"</span><span class="p">:</span><span class="w"> </span><span class="s2">"_blank"</span><span class="w">
-                    </span><span class="p">},</span><span class="w">
-                    </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Tutorials"</span><span class="p">,</span><span class="w">
-                    </span><span class="nt">"classes"</span><span class="p">:</span><span class="w"> </span><span class="s2">"btn"</span><span class="p">,</span><span class="w">
-                    </span><span class="nt">"onClick"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
-                </span><span class="p">},</span><span class="w">
-                </span><span class="p">{</span><span class="w">
-                    </span><span class="nt">"href"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://influencetech.github.io/ivx-js/developer/configuration/"</span><span class="p">,</span><span class="w">
-                    </span><span class="nt">"attributes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-                        </span><span class="nt">"target"</span><span class="p">:</span><span class="w"> </span><span class="s2">"_blank"</span><span class="w">
-                    </span><span class="p">},</span><span class="w">
-                    </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"JSON Specs and Configurations"</span><span class="p">,</span><span class="w">
-                    </span><span class="nt">"classes"</span><span class="p">:</span><span class="w"> </span><span class="s2">"btn"</span><span class="p">,</span><span class="w">
-                    </span><span class="nt">"onClick"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
-                </span><span class="p">}</span><span class="w">
-            </span><span class="p">]</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-    </span><span class="p">]</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+    "defaultState": [
+        {
+            "stateId": "welcome-form"
+        }
+    ],
+    "states": [
+        {
+            "id": "welcome-form",
+            "name": "Welcome Form",
+            "url": "/",
+            "type": "input",
+            "header": {
+                "templateUrl": "form-header.html"
+            },
+            "form": {
+                "classes": "",
+                "submit": {
+                    "label": "Get started!"
+                }
+            },
+            "next": [
+                {
+                    "stateId": "video-sample"
+                }
+            ],
+            "inputs": [
+                {
+                    "id": "full-name",
+                    "name": "fullName",
+                    "type": "text",
+                    "label": "Your name:",
+                    "settings": {
+                        "container": {},
+                        "input": {}
+                    },
+                    "attributes": {
+                        "placeholder": "Enter your name here...",
+                        "required": true
+                    }
+                }
+            ]
+        },
+        {
+            "id": "video-sample",
+            "name": "Video Sample",
+            "url": "/video-sample",
+            "type": "video",
+            "next": [
+                {
+                    "stateId": "helpful-links"
+                }
+            ],
+            "playerSettings": {
+                "youtubeId": "oErhFh4AyZ0"
+            },
+            "personalizations": [
+                {
+                    "id": "name-personalization",
+                    "templateUrl": "name-personalization.html"
+                }
+            ],
+            "cuePoints": [
+                {
+                    "timeAt": 0,
+                    "eventName": "animateElement",
+                    "args": {
+                        "element": "#name-personalization",
+                        "animationClasses": "show"
+                    }
+                },
+                {
+                    "timeAt": 5,
+                    "eventName": "animateElement",
+                    "args": {
+                        "element": "#name-personalization",
+                        "animationClasses": "hide"
+                    }
+                }
+            ]
+        },
+        {
+            "id": "helpful-links",
+            "name": "Helpful Links",
+            "url": "/helpful-links",
+            "type": "navigation",
+            "header": {
+                "templateUrl": "helpful-links-header.html"
+            },
+            "links": [
+                {
+                    "href": "https://influencetech.github.io/ivx-js/developer/tutorial.hello-world/",
+                    "attributes": {
+                        "target": "_blank"
+                    },
+                    "label": "Getting Started with iVXjs",
+                    "classes": "btn",
+                    "onClick": []
+                },
+                {
+                    "href": "https://influencetech.github.io/ivx-js/developer/tutorials/",
+                    "attributes": {
+                        "target": "_blank"
+                    },
+                    "label": "Tutorials",
+                    "classes": "btn",
+                    "onClick": []
+                },
+                {
+                    "href": "https://influencetech.github.io/ivx-js/developer/configuration/",
+                    "attributes": {
+                        "target": "_blank"
+                    },
+                    "label": "JSON Specs and Configurations",
+                    "classes": "btn",
+                    "onClick": []
+                }
+            ]
+        }
+    ]
+}
+</code></pre></div></div>
 
 <ul>
   <li>The result should look like this:
@@ -446,7 +445,7 @@ angular
     
     
     
-    <li><a href="https://influencetech.github.io/ivx-js/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    <li><a href="http://localhost:4000/ivx-js/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
   </ul>
 </div>
 
@@ -454,7 +453,7 @@ angular
       </footer>
     </div>
 
-    <script src="https://influencetech.github.io/ivx-js/assets/js/main.min.js"></script>
+    <script src="http://localhost:4000/ivx-js/assets/js/main.min.js"></script>
 
 
 
