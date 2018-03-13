@@ -26,11 +26,8 @@ class AppRun {
 
             const { route, stateId = "" } = evalState;
             const goToStateId = route ? route : stateId;
-
-            console.log(goToStateId);
         
             if (goToStateId.length > 0) {
-                console.dir($state);
                 $state.go(goToStateId);
             }
         });

@@ -20,7 +20,7 @@ class EmbeddedViewCustom {
 
     get templateHTML() {
         return `
-            <div class="ivx-embbeded-view ivx-embedded-view-inline {{viewData.classes}}" ui-view="{{viewData.id}}"></div>
+            <div class="ivx-embbeded-view ivx-embedded-view-custom {{viewData.classes}}" ui-view="{{viewData.id}}"></div>
        `
     }
 }

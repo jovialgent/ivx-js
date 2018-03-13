@@ -29,6 +29,11 @@ class HtmlState {
                 addViews(html, true);
             }
 
+            $scope.$on('$destroy', ()=>{
+                if(controller.timeOutId){
+                    $timeout.cancel(controller.timeOutId);
+                }
+            });
 
             function addViews(html, shouldShowState) {
                 iElm.html(html);
