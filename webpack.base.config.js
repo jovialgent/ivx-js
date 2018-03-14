@@ -86,17 +86,12 @@ class BaseWebpackConfig {
                     {
                         test: /\.js$/,
                         exclude: /(node_modules|bower_components)/,
-<<<<<<< HEAD
-                        use: {
-                            loader: ['ng-annotate-loader','babel-loader'],
-=======
                         use: [{
                             loader: 'ng-annotate-loader',
                             options: { explicitOnly: false }
                         },
                         {
                             loader: 'babel-loader',
->>>>>>> release/0.11
                             options: {
                                 presets: ['env']
 

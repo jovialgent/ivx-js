@@ -37,6 +37,9 @@
 <loc>http://localhost:4000/ivx-js/developer/tutorial.color-input/</loc>
 </url>
 <url>
+<loc>http://localhost:4000/ivx-js/developer/tutorial.embedded-views/</loc>
+</url>
+<url>
 <loc>http://localhost:4000/ivx-js/developer/tutorial.hello-world/</loc>
 </url>
 <url>
@@ -64,10 +67,6 @@
 <loc>http://localhost:4000/ivx-js/developer/usage.google-analytics/</loc>
 </url>
 <url>
-<<<<<<< HEAD
-<loc>https://influencetech.github.io/ivx-js/tests/karma-tests/index.html</loc>
-<lastmod>2018-02-19T08:35:16-07:00</lastmod>
-=======
 <loc>http://localhost:4000/ivx-js/developer/contributors/</loc>
 </url>
 <url>
@@ -75,7 +74,6 @@
 </url>
 <url>
 <loc>http://localhost:4000/ivx-js/tests/karma-tests/index.html</loc>
-<lastmod>2018-03-06T15:34:42-07:00</lastmod>
->>>>>>> release/0.11
+<lastmod>2018-03-13T12:36:59-06:00</lastmod>
 </url>
 </urlset>
