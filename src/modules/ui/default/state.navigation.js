@@ -34,7 +34,7 @@ export class NavigationState {
         return `
             <section class="${sectionClasses} ${defaultSectionClasses} ivx-state-section ivx-state-navigation-section" id="${data.id}">
                  <header class="${headerClasses} ${defaultHeaderClasses} ivx-state-header ivx-state-navigation-header">${headerHTML}</header>
-                 <div class='${defaultLinkContainerClasses} ${linkContainerClasses}' ${linkContainerAttributeHTML}>
+                 <div class='${defaultLinkContainerClasses} ${linkContainerClasses} ivx-navigation-state-links-container' ${linkContainerAttributeHTML}>
                     ${linkSection}
                 </div>
                 <footer class="${footerClasses} ${defaultFooterClasses} ivx-state-footer ivx-state-navigation-footer">${footerHTML}</footer>
