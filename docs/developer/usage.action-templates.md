@@ -10,7 +10,9 @@ layout: single
 
 To help make it easier for developers to create custom components that interact with 
 iVXjs experiences, iVXjs has some attributes that when set will fire different actions 
-within the application when the element is clicked
+within the application when the element is clicked. If any of the actions have promises
+with navigation (ivx-go-to-state action template or an external link), these will resolve 
+before the navigation action happens.
 
 ## Animate Element
 

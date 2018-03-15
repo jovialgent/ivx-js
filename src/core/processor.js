@@ -56,17 +56,22 @@ export class ActionProcessor {
                 callback();
             })
             .catch(function (err) {
-                
-                log.debug(`One or all of the following events were not fired:`, {
-                    group: true,
-                    messages: Object.keys(actionObj.args).map((key, index) => {
-                        return {
-                            message: `${key}:${actionObj.args[key]}`,
-                            data: actionObj.args[key]
-                        }
-                    })
-                }, actionObj);
-                self.iVXjs.Bus.emit('iVXjs:iVXio:error:event-not-fired', err);
+
+                actionArray.forEach(action => {
+                    log.debug(`The Event Could ${action.eventName} Wasn't Fired:`, {
+                        group: true,
+                        messages: Object.keys(action.args).map((key, index) => {
+                            return {
+                                message: `${key}:${action.args[key]}`,
+                                data: action.args[key]
+                            }
+                        })
+                    }, action);
+                });
+
+                log.error(err, "ACTION_PROCESSOR");
+
+                self.iVXjs.Bus.emit('iVXjs:iVXio:error:event-not-fired', {message : err});
             });
     }
 

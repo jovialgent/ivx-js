@@ -3,31 +3,35 @@ import createFactoryFunction from '../utilities/create-factory-function.js';
 // import {[CTRLNAME]} from '[CTRLFILE]';
 
 class RemoveClasses {
-    constructor(iVXjs) {
+    constructor(iVXjs, iVXjsActionTemplateService) {
         this.restrict = 'A';
         this.controller = ["iVXjs", (iVXjs) => {
 
         }];
         this.link = ($scope, iElm, iAttrs, controller) => {
-            iElm[0].addEventListener('click', (event) => {
-                let { ivxRemoveClasses } = iAttrs;
-                try{
-                    const eventObj = $scope.$eval(ivxRemoveClasses);
+            iVXjsActionTemplateService.setup($scope, iElm, iAttrs, _getRemoveClassesEventObj);
 
-                    if(angular.isObject(eventObj)){
-                        iVXjs.experience.removeClasses(eventObj);
+            function _getRemoveClassesEventObj() {
+                const { ivxRemoveClasses: value } = iAttrs;
+
+                try {
+                    const args = $scope.$eval(value);
+
+                    return {
+                        eventName: "removeClasses",
+                        args
                     }
 
-                } catch(e){
-                   iVXjs.log.error({message : `Can't fire event due attribute not being a valid object. Please check your template definition for 'ivx-remove-classes'.`})
+                } catch (e) {
+                    iVXjs.log.error({ message: `Can't fire event due attribute not being a valid object. Please check your template definition for 'ivx-remove-classes'.` })
                 }
-            }, false);
+            };
         }
     }
 
 }
 
-RemoveClasses.$inject = ['iVXjs'];
+RemoveClasses.$inject = ['iVXjs', 'iVXjsActionTemplateService'];
 
 export default angular
     .module('ivx-js.directives.template.remove-classes', [])
