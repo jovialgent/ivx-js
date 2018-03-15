@@ -1,7 +1,3 @@
-import { TypeValidator } from "../../utilities/type-parsers";
-
-const typeValidator = new TypeValidator();
-
 class ActionTemplateService {
     constructor($window, iVXjs, iVXjsBus, iVXjsActions) {
         "ngInject";
@@ -26,7 +22,11 @@ class ActionTemplateService {
 
         element.attr('ivx-action-template-set', true);
         element[0].addEventListener('click', (event) => {
-            event.preventDefault();
+            const { target } = attributes;
+
+            if (target !== '_blank') {
+                event.preventDefault();
+            }
 
             self._runActionTemplates($scope, element, attributes);
         }, false);
@@ -43,11 +43,11 @@ class ActionTemplateService {
         iVXjsActions.resolveActions(nonNavigationEvents, () => {
             const { href, target } = attributes;
 
-            if (navigationEvents.length > 0) {
+            if ((target === '_blank' || navigationEvents.length > 0)) {
                 iVXjsActions.resolveActions(navigationEvents, () => {
 
                 });
-
+                
                 return;
             }
 
@@ -57,7 +57,6 @@ class ActionTemplateService {
         });
     }
 }
-
 
 export default angular.module('ivx-js.services.action-template', [])
     .service('iVXjsActionTemplateService', ActionTemplateService)
