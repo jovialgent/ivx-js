@@ -24,7 +24,7 @@ class HtmlState {
 
                 controller.safeTemplateUrl = safeTemplateUrl;
 
-                addViews(`<div class="html-state-container" ng-include="vm.safeTemplateUrl"></div>`);
+                addViews(`<div class="html-state-container" ng-include="vm.safeTemplateUrl"></div>`, true);
             } else {
                 addViews(html, true);
             }
