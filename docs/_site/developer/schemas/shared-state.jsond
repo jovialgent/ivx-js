@@ -1,276 +1,457 @@
 {
-  "name": "iVXjs Shared State Data",
-  "description": "Contains settings that are shared amongst most states.",
-  "type": "object",
-  "properties": {
-    "id": {
-      "name": "Id",
-      "type": "string",
-      "description": "A unique identifier for the state. Used by iVXjs for navigation and CSS styling.",
-      "required": true
-    },
-    "name": {
-      "name": "Name",
-      "type": "string",
-      "description": "A human readable name of the state. States can use this name to make a default header label if no header is given.",
-      "required": true
-    },
-    "type": {
-      "name": "Type",
-      "type": "string",
-      "description": "This state's type indicating what kind of state will render to the user.",
-      "enum": [
-        "video",
-        "html",
-        "input",
-        "navigation"
-      ]
-    },
-    "url": {
-      "name": "Url",
-      "type": "string",
-      "description": "The url pathname which this state can be found that must be preceeded by a /. For example, if the domain name is \"http://www.example.com\" and this state's url is \"/test\" then the url for this state will be \"http://www.example.com/#/test.\"",
-      "required": true
-    },
-    "next": {
-      "type": "array",
-      "name": "Next",
-      "description": "A collection of rules and state Ids that indicate which state this state will go to once an appropriate actions is performed on the state. Each state will have its own action that will trigger a next navigation.",
-      "minLength": 1,
-      "required": true,
-      "items": {
-        "name": "Next Collection Items",
-        "type": "object",
-        "description": "Indicates which state to go to next based on its stateId and rule",
-        "properties": {
-          "stateId": {
-            "name": "State ID",
+    "name": "iVXjs Shared State Data",
+    "description": "Contains settings that are shared amongst most states.",
+    "type": "object",
+    "properties": {
+        "id": {
+            "name": "Id",
             "type": "string",
-            "description": "The stateId the user will go to if the rule is evaluated to true or missing.",
+            "description": "A unique identifier for the state. Used by iVXjs for navigation and CSS styling.",
             "required": true
-          },
-          "rule": {
-            "name": "Rule",
-            "type": "object",
-            "description": "Supplies the rule information for this experiences rule function to evaluate if this state should be used. If this rule evaluates to 'true', then iVXjs will navigate to the corresponding state.",
-            "properties": {
-              "conditionOperators": {
-                "name": "Condition Operators",
-                "type": "string",
-                "description": "Indicates how to evaluate the conditions for this rule.",
-                "enum": [
-                  "and",
-                  "or",
-                  "not"
-                ]
-              },
-              "conditions": {
-                "name": "Conditions",
-                "type": "array",
-                "description": "The conditions/rules to be evaluate to a boolean.",
-                "required": true,
-                "items": {
-                  "type": "object",
-                  "name": "Condition Settings",
-                  "description": "The key, value and the evaluator for each of the conditions.",
-                  "properties": {
-                    "key": {
-                      "name": "Condition Key",
-                      "type": "string",
-                      "description": "The key from the experience.data object or a keyword the rule function uses to get the correct data.",
-                      "required": true
+        },
+        "name": {
+            "name": "Name",
+            "type": "string",
+            "description": "A human readable name of the state.",
+            "required": true
+        },
+        "type": {
+            "name": "Type",
+            "type": "string",
+            "description": "This state's type indicating what kind of state will render to the user.",
+            "enum": [
+                "video",
+                "html",
+                "input",
+                "navigation"
+            ]
+        },
+        "url": {
+            "name": "Url",
+            "type": "string",
+            "description": "The url pathname which this state can be found that must be preceeded by a /. For example, if the domain name is \"http://www.example.com\" and this state's url is \"/test\" then the url for this state will be \"http://www.example.com/#/test.\"",
+            "required": true
+        },
+        "embedded": {
+            "name": "Embedded",
+            "type": "boolean",
+            "description": "Indicates that this state is embedded in another. If this is set to true, it will makes it so it can&rsquo;t have embedded views."
+        },
+        "embeddedViews": {
+            "name": "Embedded Views",
+            "type": "array",
+            "description": "A collection of view definitions to embedded various states in the same state as this one.",
+            "items": {
+                "name": "Embedded View Info",
+                "type": "object",
+                "description": "Settings to setup embedded views",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "name": "View Id",
+                        "required": true,
+                        "description": "The id of the view for this state. This id will be added to the view container when the state renders"
                     },
-                    "is": {
-                      "name": "Condition Comparer",
-                      "type": "string",
-                      "description": "The type of comparison this key will be evaluated against the value",
-                      "enum": [
-                        "lt",
-                        "lte",
-                        "gt",
-                        "gte",
-                        "equals",
-                        "notEquals"
-                      ],
-                      "required": true
+                    "name": {
+                        "type": "string",
+                        "name": "View Name",
+                        "required": true,
+                        "description": "A human readable name of the view."
                     },
-                    "value": {
-                      "name": "Condition Value",
-                      "type": "any",
-                      "description": "The value to evaluate the data found in the 'key'.",
-                      "required": true
+                    "classes": {
+                        "type": "string",
+                        "name": "View Classes",
+                        "description": "Classes to add to the views container. Used primarily for custom ui components and UI module specific classes."
+                    },
+                    "appendTo": {
+                        "type": "string",
+                        "name": "Append View",
+                        "description": "Appends the container of the view to the selector provided. The selector can only be added elements that available before the state is compiled.",
+                        "required": true
                     },
                     "type": {
-                      "name": "Condition Type",
-                      "type": "string",
-                      "description": "Type of comparison. By default, it is input meaning it looks for any data input in the experience object. However, some data modules may use this to indicate a special kind of condition"
+                        "type": "string",
+                        "name": "View Type",
+                        "description": "The type of view this embedded view is.",
+                        "required": true,
+                        "enum": [
+                            "custom"
+                        ]
+                    },
+                    "states": {
+                        "name": "Embedded States",
+                        "type": "array",
+                        "description": "A collection of view definitions to embedded various states in the same state as this one.",
+                        "items": {
+                            "type": "object",
+                            "name": "Embedded States Settings",
+                            "description": "Settings for embedding a state.",
+                            "properties": {
+                                "stateId": {
+                                    "type": "string",
+                                    "name": "Embedded State Id",
+                                    "required": true,
+                                    "description": "The state id of the state to put into this view"
+                                },
+                                "next": {
+                                    "type": "array",
+                                    "name": "Embedd View Decision Tree",
+                                    "description": "Indicates which state to go to next based on its stateId and rule. The next in the child state will be ignored and the navigation will based off this collection of rules.",
+                                    "items": {
+                                        "name": "Embedded View Rule",
+                                        "type": "object",
+                                        "description": "Indicates which state to go to next based on its stateId and rule. This will overwrite the stateId ",
+                                        "properties": {
+                                            "stateId": {
+                                                "name": "State ID",
+                                                "type": "string",
+                                                "description": "The stateId the user will go to if the rule is evaluated to true or missing. (DEPRECATED)",
+                                                "required": true
+                                            },
+                                            "route": {
+                                                "name": "Route",
+                                                "type": "string",
+                                                "description": "The route the user will go to if the rule is evaluated to true or missing.",
+                                                "required": true
+                                            },
+                                            "rule": {
+                                                "name": "Rule",
+                                                "type": "object",
+                                                "description": "Supplies the rule information for this experiences rule function to evaluate if this state should be used. If this rule evaluates to 'true', then iVXjs will navigate to the corresponding state.",
+                                                "properties": {
+                                                    "conditionOperators": {
+                                                        "name": "Condition Operators",
+                                                        "type": "string",
+                                                        "description": "Indicates how to evaluate the conditions for this rule.",
+                                                        "enum": [
+                                                            "and",
+                                                            "or",
+                                                            "not"
+                                                        ]
+                                                    },
+                                                    "conditions": {
+                                                        "name": "Conditions",
+                                                        "type": "array",
+                                                        "description": "The conditions/rules to be evaluate to a boolean.",
+                                                        "required": true,
+                                                        "items": {
+                                                            "type": "object",
+                                                            "name": "Condition Settings",
+                                                            "description": "The key, value and the evaluator for each of the conditions.",
+                                                            "properties": {
+                                                                "key": {
+                                                                    "name": "Condition Key",
+                                                                    "type": "string",
+                                                                    "description": "The key from the experience.data object or a keyword the rule function uses to get the correct data.",
+                                                                    "required": true
+                                                                },
+                                                                "is": {
+                                                                    "name": "Condition Comparer",
+                                                                    "type": "string",
+                                                                    "description": "The type of comparison this key will be evaluated against the value",
+                                                                    "enum": [
+                                                                        "lt",
+                                                                        "lte",
+                                                                        "gt",
+                                                                        "gte",
+                                                                        "equals",
+                                                                        "notEquals"
+                                                                    ],
+                                                                    "required": true
+                                                                },
+                                                                "value": {
+                                                                    "name": "Condition Value",
+                                                                    "type": "any",
+                                                                    "description": "The value to evaluate the data found in the 'key'.",
+                                                                    "required": true
+                                                                },
+                                                                "type": {
+                                                                    "name": "Condition Type",
+                                                                    "type": "string",
+                                                                    "description": "Type of comparison. By default, it is input meaning it looks for any data input in the experience object. However, some data modules may use this to indicate a special kind of condition"
+                                                                }
+                                                            }
+                                                        }
+                                                    },
+                                                    "key": {
+                                                        "name": "Rule Key",
+                                                        "type": "string",
+                                                        "description": "The key from the experience.data object or a keyword the rule function uses to get the correct data.",
+                                                        "specialNote": "This is depreciated. Use the conditionOperator and conditions for rule evaluation in the future",
+                                                        "required": true
+                                                    },
+                                                    "is": {
+                                                        "name": "Rule Comparer",
+                                                        "type": "string",
+                                                        "description": "The type of comparison this key will be evaluated against the value",
+                                                        "specialNote": "This is depreciated. Use the conditionOperator and conditions for rule evaluation in the future",
+                                                        "enum": [
+                                                            "lt",
+                                                            "lte",
+                                                            "gt",
+                                                            "gte",
+                                                            "equals",
+                                                            "notEquals"
+                                                        ],
+                                                        "required": true
+                                                    },
+                                                    "value": {
+                                                        "name": "Rule Value",
+                                                        "type": "any",
+                                                        "description": "The value to evaluate the data found in the 'key'.",
+                                                        "specialNote": "This is depreciated. Use the conditionOperator and conditions for rule evaluation in the future",
+                                                        "required": true
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
-                  }
                 }
-              },
-              "key": {
-                "name": "Rule Key",
-                "type": "string",
-                "description": "The key from the experience.data object or a keyword the rule function uses to get the correct data.",
-                "specialNote": "This is depreciated. Use the conditionOperator and conditions for rule evaluation in the future",
-                "required": true
-              },
-              "is": {
-                "name": "Rule Comparer",
-                "type": "string",
-                "description": "The type of comparison this key will be evaluated against the value",
-                "specialNote": "This is depreciated. Use the conditionOperator and conditions for rule evaluation in the future",
-                "enum": [
-                  "lt",
-                  "lte",
-                  "gt",
-                  "gte",
-                  "equals",
-                  "notEquals"
-                ],
-                "required": true
-              },
-              "value": {
-                "name": "Rule Value",
-                "type": "any",
-                "description": "The value to evaluate the data found in the 'key'.",
-                "specialNote": "This is depreciated. Use the conditionOperator and conditions for rule evaluation in the future",
-                "required": true
-              }
             }
-          }
-        }
-      }
-    },
-    "audio": {
-      "type": "object",
-      "name": "State Audio",
-      "description": "All settings for state-wide audio that plays when a user enters the state.",
-      "properties": {
-        "src": {
-          "name": "State Audio Source",
-          "type": "string",
-          "description": "The path to the audio for this state.",
-          "required": true
         },
-        "loop": {
-          "name": "Loop",
-          "type": "boolean",
-          "description": "Determines if the state wide audio should repeat if the audio ends."
-        },
-        "cuePoints": {
-          "type": "array",
-          "name": "State Audio Cue Points",
-          "description": "Events/Actions to fire while a state wide audio plays.",
-          "items": {
-            "type": "object",
-            "name": "State Audio Cue Points Event Data",
-            "description": "Events to fire at a specific time during an audio clip.",
-            "properties": {
-              "timeAt": {
-                "name": "Time At",
-                "type": "number",
-                "description": "Time in the audio at which this event should fire.",
-                "required": true
-              },
-              "once": {
-                "name": "Once",
-                "type": "boolean",
-                "description": "Indicates that this event should fire once (just in case the audio loops)"
-              },
-              "eventName": {
-                "name": "State Audio Event Name",
-                "type": "string",
-                "description": "The event to be fired."
-              },
-              "args": {
-                "name": "State Audio Event Arguments",
+        "next": {
+            "type": "array",
+            "name": "Next",
+            "description": "A collection of rules and state Ids that indicate which state this state will go to once an appropriate actions is performed on the state. Each state will have its own action that will trigger a next navigation.",
+            "minLength": 1,
+            "required": true,
+            "items": {
+                "name": "Next Collection Items",
                 "type": "object",
-                "description": "Arguments for this event."
-              }
+                "description": "Indicates which state to go to next based on its stateId and rule",
+                "properties": {
+                    "stateId": {
+                        "name": "State ID",
+                        "type": "string",
+                        "description": "The stateId the user will go to if the rule is evaluated to true or missing.",
+                        "required": true
+                    },
+                    "rule": {
+                        "name": "Rule",
+                        "type": "object",
+                        "description": "Supplies the rule information for this experiences rule function to evaluate if this state should be used. If this rule evaluates to 'true', then iVXjs will navigate to the corresponding state.",
+                        "properties": {
+                            "conditionOperators": {
+                                "name": "Condition Operators",
+                                "type": "string",
+                                "description": "Indicates how to evaluate the conditions for this rule.",
+                                "enum": [
+                                    "and",
+                                    "or",
+                                    "not"
+                                ]
+                            },
+                            "conditions": {
+                                "name": "Conditions",
+                                "type": "array",
+                                "description": "The conditions/rules to be evaluate to a boolean.",
+                                "required": true,
+                                "items": {
+                                    "type": "object",
+                                    "name": "Condition Settings",
+                                    "description": "The key, value and the evaluator for each of the conditions.",
+                                    "properties": {
+                                        "key": {
+                                            "name": "Condition Key",
+                                            "type": "string",
+                                            "description": "The key from the experience.data object or a keyword the rule function uses to get the correct data.",
+                                            "required": true
+                                        },
+                                        "is": {
+                                            "name": "Condition Comparer",
+                                            "type": "string",
+                                            "description": "The type of comparison this key will be evaluated against the value",
+                                            "enum": [
+                                                "lt",
+                                                "lte",
+                                                "gt",
+                                                "gte",
+                                                "equals",
+                                                "notEquals"
+                                            ],
+                                            "required": true
+                                        },
+                                        "value": {
+                                            "name": "Condition Value",
+                                            "type": "any",
+                                            "description": "The value to evaluate the data found in the 'key'.",
+                                            "required": true
+                                        },
+                                        "type": {
+                                            "name": "Condition Type",
+                                            "type": "string",
+                                            "description": "Type of comparison. By default, it is input meaning it looks for any data input in the experience object. However, some data modules may use this to indicate a special kind of condition"
+                                        }
+                                    }
+                                }
+                            },
+                            "key": {
+                                "name": "Rule Key",
+                                "type": "string",
+                                "description": "The key from the experience.data object or a keyword the rule function uses to get the correct data.",
+                                "specialNote": "This is depreciated. Use the conditionOperator and conditions for rule evaluation in the future",
+                                "required": true
+                            },
+                            "is": {
+                                "name": "Rule Comparer",
+                                "type": "string",
+                                "description": "The type of comparison this key will be evaluated against the value",
+                                "specialNote": "This is depreciated. Use the conditionOperator and conditions for rule evaluation in the future",
+                                "enum": [
+                                    "lt",
+                                    "lte",
+                                    "gt",
+                                    "gte",
+                                    "equals",
+                                    "notEquals"
+                                ],
+                                "required": true
+                            },
+                            "value": {
+                                "name": "Rule Value",
+                                "type": "any",
+                                "description": "The value to evaluate the data found in the 'key'.",
+                                "specialNote": "This is depreciated. Use the conditionOperator and conditions for rule evaluation in the future",
+                                "required": true
+                            }
+                        }
+                    }
+                }
             }
-          }
         },
-        "onEnd": {
-          "name": "On Audio End",
-          "type": "array",
-          "description": "Events to fire when the audio clip is finished."
+        "audio": {
+            "type": "object",
+            "name": "State Audio",
+            "description": "All settings for state-wide audio that plays when a user enters the state.",
+            "properties": {
+                "src": {
+                    "name": "State Audio Source",
+                    "type": "string",
+                    "description": "The path to the audio for this state.",
+                    "required": true
+                },
+                "loop": {
+                    "name": "Loop",
+                    "type": "boolean",
+                    "description": "Determines if the state wide audio should repeat if the audio ends."
+                },
+                "cuePoints": {
+                    "type": "array",
+                    "name": "State Audio Cue Points",
+                    "description": "Events/Actions to fire while a state wide audio plays.",
+                    "items": {
+                        "type": "object",
+                        "name": "State Audio Cue Points Event Data",
+                        "description": "Events to fire at a specific time during an audio clip.",
+                        "properties": {
+                            "timeAt": {
+                                "name": "Time At",
+                                "type": "number",
+                                "description": "Time in the audio at which this event should fire.",
+                                "required": true
+                            },
+                            "once": {
+                                "name": "Once",
+                                "type": "boolean",
+                                "description": "Indicates that this event should fire once (just in case the audio loops)"
+                            },
+                            "eventName": {
+                                "name": "State Audio Event Name",
+                                "type": "string",
+                                "description": "The event to be fired."
+                            },
+                            "args": {
+                                "name": "State Audio Event Arguments",
+                                "type": "object",
+                                "description": "Arguments for this event."
+                            }
+                        }
+                    }
+                },
+                "onEnd": {
+                    "name": "On Audio End",
+                    "type": "array",
+                    "description": "Events to fire when the audio clip is finished."
+                }
+            }
+        },
+        "header": {
+            "type": "object",
+            "name": "Header",
+            "description": "Contains all the settings for the header which appears before the main section of the state.",
+            "properties": {
+                "templateUrl": {
+                    "name": "Header's Template URL Path",
+                    "type": "string",
+                    "description": "Url path to an external .html file"
+                },
+                "html": {
+                    "name": "Header's HTML",
+                    "type": "string",
+                    "description": "HTML to be inserted in the header section of the state."
+                },
+                "classes": {
+                    "name": "Header's CSS Class Names",
+                    "type": "string",
+                    "description": "Classes to add to the header section of this state. Used mostly for injecting classes for ui frameworks."
+                }
+            }
+        },
+        "section": {
+            "type": "object",
+            "name": "Section",
+            "description": "Contains all the settings for the section (the wrapper around state specific features like forms, links and video",
+            "properties": {
+                "classes": {
+                    "name": "Section CSS Class Names",
+                    "type": "string",
+                    "description": "Classes to be added to the section part of the state. Primarily used for UI frameworks and targeting specific elements."
+                }
+            }
+        },
+        "footer": {
+            "type": "object",
+            "name": "Footer",
+            "description": "Contains all the settings for the footer which appears after the main section of the state.",
+            "properties": {
+                "templateUrl": {
+                    "name": "Footer's Template URL Path",
+                    "type": "string",
+                    "description": "Url path to an external .html file."
+                },
+                "html": {
+                    "name": "Footer's HTML",
+                    "type": "string",
+                    "description": "HTML to be inserted in the footer section of the state."
+                },
+                "classes": {
+                    "name": "Footer CSS Class Names",
+                    "type": "string",
+                    "description": "Classes to add to the footer section in this state. Used mostly for injecting classes for ui frameworks."
+                }
+            }
+        },
+        "onEnter": {
+            "name": "On Enter",
+            "type": "array",
+            "description": "A collection of events and actions to run everytime the user loads this state.",
+            "items": {
+                "type": "object",
+                "descriptions": "Event data as defined in the event section of this documentation"
+            }
+        },
+        "onExit": {
+            "name": "On Exit",
+            "type": "array",
+            "description": "A collection of events and actions to run everytime the user exits this state.",
+            "items": {
+                "type": "object",
+                "descriptions": "Event data as defined in the event section of this documentation"
+            }
         }
-      }
-    },
-    "header": {
-      "type": "object",
-      "name": "Header",
-      "description": "Contains all the settings for the header which appears before the main section of the state.",
-      "properties": {
-        "templateUrl": {
-          "name": "Header's Template URL Path",
-          "type": "string",
-          "description": "Url path to an external .html file"
-        },
-        "html": {
-          "name": "Header's HTML",
-          "type": "string",
-          "description": "HTML to be inserted in the header section of the state."
-        },
-        "classes": {
-          "name": "Header's CSS Class Names",
-          "type": "string",
-          "description": "Classes to add to the header section of this state. Used mostly for injecting classes for ui frameworks."
-        }
-      }
-    },
-    "section": {
-      "type": "object",
-      "name": "Section",
-      "description": "Contains all the settings for the section (the wrapper around state specific features like forms, links and video",
-      "properties": {
-        "classes": {
-          "name": "Section CSS Class Names",
-          "type": "string",
-          "description": "Classes to be added to the section part of the state. Primarily used for UI frameworks and targeting specific elements."
-        }
-      }
-    },
-    "footer": {
-      "type": "object",
-      "name": "Footer",
-      "description": "Contains all the settings for the footer which appears after the main section of the state.",
-      "properties": {
-        "templateUrl": {
-          "name": "Footer's Template URL Path",
-          "type": "string",
-          "description": "Url path to an external .html file."
-        },
-        "html": {
-          "name": "Footer's HTML",
-          "type": "string",
-          "description": "HTML to be inserted in the footer section of the state."
-        },
-        "classes": {
-          "name": "Footer CSS Class Names",
-          "type": "string",
-          "description": "Classes to add to the footer section in this state. Used mostly for injecting classes for ui frameworks."
-        }
-      }
-    },
-    "onEnter": {
-      "name": "On Enter",
-      "type": "array",
-      "description": "A collection of events and actions to run everytime the user loads this state.",
-      "items": {
-        "type": "object",
-        "descriptions": "Event data as defined in the event section of this documentation"
-      }
-    },
-    "onExit": {
-      "name": "On Exit",
-      "type": "array",
-      "description": "A collection of events and actions to run everytime the user exits this state.",
-      "items": {
-        "type": "object",
-        "descriptions": "Event data as defined in the event section of this documentation"
-      }
     }
-  }
 }

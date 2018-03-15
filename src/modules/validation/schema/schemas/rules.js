@@ -1,51 +1,69 @@
+import isEmpty from "lodash/isEmpty";
+
 export class Rules {
-    constructor(config){
-        this.config = config;      
+    constructor(config) {
+        this.config = config;
     }
 
-    get stateIdEnums(){
-        let {states = []} = this.config;
+    get stateIdEnums() {
+        let { states = [] } = this.config;
 
-        let stateIds = states.map((state, index) =>{
-            return state.id;
-        })
+        let stateIds = states.reduce((stateIds, state, index) => {
+            const { id: currentStateId, embeddedViews = [] } = state;
+
+            stateIds = [].concat(stateIds, [currentStateId]);
+
+            if (!isEmpty(embeddedViews)) {
+                embeddedViews.forEach(embeddedView => {
+                    const { states: embeddedViews } = embeddedView;
+                    const allParentChildStateIds = embeddedViews.map(embeddedState => {
+                        return `${currentStateId}.${embeddedState.stateId}`;
+                    });
+                    const allRelativeChildStateIds = embeddedViews.map(embeddedState => {
+                        return `^.${embeddedState.stateId}`;
+                    });
+
+                    stateIds = [].concat(stateIds, allParentChildStateIds, allRelativeChildStateIds, ['^']);
+                });
+            }
+
+            return stateIds;
+        }, []);
 
         return stateIds;
-
     }
 
-    get rulesRequired(){
+    get rulesRequired() {
         // return ["key", "is", "value"];
     }
 
-    get schema(){
+    get schema() {
         return {
-            "type" : "object",
-            "name" : "Rule Schema",
+            "type": "object",
+            "name": "Rule Schema",
             "properties": {
-                "stateId" : {
-                    "type" : "string",
-                    "enum" : this.stateIdEnums
+                "stateId": {
+                    "type": "string"
                 },
-                "rules" : {
-                    "type" : "array"
+                "rules": {
+                    "type": "array"
                 },
-                "rule" : {
-                    "type" : "object",
-                    "properties" : {
-                        "key" : {
-                            "type" : "string",
-                             "minLength"  :1
+                "rule": {
+                    "type": "object",
+                    "properties": {
+                        "key": {
+                            "type": "string",
+                            "minLength": 1
                         },
-                        "is" : {
-                            "type" : "string",
-                            "enum" : ["lt", "lte", "gt", "gte", "equals", "notEquals"]
+                        "is": {
+                            "type": "string",
+                            "enum": ["lt", "lte", "gt", "gte", "equals", "notEquals"]
                         },
-                        "value" :{
-                            "type" : ["string", "number", "boolean", "object", "array"]
+                        "value": {
+                            "type": ["string", "number", "boolean", "object", "array"]
                         }
                     },
-                    "required" : this.rulesRequired
+                    "required": this.rulesRequired
                 }
             }
         }

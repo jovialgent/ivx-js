@@ -17,21 +17,26 @@ class AppRun {
         $rootScope.ogImage = image;
         $rootScope.ogDescription = description;
 
-        iVXjs.Bus.on(stateEventNames.GO, (state) => {
-            let evalState = state;
+        iVXjs.Bus.on(stateEventNames.GO, (state = {}) => {
+            let evalState = state || {};
 
             if (Array.isArray(state)) {
                 evalState = state[0];
             }
 
-            $state.go(evalState.stateId);
+            const { route, stateId = "" } = evalState;
+            const goToStateId = route ? route : stateId;
+        
+            if (goToStateId.length > 0) {
+                $state.go(goToStateId);
+            }
         });
 
         $rootScope.$on("$includeContentError", function (event, args) {
             iVXjs.Bus.emit(angularEventNames.TEMPLATE_NOT_FOUND, event);
         });
 
-        $transitions.onSuccess({ to: '*' }, ['$state', 'ivxjs.modules.audio', ($state, iVXjsAudio) => {
+        $transitions.onSuccess({ to: '*.*' }, ['$state', 'ivxjs.modules.audio', ($state, iVXjsAudio) => {
             let { data } = $state.current;
 
             iVXjs.Bus.emit(stateEventNames.CHANGE, $state.current);
