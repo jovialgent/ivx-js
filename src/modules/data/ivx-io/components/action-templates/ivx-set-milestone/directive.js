@@ -1,26 +1,23 @@
 export class Directive {
-    constructor(iVXjs) {
+    constructor(iVXjs, iVXjsActionTemplateService) {
         this.link = ($scope, iElm, iAttrs, controller) => {
-            iElm[0].addEventListener('click', (event) => {
-                event.preventDefault();
+            iVXjsActionTemplateService.setup($scope, iElm, iAttrs, _getSetMilestoneEventObj);
 
-                let { ivxSetMilestone: milestone } = iAttrs;
+            function _getSetMilestoneEventObj() {
+                const { ivxSetMilestone: milestone } = iAttrs;
 
-                iVXjs.experience.actions.resolveActions([{
+                return {
                     eventName: "setMilestone",
                     args: {
                         milestone
                     }
-                }], () => {
-
-                })
-
-            }, false);
+                }
+            };
         }
     }
 }
 
-Directive.$inject = ["iVXjs"];
+Directive.$inject = ["iVXjs", "iVXjsActionTemplateService"];
 
 export default class {
     constructor(app, opts) {

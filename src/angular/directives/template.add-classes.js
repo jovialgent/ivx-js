@@ -9,10 +9,10 @@ class AddClasses {
 
         }];
         this.link = ($scope, iElm, iAttrs, controller) => {
-            iVXjsActionTemplateService.setup($scope, iElm, iAttrs, getAddClassesEventObj);
+            iVXjsActionTemplateService.setup($scope, iElm, iAttrs, _getAddClassesEventObj);
 
 
-           function getAddClassesEventObj() {
+           function _getAddClassesEventObj() {
                const {ivxAddClasses : value} = iAttrs;
                
                 try {

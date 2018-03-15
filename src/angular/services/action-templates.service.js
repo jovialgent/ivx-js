@@ -41,7 +41,7 @@ class ActionTemplateService {
         const navigationEvents = eventArray.filter(event => event.eventName === iVXjs.constants.STATE.EVENTS.GO);
 
         iVXjsActions.resolveActions(nonNavigationEvents, () => {
-            const { href } = attributes;
+            const { href, target } = attributes;
 
             if (navigationEvents.length > 0) {
                 iVXjsActions.resolveActions(navigationEvents, () => {
@@ -51,7 +51,7 @@ class ActionTemplateService {
                 return;
             }
 
-            if (href) {
+            if (href && target !== '_blank') {
                 $window.location = href;
             }
         });
