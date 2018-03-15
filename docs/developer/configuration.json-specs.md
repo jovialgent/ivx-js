@@ -1,7 +1,7 @@
 ---
 layout: single
-source : https://influencetech.github.io/ivx-js/
-# source : http://127.0.0.1:4000/ivx-js/
+# source : https://influencetech.github.io/ivx-js/
+source : http://127.0.0.1:4000/ivx-js/
 jsarr:
      - js/jsond-table.js
 ---
@@ -195,6 +195,10 @@ All states have the following data below. Assume the specific states types have 
 _Sample Data_
 
 [shared-state-data-sample.json]({{page.source}}developer/sample-JSON/shared-state-data-sample.json)
+
+_Sample Data With Embedded Views_
+
+[embedded-views-sample.json]({{page.source}}developer/sample-JSON/embedded-views-sample.json)
 
 _Schema_
 

@@ -65,6 +65,7 @@ export class Actions {
         const classNames = this._getClassNames(classes);
 
         elements.forEach(element => {
+            
             classNames.forEach(className => {
                 element.classList.add(className);
             });
@@ -84,7 +85,7 @@ export class Actions {
     }
 
     _getClassNames(classes = "") {
-        if (!classes || !classes.split) return;
+        if (!classes || !classes.split) return [];
 
         return classes.split(' ');
     }

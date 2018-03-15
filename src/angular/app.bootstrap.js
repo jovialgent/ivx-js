@@ -15,7 +15,9 @@ export default function (iVXjs) {
        
         .constant('ivxjs.modules.ui', iVXjs.ui)
         .constant('ivxjs.log', iVXjs.log)
+        .constant('iVXjsLog', iVXjs.log)
         .constant('ivxjs.modules.video',iVXjs.video)
+        .constant('iVXjsModulesVideo',iVXjs.video)
         .constant('ivxjs.modules.audio', stateAudio)
         .constant('ivxjs.modules.audio.experience', experienceAudio)
 
