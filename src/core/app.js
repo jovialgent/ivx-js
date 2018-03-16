@@ -81,6 +81,13 @@ export class iVXjs {
         this.experience.processor = new ActionProcessor(this);
         this.experience.config = this.config;
 
+        // console.dir(this.experience);
+
+        const { metadata = {} } = this.config;
+        const { experience: customExperience = {} } = this.settings;
+
+        this.experience.data = this._createExperienceDataObject();
+
         /**
          * Evaluates an array of expressions to allow stat navigation branching
          * 
@@ -106,6 +113,18 @@ export class iVXjs {
          * to set up.
          */
         this.Bus.emit(iVXjsConfigEvents.VALIDATED, this);
+    }
+
+
+    _createExperienceDataObject() {
+        const { experience = {}, config = {}, settings = {} } = this;
+        const { experience: customExperience = {} } = settings;
+        const { metadata = {} } = config;
+        const { data: staticData = {} } = metadata;
+        const { data: settingsData = {} } = customExperience;
+        const { data: experienceData = {} } = experience;
+
+        return Object.assign(staticData, settingsData, experienceData);
     }
 
     /**
@@ -140,6 +159,8 @@ export class iVXjs {
                     resolve(self);
                 });
         });
+
+        Object.assign(this, { settings });
 
         return initPromise;
     }
