@@ -1,25 +1,23 @@
 export class Directive {
-    constructor(iVXjs) {
+    constructor(iVXjs, iVXjsActionTemplateService) {
         this.link = ($scope, iElm, iAttrs, controller) => {
-            iElm[0].addEventListener('click', (event) => {
-                event.preventDefault();
+            iVXjsActionTemplateService.setup($scope, iElm, iAttrs, _getRecordEventEventObj);
+
+            function _getRecordEventEventObj() {
                 let { ivxRecordEvent: customEvent } = iAttrs;
 
-                iVXjs.experience.actions.resolveActions([{
+                return {
                     eventName: "recordEvent",
                     args: {
                         customEvent
                     }
-                }], () => {
-
-                })
-
-            }, false);
+                }
+            }
         }
     }
 }
 
-Directive.$inject = ["iVXjs"];
+Directive.$inject = ["iVXjs", "iVXjsActionTemplateService"];
 
 export default class {
     constructor(app, opts) {

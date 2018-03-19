@@ -126,11 +126,16 @@ export class iVXioActions {
      * @return {Promise} - will indicate if this setConverted was successful by the platform.
      */
     setConverted(eventArgs) {
+        const self = this;
+        
         if (typeof eventArgs === 'object') {
             let { label } = eventArgs;
 
             try {
-                return this.experience.setConverted(label);
+                return this.experience.setConverted(label)
+                    .then(() => {
+                        self.experience.Bus.emit(self.eventNames.SET_CONVERTED, eventArgs);
+                    });
             } catch (e) {
                 this.experience.Bus.emit(iVXioErrors.EVENT_NOT_FIRED, eventArgs, e);
                 this.iVXjsLog.error(e, "IVX_IO");
@@ -145,9 +150,14 @@ export class iVXioActions {
      * @return {Promise} - will indicate if this setComplete was successful by the platform.
      */
     setComplete(eventArgs = {}) {
+        const self = this;
+
         if (typeof eventArgs === 'object') {
             try {
-                return this.experience.setComplete();
+                return this.experience.setComplete()
+                    .then(() => {
+                        self.experience.Bus.emit(self.eventNames.SET_COMPLETE, eventArgs);
+                    });
             } catch (e) {
                 this.experience.Bus.emit(iVXioErrors.EVENT_NOT_FIRED, eventArgs, e);
                 this.iVXjsLog.error(e, "IVX_IO");
@@ -201,6 +211,8 @@ export class iVXioActions {
                                 }
                             })
                         }, data);
+
+                        self.experience.Bus.emit(self.eventNames.SET_DATA, eventArgs);
                     });
             } catch (e) {
                 this.experience.Bus.emit(iVXioErrors.EVENT_NOT_FIRED, eventArgs, e);

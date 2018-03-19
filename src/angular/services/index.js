@@ -4,7 +4,7 @@ import InlineVideo from "./ios-inline-video";
 import TemplateRenderer from "./template-renderer";
 import ScopedExperience from "./experience-scope";
 import VideoService from "./video.service";
-
+import ActionTemplateService from "./action-templates.service";
 
 export default angular.module('ivx-js.services', [
     Bus,
@@ -12,5 +12,6 @@ export default angular.module('ivx-js.services', [
     InlineVideo,
     TemplateRenderer,
     ScopedExperience,
-    VideoService
+    VideoService,
+    ActionTemplateService
 ]).name;
