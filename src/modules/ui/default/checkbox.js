@@ -105,7 +105,7 @@ export class Checkbox {
         if (labelHTML) label = labelHTML;
 
         return `
-            <label for="${id}" class="${classes} ivx-input-label ivx-input-label-buttons">
+            <label for="${id}" class="${classes} ivx-input-label ivx-input-label-checkbox">
                <input class="ivx-input ivx-input-checkbox" ${attributes}>
                ${label}
             </label>
