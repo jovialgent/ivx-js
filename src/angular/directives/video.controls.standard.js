@@ -37,7 +37,7 @@ class StandardControls {
     }
 
     get templateHTML() {
-        return `<div class="video-control-container"></div>`;
+        return `<div class="video-control-container ivx-video-controls-container"></div>`;
     }
 }
 

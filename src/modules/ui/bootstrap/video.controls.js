@@ -6,75 +6,75 @@ export default class extends DefaultVideoControls {
     }
 
     get totalTimeInfoClasses() {
-        return 'duration';
+        return 'duration ivx-video-controls-timestamp-duration';
     }
 
     get playClasses() {
-        return 'glyphicon glyphicon-play';
+        return 'glyphicon glyphicon-play ivx-video-controls-play-icon ivx-icon';
     }
 
     get pauseClasses() {
-        return 'glyphicon glyphicon-pause';
+        return 'glyphicon glyphicon-pause ivx-video-controls-pause-icon ivx-icon';
     }
 
     get unmuteClasses() {
-        return 'glyphicon glyphicon-volume-up';
+        return 'glyphicon glyphicon-volume-up ivx-video-controls-unmute-icon ivx-icon';
     }
 
     get muteClasses() {
-        return 'glyphicon glyphicon-volume-off';
+        return 'glyphicon glyphicon-volume-off ivx-video-controls-mute-icon ivx-icon';
     }
 
     get playPauseControlsClasses() {
-        return 'btn btn-default btn-xs';
+        return 'btn btn-default btn-xs ivx-video-controls-play-pause';
     }
 
     get muteControlsClasses() {
-        return 'btn btn-default btn-xs';
+        return 'btn btn-default btn-xs ivx-video-controls-mute';
     }
 
     get scrubBarClasses() {
-        return '';
+        return 'ivx-video-controls-scrub-bar';
     }
 
     get scrubBarTimeLapseClasses() {
-        return `bar`
+        return `bar ivx-video-controls-scrub-bar-timelapse`
     }
 
     get chapterButtonClasses() {
-        return 'btn chapter-button';
+        return 'btn chapter-button ivx-video-controls-chapters-item-control';
     }
 
     get trackListSelectContainerClasses() {
-        return 'track-list-select-container'
+        return 'track-list-select-container ivx-video-controls-tracks'
     }
 
     get trackListSelectClasses() {
-        return 'track-list-select form-control';
+        return 'track-list-select form-control ivx-video-controls-tracks-select';
     }
 
     get trackListSelectActiveClasses() {
-        return 'active';
+        return 'active ivx-video-controls-tracks-select-on';
     }
 
     get trackListSelectInactiveClasses() {
-        return 'inactive'
+        return 'inactive ivx-video-controls-tracks-select-off'
     }
 
     get closeCaptionButtonClasses() {
-        return 'close-caption-button btn btn-default';
+        return 'close-caption-button btn btn-default ivx-video-controls-tracks-toggle';
     }
 
     get closeCaptionButtonActiveClasses() {
-        return 'active';
+        return 'active ivx-video-controls-tracks-on';
     }
 
     get closeCaptionButtonInactiveClasses() {
-        return 'inactive';
+        return 'inactive ivx-video-controls-tracks-off';
     }
 
     get closeCaptionButtonIconClasses() {
-        return 'close-caption-button-icon glyphicon glyphicon-subtitles'
+        return 'close-caption-button-icon glyphicon glyphicon-subtitles ivx-video-controls-tracks-toggle-icon ivx-icon'
     }
 
     get scrubBarHTML() {

@@ -1,4 +1,5 @@
 import VideoSettings from '../settings.js';
+import VideoClassNames from "../../../constants/video.classes.js";
 
 export default class {
     contructor(playerId) {
