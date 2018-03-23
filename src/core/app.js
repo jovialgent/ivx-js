@@ -28,6 +28,7 @@ export class iVXjs {
          */
         this.Bus = new EventEmitter();
         this.constants = new Constants();
+        this.settings = {};
 
     }
 
@@ -80,12 +81,6 @@ export class iVXjs {
         this.experience.Log = this.log;
         this.experience.processor = new ActionProcessor(this);
         this.experience.config = this.config;
-
-        // console.dir(this.experience);
-
-        const { metadata = {} } = this.config;
-        const { experience: customExperience = {} } = this.settings;
-
         this.experience.data = this._createExperienceDataObject();
 
         /**
@@ -136,7 +131,7 @@ export class iVXjs {
      * this iVXjs experience.
      * @return {Promise} - Promise that will resovle when set up succeeds/fails
      */
-    init(settings) {
+    init(settings = {}) {
         let self = this;
         let { debug = true } = settings;
 

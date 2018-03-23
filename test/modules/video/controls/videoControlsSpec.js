@@ -1,11 +1,11 @@
-import {Controls} from '../../../../src/modules/video/controls/index.js';
+import { Controls } from '../../../../src/modules/video/controls/index.js';
 import VideoSettings from '../../../../src/modules/video/settings.js';
 
 describe('Video Controls', () => {
     let scrubBar, muteControls, volumeBar, totalTimeInfo, playPauseControls, currentTimeInfo, fakeBus, videoControls, playerId;
 
     beforeEach(() => {
-        playerId = Math.random().toString(36).substring(2,15);
+        playerId = Math.random().toString(36).substring(2, 15);
 
         fakeBus = {
             on: function (eventName, obj) {
@@ -110,16 +110,11 @@ describe('Video Controls', () => {
         videoControls.unmuteClasses = 'unmute';
         videoControls.playClasses = 'play';
         videoControls.pauseClasses = 'pause';
+        videoControls.containerEl = {
+            addClass: () => { },
+            removeClass: () => { }
 
-
-
-
-
-
-
-
-
-
+        }
     });
 
     describe('#converSecondsToParts', () => {
