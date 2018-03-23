@@ -47,7 +47,7 @@ class VideoService {
         }
 
         if (typeValidator.isString(controlType)) {
-            controlsHTML = `<ivxjs-${controlType}-video-controls control-settings="vm.controls" player-id='${playerId}'></ivxjs-${controlType}-video-controls>`;
+            controlsHTML = `<ivxjs-${controlType}-video-controls class="ivx-video-controls" control-settings="vm.controls" player-id='${playerId}'></ivxjs-${controlType}-video-controls>`;
         }
 
         return controlsHTML;
