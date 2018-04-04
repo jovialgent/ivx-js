@@ -19,6 +19,7 @@
         "example-basic-ivx-io-experience": "node_modules/.bin/webpack-dev-server --open --content-base=ivx-io-experience",
         "example-basic-navigation-experience": "node_modules/.bin/webpack-dev-server --open --content-base=basic-navigation-experience",
         "example-multiple-action-templates": "node_modules/.bin/webpack-dev-server --open --content-base=multiple-action-templates",
+        "example-basic-analytics-experience": "node_modules/.bin/webpack-dev-server --open --content-base=basic-analytics-experience",
         "example-add-class-property-to-video": "node_modules/.bin/webpack-dev-server --open --content-base=add-class-property-to-video"
     },
     "author": "",
