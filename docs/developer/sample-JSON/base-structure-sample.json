@@ -2,7 +2,7 @@
 	"metadata" : {
         "title" : "",
         "trackers" : [{
-            "type" : "google-analytics"
+            "type" : "google-analytics",
             "id" : "iVXjsTracker",
             "trackerId" : "UA-XXX-XXXXXXX",
             "name" : "My Custom Tracker"
