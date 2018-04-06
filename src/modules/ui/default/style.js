@@ -2,11 +2,11 @@ export class Style {
     constructor() { }
 
     getWidth(width) {
-        if (width === '1') return 'ivxjs-grid-1-1';
+        if (width === '1') return 'ivx-grid-1-1 ivxjs-grid-1-1';
 
         let gridString = width.replace('/', '-');
 
-        return `ivxjs-grid-${gridString}`;
+        return `ivx-grid-${gridString} ivxjs-grid-${gridString}`;
     }
 
     get containerClasses() {
