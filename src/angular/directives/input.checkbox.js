@@ -3,7 +3,7 @@ import CheckboxInputController from '../controllers/input.checkbox.js';
 import { ErrorMessages } from '../utilities/messages.error.js';
 
 class CheckboxInput {
-    constructor($compile, $filter, iVXjsUIModule, pullInTemplate) {
+    constructor($compile, $filter, iVXjs, iVXjsUIModule, pullInTemplate,ivxExperienceScope) {
         this.template = this.templateHTML;
         this.transclude = true;
         this.restrict = 'E';
@@ -19,12 +19,12 @@ class CheckboxInput {
             let { id, name, errors = {}, labelHTML, label, attributes = {}, settings = {} } = input;
             let tagHTML = `ng-blur="vm.onChange(inputValue)" ng-model="inputValue"`;
 
+            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
+            
             input.label = label ? label : $filter('stringParsers')('startCase', id);
             input = pullInTemplate.convertLabel($filter('stringParsers')('startCase', id), input, $scope);
             input.beforeHtml = pullInTemplate.convertTemplateUrlToHtml(input.beforeHtml, $scope);
             input.afterHtml = pullInTemplate.convertTemplateUrlToHtml(input.afterHtml, $scope);
-
-
 
             let checkboxUIObj = {
                 input: input,
@@ -45,7 +45,7 @@ class CheckboxInput {
     }
 }
 
-CheckboxInput.$inject = ['$compile', '$filter', 'ivxjs.modules.ui', 'pullInTemplate'];
+CheckboxInput.$inject = ['$compile', '$filter', 'iVXjs', 'ivxjs.modules.ui', 'pullInTemplate', 'ivxExperienceScope'];
 
 export default angular
     .module('ivx-js.directives.input.checkbox', [])

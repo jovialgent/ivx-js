@@ -3,7 +3,7 @@ import NumberInputController from '../controllers/input.number.js';
 import { ErrorMessages } from '../utilities/messages.error.js';
 
 class NumberInput {
-    constructor($compile, $filter, iVXjsUIModule, pullInTemplate) {
+    constructor($compile, $filter, iVXjs, iVXjsUIModule, pullInTemplate, ivxExperienceScope) {
         this.template = this.templateHTML;
         this.transclude = true;
         this.restrict = 'E';
@@ -20,6 +20,8 @@ class NumberInput {
             let errorMessages = new ErrorMessages(input, errors, attributes);
             let tagHTML = `ng-blur="vm.onChange(inputValue)" ng-model="inputValue"`;
 
+            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
+            
             input.label = label ? label : $filter('stringParsers')('startCase', id);
             input = pullInTemplate.convertLabel($filter('stringParsers')('startCase', id), input, $scope);
             input.beforeHtml = pullInTemplate.convertTemplateUrlToHtml(input.beforeHtml, $scope);
@@ -43,7 +45,7 @@ class NumberInput {
     };
 }
 
-NumberInput.$inject = ['$compile', '$filter', 'ivxjs.modules.ui', 'pullInTemplate'];
+NumberInput.$inject = ['$compile', '$filter', 'iVXjs', 'ivxjs.modules.ui', 'pullInTemplate', 'ivxExperienceScope'];
 
 export default angular
     .module('ivx-js.directives.input.number', [])

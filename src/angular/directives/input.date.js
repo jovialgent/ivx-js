@@ -4,7 +4,7 @@ import { ErrorMessages } from '../utilities/messages.error.js';
 import { DateParser } from '../utilities/date-parser.js';
 
 class DateInput {
-    constructor($compile, $filter, iVXjs, iVXjsUIModule, pullInTemplate) {
+    constructor($compile, $filter, iVXjs, iVXjsUIModule, pullInTemplate, ivxExperienceScope) {
         this.template = this.templateHTML;
         this.transclude = true;
         this.restrict = 'E';
@@ -19,6 +19,8 @@ class DateInput {
             let { inputData: input } = $scope;
             let { id, name, errors = {}, labelHTML, label, attributes = {}, settings = {} } = input;
 
+            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
+            
             if (attributes.min) {
                 let dateMin = new DateParser(attributes.min).formatForDateInput();
 
@@ -61,7 +63,7 @@ class DateInput {
     };
 }
 
-DateInput.$inject = ['$compile', '$filter', 'iVXjs', 'ivxjs.modules.ui', 'pullInTemplate'];
+DateInput.$inject = ['$compile', '$filter', 'iVXjs', 'ivxjs.modules.ui', 'pullInTemplate', 'ivxExperienceScope'];
 
 export default angular
     .module('ivx-js.directives.input.date', [])
