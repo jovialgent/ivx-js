@@ -1,6 +1,12 @@
 {
 	"metadata" : {
-		"title" : ""
+        "title" : "",
+        "trackers" : [{
+            "type" : "google-analytics",
+            "id" : "iVXjsTracker",
+            "trackerId" : "UA-XXX-XXXXXXX",
+            "name" : "My Custom Tracker"
+        }]
 	},
 	"states" : [],
 	"defaultState":[]
