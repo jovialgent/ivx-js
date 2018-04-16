@@ -19,7 +19,7 @@
 
 
 
-<title>iVXjs</title>
+<title>Favorite Color Tutorial - iVXjs</title>
 
 
 
@@ -29,11 +29,11 @@
 
 <meta property="og:locale" content="en">
 <meta property="og:site_name" content="iVXjs">
-<meta property="og:title" content="iVXjs">
+<meta property="og:title" content="Favorite Color Tutorial">
 
 
-  <link rel="canonical" href="https://influencetech.github.io/ivx-js/developer/tutorial.color-input/">
-  <meta property="og:url" content="https://influencetech.github.io/ivx-js/developer/tutorial.color-input/">
+  <link rel="canonical" href="http://localhost:4000/ivx-js/developer/tutorial.color-input/">
+  <meta property="og:url" content="http://localhost:4000/ivx-js/developer/tutorial.color-input/">
 
 
 
@@ -61,7 +61,7 @@
       "@context" : "http://schema.org",
       "@type" : "Person",
       "name" : "Influence Technology",
-      "url" : "https://influencetech.github.io/ivx-js",
+      "url" : "http://localhost:4000/ivx-js",
       "sameAs" : null
     }
   </script>
@@ -74,7 +74,7 @@
 <!-- end SEO -->
 
 
-<link href="https://influencetech.github.io/ivx-js/feed.xml" type="application/atom+xml" rel="alternate" title="iVXjs Feed">
+<link href="http://localhost:4000/ivx-js/feed.xml" type="application/atom+xml" rel="alternate" title="iVXjs Feed">
 
 <!-- http://t.co/dKP3o1e -->
 <meta name="HandheldFriendly" content="True">
@@ -86,7 +86,7 @@
 </script>
 
 <!-- For all browsers -->
-<link rel="stylesheet" href="https://influencetech.github.io/ivx-js/assets/css/main.css">
+<link rel="stylesheet" href="http://localhost:4000/ivx-js/assets/css/main.css">
 
 <meta http-equiv="cleartype" content="on">
     <!-- start custom head snippets -->
@@ -109,16 +109,16 @@
       <nav id="site-nav" class="greedy-nav">
         <button><div class="navicon"></div></button>
         <ul class="visible-links">
-          <li class="masthead__menu-item masthead__menu-item--lg"><a href="https://influencetech.github.io/ivx-js/">iVXjs</a></li>
+          <li class="masthead__menu-item masthead__menu-item--lg"><a href="http://localhost:4000/ivx-js/">iVXjs</a></li>
           
             
-            <li class="masthead__menu-item"><a href="https://influencetech.github.io/ivx-js/developer/tutorial.hello-world">Getting Started</a></li>
+            <li class="masthead__menu-item"><a href="http://localhost:4000/ivx-js/developer/tutorial.hello-world">Getting Started</a></li>
           
             
-            <li class="masthead__menu-item"><a href="https://influencetech.github.io/ivx-js/developer/tutorials">Tutorials</a></li>
+            <li class="masthead__menu-item"><a href="http://localhost:4000/ivx-js/developer/tutorials">Tutorials</a></li>
           
             
-            <li class="masthead__menu-item"><a href="https://influencetech.github.io/ivx-js/developer/configuration">Configuration and Features</a></li>
+            <li class="masthead__menu-item"><a href="http://localhost:4000/ivx-js/developer/configuration">Configuration and Features</a></li>
           
         </ul>
         <ul class="hidden-links hidden"></ul>
@@ -139,7 +139,7 @@
 
 
   <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
-    
+    <meta itemprop="headline" content="Favorite Color Tutorial">
     
     
     
@@ -147,7 +147,8 @@
     <div class="page__inner-wrap">
       
         <header>
-          
+          <h1 class="page__title" itemprop="headline">Favorite Color Tutorial
+</h1>
           
         </header>
       
@@ -304,10 +305,9 @@ go to this site <a href="http://node.green/">node.green</a></p>
 <p>After getting node, clone or pull the <a href="https://github.com/influencetech/ivx-js">iVXjs library from Github</a>. Then open up the root 
 folder on the command line and run these commands :</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>npm install
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm install
 npm run setup
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>What will happen is the following:</p>
 
@@ -323,9 +323,8 @@ npm run setup
 
 <p>After setup is done, run these commands</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>npm start
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm start
+</code></pre></div></div>
 
 <p>Wait a little bit while the process recompiles some core code and if successful, you should see this:</p>
 
@@ -351,45 +350,43 @@ with figuring out you want the JSON to look like at the end and change the proje
 
 <p>In this case we want to change this data:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
-    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"favorite-color"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"favoriteColor"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"text"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Favorite Color"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"settings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nt">"width"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1/2"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"container"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
-        </span><span class="nt">"input"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="nt">"attributes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nt">"placeholder"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Enter your favorite color..."</span><span class="w">
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+    "id": "favorite-color",
+    "name": "favoriteColor",
+    "type": "text",
+    "label": "Favorite Color",
+    "settings": {
+        "width": "1/2",
+        "container": {},
+        "input": {}
+    },
+    "attributes": {
+        "placeholder": "Enter your favorite color..."
         
-    </span><span class="p">},</span><span class="w">
-    </span><span class="nt">"errors"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-</div>
+    },
+    "errors": {}
+}
+</code></pre></div></div>
 
 <p>And change it to this:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
-    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"favorite-color"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"favoriteColor"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"color"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Favorite Color"</span><span class="p">,</span><span class="w">
-    </span><span class="nt">"settings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nt">"width"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1/2"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"container"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
-        </span><span class="nt">"input"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="nt">"attributes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nt">"placeholder"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Enter your favorite color..."</span><span class="w">
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+    "id": "favorite-color",
+    "name": "favoriteColor",
+    "type": "color",
+    "label": "Favorite Color",
+    "settings": {
+        "width": "1/2",
+        "container": {},
+        "input": {}
+    },
+    "attributes": {
+        "placeholder": "Enter your favorite color..."
         
-    </span><span class="p">},</span><span class="w">
-    </span><span class="nt">"errors"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-</div>
+    },
+    "errors": {}
+}
+</code></pre></div></div>
 
 <p>If we do this change to our <em>project.json</em> file in the current project, we will see that the favorite 
 color text box disappeared:</p>
@@ -431,31 +428,27 @@ reference.</p>
 <p>The first import <em>createFactoryFunction</em> is a utility function that converts ES6 classes into Angular 1.6 factory functions.
 This is required to use only for services, controllers and directives that need to be converted to Factory Functions.</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>import createFactoryFunction from '../utilities/create-factory-function.js';
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import createFactoryFunction from '../utilities/create-factory-function.js';
+</code></pre></div></div>
 
 <p>The second import is an instance of the controller for this directive. Note how we bring in the whole factory function from the 
 the controller.</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>import TextInputController from '../controllers/input.text.js';
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import TextInputController from '../controllers/input.text.js';
+</code></pre></div></div>
 
 <p>The third import is a utility class used for inputs. Specifically, this will find and set up all possible ng-errors and ng-attributes 
 required to run this input successfully.</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>import { ErrorMessages } from '../utilities/messages.error.js';
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import { ErrorMessages } from '../utilities/messages.error.js';
+</code></pre></div></div>
 
 <p>So, in our <em>input.color.js</em> file let’s add these imports but change the controller to the one we defined in the controllers:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>import createFactoryFunction from '../utilities/create-factory-function.js';
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import createFactoryFunction from '../utilities/create-factory-function.js';
 import ColorInputController from '../controllers/input.color.js';
 import { ErrorMessages } from '../utilities/messages.error.js';
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h3 id="class-definition">Class Definition</h3>
 
@@ -464,40 +457,36 @@ adjustments, but do follow very familiar structures.</p>
 
 <p>Let’s take a look at the constructor:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>export class TextInput{
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export class TextInput{
     constructor($compile, $filter, iVXjs, iVXjsUIModule, pullInTemplate)
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>If you notice, you see some familiar angular directive and services. This constructor is exactly like the function 
 in a factory function.</p>
 
 <p>The injection for these modules happens below the class definition:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>TextInput.$inject = ['$compile', '$filter', 'iVXjs', 'ivxjs.modules.ui', 'pullInTemplate'];
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>TextInput.$inject = ['$compile', '$filter', 'iVXjs', 'ivxjs.modules.ui', 'pullInTemplate'];
+</code></pre></div></div>
 
 <p>How converts these two elements in to a factory function is to call <code class="highlighter-rouge">createFactoryFunction()</code> with the 
 class with the $inject property and export this as default:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>export default createFactoryFunction(TextInput);
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>export default createFactoryFunction(TextInput);
+</code></pre></div></div>
 
 <p>All these calls and set up will transform the class into something like this:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>['$compile', '$filter', 'iVXjs', 'ivxjs.modules.ui', 'pullInTemplate', 
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>['$compile', '$filter', 'iVXjs', 'ivxjs.modules.ui', 'pullInTemplate', 
     function($compile, $filter, iVXjs, iVXjsUIModule, pullInTemplate){
 
     }
 ]
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>So, following these settings lets now add our <em>ColorInput</em> class:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>import createFactoryFunction from '../utilities/create-factory-function.js';
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import createFactoryFunction from '../utilities/create-factory-function.js';
 import ColorInputController from '../controllers/input.color.js';
 import { ErrorMessages } from '../utilities/messages.error.js';
 
@@ -510,8 +499,7 @@ export class ColorInput{
 ColorInput.$inject = ['$compile', '$filter', 'iVXjs', 'ivxjs.modules.ui', 'pullInTemplate'];
 
 export default createFactoryFunction(ColorInput);
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h3 id="directive-set-up">Directive Set Up</h3>
 
@@ -526,84 +514,75 @@ functions. If you would like a more indepth on each property look at the
 
 <p>The template property refers to a property in the class called templateHTML defining this input:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>this.template = this.templateHTML;
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>this.template = this.templateHTML;
+</code></pre></div></div>
 
 <h4 id="transclude">transclude</h4>
 
 <p>We set transclude to true so we can pass down variables inside if needed</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>this.transclude = true;
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>this.transclude = true;
+</code></pre></div></div>
 
 <h4 id="restrict">restrict</h4>
 <p>Since this UI component should just be an element, let’s restrict it to an element</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>this.restrict = "E";
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>this.restrict = "E";
+</code></pre></div></div>
 
 <h4 id="require">require</h4>
 <p>To validate and use other services, it is required that the iVXjs Form Input is above this 
 one.</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>this.require = "^ivxjsFormInput";
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>this.require = "^ivxjsFormInput";
+</code></pre></div></div>
 
 <h4 id="replace">replace</h4>
 <p>Replaces the element so the directive definition isn’t there. This is for ease of use</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>this.replace = true;
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>this.replace = true;
+</code></pre></div></div>
 
 <h4 id="scope">scope</h4>
 <p>The only thing that should passed down is input data. This data is the data defined in 
 the JSON.</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>this.scope = {
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>this.scope = {
     inputData: '=inputData'
 }
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h4 id="controller">controller</h4>
 
 <p>The controller’s value should be value Controller Function which is created in the 
 <em>input.text.js</em> in the controller:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code> this.controller = TextInputController;
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> this.controller = TextInputController;
+</code></pre></div></div>
 
 <h4 id="controlleras">controllerAs</h4>
 
 <p>As a good practice, we should mask the controller as “vm” to imply a seperation
 of $scope and controller</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>this.controllerAs = 'vm';
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>this.controllerAs = 'vm';
+</code></pre></div></div>
 
 <h4 id="link">link</h4>
 
 <p>We will get to the link function in the next step and explain a little more of that. But,
 for the time being lets just add an empty one we will fill in the next step.</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>this.link = ($scope, iElm, iAttrs, controller) =&gt; {
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>this.link = ($scope, iElm, iAttrs, controller) =&gt; {
 
 }
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>All these settings will be needed in our ColorInput directive so let’s add it. We will need to change the controller 
 though to point to the ColorInputController instead of the TextInputController. So, now our direcitve <em>input.color.js</em> file 
 should look like this:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>import createFactoryFunction from '../utilities/create-factory-function.js';
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import createFactoryFunction from '../utilities/create-factory-function.js';
 import ColorInputController from '../controllers/input.color.js';
 import { ErrorMessages } from '../utilities/messages.error.js';
 
@@ -628,8 +607,7 @@ export class ColorInput{
 ColorInput.$inject = ['$compile', '$filter', 'iVXjs', 'ivxjs.modules.ui', 'pullInTemplate'];
 
 export default createFactoryFunction(ColorInput);
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h2 id="step-4-creating-the-link-function-in-our-direcitve">Step 4: Creating the Link Function in our direcitve</h2>
 
@@ -641,12 +619,11 @@ how to translate the input data into a rendered data, let’s go through the lin
 
 <p>We will need the following variables defined:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>let {inputData: input} = $scope;
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>let {inputData: input} = $scope;
 let {id, name, errors = {}, labelHTML, label = $filter('stringParsers')('startCase', id), attributes = {}, type, settings = {}} = input;
 let errorMessages = new ErrorMessages(input, errors, attributes);
 let tagHTML = `ng-blur="vm.onChange(inputValue)" ng-model="inputValue"`;
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>The first thing we do is pull out the input information from the $scope. In this case we put it in a variable called 
 <code class="highlighter-rouge">input</code> using ES6’s destructuring.</p>
@@ -673,10 +650,9 @@ tell the input to run the various onChange events defined in the JSON specs. Thi
 
 <p>The next two lines sets up the label</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>input.label = labelHTML ? labelHTML : label;
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>input.label = labelHTML ? labelHTML : label;
 input = pullInTemplate.convertLabel($filter('stringParsers')('startCase', id), input, $scope);
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>This is to make sure this input is pulled in through a label, sanitized HTML or a template url.</p>
 
@@ -685,15 +661,14 @@ input = pullInTemplate.convertLabel($filter('stringParsers')('startCase', id), i
 <p>The next part sets up the iVXjs UI Module class to pull in the input data and creates a new Text Input 
 instance.</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>let uiTextObj = {
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>let uiTextObj = {
     input: input,
     settings: settings,
     tags: tagHTML,
     errors: errorMessages
 };
 let text = new iVXjsUIModule.text(uiTextObj);
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>If you notice, this iVXjsUIModule is passed through Angular injection than directly pulled in from the library. This 
 is because these classes are created during the set up process and can automatically change based on the UI set up.</p>
@@ -703,10 +678,9 @@ is because these classes are created during the set up process and can automatic
 <p>Now, to render the input we will now use Angular’s $compile directive and render the HTML returned from the UI Module. To do
 this we must set the element’s HTML to the HTML returned from the iVXjsUIModule and then compile it with the $scope:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>iElm.html(text.html);
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>iElm.html(text.html);
 $compile(iElm.contents())($scope);
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h3 id="adding-this-to-the-inputcolorjs-directive-file">Adding this to the input.color.js directive file</h3>
 <p>Since we still haven’t defined this iVXjsUIModule in the default module code, we will just copy 
@@ -714,7 +688,7 @@ all of these settings directly and use the text for the time being.</p>
 
 <p>So the file should look like this:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>import createFactoryFunction from '../utilities/create-factory-function.js';
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import createFactoryFunction from '../utilities/create-factory-function.js';
 import ColorInputController from '../controllers/input.color.js';
 import { ErrorMessages } from '../utilities/messages.error.js';
 
@@ -757,8 +731,7 @@ export class ColorInput {
 ColorInput.$inject = ['$compile', '$filter', 'iVXjs', 'ivxjs.modules.ui', 'pullInTemplate'];
 
 export default createFactoryFunction(ColorInput);
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h2 id="step-5-setting-up-the-inputcolorjs-controller-file">Step 5: Setting Up the input.color.js controller file</h2>
 
@@ -769,10 +742,9 @@ folder.</p>
 
 <p>There are two imports:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>import createFactoryFunction from '../utilities/create-factory-function.js';
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import createFactoryFunction from '../utilities/create-factory-function.js';
 import { InputControllerHelper } from '../utilities/input-controller.js';
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>The first one is the factory function creator function. The second one though is 
 a special utility class. This class sets up the controllers for most inputs.</p>
@@ -782,13 +754,12 @@ a special utility class. This class sets up the controllers for most inputs.</p>
 <p>The class is set up very similar like the directive, but in this case there is a 
 key difference. Let’s look at the class definition:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>class TextInputController extends InputControllerHelper  {
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class TextInputController extends InputControllerHelper  {
 	constructor($scope, iVXjs, iVXjsActions) {
         super($scope, iVXjs, iVXjsActions);     
     }
 }
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>The class is very small right? Well, this is because using inheritance we can actually 
 set up the controller from the <code class="highlighter-rouge">InputControllerHelper</code> class. That class handles and sets 
@@ -802,7 +773,7 @@ changes that it runs all the actions assigned to the input properly.</p>
 <p>Since we don’t have any special validation for the color input, we can just reuse the set up in this file for 
 our colors. So the controller file should look like this:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>import createFactoryFunction from '../utilities/create-factory-function.js';
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import createFactoryFunction from '../utilities/create-factory-function.js';
 import { InputControllerHelper } from '../utilities/input-controller.js';
 
 class ColorInputController extends InputControllerHelper  {
@@ -814,8 +785,7 @@ class ColorInputController extends InputControllerHelper  {
 ColorInputController.$inject = ['$scope', 'iVXjs', 'ivxjs.actions'];
 
 export default createFactoryFunction(ColorInputController)
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h2 id="step-6-registering-the-module-to-the-appjs">Step 6: Registering the module to the app.js</h2>
 
@@ -826,29 +796,28 @@ directive to the iVXjs module. To register do the following:</p>
   <li>Find the Inputs import files and add the <code class="highlighter-rouge">ColorInput</code> class</li>
 </ul>
 
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="c1">// Inputs</span>
-<span class="kr">import</span> <span class="nx">FormInput</span> <span class="nx">from</span> <span class="s1">'./directives/input.form.js'</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">TextInput</span> <span class="nx">from</span> <span class="s1">'./directives/input.text.js'</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">Anchors</span> <span class="nx">from</span> <span class="s1">'./directives/ui.anchor.js'</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">CascadingOptions</span> <span class="nx">from</span> <span class="s1">'./directives/ui.cascading-options.js'</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">ColorInput</span> <span class="nx">from</span> <span class="s2">"./directives/input.color.js"</span> <span class="c1">// Color Import Statement </span>
-<span class="kr">import</span> <span class="nx">ButtonsInput</span> <span class="nx">from</span> <span class="s1">'./directives/input.buttons.js'</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">EmailInput</span> <span class="nx">from</span> <span class="s1">'./directives/input.email.js'</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">UrlInput</span> <span class="nx">from</span> <span class="s1">'./directives/input.url.js'</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">DateInput</span> <span class="nx">from</span> <span class="s1">'./directives/input.date.js'</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">DateTimeLocalInput</span> <span class="nx">from</span> <span class="s1">'./directives/input.datetime-local.js'</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">OptionsInput</span> <span class="nx">from</span> <span class="s1">'./directives/input.options.js'</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">RadioInput</span> <span class="nx">from</span> <span class="s1">'./directives/input.radio.js'</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">CheckboxInput</span> <span class="nx">from</span> <span class="s1">'./directives/input.checkbox.js'</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">NumberInput</span> <span class="nx">from</span> <span class="s1">'./directives/input.number.js'</span><span class="p">;</span>
-<span class="kr">import</span> <span class="nx">TextareaInput</span> <span class="nx">from</span> <span class="s1">'./directives/input.textarea.js'</span><span class="p">;</span>
-</code></pre>
-</div>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Inputs</span>
+<span class="k">import</span> <span class="nx">FormInput</span> <span class="k">from</span> <span class="s1">'./directives/input.form.js'</span><span class="p">;</span>
+<span class="k">import</span> <span class="nx">TextInput</span> <span class="k">from</span> <span class="s1">'./directives/input.text.js'</span><span class="p">;</span>
+<span class="k">import</span> <span class="nx">Anchors</span> <span class="k">from</span> <span class="s1">'./directives/ui.anchor.js'</span><span class="p">;</span>
+<span class="k">import</span> <span class="nx">CascadingOptions</span> <span class="k">from</span> <span class="s1">'./directives/ui.cascading-options.js'</span><span class="p">;</span>
+<span class="k">import</span> <span class="nx">ColorInput</span> <span class="k">from</span> <span class="s2">"./directives/input.color.js"</span> <span class="c1">// Color Import Statement </span>
+<span class="k">import</span> <span class="nx">ButtonsInput</span> <span class="k">from</span> <span class="s1">'./directives/input.buttons.js'</span><span class="p">;</span>
+<span class="k">import</span> <span class="nx">EmailInput</span> <span class="k">from</span> <span class="s1">'./directives/input.email.js'</span><span class="p">;</span>
+<span class="k">import</span> <span class="nx">UrlInput</span> <span class="k">from</span> <span class="s1">'./directives/input.url.js'</span><span class="p">;</span>
+<span class="k">import</span> <span class="nx">DateInput</span> <span class="k">from</span> <span class="s1">'./directives/input.date.js'</span><span class="p">;</span>
+<span class="k">import</span> <span class="nx">DateTimeLocalInput</span> <span class="k">from</span> <span class="s1">'./directives/input.datetime-local.js'</span><span class="p">;</span>
+<span class="k">import</span> <span class="nx">OptionsInput</span> <span class="k">from</span> <span class="s1">'./directives/input.options.js'</span><span class="p">;</span>
+<span class="k">import</span> <span class="nx">RadioInput</span> <span class="k">from</span> <span class="s1">'./directives/input.radio.js'</span><span class="p">;</span>
+<span class="k">import</span> <span class="nx">CheckboxInput</span> <span class="k">from</span> <span class="s1">'./directives/input.checkbox.js'</span><span class="p">;</span>
+<span class="k">import</span> <span class="nx">NumberInput</span> <span class="k">from</span> <span class="s1">'./directives/input.number.js'</span><span class="p">;</span>
+<span class="k">import</span> <span class="nx">TextareaInput</span> <span class="k">from</span> <span class="s1">'./directives/input.textarea.js'</span><span class="p">;</span>
+</code></pre></div></div>
 <ul>
   <li>Register the directive in the module declaration under directives.</li>
 </ul>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>.directive('ivxjsFormInput', FormInput)
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.directive('ivxjsFormInput', FormInput)
 .directive('ivxjsTextInput', TextInput)
 .directive('ivxjsRadioInput', RadioInput)
 .directive('ivxjsButtonsInput', ButtonsInput)
@@ -863,8 +832,7 @@ directive to the iVXjs module. To register do the following:</p>
 .directive('ivxjsCheckboxInput', CheckboxInput)
 .directive('ivxjsNumberInput', NumberInput)
 .directive('ivxjsTextareaInput', TextareaInput)
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>If you followed the steps correctly your “Favorite Color” input should reappear and look like it did initially.</p>
 
@@ -880,7 +848,7 @@ UI Module <code class="highlighter-rouge">ColorInput</code> class.</p>
   <li>Go to the link function and find this code</li>
 </ul>
 
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">uiTextObj</span> <span class="o">=</span> <span class="p">{</span>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">uiTextObj</span> <span class="o">=</span> <span class="p">{</span>
     <span class="na">input</span><span class="p">:</span> <span class="nx">input</span><span class="p">,</span>
     <span class="na">settings</span><span class="p">:</span> <span class="nx">settings</span><span class="p">,</span>
     <span class="na">tags</span><span class="p">:</span> <span class="nx">tagHTML</span><span class="p">,</span>
@@ -889,14 +857,13 @@ UI Module <code class="highlighter-rouge">ColorInput</code> class.</p>
 <span class="kd">let</span> <span class="nx">text</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">iVXjsUIModule</span><span class="p">.</span><span class="nx">text</span><span class="p">(</span><span class="nx">uiTextObj</span><span class="p">);</span>
 
 <span class="nx">iElm</span><span class="p">.</span><span class="nx">html</span><span class="p">(</span><span class="nx">text</span><span class="p">.</span><span class="nx">html</span><span class="p">);</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <ul>
   <li>Change the code to pull in the iVXjsUiModule.color</li>
 </ul>
 
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">uiColorObj</span> <span class="o">=</span> <span class="p">{</span>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">uiColorObj</span> <span class="o">=</span> <span class="p">{</span>
     <span class="na">input</span><span class="p">:</span> <span class="nx">input</span><span class="p">,</span>
     <span class="na">settings</span><span class="p">:</span> <span class="nx">settings</span><span class="p">,</span>
     <span class="na">tags</span><span class="p">:</span> <span class="nx">tagHTML</span><span class="p">,</span>
@@ -905,8 +872,7 @@ UI Module <code class="highlighter-rouge">ColorInput</code> class.</p>
 <span class="kd">let</span> <span class="nx">color</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">iVXjsUIModule</span><span class="p">.</span><span class="nx">color</span><span class="p">(</span><span class="nx">uiColorObj</span><span class="p">);</span>
 
 <span class="nx">iElm</span><span class="p">.</span><span class="nx">html</span><span class="p">(</span><span class="nx">color</span><span class="p">.</span><span class="nx">html</span><span class="p">);</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Changing this code will remove the color input again and error out on the console. This is good! This means 
 that it using a UI Module not defined. So, let’s define it!</p>
@@ -920,11 +886,10 @@ to see if we can pull code from it to set up. Before we do let’s go over some 
 
 <p>The file imports three classes:</p>
 
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kr">import</span> <span class="p">{</span> <span class="nx">Style</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">"./style"</span><span class="p">;</span>
-<span class="kr">import</span> <span class="p">{</span> <span class="nx">ErrorMessages</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">"./messages.js"</span><span class="p">;</span>
-<span class="kr">import</span> <span class="p">{</span> <span class="nx">AttributeTags</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">"../utilities/attributes.js"</span><span class="p">;</span>
-</code></pre>
-</div>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">Style</span> <span class="p">}</span> <span class="k">from</span> <span class="s2">"./style"</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">ErrorMessages</span> <span class="p">}</span> <span class="k">from</span> <span class="s2">"./messages.js"</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">AttributeTags</span> <span class="p">}</span> <span class="k">from</span> <span class="s2">"../utilities/attributes.js"</span><span class="p">;</span>
+</code></pre></div></div>
 
 <p>The three classes serve the following purposes:</p>
 
@@ -939,9 +904,8 @@ the form in a grid</li>
 
 <p>Initializes a global style instance to use in the class:</p>
 
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">style</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Style</span><span class="p">();</span>
-</code></pre>
-</div>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">style</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Style</span><span class="p">();</span>
+</code></pre></div></div>
 
 <h3 id="class-setup">Class Setup</h3>
 
@@ -957,15 +921,14 @@ the form in a grid</li>
 sure something does appear when they do</li>
 </ul>
 
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nx">constructor</span><span class="p">(</span><span class="nx">inputObj</span> <span class="o">=</span> <span class="p">{},</span> <span class="nx">errorMessages</span> <span class="o">=</span> <span class="nx">ErrorMessages</span><span class="p">)</span> <span class="p">{</span>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">constructor</span><span class="p">(</span><span class="nx">inputObj</span> <span class="o">=</span> <span class="p">{},</span> <span class="nx">errorMessages</span> <span class="o">=</span> <span class="nx">ErrorMessages</span><span class="p">)</span> <span class="p">{</span>
 <span class="p">}</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Inside the constructor, we take the settings from the <code class="highlighter-rouge">inputObj</code> variable and add its 
 contents to various properties of the class:</p>
 
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code> <span class="kd">let</span> <span class="p">{</span><span class="nx">input</span> <span class="o">=</span> <span class="p">{},</span> <span class="nx">settings</span> <span class="o">=</span> <span class="p">{},</span> <span class="nx">tags</span> <span class="o">=</span> <span class="p">{},</span> <span class="nx">errors</span> <span class="o">=</span> <span class="p">{}}</span> <span class="o">=</span> <span class="nx">inputObj</span><span class="p">;</span>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="kd">let</span> <span class="p">{</span><span class="nx">input</span> <span class="o">=</span> <span class="p">{},</span> <span class="nx">settings</span> <span class="o">=</span> <span class="p">{},</span> <span class="nx">tags</span> <span class="o">=</span> <span class="p">{},</span> <span class="nx">errors</span> <span class="o">=</span> <span class="p">{}}</span> <span class="o">=</span> <span class="nx">inputObj</span><span class="p">;</span>
 
 <span class="k">this</span><span class="p">.</span><span class="nx">input</span> <span class="o">=</span> <span class="nx">input</span><span class="p">;</span> <span class="c1">//All input information </span>
 <span class="k">this</span><span class="p">.</span><span class="nx">settings</span> <span class="o">=</span> <span class="nx">settings</span><span class="p">;</span> <span class="c1">//All input settings </span>
@@ -973,48 +936,45 @@ contents to various properties of the class:</p>
 <span class="k">this</span><span class="p">.</span><span class="nx">errors</span> <span class="o">=</span> <span class="nx">errors</span><span class="p">;</span> <span class="c1">//Error triggers </span>
 <span class="k">this</span><span class="p">.</span><span class="nx">errorMessages</span> <span class="o">=</span> <span class="nx">errorMessages</span><span class="p">;</span> <span class="c1">//Error Message Generator</span>
 <span class="k">this</span><span class="p">.</span><span class="nx">attributeTags</span> <span class="o">=</span> <span class="nx">AttributeTags</span><span class="p">;</span> <span class="c1">//Attribute Tag Generator</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h4 id="uiclasses-and-uiattributes">uiClasses and uiAttributes</h4>
 
 <p>These are classes and attributes defined from the UI Framework to add to all inputs. In this case, since no 
 framework is defined, these properties return an empty string</p>
 
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nx">get</span> <span class="nx">uiClasses</span><span class="p">()</span> <span class="p">{</span>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">get</span> <span class="nx">uiClasses</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">return</span> <span class="s1">''</span>
 <span class="p">}</span>
 
-<span class="nx">get</span> <span class="nx">uiAttributes</span><span class="p">()</span> <span class="p">{</span>
+<span class="kd">get</span> <span class="nx">uiAttributes</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">return</span> <span class="s1">''</span>
 <span class="p">}</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h4 id="html">html</h4>
 
 <p>This property is the template HTML that gets rendered from all the input data that is passed down. 
 We will define all of the properties in the a future step so, for now we will just add it to the class</p>
 
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nx">get</span> <span class="nx">html</span><span class="p">(){</span>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">get</span> <span class="nx">html</span><span class="p">(){</span>
 
 <span class="p">}</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h3 id="add-these-to-the-colorjs-file">Add these to the color.js file.</h3>
 
 <p>For the most part, we can take all of these properties without <code class="highlighter-rouge">html</code> to get started with out color input. 
 So our <em>color.js</em> file should look like this:</p>
 
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kr">import</span> <span class="p">{</span> <span class="nx">Style</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">"./style"</span><span class="p">;</span>
-<span class="kr">import</span> <span class="p">{</span> <span class="nx">ErrorMessages</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">"./messages.js"</span><span class="p">;</span>
-<span class="kr">import</span> <span class="p">{</span> <span class="nx">AttributeTags</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">"../utilities/attributes.js"</span><span class="p">;</span>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">Style</span> <span class="p">}</span> <span class="k">from</span> <span class="s2">"./style"</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">ErrorMessages</span> <span class="p">}</span> <span class="k">from</span> <span class="s2">"./messages.js"</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">AttributeTags</span> <span class="p">}</span> <span class="k">from</span> <span class="s2">"../utilities/attributes.js"</span><span class="p">;</span>
 
 <span class="kd">let</span> <span class="nx">style</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Style</span><span class="p">();</span>
 
-<span class="kr">export</span> <span class="kr">class</span> <span class="nx">Color</span> <span class="p">{</span>
-    <span class="nx">constructor</span><span class="p">(</span><span class="nx">inputObj</span> <span class="o">=</span> <span class="p">{},</span> <span class="nx">errorMessages</span> <span class="o">=</span> <span class="nx">ErrorMessages</span><span class="p">)</span> <span class="p">{</span>
+<span class="k">export</span> <span class="kd">class</span> <span class="nx">Color</span> <span class="p">{</span>
+    <span class="kd">constructor</span><span class="p">(</span><span class="nx">inputObj</span> <span class="o">=</span> <span class="p">{},</span> <span class="nx">errorMessages</span> <span class="o">=</span> <span class="nx">ErrorMessages</span><span class="p">)</span> <span class="p">{</span>
         <span class="kd">let</span> <span class="p">{</span><span class="nx">input</span> <span class="o">=</span> <span class="p">{},</span> <span class="nx">settings</span> <span class="o">=</span> <span class="p">{},</span> <span class="nx">tags</span> <span class="o">=</span> <span class="p">{},</span> <span class="nx">errors</span> <span class="o">=</span> <span class="p">{}}</span> <span class="o">=</span> <span class="nx">inputObj</span><span class="p">;</span>
 
         <span class="k">this</span><span class="p">.</span><span class="nx">input</span> <span class="o">=</span> <span class="nx">input</span><span class="p">;</span>
@@ -1025,20 +985,19 @@ So our <em>color.js</em> file should look like this:</p>
         <span class="k">this</span><span class="p">.</span><span class="nx">attributeTags</span> <span class="o">=</span> <span class="nx">AttributeTags</span><span class="p">;</span>
     <span class="p">}</span>
 
-    <span class="nx">get</span> <span class="nx">uiClasses</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">get</span> <span class="nx">uiClasses</span><span class="p">()</span> <span class="p">{</span>
         <span class="k">return</span> <span class="s1">''</span>
     <span class="p">}</span>
 
-    <span class="nx">get</span> <span class="nx">uiAttributes</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">get</span> <span class="nx">uiAttributes</span><span class="p">()</span> <span class="p">{</span>
         <span class="k">return</span> <span class="s1">''</span>
     <span class="p">}</span>
 
-    <span class="nx">get</span> <span class="nx">html</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">get</span> <span class="nx">html</span><span class="p">()</span> <span class="p">{</span>
        
     <span class="p">}</span>
 <span class="p">}</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h2 id="step-8-register-the-color-input-to-the-ui-module">Step 8: Register the color input to the UI Module</h2>
 
@@ -1050,30 +1009,29 @@ class to the Default UI Module.</p>
   <li>Add the necessary import statement to bring in the <code class="highlighter-rouge">Color</code> input class</li>
 </ul>
 
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="c1">// Form/Input HTML</span>
-<span class="kr">import</span> <span class="p">{</span> <span class="nx">Form</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">'./form.js'</span><span class="p">;</span>
-<span class="kr">import</span> <span class="p">{</span> <span class="nx">Anchor</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">'./anchor.js'</span><span class="p">;</span>
-<span class="kr">import</span> <span class="p">{</span> <span class="nx">Buttons</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">'./buttons.js'</span><span class="p">;</span>
-<span class="kr">import</span> <span class="p">{</span> <span class="nx">Checkbox</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">'./checkbox.js'</span><span class="p">;</span>
-<span class="kr">import</span> <span class="p">{</span> <span class="nx">Color</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">"./color.js"</span><span class="p">;</span> <span class="c1">// Input here</span>
-<span class="kr">import</span> <span class="p">{</span> <span class="nb">Date</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">'./date.js'</span><span class="p">;</span>
-<span class="kr">import</span> <span class="p">{</span> <span class="nx">DatetimeLocal</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">'./datetime-local.js'</span><span class="p">;</span>
-<span class="kr">import</span> <span class="p">{</span> <span class="nx">Email</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">'./email.js'</span><span class="p">;</span>
-<span class="kr">import</span> <span class="p">{</span> <span class="nb">Number</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">'./number.js'</span><span class="p">;</span>
-<span class="kr">import</span> <span class="p">{</span> <span class="nx">Options</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">"./options.js"</span><span class="p">;</span>
-<span class="kr">import</span> <span class="p">{</span> <span class="nx">Radio</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">"./radio.js"</span><span class="p">;</span>
-<span class="kr">import</span> <span class="p">{</span> <span class="nx">Style</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">"./style.js"</span><span class="p">;</span>
-<span class="kr">import</span> <span class="p">{</span> <span class="nx">Text</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">'./text.js'</span><span class="p">;</span>
-<span class="kr">import</span> <span class="p">{</span> <span class="nx">Textarea</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">'./textarea.js'</span><span class="p">;</span>
-<span class="kr">import</span> <span class="p">{</span> <span class="nx">Url</span> <span class="p">}</span> <span class="nx">from</span> <span class="s1">'./url.js'</span><span class="p">;</span>
-</code></pre>
-</div>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Form/Input HTML</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">Form</span> <span class="p">}</span> <span class="k">from</span> <span class="s1">'./form.js'</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">Anchor</span> <span class="p">}</span> <span class="k">from</span> <span class="s1">'./anchor.js'</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">Buttons</span> <span class="p">}</span> <span class="k">from</span> <span class="s1">'./buttons.js'</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">Checkbox</span> <span class="p">}</span> <span class="k">from</span> <span class="s1">'./checkbox.js'</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">Color</span> <span class="p">}</span> <span class="k">from</span> <span class="s2">"./color.js"</span><span class="p">;</span> <span class="c1">// Input here</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nb">Date</span> <span class="p">}</span> <span class="k">from</span> <span class="s1">'./date.js'</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">DatetimeLocal</span> <span class="p">}</span> <span class="k">from</span> <span class="s1">'./datetime-local.js'</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">Email</span> <span class="p">}</span> <span class="k">from</span> <span class="s1">'./email.js'</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nb">Number</span> <span class="p">}</span> <span class="k">from</span> <span class="s1">'./number.js'</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">Options</span> <span class="p">}</span> <span class="k">from</span> <span class="s2">"./options.js"</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">Radio</span> <span class="p">}</span> <span class="k">from</span> <span class="s2">"./radio.js"</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">Style</span> <span class="p">}</span> <span class="k">from</span> <span class="s2">"./style.js"</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">Text</span> <span class="p">}</span> <span class="k">from</span> <span class="s1">'./text.js'</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">Textarea</span> <span class="p">}</span> <span class="k">from</span> <span class="s1">'./textarea.js'</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">Url</span> <span class="p">}</span> <span class="k">from</span> <span class="s1">'./url.js'</span><span class="p">;</span>
+</code></pre></div></div>
 
 <ul>
   <li>Add it as a property to the class in the <em>index.js</em> class’s constructor</li>
 </ul>
 
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nx">constructor</span><span class="p">()</span> <span class="p">{</span>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">constructor</span><span class="p">()</span> <span class="p">{</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">form</span> <span class="o">=</span> <span class="nx">Form</span><span class="p">;</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">anchor</span> <span class="o">=</span> <span class="nx">Anchor</span><span class="p">;</span>
         <span class="k">this</span><span class="p">.</span><span class="nx">buttons</span> <span class="o">=</span> <span class="nx">Buttons</span><span class="p">;</span>
@@ -1096,8 +1054,7 @@ class to the Default UI Module.</p>
             <span class="na">navigation</span><span class="p">:</span> <span class="nx">NavigationState</span>
         <span class="p">}</span>
     <span class="p">}</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Doing this will remove the error from the console, but the element shouldn’t appear. So, let’s 
 add the HTML</p>
@@ -1110,37 +1067,33 @@ add the HTML</p>
 
 <p>Here are the variables defined:</p>
 
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">let</span> <span class="p">{</span><span class="nx">input</span><span class="p">,</span> <span class="nx">settings</span><span class="p">,</span> <span class="nx">tags</span><span class="p">,</span> <span class="nx">errors</span><span class="p">,</span> <span class="nx">uiClasses</span><span class="p">,</span> <span class="nx">uiAttributes</span><span class="p">}</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="p">{</span><span class="nx">input</span><span class="p">,</span> <span class="nx">settings</span><span class="p">,</span> <span class="nx">tags</span><span class="p">,</span> <span class="nx">errors</span><span class="p">,</span> <span class="nx">uiClasses</span><span class="p">,</span> <span class="nx">uiAttributes</span><span class="p">}</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
 <span class="kd">let</span> <span class="p">{</span><span class="nx">label</span> <span class="o">=</span> <span class="s1">''</span><span class="p">,</span> <span class="nx">labelHTML</span><span class="p">,</span> <span class="nx">name</span> <span class="o">=</span> <span class="s1">''</span><span class="p">,</span> <span class="nx">id</span> <span class="o">=</span> <span class="s1">''</span><span class="p">}</span> <span class="o">=</span> <span class="nx">input</span><span class="p">;</span>
 <span class="kd">let</span> <span class="p">{</span><span class="na">input</span><span class="p">:</span> <span class="nx">inputSettings</span> <span class="o">=</span> <span class="p">{},</span> <span class="nx">showLabel</span> <span class="o">=</span> <span class="kc">true</span><span class="p">}</span> <span class="o">=</span> <span class="nx">settings</span><span class="p">;</span>
 <span class="kd">let</span> <span class="p">{</span><span class="nx">classes</span> <span class="o">=</span> <span class="s1">''</span><span class="p">}</span> <span class="o">=</span> <span class="nx">inputSettings</span><span class="p">;</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>The first variables before classes are pulling all the input data from the JSON. Below that the classes 
 for this input are defined:</p>
 
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="nx">classes</span> <span class="o">=</span> <span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">classes</span><span class="p">}</span> <span class="nx">$</span><span class="p">{</span><span class="nx">uiClasses</span><span class="p">}</span><span class="err">`</span><span class="p">;</span>
-</code></pre>
-</div>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">classes</span> <span class="o">=</span> <span class="s2">`</span><span class="p">${</span><span class="nx">classes</span><span class="p">}</span><span class="s2"> </span><span class="p">${</span><span class="nx">uiClasses</span><span class="p">}</span><span class="s2">`</span><span class="p">;</span>
+</code></pre></div></div>
 
 <p>These classes are classes passed down from the JSON and any classes that are global to the framework. 
 These will be added to the input element directly.</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>let {messages: errorMessages = [], attributes: errorAttributes = '', nonValidate = [], tags: errorTags = ''} = errors;
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>let {messages: errorMessages = [], attributes: errorAttributes = '', nonValidate = [], tags: errorTags = ''} = errors;
 let errorHTML = new this.errorMessages(errorMessages).html;
 let nonValidateAttributesHTML = new this.attributeTags(errorAttributes, nonValidate).html;
 
 nonValidateAttributesHTML = `${nonValidateAttributesHTML} ${uiAttributes}`;
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>This sets up all thhe error messages and attribute tags for this element. For the most part, this is standard and 
 shouldn’t change.</p>
 
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="k">if</span> <span class="p">(</span><span class="nx">labelHTML</span><span class="p">)</span> <span class="nx">label</span> <span class="o">=</span> <span class="nx">labelHTML</span><span class="p">;</span>
-</code></pre>
-</div>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="p">(</span><span class="nx">labelHTML</span><span class="p">)</span> <span class="nx">label</span> <span class="o">=</span> <span class="nx">labelHTML</span><span class="p">;</span>
+</code></pre></div></div>
 
 <p>Replaces the label with the <code class="highlighter-rouge">labelHTML</code> passed from the JSON.</p>
 
@@ -1149,15 +1102,14 @@ shouldn’t change.</p>
 <p>After initializing and rendering the various components for the HTML, the text input pulls in these settings 
 and attaches them correctly. Let’s look at the template string for this element:</p>
 
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">inputHTML</span> <span class="o">=</span> <span class="err">`</span> 
-    <span class="o">&lt;</span><span class="nx">label</span> <span class="k">for</span><span class="o">=</span><span class="s1">'${name}'</span><span class="o">&gt;</span> <span class="nx">$</span><span class="p">{</span><span class="nx">label</span><span class="p">}</span> <span class="o">&lt;</span><span class="sr">/label</span><span class="err">&gt;
-</span>    <span class="o">&lt;</span><span class="nx">input</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"${classes}"</span>  <span class="nx">id</span><span class="o">=</span><span class="s2">"${id}"</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"${name}"</span>  <span class="nx">type</span><span class="o">=</span><span class="s2">"text"</span> <span class="nx">$</span><span class="p">{</span><span class="nx">nonValidateAttributesHTML</span><span class="p">}</span>   <span class="nx">$</span><span class="p">{</span><span class="nx">errorTags</span><span class="p">}</span> <span class="nx">$</span><span class="p">{</span><span class="nx">tags</span><span class="p">}</span><span class="o">&gt;</span>
-    <span class="nx">$</span><span class="p">{</span><span class="nx">errorHTML</span><span class="p">}</span>
-<span class="err">`</span><span class="p">;</span>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">inputHTML</span> <span class="o">=</span> <span class="s2">` 
+    &lt;label for='</span><span class="p">${</span><span class="nx">name</span><span class="p">}</span><span class="s2">'&gt; </span><span class="p">${</span><span class="nx">label</span><span class="p">}</span><span class="s2"> &lt;/label&gt;
+    &lt;input class="</span><span class="p">${</span><span class="nx">classes</span><span class="p">}</span><span class="s2">"  id="</span><span class="p">${</span><span class="nx">id</span><span class="p">}</span><span class="s2">" name="</span><span class="p">${</span><span class="nx">name</span><span class="p">}</span><span class="s2">"  type="text" </span><span class="p">${</span><span class="nx">nonValidateAttributesHTML</span><span class="p">}</span><span class="s2">   </span><span class="p">${</span><span class="nx">errorTags</span><span class="p">}</span><span class="s2"> </span><span class="p">${</span><span class="nx">tags</span><span class="p">}</span><span class="s2">&gt;
+    </span><span class="p">${</span><span class="nx">errorHTML</span><span class="p">}</span><span class="s2">
+`</span><span class="p">;</span>
 
-<span class="k">return</span> <span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">inputHTML</span><span class="p">}</span><span class="err">`</span><span class="p">;</span>
-</code></pre>
-</div>
+<span class="k">return</span> <span class="s2">`</span><span class="p">${</span><span class="nx">inputHTML</span><span class="p">}</span><span class="s2">`</span><span class="p">;</span>
+</code></pre></div></div>
 
 <p>The various parts are as follows:</p>
 
@@ -1181,14 +1133,14 @@ and attaches them correctly. Let’s look at the template string for this elemen
 The key change thous is on the input is to change “text” to “color”. So our final <em>color.js</em> file 
 should look like this:</p>
 
-<div class="language-javascript highlighter-rouge"><pre class="highlight"><code><span class="kr">import</span> <span class="p">{</span> <span class="nx">Style</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">"./style"</span><span class="p">;</span>
-<span class="kr">import</span> <span class="p">{</span> <span class="nx">ErrorMessages</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">"./messages.js"</span><span class="p">;</span>
-<span class="kr">import</span> <span class="p">{</span> <span class="nx">AttributeTags</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">"../utilities/attributes.js"</span><span class="p">;</span>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">Style</span> <span class="p">}</span> <span class="k">from</span> <span class="s2">"./style"</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">ErrorMessages</span> <span class="p">}</span> <span class="k">from</span> <span class="s2">"./messages.js"</span><span class="p">;</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">AttributeTags</span> <span class="p">}</span> <span class="k">from</span> <span class="s2">"../utilities/attributes.js"</span><span class="p">;</span>
 
 <span class="kd">let</span> <span class="nx">style</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Style</span><span class="p">();</span>
 
-<span class="kr">export</span> <span class="kr">class</span> <span class="nx">Color</span> <span class="p">{</span>
-    <span class="nx">constructor</span><span class="p">(</span><span class="nx">inputObj</span> <span class="o">=</span> <span class="p">{},</span> <span class="nx">errorMessages</span> <span class="o">=</span> <span class="nx">ErrorMessages</span><span class="p">)</span> <span class="p">{</span>
+<span class="k">export</span> <span class="kd">class</span> <span class="nx">Color</span> <span class="p">{</span>
+    <span class="kd">constructor</span><span class="p">(</span><span class="nx">inputObj</span> <span class="o">=</span> <span class="p">{},</span> <span class="nx">errorMessages</span> <span class="o">=</span> <span class="nx">ErrorMessages</span><span class="p">)</span> <span class="p">{</span>
         <span class="kd">let</span> <span class="p">{</span><span class="nx">input</span> <span class="o">=</span> <span class="p">{},</span> <span class="nx">settings</span> <span class="o">=</span> <span class="p">{},</span> <span class="nx">tags</span> <span class="o">=</span> <span class="p">{},</span> <span class="nx">errors</span> <span class="o">=</span> <span class="p">{}}</span> <span class="o">=</span> <span class="nx">inputObj</span><span class="p">;</span>
 
         <span class="k">this</span><span class="p">.</span><span class="nx">input</span> <span class="o">=</span> <span class="nx">input</span><span class="p">;</span>
@@ -1199,41 +1151,40 @@ should look like this:</p>
         <span class="k">this</span><span class="p">.</span><span class="nx">attributeTags</span> <span class="o">=</span> <span class="nx">AttributeTags</span><span class="p">;</span>
     <span class="p">}</span>
 
-    <span class="nx">get</span> <span class="nx">uiClasses</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">get</span> <span class="nx">uiClasses</span><span class="p">()</span> <span class="p">{</span>
         <span class="k">return</span> <span class="s1">''</span>
     <span class="p">}</span>
 
-    <span class="nx">get</span> <span class="nx">uiAttributes</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">get</span> <span class="nx">uiAttributes</span><span class="p">()</span> <span class="p">{</span>
         <span class="k">return</span> <span class="s1">''</span>
     <span class="p">}</span>
 
-    <span class="nx">get</span> <span class="nx">html</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">get</span> <span class="nx">html</span><span class="p">()</span> <span class="p">{</span>
         <span class="kd">let</span> <span class="p">{</span><span class="nx">input</span><span class="p">,</span> <span class="nx">settings</span><span class="p">,</span> <span class="nx">tags</span><span class="p">,</span> <span class="nx">errors</span><span class="p">,</span> <span class="nx">uiClasses</span><span class="p">,</span> <span class="nx">uiAttributes</span><span class="p">}</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
         <span class="kd">let</span> <span class="p">{</span><span class="nx">label</span> <span class="o">=</span> <span class="s1">''</span><span class="p">,</span> <span class="nx">labelHTML</span><span class="p">,</span> <span class="nx">name</span> <span class="o">=</span> <span class="s1">''</span><span class="p">,</span> <span class="nx">id</span> <span class="o">=</span> <span class="s1">''</span><span class="p">}</span> <span class="o">=</span> <span class="nx">input</span><span class="p">;</span>
         <span class="kd">let</span> <span class="p">{</span><span class="na">input</span><span class="p">:</span> <span class="nx">inputSettings</span> <span class="o">=</span> <span class="p">{},</span> <span class="nx">showLabel</span> <span class="o">=</span> <span class="kc">true</span><span class="p">}</span> <span class="o">=</span> <span class="nx">settings</span><span class="p">;</span>
         <span class="kd">let</span> <span class="p">{</span><span class="nx">classes</span> <span class="o">=</span> <span class="s1">''</span><span class="p">}</span> <span class="o">=</span> <span class="nx">inputSettings</span><span class="p">;</span>
 
-        <span class="nx">classes</span> <span class="o">=</span> <span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">classes</span><span class="p">}</span> <span class="nx">$</span><span class="p">{</span><span class="nx">uiClasses</span><span class="p">}</span><span class="err">`</span><span class="p">;</span>
+        <span class="nx">classes</span> <span class="o">=</span> <span class="s2">`</span><span class="p">${</span><span class="nx">classes</span><span class="p">}</span><span class="s2"> </span><span class="p">${</span><span class="nx">uiClasses</span><span class="p">}</span><span class="s2">`</span><span class="p">;</span>
 
         <span class="kd">let</span> <span class="p">{</span><span class="na">messages</span><span class="p">:</span> <span class="nx">errorMessages</span> <span class="o">=</span> <span class="p">[],</span> <span class="na">attributes</span><span class="p">:</span> <span class="nx">errorAttributes</span> <span class="o">=</span> <span class="s1">''</span><span class="p">,</span> <span class="nx">nonValidate</span> <span class="o">=</span> <span class="p">[],</span> <span class="na">tags</span><span class="p">:</span> <span class="nx">errorTags</span> <span class="o">=</span> <span class="s1">''</span><span class="p">}</span> <span class="o">=</span> <span class="nx">errors</span><span class="p">;</span>
         <span class="kd">let</span> <span class="nx">errorHTML</span> <span class="o">=</span> <span class="k">new</span> <span class="k">this</span><span class="p">.</span><span class="nx">errorMessages</span><span class="p">(</span><span class="nx">errorMessages</span><span class="p">).</span><span class="nx">html</span><span class="p">;</span>
         <span class="kd">let</span> <span class="nx">nonValidateAttributesHTML</span> <span class="o">=</span> <span class="k">new</span> <span class="k">this</span><span class="p">.</span><span class="nx">attributeTags</span><span class="p">(</span><span class="nx">errorAttributes</span><span class="p">,</span> <span class="nx">nonValidate</span><span class="p">).</span><span class="nx">html</span><span class="p">;</span>
 
-        <span class="nx">nonValidateAttributesHTML</span> <span class="o">=</span> <span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">nonValidateAttributesHTML</span><span class="p">}</span> <span class="nx">$</span><span class="p">{</span><span class="nx">uiAttributes</span><span class="p">}</span><span class="err">`</span><span class="p">;</span>
+        <span class="nx">nonValidateAttributesHTML</span> <span class="o">=</span> <span class="s2">`</span><span class="p">${</span><span class="nx">nonValidateAttributesHTML</span><span class="p">}</span><span class="s2"> </span><span class="p">${</span><span class="nx">uiAttributes</span><span class="p">}</span><span class="s2">`</span><span class="p">;</span>
 
         <span class="k">if</span> <span class="p">(</span><span class="nx">labelHTML</span><span class="p">)</span> <span class="nx">label</span> <span class="o">=</span> <span class="nx">labelHTML</span><span class="p">;</span>
 
-        <span class="kd">let</span> <span class="nx">inputHTML</span> <span class="o">=</span> <span class="err">`</span> 
-            <span class="o">&lt;</span><span class="nx">label</span> <span class="k">for</span><span class="o">=</span><span class="s1">'${name}'</span><span class="o">&gt;</span> <span class="nx">$</span><span class="p">{</span><span class="nx">label</span><span class="p">}</span> <span class="o">&lt;</span><span class="sr">/label</span><span class="err">&gt;
-</span>            <span class="o">&lt;</span><span class="nx">input</span> <span class="kr">class</span><span class="o">=</span><span class="s2">"${classes}"</span>  <span class="nx">id</span><span class="o">=</span><span class="s2">"${id}"</span> <span class="nx">name</span><span class="o">=</span><span class="s2">"${name}"</span>  <span class="nx">type</span><span class="o">=</span><span class="s2">"color"</span> <span class="nx">$</span><span class="p">{</span><span class="nx">nonValidateAttributesHTML</span><span class="p">}</span>   <span class="nx">$</span><span class="p">{</span><span class="nx">errorTags</span><span class="p">}</span> <span class="nx">$</span><span class="p">{</span><span class="nx">tags</span><span class="p">}</span><span class="o">&gt;</span>
-            <span class="nx">$</span><span class="p">{</span><span class="nx">errorHTML</span><span class="p">}</span>
-       <span class="err">`</span><span class="p">;</span>
+        <span class="kd">let</span> <span class="nx">inputHTML</span> <span class="o">=</span> <span class="s2">` 
+            &lt;label for='</span><span class="p">${</span><span class="nx">name</span><span class="p">}</span><span class="s2">'&gt; </span><span class="p">${</span><span class="nx">label</span><span class="p">}</span><span class="s2"> &lt;/label&gt;
+            &lt;input class="</span><span class="p">${</span><span class="nx">classes</span><span class="p">}</span><span class="s2">"  id="</span><span class="p">${</span><span class="nx">id</span><span class="p">}</span><span class="s2">" name="</span><span class="p">${</span><span class="nx">name</span><span class="p">}</span><span class="s2">"  type="color" </span><span class="p">${</span><span class="nx">nonValidateAttributesHTML</span><span class="p">}</span><span class="s2">   </span><span class="p">${</span><span class="nx">errorTags</span><span class="p">}</span><span class="s2"> </span><span class="p">${</span><span class="nx">tags</span><span class="p">}</span><span class="s2">&gt;
+            </span><span class="p">${</span><span class="nx">errorHTML</span><span class="p">}</span><span class="s2">
+       `</span><span class="p">;</span>
 
-        <span class="k">return</span> <span class="err">`</span><span class="nx">$</span><span class="p">{</span><span class="nx">inputHTML</span><span class="p">}</span><span class="err">`</span><span class="p">;</span>
+        <span class="k">return</span> <span class="s2">`</span><span class="p">${</span><span class="nx">inputHTML</span><span class="p">}</span><span class="s2">`</span><span class="p">;</span>
     <span class="p">}</span>
 <span class="p">}</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Once you added this it should look like the final result:</p>
 
@@ -1288,15 +1239,15 @@ wheel, you build upon the existing foundation.</p>
     
     
     
-    <li><a href="https://influencetech.github.io/ivx-js/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    <li><a href="http://localhost:4000/ivx-js/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
   </ul>
 </div>
 
-<div class="page__footer-copyright">&copy; 2017 Influence Technology. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+<div class="page__footer-copyright">&copy; 2018 Influence Technology. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
       </footer>
     </div>
 
-    <script src="https://influencetech.github.io/ivx-js/assets/js/main.min.js"></script>
+    <script src="http://localhost:4000/ivx-js/assets/js/main.min.js"></script>
 
 
 

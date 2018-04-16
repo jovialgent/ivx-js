@@ -5,7 +5,7 @@ export class Service {
     }
 
     setScopeExperience(experience) {
-        console.log("GOT TO IVXIO SERVICE")
+        
     }
 }
 

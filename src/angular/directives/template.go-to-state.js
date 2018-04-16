@@ -4,25 +4,29 @@ import createFactoryFunction from '../utilities/create-factory-function.js';
 
 
 class GoToState {
-    constructor(iVXjs, iVXjsBus) {
+    constructor(iVXjs, iVXjsBus, iVXjsActionTemplateService) {
         this.restrict = 'A';
         this.controller = ["iVXjs", (iVXjs) => {
 
         }];
         this.link = ($scope, iElm, iAttrs, controller) => {
-            iElm[0].addEventListener('click', (event) => {
-                event.preventDefault();
+            iVXjsActionTemplateService.setup($scope, iElm, iAttrs, _getiVXGoToStateEventObj);
 
+            function _getiVXGoToStateEventObj() {
                 let { ivxGoToState: stateId } = iAttrs;
+                const { GO: eventName } = iVXjs.constants.STATE.EVENTS;
 
-                iVXjs.experience.goToState({ stateId }, iVXjsBus);
-            }, false);
+                return {
+                    eventName,
+                    args: { stateId }
+                }
+            }
         }
     }
 
 }
 
-GoToState.$inject = ['iVXjs', 'ivxjs.bus'];
+GoToState.$inject = ['iVXjs', 'ivxjs.bus', 'iVXjsActionTemplateService'];
 
 export default angular
     .module('ivx-js.directives.template.go-to-state', [])

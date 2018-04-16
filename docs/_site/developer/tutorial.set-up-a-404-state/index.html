@@ -19,7 +19,7 @@
 
 
 
-<title>iVXjs</title>
+<title>Set Up a 404 State - iVXjs</title>
 
 
 
@@ -29,11 +29,11 @@
 
 <meta property="og:locale" content="en">
 <meta property="og:site_name" content="iVXjs">
-<meta property="og:title" content="iVXjs">
+<meta property="og:title" content="Set Up a 404 State">
 
 
-  <link rel="canonical" href="https://influencetech.github.io/ivx-js/developer/tutorial.set-up-a-404-state/">
-  <meta property="og:url" content="https://influencetech.github.io/ivx-js/developer/tutorial.set-up-a-404-state/">
+  <link rel="canonical" href="http://localhost:4000/ivx-js/developer/tutorial.set-up-a-404-state/">
+  <meta property="og:url" content="http://localhost:4000/ivx-js/developer/tutorial.set-up-a-404-state/">
 
 
 
@@ -61,7 +61,7 @@
       "@context" : "http://schema.org",
       "@type" : "Person",
       "name" : "Influence Technology",
-      "url" : "https://influencetech.github.io/ivx-js",
+      "url" : "http://localhost:4000/ivx-js",
       "sameAs" : null
     }
   </script>
@@ -74,7 +74,7 @@
 <!-- end SEO -->
 
 
-<link href="https://influencetech.github.io/ivx-js/feed.xml" type="application/atom+xml" rel="alternate" title="iVXjs Feed">
+<link href="http://localhost:4000/ivx-js/feed.xml" type="application/atom+xml" rel="alternate" title="iVXjs Feed">
 
 <!-- http://t.co/dKP3o1e -->
 <meta name="HandheldFriendly" content="True">
@@ -86,7 +86,7 @@
 </script>
 
 <!-- For all browsers -->
-<link rel="stylesheet" href="https://influencetech.github.io/ivx-js/assets/css/main.css">
+<link rel="stylesheet" href="http://localhost:4000/ivx-js/assets/css/main.css">
 
 <meta http-equiv="cleartype" content="on">
     <!-- start custom head snippets -->
@@ -109,16 +109,16 @@
       <nav id="site-nav" class="greedy-nav">
         <button><div class="navicon"></div></button>
         <ul class="visible-links">
-          <li class="masthead__menu-item masthead__menu-item--lg"><a href="https://influencetech.github.io/ivx-js/">iVXjs</a></li>
+          <li class="masthead__menu-item masthead__menu-item--lg"><a href="http://localhost:4000/ivx-js/">iVXjs</a></li>
           
             
-            <li class="masthead__menu-item"><a href="https://influencetech.github.io/ivx-js/developer/tutorial.hello-world">Getting Started</a></li>
+            <li class="masthead__menu-item"><a href="http://localhost:4000/ivx-js/developer/tutorial.hello-world">Getting Started</a></li>
           
             
-            <li class="masthead__menu-item"><a href="https://influencetech.github.io/ivx-js/developer/tutorials">Tutorials</a></li>
+            <li class="masthead__menu-item"><a href="http://localhost:4000/ivx-js/developer/tutorials">Tutorials</a></li>
           
             
-            <li class="masthead__menu-item"><a href="https://influencetech.github.io/ivx-js/developer/configuration">Configuration and Features</a></li>
+            <li class="masthead__menu-item"><a href="http://localhost:4000/ivx-js/developer/configuration">Configuration and Features</a></li>
           
         </ul>
         <ul class="hidden-links hidden"></ul>
@@ -139,7 +139,7 @@
 
 
   <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
-    
+    <meta itemprop="headline" content="Set Up a 404 State">
     
     
     
@@ -147,7 +147,8 @@
     <div class="page__inner-wrap">
       
         <header>
-          
+          <h1 class="page__title" itemprop="headline">Set Up a 404 State
+</h1>
           
         </header>
       
@@ -198,20 +199,19 @@ more elegantly. This tutorial will show you how to set up that state and navigat
 
 <p>Here is our sample experience JSON:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
-    </span><span class="nt">"defaultState"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
-        </span><span class="nt">"stateId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"valid-state"</span><span class="w">
-    </span><span class="p">}],</span><span class="w">
-    </span><span class="nt">"states"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
-        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"valid-state-test"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Valid State"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/a-valid-state"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"html"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"html"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;h1&gt;I am the default state!&lt;/h1&gt;&lt;h2&gt;I am also a valid part of the experience&lt;/h2&gt;"</span><span class="w">
-    </span><span class="p">}]</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
+    "defaultState": [{
+        "stateId": "valid-state"
+    }],
+    "states": [{
+        "id": "valid-state-test",
+        "name": "Valid State",
+        "url": "/a-valid-state",
+        "type": "html",
+        "html" : "&lt;h1&gt;I am the default state!&lt;/h1&gt;&lt;h2&gt;I am also a valid part of the experience&lt;/h2&gt;"
+    }]
+}
+</code></pre></div></div>
 
 <p>If we loaded the experience in a browser it will look something like this:</p>
 
@@ -227,74 +227,71 @@ more elegantly. This tutorial will show you how to set up that state and navigat
   <li>Add a new array of rules to the root of the JSON called “pageNotFoundStates”</li>
 </ul>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
 
-    </span><span class="nt">"defaultState"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
-        </span><span class="nt">"stateId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"valid-state"</span><span class="w">
-    </span><span class="p">}],</span><span class="w">
-    </span><span class="nt">"pageNotFoundState"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
-    </span><span class="nt">"states"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
-         </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"valid-state"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Valid State"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/a-valid-state"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"html"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"html"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;h1&gt;I am the default state!&lt;/h1&gt;&lt;h2&gt;I am also a valid part of the experience&lt;/h2&gt;"</span><span class="w">
-    </span><span class="p">}]</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-</div>
+    "defaultState": [{
+        "stateId": "valid-state"
+    }],
+    "pageNotFoundState" : [],
+    "states": [{
+         "id": "valid-state",
+        "name": "Valid State",
+        "url": "/a-valid-state",
+        "type": "html",
+        "html" : "&lt;h1&gt;I am the default state!&lt;/h1&gt;&lt;h2&gt;I am also a valid part of the experience&lt;/h2&gt;"
+    }]
+}
+</code></pre></div></div>
 
 <ul>
   <li>Add a rule object the <code class="highlighter-rouge">pageNotFoundStates</code> array with the <code class="highlighter-rouge">stateId</code> you wish it to redirect to.</li>
 </ul>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
 
-    </span><span class="nt">"defaultState"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
-        </span><span class="nt">"stateId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"valid-state"</span><span class="w">
-    </span><span class="p">}],</span><span class="w">
-    </span><span class="nt">"pageNotFoundState"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
-        </span><span class="nt">"stateId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"404-state"</span><span class="w">
-    </span><span class="p">}],</span><span class="w">
-    </span><span class="nt">"states"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
-        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"valid-state"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Valid State"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/a-valid-state"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"html"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"html"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;h1&gt;I am the default state!&lt;/h1&gt;&lt;h2&gt;I am also a valid part of the experience&lt;/h2&gt;"</span><span class="w">
-    </span><span class="p">}]</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-</div>
+    "defaultState": [{
+        "stateId": "valid-state"
+    }],
+    "pageNotFoundState" : [{
+        "stateId" : "404-state"
+    }],
+    "states": [{
+        "id": "valid-state",
+        "name": "Valid State",
+        "url": "/a-valid-state",
+        "type": "html",
+        "html" : "&lt;h1&gt;I am the default state!&lt;/h1&gt;&lt;h2&gt;I am also a valid part of the experience&lt;/h2&gt;"
+    }]
+}
+</code></pre></div></div>
 
 <ul>
   <li>Add the settings for the “404-state” to the states array</li>
 </ul>
 
-<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
 
-    </span><span class="nt">"defaultState"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
-        </span><span class="nt">"stateId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"valid-state"</span><span class="w">
-    </span><span class="p">}],</span><span class="w">
-    </span><span class="nt">"pageNotFoundState"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
-        </span><span class="nt">"stateId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"404-state"</span><span class="w">
-    </span><span class="p">}],</span><span class="w">
-    </span><span class="nt">"states"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
-        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"valid-state"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Valid State"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/a-valid-state"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"html"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"html"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;h1&gt;I am the default state!&lt;/h1&gt;&lt;h2&gt;I am also a valid part of the experience&lt;/h2&gt;"</span><span class="w">
-    </span><span class="p">},{</span><span class="w">
-        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"404-state"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"404 Page"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/404"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"html"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"html"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;h1&gt; I am a page not found state.&lt;/h1&gt;"</span><span class="w">
-    </span><span class="p">}]</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre>
-</div>
+    "defaultState": [{
+        "stateId": "valid-state"
+    }],
+    "pageNotFoundState" : [{
+        "stateId" : "404-state"
+    }],
+    "states": [{
+        "id": "valid-state",
+        "name": "Valid State",
+        "url": "/a-valid-state",
+        "type": "html",
+        "html" : "&lt;h1&gt;I am the default state!&lt;/h1&gt;&lt;h2&gt;I am also a valid part of the experience&lt;/h2&gt;"
+    },{
+        "id": "404-state",
+        "name": "404 Page",
+        "url": "/404",
+        "type": "html",
+        "html" : "&lt;h1&gt; I am a page not found state.&lt;/h1&gt;"
+    }]
+}
+</code></pre></div></div>
 
 <p>After adding all the settings to your JSON then reload the page. You will see that when you type an invalid url, you will be redirected 
 to the “404-state”:</p>
@@ -356,15 +353,15 @@ an invalid url is given that it will redirect to the the page not found state.</
     
     
     
-    <li><a href="https://influencetech.github.io/ivx-js/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    <li><a href="http://localhost:4000/ivx-js/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
   </ul>
 </div>
 
-<div class="page__footer-copyright">&copy; 2017 Influence Technology. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+<div class="page__footer-copyright">&copy; 2018 Influence Technology. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
       </footer>
     </div>
 
-    <script src="https://influencetech.github.io/ivx-js/assets/js/main.min.js"></script>
+    <script src="http://localhost:4000/ivx-js/assets/js/main.min.js"></script>
 
 
 

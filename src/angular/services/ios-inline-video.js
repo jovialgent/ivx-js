@@ -13,12 +13,20 @@ class CreateInlineVideo {
     emitCanPlay(video) {
         let self = this;
 
+        self.video = video;
+
         if (navigator.userAgent.match('CriOS')) {
 
-            self.iVXjsBus.once(videoEventNames.PLAY, () => {
+            const playOnce = self.iVXjsBus.on(videoEventNames.PLAY, (args = {}) => {
+                const { playerId } = args;
 
-                self.iVXjsBus.emit(videoEventNames.READY_PLAYER, video);
+                if (playerId === video.id) {
+                    self.iVXjsBus.emit(videoEventNames.READY_PLAYER, video);
+                    self.iVXjsBus.removeListener(videoEventNames.PLAY, playOnce);
+                }
+
             })
+
             self.iVXjsBus.emit(videoEventNames.CAN_PLAY, video)
             return;
         }
@@ -41,13 +49,16 @@ class CreateInlineVideo {
         video.setAttribute('webkit-playsinline', '');
         makeVideoPlayableInline(video);
 
-        this.iVXjsBus.on(videoEventNames.ADD_PLAYING_CLASS, () => {
-            container.className = `${video.className} is-playing`;
-            play = !play;
+        this.iVXjsBus.on(videoEventNames.ADD_PLAYING_CLASS, args => {
+            const { playerId } = args;
+
+            if (video.id === playerId) {
+                container.className = `${video.className} is-playing`;
+                play = !play;
+            }
         });
 
         video.addEventListener('touchstart', function () {
-
             if (!play) {
                 video.play();
                 container.className = `${video.className} is-playing`;

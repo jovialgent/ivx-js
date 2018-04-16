@@ -1,0 +1,804 @@
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+
+<meta charset="utf-8">
+
+
+
+<!-- begin SEO -->
+
+
+
+
+
+
+
+
+
+<title>Embedded Views - iVXjs</title>
+
+
+
+
+
+
+
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="iVXjs">
+<meta property="og:title" content="Embedded Views">
+
+
+  <link rel="canonical" href="http://localhost:4000/ivx-js/developer/tutorial.embedded-views/">
+  <meta property="og:url" content="http://localhost:4000/ivx-js/developer/tutorial.embedded-views/">
+
+
+
+
+
+
+
+  
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "Person",
+      "name" : "Influence Technology",
+      "url" : "http://localhost:4000/ivx-js",
+      "sameAs" : null
+    }
+  </script>
+
+
+
+
+
+
+<!-- end SEO -->
+
+
+<link href="http://localhost:4000/ivx-js/feed.xml" type="application/atom+xml" rel="alternate" title="iVXjs Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://localhost:4000/ivx-js/assets/css/main.css">
+
+<meta http-equiv="cleartype" content="on">
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use http://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+  </head>
+
+  <body>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <button><div class="navicon"></div></button>
+        <ul class="visible-links">
+          <li class="masthead__menu-item masthead__menu-item--lg"><a href="http://localhost:4000/ivx-js/">iVXjs</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/ivx-js/developer/tutorial.hello-world">Getting Started</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/ivx-js/developer/tutorials">Tutorials</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/ivx-js/developer/configuration">Configuration and Features</a></li>
+          
+        </ul>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    
+
+
+
+
+
+<div id="main" role="main">
+  
+
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Embedded Views">
+    
+    
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 class="page__title" itemprop="headline">Embedded Views
+</h1>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        <h1 id="embedded-views">Embedded Views</h1>
+
+<aside class="sidebar__right">
+<nav class="toc">
+    <header><h4 class="nav__title"><i class="fa fa-file-text"></i> On This Page</h4></header>
+<ul class="toc__menu" id="markdown-toc">
+  <li><a href="#embedded-views" id="markdown-toc-embedded-views">Embedded Views</a>    <ul>
+      <li><a href="#overview" id="markdown-toc-overview">Overview</a></li>
+      <li><a href="#tutorial-note" id="markdown-toc-tutorial-note">Tutorial Note:</a></li>
+      <li><a href="#sample-embedded-view-playlist" id="markdown-toc-sample-embedded-view-playlist">Sample Embedded View: Playlist</a>        <ul>
+          <li><a href="#part-1-set-up-the-parent-navigation-state" id="markdown-toc-part-1-set-up-the-parent-navigation-state">Part 1: Set up the Parent Navigation State</a></li>
+          <li><a href="#step-1-set-up-the-json-for-the-experience" id="markdown-toc-step-1-set-up-the-json-for-the-experience">Step 1: Set up the JSON for the experience:</a></li>
+          <li><a href="#step-2-add-the-embedded-views-collection" id="markdown-toc-step-2-add-the-embedded-views-collection">Step 2: Add the Embedded Views Collection</a></li>
+        </ul>
+      </li>
+      <li><a href="#part-2-embedded-state-definition" id="markdown-toc-part-2-embedded-state-definition">Part 2: Embedded State Definition</a></li>
+      <li><a href="#part-3-setting-up-navigation-in-our-playlist" id="markdown-toc-part-3-setting-up-navigation-in-our-playlist">Part 3: Setting up navigation in our playlist</a>        <ul>
+          <li><a href="#step-1-adding-the-link-to-the-playlist" id="markdown-toc-step-1-adding-the-link-to-the-playlist">Step 1: Adding the link to the playlist</a></li>
+        </ul>
+      </li>
+      <li><a href="#step-2-add-navigation-to-the-child-state" id="markdown-toc-step-2-add-navigation-to-the-child-state">Step 2: Add navigation to the child state</a></li>
+      <li><a href="#part-3-adding-more-states" id="markdown-toc-part-3-adding-more-states">Part 3: Adding more states:</a></li>
+      <li><a href="#conclusion" id="markdown-toc-conclusion">Conclusion</a></li>
+    </ul>
+  </li>
+</ul>
+
+  </nav>
+</aside>
+
+<h2 id="overview">Overview</h2>
+
+<p>An Embedded Views are state flows within an existing state. This allows for developers to make more robust 
+and complex states by putting a state within a state and have both states talk to each other and interact
+with one another. The purpose of this tutorial page is to go over the basics on how to embedded a view 
+into a state and some advice on how to set up the various interations.</p>
+
+<h2 id="tutorial-note">Tutorial Note:</h2>
+
+<p>This tutorial assumes you know basics of the JSON and iVXjs. If some of these concepts are hard to 
+follow, feel free to look at the introductory tutorials for more info.</p>
+
+<h2 id="sample-embedded-view-playlist">Sample Embedded View: Playlist</h2>
+
+<p>A simple use case for Embedded Views is a playlist where the state has a collection of links that 
+they click that takes them to various videos, forms and links.</p>
+
+<h3 id="part-1-set-up-the-parent-navigation-state">Part 1: Set up the Parent Navigation State</h3>
+
+<p>For the playlist, we will need to use the Navigation state that will list all of our embedded states. 
+The state that you are embeddeding in called a “Parent State.”</p>
+
+<blockquote>
+  <p>Parent State - A parent state is the state that has embedded states. The parent state will have 
+special properties that allows it overwrite some aspect of its embedded states.</p>
+  <blockquote>
+    <p>Note: a parent state can <em>not</em> be embedded in another state.</p>
+  </blockquote>
+</blockquote>
+
+<h3 id="step-1-set-up-the-json-for-the-experience">Step 1: Set up the JSON for the experience:</h3>
+
+<p>So to get started, we will set up the JSON and the Navigation State and have the default state be the 
+Playlist:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"defaultState"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"stateId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"parent-navigation-state"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"states"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+        </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"parent-navigation-state"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Parent Menu Scene"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/parent-navigation-state"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"navigation"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"section"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"classes"</span><span class="p">:</span><span class="w"> </span><span class="s2">"parent-navigation-state"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="s2">"onLinksReady"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"eventName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"animateElement"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"args"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="s2">"element"</span><span class="p">:</span><span class="w"> </span><span class="s2">".navigation-state-container"</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"animationClasses"</span><span class="p">:</span><span class="w"> </span><span class="s2">"show"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="s2">"links"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            
+        </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+    </span><span class="p">{},</span><span class="w">
+    </span><span class="p">{}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="step-2-add-the-embedded-views-collection">Step 2: Add the Embedded Views Collection</h3>
+
+<p>Now, we will actually embed our views into the Parent States. To embedded the 
+views, we add the property to embedded views. This is a collection of view
+objects with properties to set up each view. Let’s see an example of the 
+playlist with one embedded view and one state:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"defaultState"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"stateId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"parent-navigation-state"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"states"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+        </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"parent-navigation-state"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Parent Menu Scene"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/parent-navigation-state"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"navigation"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"section"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"classes"</span><span class="p">:</span><span class="w"> </span><span class="s2">"parent-navigation-state"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+         </span><span class="s2">"embeddedViews"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"playlist-content"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Playlist Content"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"custom"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"classes"</span><span class="p">:</span><span class="w"> </span><span class="s2">"basic"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"appendTo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"footer"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"states"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                    </span><span class="p">{</span><span class="w">
+                        </span><span class="s2">"stateId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"child-video-state-1"</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
+                </span><span class="p">]</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="s2">"onLinksReady"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"eventName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"animateElement"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"args"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="s2">"element"</span><span class="p">:</span><span class="w"> </span><span class="s2">".navigation-state-container"</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"animationClasses"</span><span class="p">:</span><span class="w"> </span><span class="s2">"show"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="s2">"links"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            
+        </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+    </span><span class="p">{},</span><span class="w">
+    </span><span class="p">{}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Let’s break the properties a bit:</p>
+<ul>
+  <li><em>id</em> - Id of the view. This id gets added to the container where the states will be place if there needs to be special targeting for this view.</li>
+  <li><em>name</em> - A human readable name for the view. It is only used for JSON readability.</li>
+  <li><em>type</em> - The type of view. Currently, iVXjs just supports the “custom” type which just puts the state on the page without any other functions.</li>
+  <li><em>classes</em> - CSS classes to add to the view.</li>
+  <li><em>appendTo</em> - The dom element to put the view.
+    <ul>
+      <li>Note: The dom must exist in the expereince container and can’t be added to any state content (Such as inputs, videos, etc.). If you need a special 
+embedded flow structure, you will have to use an HTML scene with the elements in them.</li>
+    </ul>
+  </li>
+  <li><em>states</em> - The states to add to this view
+    <ul>
+      <li><em>stateId</em> - The id of the state to add. The state must have an embedded property (See Part 2)</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="part-2-embedded-state-definition">Part 2: Embedded State Definition</h2>
+
+<p>Since we have indicated the state we want to embed let’s define it. In the case of the 
+playlist example, the state we are embedding is a video state. Here is an example video state:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">...</span><span class="w">
+</span><span class="p">{</span><span class="w">
+    </span><span class="s2">"playerSettings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"youtubeId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pU9Q6oiQNd0"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"controls"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"standard"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"section"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"classes"</span><span class="p">:</span><span class="w"> </span><span class="s2">"child-video-state-1"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"onVideoReady"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"eventName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"animateElement"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"args"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"element"</span><span class="p">:</span><span class="w"> </span><span class="s2">".video-state-container"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"animationClasses"</span><span class="p">:</span><span class="w"> </span><span class="s2">"show"</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Child Video Scene 1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/child-video-state-1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"video"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"child-video-state-1"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span><span class="err">...</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Above, the state can’t be embedded, due the fact that there is no 
+way the iVXjs knows that the video state can be embedded. To change this,
+you will need to add a property called <code class="highlighter-rouge">embedded</code> to the state.</p>
+
+<ul>
+  <li><em>embedded</em> - indicates this state can be embedded. If this property is found on a state, the state
+can’t have any embedded views.</li>
+</ul>
+
+<p>So, we will need to update the above state definition with the property:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">...</span><span class="w">
+</span><span class="p">{</span><span class="w">
+    </span><span class="s2">"playerSettings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"youtubeId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pU9Q6oiQNd0"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"controls"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"standard"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"section"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"classes"</span><span class="p">:</span><span class="w"> </span><span class="s2">"child-video-state-1"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"onVideoReady"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"eventName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"animateElement"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"args"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"element"</span><span class="p">:</span><span class="w"> </span><span class="s2">".video-state-container"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"animationClasses"</span><span class="p">:</span><span class="w"> </span><span class="s2">"show"</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Child Video Scene 1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/child-video-state-1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"video"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"child-video-state-1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"embedded"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span><span class="err">...</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="part-3-setting-up-navigation-in-our-playlist">Part 3: Setting up navigation in our playlist</h2>
+
+<p>We now have a child video state and a parent state that we embedded the video in. 
+We will now discuss how to navigate to it.</p>
+
+<h3 id="step-1-adding-the-link-to-the-playlist">Step 1: Adding the link to the playlist</h3>
+
+<p>In the partent navigation state, we will need to add a link that points to is child video state.
+To do this we will add a link definition to the links collection:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"defaultState"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"stateId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"parent-navigation-state"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"states"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+        </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"parent-navigation-state"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Parent Menu Scene"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/parent-navigation-state"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"navigation"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"section"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"classes"</span><span class="p">:</span><span class="w"> </span><span class="s2">"parent-navigation-state"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+         </span><span class="s2">"embeddedViews"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"playlist-content"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Playlist Content"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"custom"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"classes"</span><span class="p">:</span><span class="w"> </span><span class="s2">"basic"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"appendTo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"footer"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"states"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                    </span><span class="p">{</span><span class="w">
+                        </span><span class="s2">"stateId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"child-video-state-1"</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
+                </span><span class="p">]</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="s2">"onLinksReady"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"eventName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"animateElement"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"args"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="s2">"element"</span><span class="p">:</span><span class="w"> </span><span class="s2">".navigation-state-container"</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"animationClasses"</span><span class="p">:</span><span class="w"> </span><span class="s2">"show"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="s2">"links"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+            </span><span class="s2">"id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"link-1"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"label"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Video 1"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"route"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"parent-navigation-state.child-video-state"</span><span class="w">
+        </span><span class="p">}]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+    </span><span class="p">{},</span><span class="w">
+    </span><span class="p">{}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>As you see, the link uses the new <code class="highlighter-rouge">route</code> property to point to its child. So when 
+the link is clicked the link will go its child video state.</p>
+
+<h2 id="step-2-add-navigation-to-the-child-state">Step 2: Add navigation to the child state</h2>
+
+<p>When the child video ends, let’s say it returns to the parent so the video hides. (We will add more videos later).
+Normally, you would add a “next” to the state to do navigation:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">...</span><span class="w">
+</span><span class="p">{</span><span class="w">
+    </span><span class="s2">"playerSettings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"youtubeId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pU9Q6oiQNd0"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"controls"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"standard"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"section"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"classes"</span><span class="p">:</span><span class="w"> </span><span class="s2">"child-video-state-1"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"onVideoReady"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"eventName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"animateElement"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"args"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"element"</span><span class="p">:</span><span class="w"> </span><span class="s2">".video-state-container"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"animationClasses"</span><span class="p">:</span><span class="w"> </span><span class="s2">"show"</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"next"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+        </span><span class="s2">"route"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"parent-navigation-state"</span><span class="w">
+    </span><span class="p">}],</span><span class="w">
+    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Child Video Scene 1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/child-video-state-1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"video"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"child-video-state-1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"embedded"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span><span class="err">...</span><span class="w">
+</span></code></pre></div></div>
+
+<p>But, with embedded views, the Parent state actually indicates flow and navigation. The child’s next
+collection is ignored. So, we will now add the next to the state in the embedded view:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"defaultState"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"stateId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"parent-navigation-state"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"states"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+         </span><span class="err">...</span><span class="w">
+         </span><span class="s2">"embeddedViews"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"playlist-content"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Playlist Content"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"custom"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"classes"</span><span class="p">:</span><span class="w"> </span><span class="s2">"basic"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"appendTo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"footer"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"states"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                    </span><span class="p">{</span><span class="w">
+                        </span><span class="s2">"stateId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"child-video-state-1"</span><span class="p">,</span><span class="w">
+                         </span><span class="s2">"next"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                            </span><span class="p">{</span><span class="w">
+                                </span><span class="s2">"route"</span><span class="p">:</span><span class="w"> </span><span class="s2">"parent-navigation-state"</span><span class="w">
+                            </span><span class="p">}</span><span class="w">
+                        </span><span class="p">]</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
+                </span><span class="p">]</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="err">...</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+    </span><span class="p">{},</span><span class="w">
+    </span><span class="p">{}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>So, this indicates that the user wants the child video state to navigate to the 
+parent navigation state (the playlist). Though this works, a more flexible solution 
+is to change the route to use the <code class="highlighter-rouge">^</code> symbol which indicates that you want to go back to 
+the parent:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"defaultState"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"stateId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"parent-navigation-state"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"states"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+         </span><span class="err">...</span><span class="w">
+         </span><span class="s2">"embeddedViews"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"playlist-content"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Playlist Content"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"custom"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"classes"</span><span class="p">:</span><span class="w"> </span><span class="s2">"basic"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"appendTo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"footer"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"states"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                    </span><span class="p">{</span><span class="w">
+                        </span><span class="s2">"stateId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"child-video-state-1"</span><span class="p">,</span><span class="w">
+                         </span><span class="s2">"next"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                            </span><span class="p">{</span><span class="w">
+                                </span><span class="s2">"route"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^"</span><span class="w">
+                            </span><span class="p">}</span><span class="w">
+                        </span><span class="p">]</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
+                </span><span class="p">]</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="err">...</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+    </span><span class="p">{},</span><span class="w">
+    </span><span class="p">{}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="part-3-adding-more-states">Part 3: Adding more states:</h2>
+
+<p>This playlist is kind of boring since there is only one state. Let’s add more videos to the embedded view.</p>
+
+<p>Let’s assume we have these three video states defined somewhere, lets add them to the embedded views.</p>
+
+<p>We will repeat the steps in Part 2 and add them to the parent-navigation-state:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"defaultState"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"stateId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"parent-navigation-state"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"states"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+        </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"parent-navigation-state"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Parent Menu Scene"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/parent-navigation-state"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"navigation"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"section"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"classes"</span><span class="p">:</span><span class="w"> </span><span class="s2">"parent-navigation-state"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+         </span><span class="s2">"embeddedViews"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"playlist-content"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Playlist Content"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"custom"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"classes"</span><span class="p">:</span><span class="w"> </span><span class="s2">"basic"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"appendTo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"footer"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"states"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                    </span><span class="p">{</span><span class="w">
+                        </span><span class="s2">"stateId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"child-video-state-1"</span><span class="p">,</span><span class="w">
+                        </span><span class="s2">"next"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+                            </span><span class="s2">"route"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"^"</span><span class="w">
+                        </span><span class="p">}]</span><span class="w">
+                    </span><span class="p">},</span><span class="w">
+                    </span><span class="p">{</span><span class="w">
+                        </span><span class="s2">"stateId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"child-video-state-2"</span><span class="p">,</span><span class="w">
+                        </span><span class="s2">"next"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+                            </span><span class="s2">"route"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"^"</span><span class="w">
+                        </span><span class="p">}]</span><span class="w">
+                    </span><span class="p">},</span><span class="w">
+                    </span><span class="p">{</span><span class="w">
+                        </span><span class="s2">"stateId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"child-video-state-3"</span><span class="p">,</span><span class="w">
+                        </span><span class="s2">"next"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+                            </span><span class="s2">"route"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"^"</span><span class="w">
+                        </span><span class="p">}]</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
+
+                </span><span class="p">]</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="s2">"onLinksReady"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"eventName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"animateElement"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"args"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="s2">"element"</span><span class="p">:</span><span class="w"> </span><span class="s2">".navigation-state-container"</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"animationClasses"</span><span class="p">:</span><span class="w"> </span><span class="s2">"show"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="s2">"links"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+            </span><span class="s2">"id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"link-1"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"label"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Video 1"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"route"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"parent-navigation-state.child-video-state"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"link-2"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"label"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Video 2"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"route"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"parent-navigation-state.child-video-state"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"link-3"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"label"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Video 3"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"route"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"parent-navigation-state.child-video-state"</span><span class="w">
+        </span><span class="p">}]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>This might be annoying for the user to always have to click on the video once it plays 
+to pick the video. So, let’s make each video go to the next video in the list after it plays.
+To do this we will update the navigation for each state in the view to point to. To do this, we 
+will still use the <code class="highlighter-rouge">^</code> indicator but now it will add a second state that points to its child: <code class="highlighter-rouge">^.child-state-id</code>.</p>
+
+<p>So we will change the above example to this:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"defaultState"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"stateId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"parent-navigation-state"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="s2">"states"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+        </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"parent-navigation-state"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Parent Menu Scene"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/parent-navigation-state"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"navigation"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"section"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"classes"</span><span class="p">:</span><span class="w"> </span><span class="s2">"parent-navigation-state"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+         </span><span class="s2">"embeddedViews"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"playlist-content"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Playlist Content"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"custom"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"classes"</span><span class="p">:</span><span class="w"> </span><span class="s2">"basic"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"appendTo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"footer"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"states"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                    </span><span class="p">{</span><span class="w">
+                        </span><span class="s2">"stateId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"child-video-state-1"</span><span class="p">,</span><span class="w">
+                        </span><span class="s2">"next"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+                            </span><span class="s2">"route"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"^.child-video-state-2"</span><span class="w">
+                        </span><span class="p">}]</span><span class="w">
+                    </span><span class="p">},</span><span class="w">
+                    </span><span class="p">{</span><span class="w">
+                        </span><span class="s2">"stateId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"child-video-state-2"</span><span class="p">,</span><span class="w">
+                        </span><span class="s2">"next"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+                            </span><span class="s2">"route"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"^.child-video-state-3"</span><span class="w">
+                        </span><span class="p">}]</span><span class="w">
+                    </span><span class="p">},</span><span class="w">
+                    </span><span class="p">{</span><span class="w">
+                        </span><span class="s2">"stateId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"child-video-state-3"</span><span class="p">,</span><span class="w">
+                        </span><span class="s2">"next"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+                            </span><span class="s2">"route"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"^"</span><span class="w">
+                        </span><span class="p">}]</span><span class="w">
+                    </span><span class="p">}</span><span class="w">
+
+                </span><span class="p">]</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="s2">"onLinksReady"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"eventName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"animateElement"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"args"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                    </span><span class="s2">"element"</span><span class="p">:</span><span class="w"> </span><span class="s2">".navigation-state-container"</span><span class="p">,</span><span class="w">
+                    </span><span class="s2">"animationClasses"</span><span class="p">:</span><span class="w"> </span><span class="s2">"show"</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="s2">"links"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+            </span><span class="s2">"id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"link-1"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"label"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Video 1"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"route"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"parent-navigation-state.child-video-state"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"link-2"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"label"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Video 2"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"route"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"parent-navigation-state.child-video-state"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"link-3"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"label"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Video 3"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"route"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"parent-navigation-state.child-video-state"</span><span class="w">
+        </span><span class="p">}]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+    </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Above is a very simple example to get you started. But, there are many more ways the embedded view can be used.
+Check out the embedded view example to see more examples of each state using embedded flows including the above tutorial
+with other states.</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+
+
+        
+      </footer>
+
+      
+
+      
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+    
+    
+    
+    
+    <li><a href="http://localhost:4000/ivx-js/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2018 Influence Technology. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+      </footer>
+    </div>
+
+    <script src="http://localhost:4000/ivx-js/assets/js/main.min.js"></script>
+
+
+
+
+
+  </body>
+</html>
+

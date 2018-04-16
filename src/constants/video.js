@@ -5,6 +5,7 @@ export default class extends  iVXjsConstants{
         super();
 
         this.VIDEO = "video";
+        
     }
 
     convention(){

@@ -38,6 +38,8 @@ class DateInput {
             $scope.inputValue = iVXjs.experience.data[name] ? iVXjs.experience.data[name] : '';
 
             input = pullInTemplate.convertLabel($filter('stringParsers')('startCase', id), input, $scope);
+            input.beforeHtml = pullInTemplate.convertTemplateUrlToHtml(input.beforeHtml, $scope);
+            input.afterHtml = pullInTemplate.convertTemplateUrlToHtml(input.afterHtml, $scope);
 
 
             let tagHTML = `ng-blur="vm.onChange(inputValue)" ng-model="inputValue"`;

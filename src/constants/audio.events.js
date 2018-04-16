@@ -6,10 +6,10 @@ export default class extends AudioConstants {
 
         let eventNames = {
             ADD_PLAYING_CLASS: 'add-playing-class',
-            BUFFERING : "buffering",
+            BUFFERING: "buffering",
             CAN_PLAY: "can-play",
-            DISPOSE : "dispose",
-            ENDED : "ended",
+            DISPOSE: "dispose",
+            ENDED: "ended",
             GET_DURATION: "get-duration",
             MUTE: "mute",
             PAUSE: "pause",
@@ -17,9 +17,10 @@ export default class extends AudioConstants {
             PLAY: "play",
             PLAYING: "playing",
             SEEK: "seek",
-            SET_UP : "set-up",
+            SET_UP: "set-up",
             SET_DURATION: "set-duration",
             SET_VOLUME: "set-volume",
+            VOLUME: "set-volume",
             TIME_UPDATE: "time-update",
             UNMUTE: "unmute"
         };
@@ -28,7 +29,7 @@ export default class extends AudioConstants {
     }
 
     convention(eventName) {
-        let {DELIMETER} = this;
+        let { DELIMETER } = this;
 
         return `${super.convention()}${DELIMETER}${eventName}`;
     }

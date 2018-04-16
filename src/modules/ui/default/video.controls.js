@@ -1,18 +1,23 @@
 import { Controls } from '../../video/controls/index.js';
 import ElementUtilities from "../utilities/element";
+import Element from "../../../utilities/element";
 
 export default class extends Controls {
-    constructor(container) {
-        super();
+    constructor(container, playerId) {
+        super(playerId);
 
         if (container.html instanceof Function) {
             container.html(this.html);
         } else {
-            var div = document.createElement('div');
+            let div = document.createElement('div');
+            
             div.innerHTML = this.html;
+            div.className = "ivx-video-controls-container-standard"
 
             container.appendChild(div);
         }
+
+        const modifiedContainer = new Element(container);
 
         let {
             playPauseControlsClasses,
@@ -23,154 +28,158 @@ export default class extends Controls {
             volumeBarClasses
         } = this;
 
-        this.container = container;
-        this.playPauseControls = document.getElementById("video-controls-play-pause");
-        this.totalTimeInfo = document.getElementById("video-controls-total-time");
-        this.currentTimeInfo = document.getElementById("video-controls-current-time");
-        this.scrubBar = document.getElementById("video-controls-scrub-bar");
-        this.muteControls = document.getElementById("video-controls-mute-controls");
-        this.volumeBar = document.getElementById("video-controls-volume-bar");
+        this.container = modifiedContainer.element;
+        this.containerEl = modifiedContainer;
+        this.playPauseControls = document.getElementById(`${playerId}-video-controls-play-pause`);
+        this.totalTimeInfo = document.getElementById(`${playerId}-video-controls-total-time`);
+        this.currentTimeInfo = document.getElementById(`${playerId}-video-controls-current-time`);
+        this.scrubBar = document.getElementById(`${playerId}-video-controls-scrub-bar`);
+        this.muteControls = document.getElementById(`${playerId}-video-controls-mute-controls`);
+        this.volumeBar = document.getElementById(`${playerId}-video-controls-volume-bar`);
     }
 
     get playPauseControlsClasses() {
-        return 'play-pause';
+        return 'play-pause ivx-video-controls-play-pause';
     }
 
     get totalTimeInfoClasses() {
-        return 'duration';
+        return 'duration ivx-video-controls-timestamp-duration';
     }
 
     get currentTimeInfoClasses() {
-        return 'current-time';
+        return 'current-time ivx-video-controls-timestamp-current-time';
     }
 
     get scrubBarClasses() {
-        return 'scrub-bar';
+        return 'scrub-bar ivx-video-controls-scrub-bar';
     }
 
     get muteControlsClasses() {
-        return 'mute'
+        return 'mute ivx-video-controls-mute'
     }
 
     get volumeBarClasses() {
-        return 'volume-bar'
+        return 'volume-bar ivx-video-controls-volume-bar'
     }
 
     get playClasses() {
-        return 'fa fa-play';
+        return 'fa fa-play ivx-video-controls-play-icon ivx-icon';
     }
 
     get pauseClasses() {
-        return 'fa fa-pause';
+        return 'fa fa-pause ivx-video-controls-pause-icon ivx-icon';
     }
 
     get unmuteClasses() {
-        return 'fa fa-volume-up';
+        return 'fa fa-volume-up ivx-video-controls-unmute-icon ivx-icon';
     }
 
     get muteClasses() {
-        return 'fa fa-volume-off';
+        return 'fa fa-volume-off ivx-video-controls-mute-icon ivx-icon';
     }
 
     get scrubBarTimeLapseClasses() {
-        return `time-lapsed`
+        return `time-lapsed ivx-video-controls-scrub-bar-timelapse`
     }
 
     get volumeBarCurrentVolumeClasses() {
-        return 'current-volume';
+        return 'current-volume ivx-video-controls-volume-bar-volume';
     }
 
     get chapterButtonClasses() {
-        return 'chapter-button';
+        return 'chapter-button ivx-video-controls-chapters-item-control';
     }
 
     get chapterListClasses() {
-        return "chapter-list";
+        return "chapter-list ivx-video-controls-chapters";
     }
 
     get chapterListItemClasses() {
-        return "chapter-list-item";
+        return "chapter-list-item ivx-video-controls-chapters-item";
     }
 
     get chapterActiveClasses() {
-        return "active";
+        return "active ivx-video-controls-chapter-active";
     }
 
     get chapterInActiveClasses() {
-        return "inactive"
+        return "inactive ivx-video-controls-chapter-inactive"
     }
 
     get playPauseButtonHTML() {
-        let { playClasses: play } = this;
+        let { playClasses: play, playerId } = this;
         let { playPauseControlsClasses: playPauseControls } = this;
         return `
-        <button id="video-controls-play-pause" class="${playPauseControls}">
+        <button id="${playerId}-video-controls-play-pause" class="${playPauseControls}">
             <i class='${play}'></i>
         </button>`
     }
 
     get scrubBarHTML() {
+        const { playerId } = this;
         return `
-             <div id="video-controls-scrub-bar" class="${this.scrubBarClasses}">
+             <div id="${playerId}-video-controls-scrub-bar" class="${this.scrubBarClasses}">
                 <div class="${this.scrubBarTimeLapseClasses}"></div>
             </div>
         `
     }
 
     get timestampHTML() {
+        const { playerId } = this;
         return `
-        <span id="video-controls-current-time" class="${this.currentTimeInfoClasses}"></span>
-        <span id="video-controls-total-time" class="${this.totalTimeInfoClasses}"></span>
+        <span id="${playerId}-video-controls-current-time" class="${this.currentTimeInfoClasses}"></span>
+        <span id="${playerId}-video-controls-total-time" class="${this.totalTimeInfoClasses}"></span>
         `;
     }
 
     get muteButtonHTML() {
-        let { unmuteClasses: unmute, muteControlsClasses } = this;
+        let { unmuteClasses: unmute, muteControlsClasses, playerId } = this;
         return `
-            <button id="video-controls-mute-controls" class="${muteControlsClasses}">
+            <button id="${playerId}-video-controls-mute-controls" class="${muteControlsClasses}">
                 <i class="${unmute}"></i>
             </button>
         `
     }
 
     get volumeBarHTML() {
+        const { playerId } = this;
         return `
-            <div  id="video-controls-volume-bar" class="${this.volumeBarClasses}">
+            <div  id="${playerId}-video-controls-volume-bar" class="${this.volumeBarClasses}">
                 <div class="${this.volumeBarCurrentVolumeClasses}"></div>
             </div> 
         `
     }
 
     get trackListSelectContainerClasses() {
-        return 'track-list-select-container'
+        return 'track-list-select-container ivx-video-controls-tracks'
     }
 
     get trackListSelectClasses() {
-        return 'track-list-select';
+        return 'track-list-select ivx-video-controls-tracks-select';
     }
 
     get trackListSelectActiveClasses() {
-        return 'active';
+        return 'active ivx-video-controls-tracks-select-on';
     }
 
     get trackListSelectInactiveClasses() {
-        return 'inactive'
+        return 'inactive ivx-video-controls-tracks-select-off'
     }
 
     get closeCaptionButtonClasses() {
-        return 'close-caption-button';
+        return 'close-caption-button ivx-video-controls-tracks-toggle';
     }
 
     get closeCaptionButtonActiveClasses() {
-        return 'active';
+        return 'active ivx-video-controls-tracks-on';
     }
 
     get closeCaptionButtonInactiveClasses() {
-        return 'inactive';
+        return 'inactive ivx-video-controls-tracks-off';
     }
 
     get closeCaptionButtonIconClasses() {
-        return 'close-caption-button-icon fa fa-cc'
+        return 'close-caption-button-icon fa fa-cc ivx-video-controls-tracks-toggle-icon ivx-icon'
     }
 
     get closeCaptionButtonIconContent() {
@@ -284,6 +293,9 @@ export default class extends Controls {
             let ccToggle = document.createElement('button');
             let ccToggleIcon = document.createElement('i');
 
+            trackListContainer.setAttribute('id', `${self.playerId}-track-list`);
+            ccToggle.setAttribute('id', `${self.playerId}-cc-toggle`);
+
             ElementUtilities.addClassesToElement(ccToggle, closeCaptionButtonClasses);
             ElementUtilities.addClassesToElement(ccToggleIcon, closeCaptionButtonIconClasses);
 
@@ -381,10 +393,8 @@ export default class extends Controls {
 
     }
 
-
-
     createChapterContainer(textTracks) {
-        let { chapterButtonClasses, chapterListClasses, chapterActiveClasses, chapterInActiveClasses, chapterListItemClasses } = this;
+        let { chapterButtonClasses, chapterListClasses, chapterActiveClasses, chapterInActiveClasses, chapterListItemClasses, playerId } = this;
         let chapterTrack = Array.from(textTracks).find(textTrack => {
             return textTrack.kind === 'chapters';
         });
@@ -392,6 +402,9 @@ export default class extends Controls {
 
         if (chapterTrack) {
             let chapterListEl = document.createElement('ol');
+
+            chapterListEl.setAttribute('id', `${this.playerId}-chapter-list`);
+
             let { cues = [] } = chapterTrack;
 
             Array.from(cues).forEach((cue, index) => {
@@ -405,7 +418,7 @@ export default class extends Controls {
 
                 ElementUtilities.append(chapterContainerEl, chapterButtonEl);
 
-                chapterContainerEl.id = id;
+                chapterContainerEl.id = `${id}-chapter-seclect-container`;
                 chapterContainerEl.className = `${chapterListItemClasses} ${index === 0 ? chapterActiveClasses : chapterInActiveClasses}`;
 
                 ElementUtilities.append(chapterListEl, chapterContainerEl);

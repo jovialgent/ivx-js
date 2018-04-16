@@ -22,6 +22,8 @@ class UrlInput {
 
             input.label = label ? label : $filter('stringParsers')('startCase', id);
             input = pullInTemplate.convertLabel($filter('stringParsers')('startCase', id), input, $scope);
+            input.beforeHtml = pullInTemplate.convertTemplateUrlToHtml(input.beforeHtml, $scope);
+            input.afterHtml = pullInTemplate.convertTemplateUrlToHtml(input.afterHtml, $scope);
 
             let uiUrlObj = {
                 input: input,

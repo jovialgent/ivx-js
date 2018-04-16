@@ -19,7 +19,7 @@
 
 
 
-<title>iVXjs</title>
+<title>iVXjs CDN Paths - iVXjs</title>
 
 
 
@@ -29,11 +29,11 @@
 
 <meta property="og:locale" content="en">
 <meta property="og:site_name" content="iVXjs">
-<meta property="og:title" content="iVXjs">
+<meta property="og:title" content="iVXjs CDN Paths">
 
 
-  <link rel="canonical" href="https://influencetech.github.io/ivx-js/developer/configuration.cdn-paths/">
-  <meta property="og:url" content="https://influencetech.github.io/ivx-js/developer/configuration.cdn-paths/">
+  <link rel="canonical" href="http://localhost:4000/ivx-js/developer/configuration.cdn-paths/">
+  <meta property="og:url" content="http://localhost:4000/ivx-js/developer/configuration.cdn-paths/">
 
 
 
@@ -61,7 +61,7 @@
       "@context" : "http://schema.org",
       "@type" : "Person",
       "name" : "Influence Technology",
-      "url" : "https://influencetech.github.io/ivx-js",
+      "url" : "http://localhost:4000/ivx-js",
       "sameAs" : null
     }
   </script>
@@ -74,7 +74,7 @@
 <!-- end SEO -->
 
 
-<link href="https://influencetech.github.io/ivx-js/feed.xml" type="application/atom+xml" rel="alternate" title="iVXjs Feed">
+<link href="http://localhost:4000/ivx-js/feed.xml" type="application/atom+xml" rel="alternate" title="iVXjs Feed">
 
 <!-- http://t.co/dKP3o1e -->
 <meta name="HandheldFriendly" content="True">
@@ -86,7 +86,7 @@
 </script>
 
 <!-- For all browsers -->
-<link rel="stylesheet" href="https://influencetech.github.io/ivx-js/assets/css/main.css">
+<link rel="stylesheet" href="http://localhost:4000/ivx-js/assets/css/main.css">
 
 <meta http-equiv="cleartype" content="on">
     <!-- start custom head snippets -->
@@ -109,16 +109,16 @@
       <nav id="site-nav" class="greedy-nav">
         <button><div class="navicon"></div></button>
         <ul class="visible-links">
-          <li class="masthead__menu-item masthead__menu-item--lg"><a href="https://influencetech.github.io/ivx-js/">iVXjs</a></li>
+          <li class="masthead__menu-item masthead__menu-item--lg"><a href="http://localhost:4000/ivx-js/">iVXjs</a></li>
           
             
-            <li class="masthead__menu-item"><a href="https://influencetech.github.io/ivx-js/developer/tutorial.hello-world">Getting Started</a></li>
+            <li class="masthead__menu-item"><a href="http://localhost:4000/ivx-js/developer/tutorial.hello-world">Getting Started</a></li>
           
             
-            <li class="masthead__menu-item"><a href="https://influencetech.github.io/ivx-js/developer/tutorials">Tutorials</a></li>
+            <li class="masthead__menu-item"><a href="http://localhost:4000/ivx-js/developer/tutorials">Tutorials</a></li>
           
             
-            <li class="masthead__menu-item"><a href="https://influencetech.github.io/ivx-js/developer/configuration">Configuration and Features</a></li>
+            <li class="masthead__menu-item"><a href="http://localhost:4000/ivx-js/developer/configuration">Configuration and Features</a></li>
           
         </ul>
         <ul class="hidden-links hidden"></ul>
@@ -139,7 +139,7 @@
 
 
   <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
-    
+    <meta itemprop="headline" content="iVXjs CDN Paths">
     
     
     
@@ -147,7 +147,8 @@
     <div class="page__inner-wrap">
       
         <header>
-          
+          <h1 class="page__title" itemprop="headline">iVXjs CDN Paths
+</h1>
           
         </header>
       
@@ -197,19 +198,17 @@ The list below will give you code snippets to add to your project.</p>
 <p>The CDN’s are versioned to help stabilize and push out bugs. The CDN can update at any time. To set your 
 version replace the x’s below with the right version</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>https://060adad2995367c8e229-2340761377b5351a53198a462113b619.ssl.cf2.rackcdn.com/ivx-js/x.x.x/ivx-js/fileName
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>https://060adad2995367c8e229-2340761377b5351a53198a462113b619.ssl.cf2.rackcdn.com/ivx-js/x.x.x/ivx-js/fileName
+</code></pre></div></div>
 
 <h1 id="core-library">Core Library</h1>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>&lt;!-- Non Minified --&gt;
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;!-- Non Minified --&gt;
 &lt;script src="https://060adad2995367c8e229-2340761377b5351a53198a462113b619.ssl.cf2.rackcdn.com/ivx-js/0.7.0/angular.ivx.js"&gt;&lt;/script&gt;
 
 &lt;!-- Minified --&gt;
 &lt;script src="https://060adad2995367c8e229-2340761377b5351a53198a462113b619.ssl.cf2.rackcdn.com/ivx-js/0.7.0/angular.ivx.min.js"&gt;&lt;/script&gt;
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h1 id="ui-modules">UI Modules</h1>
 
@@ -217,91 +216,79 @@ version replace the x’s below with the right version</p>
 
 <p><strong>Angular JS Module Name</strong></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>"iVXjs.ui.bootstrap"
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>"iVXjs.ui.bootstrap"
+</code></pre></div></div>
 
 <p><strong>CSS Dependency</strong></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>&lt;link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"&gt;
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"&gt;
+</code></pre></div></div>
 
 <p><strong>JS Dependency</strong></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>&lt;script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"&gt;&lt;/script&gt;
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"&gt;&lt;/script&gt;
+</code></pre></div></div>
 
 <p><strong>iVXjs Module Scripts</strong></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>&lt;!-- Non Minified --&gt;
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;!-- Non Minified --&gt;
 &lt;script src="https://060adad2995367c8e229-2340761377b5351a53198a462113b619.ssl.cf2.rackcdn.com/ivx-js/0.7.0/iVXjs.ui.bootstrap.js"&gt;&lt;/script&gt;
 
 &lt;!-- Minified --&gt;
 &lt;script src="https://060adad2995367c8e229-2340761377b5351a53198a462113b619.ssl.cf2.rackcdn.com/ivx-js/0.7.0/iVXjs.ui.bootstrap.min.js"&gt;&lt;/script&gt;
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h2 id="materialize">Materialize</h2>
 
 <p><strong>Angular JS Module Name</strong></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>"iVXjs.ui.materialize"
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>"iVXjs.ui.materialize"
+</code></pre></div></div>
 
 <p><strong>CSS Dependency</strong></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>&lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css"&gt;
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css"&gt;
+</code></pre></div></div>
 
 <p><strong>JS Dependency</strong></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"&gt;&lt;/script&gt;
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"&gt;&lt;/script&gt;
+</code></pre></div></div>
 
 <p><strong>iVXjs Module Scripts</strong></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>&lt;!-- Non Minified --&gt;
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;!-- Non Minified --&gt;
 &lt;script src="https://060adad2995367c8e229-2340761377b5351a53198a462113b619.ssl.cf2.rackcdn.com/ivx-js/0.7.0/iVXjs.ui.materialize.js"&gt;&lt;/script&gt;
 
 &lt;!-- Minified --&gt;
 &lt;script src="https://060adad2995367c8e229-2340761377b5351a53198a462113b619.ssl.cf2.rackcdn.com/ivx-js/0.7.0/iVXjs.ui.materialize.min.js"&gt;&lt;/script&gt;
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h2 id="semantic-ui">Semantic UI</h2>
 
 <p><strong>Angular JS Module Name</strong></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>"iVXjs.ui.semantic-ui"
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>"iVXjs.ui.semantic-ui"
+</code></pre></div></div>
 
 <p><strong>CSS Dependency</strong></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>&lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/semantic.min.css"&gt;
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/semantic.min.css"&gt;
+</code></pre></div></div>
 
 <p><strong>JS Dependency</strong></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/semantic.min.js"&gt;&lt;/script&gt;
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/semantic.min.js"&gt;&lt;/script&gt;
+</code></pre></div></div>
 
 <p><strong>iVXjs Module Scripts</strong></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>&lt;!-- Non Minified --&gt;
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;!-- Non Minified --&gt;
 &lt;script src="https://060adad2995367c8e229-2340761377b5351a53198a462113b619.ssl.cf2.rackcdn.com/ivx-js/0.7.0/iVXjs.ui.semantic-ui.js"&gt;&lt;/script&gt;
 
 &lt;!-- Minified --&gt;
 &lt;script src="https://060adad2995367c8e229-2340761377b5351a53198a462113b619.ssl.cf2.rackcdn.com/ivx-js/0.7.0/iVXjs.ui.semantic-ui.min.js"&gt;&lt;/script&gt;
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h1 id="data-modules">Data Modules</h1>
 
@@ -309,43 +296,38 @@ version replace the x’s below with the right version</p>
 
 <p><strong>Angular JS Module Name</strong></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>"iVXjs.data.iVXio"
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>"iVXjs.data.iVXio"
+</code></pre></div></div>
 
 <p><strong>iVXjs Module Scripts</strong></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>&lt;!-- Non Minified --&gt;
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;!-- Non Minified --&gt;
 &lt;script src="https://060adad2995367c8e229-2340761377b5351a53198a462113b619.ssl.cf2.rackcdn.com/ivx-js/0.7.0/iVXjs.data.ivx-io.js"&gt;&lt;/script&gt;
 
 &lt;!-- Minified --&gt;
 &lt;script src="https://060adad2995367c8e229-2340761377b5351a53198a462113b619.ssl.cf2.rackcdn.com/ivx-js/0.7.0/iVXjs.data.ivx-io.min.js"&gt;&lt;/script&gt;
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h2 id="firebase">Firebase</h2>
 
 <p><strong>Angular JS Module Name</strong></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>"iVXjs.data.firebase"
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>"iVXjs.data.firebase"
+</code></pre></div></div>
 
 <p><strong>JS Dependency</strong></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>&lt;script src="https://www.gstatic.com/firebasejs/3.2.0/firebase.js"&gt;&lt;/script&gt;
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script src="https://www.gstatic.com/firebasejs/3.2.0/firebase.js"&gt;&lt;/script&gt;
+</code></pre></div></div>
 
 <p><strong>iVXjs Module Scripts</strong></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>&lt;!-- Non Minified --&gt;
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;!-- Non Minified --&gt;
 &lt;script src="https://060adad2995367c8e229-2340761377b5351a53198a462113b619.ssl.cf2.rackcdn.com/ivx-js/0.7.0/iVXjs.data.firebase.js"&gt;&lt;/script&gt;
 
 &lt;!-- Minified --&gt;
 &lt;script src="https://060adad2995367c8e229-2340761377b5351a53198a462113b619.ssl.cf2.rackcdn.com/ivx-js/0.7.0/iVXjs.data.firebase.min.js"&gt;&lt;/script&gt;
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h1 id="analytics">Analytics</h1>
 
@@ -353,13 +335,12 @@ version replace the x’s below with the right version</p>
 
 <p><strong>Angular Module Name</strong></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>"iVXjs.analytics.google"
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>"iVXjs.analytics.google"
+</code></pre></div></div>
 
 <p><strong>JS Dependency</strong></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>&lt;script&gt;
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script&gt;
     (function (b, o, i, l, e, r) {
     b.GoogleAnalyticsObject = l; b[l] || (b[l] =
       function () { (b[l].q = b[l].q || []).push(arguments) }); b[l].l = +new Date;
@@ -368,18 +349,16 @@ version replace the x’s below with the right version</p>
       r.parentNode.insertBefore(e, r)
     } (window, document, 'script', 'ga'));
   &lt;/script&gt;
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p><strong>iVXjs Module Scripts</strong></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>&lt;!-- Non Minified --&gt;
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;!-- Non Minified --&gt;
 &lt;script src="https://060adad2995367c8e229-2340761377b5351a53198a462113b619.ssl.cf2.rackcdn.com/ivx-js/0.7.0/iVXjs.analytics.google.js"&gt;&lt;/script&gt;
 
 &lt;!-- Minified --&gt;
 &lt;script src="https://060adad2995367c8e229-2340761377b5351a53198a462113b619.ssl.cf2.rackcdn.com/ivx-js/0.7.0/iVXjs.analytics.google.min.js"&gt;&lt;/script&gt;
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h1 id="validation">Validation</h1>
 
@@ -387,25 +366,22 @@ version replace the x’s below with the right version</p>
 
 <p><strong>Angular JS Module Name</strong></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>"iVXjs.validation.schema"
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>"iVXjs.validation.schema"
+</code></pre></div></div>
 
 <p><strong>JS Dependency</strong></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/tv4/1.2.7/tv4.min.js"&gt;&lt;/script&gt;
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/tv4/1.2.7/tv4.min.js"&gt;&lt;/script&gt;
+</code></pre></div></div>
 
 <p><strong>iVXjs Module Scripts</strong></p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>&lt;!-- Non Minified --&gt;
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;!-- Non Minified --&gt;
 &lt;script src="https://060adad2995367c8e229-2340761377b5351a53198a462113b619.ssl.cf2.rackcdn.com/ivx-js/0.7.0/iVXjs.validation.schema.js"&gt;&lt;/script&gt;
 
 &lt;!-- Minified --&gt;
 &lt;script src="https://060adad2995367c8e229-2340761377b5351a53198a462113b619.ssl.cf2.rackcdn.com/ivx-js/0.7.0/iVXjs.validation.schema.min.js"&gt;&lt;/script&gt;
-</code></pre>
-</div>
+</code></pre></div></div>
 
         
       </section>
@@ -450,15 +426,15 @@ version replace the x’s below with the right version</p>
     
     
     
-    <li><a href="https://influencetech.github.io/ivx-js/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    <li><a href="http://localhost:4000/ivx-js/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
   </ul>
 </div>
 
-<div class="page__footer-copyright">&copy; 2017 Influence Technology. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+<div class="page__footer-copyright">&copy; 2018 Influence Technology. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
       </footer>
     </div>
 
-    <script src="https://influencetech.github.io/ivx-js/assets/js/main.min.js"></script>
+    <script src="http://localhost:4000/ivx-js/assets/js/main.min.js"></script>
 
 
 
