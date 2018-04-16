@@ -100,8 +100,7 @@ export default class {
         return rhs.indexOf(lhs) >= 0;
     }
 
-
-    // Inspired by Lodash's isEmpty function (https://github.com/lodash/lodash/blob/master/isEmpty.js)
+    // Based on the isEmpty from lodash (https://github.com/lodash/lodash/blob/master/isEmpty.js)
     empty(lhs, rhs) {
         if (lhs === null) {
             return true;
