@@ -16,7 +16,7 @@ class InputState {
             let data = angular.copy($scope.stateData);
             let { headerHTML, footerHTML = '', onInputReady = [], form: formSettings = {}, header = {}, footer = {}, audio, embedded = false, embeddedViews = [] } = data;
             let audioEventNames = new AudioEventNames();
-            let formSection = `<ivxjs-form-input inputs='vm.inputs' form-id='vm.id' on-submit='vm.onSubmit' form-settings="vm.formSettings"></ivxjs-form-input>`;
+            let formSection = `<ivxjs-form-input class="ivx-state-input-form-container" inputs='vm.inputs' form-id='vm.id' on-submit='vm.onSubmit' form-settings="vm.formSettings"></ivxjs-form-input>`;
 
             data = pullInTemplate.convertHeaderFooter(header, footer, data, controller);
 
