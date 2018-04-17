@@ -1,11 +1,7 @@
-
-
 export class InputErrors {
     constructor(inputs, currentState) {
         this.inputs = inputs;
         this.currentState = currentState;
-       
-
     }
 
     validate() {

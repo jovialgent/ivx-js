@@ -19,7 +19,7 @@
 
 
 
-<title>iVXjs Events - iVXjs</title>
+<title>iVXjs</title>
 
 
 
@@ -29,11 +29,11 @@
 
 <meta property="og:locale" content="en">
 <meta property="og:site_name" content="iVXjs">
-<meta property="og:title" content="iVXjs Events">
+<meta property="og:title" content="iVXjs">
 
 
-  <link rel="canonical" href="http://localhost:4000/ivx-js/developer/usage.events/">
-  <meta property="og:url" content="http://localhost:4000/ivx-js/developer/usage.events/">
+  <link rel="canonical" href="https://influencetech.github.io/ivx-js/developer/usage.events/">
+  <meta property="og:url" content="https://influencetech.github.io/ivx-js/developer/usage.events/">
 
 
 
@@ -61,7 +61,7 @@
       "@context" : "http://schema.org",
       "@type" : "Person",
       "name" : "Influence Technology",
-      "url" : "http://localhost:4000/ivx-js",
+      "url" : "https://influencetech.github.io/ivx-js",
       "sameAs" : null
     }
   </script>
@@ -74,7 +74,7 @@
 <!-- end SEO -->
 
 
-<link href="http://localhost:4000/ivx-js/feed.xml" type="application/atom+xml" rel="alternate" title="iVXjs Feed">
+<link href="https://influencetech.github.io/ivx-js/feed.xml" type="application/atom+xml" rel="alternate" title="iVXjs Feed">
 
 <!-- http://t.co/dKP3o1e -->
 <meta name="HandheldFriendly" content="True">
@@ -86,7 +86,7 @@
 </script>
 
 <!-- For all browsers -->
-<link rel="stylesheet" href="http://localhost:4000/ivx-js/assets/css/main.css">
+<link rel="stylesheet" href="https://influencetech.github.io/ivx-js/assets/css/main.css">
 
 <meta http-equiv="cleartype" content="on">
     <!-- start custom head snippets -->
@@ -109,16 +109,16 @@
       <nav id="site-nav" class="greedy-nav">
         <button><div class="navicon"></div></button>
         <ul class="visible-links">
-          <li class="masthead__menu-item masthead__menu-item--lg"><a href="http://localhost:4000/ivx-js/">iVXjs</a></li>
+          <li class="masthead__menu-item masthead__menu-item--lg"><a href="https://influencetech.github.io/ivx-js/">iVXjs</a></li>
           
             
-            <li class="masthead__menu-item"><a href="http://localhost:4000/ivx-js/developer/tutorial.hello-world">Getting Started</a></li>
+            <li class="masthead__menu-item"><a href="https://influencetech.github.io/ivx-js/developer/tutorial.hello-world">Getting Started</a></li>
           
             
-            <li class="masthead__menu-item"><a href="http://localhost:4000/ivx-js/developer/tutorials">Tutorials</a></li>
+            <li class="masthead__menu-item"><a href="https://influencetech.github.io/ivx-js/developer/tutorials">Tutorials</a></li>
           
             
-            <li class="masthead__menu-item"><a href="http://localhost:4000/ivx-js/developer/configuration">Configuration and Features</a></li>
+            <li class="masthead__menu-item"><a href="https://influencetech.github.io/ivx-js/developer/configuration">Configuration and Features</a></li>
           
         </ul>
         <ul class="hidden-links hidden"></ul>
@@ -139,7 +139,7 @@
 
 
   <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
-    <meta itemprop="headline" content="iVXjs Events">
+    
     
     
     
@@ -147,8 +147,7 @@
     <div class="page__inner-wrap">
       
         <header>
-          <h1 class="page__title" itemprop="headline">iVXjs Events
-</h1>
+          
           
         </header>
       
@@ -263,14 +262,15 @@ documented in a <a href="http://json-schema.org/">JSON Schema Org</a> fashion, b
 
 <p><em>Snippet</em></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>angular 
+<div class="highlighter-rouge"><pre class="highlight"><code>angular 
     .module('[APPNAME]')
     .service(["ivxjs.bus", function(iVXjsBus){
         iVXjsBus.on('EVENTNAME', function(PAYLOAD){
 
         });
     }]);
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <h1 id="audio-events">Audio Events</h1>
 
@@ -310,15 +310,17 @@ documented in a <a href="http://json-schema.org/">JSON Schema Org</a> fashion, b
 
 <p><em>JSON</em></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    "eventName" : "iVXjs:audio:mute"
-}
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"eventName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"iVXjs:audio:mute"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
 
 <p><em>Action Template</em></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ANY ivx-event="iVXjs:audio:mute"&gt;&lt;/ANY&gt;
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;ANY ivx-event="iVXjs:audio:mute"&gt;&lt;/ANY&gt;
+</code></pre>
+</div>
 
 <h2 id="ivxjsaudiopause">iVXjs:audio:pause</h2>
 
@@ -332,15 +334,17 @@ documented in a <a href="http://json-schema.org/">JSON Schema Org</a> fashion, b
 
 <p><em>JSON</em></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    "eventName" : "iVXjs:audio:pause"
-}
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"eventName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"iVXjs:audio:pause"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
 
 <p><em>Action Template</em></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ANY ivx-event="iVXjs:audio:pause"&gt;&lt;/ANY&gt;
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;ANY ivx-event="iVXjs:audio:pause"&gt;&lt;/ANY&gt;
+</code></pre>
+</div>
 
 <h2 id="ivxjsaudioplay">iVXjs:audio:play</h2>
 
@@ -354,15 +358,17 @@ documented in a <a href="http://json-schema.org/">JSON Schema Org</a> fashion, b
 
 <p><em>JSON</em></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    "eventName" : "iVXjs:audio:play"
-}
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"eventName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"iVXjs:audio:play"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
 
 <p><em>Action Template</em></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ANY ivx-event="iVXjs:audio:play"&gt;&lt;/ANY&gt;
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;ANY ivx-event="iVXjs:audio:play"&gt;&lt;/ANY&gt;
+</code></pre>
+</div>
 
 <h2 id="ivxjsaudiotime-update">iVXjs:audio:time-update</h2>
 
@@ -386,15 +392,17 @@ documented in a <a href="http://json-schema.org/">JSON Schema Org</a> fashion, b
 
 <p><em>JSON</em></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    "eventName" : "iVXjs:audio:unmute"
-}
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"eventName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"iVXjs:audio:unmute"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
 
 <p><em>Action Template</em></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ANY ivx-event="iVXjs:audio:unmute"&gt;&lt;/ANY&gt;
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;ANY ivx-event="iVXjs:audio:unmute"&gt;&lt;/ANY&gt;
+</code></pre>
+</div>
 
 <h1 id="config-events">Config Events</h1>
 
@@ -412,28 +420,29 @@ current Validation module.</p>
 
 <p><em>Payload</em></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    "valid" : {
-        "type": "boolean",
-        "description" : "Indicates that this validation is not valid"
-    },
-    "error" : {
-        "type" : "object",
-        "description" : "Contains all the invalid parts of this configuration and a message detailing the error",
-        "properties" : {
-            "message" : {
-                "type" : "string",
-                "description" : "An auto-generated human-readable message that indicates the errors. This will always be logged to the console if the configuration is invalid"
-            },
-            "errors" : {
-                "type" : "items",
-                "description" : "Depending on the validation module, this will have a collection of data for each invalid piece of data in the config."
-            }
-        }
-    }
-    "required" : ["valid", "error"]
-}
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"valid"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"boolean"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"description"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Indicates that this validation is not valid"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"error"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"description"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Contains all the invalid parts of this configuration and a message detailing the error"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"properties"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"message"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"description"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"An auto-generated human-readable message that indicates the errors. This will always be logged to the console if the configuration is invalid"</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="nt">"errors"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="nt">"type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"items"</span><span class="p">,</span><span class="w">
+                </span><span class="nt">"description"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Depending on the validation module, this will have a collection of data for each invalid piece of data in the config."</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+    </span><span class="s2">"required"</span><span class="w"> </span><span class="err">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"valid"</span><span class="p">,</span><span class="w"> </span><span class="s2">"error"</span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
 
 <h2 id="ivxjsconfigvalidated">iVXjs:config:validated</h2>
 
@@ -507,20 +516,21 @@ This logging service will fire events depending on what gets logged through the 
 
 <p><em>Payload</em></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    "type" : "object",
-    "properties" : {
-        "message": {
-            "type" : "string",
-            "description" : "The message logged"
-        },
-        "timestamp": {
-            "type": "date",
-            "description" : "The time this message was logged."
-        }
-    }
-}
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"properties"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"description"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"The message logged"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"date"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"description"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"The time this message was logged."</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
 
 <h2 id="ivxjslogerror">iVXjs:log:error</h2>
 
@@ -530,24 +540,25 @@ This logging service will fire events depending on what gets logged through the 
 
 <p><em>Payload</em></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    "type": "object",
-    "properties" : {
-        "message" : {
-            "type" : "string",
-            "description" : "Error message logged to the console"
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"properties"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"message"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"description"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Error message logged to the console"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"description"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Type of error that was fired. Typically it is in this format: iVXjs:errorr:[TYPE]
         },
-        "type" : {
-            "type" : "string",
-            "description" : "Type of error that was fired. Typically it is in this format: iVXjs:errorr:[TYPE]
-        },
-        "timestamp: {
-            "type" : "date",
-            "description" : "The time this error was logged to the console"
-        }
-    }
-}
-</code></pre></div></div>
+        "</span><span class="err">timestamp:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"date"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"description"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"The time this error was logged to the console"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
 
 <h2 id="ivxjslogtrace">iVXjs:log:trace</h2>
 
@@ -557,20 +568,21 @@ This logging service will fire events depending on what gets logged through the 
 
 <p><em>Payload</em></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    "type" : "object",
-    "properties" : {
-        "stack": {
-            "type" : "string",
-            "description" : "The stack."
-        },
-        "timestamp": {
-            "type": "date",
-            "description" : "The time this stack was logged."
-        }
-    }
-}
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"properties"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"stack"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"description"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"The stack."</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"date"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"description"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"The time this stack was logged."</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
 
 <h2 id="ivxjslogwarn">iVXjs:log:warn</h2>
 
@@ -580,20 +592,21 @@ This logging service will fire events depending on what gets logged through the 
 
 <p><em>Payload</em></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    "type" : "object",
-    "properties" : {
-        "message": {
-            "type" : "string",
-            "description" : "The warning message."
-        },
-        "timestamp": {
-            "type": "date",
-            "description" : "The time this warning was logged."
-        }
-    }
-}
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"properties"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"description"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"The warning message."</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"timestamp"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"date"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"description"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"The time this warning was logged."</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
 
 <h1 id="state-events">State Events</h1>
 
@@ -621,16 +634,17 @@ This logging service will fire events depending on what gets logged through the 
 
 <p><em>Payload</em></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    "type" : "object",
-    "properties" : {
-        "stateId" : {
-            "type" : "string",
-            "description" : "The state id to navigate to.
-        }
-    }
-}
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"properties"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"stateId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"description"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="err">"The</span><span class="w"> </span><span class="err">state</span><span class="w"> </span><span class="err">id</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">navigate</span><span class="w"> </span><span class="err">to.</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
 
 <h2 id="ivxjsstatenot-found">iVXjs:state:not-found</h2>
 
@@ -640,44 +654,19 @@ This logging service will fire events depending on what gets logged through the 
 
 <p><em>Payload</em></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    "type" : "string",
-    "name": "url",
-    "description" : "The invalid url that was sent to the navigation service.
-}
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"url"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"description"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="err">"The</span><span class="w"> </span><span class="err">invalid</span><span class="w"> </span><span class="err">url</span><span class="w"> </span><span class="err">that</span><span class="w"> </span><span class="err">was</span><span class="w"> </span><span class="err">sent</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">navigation</span><span class="w"> </span><span class="err">service.</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
 
 <h1 id="video-events">Video Events</h1>
 
 <p><em>Overview</em></p>
 
-<p>These events are triggered while a video state is loaded or while a video is playing. A video player
-on the page can be uniquely targeted by giving events a <code class="highlighter-rouge">playerId</code> property. Here is an example video state that has an id:</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    "states" : [{
-        ...
-        "type" : "video",
-        "playerSettings":{
-            "id" : "target-player-id"
-        }
-        ...
-    }]
-}
-</code></pre></div></div>
-
-<p>So if you wanted to target the player event, <code class="highlighter-rouge">iVXjs:video:mute</code>, when you enter a state
-you could do it this way:</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    "onEnter" : [{
-        "eventName" : "iVXjs:video:mute",
-        "args" : {
-            "playerId" : "target-player-id"
-        }
-    }]
-}
-</code></pre></div></div>
+<p>These events are triggered while a video state is loaded or while a video is playing.</p>
 
 <h2 id="ivxjsvideocan-play">iVXjs:video:can-play</h2>
 
@@ -726,167 +715,111 @@ performs other tasks to remove this video player from the page</p>
 
 <p><em>Description</em></p>
 
-<p>Indicates to mute a video player on the page. If it has arguments of <code class="highlighter-rouge">playerId</code>, it mutes the player with the matching id. 
-If the <code class="highlighter-rouge">playerId</code> missing, this will mute all videos currently on the page.</p>
+<p>Mutes the current video.</p>
 
 <p><em>Payload</em></p>
 
 <p>None</p>
 
-<p><em>JSON For all Video Players</em></p>
+<p><em>JSON</em></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    "eventName" : "iVXjs:video:mute"
-}
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"eventName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"iVXjs:video:mute"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
 
-<p><em>JSON For Specific Video Player</em></p>
+<p><em>Action Template</em></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    "eventName" : "iVXjs:video:mute",
-    "args" : {
-        "playerId" : "TARGET_PLAYER_ID"
-    }
-}
-</code></pre></div></div>
-
-<p><em>Action Template For All Video Players</em></p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ANY ivx-event="iVXjs:video:mute"&gt;&lt;/ANY&gt;
-</code></pre></div></div>
-
-<p><em>Action Template For Target Video Player</em></p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ANY ivx-event="iVXjs:video:mute" ivx-event-args="{playerId : 'TARGET_PLAYER_ID'}"&gt;&lt;/ANY&gt;
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;ANY ivx-event="iVXjs:video:mute"&gt;&lt;/ANY&gt;
+</code></pre>
+</div>
 
 <h2 id="ivxjsvideopause">iVXjs:video:pause</h2>
 
 <p><em>Description</em></p>
 
-<p>Indicates to pause a video player on the page. If it has arguments of <code class="highlighter-rouge">playerId</code>, it pauses the player with the matching id. 
-If <code class="highlighter-rouge">playerId</code> is missing, this will pause all videos currently on the page.</p>
+<p>Pauses the current video.</p>
 
 <p><em>Payload</em></p>
 
 <p>None</p>
 
-<p><em>JSON For all Video Players</em></p>
+<p><em>JSON</em></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    "eventName" : "iVXjs:video:pause"
-}
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"eventName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"iVXjs:video:pause"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
 
-<p><em>JSON For Specific Video Player</em></p>
+<p><em>Action Template</em></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    "eventName" : "iVXjs:video:pause",
-    "args" : {
-        "playerId" : "TARGET_PLAYER_ID"
-    }
-}
-</code></pre></div></div>
-
-<p><em>Action Template For All Video Players</em></p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ANY ivx-event="iVXjs:video:pause"&gt;&lt;/ANY&gt;
-</code></pre></div></div>
-
-<p><em>Action Template For Target Video Player</em></p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ANY ivx-event="iVXjs:video:pause" ivx-event-args="{playerId : 'TARGET_PLAYER_ID'}"&gt;&lt;/ANY&gt;
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;ANY ivx-event="iVXjs:video:pause"&gt;&lt;/ANY&gt;
+</code></pre>
+</div>
 
 <h2 id="ivxjsvideoplay">iVXjs:video:play</h2>
 
 <p><em>Description</em></p>
 
-<p>Indicates to play a video player on the page. If it has arguments of <code class="highlighter-rouge">playerId</code>, it plays the player with the matching id. 
-If <code class="highlighter-rouge">playerId</code> is missing, this will play all videos currently on the page.</p>
+<p>Plays the current video.</p>
 
 <p><em>Payload</em></p>
 
 <p>None</p>
 
-<p><em>JSON For all Video Players</em></p>
+<p><em>JSON</em></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    "eventName" : "iVXjs:video:play"
-}
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"eventName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"iVXjs:video:play"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
 
-<p><em>JSON For Specific Video Player</em></p>
+<p><em>Action Template</em></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    "eventName" : "iVXjs:video:play",
-    "args" : {
-        "playerId" : "TARGET_PLAYER_ID"
-    }
-}
-</code></pre></div></div>
-
-<p><em>Action Template For All Video Players</em></p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ANY ivx-event="iVXjs:video:play"&gt;&lt;/ANY&gt;
-</code></pre></div></div>
-
-<p><em>Action Template For Target Video Player</em></p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ANY ivx-event="iVXjs:video:play" ivx-event-args="{playerId : 'TARGET_PLAYER_ID'}"&gt;&lt;/ANY&gt;
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;ANY ivx-event="iVXjs:video:play"&gt;&lt;/ANY&gt;
+</code></pre>
+</div>
 
 <h2 id="ivxjsvideoseek">iVXjs:video:seek</h2>
 
 <p><em>Description</em></p>
 
-<p>Indicates to go to a time in the video player on the page. If it has arguments of <code class="highlighter-rouge">playerId</code>, it sets the time to
-the player with the matching id. If missing, this will set the time for all videos currently on the page.</p>
+<p>Sets the current video to the time in seconds</p>
 
 <p><em>Payload</em></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    "type": "object", 
-    "properties: {
-       "currentTime" : {
-           "type" : "number",
-            "description" : "The time to seek in seconds"
-       }
-    }
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w"> 
+    </span><span class="nt">"properties: {
+       "</span><span class="err">currentTime</span><span class="nt">" : {
+           "</span><span class="err">type</span><span class="nt">" : "</span><span class="err">number</span><span class="nt">",
+            "</span><span class="err">description</span><span class="nt">" : "</span><span class="err">The</span><span class="w"> </span><span class="err">time</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">seek</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="err">seconds"</span><span class="w">
+       </span><span class="err">}</span><span class="w">
+    </span><span class="err">}</span><span class="w">
    
-}
-</code></pre></div></div>
+</span><span class="err">}</span><span class="w">
+</span></code></pre>
+</div>
 
-<p><em>JSON For all Video Players</em></p>
+<p><em>JSON</em></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    "eventName" : "iVXjs:video:seek",
-    "args" : {
-        "currentTime" : TIME_IN_SECONDS
-    }
-}
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"eventName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"iVXjs:video:seek"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"args"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"currentTime"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="err">TIME_IN_SECONDS</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
 
-<p><em>JSON For Specific Video Player</em></p>
+<p><em>Action Template</em></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    "eventName" : "iVXjs:video:seek",
-    "args" : {
-        "playerId" : "TARGET_PLAYER_ID",
-        "currentTime" : TIME_IN_SECONDS
-    }
-}
-</code></pre></div></div>
-
-<p><em>Action Template For All Video Players</em></p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ANY ivx-event="iVXjs:video:seek" ivx-event-args="{currentTime : TIME_IN_SECONDS}"&gt;&lt;/ANY&gt;
-</code></pre></div></div>
-
-<p><em>Action Template For Target Video Player</em></p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ANY ivx-event="iVXjs:video:seek" ivx-event-args="{currentTime : TIME_IN_SECONDS, playerId : 'TARGET_PLAYER_ID'}"&gt;&lt;/ANY&gt;
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;ANY ivx-event="iVXjs:video:seek" ivx-event-args="{currentTime : SECONDS}"&gt;&lt;/ANY&gt;
+</code></pre>
+</div>
 
 <h2 id="ivxjsvideoset-duration">iVXjs:video:set-duration</h2>
 
@@ -896,65 +829,52 @@ the player with the matching id. If missing, this will set the time for all vide
 
 <p><em>Payload</em></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    "type" : "number",
-    "description" : "The duration of this video in seconds."
-}
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"number"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"description"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"The duration of this video in seconds."</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
 
 <h2 id="ivxjsvideoset-volume">iVXjs:video:set-volume</h2>
 
 <p><em>Description</em></p>
 
-<p>Indicates to set the volume of the video for a video player on the page. If it has arguments of “playerId”, it sets the volume to
-the player with the matching id. If missing, this will set the volume for all videos currently on the page.</p>
+<p>Sets the current video’s volume. Range: 0 to 1;</p>
 
 <p><em>Payload</em></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    "type": "object", 
-    "properties: {
-       "volume" : {
-           "type" : "number",
-            "description" : "The volume to set",
-            "min" : 0,
-            "max" : 1
-       }
-    }
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w"> 
+    </span><span class="nt">"properties: {
+       "</span><span class="err">volume</span><span class="nt">" : {
+           "</span><span class="err">type</span><span class="nt">" : "</span><span class="err">number</span><span class="nt">",
+            "</span><span class="err">description</span><span class="nt">" : "</span><span class="err">The</span><span class="w"> </span><span class="err">volume</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">set</span><span class="nt">",
+            "</span><span class="err">min</span><span class="nt">" : 0,
+            "</span><span class="err">max"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+       </span><span class="p">}</span><span class="w">
+    </span><span class="err">}</span><span class="w">
    
-}
-</code></pre></div></div>
+</span><span class="err">}</span><span class="w">
+</span></code></pre>
+</div>
 
-<p><em>JSON For all Video Players</em></p>
+<p><em>JSON</em></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    "eventName" : "iVXjs:video:set-volume",
-    "args" : {
-        "volume" : VOLUME_AMOUNT
-    }
-}
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"eventName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"iVXjs:video:set-volume"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"args"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"volume"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="err">VOLUME_AMOUNT</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
 
-<p><em>JSON For Specific Video Player</em></p>
+<p><em>Action Template</em></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    "eventName" : "iVXjs:video:set-volume",
-    "args" : {
-        "playerId" : "TARGET_PLAYER_ID",
-        "volume" : VOLUME_AMOUNT
-    }
-}
-</code></pre></div></div>
-
-<p><em>Action Template For All Video Players</em></p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ANY ivx-event="iVXjs:video:set-volume" ivx-event-args="{volume : VOLUME_AMOUNT}"&gt;&lt;/ANY&gt;
-</code></pre></div></div>
-
-<p><em>Action Template For Target Video Player</em></p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ANY ivx-event="iVXjs:video:set-volume" ivx-event-args="{volume : VOLUME_AMOUNT, playerId : 'TARGET_PLAYER_ID'}"&gt;&lt;/ANY&gt;
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;ANY ivx-event="iVXjs:video:volume" ivx-event-args="{volume : VOLUME_AMOUNT}"&gt;&lt;/ANY&gt;
+</code></pre>
+</div>
 
 <h2 id="ivxjsvideotime-update">iVXjs:video:time-update</h2>
 
@@ -969,47 +889,32 @@ during videos.</p>
 
 <p>player.currentTime - current time of this video player;</p>
 
-<p>player.id - the specific player id of the update.</p>
-
 <p>stateData - state data where this player exists.</p>
 
 <h2 id="ivxjsvideounmute">iVXjs:video:unmute</h2>
 
 <p><em>Description</em></p>
 
-<p>Indicates to unmute, return the volume to the last volume amount it was set, a video player on the page. If it has arguments of <code class="highlighter-rouge">playerId</code>, 
-it unmute the player with the matching id. If <code class="highlighter-rouge">playerId</code> is missing, this will mute all videos currently on the page.</p>
+<p>Unmutes the current video and sets the volume to the last volume 
+set.</p>
 
 <p><em>Payload</em></p>
 
 <p>None</p>
 
-<p><em>JSON For all Video Players</em></p>
+<p><em>JSON</em></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    "eventName" : "iVXjs:video:unmute"
-}
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"eventName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"iVXjs:video:unmute"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
 
-<p><em>JSON For Specific Video Player</em></p>
+<p><em>Action Template</em></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    "eventName" : "iVXjs:video:unmute",
-    "args" : {
-        "playerId" : "TARGET_PLAYER_ID"
-    }
-}
-</code></pre></div></div>
-
-<p><em>Action Template For All Video Players</em></p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ANY ivx-event="iVXjs:video:unmute"&gt;&lt;/ANY&gt;
-</code></pre></div></div>
-
-<p><em>Action Template For Target Video Player</em></p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ANY ivx-event="iVXjs:video:unmute" ivx-event-args="{playerId : 'TARGET_PLAYER_ID'}"&gt;&lt;/ANY&gt;
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;ANY ivx-event="iVXjs:video:unmute"&gt;&lt;/ANY&gt;
+</code></pre>
+</div>
 
 <h1 id="track-cues-events">Track Cues Events</h1>
 
@@ -1027,127 +932,100 @@ need the content in an experience to change to another language.</p>
 
 <p><em>Payload</em></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    "name" : "Current Tracks",
-    "type" : "object",
-    "properties" : {
-        oldTrack: {
-            type : "object",
-            description: "The previous track that was changed from"
-        },
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"name"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Current Tracks"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"properties"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="err">oldTrack:</span><span class="w"> </span><span class="err">{</span><span class="w">
+            </span><span class="err">type</span><span class="w"> </span><span class="err">:</span><span class="w"> </span><span class="nt">"object"</span><span class="err">,</span><span class="w">
+            </span><span class="err">description</span><span class="p">:</span><span class="w"> </span><span class="s2">"The previous track that was changed from"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
 
-        currentTrack: {
-            type : "object",
-            description: "The current track that was changed to."
-        }
-    }
-}
-</code></pre></div></div>
+        </span><span class="err">currentTrack</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="err">type</span><span class="w"> </span><span class="err">:</span><span class="w"> </span><span class="nt">"object"</span><span class="err">,</span><span class="w">
+            </span><span class="err">description</span><span class="p">:</span><span class="w"> </span><span class="s2">"The current track that was changed to."</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="err">}</span><span class="w">
+</span></code></pre>
+</div>
 
 <h2 id="ivxjstrackschange-current-track">iVXjs:tracks:change-current-track</h2>
 
 <p><em>Description</em></p>
 
-<p>Sends a track id to set the current language track. If the <code class="highlighter-rouge">playerId</code> argument 
-is in the payload, it will change the track for the specific player. Otherwise,
-it will change the tracks for all players on the page.</p>
+<p>Sends a track id to set the current language track. This will only affects 
+different subtitles and caption tracks.</p>
 
 <p><em>Payload</em></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    "type": "object", 
-    "properties: {
-       "trackId" : {
-           "type" : "string",
-            "description" : "Track Id to select the track"
-       }
-    }
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w"> 
+    </span><span class="nt">"properties: {
+       "</span><span class="err">trackId</span><span class="nt">" : {
+           "</span><span class="err">type</span><span class="nt">" : "</span><span class="err">string</span><span class="nt">",
+            "</span><span class="err">description</span><span class="nt">" : "</span><span class="err">Track</span><span class="w"> </span><span class="err">Id</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">select</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">track"</span><span class="w">
+       </span><span class="err">}</span><span class="w">
+    </span><span class="err">}</span><span class="w">
    
-}
-</code></pre></div></div>
-<p><em>JSON For all Video Players</em></p>
+</span><span class="err">}</span><span class="w">
+</span></code></pre>
+</div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    "eventName" : "iVXjs:tracks:change-current-track",
-    "args" : {
-         "trackId" : "TRACK_ID"
-    }
-}
-</code></pre></div></div>
+<p><em>JSON</em></p>
 
-<p><em>JSON For Specific Video Player</em></p>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"eventName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"iVXjs:tracks:change-current-track"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"args"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"trackId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"TRACK_ID"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    "eventName" : "iVXjs:tracks:change-current-track",
-    "args" : {
-        "playerId" : "TARGET_PLAYER_ID",
-        "trackId" : "TRACK_ID"
-    }
-}
-</code></pre></div></div>
+<p><em>Action Template</em></p>
 
-<p><em>Action Template For All Video Players</em></p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ANY ivx-event="iVXjs:tracks:change-current-track" ivx-event-args="{trackId : 'TRACK_ID'}"&gt;&lt;/ANY&gt;
-</code></pre></div></div>
-
-<p><em>Action Template For Target Video Player</em></p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ANY ivx-event="iVXjs:tracks:change-current-track" ivx-event-args="{trackId : 'TRACK_ID', playerId : 'TARGET_PLAYER_ID'}"&gt;&lt;/ANY&gt;
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;ANY ivx-event="iVXjs:tracks:change-current-track" ivx-event-args="{trackId : 'TRACK_ID'}"&gt;&lt;/ANY&gt;
+</code></pre>
+</div>
 
 <h2 id="ivxjstrackscueschange-chapter">iVXjs:tracks:cues:change-chapter</h2>
 
 <p><em>Description</em></p>
 
-<p>Skips to the start of the chapter of the chapter with the matching id. If the argument <code class="highlighter-rouge">playerId</code> is present,
-then it will skip to the chapter of a specific player. Otherwise, it will skip to any video that has 
-the matching chapter id.</p>
+<p>Skips to the start of the chapter of the chapter with the matching id.</p>
 
 <p><em>Payload</em></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    "type": "object", 
-    "properties: {
-       "chapterId" : {
-           "type" : "string",
-            "description" : "Chapter Id to select the track"
-       }
-    }
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span><span class="w"> 
+    </span><span class="nt">"properties: {
+       "</span><span class="err">chapterId</span><span class="nt">" : {
+           "</span><span class="err">type</span><span class="nt">" : "</span><span class="err">string</span><span class="nt">",
+            "</span><span class="err">description</span><span class="nt">" : "</span><span class="err">Chapter</span><span class="w"> </span><span class="err">Id</span><span class="w"> </span><span class="err">to</span><span class="w"> </span><span class="err">select</span><span class="w"> </span><span class="err">the</span><span class="w"> </span><span class="err">track"</span><span class="w">
+       </span><span class="err">}</span><span class="w">
+    </span><span class="err">}</span><span class="w">
    
-}
-</code></pre></div></div>
+</span><span class="err">}</span><span class="w">
+</span></code></pre>
+</div>
 
-<p><em>JSON For all Video Players</em></p>
+<p><em>JSON</em></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-   "eventName" : "iVXjs:tracks:cues:change-chapter",
-    "args" : {
-        "chapterId" : "CHAPTER_ID"
-    }
-}
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"eventName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"iVXjs:tracks:cues:change-chapter"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"args"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"chapterId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"CHAPTER_ID"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
 
-<p><em>JSON For Specific Video Player</em></p>
+<p><em>Action Template</em></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    "eventName" : "iVXjs:tracks:cues:change-chapter",
-    "args" : {
-        "playerId" : "TARGET_PLAYER_ID",
-        "chapterId" : "CHAPTER_ID"
-    }
-}
-</code></pre></div></div>
-
-<p><em>Action Template For All Video Players</em></p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ANY ivx-event="iVXjs:tracks:cues:change-chapter" ivx-event-args="{chapterId : 'CHAPTER_ID'}"&gt;&lt;/ANY&gt;
-</code></pre></div></div>
-
-<p><em>Action Template For Target Video Player</em></p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;ANY ivx-event="iVXjs:tracks:cues:change-chapter" ivx-event-args="{chapterId : 'CHAPTER_ID', playerId : 'PLAYER_ID'}"&gt;&lt;/ANY&gt;
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;ANY ivx-event="iVXjs:tracks:cues:change-chapter" ivx-event-args="{chapterId : 'CHAPTER_ID'}"&gt;&lt;/ANY&gt;
+</code></pre>
+</div>
 
 <h2 id="ivxjstrackscueson-enter">iVXjs:tracks:cues:on-enter</h2>
 
@@ -1299,15 +1177,15 @@ will fire when this happens.</p>
     
     
     
-    <li><a href="http://localhost:4000/ivx-js/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    <li><a href="https://influencetech.github.io/ivx-js/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
   </ul>
 </div>
 
-<div class="page__footer-copyright">&copy; 2018 Influence Technology. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+<div class="page__footer-copyright">&copy; 2017 Influence Technology. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
       </footer>
     </div>
 
-    <script src="http://localhost:4000/ivx-js/assets/js/main.min.js"></script>
+    <script src="https://influencetech.github.io/ivx-js/assets/js/main.min.js"></script>
 
 
 

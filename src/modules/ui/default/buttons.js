@@ -59,15 +59,7 @@ export class Buttons {
      * @type {String}
      */
     get buttonClasses() {
-        return 'ivx-input ivx-input-buttons';
-    }
-
-    get beforeClasses(){
-        return 'ivx-input-before ivx-input-before-buttons';
-    }
-
-    get afterClasses(){
-        return 'ivx-input-after ivx-input-after-buttons';
+        return '';
     }
 
     /**
@@ -93,7 +85,7 @@ export class Buttons {
      * @type {String}
      */
     get html() {
-        let {errors: errorClass = {}, buttons = [], input = {}, buttonClasses, beforeClasses : defaultBeforeClasses, afterClasses : defaultAfterClasses} = this;
+        let {errors: errorClass = {}, buttons = [], input = {}, buttonClasses} = this;
         let { attributes = {}, errors = {}, messages = {} } = errorClass;
         let buttonErrorMessages = Object.keys(attributes).map((key, index) => {
             return {
@@ -102,7 +94,7 @@ export class Buttons {
             }
         });
         let errorMessages = new this.errorMessages(buttonErrorMessages).html;
-        let {label = '', labelHTML = '', showLabel = false, id, beforeHtml : beforeSettings = {}, afterHtml : afterSettings = {} } = input;
+        let {label = '', labelHTML = '', showLabel = false, id} = input;
         let buttonsHTML = buttons.reduce((html, button, index) => {
             let { label, attrHTML = '', classes = "" } = button;
 
@@ -112,22 +104,15 @@ export class Buttons {
                    </button>`;
         }, '');
 
-        
-        const {html : beforeHtml = "", classes : beforeClasses = ""} = beforeSettings;
-        const {html : afterHtml = "", classes : afterClasses = ""} = afterSettings;
-
-
         if ((labelHTML.length > 0 || label.length > 0) && showLabel) {
             labelHTML = labelHTML ? labelHTML : label;
-            labelHTML = `<label class="ivx-input-label ivx-input-label-buttons" for="${id}">${labelHTML}</label>`
+            labelHTML = `<label for="${id}">${labelHTML}</label>`
         }
 
         return `
-            <div class="${beforeClasses} ${defaultBeforeClasses}">${beforeHtml}</div>
              ${labelHTML}
              ${buttonsHTML}
-             ${errorMessages} 
-             <div class="${afterClasses} ${defaultAfterClasses}">${afterHtml}</div>            
+             ${errorMessages}             
         `;
     }
 }

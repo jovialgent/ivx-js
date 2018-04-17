@@ -18,142 +18,139 @@ let objectParser = new ObjectParsers()
  */
 export class iVXio {
 
-    /**
-     * Pulls in any module settings and the global settings
-     * for this iVXjs experience to set up this iVXio 
-     * enhance data object.
-     * 
-     * @param {object} moduleSettings - settings to be passed in to the 
-     * iVXio Expereince host.
-     * @param {object} iVXjsSettings - global settings for this iVXjs experience.
-     */
-    constructor(experienceHostSettings, iVXjsSettings = {}, Bus, iVXjsLog) {
-
-        /**
-         * Module settings for iVXio which will be all the settings
-         * used with the iVXio's experience host such as story keys and
-         * funnels.
-         * 
-         * @type {object}
-         */
-        this.experienceHostSettings = experienceHostSettings
-
-        /**
-         * Global settings for this iVXjs experience 
-         * 
-         * @type {object}
-         */
-        this.iVXjsSettings = iVXjsSettings;
-        this.Bus = Bus;
-        this.iVXjsLog = iVXjsLog;
-    }
+  /**
+   * Pulls in any module settings and the global settings
+   * for this iVXjs experience to set up this iVXio 
+   * enhance data object.
+   * 
+   * @param {object} moduleSettings - settings to be passed in to the 
+   * iVXio Expereince host.
+   * @param {object} iVXjsSettings - global settings for this iVXjs experience.
+   */
+  constructor(experienceHostSettings, iVXjsSettings = {}, Bus, iVXjsLog) {
 
     /**
-     * Takes the current settings and then enhances the story data 
-     * pulled from the iVXio experience host and enhances them to 
-     * work with iVXjs.
+     * Module settings for iVXio which will be all the settings
+     * used with the iVXio's experience host such as story keys and
+     * funnels.
      * 
-     * @return {Promise} - a promise that evaluates whether this experience 
-     * was successfully enhanced.
+     * @type {object}
      */
-    enhance() {
-        let { experienceHostSettings = {}, iVXjsSettings = {} } = this;
-        let iVXioErrors = new iVXioErrorNames();
-        let self = this
-        let enhancementPromise = new Promise((resolve, reject) => {
-            if (typeof iVX === 'undefined') {
-                window.setTimeout(() => {
-                    self.Bus.emit(iVXioErrors.PLATFORM_UNAVAILABLE, {});
-                }, 100)
-                reject();
-                return;
-            }
+    this.experienceHostSettings = experienceHostSettings
 
-            self.Bus.once(iVXioErrors.EXPERIENCE, (error) => {
-                reject(error);
-            })
+    /**
+     * Global settings for this iVXjs experience 
+     * 
+     * @type {object}
+     */
+    this.iVXjsSettings = iVXjsSettings;
+    this.Bus = Bus;
+    this.iVXjsLog = iVXjsLog;
+  }
 
-            iVX(experienceHostSettings)
-                .then(
-                    (iVX) => {
-                        if (!iVX || !iVX.experience || !iVX.experience.story || !iVX.experience.story.data) {
-                            window.setTimeout(() => {
-                                self.Bus.emit(iVXioErrors.PLATFORM_UNAVAILABLE, {});
-                            }, 100);
-                            return;
-                        }
+  /**
+   * Takes the current settings and then enhances the story data 
+   * pulled from the iVXio experience host and enhances them to 
+   * work with iVXjs.
+   * 
+   * @return {Promise} - a promise that evaluates whether this experience 
+   * was successfully enhanced.
+   */
+  enhance() {
+    let { experienceHostSettings = {}, iVXjsSettings = {} } = this;
+    let iVXioErrors = new iVXioErrorNames();
+    let self = this
+    let enhancementPromise = new Promise((resolve, reject) => {
+      if (typeof iVX === 'undefined') {
+        window.setTimeout(() => {
+          self.Bus.emit(iVXioErrors.PLATFORM_UNAVAILABLE, {});
+        }, 100)
+        reject();
+        return;
+      }
 
-                        let { experience: experienceSettings = {}, rules: customRules } = iVXjsSettings;
-                        const { data: configData = {} } = experienceSettings;
-                        let defaultActions = objectParser.merge(new iVXjsActions(), experienceSettings);
-                        let experience = objectParser.merge(defaultActions, iVX.experience);
-                        let modifiedActions = new iVXioActions(experience, this.iVXjsLog);
-                        let { ui: storyUI, validation: storyValidation } = iVX.experience.story.data;
+      self.Bus.once(iVXioErrors.EXPERIENCE, (error) => {
+        reject(error);
+      })
 
-                        iVX.experience.story.data.metadata = iVX.experience.story.data.metadata ? iVX.experience.story.data.metadata : {};
+      iVX(experienceHostSettings)
+        .then(
+        (iVX) => {
+          if (!iVX || !iVX.experience || !iVX.experience.story || !iVX.experience.story.data) {
+            window.setTimeout(() => {
+              self.Bus.emit(iVXioErrors.PLATFORM_UNAVAILABLE, {});
+            }, 100);
+            return;
+          }
 
-                        let rules = new iVXioRules(experience, customRules).rules;
-                        let states = new InputValidator(iVX.experience.story.data.states, iVX.experience.story.inputs, self, reject, experienceHostSettings.debug).states;
+          let { experience: experienceSettings = {}, rules: customRules } = iVXjsSettings;
+          let defaultActions = objectParser.merge(new iVXjsActions(), experienceSettings);
+          let experience = objectParser.merge(defaultActions, iVX.experience);
+          let modifiedActions = new iVXioActions(experience, this.iVXjsLog);
+          let { ui: storyUI, validation: storyValidation } = iVX.experience.story.data;
 
-                        experience.debugHost = experienceHostSettings.debug;
+          iVX.experience.story.data.metadata = iVX.experience.story.data.metadata ? iVX.experience.story.data.metadata : {};
 
-                        experience.whiteList = [
-                            'self',
-                            'http://ivx-xapi.*.inf-env.com/**',
-                            'https://ivx-xapi.*.inf-env.com/**',
-                            'https://xapi.ivx.io/**'
-                        ];
+          let rules = new iVXioRules(experience, customRules).rules;
+          let states = new InputValidator(iVX.experience.story.data.states, iVX.experience.story.inputs, self, reject, experienceHostSettings.debug).states;
 
-                        iVX.experience.story.data.states = states;
-                        iVX.experience.story.data.metadata.title = iVX.experience.story.data.metadata.title ? iVX.experience.story.data.metadata.title : "iVX Story Player";
+          experience.debugHost = experienceHostSettings.debug;
 
-                        let enhancediVXjsSettings = {
-                            ui: iVXjsSettings.ui,
-                            validation: iVXjsSettings.validation,
-                            config: iVX.experience.story.data,
-                            experience: experience,
-                            rules: rules,
-                            actions: modifiedActions
-                        };
+          experience.whiteList = [
+            'self',
+            'http://ivx-xapi.*.inf-env.com/**',
+            'https://ivx-xapi.*.inf-env.com/**',
+            'https://xapi.ivx.io/**'
+          ];
 
-                        resolve(enhancediVXjsSettings);
-                    },
-                    (error) => {
-                        self.Bus.emit(iVXioErrors.EXPERIENCE, error);
-                        reject(error);
-                    })
+          iVX.experience.story.data.states = states;
+          iVX.experience.story.data.metadata.title = iVX.experience.story.data.metadata.title ? iVX.experience.story.data.metadata.title : "iVX Story Player";
+
+          let enhancediVXjsSettings = {
+            ui: iVXjsSettings.ui,
+            validation: iVXjsSettings.validation,
+            config: iVX.experience.story.data,
+            experience: experience,
+            rules: rules,
+            actions: modifiedActions
+          };
+
+          resolve(enhancediVXjsSettings);
+        },
+        (error) => {
+          self.Bus.emit(iVXioErrors.EXPERIENCE, error);
+          reject(error);
         })
+    })
 
-        return enhancementPromise
-    }
+    return enhancementPromise
+  }
 }
 
 module.export = initializeiVXIO;
 
 if (angular) {
-    let app = angular.module('ivx-input-validator', []);
+  let app = angular.module('ivx-input-validator', []);
 
+  app.constant('validator', InputValidator);
+
+  try {
+    let app = angular.module('ivx-js');
+
+    app.constant('iVXjs.data.iVXio', initializeiVXIO);
     app.constant('validator', InputValidator);
 
-    try {
-        let app = angular.module('ivx-js');
 
-        app.constant('iVXjs.data.iVXio', initializeiVXIO);
-        app.constant('iVXjsDataiVXio', initializeiVXIO);
-        app.constant('validator', InputValidator);
-        app.constant('iVXjsDataiVXio', InputValidator);
-
-
-        new iVXioComponents(app, { factoryFunctionCreator });
-        new iVXioServices(app, { factoryFunctionCreator });
-    } catch (e) {
-        console.warn('The iVXio Data Module is not attached to the iVXjs module. If this is correct, ignore this warning.')
-        console.warn(e);
-    }
+    new iVXioComponents(app, { factoryFunctionCreator });
+    new iVXioServices(app, { factoryFunctionCreator });
+  } catch (e) {
+    console.warn('The iVXio Data Module is not attached to the iVXjs module. If this is correct, ignore this warning.')
+    console.warn(e);
+  }
 }
 
 function initializeiVXIO(settings = {}) {
-    settings.module = iVXio;
+  settings.module = iVXio;
 
-    return settings;
+  return settings;
 };

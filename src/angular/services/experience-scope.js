@@ -2,15 +2,12 @@ import factoryFunctionCreator from "../utilities/create-factory-function";
 
 export class Service {
     constructor(iVXjs) {
-        Object.assign(this, {
-            iVXjs
-        });
+
+
     }
 
     setScopeExperience(experience) {
-        if (!this.iVXjs) return;
-
-        const { data = {} } = this.iVXjs.experience;
+        let { data } = experience;
 
         return {
             data

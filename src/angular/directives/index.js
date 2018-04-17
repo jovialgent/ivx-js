@@ -28,9 +28,6 @@ import YoutubePlayer from './video.youtube';
 import HTML5Player from './video.html5';
 import VimeoPlayer from './video.vimeo';
 
-//Embedded Views
-import EmbeddedViewCustom from "./embeded-view.custom";
-
 // Video Controls
 
 import StandardVideoControls from './video.controls.standard';
@@ -40,8 +37,6 @@ import SetData from './template.set-data';
 import AnimateElement from './template.animate-element';
 import GoToState from './template.go-to-state';
 import RaiseiVXjsEvent from './template.raise-ivxjs-event';
-import RemoveClasses from "./template.remove-classes";
-import AddClasses from "./template.add-classes";
 
 export default angular.module('ivx-js.directives',[
     InputState,
@@ -56,7 +51,6 @@ export default angular.module('ivx-js.directives',[
     RadioInput,
     TextInput,
     TextareaInput,
-    EmbeddedViewCustom,
     UrlInput,
     HTMLState,
     InputState,
@@ -65,8 +59,6 @@ export default angular.module('ivx-js.directives',[
     AnimateElement,
     GoToState,
     RaiseiVXjsEvent,
-    RemoveClasses,
-    AddClasses,
     SetData,
     Anchors,
     CascadingOptions,

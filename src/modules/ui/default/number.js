@@ -78,15 +78,6 @@ export class Number {
         return ''
     }
 
-    get beforeClasses(){
-        return 'ivx-input-before ivx-input-before-number';
-    }
-
-    get afterClasses(){
-        return 'ivx-input-after ivx-input-after-number';
-    }
-
-
     /**
      * The HTML to render a number input based on the settings from the 
      * constructor. 
@@ -108,15 +99,12 @@ export class Number {
      * @type {String}
      */
     get html() {
-        let {input, settings, tags, errors, uiClasses, uiAttributes, beforeClasses : defaultBeforeClasses, afterClasses : defaultAfterClasses } = this;
-        let {label = '', name = '', id = '', labelHTML, beforeHtml : beforeSettings = {}, afterHtml : afterSettings = {}} = input;
+        let {input, settings, tags, errors, uiClasses, uiAttributes} = this;
+        let {label = '', name = '', id = '', labelHTML} = input;
         let {input: inputSettings = {}, showLabel = true} = settings;
         let {classes = ''} = inputSettings;
 
         classes = `${classes} ${uiClasses}`;
-
-        const {html : beforeHtml = "", classes : beforeClasses = ""} = beforeSettings;
-        const {html : afterHtml = "", classes : afterClasses = ""} = afterSettings;
         
         let {messages: errorMessages = [], attributes: errorAttributes = '', nonValidate = [], tags: errorTags = ''} = errors;
         let errorHTML = new this.errorMessages(errorMessages).html;
@@ -127,11 +115,9 @@ export class Number {
         if (labelHTML) label = labelHTML;
         
         let inputHTML = ` 
-        <div class="${beforeClasses} ${defaultBeforeClasses}">${beforeHtml}</div>
-            <label class="ivx-input-label ivx-input-label-number" for="${id}"> ${label} </label>
-            <input class="${classes} ivx-input ivx-input-number"  name="${name}"  type="number" ${nonValidateAttributesHTML}   ${errorTags} ${tags}>
+            <label for="${id}"> ${label} </label>
+            <input class="${classes}"  name="${name}"  type="number" ${nonValidateAttributesHTML}   ${errorTags} ${tags}>
             ${errorHTML}
-            <div class="${afterClasses} ${defaultAfterClasses}">${afterHtml}</div>
        `;
 
         return `${inputHTML}`;

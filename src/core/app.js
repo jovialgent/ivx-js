@@ -28,7 +28,6 @@ export class iVXjs {
          */
         this.Bus = new EventEmitter();
         this.constants = new Constants();
-        this.settings = {};
 
     }
 
@@ -81,7 +80,6 @@ export class iVXjs {
         this.experience.Log = this.log;
         this.experience.processor = new ActionProcessor(this);
         this.experience.config = this.config;
-        this.experience.data = this._createExperienceDataObject();
 
         /**
          * Evaluates an array of expressions to allow stat navigation branching
@@ -110,18 +108,6 @@ export class iVXjs {
         this.Bus.emit(iVXjsConfigEvents.VALIDATED, this);
     }
 
-
-    _createExperienceDataObject() {
-        const { experience = {}, config = {}, settings = {} } = this;
-        const { experience: customExperience = {} } = settings;
-        const { metadata = {} } = config;
-        const { data: staticData = {} } = metadata;
-        const { data: settingsData = {} } = customExperience;
-        const { data: experienceData = {} } = experience;
-
-        return Object.assign(staticData, settingsData, experienceData);
-    }
-
     /**
      * Initializes iVXjs by taking in an object of settings so
      * it can run the various enhancement, validation and module
@@ -131,7 +117,7 @@ export class iVXjs {
      * this iVXjs experience.
      * @return {Promise} - Promise that will resovle when set up succeeds/fails
      */
-    init(settings = {}) {
+    init(settings) {
         let self = this;
         let { debug = true } = settings;
 
@@ -154,8 +140,6 @@ export class iVXjs {
                     resolve(self);
                 });
         });
-
-        Object.assign(this, { settings });
 
         return initPromise;
     }

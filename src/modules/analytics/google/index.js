@@ -86,7 +86,10 @@ export class Google extends DefaultAnalytics {
         let { tracker, key, value } = args
         let setActionName = tracker ? `${tracker}.set` : `${analytics.name}.set`;
 
+        console.log(key, value);
+
         ga(setActionName, key, value);
+
     }
 }
 
@@ -95,8 +98,7 @@ module.export = initializeGoogle;
 if (angular && angular.module('ivx-js')) {
     angular
         .module('ivx-js')
-        .constant('iVXjs.analytics.google', initializeGoogle)
-        .constant('iVXjsAnalyticsGoogle', initializeGoogle)
+        .constant('iVXjs.analytics.google', initializeGoogle);
 }
 
 function initializeGoogle(settings = {}, iVXjs) {

@@ -5,8 +5,6 @@ import AppRun from './app.run.js';
 import iVXjsConfigEventNames from '../constants/iVXjs.config.events.js';
 import { iVXjs } from '../core/app.js';
 
-import createFactoryFunction from "./utilities/create-factory-function";
-
 import Constants from "./constants";
 import Directives from "./directives";
 import Providers from "./providers";
@@ -20,9 +18,9 @@ const { modules = [] } = iVXjsGlobalConfigs;
 const deps = [].concat([
     'ui.router',
     'ngSanitize',
-    Providers,
     Directives,
     Constants,
+    Providers,
     Services,
     Filters
 ], modules);
@@ -31,7 +29,6 @@ const deps = [].concat([
 myIVXjs.Bus.on(iVXjsConfigEvents.VALIDATED, (iVXjs) => {
     AppBootstrap(iVXjs);
 });
-
 
 export default angular
     .module('ivx-js', deps)

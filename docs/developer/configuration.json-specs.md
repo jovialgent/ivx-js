@@ -1,7 +1,6 @@
 ---
 layout: single
-# source : https://influencetech.github.io/ivx-js/
-source : http://127.0.0.1:4000/ivx-js/
+source : https://influencetech.github.io/ivx-js/
 jsarr:
      - js/jsond-table.js
 ---
@@ -195,10 +194,6 @@ All states have the following data below. Assume the specific states types have 
 _Sample Data_
 
 [shared-state-data-sample.json]({{page.source}}developer/sample-JSON/shared-state-data-sample.json)
-
-_Sample Data With Embedded Views_
-
-[embedded-views-sample.json]({{page.source}}developer/sample-JSON/embedded-views-sample.json)
 
 _Schema_
 
@@ -558,42 +553,6 @@ _Schema_
 _animateElement Event Properties_
 
 <div id="event-ivxjs-animateElement-schema" class="json-schema-table-container" data-json-src="{{page.source}}developer/schemas/event-ivxjs-animateElement.jsond"></div>
-
-## addClasses
-
-_Description_
-
-Adds classes to any element on the page. This is helpful when you would like to change styles based on certain triggers but don't need them to animate. 
-
-_Sample Data_
-
-[event-ivxjs-addClasses.json]({{page.source}}developer/sample-JSON/event-ivxjs-addClasses.json)
-
-_Schema_
-
-[event-ivxjs-addClasses.jsond]({{page.source}}developer/schemas/event-ivxjs-addClasses.jsond)
-
-_addClasses Event Properties_
-
-<div id="event-ivxjs-addClasses-schema" class="json-schema-table-container" data-json-src="{{page.source}}developer/schemas/event-ivxjs-addClasses.jsond"></div>
-
-## removeClasses
-
-_Description_
-
-Removes classes from any element on the page. This is helpful when you would like to change styles based on certain triggers but don't need them to animate. 
-
-_Sample Data_
-
-[event-ivxjs-removeClasses.json]({{page.source}}developer/sample-JSON/event-ivxjs-removeClasses.json)
-
-_Schema_
-
-[event-ivxjs-removeClasses.jsond]({{page.source}}developer/schemas/event-ivxjs-removeClasses.jsond)
-
-_addClasses Event Properties_
-
-<div id="event-ivxjs-removeClasses-schema" class="json-schema-table-container" data-json-src="{{page.source}}developer/schemas/event-ivxjs-removeClasses.jsond"></div>
 
 ## goToNextState
 

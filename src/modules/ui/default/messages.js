@@ -51,13 +51,13 @@ export class ErrorMessages {
     get html() {
         let {errorMessages, messageClasses, containerClasses} = this;
         let errorMessageHTML = errorMessages.reduce((errorMessageHTML, errorMessage, index) => {
-            return `${errorMessageHTML}<span class="${messageClasses} ivx-input-error-message" ${errorMessage.attrHTML}>
+            return `${errorMessageHTML}<span class="${messageClasses}" ${errorMessage.attrHTML}>
                     ${errorMessage.message}
                 </span>`
         }, '');
 
         if (errorMessageHTML.length > 0) {
-            return `<div class='${containerClasses} ivx-input-error-container'>
+            return `<div class='${containerClasses}'>
                 ${errorMessageHTML}
             </div>`
         }

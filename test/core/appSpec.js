@@ -18,7 +18,7 @@ describe('iVXjs', () => {
         let myiVXjs, myFakeBus, mockValidExperience, rules;
 
         beforeEach(() => {
-            myiVXjs = new iVXjs({});
+            myiVXjs = new iVXjs();
             myFakeBus = new  FakeBus(myiVXjs);
             rules = function rules() {
 
@@ -26,9 +26,7 @@ describe('iVXjs', () => {
 
             mockValidExperience = {
                 modules: Math.random(),
-                experience: {
-                    settings : {}
-                },
+                experience: {},
                 config: Math.random(),
                 rules: rules,
                 actions : Math.random()

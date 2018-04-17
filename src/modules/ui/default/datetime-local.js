@@ -81,14 +81,6 @@ export class DatetimeLocal {
         return ``
     }
 
-    get beforeClasses(){
-        return 'ivx-input-before ivx-input-before-datetime-local';
-    }
-
-    get afterClasses(){
-        return 'ivx-input-after ivx-input-after-datetime-local';
-    }
-
     /**
     * The HTML to render a datetime-local input based on the settings from the 
     * constructor. 
@@ -107,14 +99,10 @@ export class DatetimeLocal {
     * @type {String}
     */
     get html() {
-        let {input, settings, tags, errors, uiClasses, uiAttributes, beforeClasses : defaultBeforeClasses, afterClasses : defaultAfterClasses} = this;
-        let {label, labelHTML, name = '', id = '', beforeHtml : beforeSettings = {}, afterHtml : afterSettings = {}} = input;
+        let {input, settings, tags, errors, uiClasses, uiAttributes} = this;
+        let {label, labelHTML, name = '', id = ''} = input;
         let {input: inputSettings = {}, showLabel = true} = settings;
         let {classes = ''} = inputSettings;
-
-          
-        const {html : beforeHtml ="", classes : beforeClasses = ""} = beforeSettings;
-        const {html : afterHtml ="", classes : afterClasses = ""} = afterSettings;
 
         classes = `${classes} ${uiClasses}`;
 
@@ -127,11 +115,9 @@ export class DatetimeLocal {
         if (labelHTML) label = labelHTML;
 
         let inputHTML = ` 
-            <div class="${beforeClasses} ${defaultBeforeClasses}">${beforeHtml}</div>
-            <label class="ivx-input-label ivx-input-label-datetime-local" for="${id}"> ${label} </label>
-            <input class="${classes} ivx-input ivx-input-datetime-local"  id="${id}" name="${name}"  type="datetime-local" ${nonValidateAttributesHTML}   ${errorTags} ${tags}>
+            <label for="${id}"> ${label} </label>
+            <input class="${classes}"  id="${id}" name="${name}"  type="datetime-local" ${nonValidateAttributesHTML}   ${errorTags} ${tags}>
             ${errorHTML}
-            <div class="${afterClasses} ${defaultAfterClasses}">${afterHtml}</div>
        `;
 
         return `${inputHTML}`;
