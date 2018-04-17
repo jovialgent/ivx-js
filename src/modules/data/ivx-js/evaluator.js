@@ -2,6 +2,9 @@ import { TypeValidator, ObjectParsers } from '../../../utilities/type-parsers.js
 
 let typeValidator = new TypeValidator();
 
+const { hasOwnProperty } = Object.prototype;
+
+
 export default class {
     constructor(experience, customEvaluator) {
         this.experience = experience;
@@ -95,5 +98,24 @@ export default class {
 
     in(lhs, rhs) {
         return rhs.indexOf(lhs) >= 0;
+    }
+
+    // Based on the isEmpty from lodash (https://github.com/lodash/lodash/blob/master/isEmpty.js)
+    empty(lhs, rhs) {
+        if (lhs === null) {
+            return true;
+        }
+
+        if (Array.isArray(lhs) || typeof value === 'string') {
+            return !lhs.length;
+        }
+
+        for (let key in lhs) {
+            if (hasOwnProperty.call(lhs, key)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
