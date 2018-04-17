@@ -1,11 +1,9 @@
 import {InputErrors} from './inputs.js';
-import {HTMLObject} from './html-object';
 
 export class InputStateSchema {
     constructor(state, index) {
         this.state = state;
         this.index = index;
-        this.generalHTMLSchema = new HTMLObject().generalHTMLSchema;
 
     }
 
@@ -108,8 +106,6 @@ export class InputStateSchema {
                             "labelTemplateUrl": {
                                 "type": "string"
                             },
-                            "beforeHtml" : this.generalHTMLSchema,
-                            "afterHtml" : this.generalHTMLSchema,
                             "settings": {
                                 "type": "object",
                                 "properties": {

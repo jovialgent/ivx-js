@@ -5,7 +5,6 @@ let typeValidator = new TypeValidator();
 
 export class Bus {
     constructor($rootScope, iVXjs) {
-        "ngInject";
         this.$rootScope = $rootScope;
         this.iVXjs = iVXjs;
     }
@@ -34,10 +33,10 @@ export class Bus {
 
     on(eventName, callback) {
         let self = this;
-        const fnName = Math.random().toString(26).substring(2, 15).replace(/[0-9]/g, '');
+        let { name: fnName = Math.random().toString(36).substring(7) } = callback;
         let enhancedCallbackString = `
             return function ${fnName}(args){
-
+                
                 if(Array.isArray(args)){
                     callback.apply(this, args);
                 } else {
@@ -45,6 +44,7 @@ export class Bus {
                     callback.apply(this, customArgs);
                 }
                
+                
                 if(!$rootScope.$$phase){
                     $rootScope.$apply();
                 }
@@ -66,7 +66,8 @@ export class Bus {
     }
 }
 
+Bus.$inject = ['$rootScope', 'iVXjs'];
+
 export default angular.module('ivx-js.services.bus', [])
-    .service('ivxjs.bus', Bus)
-    .service('iVXjsBus', Bus)
+    .service('ivxjs.bus', createFactoryFunction(Bus))
     .name;

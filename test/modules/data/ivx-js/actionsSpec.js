@@ -52,9 +52,9 @@ describe('iVXjsActions', () => {
         })
 
         it('should add class name if animation class.', () => {
-            const element = document.createElement("div");
-
-            element.className = "hide";
+            element = {
+                className: "hide"
+            };
 
             actions.setElementClasses(element, {
                 animationClasses: 'test'
@@ -64,17 +64,18 @@ describe('iVXjsActions', () => {
         });
 
         it('should replace animationClass on the element with the new animation class.', () => {
-            const element = document.createElement("div");
+            element = {
+                className: "old-animation",
+                animationClass : "old-animation"
 
-            element.className = "old-animation";
-            element.animationClass = "old-animation";
+            };
 
             actions.setElementClasses(element, {
                 animationClasses : 'new-animation'
             });
 
             
-            expect(element.className).toEqual('new-animation');
+            expect(element.className).toEqual(' new-animation');
         });
     });
 

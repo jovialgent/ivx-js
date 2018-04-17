@@ -19,7 +19,7 @@
 
 
 
-<title>iVXjs Templates Tutorial - iVXjs</title>
+<title>iVXjs</title>
 
 
 
@@ -29,11 +29,11 @@
 
 <meta property="og:locale" content="en">
 <meta property="og:site_name" content="iVXjs">
-<meta property="og:title" content="iVXjs Templates Tutorial">
+<meta property="og:title" content="iVXjs">
 
 
-  <link rel="canonical" href="http://localhost:4000/ivx-js/developer/tutorial.templates/">
-  <meta property="og:url" content="http://localhost:4000/ivx-js/developer/tutorial.templates/">
+  <link rel="canonical" href="https://influencetech.github.io/ivx-js/developer/tutorial.templates/">
+  <meta property="og:url" content="https://influencetech.github.io/ivx-js/developer/tutorial.templates/">
 
 
 
@@ -61,7 +61,7 @@
       "@context" : "http://schema.org",
       "@type" : "Person",
       "name" : "Influence Technology",
-      "url" : "http://localhost:4000/ivx-js",
+      "url" : "https://influencetech.github.io/ivx-js",
       "sameAs" : null
     }
   </script>
@@ -74,7 +74,7 @@
 <!-- end SEO -->
 
 
-<link href="http://localhost:4000/ivx-js/feed.xml" type="application/atom+xml" rel="alternate" title="iVXjs Feed">
+<link href="https://influencetech.github.io/ivx-js/feed.xml" type="application/atom+xml" rel="alternate" title="iVXjs Feed">
 
 <!-- http://t.co/dKP3o1e -->
 <meta name="HandheldFriendly" content="True">
@@ -86,7 +86,7 @@
 </script>
 
 <!-- For all browsers -->
-<link rel="stylesheet" href="http://localhost:4000/ivx-js/assets/css/main.css">
+<link rel="stylesheet" href="https://influencetech.github.io/ivx-js/assets/css/main.css">
 
 <meta http-equiv="cleartype" content="on">
     <!-- start custom head snippets -->
@@ -109,16 +109,16 @@
       <nav id="site-nav" class="greedy-nav">
         <button><div class="navicon"></div></button>
         <ul class="visible-links">
-          <li class="masthead__menu-item masthead__menu-item--lg"><a href="http://localhost:4000/ivx-js/">iVXjs</a></li>
+          <li class="masthead__menu-item masthead__menu-item--lg"><a href="https://influencetech.github.io/ivx-js/">iVXjs</a></li>
           
             
-            <li class="masthead__menu-item"><a href="http://localhost:4000/ivx-js/developer/tutorial.hello-world">Getting Started</a></li>
+            <li class="masthead__menu-item"><a href="https://influencetech.github.io/ivx-js/developer/tutorial.hello-world">Getting Started</a></li>
           
             
-            <li class="masthead__menu-item"><a href="http://localhost:4000/ivx-js/developer/tutorials">Tutorials</a></li>
+            <li class="masthead__menu-item"><a href="https://influencetech.github.io/ivx-js/developer/tutorials">Tutorials</a></li>
           
             
-            <li class="masthead__menu-item"><a href="http://localhost:4000/ivx-js/developer/configuration">Configuration and Features</a></li>
+            <li class="masthead__menu-item"><a href="https://influencetech.github.io/ivx-js/developer/configuration">Configuration and Features</a></li>
           
         </ul>
         <ul class="hidden-links hidden"></ul>
@@ -139,7 +139,7 @@
 
 
   <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
-    <meta itemprop="headline" content="iVXjs Templates Tutorial">
+    
     
     
     
@@ -147,8 +147,7 @@
     <div class="page__inner-wrap">
       
         <header>
-          <h1 class="page__title" itemprop="headline">iVXjs Templates Tutorial
-</h1>
+          
           
         </header>
       
@@ -233,32 +232,34 @@ a static web page. This will show you how to add templatesUrls into HTML states.
   <li>HTML State’s Data From JSON file:</li>
 </ul>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    "id": "html-state-sample",
-    "name": "HTML State Sample",
-    "url": "/html-state-sample",
-    "type": "html",
-    "html" : "&lt;h1&gt;Sample HTML State&lt;/h1&gt;&lt;h2&gt;Will time out in 5 seconds&lt;/h2&gt;",
-    "onEnter": [],
-    "onExit": [],
-    "onTimeout" : [],
-    "timeoutInMs": 5000,
-    "next": [{
-        "stateId" : "html-state-sample-2"
-    }]
-}
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"html-state-sample"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"HTML State Sample"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/html-state-sample"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"html"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"html"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;h1&gt;Sample HTML State&lt;/h1&gt;&lt;h2&gt;Will time out in 5 seconds&lt;/h2&gt;"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"onEnter"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"onExit"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"onTimeout"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"timeoutInMs"</span><span class="p">:</span><span class="w"> </span><span class="mi">5000</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"next"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+        </span><span class="nt">"stateId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"html-state-sample-2"</span><span class="w">
+    </span><span class="p">}]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
 
 <ul>
   <li>Add change the HTML to <code class="highlighter-rouge">"&lt;h1 class=\"test-class\"&gt;HTML State&lt;/h1&gt;&lt;h2&gt;This came from the JSON&lt;/h2&gt;"</code> to the <code class="highlighter-rouge">html</code>:</li>
 </ul>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-	...
-	html : "&lt;h1 class=\"test-class\"&gt;HTML State&lt;/h1&gt;&lt;h2&gt;This came from the JSON&lt;/h2&gt;"
-	...
-}
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+	</span><span class="err">...</span><span class="w">
+	</span><span class="err">html</span><span class="w"> </span><span class="err">:</span><span class="w"> </span><span class="nt">"&lt;h1 class=\"test-class\"&gt;HTML State&lt;/h1&gt;&lt;h2&gt;This came from the JSON&lt;/h2&gt;"</span><span class="w">
+	</span><span class="err">...</span><span class="w">
+</span><span class="err">}</span><span class="w">
+</span></code></pre>
+</div>
 
 <ul>
   <li>After adding the HTML it should look like this:</li>
@@ -280,9 +281,10 @@ characters when writing it.</p>
 
 <p><em>html-state.html</em></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;h1 class="test-class"&gt;HTML State&lt;/h1&gt;
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;h1 class="test-class"&gt;HTML State&lt;/h1&gt;
 &lt;h2&gt;This came from the JSON.&lt;/h2&gt;
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <ul>
   <li>Change the <code class="highlighter-rouge">&lt;h2&gt;</code> element to read “This came from a template.”:</li>
@@ -290,44 +292,47 @@ characters when writing it.</p>
 
 <p><em>html-state.html</em></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;h1 class="test-class"&gt;HTML State&lt;/h1&gt;
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;h1 class="test-class"&gt;HTML State&lt;/h1&gt;
 &lt;h2&gt;This came from a template.&lt;/h2&gt;
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <ul>
   <li>Remove the <code class="highlighter-rouge">html</code> data from the HTML State Data:</li>
 </ul>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-	"id": "html-state-test",
-	"name": "HTML State Test",
-	"url": "/html-state-test",
-	"type": "html",
-	"onEnter": [],
-	"onExit": [],
-	"next": [
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+	</span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"html-state-test"</span><span class="p">,</span><span class="w">
+	</span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"HTML State Test"</span><span class="p">,</span><span class="w">
+	</span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/html-state-test"</span><span class="p">,</span><span class="w">
+	</span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"html"</span><span class="p">,</span><span class="w">
+	</span><span class="nt">"onEnter"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+	</span><span class="nt">"onExit"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+	</span><span class="nt">"next"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
 	   
-	]
-}
-</code></pre></div></div>
+	</span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
 
 <ul>
   <li>Add a new key <code class="highlighter-rouge">templateUrl</code> whose value is “html-state.html”:</li>
 </ul>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-	"id": "html-state-test",
-	"name": "HTML State Test",
-	"url": "/html-state-test",
-	"type": "html",
-	"templateUrl" : "html-state.html",
-	"onEnter": [],
-	"onExit": [],
-	"next": [
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+	</span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"html-state-test"</span><span class="p">,</span><span class="w">
+	</span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"HTML State Test"</span><span class="p">,</span><span class="w">
+	</span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/html-state-test"</span><span class="p">,</span><span class="w">
+	</span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"html"</span><span class="p">,</span><span class="w">
+	</span><span class="nt">"templateUrl"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"html-state.html"</span><span class="p">,</span><span class="w">
+	</span><span class="nt">"onEnter"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+	</span><span class="nt">"onExit"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+	</span><span class="nt">"next"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
 	   
-	]
-}
-</code></pre></div></div>
+	</span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
 
 <ul>
   <li>Refresh the page, and you should see a screen similar to this one:</li>
@@ -354,73 +359,76 @@ be able to add intricate headers and footers without bloating the JSON spec.</p>
   <li>Here is the sample Video State Data:</li>
 </ul>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    "id": "html5-video-state-test",
-    "name": "HTML5 Video Test",
-    "url": "/html5-video-test",
-    "type": "video",
-    "header": {},
-    "footer": {},
-    "onEnter": [],
-    "onExit": [],
-    "next": [],
-    "onVideoEnd": [],
-    "playerSettings": {
-        "controls": "standard",
-        "sources": [{
-            "src": "http://clips.vorwaerts-gmbh.de/VfE_html5.mp4",
-            "type": "video/mp4"
-        }]
-    },
-    "personalizations": [],
-    "cuePoints": []
-}
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"html5-video-state-test"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"HTML5 Video Test"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/html5-video-test"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"video"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"header"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+    </span><span class="nt">"footer"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+    </span><span class="nt">"onEnter"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"onExit"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"next"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"onVideoEnd"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"playerSettings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"controls"</span><span class="p">:</span><span class="w"> </span><span class="s2">"standard"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"sources"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+            </span><span class="nt">"src"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://clips.vorwaerts-gmbh.de/VfE_html5.mp4"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"video/mp4"</span><span class="w">
+        </span><span class="p">}]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"personalizations"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"cuePoints"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
 
 <ul>
   <li>Add the key <code class="highlighter-rouge">"html"</code> with value <code class="highlighter-rouge">"&lt;h1 class=\"class-test\"&gt;I AM FROM THE JSON&lt;/h1&gt;"</code>to either the header or footer object:</li>
 </ul>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-	...
-	"header" : {
-		"html" : "&lt;h1 class=\"class-one\"&gt;I AM FROM THE JSON&lt;/h1&gt;"
-	},
-	...
-}
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+	</span><span class="err">...</span><span class="w">
+	</span><span class="nt">"header"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+		</span><span class="nt">"html"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;h1 class=\"class-one\"&gt;I AM FROM THE JSON&lt;/h1&gt;"</span><span class="w">
+	</span><span class="p">},</span><span class="w">
+	</span><span class="err">...</span><span class="w">
+</span><span class="err">}</span><span class="w">
+</span></code></pre>
+</div>
 
 <ul>
   <li>The resulting data will look like this:</li>
 </ul>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    "id": "html5-video-state-test",
-    "name": "HTML5 Video Test",
-    "url": "/html5-video-test",
-    "type": "video",
-    "header": {
-       	"html" : "&lt;h1 class=\"class-one\"&gt;I AM FROM THE JSON&lt;/h1&gt;",
-        "classes": ""
-    },
-    "footer": {
-        "html": ""
-    },
-    "onEnter": [],
-    "onExit": [],
-    "next": [],
-    "onVideoEnd": [],
-    "playerSettings": {
-        "controls": "standard",
-        "sources": [{
-            "src": "http://clips.vorwaerts-gmbh.de/VfE_html5.mp4",
-            "type": "video/mp4"
-        }]
-    },
-    "personalizations": [],
-    "cuePoints": []
-}
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"html5-video-state-test"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"HTML5 Video Test"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/html5-video-test"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"video"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"header"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+       	</span><span class="nt">"html"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;h1 class=\"class-one\"&gt;I AM FROM THE JSON&lt;/h1&gt;"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"classes"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"footer"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"html"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"onEnter"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"onExit"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"next"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"onVideoEnd"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"playerSettings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"controls"</span><span class="p">:</span><span class="w"> </span><span class="s2">"standard"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"sources"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+            </span><span class="nt">"src"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://clips.vorwaerts-gmbh.de/VfE_html5.mp4"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"video/mp4"</span><span class="w">
+        </span><span class="p">}]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"personalizations"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"cuePoints"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
 
 <ul>
   <li>This will render something like this:
@@ -435,33 +443,34 @@ be able to add intricate headers and footers without bloating the JSON spec.</p>
   <li>Here is the video state data from above:</li>
 </ul>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    "id": "html5-video-state-test",
-    "name": "HTML5 Video Test",
-    "url": "/html5-video-test",
-    "type": "video",
-    "header": {
-        "html": "",
-        "classes": ""
-    },
-    "footer": {
-        "html": ""
-    },
-    "onEnter": [],
-    "onExit": [],
-    "next": [],
-    "onVideoEnd": [],
-    "playerSettings": {
-        "controls": "standard",
-        "sources": [{
-            "src": "http://clips.vorwaerts-gmbh.de/VfE_html5.mp4",
-            "type": "video/mp4"
-        }]
-    },
-    "personalizations": [],
-    "cuePoints": []
-}
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"html5-video-state-test"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"HTML5 Video Test"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/html5-video-test"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"video"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"header"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"html"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"classes"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"footer"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"html"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"onEnter"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"onExit"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"next"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"onVideoEnd"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"playerSettings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"controls"</span><span class="p">:</span><span class="w"> </span><span class="s2">"standard"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"sources"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+            </span><span class="nt">"src"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://clips.vorwaerts-gmbh.de/VfE_html5.mp4"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"video/mp4"</span><span class="w">
+        </span><span class="p">}]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"personalizations"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"cuePoints"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
 
 <ul>
   <li>Take the HTML from the header’s <code class="highlighter-rouge">"html"</code> value and add it to a file called ‘video-header.html’ and replace the text to read “I AM FROM A TEMPLATE!”:</li>
@@ -469,53 +478,56 @@ be able to add intricate headers and footers without bloating the JSON spec.</p>
 
 <p><em>video-header.html</em></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;h1 class="test-class"&gt;I AM FROM A TEMPLATE!&lt;/h1&gt;
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;h1 class="test-class"&gt;I AM FROM A TEMPLATE!&lt;/h1&gt;
+</code></pre>
+</div>
 
 <ul>
   <li>Replace the header’s <code class="highlighter-rouge">"html"</code> with the key <code class="highlighter-rouge">"templateUrl"</code> whose value is <code class="highlighter-rouge">"video-header.html"</code>:</li>
 </ul>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-	...
-	"header" : {
-		"templateUrl" : "video-header.html"
-	},
-	...
-}
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+	</span><span class="err">...</span><span class="w">
+	</span><span class="nt">"header"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+		</span><span class="nt">"templateUrl"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"video-header.html"</span><span class="w">
+	</span><span class="p">},</span><span class="w">
+	</span><span class="err">...</span><span class="w">
+</span><span class="err">}</span><span class="w">
+</span></code></pre>
+</div>
 
 <ul>
   <li>The resulting video state data will look like this:</li>
 </ul>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    "id": "html5-video-state-test",
-    "name": "HTML5 Video Test",
-    "url": "/html5-video-test",
-    "type": "video",
-    "header": {
-        "templateUrl" : "video-header.html",
-        "classes": ""
-    },
-    "footer": {
-        "html": ""
-    },
-    "onEnter": [],
-    "onExit": [],
-    "next": [],
-    "onVideoEnd": [],
-    "playerSettings": {
-        "controls": "standard",
-        "sources": [{
-            "src": "http://clips.vorwaerts-gmbh.de/VfE_html5.mp4",
-            "type": "video/mp4"
-        }]
-    },
-    "personalizations": [],
-    "cuePoints": []
-}
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"html5-video-state-test"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"HTML5 Video Test"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/html5-video-test"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"video"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"header"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"templateUrl"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"video-header.html"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"classes"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"footer"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"html"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"onEnter"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"onExit"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"next"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"onVideoEnd"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"playerSettings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"controls"</span><span class="p">:</span><span class="w"> </span><span class="s2">"standard"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"sources"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+            </span><span class="nt">"src"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://clips.vorwaerts-gmbh.de/VfE_html5.mp4"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"video/mp4"</span><span class="w">
+        </span><span class="p">}]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"personalizations"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"cuePoints"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
 
 <ul>
   <li>Refresh the page, and it should look something like this:
@@ -537,7 +549,7 @@ require a template to be able to render and behave correctly.</p>
 
 <p>Personalizations, which typically show and hide and a cuepoint, requires some CSS to allow this behavior. In this tutorial, the state will add the class “hide” and on the cuepoint will add the class “show”. If you don’t have any CSS to support these behaviors, this will not work. To support these, you can add this HTML:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;style&gt;
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;style&gt;
 	.show {
         -webkit-animation: showState 0.1s;
         -moz-animation: showState 0.1s;
@@ -636,7 +648,8 @@ require a template to be able to render and behave correctly.</p>
         ;
     }
 &lt;/style&gt;
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <h3 id="from-json-adding-html-to-personalizations">From JSON: Adding HTML To Personalizations</h3>
 
@@ -646,98 +659,102 @@ require a template to be able to render and behave correctly.</p>
   <li>Here is the base state data from the sample:</li>
 </ul>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    "id": "html5-video-state-test",
-    "name": "HTML5 Video Test",
-    "url": "/html5-video-test",
-    "type": "video",
-    "header": {},
-    "footer": {},
-    "onEnter": [],
-    "onExit": [],
-    "next": [],
-    "onVideoEnd": [],
-    "playerSettings": {
-        "controls": "standard",
-        "sources": [{
-            "src": "http://clips.vorwaerts-gmbh.de/VfE_html5.mp4",
-            "type": "video/mp4"
-        }]
-    },
-    "personalizations": [],
-    "cuePoints": []
-}
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"html5-video-state-test"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"HTML5 Video Test"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/html5-video-test"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"video"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"header"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+    </span><span class="nt">"footer"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+    </span><span class="nt">"onEnter"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"onExit"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"next"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"onVideoEnd"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"playerSettings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"controls"</span><span class="p">:</span><span class="w"> </span><span class="s2">"standard"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"sources"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+            </span><span class="nt">"src"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://clips.vorwaerts-gmbh.de/VfE_html5.mp4"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"video/mp4"</span><span class="w">
+        </span><span class="p">}]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"personalizations"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"cuePoints"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
 
 <ul>
   <li>Add a personalization by adding an object to the personalizations array with keys <code class="highlighter-rouge">"id"</code> which is the id of 
 personalization and <code class="highlighter-rouge">"html"</code> which is the HTML for the personalization:</li>
 </ul>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    ...
-    "personalizations": [{
-    	"id" : "personalization",
-    	"html" : "&lt;h1&gt;I am from the JSON.&lt;/h1&gt;"
-    }],
-    ...
-}
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="err">...</span><span class="w">
+    </span><span class="nt">"personalizations"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+    	</span><span class="nt">"id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"personalization"</span><span class="p">,</span><span class="w">
+    	</span><span class="nt">"html"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;h1&gt;I am from the JSON.&lt;/h1&gt;"</span><span class="w">
+    </span><span class="p">}],</span><span class="w">
+    </span><span class="err">...</span><span class="w">
+</span><span class="err">}</span><span class="w">
+</span></code></pre>
+</div>
 
 <ul>
   <li>Add a cuePoint data object the event “animateElement” at 2 seconds which will show your personalization:</li>
 </ul>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    ...
-    "cuePoints": [{
-    	"eventName" : "animateElement",
-    	"timeAt" : 2,
-    	"args" : {
-    		"element" : "#personalization",
-    		"animationClasses" : "show" 
-    	}
-    }]
-    ...
-}
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="err">...</span><span class="w">
+    </span><span class="nt">"cuePoints"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+    	</span><span class="nt">"eventName"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"animateElement"</span><span class="p">,</span><span class="w">
+    	</span><span class="nt">"timeAt"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+    	</span><span class="nt">"args"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    		</span><span class="nt">"element"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"#personalization"</span><span class="p">,</span><span class="w">
+    		</span><span class="nt">"animationClasses"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"show"</span><span class="w"> 
+    	</span><span class="p">}</span><span class="w">
+    </span><span class="p">}]</span><span class="w">
+    </span><span class="err">...</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
 
 <ul>
   <li>The resulting state data will look like this:</li>
 </ul>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    "id": "html5-video-state-test",
-    "name": "HTML5 Video Test",
-    "url": "/html5-video-test",
-    "type": "video",
-    "header": {},
-    "footer": {},
-    "onEnter": [],
-    "onExit": [],
-    "next": [],
-    "onVideoEnd": [],
-    "playerSettings": {
-        "controls": "standard",
-        "sources": [{
-            "src": "http://clips.vorwaerts-gmbh.de/VfE_html5.mp4",
-            "type": "video/mp4"
-        }]
-    },
-    "personalizations": [{
-        "id": "personalization",
-        "html": "&lt;h1&gt;I am from the JSON.&lt;/h1&gt;"
-    }],
-    "cuePoints": [{
-        "eventName": "animateElement",
-        "timeAt": 2,
-        "args": {
-            "element": "#personalization",
-            "animationClasses": "show"
-        }
-    }]
-}
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"html5-video-state-test"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"HTML5 Video Test"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/html5-video-test"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"video"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"header"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+    </span><span class="nt">"footer"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+    </span><span class="nt">"onEnter"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"onExit"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"next"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"onVideoEnd"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"playerSettings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"controls"</span><span class="p">:</span><span class="w"> </span><span class="s2">"standard"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"sources"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+            </span><span class="nt">"src"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://clips.vorwaerts-gmbh.de/VfE_html5.mp4"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"video/mp4"</span><span class="w">
+        </span><span class="p">}]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"personalizations"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"personalization"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"html"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;h1&gt;I am from the JSON.&lt;/h1&gt;"</span><span class="w">
+    </span><span class="p">}],</span><span class="w">
+    </span><span class="nt">"cuePoints"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+        </span><span class="nt">"eventName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"animateElement"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"timeAt"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"args"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"element"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#personalization"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"animationClasses"</span><span class="p">:</span><span class="w"> </span><span class="s2">"show"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
 
 <ul>
   <li>Once you add this data, play the video and after 2 seconds, you should see something like this:
@@ -752,38 +769,39 @@ personalization and <code class="highlighter-rouge">"html"</code> which is the H
   <li>Here is the current state data from the above tutorial:</li>
 </ul>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    "id": "html5-video-state-test",
-    "name": "HTML5 Video Test",
-    "url": "/html5-video-test",
-    "type": "video",
-    "header": {},
-    "footer": {},
-    "onEnter": [],
-    "onExit": [],
-    "next": [],
-    "onVideoEnd": [],
-    "playerSettings": {
-        "controls": "standard",
-        "sources": [{
-            "src": "http://clips.vorwaerts-gmbh.de/VfE_html5.mp4",
-            "type": "video/mp4"
-        }]
-    },
-    "personalizations": [{
-        "id": "personalization",
-        "html": "&lt;h1&gt;I am from the JSON.&lt;/h1&gt;"
-    }],
-    "cuePoints": [{
-        "eventName": "animateElement",
-        "timeAt": 2,
-        "args": {
-            "element": "#personalization",
-            "animationClasses": "show"
-        }
-    }]
-}
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"html5-video-state-test"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"HTML5 Video Test"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/html5-video-test"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"video"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"header"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+    </span><span class="nt">"footer"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+    </span><span class="nt">"onEnter"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"onExit"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"next"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"onVideoEnd"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"playerSettings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"controls"</span><span class="p">:</span><span class="w"> </span><span class="s2">"standard"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"sources"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+            </span><span class="nt">"src"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://clips.vorwaerts-gmbh.de/VfE_html5.mp4"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"video/mp4"</span><span class="w">
+        </span><span class="p">}]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"personalizations"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"personalization"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"html"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;h1&gt;I am from the JSON.&lt;/h1&gt;"</span><span class="w">
+    </span><span class="p">}],</span><span class="w">
+    </span><span class="nt">"cuePoints"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+        </span><span class="nt">"eventName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"animateElement"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"timeAt"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"args"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"element"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#personalization"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"animationClasses"</span><span class="p">:</span><span class="w"> </span><span class="s2">"show"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
 
 <ul>
   <li>To begin, move the value of the “html” from the personalization with id “personalization” and add it
@@ -792,59 +810,62 @@ to a file called “video-personalization.html” and change the text to read �
 
 <p><em>video-personalization.html</em></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;h1&gt;I am a personalization from a template.&lt;/h1&gt;
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;h1&gt;I am a personalization from a template.&lt;/h1&gt;
+</code></pre>
+</div>
 
 <ul>
   <li>Replace the <code class="highlighter-rouge">"html"</code> in the personalization with the key <code class="highlighter-rouge">"templateUrl"</code> with value <code class="highlighter-rouge">"video-personalization.html"</code>:</li>
 </ul>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-	...
-	"personalizations" : [{
-		"id" : "personalization",
-		"templateUrl" : "video-personalization.html"
-	}]
-	...
-}
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+	</span><span class="err">...</span><span class="w">
+	</span><span class="nt">"personalizations"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+		</span><span class="nt">"id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"personalization"</span><span class="p">,</span><span class="w">
+		</span><span class="nt">"templateUrl"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"video-personalization.html"</span><span class="w">
+	</span><span class="p">}]</span><span class="w">
+	</span><span class="err">...</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
 
 <ul>
   <li>The resulting state data will be:</li>
 </ul>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    "id": "html5-video-state-test",
-    "name": "HTML5 Video Test",
-    "url": "/html5-video-test",
-    "type": "video",
-    "header": {},
-    "footer": {},
-    "onEnter": [],
-    "onExit": [],
-    "next": [],
-    "onVideoEnd": [],
-    "playerSettings": {
-        "controls": "standard",
-        "sources": [{
-            "src": "http://clips.vorwaerts-gmbh.de/VfE_html5.mp4",
-            "type": "video/mp4"
-        }]
-    },
-    "personalizations": [{
-        "id": "personalization",
-        "templateUrl" : "video-personalization.html"
-    }],
-    "cuePoints": [{
-        "eventName": "animateElement",
-        "timeAt": 2,
-        "args": {
-            "element": "#personalization",
-            "animationClasses": "show"
-        }
-    }]
-}
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"html5-video-state-test"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"HTML5 Video Test"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/html5-video-test"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"video"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"header"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+    </span><span class="nt">"footer"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+    </span><span class="nt">"onEnter"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"onExit"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"next"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"onVideoEnd"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"playerSettings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"controls"</span><span class="p">:</span><span class="w"> </span><span class="s2">"standard"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"sources"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+            </span><span class="nt">"src"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://clips.vorwaerts-gmbh.de/VfE_html5.mp4"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"video/mp4"</span><span class="w">
+        </span><span class="p">}]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"personalizations"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"personalization"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"templateUrl"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"video-personalization.html"</span><span class="w">
+    </span><span class="p">}],</span><span class="w">
+    </span><span class="nt">"cuePoints"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+        </span><span class="nt">"eventName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"animateElement"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"timeAt"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"args"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"element"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#personalization"</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"animationClasses"</span><span class="p">:</span><span class="w"> </span><span class="s2">"show"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">}]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
 
 <ul>
   <li>Now play the video, and after 2 seconds, the player should look something like this:
@@ -865,57 +886,59 @@ to a file called “video-personalization.html” and change the text to read �
   <li>Here is the original input state data from the sample file:</li>
 </ul>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    "id": "input-state-test",
-    "name": "Input State Test",
-    "url": "/input-state-test",
-    "type": "input",
-    "header": {},
-    "footer": {},
-    "onEnter": [],
-    "onExit": [],
-    "onSubmit": [],
-    "form": {
-        "classes": "",
-        "submit": {}
-    },
-    "next": [],
-    "inputs": [{
-        "id": "text-input-test",
-        "name": "textInputTest",
-        "type": "text",
-        "label": "I am a label",
-        "settings": {
-            "container": {},
-            "input": {}
-        },
-        "attributes": {}
-    }]
-}
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"input-state-test"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Input State Test"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/input-state-test"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"input"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"header"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+    </span><span class="nt">"footer"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+    </span><span class="nt">"onEnter"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"onExit"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"onSubmit"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"form"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"classes"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"submit"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"next"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"inputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"text-input-test"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"textInputTest"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"text"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"I am a label"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"settings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"container"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+            </span><span class="nt">"input"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"attributes"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
+    </span><span class="p">}]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
 
 <ul>
   <li>Find the input object with <code class="highlighter-rouge">"id"</code> value of <code class="highlighter-rouge">"text-input-test"</code> in the inputs array:</li>
 </ul>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-	...
-	 "inputs": [{
-        "id": "text-input-test",
-        "name": "textInputTest",
-        "type": "text",
-        "label": "I am a label",
-        "settings": {
-            "container": {},
-            "input": {}
-        },
-        "attributes": {}
-    }]
-	...
-}
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+	</span><span class="err">...</span><span class="w">
+	 </span><span class="nt">"inputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"text-input-test"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"textInputTest"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"text"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"I am a label"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"settings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"container"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+            </span><span class="nt">"input"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"attributes"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
+    </span><span class="p">}]</span><span class="w">
+	</span><span class="err">...</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>...
+<div class="highlighter-rouge"><pre class="highlight"><code>...
 {
     "id": "text-input-test",
     "name": "textInputTest",
@@ -928,13 +951,14 @@ to a file called “video-personalization.html” and change the text to read �
     "attributes": {}
 }
 ...
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <ul>
   <li>To add the custom html, replace <code class="highlighter-rouge">"label"</code> with <code class="highlighter-rouge">"labelHTML"</code> and its value to <code class="highlighter-rouge">"&lt;h2&gt;I am from the JSON&lt;/h2&gt;"</code> in this input:</li>
 </ul>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[
+<div class="highlighter-rouge"><pre class="highlight"><code>[
 	...
 	{
 	    "id": "text-input-test",
@@ -949,40 +973,42 @@ to a file called “video-personalization.html” and change the text to read �
 	}
 	...
 ]
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <ul>
   <li>The resulting input state data should look like this:</li>
 </ul>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    "id": "input-state-test",
-    "name": "Input State Test",
-    "url": "/input-state-test",
-    "type": "input",
-    "header": {},
-    "footer": {},
-    "onEnter": [],
-    "onExit": [],
-    "onSubmit": [],
-    "form": {
-        "classes": "",
-        "submit": {}
-    },
-    "next": [],
-    "inputs": [{
-        "id": "text-input-test",
-        "name": "textInputTest",
-        "type": "text",
-        "labelHTML": "&lt;h2&gt;I am from the JSON&lt;/h2&gt;",
-        "settings": {
-            "container": {},
-            "input": {}
-        },
-        "attributes": {}
-    }]
-}
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"input-state-test"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Input State Test"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/input-state-test"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"input"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"header"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+    </span><span class="nt">"footer"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+    </span><span class="nt">"onEnter"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"onExit"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"onSubmit"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"form"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"classes"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"submit"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"next"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"inputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"text-input-test"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"textInputTest"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"text"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"labelHTML"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;h2&gt;I am from the JSON&lt;/h2&gt;"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"settings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"container"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+            </span><span class="nt">"input"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"attributes"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
+    </span><span class="p">}]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
 
 <ul>
   <li>This should render like this:
@@ -997,57 +1023,59 @@ to a file called “video-personalization.html” and change the text to read �
   <li>Here is the resulting data from above:</li>
 </ul>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    "id": "input-state-test",
-    "name": "Input State Test",
-    "url": "/input-state-test",
-    "type": "input",
-    "header": {},
-    "footer": {},
-    "onEnter": [],
-    "onExit": [],
-    "onSubmit": [],
-    "form": {
-        "classes": "",
-        "submit": {}
-    },
-    "next": [],
-    "inputs": [{
-        "id": "text-input-test",
-        "name": "textInputTest",
-        "type": "text",
-        "labelHTML": "&lt;h2&gt;I am from the JSON&lt;/h2&gt;",
-        "settings": {
-            "container": {},
-            "input": {}
-        },
-        "attributes": {}
-    }]
-}
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"input-state-test"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Input State Test"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/input-state-test"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"input"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"header"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+    </span><span class="nt">"footer"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+    </span><span class="nt">"onEnter"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"onExit"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"onSubmit"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"form"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"classes"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"submit"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"next"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"inputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"text-input-test"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"textInputTest"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"text"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"labelHTML"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;h2&gt;I am from the JSON&lt;/h2&gt;"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"settings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"container"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+            </span><span class="nt">"input"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"attributes"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
+    </span><span class="p">}]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
 
 <ul>
   <li>Again find the input data object in the <code class="highlighter-rouge">"inputs"</code> array with <code class="highlighter-rouge">"id"</code> equal to <code class="highlighter-rouge">"text-input-test"</code>:</li>
 </ul>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-	...
-	"inputs": [{
-	    "id": "text-input-test",
-	    "name": "textInputTest",
-	    "type": "text",
-	    "labelHTML": "&lt;h2&gt;I am from the JSON&lt;/h2&gt;",
-	    "settings": {
-	        "container": {},
-	        "input": {}
-	    },
-	    "attributes": {}
-	}]
-	...
-}
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+	</span><span class="err">...</span><span class="w">
+	</span><span class="nt">"inputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+	    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"text-input-test"</span><span class="p">,</span><span class="w">
+	    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"textInputTest"</span><span class="p">,</span><span class="w">
+	    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"text"</span><span class="p">,</span><span class="w">
+	    </span><span class="nt">"labelHTML"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;h2&gt;I am from the JSON&lt;/h2&gt;"</span><span class="p">,</span><span class="w">
+	    </span><span class="nt">"settings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+	        </span><span class="nt">"container"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+	        </span><span class="nt">"input"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
+	    </span><span class="p">},</span><span class="w">
+	    </span><span class="nt">"attributes"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
+	</span><span class="p">}]</span><span class="w">
+	</span><span class="err">...</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[
+<div class="highlighter-rouge"><pre class="highlight"><code>[
 	...
 	{
 		"id": "text-input-test",
@@ -1062,7 +1090,8 @@ to a file called “video-personalization.html” and change the text to read �
 	}
 	...
 ]
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <ul>
   <li>Take the value of <code class="highlighter-rouge">"labelHTML"</code> and add it to a file called “input-label.html” and replace the value “I am from the JSON” with the value “I am from the template”:</li>
@@ -1070,15 +1099,16 @@ to a file called “video-personalization.html” and change the text to read �
 
 <p><em>input-label.html</em></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;h2&gt;I am from the template&lt;/h2&gt;
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;h2&gt;I am from the template&lt;/h2&gt;
+</code></pre>
+</div>
 
 <ul>
   <li>Now reaplce <code class="highlighter-rouge">"labelHTML"</code> with the key <code class="highlighter-rouge">"labelTemplateUrl"</code> whose value is `
 “input-label.html”`:</li>
 </ul>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[
+<div class="highlighter-rouge"><pre class="highlight"><code>[
 	...
 	{
 		"id": "text-input-test",
@@ -1093,40 +1123,42 @@ to a file called “video-personalization.html” and change the text to read �
 	}
 	...
 ]
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <ul>
   <li>The resulting data should look like this:</li>
 </ul>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-    "id": "input-state-test",
-    "name": "Input State Test",
-    "url": "/input-state-test",
-    "type": "input",
-    "header": {},
-    "footer": {},
-    "onEnter": [],
-    "onExit": [],
-    "onSubmit": [],
-    "form": {
-        "classes": "",
-        "submit": {}
-    },
-    "next": [],
-    "inputs": [{
-        "id": "text-input-test",
-        "name": "textInputTest",
-        "type": "text",
-        "labelTemplateUrl": "input-label.html",
-        "settings": {
-            "container": {},
-            "input": {}
-        },
-        "attributes": {}
-    }]
-}
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"input-state-test"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Input State Test"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/input-state-test"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"input"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"header"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+    </span><span class="nt">"footer"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+    </span><span class="nt">"onEnter"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"onExit"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"onSubmit"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"form"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"classes"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"submit"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"next"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+    </span><span class="nt">"inputs"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+        </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"text-input-test"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"textInputTest"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"text"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"labelTemplateUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"input-label.html"</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"settings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"container"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+            </span><span class="nt">"input"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"attributes"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
+    </span><span class="p">}]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
 
 <ul>
   <li>This should render into something like this:
@@ -1149,15 +1181,16 @@ not work with other frameworks.</p>
 level of presedence over other data that adds HTML. For example, if as a developer you wrote
 your Header data object like this:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{
-   ...
-   "header" : {
-   		"html" : "&lt;h1&gt;I WILL NOT BE SEEN&lt;/h1&gt;",
-   		"templateUrl" : "templates/test.html"
-   }
-   ...
-}
-</code></pre></div></div>
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+   </span><span class="err">...</span><span class="w">
+   </span><span class="nt">"header"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+   		</span><span class="nt">"html"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;h1&gt;I WILL NOT BE SEEN&lt;/h1&gt;"</span><span class="p">,</span><span class="w">
+   		</span><span class="nt">"templateUrl"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"templates/test.html"</span><span class="w">
+   </span><span class="p">}</span><span class="w">
+   </span><span class="err">...</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
 
 <p>The <code class="highlighter-rouge">&lt;h1&gt;I WILL NOT BE SEEN&lt;/h1&gt;</code> will not be seen.</p>
 
@@ -1204,15 +1237,15 @@ your Header data object like this:</p>
     
     
     
-    <li><a href="http://localhost:4000/ivx-js/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    <li><a href="https://influencetech.github.io/ivx-js/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
   </ul>
 </div>
 
-<div class="page__footer-copyright">&copy; 2018 Influence Technology. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+<div class="page__footer-copyright">&copy; 2017 Influence Technology. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
       </footer>
     </div>
 
-    <script src="http://localhost:4000/ivx-js/assets/js/main.min.js"></script>
+    <script src="https://influencetech.github.io/ivx-js/assets/js/main.min.js"></script>
 
 
 

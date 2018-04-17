@@ -1,18 +1,17 @@
 export class Directive {
-    constructor(iVXjs,iVXjsActionTemplateService) {
+    constructor(iVXjs) {
         this.link = ($scope, iElm, iAttrs, controller) => {
-            iVXjsActionTemplateService.setup($scope, iElm, iAttrs, _getSetCompletedEventObj);
+            iElm[0].addEventListener('click', (event) => {
+                event.preventDefault();
 
-            function _getSetCompletedEventObj() {
-                return {
-                    eventName: "setComplete"
-                }
-            }
+                iVXjs.experience.setComplete();
+
+            }, false);
         }
     }
 }
 
-Directive.$inject = ["iVXjs", "iVXjsActionTemplateService"];
+Directive.$inject = ["iVXjs"];
 
 export default class {
     constructor(app, opts) {

@@ -6,7 +6,7 @@ describe('ErrorMessages', () =>{
     
     describe('#html', () =>{
        
-       xit('should return a correct HTML with error messages.', () =>{
+       it('should return a correct HTML with error messages.', () =>{
            let errorMessages = new ErrorMessages([
                {
                    "attrHTML" : `test="test"`,
@@ -14,7 +14,7 @@ describe('ErrorMessages', () =>{
                }
            ]);
            
-           let errorHTML = `<div class='error-messages ivx-error-container'>
+           let errorHTML = `<div class='error-messages'>
                 <span class="error-message" test="test">
                     I am an error!
                 </span>

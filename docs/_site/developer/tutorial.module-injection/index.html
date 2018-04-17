@@ -19,7 +19,7 @@
 
 
 
-<title>Module Injection - iVXjs</title>
+<title>iVXjs</title>
 
 
 
@@ -29,11 +29,11 @@
 
 <meta property="og:locale" content="en">
 <meta property="og:site_name" content="iVXjs">
-<meta property="og:title" content="Module Injection">
+<meta property="og:title" content="iVXjs">
 
 
-  <link rel="canonical" href="http://localhost:4000/ivx-js/developer/tutorial.module-injection/">
-  <meta property="og:url" content="http://localhost:4000/ivx-js/developer/tutorial.module-injection/">
+  <link rel="canonical" href="https://influencetech.github.io/ivx-js/developer/tutorial.module-injection/">
+  <meta property="og:url" content="https://influencetech.github.io/ivx-js/developer/tutorial.module-injection/">
 
 
 
@@ -61,7 +61,7 @@
       "@context" : "http://schema.org",
       "@type" : "Person",
       "name" : "Influence Technology",
-      "url" : "http://localhost:4000/ivx-js",
+      "url" : "https://influencetech.github.io/ivx-js",
       "sameAs" : null
     }
   </script>
@@ -74,7 +74,7 @@
 <!-- end SEO -->
 
 
-<link href="http://localhost:4000/ivx-js/feed.xml" type="application/atom+xml" rel="alternate" title="iVXjs Feed">
+<link href="https://influencetech.github.io/ivx-js/feed.xml" type="application/atom+xml" rel="alternate" title="iVXjs Feed">
 
 <!-- http://t.co/dKP3o1e -->
 <meta name="HandheldFriendly" content="True">
@@ -86,7 +86,7 @@
 </script>
 
 <!-- For all browsers -->
-<link rel="stylesheet" href="http://localhost:4000/ivx-js/assets/css/main.css">
+<link rel="stylesheet" href="https://influencetech.github.io/ivx-js/assets/css/main.css">
 
 <meta http-equiv="cleartype" content="on">
     <!-- start custom head snippets -->
@@ -109,16 +109,16 @@
       <nav id="site-nav" class="greedy-nav">
         <button><div class="navicon"></div></button>
         <ul class="visible-links">
-          <li class="masthead__menu-item masthead__menu-item--lg"><a href="http://localhost:4000/ivx-js/">iVXjs</a></li>
+          <li class="masthead__menu-item masthead__menu-item--lg"><a href="https://influencetech.github.io/ivx-js/">iVXjs</a></li>
           
             
-            <li class="masthead__menu-item"><a href="http://localhost:4000/ivx-js/developer/tutorial.hello-world">Getting Started</a></li>
+            <li class="masthead__menu-item"><a href="https://influencetech.github.io/ivx-js/developer/tutorial.hello-world">Getting Started</a></li>
           
             
-            <li class="masthead__menu-item"><a href="http://localhost:4000/ivx-js/developer/tutorials">Tutorials</a></li>
+            <li class="masthead__menu-item"><a href="https://influencetech.github.io/ivx-js/developer/tutorials">Tutorials</a></li>
           
             
-            <li class="masthead__menu-item"><a href="http://localhost:4000/ivx-js/developer/configuration">Configuration and Features</a></li>
+            <li class="masthead__menu-item"><a href="https://influencetech.github.io/ivx-js/developer/configuration">Configuration and Features</a></li>
           
         </ul>
         <ul class="hidden-links hidden"></ul>
@@ -139,7 +139,7 @@
 
 
   <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
-    <meta itemprop="headline" content="Module Injection">
+    
     
     
     
@@ -147,8 +147,7 @@
     <div class="page__inner-wrap">
       
         <header>
-          <h1 class="page__title" itemprop="headline">Module Injection
-</h1>
+          
           
         </header>
       
@@ -200,47 +199,50 @@ into iVXjs without having to change the JSON. To inject this iVXjs Bootstrap UI 
   <li>Make a reference to it in your HTML after the <em>angular.ivx.js</em> reference:</li>
 </ul>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>...
+<div class="highlighter-rouge"><pre class="highlight"><code>...
 &lt;!-- Angular iVXjs Library --&gt;
 &lt;script src="js/lib/angular.ivx.js"&gt;&lt;/script&gt;
 
 &lt;!-- iVXjs Bootstrap UI Module --&gt;
 &lt;script src="js/lib/iVXjs.ui.bootstrap.js"&gt;&lt;/script&gt;
 ...
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <ul>
   <li>Go to the config function of the angular application and put in the init function with the config
 data path:</li>
 </ul>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>angular
+<div class="highlighter-rouge"><pre class="highlight"><code>angular
 .module('app', ['ivx-js'])
 .config(['iVXjs', function (iVXjs) {
     iVXjs.init({
         config: "data/module-injection.json"
     });
 }]);
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <ul>
   <li>Inject the iVXjs Bootstrap Module function:</li>
 </ul>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>angular
+<div class="highlighter-rouge"><pre class="highlight"><code>angular
 .module('app', ['ivx-js'])
 .config(['iVXjs', 'iVXjs.ui.bootstrap', function (iVXjs, iVXjsUIBootstrap) {
     iVXjs.init({
         config: "data/module-injection.json"
     });
 }]);
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <ul>
   <li>Call the iVXjsUIBootstrap function in the init object with the key “ui”:</li>
 </ul>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>angular
+<div class="highlighter-rouge"><pre class="highlight"><code>angular
 .module('app', ['ivx-js'])
 .config(['iVXjs', 'iVXjs.ui.bootstrap', function (iVXjs, iVXjsUIBootstrap) {
     iVXjs.init({
@@ -248,7 +250,8 @@ data path:</li>
         ui : iVXjsUIBootstrap()
     });
 }]);
-</code></pre></div></div>
+</code></pre>
+</div>
 
 <p>Once those steps are followed, the video state should look something like this:</p>
 
@@ -298,15 +301,15 @@ data path:</li>
     
     
     
-    <li><a href="http://localhost:4000/ivx-js/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    <li><a href="https://influencetech.github.io/ivx-js/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
   </ul>
 </div>
 
-<div class="page__footer-copyright">&copy; 2018 Influence Technology. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+<div class="page__footer-copyright">&copy; 2017 Influence Technology. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
       </footer>
     </div>
 
-    <script src="http://localhost:4000/ivx-js/assets/js/main.min.js"></script>
+    <script src="https://influencetech.github.io/ivx-js/assets/js/main.min.js"></script>
 
 
 

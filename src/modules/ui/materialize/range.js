@@ -1,5 +1,5 @@
-import { ErrorMessages } from "./messages.js";
-import { AttributeTags } from "../utilities/attributes.js";
+import {ErrorMessages} from "./messages.js";
+import {AttributeTags} from "../utilities/attributes.js";
 
 /**
  * Creates a number input that will record numbers  
@@ -19,7 +19,7 @@ export class Range {
      * @param {object} errorMessages - UI specific Error messages 
      */
     constructor(inputObj = {}, errorMessages = ErrorMessages) {
-        let { input = {}, settings = {}, tags = {}, errors = {} } = inputObj;
+        let {input = {}, settings = {}, tags = {}, errors = {}} = inputObj;
 
         /**
          * Input specific settings for this number input
@@ -78,14 +78,6 @@ export class Range {
         return ''
     }
 
-    get beforeClasses(){
-        return 'ivx-input-before ivx-input-before-range';
-    }
-
-    get afterClasses(){
-        return 'ivx-input-after ivx-input-after-range';
-    }
-
     /**
      * The HTML to render a number input based on the settings from the 
      * constructor. 
@@ -107,29 +99,28 @@ export class Range {
      * @type {String}
      */
     get html() {
-        let { input, settings, tags, errors, uiClasses, uiAttributes, beforeClasses : defaultBeforeClasses, afterClasses : defaultAfterClasses } = this;
-        let { label = '', name = '', id = '', labelHTML,  beforeHtml : beforeSettings = {}, afterHtml : afterSettings = {}  } = input;
-        let { input: inputSettings = {}, showLabel = true } = settings;
-        let { classes = '' } = inputSettings;
+        let {input, settings, tags, errors, uiClasses, uiAttributes} = this;
+        let {label = '', name = '', id = '', labelHTML} = input;
+        let {input: inputSettings = {}, showLabel = true} = settings;
+        let {classes = ''} = inputSettings;
 
         classes = `${classes} ${uiClasses}`;
-
-        let { messages: errorMessages = [], attributes: errorAttributes = '', nonValidate = [], tags: errorTags = '' } = errors;
+        
+        let {messages: errorMessages = [], attributes: errorAttributes = '', nonValidate = [], tags: errorTags = ''} = errors;
         let errorHTML = new this.errorMessages(errorMessages).html;
         let nonValidateAttributesHTML = new this.attributeTags(errorAttributes, nonValidate).html;
 
         nonValidateAttributesHTML = `${nonValidateAttributesHTML} ${uiAttributes}`;
 
         if (labelHTML) label = labelHTML;
-
+        
         let inputHTML = ` 
-        <div class="${beforeClasses} ${defaultBeforeClasses}">${beforeHtml}</div>
+             
             <p class="range-field">
-            <input class="${classes} ivx-input ivx-input-range"  name="${name}"  type="range" ${nonValidateAttributesHTML}   ${errorTags} ${tags}>
+            <input class="${classes}"  name="${name}"  type="range" ${nonValidateAttributesHTML}   ${errorTags} ${tags}>
            </p>
-           <label class="ivx-input-label ivx-input-label-range for="${name}"> ${label} </label>
+           <label for="${name}"> ${label} </label>
             ${errorHTML}
-            <div class="${afterClasses} ${defaultAfterClasses}">${afterHtml}</div>
        `;
 
         return `${inputHTML}`;

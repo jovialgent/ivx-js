@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -148,8 +148,6 @@ var TypeValidator = exports.TypeValidator = function () {
     }, {
         key: 'isUndefined',
         value: function isUndefined(obj) {
-            var undefined = void 0;
-
             return obj === undefined || obj === null;
         }
     }, {
@@ -507,7 +505,8 @@ var Rules = exports.Rules = function () {
                         },
                         "required": this.rulesRequired
                     }
-                }
+                },
+                "required": ["stateId"]
             };
         }
     }]);
@@ -520,52 +519,6 @@ var Rules = exports.Rules = function () {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var HTMLObject = exports.HTMLObject = function () {
-    function HTMLObject() {
-        _classCallCheck(this, HTMLObject);
-    }
-
-    _createClass(HTMLObject, [{
-        key: "generalHTMLSchema",
-        get: function get() {
-            return {
-                "type": "object",
-                "properties": {
-                    "html": {
-                        "type": "string"
-                    },
-                    "classes": {
-                        "type": "string"
-                    },
-                    "templateUrl": {
-                        "type": "string"
-                    }
-                }
-            };
-        }
-    }, {
-        key: "labelHTMLSchema",
-        get: function get() {}
-    }]);
-
-    return HTMLObject;
-}();
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
 /* WEBPACK VAR INJECTION */(function(module) {
 
 Object.defineProperty(exports, "__esModule", {
@@ -575,9 +528,9 @@ exports.SchemaValidation = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _index = __webpack_require__(6);
+var _index = __webpack_require__(5);
 
-var _baseStructure = __webpack_require__(11);
+var _baseStructure = __webpack_require__(10);
 
 var _statesTypes = __webpack_require__(13);
 
@@ -759,16 +712,16 @@ var SchemaValidation = exports.SchemaValidation = function () {
 module.export = initializeSchemaValidation;
 
 if (angular && angular.module('ivx-js')) {
-    angular.module('ivx-js').constant('iVXjs.validation.schema', initializeSchemaValidation).constant('iVXjsValidationSchema', initializeSchemaValidation);
+    angular.module('ivx-js').constant('iVXjs.validation.schema', initializeSchemaValidation);
 }
 
 function initializeSchemaValidation(settings) {
     return SchemaValidation;
 };
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)(module)))
 
 /***/ }),
-/* 5 */
+/* 4 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -796,7 +749,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 6 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -813,11 +766,11 @@ var _typeParsers = __webpack_require__(1);
 
 var _validation = __webpack_require__(0);
 
-var _experience = __webpack_require__(7);
+var _experience = __webpack_require__(6);
 
-var _modules = __webpack_require__(8);
+var _modules = __webpack_require__(7);
 
-var _config = __webpack_require__(9);
+var _config = __webpack_require__(8);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -935,7 +888,7 @@ var iVXjsValidation = exports.iVXjsValidation = function (_Validation) {
 ;
 
 /***/ }),
-/* 7 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1011,7 +964,7 @@ var ExperienceValidation = exports.ExperienceValidation = function (_Validation)
 ;
 
 /***/ }),
-/* 8 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1080,7 +1033,7 @@ var ModuleValidation = exports.ModuleValidation = function (_Validation) {
 ;
 
 /***/ }),
-/* 9 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1095,7 +1048,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _validation = __webpack_require__(0);
 
-var _configStates = __webpack_require__(10);
+var _configStates = __webpack_require__(9);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -1203,7 +1156,7 @@ var ConfigValidation = exports.ConfigValidation = function (_Validation) {
 ;
 
 /***/ }),
-/* 10 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1327,7 +1280,7 @@ var ConfigStatesValidation = exports.ConfigStatesValidation = function (_Validat
 ;
 
 /***/ }),
-/* 11 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1342,7 +1295,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _rules = __webpack_require__(2);
 
-var _states = __webpack_require__(12);
+var _states = __webpack_require__(11);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -1401,7 +1354,7 @@ var BaseStructure = exports.BaseStructure = function () {
 }();
 
 /***/ }),
-/* 12 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1416,7 +1369,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _rules = __webpack_require__(2);
 
-var _htmlObject = __webpack_require__(3);
+var _htmlObject = __webpack_require__(12);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -1502,6 +1455,52 @@ var States = exports.States = function () {
     }]);
 
     return States;
+}();
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var HTMLObject = exports.HTMLObject = function () {
+    function HTMLObject() {
+        _classCallCheck(this, HTMLObject);
+    }
+
+    _createClass(HTMLObject, [{
+        key: "generalHTMLSchema",
+        get: function get() {
+            return {
+                "type": "object",
+                "properties": {
+                    "html": {
+                        "type": "string"
+                    },
+                    "classes": {
+                        "type": "string"
+                    },
+                    "templateUrl": {
+                        "type": "string"
+                    }
+                }
+            };
+        }
+    }, {
+        key: "labelHTMLSchema",
+        get: function get() {}
+    }]);
+
+    return HTMLObject;
 }();
 
 /***/ }),
@@ -1801,19 +1800,9 @@ var VideoStateSchema = exports.VideoStateSchema = function () {
                                 "timeAt": {
                                     "type": "number",
                                     "minimum": 0
-                                },
-                                "endAt": {
-                                    "type": "number",
-                                    "minimum": 0
-                                },
-                                "eventName": {
-                                    "type": "string"
-                                },
-                                "args": {
-                                    "type": "object"
                                 }
                             },
-                            "required": ["eventName"]
+                            "required": ["timeAt"]
                         }
                     }
                 },
@@ -1841,8 +1830,6 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _inputs = __webpack_require__(17);
 
-var _htmlObject = __webpack_require__(3);
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var InputStateSchema = exports.InputStateSchema = function () {
@@ -1851,11 +1838,10 @@ var InputStateSchema = exports.InputStateSchema = function () {
 
         this.state = state;
         this.index = index;
-        this.generalHTMLSchema = new _htmlObject.HTMLObject().generalHTMLSchema;
     }
 
     _createClass(InputStateSchema, [{
-        key: 'validate',
+        key: "validate",
         value: function validate() {
             var allErrors = [tv4.validateMultiple(this.state, this.schema), this.inputErrors].reduce(function (currentErrors, errorObj, index) {
                 var errors = errorObj.errors;
@@ -1871,7 +1857,7 @@ var InputStateSchema = exports.InputStateSchema = function () {
             };
         }
     }, {
-        key: 'inputErrors',
+        key: "inputErrors",
         get: function get() {
             var index = this.index;
             var _state$inputs = this.state.inputs,
@@ -1884,7 +1870,7 @@ var InputStateSchema = exports.InputStateSchema = function () {
             };
         }
     }, {
-        key: 'schema',
+        key: "schema",
         get: function get() {
             return {
                 "type": "object",
@@ -1958,8 +1944,6 @@ var InputStateSchema = exports.InputStateSchema = function () {
                                 "labelTemplateUrl": {
                                     "type": "string"
                                 },
-                                "beforeHtml": this.generalHTMLSchema,
-                                "afterHtml": this.generalHTMLSchema,
                                 "settings": {
                                     "type": "object",
                                     "properties": {

@@ -25,22 +25,11 @@ export class Options {
         return ''
     }
 
-    get beforeClasses(){
-        return 'ivx-input-before ivx-input-before-options';
-    }
-
-    get afterClasses(){
-        return 'ivx-input-after ivx-input-after-options';
-    }
-
     get html() {
-        let {tags, input, defaultDisplay, errors, settings, uiClasses, uiAttributes, beforeClasses : defaultBeforeClasses, afterClasses : defaultAfterClasses} = this;
-        let {id, name, options, label = '', labelHTML, beforeHtml : beforeSettings = {}, afterHtml : afterSettings = {}} = input;
+        let {tags, input, defaultDisplay, errors, settings, uiClasses, uiAttributes} = this;
+        let {id, name, options, label = '', labelHTML} = input;
         let {input: inputSettings = {}, showLabel = true} = settings;
         let {classes = ''} = inputSettings;
-
-        const {html : beforeHtml = "", classes : beforeClasses = ""} = beforeSettings;
-        const {html : afterHtml = "", classes : afterClasses = ""} = afterSettings;
 
         classes = `${classes} ${uiClasses}`;
 
@@ -65,15 +54,12 @@ export class Options {
         }, '')
 
         let inputHTML = ` 
-             <div class="${beforeClasses} ${defaultBeforeClasses}">${beforeHtml}</div>
-             <label class="ivx-input-label ivx-input-label-options" for="${id}">${label}</label>             
-               <select class="${classes} ivx-input ivx-input-options"  id="${id}" name="${name}"${nonValidateAttributesHTML} ${errorTags} ${tags}>
+             <label for="${id}">${label}</label>             
+               <select class="${classes}"  id="${id}" name="${name}"${nonValidateAttributesHTML} ${errorTags} ${tags}>
                   ${defaultOptionTag}
                   ${optionsHTML}
                </select>
-               ${errorHTML}
-               <div class="${afterClasses} ${defaultAfterClasses}">${afterHtml}</div>
-        `;
+               ${errorHTML}`;
 
         return `${inputHTML}`;
     }

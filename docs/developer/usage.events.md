@@ -434,35 +434,7 @@ _Payload_
 
 _Overview_
 
-These events are triggered while a video state is loaded or while a video is playing. A video player
-on the page can be uniquely targeted by giving events a `playerId` property. Here is an example video state that has an id: 
-
-```
-{
-    "states" : [{
-        ...
-        "type" : "video",
-        "playerSettings":{
-            "id" : "target-player-id"
-        }
-        ...
-    }]
-}
-```
-
-So if you wanted to target the player event, `iVXjs:video:mute`, when you enter a state
-you could do it this way: 
-
-```
-{
-    "onEnter" : [{
-        "eventName" : "iVXjs:video:mute",
-        "args" : {
-            "playerId" : "target-player-id"
-        }
-    }]
-}
-```
+These events are triggered while a video state is loaded or while a video is playing. 
 
 ## iVXjs:video:can-play
 
@@ -512,14 +484,13 @@ None
 
 _Description_ 
 
-Indicates to mute a video player on the page. If it has arguments of `playerId`, it mutes the player with the matching id. 
-If the `playerId` missing, this will mute all videos currently on the page.
+Mutes the current video. 
 
 _Payload_
 
 None 
 
-_JSON For all Video Players_
+_JSON_
 
 ```
 {
@@ -527,41 +498,23 @@ _JSON For all Video Players_
 }
 ```
 
-_JSON For Specific Video Player_
-
-```
-{
-    "eventName" : "iVXjs:video:mute",
-    "args" : {
-        "playerId" : "TARGET_PLAYER_ID"
-    }
-}
-```
-
-_Action Template For All Video Players_
+_Action Template_
 
 ```
 <ANY ivx-event="iVXjs:video:mute"></ANY>
-```
-
-_Action Template For Target Video Player_
-
-```
-<ANY ivx-event="iVXjs:video:mute" ivx-event-args="{playerId : 'TARGET_PLAYER_ID'}"></ANY>
 ```
 
 ## iVXjs:video:pause
 
 _Description_ 
 
-Indicates to pause a video player on the page. If it has arguments of `playerId`, it pauses the player with the matching id. 
-If `playerId` is missing, this will pause all videos currently on the page.
+Pauses the current video. 
 
 _Payload_ 
 
 None 
 
-_JSON For all Video Players_
+_JSON_
 
 ```
 {
@@ -569,41 +522,23 @@ _JSON For all Video Players_
 }
 ```
 
-_JSON For Specific Video Player_
-
-```
-{
-    "eventName" : "iVXjs:video:pause",
-    "args" : {
-        "playerId" : "TARGET_PLAYER_ID"
-    }
-}
-```
-
-_Action Template For All Video Players_
+_Action Template_
 
 ```
 <ANY ivx-event="iVXjs:video:pause"></ANY>
-```
-
-_Action Template For Target Video Player_
-
-```
-<ANY ivx-event="iVXjs:video:pause" ivx-event-args="{playerId : 'TARGET_PLAYER_ID'}"></ANY>
 ```
 
 ## iVXjs:video:play 
 
 _Description_ 
 
-Indicates to play a video player on the page. If it has arguments of `playerId`, it plays the player with the matching id. 
-If `playerId` is missing, this will play all videos currently on the page.
+Plays the current video. 
 
 _Payload_ 
 
 None 
 
-_JSON For all Video Players_
+_JSON_
 
 ```
 {
@@ -611,35 +546,17 @@ _JSON For all Video Players_
 }
 ```
 
-_JSON For Specific Video Player_
-
-```
-{
-    "eventName" : "iVXjs:video:play",
-    "args" : {
-        "playerId" : "TARGET_PLAYER_ID"
-    }
-}
-```
-
-_Action Template For All Video Players_
+_Action Template_
 
 ```
 <ANY ivx-event="iVXjs:video:play"></ANY>
-```
-
-_Action Template For Target Video Player_
-
-```
-<ANY ivx-event="iVXjs:video:play" ivx-event-args="{playerId : 'TARGET_PLAYER_ID'}"></ANY>
 ```
 
 ## iVXjs:video:seek
 
 _Description_ 
 
-Indicates to go to a time in the video player on the page. If it has arguments of `playerId`, it sets the time to
-the player with the matching id. If missing, this will set the time for all videos currently on the page.
+Sets the current video to the time in seconds 
 
 _Payload_ 
 
@@ -656,7 +573,7 @@ _Payload_
 }
 ```
 
-_JSON For all Video Players_
+_JSON_
 
 ```
 {
@@ -667,28 +584,10 @@ _JSON For all Video Players_
 }
 ```
 
-_JSON For Specific Video Player_
+_Action Template_
 
 ```
-{
-    "eventName" : "iVXjs:video:seek",
-    "args" : {
-        "playerId" : "TARGET_PLAYER_ID",
-        "currentTime" : TIME_IN_SECONDS
-    }
-}
-```
-
-_Action Template For All Video Players_
-
-```
-<ANY ivx-event="iVXjs:video:seek" ivx-event-args="{currentTime : TIME_IN_SECONDS}"></ANY>
-```
-
-_Action Template For Target Video Player_
-
-```
-<ANY ivx-event="iVXjs:video:seek" ivx-event-args="{currentTime : TIME_IN_SECONDS, playerId : 'TARGET_PLAYER_ID'}"></ANY>
+<ANY ivx-event="iVXjs:video:seek" ivx-event-args="{currentTime : SECONDS}"></ANY>
 ```
 
 ## iVXjs:video:set-duration 
@@ -710,8 +609,7 @@ _Payload_
 
 _Description_ 
 
-Indicates to set the volume of the video for a video player on the page. If it has arguments of "playerId", it sets the volume to
-the player with the matching id. If missing, this will set the volume for all videos currently on the page.
+Sets the current video's volume. Range: 0 to 1;
 
 _Payload_
 
@@ -730,7 +628,7 @@ _Payload_
 }
 ```
 
-_JSON For all Video Players_
+_JSON_
 
 ```
 {
@@ -741,28 +639,10 @@ _JSON For all Video Players_
 }
 ```
 
-_JSON For Specific Video Player_
+_Action Template_
 
 ```
-{
-    "eventName" : "iVXjs:video:set-volume",
-    "args" : {
-        "playerId" : "TARGET_PLAYER_ID",
-        "volume" : VOLUME_AMOUNT
-    }
-}
-```
-
-_Action Template For All Video Players_
-
-```
-<ANY ivx-event="iVXjs:video:set-volume" ivx-event-args="{volume : VOLUME_AMOUNT}"></ANY>
-```
-
-_Action Template For Target Video Player_
-
-```
-<ANY ivx-event="iVXjs:video:set-volume" ivx-event-args="{volume : VOLUME_AMOUNT, playerId : 'TARGET_PLAYER_ID'}"></ANY>
+<ANY ivx-event="iVXjs:video:volume" ivx-event-args="{volume : VOLUME_AMOUNT}"></ANY>
 ```
 
 ## iVXjs:video:time-update 
@@ -778,23 +658,20 @@ player - current instant of this video player.
 
 player.currentTime - current time of this video player;
 
-player.id - the specific player id of the update.
-
 stateData - state data where this player exists.
 
-
-## iVXjs:video:unmute
+## iVXjs:video:unmute 
 
 _Description_ 
 
-Indicates to unmute, return the volume to the last volume amount it was set, a video player on the page. If it has arguments of `playerId`, 
-it unmute the player with the matching id. If `playerId` is missing, this will mute all videos currently on the page.
+Unmutes the current video and sets the volume to the last volume 
+set. 
 
-_Payload_
+_Payload_ 
 
 None 
 
-_JSON For all Video Players_
+_JSON_
 
 ```
 {
@@ -802,27 +679,10 @@ _JSON For all Video Players_
 }
 ```
 
-_JSON For Specific Video Player_
-
-```
-{
-    "eventName" : "iVXjs:video:unmute",
-    "args" : {
-        "playerId" : "TARGET_PLAYER_ID"
-    }
-}
-```
-
-_Action Template For All Video Players_
+_Action Template_
 
 ```
 <ANY ivx-event="iVXjs:video:unmute"></ANY>
-```
-
-_Action Template For Target Video Player_
-
-```
-<ANY ivx-event="iVXjs:video:unmute" ivx-event-args="{playerId : 'TARGET_PLAYER_ID'}"></ANY>
 ```
 
 # Track Cues Events
@@ -863,9 +723,8 @@ _Payload_
 
 _Description_
 
-Sends a track id to set the current language track. If the `playerId` argument 
-is in the payload, it will change the track for the specific player. Otherwise,
-it will change the tracks for all players on the page. 
+Sends a track id to set the current language track. This will only affects 
+different subtitles and caption tracks.
 
 _Payload_ 
 
@@ -881,49 +740,29 @@ _Payload_
    
 }
 ```
-_JSON For all Video Players_
+
+_JSON_
 
 ```
 {
     "eventName" : "iVXjs:tracks:change-current-track",
     "args" : {
-         "trackId" : "TRACK_ID"
-    }
-}
-```
-
-_JSON For Specific Video Player_
-
-```
-{
-    "eventName" : "iVXjs:tracks:change-current-track",
-    "args" : {
-        "playerId" : "TARGET_PLAYER_ID",
         "trackId" : "TRACK_ID"
     }
 }
 ```
 
-_Action Template For All Video Players_
+_Action Template_
 
 ```
 <ANY ivx-event="iVXjs:tracks:change-current-track" ivx-event-args="{trackId : 'TRACK_ID'}"></ANY>
 ```
 
-_Action Template For Target Video Player_
-
-```
-<ANY ivx-event="iVXjs:tracks:change-current-track" ivx-event-args="{trackId : 'TRACK_ID', playerId : 'TARGET_PLAYER_ID'}"></ANY>
-```
-
-
 ## iVXjs:tracks:cues:change-chapter
 
 _Description_
 
-Skips to the start of the chapter of the chapter with the matching id. If the argument `playerId` is present,
-then it will skip to the chapter of a specific player. Otherwise, it will skip to any video that has 
-the matching chapter id.
+Skips to the start of the chapter of the chapter with the matching id.
 
 _Payload_ 
 
@@ -940,39 +779,21 @@ _Payload_
 }
 ```
 
-_JSON For all Video Players_
-
-```
-{
-   "eventName" : "iVXjs:tracks:cues:change-chapter",
-    "args" : {
-        "chapterId" : "CHAPTER_ID"
-    }
-}
-```
-
-_JSON For Specific Video Player_
+_JSON_
 
 ```
 {
     "eventName" : "iVXjs:tracks:cues:change-chapter",
     "args" : {
-        "playerId" : "TARGET_PLAYER_ID",
         "chapterId" : "CHAPTER_ID"
     }
 }
 ```
 
-_Action Template For All Video Players_
+_Action Template_
 
 ```
 <ANY ivx-event="iVXjs:tracks:cues:change-chapter" ivx-event-args="{chapterId : 'CHAPTER_ID'}"></ANY>
-```
-
-_Action Template For Target Video Player_
-
-```
-<ANY ivx-event="iVXjs:tracks:cues:change-chapter" ivx-event-args="{chapterId : 'CHAPTER_ID', playerId : 'PLAYER_ID'}"></ANY>
 ```
 
 ## iVXjs:tracks:cues:on-enter

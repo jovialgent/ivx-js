@@ -4,11 +4,10 @@ import VideoEventNames from "../../../../src/constants/video.events.js";
 import {FakeBus} from '../../../core/fake-bus.js';
 
 describe('Video Events', () => {
-    let fakeBus, videoEvents, playerEventControlNames, videoEventNames, playerId;
+    let fakeBus, videoEvents, playerEventControlNames, videoEventNames;
 
     beforeEach(() => {
         playerEventControlNames = new VideoSettings().PlayerControlEvents;
-        playerId = Math.random().toString(36).substring(2,15);
         videoEventNames = new VideoEventNames();
         fakeBus = {
             on: function (eventName, obj) {
@@ -37,8 +36,7 @@ describe('Video Events', () => {
 
         });
 
-        videoEvents = new VideoEvents(playerId);
-        videoEvents.playerId = playerId;
+        videoEvents = new VideoEvents();
         videoEvents.iVXjsBus = fakeBus;
         videoEvents.controlEventNames = videoEventNames;
     });
@@ -47,35 +45,35 @@ describe('Video Events', () => {
     describe('#play', () => {
         it(`should emit a play event.`, () => {
             videoEvents.play();
-            expect(fakeBus.emit).toHaveBeenCalledWith(videoEventNames.PLAY, {playerId});
+            expect(fakeBus.emit).toHaveBeenCalledWith(videoEventNames.PLAY);
         })
     });
 
     describe('#pause', () => {
         it(`should emit a pause event.`, () => {
             videoEvents.pause();
-            expect(fakeBus.emit).toHaveBeenCalledWith(videoEventNames.PAUSE, {playerId});
+            expect(fakeBus.emit).toHaveBeenCalledWith(videoEventNames.PAUSE);
         })
     });
 
     describe('#setVolume', () => {
         it(`should emit a set volume event.`, () => {
             videoEvents.setVolume(3);
-            expect(fakeBus.emit).toHaveBeenCalledWith(videoEventNames.SET_VOLUME, {volume : 3, playerId});
+            expect(fakeBus.emit).toHaveBeenCalledWith(videoEventNames.SET_VOLUME, 3);
         })
     });
 
     describe('#seek', () => {
         it(`should emit a set seek event.`, () => {
             videoEvents.seek(123);
-            expect(fakeBus.emit).toHaveBeenCalledWith(videoEventNames.SEEK, {currentTime:123, playerId});
+            expect(fakeBus.emit).toHaveBeenCalledWith(videoEventNames.SEEK, 123);
         })
     });
 
     describe('#getDuration', () => {
         it(`should emit a set a get duration event.`, () => {
             videoEvents.getDuration((duration)=>{});
-            expect(fakeBus.emit).toHaveBeenCalledWith(videoEventNames.GET_DURATION, {playerId});
+            expect(fakeBus.emit).toHaveBeenCalledWith(videoEventNames.GET_DURATION);
         })
         
     });

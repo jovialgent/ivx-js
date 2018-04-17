@@ -13,8 +13,6 @@ export class TypeValidator {
     }
 
     isUndefined(obj) {
-        const undefined = void (0);
-
         return obj === undefined || obj === null;
     }
 

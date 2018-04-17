@@ -1,90 +1,77 @@
-import { Rules } from './rules.js';
-import { HTMLObject } from './html-object';
-import EmbeddedViewsSchema from "./states.embedded";
+import {Rules} from './rules.js'; 
+import {HTMLObject} from './html-object';
 
 export class States {
-    constructor(config) {
+    constructor(config){
         this.rulesSchema = new Rules(config).schema;
         this.generalHTMLSchema = new HTMLObject().generalHTMLSchema;
-        this.embeddedViewsSchema = new EmbeddedViewsSchema(config).schema;
+
     }
 
-    get stateRequired() {
-        return ['id', 'name', 'url', 'type']
+    get stateRequired(){
+        return ['id', 'name','url','type']
     }
 
-    get typeEnum() {
+    get typeEnum(){
         return ["navigation", "video", "input", "html"];
     }
 
-    get stateProperties() {
+    get stateProperties(){
         return {
-            "id": {
-                "type": "string",
-                "minLength": 1
+            "id" : {
+                "type" : "string",
+                "minLength"  :1
             },
-            "name": {
-                "type": "string",
-                "minLength": 1
+            "name" : {
+                "type" : "string",
+                "minLength"  :1
             },
-            "url": {
-                "type": "string",
-                "pattern": "\/^(\/[A-Za-z0-9-]*)$\/",
-                "minLength": 1
+            "url" : {
+                "type" : "string",
+                "pattern" : "\/^(\/[A-Za-z0-9-]*)$\/",
+                "minLength" :1
             },
-            "audio": {
-                "type": "object",
-                "properties": {
-                    "src": {
-                        "type": "string",
-                        "minLength": 1
+            "audio" : {
+                "type" : "object",
+                "properties" : {
+                    "src" : {
+                        "type" : "string",
+                        "minLength" : 1
                     },
-                    "loop": {
-                        "type": "boolean"
+                    "loop" : {
+                        "type" : "boolean"
                     },
                     "cuePoints": {
-                        "type": "array"
+                        "type" : "array"
                     }
                 },
                 "required": ["src"]
             },
-            "type": {
-                "type": "string",
-                "enum": this.typeEnum
+            "type" : {
+                "type" : "string",
+                "enum" : this.typeEnum
             },
-            "next": {
-                "type": "array",
-                "items": this.rulesSchema
+            "next" : {
+                "type" : "array",
+                "items" : this.rulesSchema
             },
-            "onEnter": {
-                "type": "array"
+            "onEnter" : {
+                "type" : "array"
             },
-            "onExit": {
-                "type": "array"
+            "onExit" : {
+                "type" : "array"
             },
-            "embedded": {
-                type: "boolean"
-            },
-            "header": this.generalHTMLSchema,
-            "footer": this.generalHTMLSchema,
-            "embeddedViews": {
-                "type": "array",
-                "items": this.embeddedViewsSchema
-            },
-            "oneOf": [{
-                "required": ["embedded"]
-            }, {
-                "required": ["embeddedViews"]
-            }]
+            "header" :this.generalHTMLSchema,
+            "footer" : this.generalHTMLSchema
         }
     }
 
-    get schema() {
+    get schema(){
         return {
-            "type": "object",
-            "name": "state",
-            "properties": this.stateProperties,
-            "required": this.stateRequired
+            "type" : "object",
+            "name" : "state",
+            "properties" : this.stateProperties,
+            "required" : this.stateRequired
         }
     }
 }
