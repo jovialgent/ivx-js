@@ -9,7 +9,7 @@ class AnchorController {
         this.$state = $state;
     }
 
-    onLinkClick($event) {
+    onLinkClick($event = {}) {
         let { iVXjs, $state } = this;
         let { onClick: onClickEvents = [], href, attributes = {}, route = "" } = this.anchorInfo;
         let self = this;
@@ -17,14 +17,23 @@ class AnchorController {
             return clickEvent.eventName === 'goToNextState';
         });
 
+
+
         if (attributes.target !== '_blank') {
             $event.preventDefault();
         }
 
+        const { currentTarget = {} } = $event;
+        const { href : compiledHref } = currentTarget;
+
+        console.log(currentTarget);
+        console.log(compiledHref);
+
+
         if (route.length && route.length > 0) {
             iVXjs.log.debug(`Link with route ${route} onLinkClick Started`, {}, { anchor: this.anchorInfo, source: 'onClick', status: 'completed', actions: onClickEvents, timestamp: Date.now() });
         } else {
-            iVXjs.log.debug(`Link with href ${href} onLinkClick Start`, {}, { anchor: this.anchorInfo, source: 'onClick', status: 'started', actions: onClickEvents, timestamp: Date.now() });
+            iVXjs.log.debug(`Link with href ${compiledHref ? compiledHref : href} onLinkClick Start`, {}, { anchor: this.anchorInfo, source: 'onClick', status: 'started', actions: onClickEvents, timestamp: Date.now() });
         }
 
 
@@ -40,11 +49,11 @@ class AnchorController {
             }
 
 
-            iVXjs.log.debug(`Link with href ${href} onLinkClick Ended`, {}, { anchor: this.anchorInfo, source: 'onClick', status: 'completed', actions: onClickEvents, timestamp: Date.now() });
+            iVXjs.log.debug(`Link with href ${ compiledHref ? compiledHref : href} onLinkClick Ended`, {}, { anchor: this.anchorInfo, source: 'onClick', status: 'completed', actions: onClickEvents, timestamp: Date.now() });
 
 
             if (attributes.target !== '_blank') {
-                self.$window.location = href;
+                self.$window.location = compiledHref ? compiledHref : href;
             }
         });
 
