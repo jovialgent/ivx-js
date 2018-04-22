@@ -26,10 +26,6 @@ class AnchorController {
         const { currentTarget = {} } = $event;
         const { href : compiledHref } = currentTarget;
 
-        console.log(currentTarget);
-        console.log(compiledHref);
-
-
         if (route.length && route.length > 0) {
             iVXjs.log.debug(`Link with route ${route} onLinkClick Started`, {}, { anchor: this.anchorInfo, source: 'onClick', status: 'completed', actions: onClickEvents, timestamp: Date.now() });
         } else {
