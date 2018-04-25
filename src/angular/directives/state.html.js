@@ -29,8 +29,8 @@ class HtmlState {
                 addViews(html, true);
             }
 
-            $scope.$on('$destroy', ()=>{
-                if(controller.timeOutId){
+            $scope.$on('$destroy', () => {
+                if (controller.timeOutId) {
                     $timeout.cancel(controller.timeOutId);
                 }
             });
@@ -48,6 +48,8 @@ class HtmlState {
                 });
             }
 
+            controller.embedded = embedded;
+
             function showState() {
                 let hasTransition = onCompile.find((event, index) => {
                     return event.eventName === "animateElement" && event.args.element === ".html-state-container";
@@ -63,7 +65,7 @@ class HtmlState {
                     })
                 }
 
-                iVXjs.log.debug(`onCompile Started`, {}, { state:$scope.stateData, source: 'onCompile', status: 'started', actions: onCompile, timestamp: Date.now() });
+                iVXjs.log.debug(`onCompile Started`, {}, { state: $scope.stateData, source: 'onCompile', status: 'started', actions: onCompile, timestamp: Date.now() });
 
                 iVXjsActions.resolveActions(onCompile, () => {
                     iVXjs.log.debug(`onCompile Completed`, {}, { state: $scope.stateData, source: 'onCompile', status: 'completed', actions: onCompile, timestamp: Date.now() });
@@ -77,7 +79,7 @@ class HtmlState {
     }
 
     get templateHTML() {
-        return `<div class="html-state-container" id="{{vm.id}}"></div>`;
+        return `<div ng-class="{'ivx-embedded-state': vm.embedded}" class="ivx-state-container ivx-state-html-container html-state-container" id="{{vm.id}}"></div>`;
     };
 }
 

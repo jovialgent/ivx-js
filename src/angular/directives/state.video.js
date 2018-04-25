@@ -59,6 +59,8 @@ class VideoState {
                 iVXjsStateCreator.addViews(embeddedViews, iElm);
             }
 
+            controller.embedded = embedded;
+
             $compile(iElm.contents())($scope, (compiled) => {
                 iElm.html(compiled);
 
@@ -87,7 +89,7 @@ class VideoState {
     }
 
     get templateHTML() {
-        return `<div class="video-state-container"></div>`;
+        return `<div ng-class="{'ivx-embedded-state': vm.embedded}" class="ivx-state-container ivx-state-video-container video-state-container"></div>`;
     }
 }
 

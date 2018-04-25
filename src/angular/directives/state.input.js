@@ -69,6 +69,8 @@ class InputState {
                     })
                 }
 
+                controller.embedded = embedded;
+
                 iVXjs.log.debug(`onInputReady Started`, {}, { state: data, source: 'onInputReady', status: 'started', actions: onInputReady, timestamp: Date.now() });
 
                 iVXjsActions.resolveActions(onInputReady, () => {
@@ -83,7 +85,7 @@ class InputState {
     }
 
     get templateHTML() {
-        return `<div class="input-state-container"></div>`;
+        return `<div ng-class="{'ivx-embedded-state': vm.embedded}" class="ivx-state-container ivx-state-input-container input-state-container"></div>`;
     };
 }
 

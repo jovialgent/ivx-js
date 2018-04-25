@@ -36,6 +36,8 @@ class NavigationState {
                 iVXjsStateCreator.addViews(embeddedViews, iElm);
             }
 
+            controller.embedded = embedded;
+
             $compile(iElm.contents())($scope, (compiled) => {
                 iElm.html(compiled);
                 showState();
@@ -70,7 +72,7 @@ class NavigationState {
     }
 
     get templateHTML() {
-        return `<div  class="navigation-state-container"></div>`;
+        return `<div ng-class="{'ivx-embedded-state': vm.embedded}"  class="ivx-state-container ivx-state-navigation-container navigation-state-container"></div>`;
     };
 }
 
