@@ -245,72 +245,9 @@ var ErrorMessages = exports.ErrorMessages = function () {
 
 /***/ }),
 /* 2 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Style = exports.Style = function () {
-    function Style() {
-        _classCallCheck(this, Style);
-    }
-
-    _createClass(Style, [{
-        key: 'getWidth',
-        value: function getWidth(width) {
-            if (width === '1') return 'ivxjs-grid-1-1';
-
-            var gridString = width.replace('/', '-');
-
-            return 'ivxjs-grid-' + gridString;
-        }
-    }, {
-        key: 'addWidthClasses',
-        value: function addWidthClasses(inputsHTML) {
-            var self = this;
-            var _containerClasses = this.containerClasses,
-                containerClasses = _containerClasses === undefined ? '' : _containerClasses;
-
-            var contents = inputsHTML.reduce(function (currentHTML, inputHTML) {
-                var html = inputHTML.html,
-                    _inputHTML$settings = inputHTML.settings,
-                    settings = _inputHTML$settings === undefined ? {} : _inputHTML$settings;
-                var _settings$width = settings.width,
-                    width = _settings$width === undefined ? '1' : _settings$width,
-                    _settings$container = settings.container,
-                    container = _settings$container === undefined ? {} : _settings$container;
-                var _container$classes = container.classes,
-                    classes = _container$classes === undefined ? '' : _container$classes;
-
-
-                classes = classes + ' ' + containerClasses;
-
-                var thisWidth = self.getWidth(width);
-
-                html = html.replace("ivxjs-grid-1-1", thisWidth + ' ' + classes);
-
-                return currentHTML + ' ' + html;
-            }, '');
-
-            return contents;
-        }
-    }, {
-        key: 'containerClasses',
-        get: function get() {
-            return 'input-container';
-        }
-    }]);
-
-    return Style;
-}();
+throw new Error("Module build failed: SyntaxError: C:/Projects/GitHub/ivx-js/src/modules/ui/default/style.js: Unexpected token (5:0)\n\n\u001b[0m \u001b[90m 3 | \u001b[39m\n \u001b[90m 4 | \u001b[39m    getWidth(width) {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 5 | \u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<\u001b[39m \u001b[33mHEAD\u001b[39m\n \u001b[90m   | \u001b[39m\u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 6 | \u001b[39m        \u001b[36mif\u001b[39m (width \u001b[33m===\u001b[39m \u001b[32m'1'\u001b[39m) \u001b[36mreturn\u001b[39m \u001b[32m'ivx-grid-1-1 ivxjs-grid-1-1'\u001b[39m\u001b[33m;\u001b[39m\n \u001b[90m 7 | \u001b[39m\n \u001b[90m 8 | \u001b[39m\u001b[33m===\u001b[39m\u001b[33m===\u001b[39m\u001b[33m=\u001b[39m\u001b[0m\n");
 
 /***/ }),
 /* 3 */,
@@ -1021,7 +958,7 @@ var Anchor = exports.Anchor = function () {
                 label = href;
             }
 
-            return '\n             <a id=\'' + id + '\' class="' + classes + ' ' + anchorClasses + '"  href="' + href + '" ' + attributeHTML + ' >' + (labelHTML ? labelHTML : label) + '</a>           \n        ';
+            return '\n             <a id=\'' + id + '\' class="' + classes + ' ' + anchorClasses + ' ivx-link"  href="' + href + '" ' + attributeHTML + ' >' + (labelHTML ? labelHTML : label) + '</a>           \n        ';
         }
     }]);
 
@@ -1107,7 +1044,7 @@ var Form = exports.Form = function () {
     _createClass(Form, [{
         key: 'formClasses',
         get: function get() {
-            return 'row';
+            return 'row ivx-grid-row';
         }
 
         /**
@@ -3604,6 +3541,7 @@ var Controls = exports.Controls = function (_ControlEvents) {
             currentVolumeSpan.style.width = volumeLevel * 100 + "%";
 
             this.currentVolume = volumeLevel;
+            this.unmute();
             this.setVolume(volumeLevel);
         }
     }, {
@@ -3673,13 +3611,13 @@ var Controls = exports.Controls = function (_ControlEvents) {
                     muteIcon.className = muteClasses;
                     currentVolumeSpan.style.width = "0%";
 
-                    this.setVolume(0);
+                    this.mute();
                     break;
                 case muteClasses:
                     muteIcon.className = unmuteClasses;
                     currentVolumeSpan.style.width = this.currentVolume * 100 + "%";
 
-                    this.setVolume(this.currentVolume);
+                    this.unmute();
                     break;
                 default:
                     break;
@@ -3970,6 +3908,16 @@ var _class = function () {
         key: 'changeCurrentTrack',
         value: function changeCurrentTrack(trackId) {
             this.iVXjsBus.emit(this.trackEventNames.CHANGE_CURRENT_TRACK, { trackId: trackId });
+        }
+    }, {
+        key: 'mute',
+        value: function mute() {
+            this.iVXjsBus.emit(this.controlEventNames.MUTE);
+        }
+    }, {
+        key: 'unmute',
+        value: function unmute() {
+            this.iVXjsBus.emit(this.controlEventNames.UNMUTE);
         }
     }]);
 

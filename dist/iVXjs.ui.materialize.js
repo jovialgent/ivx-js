@@ -245,72 +245,9 @@ var ErrorMessages = exports.ErrorMessages = function () {
 
 /***/ }),
 /* 2 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Style = exports.Style = function () {
-    function Style() {
-        _classCallCheck(this, Style);
-    }
-
-    _createClass(Style, [{
-        key: 'getWidth',
-        value: function getWidth(width) {
-            if (width === '1') return 'ivxjs-grid-1-1';
-
-            var gridString = width.replace('/', '-');
-
-            return 'ivxjs-grid-' + gridString;
-        }
-    }, {
-        key: 'addWidthClasses',
-        value: function addWidthClasses(inputsHTML) {
-            var self = this;
-            var _containerClasses = this.containerClasses,
-                containerClasses = _containerClasses === undefined ? '' : _containerClasses;
-
-            var contents = inputsHTML.reduce(function (currentHTML, inputHTML) {
-                var html = inputHTML.html,
-                    _inputHTML$settings = inputHTML.settings,
-                    settings = _inputHTML$settings === undefined ? {} : _inputHTML$settings;
-                var _settings$width = settings.width,
-                    width = _settings$width === undefined ? '1' : _settings$width,
-                    _settings$container = settings.container,
-                    container = _settings$container === undefined ? {} : _settings$container;
-                var _container$classes = container.classes,
-                    classes = _container$classes === undefined ? '' : _container$classes;
-
-
-                classes = classes + ' ' + containerClasses;
-
-                var thisWidth = self.getWidth(width);
-
-                html = html.replace("ivxjs-grid-1-1", thisWidth + ' ' + classes);
-
-                return currentHTML + ' ' + html;
-            }, '');
-
-            return contents;
-        }
-    }, {
-        key: 'containerClasses',
-        get: function get() {
-            return 'input-container';
-        }
-    }]);
-
-    return Style;
-}();
+throw new Error("Module build failed: SyntaxError: C:/Projects/GitHub/ivx-js/src/modules/ui/default/style.js: Unexpected token (5:0)\n\n\u001b[0m \u001b[90m 3 | \u001b[39m\n \u001b[90m 4 | \u001b[39m    getWidth(width) {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 5 | \u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<\u001b[39m \u001b[33mHEAD\u001b[39m\n \u001b[90m   | \u001b[39m\u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 6 | \u001b[39m        \u001b[36mif\u001b[39m (width \u001b[33m===\u001b[39m \u001b[32m'1'\u001b[39m) \u001b[36mreturn\u001b[39m \u001b[32m'ivx-grid-1-1 ivxjs-grid-1-1'\u001b[39m\u001b[33m;\u001b[39m\n \u001b[90m 7 | \u001b[39m\n \u001b[90m 8 | \u001b[39m\u001b[33m===\u001b[39m\u001b[33m===\u001b[39m\u001b[33m=\u001b[39m\u001b[0m\n");
 
 /***/ }),
 /* 3 */
@@ -1024,7 +961,7 @@ var Anchor = exports.Anchor = function () {
                 label = href;
             }
 
-            return '\n             <a id=\'' + id + '\' class="' + classes + ' ' + anchorClasses + '"  href="' + href + '" ' + attributeHTML + ' >' + (labelHTML ? labelHTML : label) + '</a>           \n        ';
+            return '\n             <a id=\'' + id + '\' class="' + classes + ' ' + anchorClasses + ' ivx-link"  href="' + href + '" ' + attributeHTML + ' >' + (labelHTML ? labelHTML : label) + '</a>           \n        ';
         }
     }]);
 
@@ -1110,7 +1047,7 @@ var Form = exports.Form = function () {
     _createClass(Form, [{
         key: 'formClasses',
         get: function get() {
-            return 'row';
+            return 'row ivx-grid-row';
         }
 
         /**
@@ -3607,6 +3544,7 @@ var Controls = exports.Controls = function (_ControlEvents) {
             currentVolumeSpan.style.width = volumeLevel * 100 + "%";
 
             this.currentVolume = volumeLevel;
+            this.unmute();
             this.setVolume(volumeLevel);
         }
     }, {
@@ -3676,13 +3614,13 @@ var Controls = exports.Controls = function (_ControlEvents) {
                     muteIcon.className = muteClasses;
                     currentVolumeSpan.style.width = "0%";
 
-                    this.setVolume(0);
+                    this.mute();
                     break;
                 case muteClasses:
                     muteIcon.className = unmuteClasses;
                     currentVolumeSpan.style.width = this.currentVolume * 100 + "%";
 
-                    this.setVolume(this.currentVolume);
+                    this.unmute();
                     break;
                 default:
                     break;
@@ -3973,6 +3911,16 @@ var _class = function () {
         key: 'changeCurrentTrack',
         value: function changeCurrentTrack(trackId) {
             this.iVXjsBus.emit(this.trackEventNames.CHANGE_CURRENT_TRACK, { trackId: trackId });
+        }
+    }, {
+        key: 'mute',
+        value: function mute() {
+            this.iVXjsBus.emit(this.controlEventNames.MUTE);
+        }
+    }, {
+        key: 'unmute',
+        value: function unmute() {
+            this.iVXjsBus.emit(this.controlEventNames.UNMUTE);
         }
     }]);
 
@@ -5475,7 +5423,7 @@ var File = exports.File = function () {
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+        value: true
 });
 exports.Range = undefined;
 
@@ -5493,167 +5441,167 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  */
 var Range = exports.Range = function () {
 
-  /**
-   * Accepts an input object with various input settings and UI specific error 
-   * messages
-   * @param {object} inputObj - various input settings to render this number input box
-   * @param {object} inputObj.input - input specific settings for this number input 
-   * @param {object} inputObj.settings - global settings for this number input 
-   * @param {string} inputObj.tags - input specific attribute tags 
-   * @param {class} inputObj.errors - errors from a rendering for validation and 
-   * error messaging appearance.
-   * @param {object} errorMessages - UI specific Error messages 
-   */
-  function Range() {
-    var inputObj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-    var errorMessages = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _messages.ErrorMessages;
+        /**
+         * Accepts an input object with various input settings and UI specific error 
+         * messages
+         * @param {object} inputObj - various input settings to render this number input box
+         * @param {object} inputObj.input - input specific settings for this number input 
+         * @param {object} inputObj.settings - global settings for this number input 
+         * @param {string} inputObj.tags - input specific attribute tags 
+         * @param {class} inputObj.errors - errors from a rendering for validation and 
+         * error messaging appearance.
+         * @param {object} errorMessages - UI specific Error messages 
+         */
+        function Range() {
+                var inputObj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+                var errorMessages = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _messages.ErrorMessages;
 
-    _classCallCheck(this, Range);
+                _classCallCheck(this, Range);
 
-    var _inputObj$input = inputObj.input,
-        input = _inputObj$input === undefined ? {} : _inputObj$input,
-        _inputObj$settings = inputObj.settings,
-        settings = _inputObj$settings === undefined ? {} : _inputObj$settings,
-        _inputObj$tags = inputObj.tags,
-        tags = _inputObj$tags === undefined ? {} : _inputObj$tags,
-        _inputObj$errors = inputObj.errors,
-        errors = _inputObj$errors === undefined ? {} : _inputObj$errors;
+                var _inputObj$input = inputObj.input,
+                    input = _inputObj$input === undefined ? {} : _inputObj$input,
+                    _inputObj$settings = inputObj.settings,
+                    settings = _inputObj$settings === undefined ? {} : _inputObj$settings,
+                    _inputObj$tags = inputObj.tags,
+                    tags = _inputObj$tags === undefined ? {} : _inputObj$tags,
+                    _inputObj$errors = inputObj.errors,
+                    errors = _inputObj$errors === undefined ? {} : _inputObj$errors;
 
-    /**
-     * Input specific settings for this number input
-     * @type {object}  
-     */
+                /**
+                 * Input specific settings for this number input
+                 * @type {object}  
+                 */
 
-    this.input = input;
+                this.input = input;
 
-    /**
-    * Input specific settings for this number input
-    * @type {object}  
-    */
-    this.settings = settings;
+                /**
+                * Input specific settings for this number input
+                * @type {object}  
+                */
+                this.settings = settings;
 
-    /**
-    * Tags to be added to this number input
-    * @type {String}
-    */
-    this.tags = tags;
+                /**
+                * Tags to be added to this number input
+                * @type {String}
+                */
+                this.tags = tags;
 
-    /**
-    * Holds all validation error correcting.
-    * @type {Class}
-    */
-    this.errors = errors;
+                /**
+                * Holds all validation error correcting.
+                * @type {Class}
+                */
+                this.errors = errors;
 
-    /**
-    * Renders UI specific error messages by utilizing the 
-    * error class passed down to keep it consistent with the 
-    * current UI framework.
-    * @type {Class}
-    */
-    this.errorMessages = errorMessages;
+                /**
+                * Renders UI specific error messages by utilizing the 
+                * error class passed down to keep it consistent with the 
+                * current UI framework.
+                * @type {Class}
+                */
+                this.errorMessages = errorMessages;
 
-    /**
-    * Converts attribute data into attribute HTML for 
-    * attributes not covered by the errors class.
-    * @type {Class}
-    */
-    this.attributeTags = _attributes.AttributeTags;
-  }
+                /**
+                * Converts attribute data into attribute HTML for 
+                * attributes not covered by the errors class.
+                * @type {Class}
+                */
+                this.attributeTags = _attributes.AttributeTags;
+        }
 
-  /**
-   * Default ui classes to add to all number inputs 
-   * @type {String}
-   */
-
-
-  _createClass(Range, [{
-    key: "uiClasses",
-    get: function get() {
-      return '';
-    }
-
-    /**
-    * Default ui attributes to add to this email input 
-    * that aren't covered by the tags or errors above.
-    * @type {String}
-    */
-
-  }, {
-    key: "uiAttributes",
-    get: function get() {
-      return '';
-    }
-
-    /**
-     * The HTML to render a number input based on the settings from the 
-     * constructor. 
-     * 
-     * @example 
-     * //Data 
-     * input.label = "<h1>Label</h1>";
-     * settings.classes = "class-1";
-     * errors.tags = "required='true'";
-     * Number.uiClasses = 'ui-classes-1';
-     * input.attributes = {
-     *     "step" : "0.1"
-     * }
-     * // Renders 
-     * <label>
-     *      <h1>Label</h1>
-     * </label>
-     * <input step="0.1" class="class-1 ui-classes-1" type="number" required="true">
-     * @type {String}
-     */
-
-  }, {
-    key: "html",
-    get: function get() {
-      var input = this.input,
-          settings = this.settings,
-          tags = this.tags,
-          errors = this.errors,
-          uiClasses = this.uiClasses,
-          uiAttributes = this.uiAttributes;
-      var _input$label = input.label,
-          label = _input$label === undefined ? '' : _input$label,
-          _input$name = input.name,
-          name = _input$name === undefined ? '' : _input$name,
-          _input$id = input.id,
-          id = _input$id === undefined ? '' : _input$id,
-          labelHTML = input.labelHTML;
-      var _settings$input = settings.input,
-          inputSettings = _settings$input === undefined ? {} : _settings$input,
-          _settings$showLabel = settings.showLabel,
-          showLabel = _settings$showLabel === undefined ? true : _settings$showLabel;
-      var _inputSettings$classe = inputSettings.classes,
-          classes = _inputSettings$classe === undefined ? '' : _inputSettings$classe;
+        /**
+         * Default ui classes to add to all number inputs 
+         * @type {String}
+         */
 
 
-      classes = classes + " " + uiClasses;
+        _createClass(Range, [{
+                key: "uiClasses",
+                get: function get() {
+                        return '';
+                }
 
-      var _errors$messages = errors.messages,
-          errorMessages = _errors$messages === undefined ? [] : _errors$messages,
-          _errors$attributes = errors.attributes,
-          errorAttributes = _errors$attributes === undefined ? '' : _errors$attributes,
-          _errors$nonValidate = errors.nonValidate,
-          nonValidate = _errors$nonValidate === undefined ? [] : _errors$nonValidate,
-          _errors$tags = errors.tags,
-          errorTags = _errors$tags === undefined ? '' : _errors$tags;
+                /**
+                * Default ui attributes to add to this email input 
+                * that aren't covered by the tags or errors above.
+                * @type {String}
+                */
 
-      var errorHTML = new this.errorMessages(errorMessages).html;
-      var nonValidateAttributesHTML = new this.attributeTags(errorAttributes, nonValidate).html;
+        }, {
+                key: "uiAttributes",
+                get: function get() {
+                        return '';
+                }
 
-      nonValidateAttributesHTML = nonValidateAttributesHTML + " " + uiAttributes;
+                /**
+                 * The HTML to render a number input based on the settings from the 
+                 * constructor. 
+                 * 
+                 * @example 
+                 * //Data 
+                 * input.label = "<h1>Label</h1>";
+                 * settings.classes = "class-1";
+                 * errors.tags = "required='true'";
+                 * Number.uiClasses = 'ui-classes-1';
+                 * input.attributes = {
+                 *     "step" : "0.1"
+                 * }
+                 * // Renders 
+                 * <label>
+                 *      <h1>Label</h1>
+                 * </label>
+                 * <input step="0.1" class="class-1 ui-classes-1" type="number" required="true">
+                 * @type {String}
+                 */
 
-      if (labelHTML) label = labelHTML;
+        }, {
+                key: "html",
+                get: function get() {
+                        var input = this.input,
+                            settings = this.settings,
+                            tags = this.tags,
+                            errors = this.errors,
+                            uiClasses = this.uiClasses,
+                            uiAttributes = this.uiAttributes;
+                        var _input$label = input.label,
+                            label = _input$label === undefined ? '' : _input$label,
+                            _input$name = input.name,
+                            name = _input$name === undefined ? '' : _input$name,
+                            _input$id = input.id,
+                            id = _input$id === undefined ? '' : _input$id,
+                            labelHTML = input.labelHTML;
+                        var _settings$input = settings.input,
+                            inputSettings = _settings$input === undefined ? {} : _settings$input,
+                            _settings$showLabel = settings.showLabel,
+                            showLabel = _settings$showLabel === undefined ? true : _settings$showLabel;
+                        var _inputSettings$classe = inputSettings.classes,
+                            classes = _inputSettings$classe === undefined ? '' : _inputSettings$classe;
 
-      var inputHTML = " \n             \n            <p class=\"range-field\">\n            <input class=\"" + classes + "\"  name=\"" + name + "\"  type=\"range\" " + nonValidateAttributesHTML + "   " + errorTags + " " + tags + ">\n           </p>\n           <label for=\"" + name + "\"> " + label + " </label>\n            " + errorHTML + "\n       ";
 
-      return "" + inputHTML;
-    }
-  }]);
+                        classes = classes + " " + uiClasses;
 
-  return Range;
+                        var _errors$messages = errors.messages,
+                            errorMessages = _errors$messages === undefined ? [] : _errors$messages,
+                            _errors$attributes = errors.attributes,
+                            errorAttributes = _errors$attributes === undefined ? '' : _errors$attributes,
+                            _errors$nonValidate = errors.nonValidate,
+                            nonValidate = _errors$nonValidate === undefined ? [] : _errors$nonValidate,
+                            _errors$tags = errors.tags,
+                            errorTags = _errors$tags === undefined ? '' : _errors$tags;
+
+                        var errorHTML = new this.errorMessages(errorMessages).html;
+                        var nonValidateAttributesHTML = new this.attributeTags(errorAttributes, nonValidate).html;
+
+                        nonValidateAttributesHTML = nonValidateAttributesHTML + " " + uiAttributes;
+
+                        if (labelHTML) label = labelHTML;
+
+                        var inputHTML = " \n             \n            <p class=\"range-field\">\n            <input class=\"" + classes + "\"  name=\"" + name + "\"  type=\"range\" " + nonValidateAttributesHTML + "   " + errorTags + " " + tags + ">\n           </p>\n           <label for=\"" + name + "\"> " + label + " </label>\n            " + errorHTML + "\n       ";
+
+                        return "" + inputHTML;
+                }
+        }]);
+
+        return Range;
 }();
 
 /***/ }),
@@ -6316,7 +6264,7 @@ exports.default = (0, _createFactoryFunction2.default)(FileInput);
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+   value: true
 });
 
 var _createFactoryFunction = __webpack_require__(8);
@@ -6336,9 +6284,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var FirebaseAuthenticationConstants = new _firebaseAuthentication2.default();
 
 var FileInputController = function FileInputController($scope, iVXjs, iVXjsActions) {
-  _classCallCheck(this, FileInputController);
+   _classCallCheck(this, FileInputController);
 
-  var self = this;
+   var self = this;
 };
 
 FileInputController.$inject = ['$scope', 'iVXjs', 'ivxjs.actions'];

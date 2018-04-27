@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 151);
+/******/ 	return __webpack_require__(__webpack_require__.s = 152);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -68,10 +68,10 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 var global = __webpack_require__(3);
-var core = __webpack_require__(30);
+var core = __webpack_require__(28);
 var hide = __webpack_require__(16);
 var redefine = __webpack_require__(17);
-var ctx = __webpack_require__(26);
+var ctx = __webpack_require__(24);
 var PROTOTYPE = 'prototype';
 
 var $export = function (type, name, source) {
@@ -189,7 +189,7 @@ module.exports = function (it) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var store = __webpack_require__(65)('wks');
-var uid = __webpack_require__(42);
+var uid = __webpack_require__(41);
 var Symbol = __webpack_require__(3).Symbol;
 var USE_SYMBOL = typeof Symbol == 'function';
 
@@ -216,8 +216,8 @@ module.exports = !__webpack_require__(4)(function () {
 /***/ (function(module, exports, __webpack_require__) {
 
 var anObject = __webpack_require__(2);
-var IE8_DOM_DEFINE = __webpack_require__(116);
-var toPrimitive = __webpack_require__(31);
+var IE8_DOM_DEFINE = __webpack_require__(117);
+var toPrimitive = __webpack_require__(29);
 var dP = Object.defineProperty;
 
 exports.f = __webpack_require__(7) ? Object.defineProperty : function defineProperty(O, P, Attributes) {
@@ -238,7 +238,7 @@ exports.f = __webpack_require__(7) ? Object.defineProperty : function defineProp
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.15 ToLength
-var toInteger = __webpack_require__(33);
+var toInteger = __webpack_require__(31);
 var min = Math.min;
 module.exports = function (it) {
   return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0; // pow(2, 53) - 1 == 9007199254740991
@@ -567,7 +567,7 @@ var ObjectParsers = exports.ObjectParsers = function () {
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.13 ToObject(argument)
-var defined = __webpack_require__(32);
+var defined = __webpack_require__(30);
 module.exports = function (it) {
   return Object(defined(it));
 };
@@ -588,7 +588,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-var _video = __webpack_require__(108);
+var _video = __webpack_require__(110);
 
 var _video2 = _interopRequireDefault(_video);
 
@@ -755,7 +755,7 @@ module.exports = function (it, key) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var dP = __webpack_require__(8);
-var createDesc = __webpack_require__(41);
+var createDesc = __webpack_require__(40);
 module.exports = __webpack_require__(7) ? function (object, key, value) {
   return dP.f(object, key, createDesc(1, value));
 } : function (object, key, value) {
@@ -771,12 +771,12 @@ module.exports = __webpack_require__(7) ? function (object, key, value) {
 var global = __webpack_require__(3);
 var hide = __webpack_require__(16);
 var has = __webpack_require__(15);
-var SRC = __webpack_require__(42)('src');
+var SRC = __webpack_require__(41)('src');
 var TO_STRING = 'toString';
 var $toString = Function[TO_STRING];
 var TPL = ('' + $toString).split(TO_STRING);
 
-__webpack_require__(30).inspectSource = function (it) {
+__webpack_require__(28).inspectSource = function (it) {
   return $toString.call(it);
 };
 
@@ -807,7 +807,7 @@ __webpack_require__(30).inspectSource = function (it) {
 
 var $export = __webpack_require__(0);
 var fails = __webpack_require__(4);
-var defined = __webpack_require__(32);
+var defined = __webpack_require__(30);
 var quot = /"/g;
 // B.2.3.2.1 CreateHTML(string, tag, attribute, value)
 var createHTML = function (string, tag, attribute, value) {
@@ -832,7 +832,7 @@ module.exports = function (NAME, exec) {
 
 // to indexed object, toObject with fallback for non-array-like ES3 strings
 var IObject = __webpack_require__(57);
-var defined = __webpack_require__(32);
+var defined = __webpack_require__(30);
 module.exports = function (it) {
   return IObject(defined(it));
 };
@@ -843,11 +843,11 @@ module.exports = function (it) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var pIE = __webpack_require__(58);
-var createDesc = __webpack_require__(41);
+var createDesc = __webpack_require__(40);
 var toIObject = __webpack_require__(19);
-var toPrimitive = __webpack_require__(31);
+var toPrimitive = __webpack_require__(29);
 var has = __webpack_require__(15);
-var IE8_DOM_DEFINE = __webpack_require__(116);
+var IE8_DOM_DEFINE = __webpack_require__(117);
 var gOPD = Object.getOwnPropertyDescriptor;
 
 exports.f = __webpack_require__(7) ? gOPD : function getOwnPropertyDescriptor(O, P) {
@@ -881,6 +881,322 @@ module.exports = Object.getPrototypeOf || function (O) {
 
 /***/ }),
 /* 22 */
+/***/ (function(module, exports) {
+
+throw new Error("Module build failed: SyntaxError: C:/Projects/GitHub/ivx-js/src/modules/ui/default/style.js: Unexpected token (5:0)\n\n\u001b[0m \u001b[90m 3 | \u001b[39m\n \u001b[90m 4 | \u001b[39m    getWidth(width) {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 5 | \u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<\u001b[39m \u001b[33mHEAD\u001b[39m\n \u001b[90m   | \u001b[39m\u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 6 | \u001b[39m        \u001b[36mif\u001b[39m (width \u001b[33m===\u001b[39m \u001b[32m'1'\u001b[39m) \u001b[36mreturn\u001b[39m \u001b[32m'ivx-grid-1-1 ivxjs-grid-1-1'\u001b[39m\u001b[33m;\u001b[39m\n \u001b[90m 7 | \u001b[39m\n \u001b[90m 8 | \u001b[39m\u001b[33m===\u001b[39m\u001b[33m===\u001b[39m\u001b[33m=\u001b[39m\u001b[0m\n");
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * Indicates errors for each input based on the 
+ * attributes created from the various rendering libraries
+ * iVXjs uses. 
+ */
+var ErrorMessages = exports.ErrorMessages = function () {
+
+    /**
+     * Brings in all the possible error messages 
+     * this input can produce.
+     * 
+     * @param {Array} errorMessages - list of all possible 
+     * error messages with attributes indicating the message 
+     * and the conditions in which to show them.
+     */
+    function ErrorMessages() {
+        var errorMessages = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+
+        _classCallCheck(this, ErrorMessages);
+
+        /**
+         * List of all possible error messages.
+         * @type {Array}
+         */
+        this.errorMessages = errorMessages;
+    }
+
+    /**
+     * Sets the classes for the error message div.
+     * @type {String} 
+     */
+
+
+    _createClass(ErrorMessages, [{
+        key: 'messageClasses',
+        get: function get() {
+            return 'error-message';
+        }
+
+        /**
+         * Set the classes for the container of all error messages.
+         * @type {String}
+         */
+
+    }, {
+        key: 'containerClasses',
+        get: function get() {
+            return 'error-messages';
+        }
+
+        /**
+         * Renders the HTML for all error messages and the container with 
+         * them. Results:
+         * @example
+         * <div class="error-messages">
+         *    <span class="error-message">MESSAGE</span>
+         * </div>
+         * @type {String}
+         */
+
+    }, {
+        key: 'html',
+        get: function get() {
+            var errorMessages = this.errorMessages,
+                messageClasses = this.messageClasses,
+                containerClasses = this.containerClasses;
+
+            var errorMessageHTML = errorMessages.reduce(function (errorMessageHTML, errorMessage, index) {
+                return errorMessageHTML + '<span class="' + messageClasses + '" ' + errorMessage.attrHTML + '>\n                    ' + errorMessage.message + '\n                </span>';
+            }, '');
+
+            if (errorMessageHTML.length > 0) {
+                return '<div class=\'' + containerClasses + '\'>\n                ' + errorMessageHTML + '\n            </div>';
+            }
+
+            return '';
+        }
+    }]);
+
+    return ErrorMessages;
+}();
+
+/***/ }),
+/* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// optional / simple context binding
+var aFunction = __webpack_require__(13);
+module.exports = function (fn, that, length) {
+  aFunction(fn);
+  if (that === undefined) return fn;
+  switch (length) {
+    case 1: return function (a) {
+      return fn.call(that, a);
+    };
+    case 2: return function (a, b) {
+      return fn.call(that, a, b);
+    };
+    case 3: return function (a, b, c) {
+      return fn.call(that, a, b, c);
+    };
+  }
+  return function (/* ...args */) {
+    return fn.apply(that, arguments);
+  };
+};
+
+
+/***/ }),
+/* 25 */
+/***/ (function(module, exports) {
+
+var toString = {}.toString;
+
+module.exports = function (it) {
+  return toString.call(it).slice(8, -1);
+};
+
+
+/***/ }),
+/* 26 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var fails = __webpack_require__(4);
+
+module.exports = function (method, arg) {
+  return !!method && fails(function () {
+    // eslint-disable-next-line no-useless-call
+    arg ? method.call(null, function () { /* empty */ }, 1) : method.call(null);
+  });
+};
+
+
+/***/ }),
+/* 27 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var _class = function () {
+    function _class() {
+        _classCallCheck(this, _class);
+
+        this.LIBRARY = "iVXjs";
+        this.DELIMETER = ":";
+    }
+
+    _createClass(_class, [{
+        key: "convention",
+        value: function convention() {
+            return this.LIBRARY;
+        }
+    }, {
+        key: "addNames",
+        value: function addNames(nameCollection) {
+            var self = this;
+            var names = Object.keys(nameCollection);
+
+            names.forEach(function (name, index) {
+                self[name] = self.convention(nameCollection[name]);
+            });
+        }
+    }]);
+
+    return _class;
+}();
+
+exports.default = _class;
+
+/***/ }),
+/* 28 */
+/***/ (function(module, exports) {
+
+var core = module.exports = { version: '2.5.1' };
+if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
+
+
+/***/ }),
+/* 29 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 7.1.1 ToPrimitive(input [, PreferredType])
+var isObject = __webpack_require__(5);
+// instead of the ES6 spec version, we didn't implement @@toPrimitive case
+// and the second argument - flag - preferred type is a string
+module.exports = function (it, S) {
+  if (!isObject(it)) return it;
+  var fn, val;
+  if (S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it))) return val;
+  if (typeof (fn = it.valueOf) == 'function' && !isObject(val = fn.call(it))) return val;
+  if (!S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it))) return val;
+  throw TypeError("Can't convert object to primitive value");
+};
+
+
+/***/ }),
+/* 30 */
+/***/ (function(module, exports) {
+
+// 7.2.1 RequireObjectCoercible(argument)
+module.exports = function (it) {
+  if (it == undefined) throw TypeError("Can't call method on  " + it);
+  return it;
+};
+
+
+/***/ }),
+/* 31 */
+/***/ (function(module, exports) {
+
+// 7.1.4 ToInteger
+var ceil = Math.ceil;
+var floor = Math.floor;
+module.exports = function (it) {
+  return isNaN(it = +it) ? 0 : (it > 0 ? floor : ceil)(it);
+};
+
+
+/***/ }),
+/* 32 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// most Object methods by ES6 should accept primitives
+var $export = __webpack_require__(0);
+var core = __webpack_require__(28);
+var fails = __webpack_require__(4);
+module.exports = function (KEY, exec) {
+  var fn = (core.Object || {})[KEY] || Object[KEY];
+  var exp = {};
+  exp[KEY] = exec(fn);
+  $export($export.S + $export.F * fails(function () { fn(1); }), 'Object', exp);
+};
+
+
+/***/ }),
+/* 33 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 0 -> Array#forEach
+// 1 -> Array#map
+// 2 -> Array#filter
+// 3 -> Array#some
+// 4 -> Array#every
+// 5 -> Array#find
+// 6 -> Array#findIndex
+var ctx = __webpack_require__(24);
+var IObject = __webpack_require__(57);
+var toObject = __webpack_require__(11);
+var toLength = __webpack_require__(9);
+var asc = __webpack_require__(101);
+module.exports = function (TYPE, $create) {
+  var IS_MAP = TYPE == 1;
+  var IS_FILTER = TYPE == 2;
+  var IS_SOME = TYPE == 3;
+  var IS_EVERY = TYPE == 4;
+  var IS_FIND_INDEX = TYPE == 6;
+  var NO_HOLES = TYPE == 5 || IS_FIND_INDEX;
+  var create = $create || asc;
+  return function ($this, callbackfn, that) {
+    var O = toObject($this);
+    var self = IObject(O);
+    var f = ctx(callbackfn, that, 3);
+    var length = toLength(self.length);
+    var index = 0;
+    var result = IS_MAP ? create($this, length) : IS_FILTER ? create($this, 0) : undefined;
+    var val, res;
+    for (;length > index; index++) if (NO_HOLES || index in self) {
+      val = self[index];
+      res = f(val, index, O);
+      if (TYPE) {
+        if (IS_MAP) result[index] = res;   // map
+        else if (res) switch (TYPE) {
+          case 3: return true;             // some
+          case 5: return val;              // find
+          case 6: return index;            // findIndex
+          case 2: result.push(val);        // filter
+        } else if (IS_EVERY) return false; // every
+      }
+    }
+    return IS_FIND_INDEX ? -1 : IS_SOME || IS_EVERY ? IS_EVERY : result;
+  };
+};
+
+
+/***/ }),
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -948,7 +1264,7 @@ var InputControllerHelper = exports.InputControllerHelper = function InputContro
 };
 
 /***/ }),
-/* 23 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1080,427 +1396,48 @@ var ErrorMessages = exports.ErrorMessages = function () {
 }();
 
 /***/ }),
-/* 24 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Style = exports.Style = function () {
-    function Style() {
-        _classCallCheck(this, Style);
-    }
-
-    _createClass(Style, [{
-        key: 'getWidth',
-        value: function getWidth(width) {
-            if (width === '1') return 'ivxjs-grid-1-1';
-
-            var gridString = width.replace('/', '-');
-
-            return 'ivxjs-grid-' + gridString;
-        }
-    }, {
-        key: 'addWidthClasses',
-        value: function addWidthClasses(inputsHTML) {
-            var self = this;
-            var _containerClasses = this.containerClasses,
-                containerClasses = _containerClasses === undefined ? '' : _containerClasses;
-
-            var contents = inputsHTML.reduce(function (currentHTML, inputHTML) {
-                var html = inputHTML.html,
-                    _inputHTML$settings = inputHTML.settings,
-                    settings = _inputHTML$settings === undefined ? {} : _inputHTML$settings;
-                var _settings$width = settings.width,
-                    width = _settings$width === undefined ? '1' : _settings$width,
-                    _settings$container = settings.container,
-                    container = _settings$container === undefined ? {} : _settings$container;
-                var _container$classes = container.classes,
-                    classes = _container$classes === undefined ? '' : _container$classes;
-
-
-                classes = classes + ' ' + containerClasses;
-
-                var thisWidth = self.getWidth(width);
-
-                html = html.replace("ivxjs-grid-1-1", thisWidth + ' ' + classes);
-
-                return currentHTML + ' ' + html;
-            }, '');
-
-            return contents;
-        }
-    }, {
-        key: 'containerClasses',
-        get: function get() {
-            return 'input-container';
-        }
-    }]);
-
-    return Style;
-}();
-
-/***/ }),
-/* 25 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-/**
- * Indicates errors for each input based on the 
- * attributes created from the various rendering libraries
- * iVXjs uses. 
- */
-var ErrorMessages = exports.ErrorMessages = function () {
-
-    /**
-     * Brings in all the possible error messages 
-     * this input can produce.
-     * 
-     * @param {Array} errorMessages - list of all possible 
-     * error messages with attributes indicating the message 
-     * and the conditions in which to show them.
-     */
-    function ErrorMessages() {
-        var errorMessages = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-
-        _classCallCheck(this, ErrorMessages);
-
-        /**
-         * List of all possible error messages.
-         * @type {Array}
-         */
-        this.errorMessages = errorMessages;
-    }
-
-    /**
-     * Sets the classes for the error message div.
-     * @type {String} 
-     */
-
-
-    _createClass(ErrorMessages, [{
-        key: 'messageClasses',
-        get: function get() {
-            return 'error-message';
-        }
-
-        /**
-         * Set the classes for the container of all error messages.
-         * @type {String}
-         */
-
-    }, {
-        key: 'containerClasses',
-        get: function get() {
-            return 'error-messages';
-        }
-
-        /**
-         * Renders the HTML for all error messages and the container with 
-         * them. Results:
-         * @example
-         * <div class="error-messages">
-         *    <span class="error-message">MESSAGE</span>
-         * </div>
-         * @type {String}
-         */
-
-    }, {
-        key: 'html',
-        get: function get() {
-            var errorMessages = this.errorMessages,
-                messageClasses = this.messageClasses,
-                containerClasses = this.containerClasses;
-
-            var errorMessageHTML = errorMessages.reduce(function (errorMessageHTML, errorMessage, index) {
-                return errorMessageHTML + '<span class="' + messageClasses + '" ' + errorMessage.attrHTML + '>\n                    ' + errorMessage.message + '\n                </span>';
-            }, '');
-
-            if (errorMessageHTML.length > 0) {
-                return '<div class=\'' + containerClasses + '\'>\n                ' + errorMessageHTML + '\n            </div>';
-            }
-
-            return '';
-        }
-    }]);
-
-    return ErrorMessages;
-}();
-
-/***/ }),
-/* 26 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// optional / simple context binding
-var aFunction = __webpack_require__(13);
-module.exports = function (fn, that, length) {
-  aFunction(fn);
-  if (that === undefined) return fn;
-  switch (length) {
-    case 1: return function (a) {
-      return fn.call(that, a);
-    };
-    case 2: return function (a, b) {
-      return fn.call(that, a, b);
-    };
-    case 3: return function (a, b, c) {
-      return fn.call(that, a, b, c);
-    };
-  }
-  return function (/* ...args */) {
-    return fn.apply(that, arguments);
-  };
-};
-
-
-/***/ }),
-/* 27 */
-/***/ (function(module, exports) {
-
-var toString = {}.toString;
-
-module.exports = function (it) {
-  return toString.call(it).slice(8, -1);
-};
-
-
-/***/ }),
-/* 28 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var fails = __webpack_require__(4);
-
-module.exports = function (method, arg) {
-  return !!method && fails(function () {
-    // eslint-disable-next-line no-useless-call
-    arg ? method.call(null, function () { /* empty */ }, 1) : method.call(null);
-  });
-};
-
-
-/***/ }),
-/* 29 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var _class = function () {
-    function _class() {
-        _classCallCheck(this, _class);
-
-        this.LIBRARY = "iVXjs";
-        this.DELIMETER = ":";
-    }
-
-    _createClass(_class, [{
-        key: "convention",
-        value: function convention() {
-            return this.LIBRARY;
-        }
-    }, {
-        key: "addNames",
-        value: function addNames(nameCollection) {
-            var self = this;
-            var names = Object.keys(nameCollection);
-
-            names.forEach(function (name, index) {
-                self[name] = self.convention(nameCollection[name]);
-            });
-        }
-    }]);
-
-    return _class;
-}();
-
-exports.default = _class;
-
-/***/ }),
-/* 30 */
-/***/ (function(module, exports) {
-
-var core = module.exports = { version: '2.5.1' };
-if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
-
-
-/***/ }),
-/* 31 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 7.1.1 ToPrimitive(input [, PreferredType])
-var isObject = __webpack_require__(5);
-// instead of the ES6 spec version, we didn't implement @@toPrimitive case
-// and the second argument - flag - preferred type is a string
-module.exports = function (it, S) {
-  if (!isObject(it)) return it;
-  var fn, val;
-  if (S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it))) return val;
-  if (typeof (fn = it.valueOf) == 'function' && !isObject(val = fn.call(it))) return val;
-  if (!S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it))) return val;
-  throw TypeError("Can't convert object to primitive value");
-};
-
-
-/***/ }),
-/* 32 */
-/***/ (function(module, exports) {
-
-// 7.2.1 RequireObjectCoercible(argument)
-module.exports = function (it) {
-  if (it == undefined) throw TypeError("Can't call method on  " + it);
-  return it;
-};
-
-
-/***/ }),
-/* 33 */
-/***/ (function(module, exports) {
-
-// 7.1.4 ToInteger
-var ceil = Math.ceil;
-var floor = Math.floor;
-module.exports = function (it) {
-  return isNaN(it = +it) ? 0 : (it > 0 ? floor : ceil)(it);
-};
-
-
-/***/ }),
-/* 34 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// most Object methods by ES6 should accept primitives
-var $export = __webpack_require__(0);
-var core = __webpack_require__(30);
-var fails = __webpack_require__(4);
-module.exports = function (KEY, exec) {
-  var fn = (core.Object || {})[KEY] || Object[KEY];
-  var exp = {};
-  exp[KEY] = exec(fn);
-  $export($export.S + $export.F * fails(function () { fn(1); }), 'Object', exp);
-};
-
-
-/***/ }),
-/* 35 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 0 -> Array#forEach
-// 1 -> Array#map
-// 2 -> Array#filter
-// 3 -> Array#some
-// 4 -> Array#every
-// 5 -> Array#find
-// 6 -> Array#findIndex
-var ctx = __webpack_require__(26);
-var IObject = __webpack_require__(57);
-var toObject = __webpack_require__(11);
-var toLength = __webpack_require__(9);
-var asc = __webpack_require__(101);
-module.exports = function (TYPE, $create) {
-  var IS_MAP = TYPE == 1;
-  var IS_FILTER = TYPE == 2;
-  var IS_SOME = TYPE == 3;
-  var IS_EVERY = TYPE == 4;
-  var IS_FIND_INDEX = TYPE == 6;
-  var NO_HOLES = TYPE == 5 || IS_FIND_INDEX;
-  var create = $create || asc;
-  return function ($this, callbackfn, that) {
-    var O = toObject($this);
-    var self = IObject(O);
-    var f = ctx(callbackfn, that, 3);
-    var length = toLength(self.length);
-    var index = 0;
-    var result = IS_MAP ? create($this, length) : IS_FILTER ? create($this, 0) : undefined;
-    var val, res;
-    for (;length > index; index++) if (NO_HOLES || index in self) {
-      val = self[index];
-      res = f(val, index, O);
-      if (TYPE) {
-        if (IS_MAP) result[index] = res;   // map
-        else if (res) switch (TYPE) {
-          case 3: return true;             // some
-          case 5: return val;              // find
-          case 6: return index;            // findIndex
-          case 2: result.push(val);        // filter
-        } else if (IS_EVERY) return false; // every
-      }
-    }
-    return IS_FIND_INDEX ? -1 : IS_SOME || IS_EVERY ? IS_EVERY : result;
-  };
-};
-
-
-/***/ }),
 /* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 if (__webpack_require__(7)) {
-  var LIBRARY = __webpack_require__(43);
+  var LIBRARY = __webpack_require__(42);
   var global = __webpack_require__(3);
   var fails = __webpack_require__(4);
   var $export = __webpack_require__(0);
   var $typed = __webpack_require__(75);
   var $buffer = __webpack_require__(107);
-  var ctx = __webpack_require__(26);
-  var anInstance = __webpack_require__(49);
-  var propertyDesc = __webpack_require__(41);
+  var ctx = __webpack_require__(24);
+  var anInstance = __webpack_require__(48);
+  var propertyDesc = __webpack_require__(40);
   var hide = __webpack_require__(16);
-  var redefineAll = __webpack_require__(51);
-  var toInteger = __webpack_require__(33);
+  var redefineAll = __webpack_require__(50);
+  var toInteger = __webpack_require__(31);
   var toLength = __webpack_require__(9);
-  var toIndex = __webpack_require__(142);
-  var toAbsoluteIndex = __webpack_require__(45);
-  var toPrimitive = __webpack_require__(31);
+  var toIndex = __webpack_require__(143);
+  var toAbsoluteIndex = __webpack_require__(44);
+  var toPrimitive = __webpack_require__(29);
   var has = __webpack_require__(15);
   var classof = __webpack_require__(59);
   var isObject = __webpack_require__(5);
   var toObject = __webpack_require__(11);
   var isArrayIter = __webpack_require__(98);
-  var create = __webpack_require__(46);
+  var create = __webpack_require__(45);
   var getPrototypeOf = __webpack_require__(21);
-  var gOPN = __webpack_require__(47).f;
+  var gOPN = __webpack_require__(46).f;
   var getIterFn = __webpack_require__(100);
-  var uid = __webpack_require__(42);
+  var uid = __webpack_require__(41);
   var wks = __webpack_require__(6);
-  var createArrayMethod = __webpack_require__(35);
+  var createArrayMethod = __webpack_require__(33);
   var createArrayIncludes = __webpack_require__(66);
   var speciesConstructor = __webpack_require__(73);
   var ArrayIterators = __webpack_require__(103);
   var Iterators = __webpack_require__(54);
   var $iterDetect = __webpack_require__(70);
-  var setSpecies = __webpack_require__(48);
+  var setSpecies = __webpack_require__(47);
   var arrayFill = __webpack_require__(102);
-  var arrayCopyWithin = __webpack_require__(132);
+  var arrayCopyWithin = __webpack_require__(133);
   var $DP = __webpack_require__(8);
   var $GOPD = __webpack_require__(20);
   var dP = $DP.f;
@@ -1949,10 +1886,10 @@ if (__webpack_require__(7)) {
 /* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Map = __webpack_require__(137);
+var Map = __webpack_require__(138);
 var $export = __webpack_require__(0);
 var shared = __webpack_require__(65)('metadata');
-var store = shared.store || (shared.store = new (__webpack_require__(140))());
+var store = shared.store || (shared.store = new (__webpack_require__(141))());
 
 var getOrCreateMetadataMap = function (target, targetKey, create) {
   var targetMetadata = store.get(target);
@@ -2006,6 +1943,269 @@ module.exports = {
 /* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
+var META = __webpack_require__(41)('meta');
+var isObject = __webpack_require__(5);
+var has = __webpack_require__(15);
+var setDesc = __webpack_require__(8).f;
+var id = 0;
+var isExtensible = Object.isExtensible || function () {
+  return true;
+};
+var FREEZE = !__webpack_require__(4)(function () {
+  return isExtensible(Object.preventExtensions({}));
+});
+var setMeta = function (it) {
+  setDesc(it, META, { value: {
+    i: 'O' + ++id, // object ID
+    w: {}          // weak collections IDs
+  } });
+};
+var fastKey = function (it, create) {
+  // return primitive with prefix
+  if (!isObject(it)) return typeof it == 'symbol' ? it : (typeof it == 'string' ? 'S' : 'P') + it;
+  if (!has(it, META)) {
+    // can't set metadata to uncaught frozen object
+    if (!isExtensible(it)) return 'F';
+    // not necessary to add metadata
+    if (!create) return 'E';
+    // add missing metadata
+    setMeta(it);
+  // return object ID
+  } return it[META].i;
+};
+var getWeak = function (it, create) {
+  if (!has(it, META)) {
+    // can't set metadata to uncaught frozen object
+    if (!isExtensible(it)) return true;
+    // not necessary to add metadata
+    if (!create) return false;
+    // add missing metadata
+    setMeta(it);
+  // return hash weak collections IDs
+  } return it[META].w;
+};
+// add metadata on freeze-family methods calling
+var onFreeze = function (it) {
+  if (FREEZE && meta.NEED && isExtensible(it) && !has(it, META)) setMeta(it);
+  return it;
+};
+var meta = module.exports = {
+  KEY: META,
+  NEED: false,
+  fastKey: fastKey,
+  getWeak: getWeak,
+  onFreeze: onFreeze
+};
+
+
+/***/ }),
+/* 39 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 22.1.3.31 Array.prototype[@@unscopables]
+var UNSCOPABLES = __webpack_require__(6)('unscopables');
+var ArrayProto = Array.prototype;
+if (ArrayProto[UNSCOPABLES] == undefined) __webpack_require__(16)(ArrayProto, UNSCOPABLES, {});
+module.exports = function (key) {
+  ArrayProto[UNSCOPABLES][key] = true;
+};
+
+
+/***/ }),
+/* 40 */
+/***/ (function(module, exports) {
+
+module.exports = function (bitmap, value) {
+  return {
+    enumerable: !(bitmap & 1),
+    configurable: !(bitmap & 2),
+    writable: !(bitmap & 4),
+    value: value
+  };
+};
+
+
+/***/ }),
+/* 41 */
+/***/ (function(module, exports) {
+
+var id = 0;
+var px = Math.random();
+module.exports = function (key) {
+  return 'Symbol('.concat(key === undefined ? '' : key, ')_', (++id + px).toString(36));
+};
+
+
+/***/ }),
+/* 42 */
+/***/ (function(module, exports) {
+
+module.exports = false;
+
+
+/***/ }),
+/* 43 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 19.1.2.14 / 15.2.3.14 Object.keys(O)
+var $keys = __webpack_require__(119);
+var enumBugKeys = __webpack_require__(85);
+
+module.exports = Object.keys || function keys(O) {
+  return $keys(O, enumBugKeys);
+};
+
+
+/***/ }),
+/* 44 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var toInteger = __webpack_require__(31);
+var max = Math.max;
+var min = Math.min;
+module.exports = function (index, length) {
+  index = toInteger(index);
+  return index < 0 ? max(index + length, 0) : min(index, length);
+};
+
+
+/***/ }),
+/* 45 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
+var anObject = __webpack_require__(2);
+var dPs = __webpack_require__(120);
+var enumBugKeys = __webpack_require__(85);
+var IE_PROTO = __webpack_require__(84)('IE_PROTO');
+var Empty = function () { /* empty */ };
+var PROTOTYPE = 'prototype';
+
+// Create object with fake `null` prototype: use iframe Object with cleared prototype
+var createDict = function () {
+  // Thrash, waste and sodomy: IE GC bug
+  var iframe = __webpack_require__(82)('iframe');
+  var i = enumBugKeys.length;
+  var lt = '<';
+  var gt = '>';
+  var iframeDocument;
+  iframe.style.display = 'none';
+  __webpack_require__(86).appendChild(iframe);
+  iframe.src = 'javascript:'; // eslint-disable-line no-script-url
+  // createDict = iframe.contentWindow.Object;
+  // html.removeChild(iframe);
+  iframeDocument = iframe.contentWindow.document;
+  iframeDocument.open();
+  iframeDocument.write(lt + 'script' + gt + 'document.F=Object' + lt + '/script' + gt);
+  iframeDocument.close();
+  createDict = iframeDocument.F;
+  while (i--) delete createDict[PROTOTYPE][enumBugKeys[i]];
+  return createDict();
+};
+
+module.exports = Object.create || function create(O, Properties) {
+  var result;
+  if (O !== null) {
+    Empty[PROTOTYPE] = anObject(O);
+    result = new Empty();
+    Empty[PROTOTYPE] = null;
+    // add "__proto__" for Object.getPrototypeOf polyfill
+    result[IE_PROTO] = O;
+  } else result = createDict();
+  return Properties === undefined ? result : dPs(result, Properties);
+};
+
+
+/***/ }),
+/* 46 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 19.1.2.7 / 15.2.3.4 Object.getOwnPropertyNames(O)
+var $keys = __webpack_require__(119);
+var hiddenKeys = __webpack_require__(85).concat('length', 'prototype');
+
+exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
+  return $keys(O, hiddenKeys);
+};
+
+
+/***/ }),
+/* 47 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var global = __webpack_require__(3);
+var dP = __webpack_require__(8);
+var DESCRIPTORS = __webpack_require__(7);
+var SPECIES = __webpack_require__(6)('species');
+
+module.exports = function (KEY) {
+  var C = global[KEY];
+  if (DESCRIPTORS && C && !C[SPECIES]) dP.f(C, SPECIES, {
+    configurable: true,
+    get: function () { return this; }
+  });
+};
+
+
+/***/ }),
+/* 48 */
+/***/ (function(module, exports) {
+
+module.exports = function (it, Constructor, name, forbiddenField) {
+  if (!(it instanceof Constructor) || (forbiddenField !== undefined && forbiddenField in it)) {
+    throw TypeError(name + ': incorrect invocation!');
+  } return it;
+};
+
+
+/***/ }),
+/* 49 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var ctx = __webpack_require__(24);
+var call = __webpack_require__(131);
+var isArrayIter = __webpack_require__(98);
+var anObject = __webpack_require__(2);
+var toLength = __webpack_require__(9);
+var getIterFn = __webpack_require__(100);
+var BREAK = {};
+var RETURN = {};
+var exports = module.exports = function (iterable, entries, fn, that, ITERATOR) {
+  var iterFn = ITERATOR ? function () { return iterable; } : getIterFn(iterable);
+  var f = ctx(fn, that, entries ? 2 : 1);
+  var index = 0;
+  var length, step, iterator, result;
+  if (typeof iterFn != 'function') throw TypeError(iterable + ' is not iterable!');
+  // fast case for arrays with default iterator
+  if (isArrayIter(iterFn)) for (length = toLength(iterable.length); length > index; index++) {
+    result = entries ? f(anObject(step = iterable[index])[0], step[1]) : f(iterable[index]);
+    if (result === BREAK || result === RETURN) return result;
+  } else for (iterator = iterFn.call(iterable); !(step = iterator.next()).done;) {
+    result = call(iterator, f, step.value, entries);
+    if (result === BREAK || result === RETURN) return result;
+  }
+};
+exports.BREAK = BREAK;
+exports.RETURN = RETURN;
+
+
+/***/ }),
+/* 50 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var redefine = __webpack_require__(17);
+module.exports = function (target, src, safe) {
+  for (var key in src) redefine(target, key, src[key], safe);
+  return target;
+};
+
+
+/***/ }),
+/* 51 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 
 
@@ -2017,7 +2217,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-var _audio = __webpack_require__(157);
+var _audio = __webpack_require__(160);
 
 var _audio2 = _interopRequireDefault(_audio);
 
@@ -2077,269 +2277,6 @@ var _class = function (_AudioConstants) {
 exports.default = _class;
 
 /***/ }),
-/* 39 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var META = __webpack_require__(42)('meta');
-var isObject = __webpack_require__(5);
-var has = __webpack_require__(15);
-var setDesc = __webpack_require__(8).f;
-var id = 0;
-var isExtensible = Object.isExtensible || function () {
-  return true;
-};
-var FREEZE = !__webpack_require__(4)(function () {
-  return isExtensible(Object.preventExtensions({}));
-});
-var setMeta = function (it) {
-  setDesc(it, META, { value: {
-    i: 'O' + ++id, // object ID
-    w: {}          // weak collections IDs
-  } });
-};
-var fastKey = function (it, create) {
-  // return primitive with prefix
-  if (!isObject(it)) return typeof it == 'symbol' ? it : (typeof it == 'string' ? 'S' : 'P') + it;
-  if (!has(it, META)) {
-    // can't set metadata to uncaught frozen object
-    if (!isExtensible(it)) return 'F';
-    // not necessary to add metadata
-    if (!create) return 'E';
-    // add missing metadata
-    setMeta(it);
-  // return object ID
-  } return it[META].i;
-};
-var getWeak = function (it, create) {
-  if (!has(it, META)) {
-    // can't set metadata to uncaught frozen object
-    if (!isExtensible(it)) return true;
-    // not necessary to add metadata
-    if (!create) return false;
-    // add missing metadata
-    setMeta(it);
-  // return hash weak collections IDs
-  } return it[META].w;
-};
-// add metadata on freeze-family methods calling
-var onFreeze = function (it) {
-  if (FREEZE && meta.NEED && isExtensible(it) && !has(it, META)) setMeta(it);
-  return it;
-};
-var meta = module.exports = {
-  KEY: META,
-  NEED: false,
-  fastKey: fastKey,
-  getWeak: getWeak,
-  onFreeze: onFreeze
-};
-
-
-/***/ }),
-/* 40 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 22.1.3.31 Array.prototype[@@unscopables]
-var UNSCOPABLES = __webpack_require__(6)('unscopables');
-var ArrayProto = Array.prototype;
-if (ArrayProto[UNSCOPABLES] == undefined) __webpack_require__(16)(ArrayProto, UNSCOPABLES, {});
-module.exports = function (key) {
-  ArrayProto[UNSCOPABLES][key] = true;
-};
-
-
-/***/ }),
-/* 41 */
-/***/ (function(module, exports) {
-
-module.exports = function (bitmap, value) {
-  return {
-    enumerable: !(bitmap & 1),
-    configurable: !(bitmap & 2),
-    writable: !(bitmap & 4),
-    value: value
-  };
-};
-
-
-/***/ }),
-/* 42 */
-/***/ (function(module, exports) {
-
-var id = 0;
-var px = Math.random();
-module.exports = function (key) {
-  return 'Symbol('.concat(key === undefined ? '' : key, ')_', (++id + px).toString(36));
-};
-
-
-/***/ }),
-/* 43 */
-/***/ (function(module, exports) {
-
-module.exports = false;
-
-
-/***/ }),
-/* 44 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 19.1.2.14 / 15.2.3.14 Object.keys(O)
-var $keys = __webpack_require__(118);
-var enumBugKeys = __webpack_require__(85);
-
-module.exports = Object.keys || function keys(O) {
-  return $keys(O, enumBugKeys);
-};
-
-
-/***/ }),
-/* 45 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var toInteger = __webpack_require__(33);
-var max = Math.max;
-var min = Math.min;
-module.exports = function (index, length) {
-  index = toInteger(index);
-  return index < 0 ? max(index + length, 0) : min(index, length);
-};
-
-
-/***/ }),
-/* 46 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
-var anObject = __webpack_require__(2);
-var dPs = __webpack_require__(119);
-var enumBugKeys = __webpack_require__(85);
-var IE_PROTO = __webpack_require__(84)('IE_PROTO');
-var Empty = function () { /* empty */ };
-var PROTOTYPE = 'prototype';
-
-// Create object with fake `null` prototype: use iframe Object with cleared prototype
-var createDict = function () {
-  // Thrash, waste and sodomy: IE GC bug
-  var iframe = __webpack_require__(82)('iframe');
-  var i = enumBugKeys.length;
-  var lt = '<';
-  var gt = '>';
-  var iframeDocument;
-  iframe.style.display = 'none';
-  __webpack_require__(86).appendChild(iframe);
-  iframe.src = 'javascript:'; // eslint-disable-line no-script-url
-  // createDict = iframe.contentWindow.Object;
-  // html.removeChild(iframe);
-  iframeDocument = iframe.contentWindow.document;
-  iframeDocument.open();
-  iframeDocument.write(lt + 'script' + gt + 'document.F=Object' + lt + '/script' + gt);
-  iframeDocument.close();
-  createDict = iframeDocument.F;
-  while (i--) delete createDict[PROTOTYPE][enumBugKeys[i]];
-  return createDict();
-};
-
-module.exports = Object.create || function create(O, Properties) {
-  var result;
-  if (O !== null) {
-    Empty[PROTOTYPE] = anObject(O);
-    result = new Empty();
-    Empty[PROTOTYPE] = null;
-    // add "__proto__" for Object.getPrototypeOf polyfill
-    result[IE_PROTO] = O;
-  } else result = createDict();
-  return Properties === undefined ? result : dPs(result, Properties);
-};
-
-
-/***/ }),
-/* 47 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 19.1.2.7 / 15.2.3.4 Object.getOwnPropertyNames(O)
-var $keys = __webpack_require__(118);
-var hiddenKeys = __webpack_require__(85).concat('length', 'prototype');
-
-exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
-  return $keys(O, hiddenKeys);
-};
-
-
-/***/ }),
-/* 48 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var global = __webpack_require__(3);
-var dP = __webpack_require__(8);
-var DESCRIPTORS = __webpack_require__(7);
-var SPECIES = __webpack_require__(6)('species');
-
-module.exports = function (KEY) {
-  var C = global[KEY];
-  if (DESCRIPTORS && C && !C[SPECIES]) dP.f(C, SPECIES, {
-    configurable: true,
-    get: function () { return this; }
-  });
-};
-
-
-/***/ }),
-/* 49 */
-/***/ (function(module, exports) {
-
-module.exports = function (it, Constructor, name, forbiddenField) {
-  if (!(it instanceof Constructor) || (forbiddenField !== undefined && forbiddenField in it)) {
-    throw TypeError(name + ': incorrect invocation!');
-  } return it;
-};
-
-
-/***/ }),
-/* 50 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var ctx = __webpack_require__(26);
-var call = __webpack_require__(130);
-var isArrayIter = __webpack_require__(98);
-var anObject = __webpack_require__(2);
-var toLength = __webpack_require__(9);
-var getIterFn = __webpack_require__(100);
-var BREAK = {};
-var RETURN = {};
-var exports = module.exports = function (iterable, entries, fn, that, ITERATOR) {
-  var iterFn = ITERATOR ? function () { return iterable; } : getIterFn(iterable);
-  var f = ctx(fn, that, entries ? 2 : 1);
-  var index = 0;
-  var length, step, iterator, result;
-  if (typeof iterFn != 'function') throw TypeError(iterable + ' is not iterable!');
-  // fast case for arrays with default iterator
-  if (isArrayIter(iterFn)) for (length = toLength(iterable.length); length > index; index++) {
-    result = entries ? f(anObject(step = iterable[index])[0], step[1]) : f(iterable[index]);
-    if (result === BREAK || result === RETURN) return result;
-  } else for (iterator = iterFn.call(iterable); !(step = iterator.next()).done;) {
-    result = call(iterator, f, step.value, entries);
-    if (result === BREAK || result === RETURN) return result;
-  }
-};
-exports.BREAK = BREAK;
-exports.RETURN = RETURN;
-
-
-/***/ }),
-/* 51 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var redefine = __webpack_require__(17);
-module.exports = function (target, src, safe) {
-  for (var key in src) redefine(target, key, src[key], safe);
-  return target;
-};
-
-
-/***/ }),
 /* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2357,7 +2294,7 @@ module.exports = function (it, tag, stat) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var $export = __webpack_require__(0);
-var defined = __webpack_require__(32);
+var defined = __webpack_require__(30);
 var fails = __webpack_require__(4);
 var spaces = __webpack_require__(88);
 var space = '[' + spaces + ']';
@@ -2465,7 +2402,7 @@ var Validation = exports.Validation = function () {
 /***/ (function(module, exports, __webpack_require__) {
 
 // fallback for non-array-like ES3 and non-enumerable old V8 strings
-var cof = __webpack_require__(27);
+var cof = __webpack_require__(25);
 // eslint-disable-next-line no-prototype-builtins
 module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
   return cof(it) == 'String' ? it.split('') : Object(it);
@@ -2484,7 +2421,7 @@ exports.f = {}.propertyIsEnumerable;
 /***/ (function(module, exports, __webpack_require__) {
 
 // getting tag from 19.1.3.6 Object.prototype.toString()
-var cof = __webpack_require__(27);
+var cof = __webpack_require__(25);
 var TAG = __webpack_require__(6)('toStringTag');
 // ES3 wrong here
 var ARG = cof(function () { return arguments; }()) == 'Arguments';
@@ -2523,7 +2460,71 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-var _iVXjsConfig = __webpack_require__(155);
+var _state = __webpack_require__(158);
+
+var _state2 = _interopRequireDefault(_state);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _class = function (_iVXjsStateConstants) {
+    _inherits(_class, _iVXjsStateConstants);
+
+    function _class() {
+        _classCallCheck(this, _class);
+
+        var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
+
+        var eventNames = {
+            CHANGE: "change",
+            SUCCESS: "success",
+            ERROR: "error",
+            GO: "go",
+            NOT_FOUND: "not-found",
+            GET_STATE: "get-state",
+            REQUEST_STATE: "request-state"
+        };
+
+        _this.addNames(eventNames);
+        return _this;
+    }
+
+    _createClass(_class, [{
+        key: "convention",
+        value: function convention(eventName) {
+            var DELIMETER = this.DELIMETER;
+
+
+            return "" + _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + eventName;
+        }
+    }]);
+
+    return _class;
+}(_state2.default);
+
+exports.default = _class;
+
+/***/ }),
+/* 61 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _iVXjsConfig = __webpack_require__(161);
 
 var _iVXjsConfig2 = _interopRequireDefault(_iVXjsConfig);
 
@@ -2570,7 +2571,7 @@ var _class = function (_iVXjsConfigConstants) {
 exports.default = _class;
 
 /***/ }),
-/* 61 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2584,11 +2585,132 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-var _index = __webpack_require__(29);
+var _tracks = __webpack_require__(111);
+
+var _tracks2 = _interopRequireDefault(_tracks);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _class = function (_TrackConstants) {
+    _inherits(_class, _TrackConstants);
+
+    function _class() {
+        _classCallCheck(this, _class);
+
+        var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
+
+        var eventNames = {
+            ON_TRACK_CHANGE: "on-track-change",
+            CHANGE_CURRENT_TRACK: "change-current-track"
+        };
+
+        _this.addNames(eventNames);
+        return _this;
+    }
+
+    _createClass(_class, [{
+        key: "convention",
+        value: function convention(eventName) {
+            var DELIMETER = this.DELIMETER;
+
+
+            return "" + _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + eventName;
+        }
+    }]);
+
+    return _class;
+}(_tracks2.default);
+
+exports.default = _class;
+
+/***/ }),
+/* 63 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _tracksCues = __webpack_require__(168);
+
+var _tracksCues2 = _interopRequireDefault(_tracksCues);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _class = function (_TrackCuesConstants) {
+    _inherits(_class, _TrackCuesConstants);
+
+    function _class() {
+        _classCallCheck(this, _class);
+
+        var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
+
+        var eventNames = {
+            ON_ENTER: "on-enter",
+            ON_EXIT: "on-exit",
+            ON_CHAPTER_START: "on-chapter-start",
+            ON_CHAPTER_END: "on-chpater-end",
+            CHANGE_CHAPTER: "change-chapter"
+        };
+
+        _this.addNames(eventNames);
+        return _this;
+    }
+
+    _createClass(_class, [{
+        key: "convention",
+        value: function convention(eventName) {
+            var DELIMETER = this.DELIMETER;
+
+
+            return "" + _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + eventName;
+        }
+    }]);
+
+    return _class;
+}(_tracksCues2.default);
+
+exports.default = _class;
+
+/***/ }),
+/* 64 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _index = __webpack_require__(27);
 
 var _index2 = _interopRequireDefault(_index);
 
-var _video = __webpack_require__(108);
+var _video = __webpack_require__(110);
 
 var _video2 = _interopRequireDefault(_video);
 
@@ -2596,7 +2718,7 @@ var _http = __webpack_require__(109);
 
 var _http2 = _interopRequireDefault(_http);
 
-var _iVXio = __webpack_require__(110);
+var _iVXio = __webpack_require__(112);
 
 var _iVXio2 = _interopRequireDefault(_iVXio);
 
@@ -2649,191 +2771,6 @@ var _class = function (_iVXjsConstants) {
 exports.default = _class;
 
 /***/ }),
-/* 62 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-
-var _state = __webpack_require__(159);
-
-var _state2 = _interopRequireDefault(_state);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var _class = function (_iVXjsStateConstants) {
-    _inherits(_class, _iVXjsStateConstants);
-
-    function _class() {
-        _classCallCheck(this, _class);
-
-        var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
-
-        var eventNames = {
-            CHANGE: "change",
-            SUCCESS: "success",
-            ERROR: "error",
-            GO: "go",
-            NOT_FOUND: "not-found",
-            GET_STATE: "get-state",
-            REQUEST_STATE: "request-state"
-        };
-
-        _this.addNames(eventNames);
-        return _this;
-    }
-
-    _createClass(_class, [{
-        key: "convention",
-        value: function convention(eventName) {
-            var DELIMETER = this.DELIMETER;
-
-
-            return "" + _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + eventName;
-        }
-    }]);
-
-    return _class;
-}(_state2.default);
-
-exports.default = _class;
-
-/***/ }),
-/* 63 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-
-var _tracks = __webpack_require__(113);
-
-var _tracks2 = _interopRequireDefault(_tracks);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var _class = function (_TrackConstants) {
-    _inherits(_class, _TrackConstants);
-
-    function _class() {
-        _classCallCheck(this, _class);
-
-        var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
-
-        var eventNames = {
-            ON_TRACK_CHANGE: "on-track-change",
-            CHANGE_CURRENT_TRACK: "change-current-track"
-        };
-
-        _this.addNames(eventNames);
-        return _this;
-    }
-
-    _createClass(_class, [{
-        key: "convention",
-        value: function convention(eventName) {
-            var DELIMETER = this.DELIMETER;
-
-
-            return "" + _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + eventName;
-        }
-    }]);
-
-    return _class;
-}(_tracks2.default);
-
-exports.default = _class;
-
-/***/ }),
-/* 64 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-
-var _tracksCues = __webpack_require__(160);
-
-var _tracksCues2 = _interopRequireDefault(_tracksCues);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var _class = function (_TrackCuesConstants) {
-    _inherits(_class, _TrackCuesConstants);
-
-    function _class() {
-        _classCallCheck(this, _class);
-
-        var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
-
-        var eventNames = {
-            ON_ENTER: "on-enter",
-            ON_EXIT: "on-exit",
-            ON_CHAPTER_START: "on-chapter-start",
-            ON_CHAPTER_END: "on-chpater-end",
-            CHANGE_CHAPTER: "change-chapter"
-        };
-
-        _this.addNames(eventNames);
-        return _this;
-    }
-
-    _createClass(_class, [{
-        key: "convention",
-        value: function convention(eventName) {
-            var DELIMETER = this.DELIMETER;
-
-
-            return "" + _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + eventName;
-        }
-    }]);
-
-    return _class;
-}(_tracksCues2.default);
-
-exports.default = _class;
-
-/***/ }),
 /* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2853,7 +2790,7 @@ module.exports = function (key) {
 // true  -> Array#includes
 var toIObject = __webpack_require__(19);
 var toLength = __webpack_require__(9);
-var toAbsoluteIndex = __webpack_require__(45);
+var toAbsoluteIndex = __webpack_require__(44);
 module.exports = function (IS_INCLUDES) {
   return function ($this, el, fromIndex) {
     var O = toIObject($this);
@@ -2886,7 +2823,7 @@ exports.f = Object.getOwnPropertySymbols;
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.2.2 IsArray(argument)
-var cof = __webpack_require__(27);
+var cof = __webpack_require__(25);
 module.exports = Array.isArray || function isArray(arg) {
   return cof(arg) == 'Array';
 };
@@ -2898,7 +2835,7 @@ module.exports = Array.isArray || function isArray(arg) {
 
 // 7.2.8 IsRegExp(argument)
 var isObject = __webpack_require__(5);
-var cof = __webpack_require__(27);
+var cof = __webpack_require__(25);
 var MATCH = __webpack_require__(6)('match');
 module.exports = function (it) {
   var isRegExp;
@@ -2963,7 +2900,7 @@ module.exports = function () {
 var hide = __webpack_require__(16);
 var redefine = __webpack_require__(17);
 var fails = __webpack_require__(4);
-var defined = __webpack_require__(32);
+var defined = __webpack_require__(30);
 var wks = __webpack_require__(6);
 
 module.exports = function (KEY, length, exec) {
@@ -3013,10 +2950,10 @@ module.exports = function (O, D) {
 var global = __webpack_require__(3);
 var $export = __webpack_require__(0);
 var redefine = __webpack_require__(17);
-var redefineAll = __webpack_require__(51);
-var meta = __webpack_require__(39);
-var forOf = __webpack_require__(50);
-var anInstance = __webpack_require__(49);
+var redefineAll = __webpack_require__(50);
+var meta = __webpack_require__(38);
+var forOf = __webpack_require__(49);
+var anInstance = __webpack_require__(48);
 var isObject = __webpack_require__(5);
 var fails = __webpack_require__(4);
 var $iterDetect = __webpack_require__(70);
@@ -3102,7 +3039,7 @@ module.exports = function (NAME, wrapper, methods, common, IS_MAP, IS_WEAK) {
 
 var global = __webpack_require__(3);
 var hide = __webpack_require__(16);
-var uid = __webpack_require__(42);
+var uid = __webpack_require__(41);
 var TYPED = uid('typed_array');
 var VIEW = uid('view');
 var ABV = !!(global.ArrayBuffer && global.DataView);
@@ -3137,7 +3074,7 @@ module.exports = {
 "use strict";
 
 // Forced replacement prototype accessors methods
-module.exports = __webpack_require__(43) || !__webpack_require__(4)(function () {
+module.exports = __webpack_require__(42) || !__webpack_require__(4)(function () {
   var K = Math.random();
   // In FF throws only define methods
   // eslint-disable-next-line no-undef, no-useless-call
@@ -3174,8 +3111,8 @@ module.exports = function (COLLECTION) {
 // https://tc39.github.io/proposal-setmap-offrom/
 var $export = __webpack_require__(0);
 var aFunction = __webpack_require__(13);
-var ctx = __webpack_require__(26);
-var forOf = __webpack_require__(50);
+var ctx = __webpack_require__(24);
+var forOf = __webpack_require__(49);
 
 module.exports = function (COLLECTION) {
   $export($export.S, COLLECTION, { from: function from(source /* , mapFn, thisArg */) {
@@ -3215,7 +3152,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-var _angular = __webpack_require__(154);
+var _angular = __webpack_require__(155);
 
 var _angular2 = _interopRequireDefault(_angular);
 
@@ -3373,9 +3310,9 @@ module.exports = function (it) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var global = __webpack_require__(3);
-var core = __webpack_require__(30);
-var LIBRARY = __webpack_require__(43);
-var wksExt = __webpack_require__(117);
+var core = __webpack_require__(28);
+var LIBRARY = __webpack_require__(42);
+var wksExt = __webpack_require__(118);
 var defineProperty = __webpack_require__(8).f;
 module.exports = function (name) {
   var $Symbol = core.Symbol || (core.Symbol = LIBRARY ? {} : global.Symbol || {});
@@ -3388,7 +3325,7 @@ module.exports = function (name) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var shared = __webpack_require__(65)('keys');
-var uid = __webpack_require__(42);
+var uid = __webpack_require__(41);
 module.exports = function (key) {
   return shared[key] || (shared[key] = uid(key));
 };
@@ -3428,7 +3365,7 @@ module.exports = {
   set: Object.setPrototypeOf || ('__proto__' in {} ? // eslint-disable-line
     function (test, buggy, set) {
       try {
-        set = __webpack_require__(26)(Function.call, __webpack_require__(20).f(Object.prototype, '__proto__').set, 2);
+        set = __webpack_require__(24)(Function.call, __webpack_require__(20).f(Object.prototype, '__proto__').set, 2);
         set(test, []);
         buggy = !(test instanceof Array);
       } catch (e) { buggy = true; }
@@ -3472,8 +3409,8 @@ module.exports = function (that, target, C) {
 
 "use strict";
 
-var toInteger = __webpack_require__(33);
-var defined = __webpack_require__(32);
+var toInteger = __webpack_require__(31);
+var defined = __webpack_require__(30);
 
 module.exports = function repeat(count) {
   var str = String(defined(this));
@@ -3516,8 +3453,8 @@ module.exports = (!$expm1
 /* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var toInteger = __webpack_require__(33);
-var defined = __webpack_require__(32);
+var toInteger = __webpack_require__(31);
+var defined = __webpack_require__(30);
 // true  -> String#at
 // false -> String#codePointAt
 module.exports = function (TO_STRING) {
@@ -3541,7 +3478,7 @@ module.exports = function (TO_STRING) {
 
 "use strict";
 
-var LIBRARY = __webpack_require__(43);
+var LIBRARY = __webpack_require__(42);
 var $export = __webpack_require__(0);
 var redefine = __webpack_require__(17);
 var hide = __webpack_require__(16);
@@ -3618,8 +3555,8 @@ module.exports = function (Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCE
 
 "use strict";
 
-var create = __webpack_require__(46);
-var descriptor = __webpack_require__(41);
+var create = __webpack_require__(45);
+var descriptor = __webpack_require__(40);
 var setToStringTag = __webpack_require__(52);
 var IteratorPrototype = {};
 
@@ -3638,7 +3575,7 @@ module.exports = function (Constructor, NAME, next) {
 
 // helper for String#{startsWith, endsWith, includes}
 var isRegExp = __webpack_require__(69);
-var defined = __webpack_require__(32);
+var defined = __webpack_require__(30);
 
 module.exports = function (that, searchString, NAME) {
   if (isRegExp(searchString)) throw TypeError('String#' + NAME + " doesn't accept regex!");
@@ -3685,7 +3622,7 @@ module.exports = function (it) {
 "use strict";
 
 var $defineProperty = __webpack_require__(8);
-var createDesc = __webpack_require__(41);
+var createDesc = __webpack_require__(40);
 
 module.exports = function (object, index, value) {
   if (index in object) $defineProperty.f(object, index, createDesc(0, value));
@@ -3700,7 +3637,7 @@ module.exports = function (object, index, value) {
 var classof = __webpack_require__(59);
 var ITERATOR = __webpack_require__(6)('iterator');
 var Iterators = __webpack_require__(54);
-module.exports = __webpack_require__(30).getIteratorMethod = function (it) {
+module.exports = __webpack_require__(28).getIteratorMethod = function (it) {
   if (it != undefined) return it[ITERATOR]
     || it['@@iterator']
     || Iterators[classof(it)];
@@ -3712,7 +3649,7 @@ module.exports = __webpack_require__(30).getIteratorMethod = function (it) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // 9.4.2.3 ArraySpeciesCreate(originalArray, length)
-var speciesConstructor = __webpack_require__(294);
+var speciesConstructor = __webpack_require__(297);
 
 module.exports = function (original, length) {
   return new (speciesConstructor(original))(length);
@@ -3727,7 +3664,7 @@ module.exports = function (original, length) {
 // 22.1.3.6 Array.prototype.fill(value, start = 0, end = this.length)
 
 var toObject = __webpack_require__(11);
-var toAbsoluteIndex = __webpack_require__(45);
+var toAbsoluteIndex = __webpack_require__(44);
 var toLength = __webpack_require__(9);
 module.exports = function fill(value /* , start = 0, end = @length */) {
   var O = toObject(this);
@@ -3747,8 +3684,8 @@ module.exports = function fill(value /* , start = 0, end = @length */) {
 
 "use strict";
 
-var addToUnscopables = __webpack_require__(40);
-var step = __webpack_require__(133);
+var addToUnscopables = __webpack_require__(39);
+var step = __webpack_require__(134);
 var Iterators = __webpack_require__(54);
 var toIObject = __webpack_require__(19);
 
@@ -3786,8 +3723,8 @@ addToUnscopables('entries');
 /* 104 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var ctx = __webpack_require__(26);
-var invoke = __webpack_require__(123);
+var ctx = __webpack_require__(24);
+var invoke = __webpack_require__(124);
 var html = __webpack_require__(86);
 var cel = __webpack_require__(82);
 var global = __webpack_require__(3);
@@ -3829,7 +3766,7 @@ if (!setTask || !clearTask) {
     delete queue[id];
   };
   // Node.js 0.8-
-  if (__webpack_require__(27)(process) == 'process') {
+  if (__webpack_require__(25)(process) == 'process') {
     defer = function (id) {
       process.nextTick(ctx(run, id, 1));
     };
@@ -3881,7 +3818,7 @@ var macrotask = __webpack_require__(104).set;
 var Observer = global.MutationObserver || global.WebKitMutationObserver;
 var process = global.process;
 var Promise = global.Promise;
-var isNode = __webpack_require__(27)(process) == 'process';
+var isNode = __webpack_require__(25)(process) == 'process';
 
 module.exports = function () {
   var head, last, notify;
@@ -3979,16 +3916,16 @@ module.exports.f = function (C) {
 
 var global = __webpack_require__(3);
 var DESCRIPTORS = __webpack_require__(7);
-var LIBRARY = __webpack_require__(43);
+var LIBRARY = __webpack_require__(42);
 var $typed = __webpack_require__(75);
 var hide = __webpack_require__(16);
-var redefineAll = __webpack_require__(51);
+var redefineAll = __webpack_require__(50);
 var fails = __webpack_require__(4);
-var anInstance = __webpack_require__(49);
-var toInteger = __webpack_require__(33);
+var anInstance = __webpack_require__(48);
+var toInteger = __webpack_require__(31);
 var toLength = __webpack_require__(9);
-var toIndex = __webpack_require__(142);
-var gOPN = __webpack_require__(47).f;
+var toIndex = __webpack_require__(143);
+var gOPN = __webpack_require__(46).f;
 var dP = __webpack_require__(8).f;
 var arrayFill = __webpack_require__(102);
 var setToStringTag = __webpack_require__(52);
@@ -4269,9 +4206,9 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-var _index = __webpack_require__(29);
+var _http = __webpack_require__(109);
 
-var _index2 = _interopRequireDefault(_index);
+var _http2 = _interopRequireDefault(_http);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -4281,31 +4218,36 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var _class = function (_iVXjsConstants) {
-    _inherits(_class, _iVXjsConstants);
+var _class = function (_HTTPConstants) {
+    _inherits(_class, _HTTPConstants);
 
     function _class() {
         _classCallCheck(this, _class);
 
         var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
 
-        _this.VIDEO = "video";
+        var errorTypes = {
+            REQUEST_ERROR: "request" + _this.DELIMETER + "error",
+            REQUEST_SUCCESS: "request" + _this.DELIMETER + "success",
+            RESPONSE_ERROR: "response" + _this.DELIMETER + "error",
+            RESPONSE_SUCCESS: "response" + _this.DELIMETER + "success"
+        };
+
+        _this.addNames(errorTypes);
         return _this;
     }
 
     _createClass(_class, [{
         key: "convention",
-        value: function convention() {
-            var DELIMETER = this.DELIMETER,
-                VIDEO = this.VIDEO;
+        value: function convention(errorName) {
+            var DELIMETER = this.DELIMETER;
 
-
-            return "" + _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + VIDEO;
+            return "" + _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + errorName;
         }
     }]);
 
     return _class;
-}(_index2.default);
+}(_http2.default);
 
 exports.default = _class;
 
@@ -4324,7 +4266,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-var _index = __webpack_require__(29);
+var _index = __webpack_require__(27);
 
 var _index2 = _interopRequireDefault(_index);
 
@@ -4379,7 +4321,117 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-var _index = __webpack_require__(29);
+var _index = __webpack_require__(27);
+
+var _index2 = _interopRequireDefault(_index);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _class = function (_iVXjsConstants) {
+    _inherits(_class, _iVXjsConstants);
+
+    function _class() {
+        _classCallCheck(this, _class);
+
+        var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
+
+        _this.VIDEO = "video";
+        return _this;
+    }
+
+    _createClass(_class, [{
+        key: "convention",
+        value: function convention() {
+            var DELIMETER = this.DELIMETER,
+                VIDEO = this.VIDEO;
+
+
+            return "" + _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + VIDEO;
+        }
+    }]);
+
+    return _class;
+}(_index2.default);
+
+exports.default = _class;
+
+/***/ }),
+/* 111 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _index = __webpack_require__(27);
+
+var _index2 = _interopRequireDefault(_index);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _class = function (_iVXjsConstants) {
+    _inherits(_class, _iVXjsConstants);
+
+    function _class() {
+        _classCallCheck(this, _class);
+
+        var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
+
+        _this.TRACKS = "tracks";
+        return _this;
+    }
+
+    _createClass(_class, [{
+        key: "convention",
+        value: function convention() {
+            var DELIMETER = this.DELIMETER,
+                TRACKS = this.TRACKS;
+
+
+            return "" + _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + TRACKS;
+        }
+    }]);
+
+    return _class;
+}(_index2.default);
+
+exports.default = _class;
+
+/***/ }),
+/* 112 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _index = __webpack_require__(27);
 
 var _index2 = _interopRequireDefault(_index);
 
@@ -4420,7 +4472,7 @@ var _class = function (_iVXjsConstants) {
 exports.default = _class;
 
 /***/ }),
-/* 111 */
+/* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4434,67 +4486,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-var _http = __webpack_require__(109);
-
-var _http2 = _interopRequireDefault(_http);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var _class = function (_HTTPConstants) {
-    _inherits(_class, _HTTPConstants);
-
-    function _class() {
-        _classCallCheck(this, _class);
-
-        var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
-
-        var errorTypes = {
-            REQUEST_ERROR: "request" + _this.DELIMETER + "error",
-            REQUEST_SUCCESS: "request" + _this.DELIMETER + "success",
-            RESPONSE_ERROR: "response" + _this.DELIMETER + "error",
-            RESPONSE_SUCCESS: "response" + _this.DELIMETER + "success"
-        };
-
-        _this.addNames(errorTypes);
-        return _this;
-    }
-
-    _createClass(_class, [{
-        key: "convention",
-        value: function convention(errorName) {
-            var DELIMETER = this.DELIMETER;
-
-            return "" + _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + errorName;
-        }
-    }]);
-
-    return _class;
-}(_http2.default);
-
-exports.default = _class;
-
-/***/ }),
-/* 112 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-
-var _index = __webpack_require__(29);
+var _index = __webpack_require__(27);
 
 var _index2 = _interopRequireDefault(_index);
 
@@ -4539,61 +4531,6 @@ var _class = function (_iVXjsConstants) {
             }
 
             return "" + _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + LOGGING + DELIMETER + level;
-        }
-    }]);
-
-    return _class;
-}(_index2.default);
-
-exports.default = _class;
-
-/***/ }),
-/* 113 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-
-var _index = __webpack_require__(29);
-
-var _index2 = _interopRequireDefault(_index);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var _class = function (_iVXjsConstants) {
-    _inherits(_class, _iVXjsConstants);
-
-    function _class() {
-        _classCallCheck(this, _class);
-
-        var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
-
-        _this.TRACKS = "tracks";
-        return _this;
-    }
-
-    _createClass(_class, [{
-        key: "convention",
-        value: function convention() {
-            var DELIMETER = this.DELIMETER,
-                TRACKS = this.TRACKS;
-
-
-            return "" + _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + TRACKS;
         }
     }]);
 
@@ -4696,6 +4633,117 @@ var ActionProcessor = exports.ActionProcessor = function () {
 
 /***/ }),
 /* 115 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _angularEvents = __webpack_require__(79);
+
+var _angularEvents2 = _interopRequireDefault(_angularEvents);
+
+var _audioEvents = __webpack_require__(51);
+
+var _audioEvents2 = _interopRequireDefault(_audioEvents);
+
+var _errors = __webpack_require__(64);
+
+var _errors2 = _interopRequireDefault(_errors);
+
+var _httpEvents = __webpack_require__(108);
+
+var _httpEvents2 = _interopRequireDefault(_httpEvents);
+
+var _iVXioErrors = __webpack_require__(204);
+
+var _iVXioErrors2 = _interopRequireDefault(_iVXioErrors);
+
+var _iVXjsConfigEvents = __webpack_require__(61);
+
+var _iVXjsConfigEvents2 = _interopRequireDefault(_iVXjsConfigEvents);
+
+var _logging = __webpack_require__(113);
+
+var _logging2 = _interopRequireDefault(_logging);
+
+var _stateEvents = __webpack_require__(60);
+
+var _stateEvents2 = _interopRequireDefault(_stateEvents);
+
+var _tracksEvents = __webpack_require__(62);
+
+var _tracksEvents2 = _interopRequireDefault(_tracksEvents);
+
+var _tracksCuesEvents = __webpack_require__(63);
+
+var _tracksCuesEvents2 = _interopRequireDefault(_tracksCuesEvents);
+
+var _videoEvents = __webpack_require__(12);
+
+var _videoEvents2 = _interopRequireDefault(_videoEvents);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var _class = function _class() {
+    _classCallCheck(this, _class);
+
+    // Angular
+    this.ANGULAR = {
+        EVENTS: new _angularEvents2.default()
+
+        // Audio
+    };this.AUDIO = {
+        EVENTS: new _audioEvents2.default()
+
+        // Errors 
+    };this.ERRORS = {
+        EVENTS: new _errors2.default()
+    };
+
+    // Http
+    this.HTTP = {
+        EVENTS: new _httpEvents2.default()
+
+        // iVXjs
+    };this.CONFIG = {
+        EVENTS: new _iVXjsConfigEvents2.default()
+    };
+
+    // iVXio
+    this.iVXio = {
+        ERRORS: new _iVXioErrors2.default()
+    };
+
+    // Logging
+    this.LOGGING = {
+        EVENTS: new _logging2.default()
+    };
+
+    this.TRACKS = {
+        EVENTS: new _tracksEvents2.default(),
+        CUES: new _tracksCuesEvents2.default()
+
+        // State
+    };this.STATE = {
+        EVENTS: new _stateEvents2.default()
+    };
+
+    // Video 
+    this.VIDEO = {
+        EVENTS: new _videoEvents2.default()
+    };
+};
+
+exports.default = _class;
+
+/***/ }),
+/* 116 */
 /***/ (function(module, exports) {
 
 var g;
@@ -4722,7 +4770,7 @@ module.exports = g;
 
 
 /***/ }),
-/* 116 */
+/* 117 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = !__webpack_require__(7) && !__webpack_require__(4)(function () {
@@ -4731,14 +4779,14 @@ module.exports = !__webpack_require__(7) && !__webpack_require__(4)(function () 
 
 
 /***/ }),
-/* 117 */
+/* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports.f = __webpack_require__(6);
 
 
 /***/ }),
-/* 118 */
+/* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var has = __webpack_require__(15);
@@ -4761,12 +4809,12 @@ module.exports = function (object, names) {
 
 
 /***/ }),
-/* 119 */
+/* 120 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var dP = __webpack_require__(8);
 var anObject = __webpack_require__(2);
-var getKeys = __webpack_require__(44);
+var getKeys = __webpack_require__(43);
 
 module.exports = __webpack_require__(7) ? Object.defineProperties : function defineProperties(O, Properties) {
   anObject(O);
@@ -4780,12 +4828,12 @@ module.exports = __webpack_require__(7) ? Object.defineProperties : function def
 
 
 /***/ }),
-/* 120 */
+/* 121 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
 var toIObject = __webpack_require__(19);
-var gOPN = __webpack_require__(47).f;
+var gOPN = __webpack_require__(46).f;
 var toString = {}.toString;
 
 var windowNames = typeof window == 'object' && window && Object.getOwnPropertyNames
@@ -4805,13 +4853,13 @@ module.exports.f = function getOwnPropertyNames(it) {
 
 
 /***/ }),
-/* 121 */
+/* 122 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 // 19.1.2.1 Object.assign(target, source, ...)
-var getKeys = __webpack_require__(44);
+var getKeys = __webpack_require__(43);
 var gOPS = __webpack_require__(67);
 var pIE = __webpack_require__(58);
 var toObject = __webpack_require__(11);
@@ -4846,14 +4894,14 @@ module.exports = !$assign || __webpack_require__(4)(function () {
 
 
 /***/ }),
-/* 122 */
+/* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 var aFunction = __webpack_require__(13);
 var isObject = __webpack_require__(5);
-var invoke = __webpack_require__(123);
+var invoke = __webpack_require__(124);
 var arraySlice = [].slice;
 var factories = {};
 
@@ -4878,7 +4926,7 @@ module.exports = Function.bind || function bind(that /* , ...args */) {
 
 
 /***/ }),
-/* 123 */
+/* 124 */
 /***/ (function(module, exports) {
 
 // fast apply, http://jsperf.lnkit.com/fast-apply/5
@@ -4900,7 +4948,7 @@ module.exports = function (fn, args, that) {
 
 
 /***/ }),
-/* 124 */
+/* 125 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $parseInt = __webpack_require__(3).parseInt;
@@ -4915,7 +4963,7 @@ module.exports = $parseInt(ws + '08') !== 8 || $parseInt(ws + '0x16') !== 22 ? f
 
 
 /***/ }),
-/* 125 */
+/* 126 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $parseFloat = __webpack_require__(3).parseFloat;
@@ -4929,10 +4977,10 @@ module.exports = 1 / $parseFloat(__webpack_require__(88) + '-0') !== -Infinity ?
 
 
 /***/ }),
-/* 126 */
+/* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var cof = __webpack_require__(27);
+var cof = __webpack_require__(25);
 module.exports = function (it, msg) {
   if (typeof it != 'number' && cof(it) != 'Number') throw TypeError(msg);
   return +it;
@@ -4940,7 +4988,7 @@ module.exports = function (it, msg) {
 
 
 /***/ }),
-/* 127 */
+/* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.1.2.3 Number.isInteger(number)
@@ -4952,7 +5000,7 @@ module.exports = function isInteger(it) {
 
 
 /***/ }),
-/* 128 */
+/* 129 */
 /***/ (function(module, exports) {
 
 // 20.2.2.20 Math.log1p(x)
@@ -4962,7 +5010,7 @@ module.exports = Math.log1p || function log1p(x) {
 
 
 /***/ }),
-/* 129 */
+/* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.2.2.16 Math.fround(x)
@@ -4991,7 +5039,7 @@ module.exports = Math.fround || function fround(x) {
 
 
 /***/ }),
-/* 130 */
+/* 131 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // call something on iterator step with safe closing on error
@@ -5009,7 +5057,7 @@ module.exports = function (iterator, fn, value, entries) {
 
 
 /***/ }),
-/* 131 */
+/* 132 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var aFunction = __webpack_require__(13);
@@ -5043,14 +5091,14 @@ module.exports = function (that, callbackfn, aLen, memo, isRight) {
 
 
 /***/ }),
-/* 132 */
+/* 133 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 // 22.1.3.3 Array.prototype.copyWithin(target, start, end = this.length)
 
 var toObject = __webpack_require__(11);
-var toAbsoluteIndex = __webpack_require__(45);
+var toAbsoluteIndex = __webpack_require__(44);
 var toLength = __webpack_require__(9);
 
 module.exports = [].copyWithin || function copyWithin(target /* = 0 */, start /* = 0, end = @length */) {
@@ -5076,7 +5124,7 @@ module.exports = [].copyWithin || function copyWithin(target /* = 0 */, start /*
 
 
 /***/ }),
-/* 133 */
+/* 134 */
 /***/ (function(module, exports) {
 
 module.exports = function (done, value) {
@@ -5085,7 +5133,7 @@ module.exports = function (done, value) {
 
 
 /***/ }),
-/* 134 */
+/* 135 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 21.2.5.3 get RegExp.prototype.flags()
@@ -5096,7 +5144,7 @@ if (__webpack_require__(7) && /./g.flags != 'g') __webpack_require__(8).f(RegExp
 
 
 /***/ }),
-/* 135 */
+/* 136 */
 /***/ (function(module, exports) {
 
 module.exports = function (exec) {
@@ -5109,7 +5157,7 @@ module.exports = function (exec) {
 
 
 /***/ }),
-/* 136 */
+/* 137 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var anObject = __webpack_require__(2);
@@ -5127,12 +5175,12 @@ module.exports = function (C, x) {
 
 
 /***/ }),
-/* 137 */
+/* 138 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var strong = __webpack_require__(138);
+var strong = __webpack_require__(139);
 var validate = __webpack_require__(55);
 var MAP = 'Map';
 
@@ -5153,22 +5201,22 @@ module.exports = __webpack_require__(74)(MAP, function (get) {
 
 
 /***/ }),
-/* 138 */
+/* 139 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 var dP = __webpack_require__(8).f;
-var create = __webpack_require__(46);
-var redefineAll = __webpack_require__(51);
-var ctx = __webpack_require__(26);
-var anInstance = __webpack_require__(49);
-var forOf = __webpack_require__(50);
+var create = __webpack_require__(45);
+var redefineAll = __webpack_require__(50);
+var ctx = __webpack_require__(24);
+var anInstance = __webpack_require__(48);
+var forOf = __webpack_require__(49);
 var $iterDefine = __webpack_require__(94);
-var step = __webpack_require__(133);
-var setSpecies = __webpack_require__(48);
+var step = __webpack_require__(134);
+var setSpecies = __webpack_require__(47);
 var DESCRIPTORS = __webpack_require__(7);
-var fastKey = __webpack_require__(39).fastKey;
+var fastKey = __webpack_require__(38).fastKey;
 var validate = __webpack_require__(55);
 var SIZE = DESCRIPTORS ? '_s' : 'size';
 
@@ -5304,12 +5352,12 @@ module.exports = {
 
 
 /***/ }),
-/* 139 */
+/* 140 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var strong = __webpack_require__(138);
+var strong = __webpack_require__(139);
 var validate = __webpack_require__(55);
 var SET = 'Set';
 
@@ -5325,16 +5373,16 @@ module.exports = __webpack_require__(74)(SET, function (get) {
 
 
 /***/ }),
-/* 140 */
+/* 141 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var each = __webpack_require__(35)(0);
+var each = __webpack_require__(33)(0);
 var redefine = __webpack_require__(17);
-var meta = __webpack_require__(39);
-var assign = __webpack_require__(121);
-var weak = __webpack_require__(141);
+var meta = __webpack_require__(38);
+var assign = __webpack_require__(122);
+var weak = __webpack_require__(142);
 var isObject = __webpack_require__(5);
 var fails = __webpack_require__(4);
 var validate = __webpack_require__(55);
@@ -5391,18 +5439,18 @@ if (fails(function () { return new $WeakMap().set((Object.freeze || Object)(tmp)
 
 
 /***/ }),
-/* 141 */
+/* 142 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var redefineAll = __webpack_require__(51);
-var getWeak = __webpack_require__(39).getWeak;
+var redefineAll = __webpack_require__(50);
+var getWeak = __webpack_require__(38).getWeak;
 var anObject = __webpack_require__(2);
 var isObject = __webpack_require__(5);
-var anInstance = __webpack_require__(49);
-var forOf = __webpack_require__(50);
-var createArrayMethod = __webpack_require__(35);
+var anInstance = __webpack_require__(48);
+var forOf = __webpack_require__(49);
+var createArrayMethod = __webpack_require__(33);
 var $has = __webpack_require__(15);
 var validate = __webpack_require__(55);
 var arrayFind = createArrayMethod(5);
@@ -5483,11 +5531,11 @@ module.exports = {
 
 
 /***/ }),
-/* 142 */
+/* 143 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://tc39.github.io/ecma262/#sec-toindex
-var toInteger = __webpack_require__(33);
+var toInteger = __webpack_require__(31);
 var toLength = __webpack_require__(9);
 module.exports = function (it) {
   if (it === undefined) return 0;
@@ -5499,11 +5547,11 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 143 */
+/* 144 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // all object keys, includes non-enumerable and symbols
-var gOPN = __webpack_require__(47);
+var gOPN = __webpack_require__(46);
 var gOPS = __webpack_require__(67);
 var anObject = __webpack_require__(2);
 var Reflect = __webpack_require__(3).Reflect;
@@ -5515,7 +5563,7 @@ module.exports = Reflect && Reflect.ownKeys || function ownKeys(it) {
 
 
 /***/ }),
-/* 144 */
+/* 145 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5524,7 +5572,7 @@ module.exports = Reflect && Reflect.ownKeys || function ownKeys(it) {
 var isArray = __webpack_require__(68);
 var isObject = __webpack_require__(5);
 var toLength = __webpack_require__(9);
-var ctx = __webpack_require__(26);
+var ctx = __webpack_require__(24);
 var IS_CONCAT_SPREADABLE = __webpack_require__(6)('isConcatSpreadable');
 
 function flattenIntoArray(target, original, source, sourceLen, start, depth, mapper, thisArg) {
@@ -5561,13 +5609,13 @@ module.exports = flattenIntoArray;
 
 
 /***/ }),
-/* 145 */
+/* 146 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://github.com/tc39/proposal-string-pad-start-end
 var toLength = __webpack_require__(9);
 var repeat = __webpack_require__(90);
-var defined = __webpack_require__(32);
+var defined = __webpack_require__(30);
 
 module.exports = function (that, maxLength, fillString, left) {
   var S = String(defined(that));
@@ -5583,10 +5631,10 @@ module.exports = function (that, maxLength, fillString, left) {
 
 
 /***/ }),
-/* 146 */
+/* 147 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var getKeys = __webpack_require__(44);
+var getKeys = __webpack_require__(43);
 var toIObject = __webpack_require__(19);
 var isEnum = __webpack_require__(58).f;
 module.exports = function (isEntries) {
@@ -5605,12 +5653,12 @@ module.exports = function (isEntries) {
 
 
 /***/ }),
-/* 147 */
+/* 148 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://github.com/DavidBruant/Map-Set.prototype.toJSON
 var classof = __webpack_require__(59);
-var from = __webpack_require__(148);
+var from = __webpack_require__(149);
 module.exports = function (NAME) {
   return function toJSON() {
     if (classof(this) != NAME) throw TypeError(NAME + "#toJSON isn't generic");
@@ -5620,10 +5668,10 @@ module.exports = function (NAME) {
 
 
 /***/ }),
-/* 148 */
+/* 149 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var forOf = __webpack_require__(50);
+var forOf = __webpack_require__(49);
 
 module.exports = function (iter, ITERATOR) {
   var result = [];
@@ -5633,7 +5681,7 @@ module.exports = function (iter, ITERATOR) {
 
 
 /***/ }),
-/* 149 */
+/* 150 */
 /***/ (function(module, exports) {
 
 // https://rwaldron.github.io/proposal-math-extensions/
@@ -5657,7 +5705,7 @@ module.exports = Math.scale || function scale(x, inLow, inHigh, outLow, outHigh)
 
 
 /***/ }),
-/* 150 */
+/* 151 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5745,269 +5793,85 @@ var DateParser = exports.DateParser = function () {
 }();
 
 /***/ }),
-/* 151 */
+/* 152 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _containerSetup = __webpack_require__(152);
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
 
-var _containerSetup2 = _interopRequireDefault(_containerSetup);
+var _app = __webpack_require__(153);
 
-var _stringParsers = __webpack_require__(153);
+var _app2 = _interopRequireDefault(_app);
 
-var _typeParsers = __webpack_require__(10);
-
-var _angularEvents = __webpack_require__(79);
-
-var _angularEvents2 = _interopRequireDefault(_angularEvents);
-
-var _iVXjsConfigEvents = __webpack_require__(60);
-
-var _iVXjsConfigEvents2 = _interopRequireDefault(_iVXjsConfigEvents);
-
-var _registeredConstants = __webpack_require__(156);
-
-var _registeredConstants2 = _interopRequireDefault(_registeredConstants);
-
-var _app = __webpack_require__(161);
-
-var _createFactoryFunction = __webpack_require__(1);
-
-var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
-
-var _index = __webpack_require__(405);
-
-var _index2 = _interopRequireDefault(_index);
-
-var _ivxjsSetup = __webpack_require__(407);
-
-var _ivxjsSetup2 = _interopRequireDefault(_ivxjsSetup);
-
-var _stateInput = __webpack_require__(408);
-
-var _stateInput2 = _interopRequireDefault(_stateInput);
-
-var _stateVideo = __webpack_require__(411);
-
-var _stateVideo2 = _interopRequireDefault(_stateVideo);
-
-var _stateHtml = __webpack_require__(413);
-
-var _stateHtml2 = _interopRequireDefault(_stateHtml);
-
-var _stateNavigation = __webpack_require__(415);
-
-var _stateNavigation2 = _interopRequireDefault(_stateNavigation);
-
-var _inputForm = __webpack_require__(416);
-
-var _inputForm2 = _interopRequireDefault(_inputForm);
-
-var _inputText = __webpack_require__(418);
-
-var _inputText2 = _interopRequireDefault(_inputText);
-
-var _uiAnchor = __webpack_require__(420);
-
-var _uiAnchor2 = _interopRequireDefault(_uiAnchor);
-
-var _uiCascadingOptions = __webpack_require__(422);
-
-var _uiCascadingOptions2 = _interopRequireDefault(_uiCascadingOptions);
-
-var _inputButtons = __webpack_require__(424);
-
-var _inputButtons2 = _interopRequireDefault(_inputButtons);
-
-var _inputEmail = __webpack_require__(426);
-
-var _inputEmail2 = _interopRequireDefault(_inputEmail);
-
-var _inputUrl = __webpack_require__(428);
-
-var _inputUrl2 = _interopRequireDefault(_inputUrl);
-
-var _inputDate = __webpack_require__(430);
-
-var _inputDate2 = _interopRequireDefault(_inputDate);
-
-var _inputDatetimeLocal = __webpack_require__(432);
-
-var _inputDatetimeLocal2 = _interopRequireDefault(_inputDatetimeLocal);
-
-var _inputOptions = __webpack_require__(434);
-
-var _inputOptions2 = _interopRequireDefault(_inputOptions);
-
-var _inputRadio = __webpack_require__(436);
-
-var _inputRadio2 = _interopRequireDefault(_inputRadio);
-
-var _inputCheckbox = __webpack_require__(438);
-
-var _inputCheckbox2 = _interopRequireDefault(_inputCheckbox);
-
-var _inputNumber = __webpack_require__(440);
-
-var _inputNumber2 = _interopRequireDefault(_inputNumber);
-
-var _inputTextarea = __webpack_require__(442);
-
-var _inputTextarea2 = _interopRequireDefault(_inputTextarea);
-
-var _videoYoutube = __webpack_require__(444);
-
-var _videoYoutube2 = _interopRequireDefault(_videoYoutube);
-
-var _videoHtml = __webpack_require__(446);
-
-var _videoHtml2 = _interopRequireDefault(_videoHtml);
-
-var _videoVimeo = __webpack_require__(448);
-
-var _videoVimeo2 = _interopRequireDefault(_videoVimeo);
-
-var _videoControlsStandard = __webpack_require__(450);
-
-var _videoControlsStandard2 = _interopRequireDefault(_videoControlsStandard);
-
-var _actions = __webpack_require__(452);
-
-var _actions2 = _interopRequireDefault(_actions);
-
-var _bus = __webpack_require__(453);
-
-var _iosInlineVideo = __webpack_require__(454);
-
-var _iosInlineVideo2 = _interopRequireDefault(_iosInlineVideo);
-
-var _templateRenderer = __webpack_require__(455);
-
-var _templateRenderer2 = _interopRequireDefault(_templateRenderer);
-
-var _templateSetData = __webpack_require__(456);
-
-var _templateSetData2 = _interopRequireDefault(_templateSetData);
-
-var _templateAnimateElement = __webpack_require__(457);
-
-var _templateAnimateElement2 = _interopRequireDefault(_templateAnimateElement);
-
-var _templateGoToState = __webpack_require__(458);
-
-var _templateGoToState2 = _interopRequireDefault(_templateGoToState);
-
-var _templateRaiseIvxjsEvent = __webpack_require__(459);
-
-var _templateRaiseIvxjsEvent2 = _interopRequireDefault(_templateRaiseIvxjsEvent);
-
-var _appConfig = __webpack_require__(460);
+var _appConfig = __webpack_require__(156);
 
 var _appConfig2 = _interopRequireDefault(_appConfig);
 
-var _appRun = __webpack_require__(462);
+var _appRun = __webpack_require__(159);
 
 var _appRun2 = _interopRequireDefault(_appRun);
 
+var _iVXjsConfigEvents = __webpack_require__(61);
+
+var _iVXjsConfigEvents2 = _interopRequireDefault(_iVXjsConfigEvents);
+
+var _app3 = __webpack_require__(162);
+
+var _constants = __webpack_require__(408);
+
+var _constants2 = _interopRequireDefault(_constants);
+
+var _directives = __webpack_require__(409);
+
+var _directives2 = _interopRequireDefault(_directives);
+
+var _providers = __webpack_require__(455);
+
+var _providers2 = _interopRequireDefault(_providers);
+
+var _services = __webpack_require__(457);
+
+var _services2 = _interopRequireDefault(_services);
+
+var _filters = __webpack_require__(463);
+
+var _filters2 = _interopRequireDefault(_filters);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var stringParser = new _stringParsers.StringParsers(); //Utilities
-
-var objectParsers = new _typeParsers.ObjectParsers();
-var angularEventNames = new _angularEvents2.default();
 var iVXjsConfigEvents = new _iVXjsConfigEvents2.default();
-var myIVXjs = new _app.iVXjs();
-
-//Providers
-
-
-// Directives
-
-// States
-
-
-// Inputs
-
-
-// Video Players
-
-
-// Video Controls
-
-//Services
-
-
-//Template Directives 
-
-
-// Config
-
-
-// Run
+var myIVXjs = new _app3.iVXjs();
 var _window = window,
     _window$iVXjsGlobalCo = _window.iVXjsGlobalConfigs,
     iVXjsGlobalConfigs = _window$iVXjsGlobalCo === undefined ? {} : _window$iVXjsGlobalCo;
 var _iVXjsGlobalConfigs$m = iVXjsGlobalConfigs.modules,
     modules = _iVXjsGlobalConfigs$m === undefined ? [] : _iVXjsGlobalConfigs$m;
 
-var deps = [].concat(['ui.router', 'ngSanitize'], modules);
-
-var app = angular.module('ivx-js', deps);
-
-app
-
-//Providers
-.provider('iVXjsSetup', _ivxjsSetup2.default)
-
-// Constants
-.constant('iVXjs', myIVXjs).constant('ivxjs.constants', new _registeredConstants2.default()).constant('factoryFunctionCreator', _createFactoryFunction2.default)
-//.constant('YT', YT)
-
-// Inputs
-.directive('ivxjsFormInput', _inputForm2.default).directive('ivxjsTextInput', _inputText2.default).directive('ivxjsRadioInput', _inputRadio2.default).directive('ivxjsButtonsInput', _inputButtons2.default).directive('ivxjsAnchor', _uiAnchor2.default).directive('ivxjsCascadingOptionsInput', _uiCascadingOptions2.default).directive('ivxjsOptionsInput', _inputOptions2.default).directive('ivxjsEmailInput', _inputEmail2.default).directive('ivxjsUrlInput', _inputUrl2.default).directive('ivxjsDateInput', _inputDate2.default).directive('ivxjsDatetimeLocalInput', _inputDatetimeLocal2.default).directive('ivxjsCheckboxInput', _inputCheckbox2.default).directive('ivxjsNumberInput', _inputNumber2.default).directive('ivxjsTextareaInput', _inputTextarea2.default)
-
-// Input State
-.directive('ivxjsInputState', _stateInput2.default)
-
-// HTML State
-.directive('ivxjsHtmlState', _stateHtml2.default)
-
-// Navigation State
-.directive('ivxjsNavigationState', _stateNavigation2.default)
-
-// Video Players    
-.directive('ivxjsYoutubeVideoPlayer', _videoYoutube2.default).directive('ivxjsHtml5VideoPlayer', _videoHtml2.default).directive('ivxjsVimeoVideoPlayer', _videoVimeo2.default).directive('ivxjsStandardVideoControls', _videoControlsStandard2.default)
-
-// Video State
-.directive('ivxjsVideoState', _stateVideo2.default)
-
-//Temaplate
-.directive('ivxSetData', _templateSetData2.default).directive('ivxAnimate', _templateAnimateElement2.default).directive('ivxGoToState', _templateGoToState2.default).directive('ivxEvent', _templateRaiseIvxjsEvent2.default)
-
-//Services
-.service('ivxjs.actions', _actions2.default).service('createInlineVideo', _iosInlineVideo2.default).service('ivxjs.bus', _bus.BusService).service('pullInTemplate', _templateRenderer2.default)
-
-//Controllers
-
-//Filters 
-.filter('stringParsers', ['$rootScope', function ($rootScope) {
-    return function (name, text) {
-        return stringParser[name](text);
-    };
-}])
-
-//Config
-.config(_appConfig2.default)
-
-//Run
-.run(_appRun2.default);
-
-new _index2.default(app, { factoryFunctionCreator: _createFactoryFunction2.default });
+var deps = [].concat(['ui.router', 'ngSanitize', _directives2.default, _constants2.default, _providers2.default, _services2.default, _filters2.default], modules);
 
 // Bootstrap App
 myIVXjs.Bus.on(iVXjsConfigEvents.VALIDATED, function (iVXjs) {
+    (0, _app2.default)(iVXjs);
+});
+
+exports.default = angular.module('ivx-js', deps).constant('iVXjs', myIVXjs).config(_appConfig2.default).run(_appRun2.default).name;
+
+/***/ }),
+/* 153 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+exports.default = function (iVXjs) {
     var stateAudio = new iVXjs.audio('body', 'state-audio');
     var experienceAudio = new iVXjs.audio('body', 'experience-audio');
 
@@ -6025,10 +5889,25 @@ myIVXjs.Bus.on(iVXjsConfigEvents.VALIDATED, function (iVXjs) {
 
     angular.bootstrap(iVXjs.config.bootstrapSelector ? document.querySelector(iVXjs.config.bootstrapSelector) : document, ['ivx-js']);
     iVXjs.Bus.emit(angularEventNames.BOOTSTRAPPED);
-});
+};
+
+var _typeParsers = __webpack_require__(10);
+
+var _containerSetup = __webpack_require__(154);
+
+var _containerSetup2 = _interopRequireDefault(_containerSetup);
+
+var _angularEvents = __webpack_require__(79);
+
+var _angularEvents2 = _interopRequireDefault(_angularEvents);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var objectParsers = new _typeParsers.ObjectParsers();
+var angularEventNames = new _angularEvents2.default();
 
 /***/ }),
-/* 152 */
+/* 154 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6061,59 +5940,7 @@ var _class = function _class(selector, template, audioClass) {
 exports.default = _class;
 
 /***/ }),
-/* 153 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var StringParsers = exports.StringParsers = function () {
-    function StringParsers(id) {
-        _classCallCheck(this, StringParsers);
-    }
-
-    _createClass(StringParsers, [{
-        key: 'camelCase',
-        value: function camelCase(id) {
-            var inputParts = id.split('-');
-            var self = this;
-            var inputName = inputParts && inputParts.length > 0 ? inputParts.reduce(function (inputName, inputPart) {
-                return '' + inputName + self.capitalize(inputPart);
-            }) : '' + inputParts[0];
-
-            return inputName;
-        }
-    }, {
-        key: 'startCase',
-        value: function startCase(id) {
-            var inputParts = id.split('-');
-            var self = this;
-            var inputName = inputParts && inputParts.length > 0 ? inputParts.reduce(function (inputName, inputPart) {
-                return '' + inputName + self.capitalize(inputPart) + ' ';
-            }, '') : '' + inputParts[0];
-
-            return inputName;
-        }
-    }, {
-        key: 'capitalize',
-        value: function capitalize(tempString) {
-            return tempString[0].toUpperCase() + tempString.substring(1);
-        }
-    }]);
-
-    return StringParsers;
-}();
-
-/***/ }),
-/* 154 */
+/* 155 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6127,7 +5954,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-var _index = __webpack_require__(29);
+var _index = __webpack_require__(27);
 
 var _index2 = _interopRequireDefault(_index);
 
@@ -6168,7 +5995,7 @@ var _class = function (_iVXjsConstants) {
 exports.default = _class;
 
 /***/ }),
-/* 155 */
+/* 156 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6180,158 +6007,140 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+var _createFactoryFunction = __webpack_require__(1);
 
-var _index = __webpack_require__(29);
+var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
 
-var _index2 = _interopRequireDefault(_index);
+var _httpInterceptors = __webpack_require__(157);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var _class = function (_iVXjsConstants) {
-    _inherits(_class, _iVXjsConstants);
-
-    function _class() {
-        _classCallCheck(this, _class);
-
-        var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
-
-        _this.CONFIG = "config";
-        return _this;
-    }
-
-    _createClass(_class, [{
-        key: "convention",
-        value: function convention() {
-            var DELIMETER = this.DELIMETER,
-                CONFIG = this.CONFIG;
-
-
-            return "" + _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + CONFIG;
-        }
-    }]);
-
-    return _class;
-}(_index2.default);
-
-exports.default = _class;
-
-/***/ }),
-/* 156 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _angularEvents = __webpack_require__(79);
-
-var _angularEvents2 = _interopRequireDefault(_angularEvents);
-
-var _audioEvents = __webpack_require__(38);
-
-var _audioEvents2 = _interopRequireDefault(_audioEvents);
-
-var _errors = __webpack_require__(61);
-
-var _errors2 = _interopRequireDefault(_errors);
-
-var _httpEvents = __webpack_require__(111);
-
-var _httpEvents2 = _interopRequireDefault(_httpEvents);
-
-var _iVXioErrors = __webpack_require__(158);
-
-var _iVXioErrors2 = _interopRequireDefault(_iVXioErrors);
-
-var _iVXjsConfigEvents = __webpack_require__(60);
-
-var _iVXjsConfigEvents2 = _interopRequireDefault(_iVXjsConfigEvents);
-
-var _logging = __webpack_require__(112);
-
-var _logging2 = _interopRequireDefault(_logging);
-
-var _stateEvents = __webpack_require__(62);
-
-var _stateEvents2 = _interopRequireDefault(_stateEvents);
-
-var _tracksEvents = __webpack_require__(63);
-
-var _tracksEvents2 = _interopRequireDefault(_tracksEvents);
-
-var _tracksCuesEvents = __webpack_require__(64);
-
-var _tracksCuesEvents2 = _interopRequireDefault(_tracksCuesEvents);
+var _httpInterceptors2 = _interopRequireDefault(_httpInterceptors);
 
 var _videoEvents = __webpack_require__(12);
 
 var _videoEvents2 = _interopRequireDefault(_videoEvents);
 
+var _stateEvents = __webpack_require__(60);
+
+var _stateEvents2 = _interopRequireDefault(_stateEvents);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var _class = function _class() {
-    _classCallCheck(this, _class);
+var stateEvents = new _stateEvents2.default();
 
-    // Angular
-    this.ANGULAR = {
-        EVENTS: new _angularEvents2.default()
+var AppConfig = function () {
+    function AppConfig($stateProvider, $urlRouterProvider, $locationProvider, $compileProvider, $httpProvider, $sceDelegateProvider, $provide, iVXjs) {
+        _classCallCheck(this, AppConfig);
 
-        // Audio
-    };this.AUDIO = {
-        EVENTS: new _audioEvents2.default()
+        if (!iVXjs.config) return;
 
-        // Errors 
-    };this.ERRORS = {
-        EVENTS: new _errors2.default()
-    };
+        this.createStates($stateProvider, iVXjs.config.states);
 
-    // Http
-    this.HTTP = {
-        EVENTS: new _httpEvents2.default()
+        var experience = iVXjs.experience;
+        var _iVXjs$config$templat = iVXjs.config.templates,
+            templates = _iVXjs$config$templat === undefined ? [] : _iVXjs$config$templat;
 
-        // iVXjs
-    };this.CONFIG = {
-        EVENTS: new _iVXjsConfigEvents2.default()
-    };
+        var defaultStateID = iVXjs.rules(iVXjs.config.defaultState);
 
-    // iVXio
-    this.iVXio = {
-        ERRORS: new _iVXioErrors2.default()
-    };
+        var _iVXjs$config$states$ = iVXjs.config.states.find(function (state) {
+            return state.id === defaultStateID;
+        }),
+            url = _iVXjs$config$states$.url;
 
-    // Logging
-    this.LOGGING = {
-        EVENTS: new _logging2.default()
-    };
+        if (experience.whiteList) {
+            $sceDelegateProvider.resourceUrlWhitelist(experience.whiteList);
+        }
 
-    this.TRACKS = {
-        EVENTS: new _tracksEvents2.default(),
-        CUES: new _tracksCuesEvents2.default()
+        $urlRouterProvider.otherwise(function ($injector, $location) {
+            var currentUrl = $location.url();
 
-        // State
-    };this.STATE = {
-        EVENTS: new _stateEvents2.default()
-    };
+            if (!currentUrl || currentUrl.length <= 0) {
+                return url;
+            }
 
-    // Video 
-    this.VIDEO = {
-        EVENTS: new _videoEvents2.default()
-    };
-};
+            iVXjs.Bus.emit(stateEvents.NOT_FOUND, currentUrl);
 
-exports.default = _class;
+            var pageNotFoundStateId = iVXjs.rules(iVXjs.config.pageNotFoundState);
+            var pageNotFoundUrl = void 0;
+
+            var pageNotFoundState = iVXjs.config.states.find(function (state) {
+                return state.id === pageNotFoundStateId;
+            });
+
+            if (pageNotFoundState) {
+                pageNotFoundUrl = pageNotFoundState.url;
+            }
+
+            return pageNotFoundUrl ? pageNotFoundUrl : url;
+        });
+        this.create$httpInjectors($httpProvider, $provide);
+    }
+
+    _createClass(AppConfig, [{
+        key: 'create$httpInjectors',
+        value: function create$httpInjectors($httpProvider, $provide) {
+            $provide.factory("iVXjsHttpInterceptors", _httpInterceptors2.default);
+
+            $httpProvider.interceptors.push("iVXjsHttpInterceptors");
+        }
+    }, {
+        key: 'createStates',
+        value: function createStates($stateProvider) {
+            var states = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+
+            states.forEach(function (state, index) {
+                var type = state.type,
+                    id = state.id,
+                    url = state.url,
+                    _state$onEnter = state.onEnter,
+                    onEnter = _state$onEnter === undefined ? [] : _state$onEnter,
+                    _state$onExit = state.onExit,
+                    onExit = _state$onExit === undefined ? [] : _state$onExit;
+
+                var videoEventNames = new _videoEvents2.default();
+
+                $stateProvider.state(id, {
+                    url: url,
+                    data: state,
+                    template: '<ivxjs-' + type + '-state class="hide"></ivxjs-' + type + '-state>',
+                    onEnter: ['$rootScope', '$state', 'iVXjs', 'ivxjs.actions', 'ivxjs.bus', 'ivxjs.modules.audio.experience', 'ivxjs.modules.audio', function ($rootScope, $state, iVXjs, iVXjsActions, iVXjsBus, iVXjsAudioExperience, iVXjsAudio) {
+                        if (!iVXjsAudioExperience.eventsAdded) {
+                            iVXjsAudioExperience.addEventListeners(iVXjsBus);
+                            iVXjsAudio.addEventListeners(iVXjsBus);
+                            iVXjs.experience.Bus = iVXjsBus;
+                            iVXjsAudioExperience.eventsAdded = true;
+                            iVXjsAudio.eventsAdded = true;
+                            iVXjs.experience.audio = iVXjsAudioExperience;
+                            iVXjs.experience.actions = iVXjsActions;
+                        }
+
+                        iVXjs.log.debug('On Enter Actions Start', {}, { source: 'onEnter', status: 'started', actions: onEnter, timestamp: Date.now() });
+
+                        $rootScope.stateID = id;
+
+                        iVXjsActions.resolveActions(onEnter, function () {
+                            iVXjs.log.debug('On Enter Actions Resolved', {}, { source: 'onEnter', actions: onEnter, status: 'completed', timestamp: Date.now() });
+                        });
+                    }],
+                    onExit: ['$rootScope', 'ivxjs.actions', 'iVXjs', 'ivxjs.bus', function ($rootScope, iVXjsActions, iVXjs, iVXjsBus) {
+                        iVXjsBus.emit(videoEventNames.DISPOSE);
+                        iVXjs.log.debug('On Exit Actions Start', {}, { source: 'onExit', status: 'started', actions: onEnter });
+                        iVXjsActions.resolveActions(onExit, function () {
+                            iVXjs.log.debug('On Exit Events Actions Resolved', {}, { source: 'onExit', actions: onExit, status: 'completed', timestamp: Date.now() });
+                        });
+                    }]
+                });
+            });
+        }
+    }]);
+
+    return AppConfig;
+}();
+
+AppConfig.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider', '$compileProvider', '$httpProvider', '$sceDelegateProvider', '$provide', 'iVXjs'];
+
+exports.default = (0, _createFactoryFunction2.default)(AppConfig);
 
 /***/ }),
 /* 157 */
@@ -6343,50 +6152,52 @@ exports.default = _class;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.HttpInterceptors = undefined;
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _createFactoryFunction = __webpack_require__(1);
 
-var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
 
-var _index = __webpack_require__(29);
+var _httpEvents = __webpack_require__(108);
 
-var _index2 = _interopRequireDefault(_index);
+var _httpEvents2 = _interopRequireDefault(_httpEvents);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+var httpEventNames = new _httpEvents2.default();
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+var HttpInterceptors = exports.HttpInterceptors = function HttpInterceptors($q, iVXjs, iVXjsLog) {
+    _classCallCheck(this, HttpInterceptors);
 
-var _class = function (_iVXjsConstants) {
-    _inherits(_class, _iVXjsConstants);
+    this.request = function (config) {
+        iVXjsLog.log('Requested Template: ' + config.url);
+        iVXjs.Bus.emit(httpEventNames.REQUEST_SUCCESS, config);
+        return config;
+    };
+    this.requestError = function (rejection) {
+        iVXjs.Bus.emit(httpEventNames.REQUEST_ERROR, rejection);
+        iVXjsLog.error({ message: rejection.data }, "HTTP");
 
-    function _class() {
-        _classCallCheck(this, _class);
+        return $q.reject(rejection);
+    };
+    this.response = function (response) {
+        iVXjsLog.log('Loaded Template: ' + response.config.url);
+        iVXjs.Bus.emit(httpEventNames.RESPONSE_SUCCESS, response);
+        return response;
+    };
+    this.responseError = function (rejection) {
+        iVXjsLog.error({ message: rejection.data, info: rejection }, "HTTP");
+        iVXjs.Bus.emit(httpEventNames.RESPONSE_ERROR, rejection);
 
-        var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
+        return $q.reject(rejection);
+    };
+};
 
-        _this.AUDIO = "audio";
-        return _this;
-    }
+HttpInterceptors.$inject = ["$q", "iVXjs", "ivxjs.log"];
 
-    _createClass(_class, [{
-        key: "convention",
-        value: function convention() {
-            var DELIMETER = this.DELIMETER,
-                AUDIO = this.AUDIO;
-
-
-            return "" + _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + AUDIO;
-        }
-    }]);
-
-    return _class;
-}(_index2.default);
-
-exports.default = _class;
+exports.default = (0, _createFactoryFunction2.default)(HttpInterceptors);
 
 /***/ }),
 /* 158 */
@@ -6403,73 +6214,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-var _iVXio = __webpack_require__(110);
-
-var _iVXio2 = _interopRequireDefault(_iVXio);
-
-var _errors = __webpack_require__(61);
-
-var _errors2 = _interopRequireDefault(_errors);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var _class = function (_iVXioConstants) {
-    _inherits(_class, _iVXioConstants);
-
-    function _class() {
-        _classCallCheck(this, _class);
-
-        var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
-
-        _this.ERROR = new _errors2.default().ERROR;
-
-        var errorTypes = {
-            EXPERIENCE: "experience",
-            PLATFORM_UNAVAILABLE: "platform-unavailable",
-            EVENT_NOT_FIRED: "event-not-fired"
-        };
-
-        _this.addNames(errorTypes);
-        return _this;
-    }
-
-    _createClass(_class, [{
-        key: "convention",
-        value: function convention(errorName) {
-            var ERROR = this.ERROR,
-                DELIMETER = this.DELIMETER;
-
-            return "" + _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + ERROR + DELIMETER + errorName;
-        }
-    }]);
-
-    return _class;
-}(_iVXio2.default);
-
-exports.default = _class;
-
-/***/ }),
-/* 159 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-
-var _index = __webpack_require__(29);
+var _index = __webpack_require__(27);
 
 var _index2 = _interopRequireDefault(_index);
 
@@ -6510,6 +6255,134 @@ var _class = function (_iVXjsConstants) {
 exports.default = _class;
 
 /***/ }),
+/* 159 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createFactoryFunction = __webpack_require__(1);
+
+var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
+
+var _audioEvents = __webpack_require__(51);
+
+var _audioEvents2 = _interopRequireDefault(_audioEvents);
+
+var _stateEvents = __webpack_require__(60);
+
+var _stateEvents2 = _interopRequireDefault(_stateEvents);
+
+var _angularEvents = __webpack_require__(79);
+
+var _angularEvents2 = _interopRequireDefault(_angularEvents);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var AppRun = function AppRun($rootScope, $state, $window, $transitions, $http, iVXjs, iVXjsBus, iVXjsActions, iVXjsConstants) {
+    _classCallCheck(this, AppRun);
+
+    if (!iVXjs || !iVXjs.config) return;
+
+    var _iVXjs$config = iVXjs.config,
+        _iVXjs$config$metadat = _iVXjs$config.metadata,
+        metadata = _iVXjs$config$metadat === undefined ? {} : _iVXjs$config$metadat,
+        templates = _iVXjs$config.templates;
+    var _metadata$title = metadata.title,
+        title = _metadata$title === undefined ? 'iVX Story Player' : _metadata$title,
+        description = metadata.description,
+        image = metadata.image;
+
+    var audioEventNames = new _audioEvents2.default();
+    var stateEventNames = new _stateEvents2.default();
+    var angularEventNames = new _angularEvents2.default();
+
+    $rootScope.pageTitle = title;
+    $rootScope.ogImage = image;
+    $rootScope.ogDescription = description;
+
+    iVXjs.Bus.on(stateEventNames.GO, function (state) {
+        var evalState = state;
+
+        if (Array.isArray(state)) {
+            evalState = state[0];
+        }
+
+        $state.go(evalState.stateId);
+    });
+
+    $rootScope.$on("$includeContentError", function (event, args) {
+        iVXjs.Bus.emit(angularEventNames.TEMPLATE_NOT_FOUND, event);
+    });
+
+    $transitions.onSuccess({ to: '*' }, ['$state', 'ivxjs.modules.audio', function ($state, iVXjsAudio) {
+        var data = $state.current.data;
+
+
+        iVXjs.Bus.emit(stateEventNames.CHANGE, $state.current);
+
+        if (data.audio) {
+            data.audio.id = 'state-audio';
+
+            iVXjsBus.emit(audioEventNames.SET_UP, data.audio);
+        } else {
+            iVXjsAudio.pause();
+        }
+
+        if ($state.current.data.restricted) {
+
+            var navigateBackState = iVXjs.experience.config.pageNotFoundState ? iVXjs.experience.config.pageNotFoundState : iVXjs.experience.config.defaultState;
+            var restrictRedirect = iVXjs.experience.rules(navigateBackState);
+
+            if (iVXjs.experience.isRestricted) {
+                iVXjs.experience.isRestricted().then(function (restricted) {
+                    if (restricted) {
+                        $state.go(restrictRedirect);
+                    }
+                });
+            }
+        }
+    }]);
+
+    iVXjsBus.on(audioEventNames.ENDED, function (currentAudio) {
+        if (currentAudio.id === 'state-audio') {
+            iVXjsActions.resolveActions(currentAudio.onEnd, function () {});
+        }
+    });
+
+    iVXjsBus.on(stateEventNames.REQUEST_STATE, function () {
+        var currentState = $state.current;
+
+        if (!currentState.data) {
+            var defaultStateRules = iVXjs.experience.config.defaultState;
+            var defaultStateId = iVXjs.experience.rules(defaultStateRules);
+
+            currentState.data = iVXjs.config.states.find(function (state) {
+                return state.id === defaultStateId;
+            });
+        }
+
+        iVXjsBus.emit(stateEventNames.GET_STATE, currentState);
+    });
+
+    iVXjsBus.on(audioEventNames.TIME_UPDATE, function (currentAudio) {
+        if (currentAudio.id === 'state-audio') {
+            currentAudio.runCuePoints(iVXjs.experience.processor);
+        }
+    });
+};
+
+AppRun.$inject = ['$rootScope', '$state', '$window', '$transitions', '$http', 'iVXjs', 'ivxjs.bus', 'ivxjs.actions', 'ivxjs.constants'];
+
+exports.default = (0, _createFactoryFunction2.default)(AppRun);
+
+/***/ }),
 /* 160 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -6524,9 +6397,9 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-var _tracks = __webpack_require__(113);
+var _index = __webpack_require__(27);
 
-var _tracks2 = _interopRequireDefault(_tracks);
+var _index2 = _interopRequireDefault(_index);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -6536,15 +6409,15 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var _class = function (_TracksConstants) {
-    _inherits(_class, _TracksConstants);
+var _class = function (_iVXjsConstants) {
+    _inherits(_class, _iVXjsConstants);
 
     function _class() {
         _classCallCheck(this, _class);
 
         var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
 
-        _this.CUES = "cues";
+        _this.AUDIO = "audio";
         return _this;
     }
 
@@ -6552,20 +6425,75 @@ var _class = function (_TracksConstants) {
         key: "convention",
         value: function convention() {
             var DELIMETER = this.DELIMETER,
-                CUES = this.CUES;
+                AUDIO = this.AUDIO;
 
 
-            return "" + _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + CUES;
+            return "" + _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + AUDIO;
         }
     }]);
 
     return _class;
-}(_tracks2.default);
+}(_index2.default);
 
 exports.default = _class;
 
 /***/ }),
 /* 161 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _index = __webpack_require__(27);
+
+var _index2 = _interopRequireDefault(_index);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _class = function (_iVXjsConstants) {
+    _inherits(_class, _iVXjsConstants);
+
+    function _class() {
+        _classCallCheck(this, _class);
+
+        var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
+
+        _this.CONFIG = "config";
+        return _this;
+    }
+
+    _createClass(_class, [{
+        key: "convention",
+        value: function convention() {
+            var DELIMETER = this.DELIMETER,
+                CONFIG = this.CONFIG;
+
+
+            return "" + _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + CONFIG;
+        }
+    }]);
+
+    return _class;
+}(_index2.default);
+
+exports.default = _class;
+
+/***/ }),
+/* 162 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6578,24 +6506,28 @@ exports.iVXjs = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _setup = __webpack_require__(162);
+var _setup = __webpack_require__(163);
 
-var _logging = __webpack_require__(201);
+var _logging = __webpack_require__(203);
 
 var _logging2 = _interopRequireDefault(_logging);
 
-var _iVXjsConfigEvents = __webpack_require__(60);
+var _iVXjsConfigEvents = __webpack_require__(61);
 
 var _iVXjsConfigEvents2 = _interopRequireDefault(_iVXjsConfigEvents);
 
 var _processor = __webpack_require__(114);
 
+var _registeredConstants = __webpack_require__(115);
+
+var _registeredConstants2 = _interopRequireDefault(_registeredConstants);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-__webpack_require__(202);
-var EventEmitter = __webpack_require__(404);
+__webpack_require__(205);
+var EventEmitter = __webpack_require__(407);
 
 var iVXjsConfigEvents = new _iVXjsConfigEvents2.default();
 
@@ -6619,6 +6551,7 @@ var iVXjs = exports.iVXjs = function () {
                  * @type {EventEmitter}
                  */
                 this.Bus = new EventEmitter();
+                this.constants = new _registeredConstants2.default();
         }
 
         /**
@@ -6748,7 +6681,7 @@ var iVXjs = exports.iVXjs = function () {
 ;
 
 /***/ }),
-/* 162 */
+/* 163 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6761,27 +6694,27 @@ exports.Setup = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _processor = __webpack_require__(163);
+var _processor = __webpack_require__(164);
 
-var _registeredModules = __webpack_require__(164);
+var _registeredModules = __webpack_require__(165);
 
-var _registeredModules2 = __webpack_require__(169);
+var _registeredModules2 = __webpack_require__(171);
 
 var _asserts = __webpack_require__(81);
 
-var _errors = __webpack_require__(61);
+var _errors = __webpack_require__(64);
 
 var _errors2 = _interopRequireDefault(_errors);
 
-var _iVXjsConfigEvents = __webpack_require__(60);
+var _iVXjsConfigEvents = __webpack_require__(61);
 
 var _iVXjsConfigEvents2 = _interopRequireDefault(_iVXjsConfigEvents);
 
-var _index = __webpack_require__(171);
+var _index = __webpack_require__(173);
 
-var _index2 = __webpack_require__(175);
+var _index2 = __webpack_require__(177);
 
-var _index3 = __webpack_require__(196);
+var _index3 = __webpack_require__(198);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -6951,14 +6884,14 @@ var Setup = exports.Setup = function () {
 ;
 
 /***/ }),
-/* 163 */
+/* 164 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -6971,91 +6904,91 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  */
 var DataProcessor = exports.DataProcessor = function () {
 
-  /**
-   * Registers all the data that will be used to enhance the
-   * data.
-   * 
-   * @param {object} dataModuleObj - user defined settings for this data module
-   * @param {object} settings - all user settings that will be enhanced.
-   */
-  function DataProcessor(dataModule, settings, Bus, iVXjsLog) {
-    _classCallCheck(this, DataProcessor);
-
     /**
-     * User defined data module data that will be used to
-     * process and enhance the experience data.
+     * Registers all the data that will be used to enhance the
+     * data.
      * 
-     * @type {object}
+     * @param {object} dataModuleObj - user defined settings for this data module
+     * @param {object} settings - all user settings that will be enhanced.
      */
-    this.dataModule = dataModule;
+    function DataProcessor(dataModule, settings, Bus, iVXjsLog) {
+        _classCallCheck(this, DataProcessor);
 
-    /**
-     * All user settings including default data that will 
-     * be added to this data module. 
-     * 
-     * @type {object}
-     */
-    this.settings = settings;
+        /**
+         * User defined data module data that will be used to
+         * process and enhance the experience data.
+         * 
+         * @type {object}
+         */
+        this.dataModule = dataModule;
 
-    /**
-     * All available data modules that can be set for this
-     * experience.
-     * 
-     * @type {object}
-     */
-    this.Bus = Bus;
-    this.iVXjsLog = iVXjsLog;
-  }
+        /**
+         * All user settings including default data that will 
+         * be added to this data module. 
+         * 
+         * @type {object}
+         */
+        this.settings = settings;
 
-  /**
-   * Loads dependencies needed to run the enhancements on the data 
-   * and resolves by sending out all enhanced data.
-   * 
-   * @return {Promise} - indicates that the data is enhanced.
-   */
-
-
-  _createClass(DataProcessor, [{
-    key: "getData",
-    value: function getData() {
-      var self = this;
-      var dataModule = this.dataModule,
-          settings = this.settings;
-      var dataSettings = settings.data;
-
-      var dataPromise = new Promise(function (resolve, reject) {
-        self.runEnhancements(resolve, reject, dataModule, dataSettings, self.settings);
-      });
-
-      return dataPromise;
+        /**
+         * All available data modules that can be set for this
+         * experience.
+         * 
+         * @type {object}
+         */
+        this.Bus = Bus;
+        this.iVXjsLog = iVXjsLog;
     }
 
     /**
-     * Utilizing the appropriate module defined in the data module settings
-     * this will enhance the current data and actions defined in that 
-     * class's enhance method.
+     * Loads dependencies needed to run the enhancements on the data 
+     * and resolves by sending out all enhanced data.
+     * 
+     * @return {Promise} - indicates that the data is enhanced.
      */
 
-  }, {
-    key: "runEnhancements",
-    value: function runEnhancements(resolve, reject, DataModuleClass, dataModuleSettings, iVXjsSettings) {
-      var dataModule = new DataModuleClass(dataModuleSettings, iVXjsSettings, this.Bus, this.iVXjsLog);
 
-      dataModule.enhance().then(function (data) {
-        resolve(data);
-      }, function (error) {
-        reject(error);
-      });
-    }
-  }]);
+    _createClass(DataProcessor, [{
+        key: "getData",
+        value: function getData() {
+            var self = this;
+            var dataModule = this.dataModule,
+                settings = this.settings;
+            var dataSettings = settings.data;
 
-  return DataProcessor;
+            var dataPromise = new Promise(function (resolve, reject) {
+                self.runEnhancements(resolve, reject, dataModule, dataSettings, self.settings);
+            });
+
+            return dataPromise;
+        }
+
+        /**
+         * Utilizing the appropriate module defined in the data module settings
+         * this will enhance the current data and actions defined in that 
+         * class's enhance method.
+         */
+
+    }, {
+        key: "runEnhancements",
+        value: function runEnhancements(resolve, reject, DataModuleClass, dataModuleSettings, iVXjsSettings) {
+            var dataModule = new DataModuleClass(dataModuleSettings, iVXjsSettings, this.Bus, this.iVXjsLog);
+
+            dataModule.enhance().then(function (data) {
+                resolve(data);
+            }, function (error) {
+                reject(error);
+            });
+        }
+    }]);
+
+    return DataProcessor;
 }();
 
 ;
 
 /***/ }),
-/* 164 */
+/* 165 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7066,11 +6999,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.RegisteredVideoModules = undefined;
 
-var _html = __webpack_require__(165);
+var _html = __webpack_require__(166);
 
-var _youTube = __webpack_require__(167);
+var _youTube = __webpack_require__(169);
 
-var _vimeo = __webpack_require__(168);
+var _vimeo = __webpack_require__(170);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } } // Types
 
@@ -7086,7 +7019,7 @@ var RegisteredVideoModules = exports.RegisteredVideoModules = function Registere
 ;
 
 /***/ }),
-/* 165 */
+/* 166 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7109,15 +7042,15 @@ var _videoEvents = __webpack_require__(12);
 
 var _videoEvents2 = _interopRequireDefault(_videoEvents);
 
-var _html = __webpack_require__(166);
+var _html = __webpack_require__(167);
 
 var _html2 = _interopRequireDefault(_html);
 
-var _tracksEvents = __webpack_require__(63);
+var _tracksEvents = __webpack_require__(62);
 
 var _tracksEvents2 = _interopRequireDefault(_tracksEvents);
 
-var _tracksCuesEvents = __webpack_require__(64);
+var _tracksCuesEvents = __webpack_require__(63);
 
 var _tracksCuesEvents2 = _interopRequireDefault(_tracksCuesEvents);
 
@@ -7152,12 +7085,22 @@ var Html5 = exports.Html5 = function () {
     _createClass(Html5, [{
         key: "play",
         value: function play() {
-            this.player.play();
+            this.playLoader = this.player.play();
         }
     }, {
         key: "pause",
         value: function pause() {
             this.player.pause();
+        }
+    }, {
+        key: "mute",
+        value: function mute() {
+            this.player.muted = true;
+        }
+    }, {
+        key: "unmute",
+        value: function unmute() {
+            this.player.muted = false;
         }
     }, {
         key: "seek",
@@ -7269,6 +7212,8 @@ var Html5 = exports.Html5 = function () {
             // Get custom iVXjsBus Function
             this.playOnEvent = iVXjsBus.on(videoEventNames.PLAY, playOnEvent);
             this.pauseOnEvent = iVXjsBus.on(videoEventNames.PAUSE, pauseOnEvent);
+            this.muteOnEvent = iVXjsBus.on(videoEventNames.MUTE, muteOnEvent);
+            this.unmuteOnEvent = iVXjsBus.on(videoEventNames.UNMUTE, unmuteOnEvent);
             this.volumeOnEvent = iVXjsBus.on(videoEventNames.SET_VOLUME, volumeOnEvent);
             this.durationOnEvent = iVXjsBus.on(videoEventNames.GET_DURATION, durationOnEvent);
             this.seekOnEvent = iVXjsBus.on(videoEventNames.SEEK, seekOnEvent);
@@ -7326,6 +7271,14 @@ var Html5 = exports.Html5 = function () {
 
             function pauseOnEvent() {
                 self.pause();
+            }
+
+            function muteOnEvent() {
+                self.mute();
+            }
+
+            function unmuteOnEvent() {
+                self.unmute();
             }
 
             function playingOnEvent() {
@@ -7432,6 +7385,8 @@ var Html5 = exports.Html5 = function () {
             var eventNameMap = {
                 play: videoEventNames.PLAY,
                 pause: videoEventNames.PAUSE,
+                mute: videoEventNames.MUTE,
+                unmute: videoEventNames.UNMUTE,
                 seek: videoEventNames.SEEK,
                 duration: videoEventNames.GET_DURATION,
                 volume: videoEventNames.SET_VOLUME,
@@ -7510,7 +7465,7 @@ var Html5 = exports.Html5 = function () {
 ;
 
 /***/ }),
-/* 166 */
+/* 167 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7520,11 +7475,11 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _tracksEvents = __webpack_require__(63);
+var _tracksEvents = __webpack_require__(62);
 
 var _tracksEvents2 = _interopRequireDefault(_tracksEvents);
 
-var _tracksCuesEvents = __webpack_require__(64);
+var _tracksCuesEvents = __webpack_require__(63);
 
 var _tracksCuesEvents2 = _interopRequireDefault(_tracksCuesEvents);
 
@@ -7769,13 +7724,13 @@ exports.default = {
         var self = this;
         var cleanedProperties = propertyKeys.reduce(function (cleaned, key, index) {
             var percentString = percents[key];
-            var decimalValue = self._convertPercentToDecimal(percentString);
+            var decimalValue = self._convertPercentToInteger(percentString);
             var newProperty = {};
 
             if (isNaN(decimalValue)) {
                 newProperty[key] = percentString;
             } else {
-                newProperty[key] = decimalValue * multiplier;
+                newProperty[key] = decimalValue;
             }
 
             Object.assign(cleaned, newProperty);
@@ -7785,10 +7740,10 @@ exports.default = {
 
         return cleanedProperties;
     },
-    _convertPercentToDecimal: function _convertPercentToDecimal(percentString) {
+    _convertPercentToInteger: function _convertPercentToInteger(percentString) {
         var percentValue = percentString.replace("%", "");
 
-        return parseFloat(percentValue) / 100;
+        return parseFloat(percentValue);
     },
     addVTTCueStyles: function addVTTCueStyles(opts) {
         var oldCue = opts.vttCue,
@@ -7809,15 +7764,15 @@ exports.default = {
         }
 
         if (position) {
-            newCue.position = this._convertPercentToDecimal(position);
+            newCue.position = this._convertPercentToInteger(position);
         }
 
         if (size) {
-            newCue.size = this._convertPercentToDecimal(size);
+            newCue.size = this._convertPercentToInteger(size);
         }
 
         if (line) {
-            newCue.line = line.indexOf && line.indexOf('%') >= 0 ? this._convertPercentToDecimal(line) : line;
+            newCue.line = line.indexOf && line.indexOf('%') >= 0 ? this._convertPercentToInteger(line) : line;
         }
 
         if (vertical) {
@@ -7849,7 +7804,62 @@ exports.default = {
 };
 
 /***/ }),
-/* 167 */
+/* 168 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _tracks = __webpack_require__(111);
+
+var _tracks2 = _interopRequireDefault(_tracks);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _class = function (_TracksConstants) {
+    _inherits(_class, _TracksConstants);
+
+    function _class() {
+        _classCallCheck(this, _class);
+
+        var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
+
+        _this.CUES = "cues";
+        return _this;
+    }
+
+    _createClass(_class, [{
+        key: "convention",
+        value: function convention() {
+            var DELIMETER = this.DELIMETER,
+                CUES = this.CUES;
+
+
+            return "" + _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + CUES;
+        }
+    }]);
+
+    return _class;
+}(_tracks2.default);
+
+exports.default = _class;
+
+/***/ }),
+/* 169 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7924,6 +7934,8 @@ var YouTube = exports.YouTube = function () {
             var eventNameMap = {
                 play: videoEventNames.PLAY,
                 pause: videoEventNames.PAUSE,
+                mute: videoEventNames.MUTE,
+                unmute: videoEventNames.UNMUTE,
                 seek: videoEventNames.SEEK,
                 duration: videoEventNames.GET_DURATION,
                 volume: videoEventNames.SET_VOLUME,
@@ -7987,6 +7999,8 @@ var YouTube = exports.YouTube = function () {
                 self.playOnEvent = iVXjsBus.on(videoEventNames.PLAY, playOnEvent);
                 self.pauseOnEvent = iVXjsBus.on(videoEventNames.PAUSE, pauseOnEvent);
                 self.volumeOnEvent = iVXjsBus.on(videoEventNames.SET_VOLUME, volumeOnEvent);
+                self.muteOnEvent = iVXjsBus.on(videoEventNames.MUTE, muteOnEvent);
+                self.unmuteOnEvent = iVXjsBus.on(videoEventNames.UNMUTE, unmuteOnEvent);
                 self.durationOnEvent = iVXjsBus.on(videoEventNames.GET_DURATION, durationOnEvent);
                 self.seekOnEvent = iVXjsBus.on(videoEventNames.SEEK, seekOnEvent);
                 self.pausedOnEvent = iVXjsBus.on(videoEventNames.PAUSED, pausedOnEvent);
@@ -8011,6 +8025,14 @@ var YouTube = exports.YouTube = function () {
             function pauseOnEvent() {
                 player.pauseVideo();
                 clearInterval(self.timeUpdateId);
+            }
+
+            function muteOnEvent() {
+                player.mute();
+            }
+
+            function unmuteOnEvent() {
+                player.unMute();
             }
 
             function durationOnEvent() {
@@ -8072,7 +8094,7 @@ var YouTube = exports.YouTube = function () {
 }();
 
 /***/ }),
-/* 168 */
+/* 170 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8120,6 +8142,7 @@ var Vimeo = exports.Vimeo = function () {
         this.player = new window.Vimeo.Player('player1', options);
         this.videoEventNames = new _videoEvents2.default();
         this.iVXjsLog = iVXjsLog;
+        this.currentVolume = 0.5;
     }
 
     _createClass(Vimeo, [{
@@ -8188,6 +8211,9 @@ var Vimeo = exports.Vimeo = function () {
             self.durationOnEvent = iVXjsBus.on(videoEventNames.GET_DURATION, durationOnEvent);
             self.pauseOnEvent = iVXjsBus.on(videoEventNames.PAUSE, pauseOnEvent);
             self.playOnEvent = iVXjsBus.on(videoEventNames.PLAY, playOnEvent);
+            self.muteOnEvent = iVXjsBus.on(videoEventNames.MUTE, muteOnEvent);
+            self.unmuteOnEvent = iVXjsBus.on(videoEventNames.UNMUTE, unmuteOnEvent);
+            self.playOnEvent = iVXjsBus.on(videoEventNames.PLAY, playOnEvent);
             self.seekOnEvent = iVXjsBus.on(videoEventNames.SEEK, seekOnEvent);
             self.volumeOnEvent = iVXjsBus.on(videoEventNames.SET_VOLUME, volumeOnEvent);
 
@@ -8225,6 +8251,14 @@ var Vimeo = exports.Vimeo = function () {
                 self.player.pause();
             }
 
+            function muteOnEvent() {
+                self.player.setVolume(0);
+            }
+
+            function unmuteOnEvent() {
+                self.player.setVolume(self.currentVolume);
+            }
+
             function volumeOnEvent(volumeObj) {
                 var volume = volumeObj;
 
@@ -8233,6 +8267,7 @@ var Vimeo = exports.Vimeo = function () {
                 }
 
                 self.player.setVolume(volume);
+                self.currentVolume = volume;
             }
 
             function seekOnEvent(currentTimeObj) {
@@ -8262,7 +8297,7 @@ var Vimeo = exports.Vimeo = function () {
 }();
 
 /***/ }),
-/* 169 */
+/* 171 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8273,7 +8308,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.RegisteredAudioModules = undefined;
 
-var _html = __webpack_require__(170);
+var _html = __webpack_require__(172);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } } // Types
 
@@ -8287,7 +8322,7 @@ var RegisteredAudioModules = exports.RegisteredAudioModules = function Registere
 ;
 
 /***/ }),
-/* 170 */
+/* 172 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8302,7 +8337,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _typeParsers = __webpack_require__(10);
 
-var _audioEvents = __webpack_require__(38);
+var _audioEvents = __webpack_require__(51);
 
 var _audioEvents2 = _interopRequireDefault(_audioEvents);
 
@@ -8511,7 +8546,7 @@ var Html5 = exports.Html5 = function () {
 }();
 
 /***/ }),
-/* 171 */
+/* 173 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8526,9 +8561,9 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _typeParsers = __webpack_require__(10);
 
-var _actions = __webpack_require__(172);
+var _actions = __webpack_require__(174);
 
-var _rules = __webpack_require__(173);
+var _rules = __webpack_require__(175);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -8645,7 +8680,7 @@ var iVXjsData = exports.iVXjsData = function () {
 }();
 
 /***/ }),
-/* 172 */
+/* 174 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8658,11 +8693,11 @@ exports.Actions = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _audioEvents = __webpack_require__(38);
+var _audioEvents = __webpack_require__(51);
 
 var _audioEvents2 = _interopRequireDefault(_audioEvents);
 
-var _stateEvents = __webpack_require__(62);
+var _stateEvents = __webpack_require__(60);
 
 var _stateEvents2 = _interopRequireDefault(_stateEvents);
 
@@ -8863,7 +8898,7 @@ var Actions = exports.Actions = function () {
 ;
 
 /***/ }),
-/* 173 */
+/* 175 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8876,7 +8911,7 @@ exports.Rules = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _evaluator = __webpack_require__(174);
+var _evaluator = __webpack_require__(176);
 
 var _evaluator2 = _interopRequireDefault(_evaluator);
 
@@ -8986,7 +9021,7 @@ var Rules = exports.Rules = function () {
 }();
 
 /***/ }),
-/* 174 */
+/* 176 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9127,7 +9162,7 @@ var _class = function () {
 exports.default = _class;
 
 /***/ }),
-/* 175 */
+/* 177 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9138,41 +9173,41 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.DefaultUI = undefined;
 
-var _form = __webpack_require__(176);
+var _form = __webpack_require__(178);
 
-var _anchor = __webpack_require__(177);
+var _anchor = __webpack_require__(179);
 
-var _buttons = __webpack_require__(178);
+var _buttons = __webpack_require__(180);
 
-var _checkbox = __webpack_require__(179);
+var _checkbox = __webpack_require__(181);
 
-var _date = __webpack_require__(180);
+var _date = __webpack_require__(182);
 
-var _datetimeLocal = __webpack_require__(181);
+var _datetimeLocal = __webpack_require__(183);
 
-var _email = __webpack_require__(182);
+var _email = __webpack_require__(184);
 
-var _number = __webpack_require__(183);
+var _number = __webpack_require__(185);
 
-var _options = __webpack_require__(184);
+var _options = __webpack_require__(186);
 
-var _radio = __webpack_require__(185);
+var _radio = __webpack_require__(187);
 
-var _style = __webpack_require__(24);
+var _style = __webpack_require__(22);
 
-var _text = __webpack_require__(186);
+var _text = __webpack_require__(188);
 
-var _textarea = __webpack_require__(187);
+var _textarea = __webpack_require__(189);
 
-var _url = __webpack_require__(188);
+var _url = __webpack_require__(190);
 
-var _stateInput = __webpack_require__(189);
+var _stateInput = __webpack_require__(191);
 
-var _stateVideo = __webpack_require__(190);
+var _stateVideo = __webpack_require__(192);
 
-var _stateNavigation = __webpack_require__(191);
+var _stateNavigation = __webpack_require__(193);
 
-var _videoControls = __webpack_require__(192);
+var _videoControls = __webpack_require__(194);
 
 var _videoControls2 = _interopRequireDefault(_videoControls);
 
@@ -9243,7 +9278,7 @@ exports.DefaultUI = function DefaultUI() {
 };
 
 /***/ }),
-/* 176 */
+/* 178 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9256,7 +9291,7 @@ exports.Form = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _style = __webpack_require__(24);
+var _style = __webpack_require__(22);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -9321,7 +9356,7 @@ var Form = exports.Form = function () {
     _createClass(Form, [{
         key: 'formClasses',
         get: function get() {
-            return 'row';
+            return 'row ivx-grid-row';
         }
 
         /**
@@ -9420,7 +9455,7 @@ var Form = exports.Form = function () {
 }();
 
 /***/ }),
-/* 177 */
+/* 179 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9478,7 +9513,7 @@ var Anchor = exports.Anchor = function () {
                 label = href;
             }
 
-            return '\n             <a id=\'' + id + '\' class="' + classes + ' ' + anchorClasses + '"  href="' + href + '" ' + attributeHTML + ' >' + (labelHTML ? labelHTML : label) + '</a>           \n        ';
+            return '\n             <a id=\'' + id + '\' class="' + classes + ' ' + anchorClasses + ' ivx-link"  href="' + href + '" ' + attributeHTML + ' >' + (labelHTML ? labelHTML : label) + '</a>           \n        ';
         }
     }]);
 
@@ -9486,7 +9521,7 @@ var Anchor = exports.Anchor = function () {
 }();
 
 /***/ }),
-/* 178 */
+/* 180 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9499,9 +9534,9 @@ exports.Buttons = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _style = __webpack_require__(24);
+var _style = __webpack_require__(22);
 
-var _messages = __webpack_require__(25);
+var _messages = __webpack_require__(23);
 
 var _attributes = __webpack_require__(14);
 
@@ -9658,7 +9693,7 @@ var Buttons = exports.Buttons = function () {
 }();
 
 /***/ }),
-/* 179 */
+/* 181 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9671,9 +9706,9 @@ exports.Checkbox = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _style = __webpack_require__(24);
+var _style = __webpack_require__(22);
 
-var _messages = __webpack_require__(25);
+var _messages = __webpack_require__(23);
 
 var _attributes = __webpack_require__(14);
 
@@ -9869,7 +9904,7 @@ var Checkbox = exports.Checkbox = function () {
 }();
 
 /***/ }),
-/* 180 */
+/* 182 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9882,9 +9917,9 @@ exports.Date = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _style = __webpack_require__(24);
+var _style = __webpack_require__(22);
 
-var _messages = __webpack_require__(25);
+var _messages = __webpack_require__(23);
 
 var _attributes = __webpack_require__(14);
 
@@ -10059,7 +10094,7 @@ var Date = exports.Date = function () {
 }();
 
 /***/ }),
-/* 181 */
+/* 183 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10072,9 +10107,9 @@ exports.DatetimeLocal = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _style = __webpack_require__(24);
+var _style = __webpack_require__(22);
 
-var _messages = __webpack_require__(25);
+var _messages = __webpack_require__(23);
 
 var _attributes = __webpack_require__(14);
 
@@ -10249,7 +10284,7 @@ var DatetimeLocal = exports.DatetimeLocal = function () {
 }();
 
 /***/ }),
-/* 182 */
+/* 184 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10262,9 +10297,9 @@ exports.Email = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _style = __webpack_require__(24);
+var _style = __webpack_require__(22);
 
-var _messages = __webpack_require__(25);
+var _messages = __webpack_require__(23);
 
 var _attributes = __webpack_require__(14);
 
@@ -10440,7 +10475,7 @@ var Email = exports.Email = function () {
 }();
 
 /***/ }),
-/* 183 */
+/* 185 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10453,7 +10488,7 @@ exports.Number = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _messages = __webpack_require__(25);
+var _messages = __webpack_require__(23);
 
 var _attributes = __webpack_require__(14);
 
@@ -10629,7 +10664,7 @@ var Number = exports.Number = function () {
 }();
 
 /***/ }),
-/* 184 */
+/* 186 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10642,9 +10677,9 @@ exports.Options = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _style = __webpack_require__(24);
+var _style = __webpack_require__(22);
 
-var _messages = __webpack_require__(25);
+var _messages = __webpack_require__(23);
 
 var _attributes = __webpack_require__(14);
 
@@ -10749,7 +10784,7 @@ var Options = exports.Options = function () {
 }();
 
 /***/ }),
-/* 185 */
+/* 187 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10762,7 +10797,7 @@ exports.Radio = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _messages = __webpack_require__(25);
+var _messages = __webpack_require__(23);
 
 var _attributes = __webpack_require__(14);
 
@@ -10873,7 +10908,7 @@ var Radio = exports.Radio = function () {
 }();
 
 /***/ }),
-/* 186 */
+/* 188 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10886,9 +10921,9 @@ exports.Text = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _style = __webpack_require__(24);
+var _style = __webpack_require__(22);
 
-var _messages = __webpack_require__(25);
+var _messages = __webpack_require__(23);
 
 var _attributes = __webpack_require__(14);
 
@@ -10983,7 +11018,7 @@ var Text = exports.Text = function () {
 }();
 
 /***/ }),
-/* 187 */
+/* 189 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10996,9 +11031,9 @@ exports.Textarea = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _style = __webpack_require__(24);
+var _style = __webpack_require__(22);
 
-var _messages = __webpack_require__(25);
+var _messages = __webpack_require__(23);
 
 var _attributes = __webpack_require__(14);
 
@@ -11089,7 +11124,7 @@ var Textarea = exports.Textarea = function () {
 }();
 
 /***/ }),
-/* 188 */
+/* 190 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11102,9 +11137,9 @@ exports.Url = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _style = __webpack_require__(24);
+var _style = __webpack_require__(22);
 
-var _messages = __webpack_require__(25);
+var _messages = __webpack_require__(23);
 
 var _attributes = __webpack_require__(14);
 
@@ -11193,7 +11228,7 @@ var Url = exports.Url = function () {
 }();
 
 /***/ }),
-/* 189 */
+/* 191 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11264,7 +11299,7 @@ var InputState = exports.InputState = function () {
 }();
 
 /***/ }),
-/* 190 */
+/* 192 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11328,7 +11363,7 @@ var VideoState = exports.VideoState = function () {
 }();
 
 /***/ }),
-/* 191 */
+/* 193 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11415,7 +11450,7 @@ var NavigationState = exports.NavigationState = function () {
 }();
 
 /***/ }),
-/* 192 */
+/* 194 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11427,9 +11462,9 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _index = __webpack_require__(193);
+var _index = __webpack_require__(195);
 
-var _element = __webpack_require__(195);
+var _element = __webpack_require__(197);
 
 var _element2 = _interopRequireDefault(_element);
 
@@ -11958,7 +11993,7 @@ var _class = function (_Controls) {
 exports.default = _class;
 
 /***/ }),
-/* 193 */
+/* 195 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11971,7 +12006,7 @@ exports.Controls = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _events = __webpack_require__(194);
+var _events = __webpack_require__(196);
 
 var _events2 = _interopRequireDefault(_events);
 
@@ -11979,11 +12014,11 @@ var _videoEvents = __webpack_require__(12);
 
 var _videoEvents2 = _interopRequireDefault(_videoEvents);
 
-var _tracksEvents = __webpack_require__(63);
+var _tracksEvents = __webpack_require__(62);
 
 var _tracksEvents2 = _interopRequireDefault(_tracksEvents);
 
-var _tracksCuesEvents = __webpack_require__(64);
+var _tracksCuesEvents = __webpack_require__(63);
 
 var _tracksCuesEvents2 = _interopRequireDefault(_tracksCuesEvents);
 
@@ -12058,6 +12093,7 @@ var Controls = exports.Controls = function (_ControlEvents) {
             currentVolumeSpan.style.width = volumeLevel * 100 + "%";
 
             this.currentVolume = volumeLevel;
+            this.unmute();
             this.setVolume(volumeLevel);
         }
     }, {
@@ -12127,13 +12163,13 @@ var Controls = exports.Controls = function (_ControlEvents) {
                     muteIcon.className = muteClasses;
                     currentVolumeSpan.style.width = "0%";
 
-                    this.setVolume(0);
+                    this.mute();
                     break;
                 case muteClasses:
                     muteIcon.className = unmuteClasses;
                     currentVolumeSpan.style.width = this.currentVolume * 100 + "%";
 
-                    this.setVolume(this.currentVolume);
+                    this.unmute();
                     break;
                 default:
                     break;
@@ -12361,7 +12397,7 @@ var Controls = exports.Controls = function (_ControlEvents) {
 ;
 
 /***/ }),
-/* 194 */
+/* 196 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12425,6 +12461,16 @@ var _class = function () {
         value: function changeCurrentTrack(trackId) {
             this.iVXjsBus.emit(this.trackEventNames.CHANGE_CURRENT_TRACK, { trackId: trackId });
         }
+    }, {
+        key: 'mute',
+        value: function mute() {
+            this.iVXjsBus.emit(this.controlEventNames.MUTE);
+        }
+    }, {
+        key: 'unmute',
+        value: function unmute() {
+            this.iVXjsBus.emit(this.controlEventNames.UNMUTE);
+        }
     }]);
 
     return _class;
@@ -12433,7 +12479,7 @@ var _class = function () {
 exports.default = _class;
 
 /***/ }),
-/* 195 */
+/* 197 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12487,7 +12533,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 196 */
+/* 198 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12504,11 +12550,11 @@ var _typeParsers = __webpack_require__(10);
 
 var _validation = __webpack_require__(56);
 
-var _experience = __webpack_require__(197);
+var _experience = __webpack_require__(199);
 
-var _modules = __webpack_require__(198);
+var _modules = __webpack_require__(200);
 
-var _config = __webpack_require__(199);
+var _config = __webpack_require__(201);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -12626,7 +12672,7 @@ var iVXjsValidation = exports.iVXjsValidation = function (_Validation) {
 ;
 
 /***/ }),
-/* 197 */
+/* 199 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12702,7 +12748,7 @@ var ExperienceValidation = exports.ExperienceValidation = function (_Validation)
 ;
 
 /***/ }),
-/* 198 */
+/* 200 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12771,7 +12817,7 @@ var ModuleValidation = exports.ModuleValidation = function (_Validation) {
 ;
 
 /***/ }),
-/* 199 */
+/* 201 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12786,7 +12832,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _validation = __webpack_require__(56);
 
-var _configStates = __webpack_require__(200);
+var _configStates = __webpack_require__(202);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -12894,7 +12940,7 @@ var ConfigValidation = exports.ConfigValidation = function (_Validation) {
 ;
 
 /***/ }),
-/* 200 */
+/* 202 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13018,7 +13064,7 @@ var ConfigStatesValidation = exports.ConfigStatesValidation = function (_Validat
 ;
 
 /***/ }),
-/* 201 */
+/* 203 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13032,11 +13078,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _logging = __webpack_require__(112);
+var _logging = __webpack_require__(113);
 
 var _logging2 = _interopRequireDefault(_logging);
 
-var _errors = __webpack_require__(61);
+var _errors = __webpack_require__(64);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -13191,17 +13237,83 @@ var _class = function () {
 exports.default = _class;
 
 /***/ }),
-/* 202 */
+/* 204 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _iVXio = __webpack_require__(112);
+
+var _iVXio2 = _interopRequireDefault(_iVXio);
+
+var _errors = __webpack_require__(64);
+
+var _errors2 = _interopRequireDefault(_errors);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _class = function (_iVXioConstants) {
+    _inherits(_class, _iVXioConstants);
+
+    function _class() {
+        _classCallCheck(this, _class);
+
+        var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
+
+        _this.ERROR = new _errors2.default().ERROR;
+
+        var errorTypes = {
+            EXPERIENCE: "experience",
+            PLATFORM_UNAVAILABLE: "platform-unavailable",
+            EVENT_NOT_FIRED: "event-not-fired"
+        };
+
+        _this.addNames(errorTypes);
+        return _this;
+    }
+
+    _createClass(_class, [{
+        key: "convention",
+        value: function convention(errorName) {
+            var ERROR = this.ERROR,
+                DELIMETER = this.DELIMETER;
+
+            return "" + _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + ERROR + DELIMETER + errorName;
+        }
+    }]);
+
+    return _class;
+}(_iVXio2.default);
+
+exports.default = _class;
+
+/***/ }),
+/* 205 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(global) {
 
-__webpack_require__(203);
+__webpack_require__(206);
 
-__webpack_require__(400);
+__webpack_require__(403);
 
-__webpack_require__(401);
+__webpack_require__(404);
 
 if (global._babelPolyfill) {
   throw new Error("only one instance of babel-polyfill is allowed");
@@ -13223,16 +13335,13 @@ define(String.prototype, "padRight", "".padEnd);
 "pop,reverse,shift,keys,values,entries,indexOf,every,some,forEach,map,filter,find,findIndex,includes,join,slice,concat,push,splice,unshift,sort,lastIndexOf,reduce,reduceRight,copyWithin,fill".split(",").forEach(function (key) {
   [][key] && define(Array, key, Function.call.bind([][key]));
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(115)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(116)))
 
 /***/ }),
-/* 203 */
+/* 206 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(204);
-__webpack_require__(206);
 __webpack_require__(207);
-__webpack_require__(208);
 __webpack_require__(209);
 __webpack_require__(210);
 __webpack_require__(211);
@@ -13245,9 +13354,9 @@ __webpack_require__(217);
 __webpack_require__(218);
 __webpack_require__(219);
 __webpack_require__(220);
+__webpack_require__(221);
 __webpack_require__(222);
 __webpack_require__(223);
-__webpack_require__(224);
 __webpack_require__(225);
 __webpack_require__(226);
 __webpack_require__(227);
@@ -13306,18 +13415,18 @@ __webpack_require__(279);
 __webpack_require__(280);
 __webpack_require__(281);
 __webpack_require__(282);
+__webpack_require__(283);
 __webpack_require__(284);
 __webpack_require__(285);
 __webpack_require__(287);
 __webpack_require__(288);
-__webpack_require__(289);
 __webpack_require__(290);
 __webpack_require__(291);
 __webpack_require__(292);
 __webpack_require__(293);
+__webpack_require__(294);
 __webpack_require__(295);
 __webpack_require__(296);
-__webpack_require__(297);
 __webpack_require__(298);
 __webpack_require__(299);
 __webpack_require__(300);
@@ -13328,21 +13437,21 @@ __webpack_require__(304);
 __webpack_require__(305);
 __webpack_require__(306);
 __webpack_require__(307);
-__webpack_require__(103);
 __webpack_require__(308);
 __webpack_require__(309);
-__webpack_require__(134);
 __webpack_require__(310);
+__webpack_require__(103);
 __webpack_require__(311);
 __webpack_require__(312);
+__webpack_require__(135);
 __webpack_require__(313);
 __webpack_require__(314);
-__webpack_require__(137);
-__webpack_require__(139);
-__webpack_require__(140);
 __webpack_require__(315);
 __webpack_require__(316);
 __webpack_require__(317);
+__webpack_require__(138);
+__webpack_require__(140);
+__webpack_require__(141);
 __webpack_require__(318);
 __webpack_require__(319);
 __webpack_require__(320);
@@ -13425,11 +13534,14 @@ __webpack_require__(396);
 __webpack_require__(397);
 __webpack_require__(398);
 __webpack_require__(399);
-module.exports = __webpack_require__(30);
+__webpack_require__(400);
+__webpack_require__(401);
+__webpack_require__(402);
+module.exports = __webpack_require__(28);
 
 
 /***/ }),
-/* 204 */
+/* 207 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13440,25 +13552,25 @@ var has = __webpack_require__(15);
 var DESCRIPTORS = __webpack_require__(7);
 var $export = __webpack_require__(0);
 var redefine = __webpack_require__(17);
-var META = __webpack_require__(39).KEY;
+var META = __webpack_require__(38).KEY;
 var $fails = __webpack_require__(4);
 var shared = __webpack_require__(65);
 var setToStringTag = __webpack_require__(52);
-var uid = __webpack_require__(42);
+var uid = __webpack_require__(41);
 var wks = __webpack_require__(6);
-var wksExt = __webpack_require__(117);
+var wksExt = __webpack_require__(118);
 var wksDefine = __webpack_require__(83);
-var enumKeys = __webpack_require__(205);
+var enumKeys = __webpack_require__(208);
 var isArray = __webpack_require__(68);
 var anObject = __webpack_require__(2);
 var toIObject = __webpack_require__(19);
-var toPrimitive = __webpack_require__(31);
-var createDesc = __webpack_require__(41);
-var _create = __webpack_require__(46);
-var gOPNExt = __webpack_require__(120);
+var toPrimitive = __webpack_require__(29);
+var createDesc = __webpack_require__(40);
+var _create = __webpack_require__(45);
+var gOPNExt = __webpack_require__(121);
 var $GOPD = __webpack_require__(20);
 var $DP = __webpack_require__(8);
-var $keys = __webpack_require__(44);
+var $keys = __webpack_require__(43);
 var gOPD = $GOPD.f;
 var dP = $DP.f;
 var gOPN = gOPNExt.f;
@@ -13581,11 +13693,11 @@ if (!USE_NATIVE) {
 
   $GOPD.f = $getOwnPropertyDescriptor;
   $DP.f = $defineProperty;
-  __webpack_require__(47).f = gOPNExt.f = $getOwnPropertyNames;
+  __webpack_require__(46).f = gOPNExt.f = $getOwnPropertyNames;
   __webpack_require__(58).f = $propertyIsEnumerable;
   __webpack_require__(67).f = $getOwnPropertySymbols;
 
-  if (DESCRIPTORS && !__webpack_require__(43)) {
+  if (DESCRIPTORS && !__webpack_require__(42)) {
     redefine(ObjectProto, 'propertyIsEnumerable', $propertyIsEnumerable, true);
   }
 
@@ -13670,11 +13782,11 @@ setToStringTag(global.JSON, 'JSON', true);
 
 
 /***/ }),
-/* 205 */
+/* 208 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // all enumerable object keys, includes symbols
-var getKeys = __webpack_require__(44);
+var getKeys = __webpack_require__(43);
 var gOPS = __webpack_require__(67);
 var pIE = __webpack_require__(58);
 module.exports = function (it) {
@@ -13691,16 +13803,16 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 206 */
+/* 209 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $export = __webpack_require__(0);
 // 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
-$export($export.S, 'Object', { create: __webpack_require__(46) });
+$export($export.S, 'Object', { create: __webpack_require__(45) });
 
 
 /***/ }),
-/* 207 */
+/* 210 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $export = __webpack_require__(0);
@@ -13709,23 +13821,23 @@ $export($export.S + $export.F * !__webpack_require__(7), 'Object', { definePrope
 
 
 /***/ }),
-/* 208 */
+/* 211 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $export = __webpack_require__(0);
 // 19.1.2.3 / 15.2.3.7 Object.defineProperties(O, Properties)
-$export($export.S + $export.F * !__webpack_require__(7), 'Object', { defineProperties: __webpack_require__(119) });
+$export($export.S + $export.F * !__webpack_require__(7), 'Object', { defineProperties: __webpack_require__(120) });
 
 
 /***/ }),
-/* 209 */
+/* 212 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.6 Object.getOwnPropertyDescriptor(O, P)
 var toIObject = __webpack_require__(19);
 var $getOwnPropertyDescriptor = __webpack_require__(20).f;
 
-__webpack_require__(34)('getOwnPropertyDescriptor', function () {
+__webpack_require__(32)('getOwnPropertyDescriptor', function () {
   return function getOwnPropertyDescriptor(it, key) {
     return $getOwnPropertyDescriptor(toIObject(it), key);
   };
@@ -13733,56 +13845,16 @@ __webpack_require__(34)('getOwnPropertyDescriptor', function () {
 
 
 /***/ }),
-/* 210 */
+/* 213 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.9 Object.getPrototypeOf(O)
 var toObject = __webpack_require__(11);
 var $getPrototypeOf = __webpack_require__(21);
 
-__webpack_require__(34)('getPrototypeOf', function () {
+__webpack_require__(32)('getPrototypeOf', function () {
   return function getPrototypeOf(it) {
     return $getPrototypeOf(toObject(it));
-  };
-});
-
-
-/***/ }),
-/* 211 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 19.1.2.14 Object.keys(O)
-var toObject = __webpack_require__(11);
-var $keys = __webpack_require__(44);
-
-__webpack_require__(34)('keys', function () {
-  return function keys(it) {
-    return $keys(toObject(it));
-  };
-});
-
-
-/***/ }),
-/* 212 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 19.1.2.7 Object.getOwnPropertyNames(O)
-__webpack_require__(34)('getOwnPropertyNames', function () {
-  return __webpack_require__(120).f;
-});
-
-
-/***/ }),
-/* 213 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 19.1.2.5 Object.freeze(O)
-var isObject = __webpack_require__(5);
-var meta = __webpack_require__(39).onFreeze;
-
-__webpack_require__(34)('freeze', function ($freeze) {
-  return function freeze(it) {
-    return $freeze && isObject(it) ? $freeze(meta(it)) : it;
   };
 });
 
@@ -13791,13 +13863,13 @@ __webpack_require__(34)('freeze', function ($freeze) {
 /* 214 */
 /***/ (function(module, exports, __webpack_require__) {
 
-// 19.1.2.17 Object.seal(O)
-var isObject = __webpack_require__(5);
-var meta = __webpack_require__(39).onFreeze;
+// 19.1.2.14 Object.keys(O)
+var toObject = __webpack_require__(11);
+var $keys = __webpack_require__(43);
 
-__webpack_require__(34)('seal', function ($seal) {
-  return function seal(it) {
-    return $seal && isObject(it) ? $seal(meta(it)) : it;
+__webpack_require__(32)('keys', function () {
+  return function keys(it) {
+    return $keys(toObject(it));
   };
 });
 
@@ -13806,14 +13878,9 @@ __webpack_require__(34)('seal', function ($seal) {
 /* 215 */
 /***/ (function(module, exports, __webpack_require__) {
 
-// 19.1.2.15 Object.preventExtensions(O)
-var isObject = __webpack_require__(5);
-var meta = __webpack_require__(39).onFreeze;
-
-__webpack_require__(34)('preventExtensions', function ($preventExtensions) {
-  return function preventExtensions(it) {
-    return $preventExtensions && isObject(it) ? $preventExtensions(meta(it)) : it;
-  };
+// 19.1.2.7 Object.getOwnPropertyNames(O)
+__webpack_require__(32)('getOwnPropertyNames', function () {
+  return __webpack_require__(121).f;
 });
 
 
@@ -13821,12 +13888,13 @@ __webpack_require__(34)('preventExtensions', function ($preventExtensions) {
 /* 216 */
 /***/ (function(module, exports, __webpack_require__) {
 
-// 19.1.2.12 Object.isFrozen(O)
+// 19.1.2.5 Object.freeze(O)
 var isObject = __webpack_require__(5);
+var meta = __webpack_require__(38).onFreeze;
 
-__webpack_require__(34)('isFrozen', function ($isFrozen) {
-  return function isFrozen(it) {
-    return isObject(it) ? $isFrozen ? $isFrozen(it) : false : true;
+__webpack_require__(32)('freeze', function ($freeze) {
+  return function freeze(it) {
+    return $freeze && isObject(it) ? $freeze(meta(it)) : it;
   };
 });
 
@@ -13835,12 +13903,13 @@ __webpack_require__(34)('isFrozen', function ($isFrozen) {
 /* 217 */
 /***/ (function(module, exports, __webpack_require__) {
 
-// 19.1.2.13 Object.isSealed(O)
+// 19.1.2.17 Object.seal(O)
 var isObject = __webpack_require__(5);
+var meta = __webpack_require__(38).onFreeze;
 
-__webpack_require__(34)('isSealed', function ($isSealed) {
-  return function isSealed(it) {
-    return isObject(it) ? $isSealed ? $isSealed(it) : false : true;
+__webpack_require__(32)('seal', function ($seal) {
+  return function seal(it) {
+    return $seal && isObject(it) ? $seal(meta(it)) : it;
   };
 });
 
@@ -13849,12 +13918,13 @@ __webpack_require__(34)('isSealed', function ($isSealed) {
 /* 218 */
 /***/ (function(module, exports, __webpack_require__) {
 
-// 19.1.2.11 Object.isExtensible(O)
+// 19.1.2.15 Object.preventExtensions(O)
 var isObject = __webpack_require__(5);
+var meta = __webpack_require__(38).onFreeze;
 
-__webpack_require__(34)('isExtensible', function ($isExtensible) {
-  return function isExtensible(it) {
-    return isObject(it) ? $isExtensible ? $isExtensible(it) : true : false;
+__webpack_require__(32)('preventExtensions', function ($preventExtensions) {
+  return function preventExtensions(it) {
+    return $preventExtensions && isObject(it) ? $preventExtensions(meta(it)) : it;
   };
 });
 
@@ -13863,23 +13933,65 @@ __webpack_require__(34)('isExtensible', function ($isExtensible) {
 /* 219 */
 /***/ (function(module, exports, __webpack_require__) {
 
-// 19.1.3.1 Object.assign(target, source)
-var $export = __webpack_require__(0);
+// 19.1.2.12 Object.isFrozen(O)
+var isObject = __webpack_require__(5);
 
-$export($export.S + $export.F, 'Object', { assign: __webpack_require__(121) });
+__webpack_require__(32)('isFrozen', function ($isFrozen) {
+  return function isFrozen(it) {
+    return isObject(it) ? $isFrozen ? $isFrozen(it) : false : true;
+  };
+});
 
 
 /***/ }),
 /* 220 */
 /***/ (function(module, exports, __webpack_require__) {
 
-// 19.1.3.10 Object.is(value1, value2)
-var $export = __webpack_require__(0);
-$export($export.S, 'Object', { is: __webpack_require__(221) });
+// 19.1.2.13 Object.isSealed(O)
+var isObject = __webpack_require__(5);
+
+__webpack_require__(32)('isSealed', function ($isSealed) {
+  return function isSealed(it) {
+    return isObject(it) ? $isSealed ? $isSealed(it) : false : true;
+  };
+});
 
 
 /***/ }),
 /* 221 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 19.1.2.11 Object.isExtensible(O)
+var isObject = __webpack_require__(5);
+
+__webpack_require__(32)('isExtensible', function ($isExtensible) {
+  return function isExtensible(it) {
+    return isObject(it) ? $isExtensible ? $isExtensible(it) : true : false;
+  };
+});
+
+
+/***/ }),
+/* 222 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 19.1.3.1 Object.assign(target, source)
+var $export = __webpack_require__(0);
+
+$export($export.S + $export.F, 'Object', { assign: __webpack_require__(122) });
+
+
+/***/ }),
+/* 223 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 19.1.3.10 Object.is(value1, value2)
+var $export = __webpack_require__(0);
+$export($export.S, 'Object', { is: __webpack_require__(224) });
+
+
+/***/ }),
+/* 224 */
 /***/ (function(module, exports) {
 
 // 7.2.9 SameValue(x, y)
@@ -13890,7 +14002,7 @@ module.exports = Object.is || function is(x, y) {
 
 
 /***/ }),
-/* 222 */
+/* 225 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.3.19 Object.setPrototypeOf(O, proto)
@@ -13899,7 +14011,7 @@ $export($export.S, 'Object', { setPrototypeOf: __webpack_require__(87).set });
 
 
 /***/ }),
-/* 223 */
+/* 226 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13916,17 +14028,17 @@ if (test + '' != '[object z]') {
 
 
 /***/ }),
-/* 224 */
+/* 227 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.2.3.2 / 15.3.4.5 Function.prototype.bind(thisArg, args...)
 var $export = __webpack_require__(0);
 
-$export($export.P, 'Function', { bind: __webpack_require__(122) });
+$export($export.P, 'Function', { bind: __webpack_require__(123) });
 
 
 /***/ }),
-/* 225 */
+/* 228 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var dP = __webpack_require__(8).f;
@@ -13948,7 +14060,7 @@ NAME in FProto || __webpack_require__(7) && dP(FProto, NAME, {
 
 
 /***/ }),
-/* 226 */
+/* 229 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13968,38 +14080,38 @@ if (!(HAS_INSTANCE in FunctionProto)) __webpack_require__(8).f(FunctionProto, HA
 
 
 /***/ }),
-/* 227 */
+/* 230 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $export = __webpack_require__(0);
-var $parseInt = __webpack_require__(124);
+var $parseInt = __webpack_require__(125);
 // 18.2.5 parseInt(string, radix)
 $export($export.G + $export.F * (parseInt != $parseInt), { parseInt: $parseInt });
 
 
 /***/ }),
-/* 228 */
+/* 231 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $export = __webpack_require__(0);
-var $parseFloat = __webpack_require__(125);
+var $parseFloat = __webpack_require__(126);
 // 18.2.4 parseFloat(string)
 $export($export.G + $export.F * (parseFloat != $parseFloat), { parseFloat: $parseFloat });
 
 
 /***/ }),
-/* 229 */
+/* 232 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 var global = __webpack_require__(3);
 var has = __webpack_require__(15);
-var cof = __webpack_require__(27);
+var cof = __webpack_require__(25);
 var inheritIfRequired = __webpack_require__(89);
-var toPrimitive = __webpack_require__(31);
+var toPrimitive = __webpack_require__(29);
 var fails = __webpack_require__(4);
-var gOPN = __webpack_require__(47).f;
+var gOPN = __webpack_require__(46).f;
 var gOPD = __webpack_require__(20).f;
 var dP = __webpack_require__(8).f;
 var $trim = __webpack_require__(53).trim;
@@ -14008,7 +14120,7 @@ var $Number = global[NUMBER];
 var Base = $Number;
 var proto = $Number.prototype;
 // Opera ~12 has broken Object#toString
-var BROKEN_COF = cof(__webpack_require__(46)(proto)) == NUMBER;
+var BROKEN_COF = cof(__webpack_require__(45)(proto)) == NUMBER;
 var TRIM = 'trim' in String.prototype;
 
 // 7.1.3 ToNumber(argument)
@@ -14064,14 +14176,14 @@ if (!$Number(' 0o1') || !$Number('0b1') || $Number('+0x1')) {
 
 
 /***/ }),
-/* 230 */
+/* 233 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 var $export = __webpack_require__(0);
-var toInteger = __webpack_require__(33);
-var aNumberValue = __webpack_require__(126);
+var toInteger = __webpack_require__(31);
+var aNumberValue = __webpack_require__(127);
 var repeat = __webpack_require__(90);
 var $toFixed = 1.0.toFixed;
 var floor = Math.floor;
@@ -14185,14 +14297,14 @@ $export($export.P + $export.F * (!!$toFixed && (
 
 
 /***/ }),
-/* 231 */
+/* 234 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 var $export = __webpack_require__(0);
 var $fails = __webpack_require__(4);
-var aNumberValue = __webpack_require__(126);
+var aNumberValue = __webpack_require__(127);
 var $toPrecision = 1.0.toPrecision;
 
 $export($export.P + $export.F * ($fails(function () {
@@ -14210,7 +14322,7 @@ $export($export.P + $export.F * ($fails(function () {
 
 
 /***/ }),
-/* 232 */
+/* 235 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.1.2.1 Number.EPSILON
@@ -14220,7 +14332,7 @@ $export($export.S, 'Number', { EPSILON: Math.pow(2, -52) });
 
 
 /***/ }),
-/* 233 */
+/* 236 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.1.2.2 Number.isFinite(number)
@@ -14235,17 +14347,17 @@ $export($export.S, 'Number', {
 
 
 /***/ }),
-/* 234 */
+/* 237 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.1.2.3 Number.isInteger(number)
 var $export = __webpack_require__(0);
 
-$export($export.S, 'Number', { isInteger: __webpack_require__(127) });
+$export($export.S, 'Number', { isInteger: __webpack_require__(128) });
 
 
 /***/ }),
-/* 235 */
+/* 238 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.1.2.4 Number.isNaN(number)
@@ -14260,12 +14372,12 @@ $export($export.S, 'Number', {
 
 
 /***/ }),
-/* 236 */
+/* 239 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.1.2.5 Number.isSafeInteger(number)
 var $export = __webpack_require__(0);
-var isInteger = __webpack_require__(127);
+var isInteger = __webpack_require__(128);
 var abs = Math.abs;
 
 $export($export.S, 'Number', {
@@ -14276,7 +14388,7 @@ $export($export.S, 'Number', {
 
 
 /***/ }),
-/* 237 */
+/* 240 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.1.2.6 Number.MAX_SAFE_INTEGER
@@ -14286,7 +14398,7 @@ $export($export.S, 'Number', { MAX_SAFE_INTEGER: 0x1fffffffffffff });
 
 
 /***/ }),
-/* 238 */
+/* 241 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.1.2.10 Number.MIN_SAFE_INTEGER
@@ -14296,32 +14408,32 @@ $export($export.S, 'Number', { MIN_SAFE_INTEGER: -0x1fffffffffffff });
 
 
 /***/ }),
-/* 239 */
+/* 242 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $export = __webpack_require__(0);
-var $parseFloat = __webpack_require__(125);
+var $parseFloat = __webpack_require__(126);
 // 20.1.2.12 Number.parseFloat(string)
 $export($export.S + $export.F * (Number.parseFloat != $parseFloat), 'Number', { parseFloat: $parseFloat });
 
 
 /***/ }),
-/* 240 */
+/* 243 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $export = __webpack_require__(0);
-var $parseInt = __webpack_require__(124);
+var $parseInt = __webpack_require__(125);
 // 20.1.2.13 Number.parseInt(string, radix)
 $export($export.S + $export.F * (Number.parseInt != $parseInt), 'Number', { parseInt: $parseInt });
 
 
 /***/ }),
-/* 241 */
+/* 244 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.2.2.3 Math.acosh(x)
 var $export = __webpack_require__(0);
-var log1p = __webpack_require__(128);
+var log1p = __webpack_require__(129);
 var sqrt = Math.sqrt;
 var $acosh = Math.acosh;
 
@@ -14340,7 +14452,7 @@ $export($export.S + $export.F * !($acosh
 
 
 /***/ }),
-/* 242 */
+/* 245 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.2.2.5 Math.asinh(x)
@@ -14356,7 +14468,7 @@ $export($export.S + $export.F * !($asinh && 1 / $asinh(0) > 0), 'Math', { asinh:
 
 
 /***/ }),
-/* 243 */
+/* 246 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.2.2.7 Math.atanh(x)
@@ -14372,7 +14484,7 @@ $export($export.S + $export.F * !($atanh && 1 / $atanh(-0) < 0), 'Math', {
 
 
 /***/ }),
-/* 244 */
+/* 247 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.2.2.9 Math.cbrt(x)
@@ -14387,7 +14499,7 @@ $export($export.S, 'Math', {
 
 
 /***/ }),
-/* 245 */
+/* 248 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.2.2.11 Math.clz32(x)
@@ -14401,7 +14513,7 @@ $export($export.S, 'Math', {
 
 
 /***/ }),
-/* 246 */
+/* 249 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.2.2.12 Math.cosh(x)
@@ -14416,7 +14528,7 @@ $export($export.S, 'Math', {
 
 
 /***/ }),
-/* 247 */
+/* 250 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.2.2.14 Math.expm1(x)
@@ -14427,17 +14539,17 @@ $export($export.S + $export.F * ($expm1 != Math.expm1), 'Math', { expm1: $expm1 
 
 
 /***/ }),
-/* 248 */
+/* 251 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.2.2.16 Math.fround(x)
 var $export = __webpack_require__(0);
 
-$export($export.S, 'Math', { fround: __webpack_require__(129) });
+$export($export.S, 'Math', { fround: __webpack_require__(130) });
 
 
 /***/ }),
-/* 249 */
+/* 252 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.2.2.17 Math.hypot([value1[, value2[, … ]]])
@@ -14468,7 +14580,7 @@ $export($export.S, 'Math', {
 
 
 /***/ }),
-/* 250 */
+/* 253 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.2.2.18 Math.imul(x, y)
@@ -14491,7 +14603,7 @@ $export($export.S + $export.F * __webpack_require__(4)(function () {
 
 
 /***/ }),
-/* 251 */
+/* 254 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.2.2.21 Math.log10(x)
@@ -14505,17 +14617,17 @@ $export($export.S, 'Math', {
 
 
 /***/ }),
-/* 252 */
+/* 255 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.2.2.20 Math.log1p(x)
 var $export = __webpack_require__(0);
 
-$export($export.S, 'Math', { log1p: __webpack_require__(128) });
+$export($export.S, 'Math', { log1p: __webpack_require__(129) });
 
 
 /***/ }),
-/* 253 */
+/* 256 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.2.2.22 Math.log2(x)
@@ -14529,7 +14641,7 @@ $export($export.S, 'Math', {
 
 
 /***/ }),
-/* 254 */
+/* 257 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.2.2.28 Math.sign(x)
@@ -14539,7 +14651,7 @@ $export($export.S, 'Math', { sign: __webpack_require__(91) });
 
 
 /***/ }),
-/* 255 */
+/* 258 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.2.2.30 Math.sinh(x)
@@ -14560,7 +14672,7 @@ $export($export.S + $export.F * __webpack_require__(4)(function () {
 
 
 /***/ }),
-/* 256 */
+/* 259 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.2.2.33 Math.tanh(x)
@@ -14578,7 +14690,7 @@ $export($export.S, 'Math', {
 
 
 /***/ }),
-/* 257 */
+/* 260 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.2.2.34 Math.trunc(x)
@@ -14592,11 +14704,11 @@ $export($export.S, 'Math', {
 
 
 /***/ }),
-/* 258 */
+/* 261 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $export = __webpack_require__(0);
-var toAbsoluteIndex = __webpack_require__(45);
+var toAbsoluteIndex = __webpack_require__(44);
 var fromCharCode = String.fromCharCode;
 var $fromCodePoint = String.fromCodePoint;
 
@@ -14621,7 +14733,7 @@ $export($export.S + $export.F * (!!$fromCodePoint && $fromCodePoint.length != 1)
 
 
 /***/ }),
-/* 259 */
+/* 262 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $export = __webpack_require__(0);
@@ -14645,7 +14757,7 @@ $export($export.S, 'String', {
 
 
 /***/ }),
-/* 260 */
+/* 263 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14659,7 +14771,7 @@ __webpack_require__(53)('trim', function ($trim) {
 
 
 /***/ }),
-/* 261 */
+/* 264 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14683,7 +14795,7 @@ __webpack_require__(94)(String, 'String', function (iterated) {
 
 
 /***/ }),
-/* 262 */
+/* 265 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14699,7 +14811,7 @@ $export($export.P, 'String', {
 
 
 /***/ }),
-/* 263 */
+/* 266 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14726,7 +14838,7 @@ $export($export.P + $export.F * __webpack_require__(97)(ENDS_WITH), 'String', {
 
 
 /***/ }),
-/* 264 */
+/* 267 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14745,7 +14857,7 @@ $export($export.P + $export.F * __webpack_require__(97)(INCLUDES), 'String', {
 
 
 /***/ }),
-/* 265 */
+/* 268 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $export = __webpack_require__(0);
@@ -14757,7 +14869,7 @@ $export($export.P, 'String', {
 
 
 /***/ }),
-/* 266 */
+/* 269 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14782,7 +14894,7 @@ $export($export.P + $export.F * __webpack_require__(97)(STARTS_WITH), 'String', 
 
 
 /***/ }),
-/* 267 */
+/* 270 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14796,7 +14908,7 @@ __webpack_require__(18)('anchor', function (createHTML) {
 
 
 /***/ }),
-/* 268 */
+/* 271 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14810,7 +14922,7 @@ __webpack_require__(18)('big', function (createHTML) {
 
 
 /***/ }),
-/* 269 */
+/* 272 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14824,7 +14936,7 @@ __webpack_require__(18)('blink', function (createHTML) {
 
 
 /***/ }),
-/* 270 */
+/* 273 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14838,7 +14950,7 @@ __webpack_require__(18)('bold', function (createHTML) {
 
 
 /***/ }),
-/* 271 */
+/* 274 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14852,7 +14964,7 @@ __webpack_require__(18)('fixed', function (createHTML) {
 
 
 /***/ }),
-/* 272 */
+/* 275 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14866,7 +14978,7 @@ __webpack_require__(18)('fontcolor', function (createHTML) {
 
 
 /***/ }),
-/* 273 */
+/* 276 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14880,7 +14992,7 @@ __webpack_require__(18)('fontsize', function (createHTML) {
 
 
 /***/ }),
-/* 274 */
+/* 277 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14894,7 +15006,7 @@ __webpack_require__(18)('italics', function (createHTML) {
 
 
 /***/ }),
-/* 275 */
+/* 278 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14908,7 +15020,7 @@ __webpack_require__(18)('link', function (createHTML) {
 
 
 /***/ }),
-/* 276 */
+/* 279 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14922,7 +15034,7 @@ __webpack_require__(18)('small', function (createHTML) {
 
 
 /***/ }),
-/* 277 */
+/* 280 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14936,7 +15048,7 @@ __webpack_require__(18)('strike', function (createHTML) {
 
 
 /***/ }),
-/* 278 */
+/* 281 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14950,7 +15062,7 @@ __webpack_require__(18)('sub', function (createHTML) {
 
 
 /***/ }),
-/* 279 */
+/* 282 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14964,7 +15076,7 @@ __webpack_require__(18)('sup', function (createHTML) {
 
 
 /***/ }),
-/* 280 */
+/* 283 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.3.3.1 / 15.9.4.4 Date.now()
@@ -14974,14 +15086,14 @@ $export($export.S, 'Date', { now: function () { return new Date().getTime(); } }
 
 
 /***/ }),
-/* 281 */
+/* 284 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 var $export = __webpack_require__(0);
 var toObject = __webpack_require__(11);
-var toPrimitive = __webpack_require__(31);
+var toPrimitive = __webpack_require__(29);
 
 $export($export.P + $export.F * __webpack_require__(4)(function () {
   return new Date(NaN).toJSON() !== null
@@ -14997,12 +15109,12 @@ $export($export.P + $export.F * __webpack_require__(4)(function () {
 
 
 /***/ }),
-/* 282 */
+/* 285 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 20.3.4.36 / 15.9.5.43 Date.prototype.toISOString()
 var $export = __webpack_require__(0);
-var toISOString = __webpack_require__(283);
+var toISOString = __webpack_require__(286);
 
 // PhantomJS / old WebKit has a broken implementations
 $export($export.P + $export.F * (Date.prototype.toISOString !== toISOString), 'Date', {
@@ -15011,7 +15123,7 @@ $export($export.P + $export.F * (Date.prototype.toISOString !== toISOString), 'D
 
 
 /***/ }),
-/* 283 */
+/* 286 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15044,7 +15156,7 @@ module.exports = (fails(function () {
 
 
 /***/ }),
-/* 284 */
+/* 287 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var DateProto = Date.prototype;
@@ -15062,23 +15174,23 @@ if (new Date(NaN) + '' != INVALID_DATE) {
 
 
 /***/ }),
-/* 285 */
+/* 288 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var TO_PRIMITIVE = __webpack_require__(6)('toPrimitive');
 var proto = Date.prototype;
 
-if (!(TO_PRIMITIVE in proto)) __webpack_require__(16)(proto, TO_PRIMITIVE, __webpack_require__(286));
+if (!(TO_PRIMITIVE in proto)) __webpack_require__(16)(proto, TO_PRIMITIVE, __webpack_require__(289));
 
 
 /***/ }),
-/* 286 */
+/* 289 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 var anObject = __webpack_require__(2);
-var toPrimitive = __webpack_require__(31);
+var toPrimitive = __webpack_require__(29);
 var NUMBER = 'number';
 
 module.exports = function (hint) {
@@ -15088,7 +15200,7 @@ module.exports = function (hint) {
 
 
 /***/ }),
-/* 287 */
+/* 290 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 22.1.2.2 / 15.4.3.2 Array.isArray(arg)
@@ -15098,15 +15210,15 @@ $export($export.S, 'Array', { isArray: __webpack_require__(68) });
 
 
 /***/ }),
-/* 288 */
+/* 291 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var ctx = __webpack_require__(26);
+var ctx = __webpack_require__(24);
 var $export = __webpack_require__(0);
 var toObject = __webpack_require__(11);
-var call = __webpack_require__(130);
+var call = __webpack_require__(131);
 var isArrayIter = __webpack_require__(98);
 var toLength = __webpack_require__(9);
 var createProperty = __webpack_require__(99);
@@ -15142,7 +15254,7 @@ $export($export.S + $export.F * !__webpack_require__(70)(function (iter) { Array
 
 
 /***/ }),
-/* 289 */
+/* 292 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15168,7 +15280,7 @@ $export($export.S + $export.F * __webpack_require__(4)(function () {
 
 
 /***/ }),
-/* 290 */
+/* 293 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15179,7 +15291,7 @@ var toIObject = __webpack_require__(19);
 var arrayJoin = [].join;
 
 // fallback for not array-like strings
-$export($export.P + $export.F * (__webpack_require__(57) != Object || !__webpack_require__(28)(arrayJoin)), 'Array', {
+$export($export.P + $export.F * (__webpack_require__(57) != Object || !__webpack_require__(26)(arrayJoin)), 'Array', {
   join: function join(separator) {
     return arrayJoin.call(toIObject(this), separator === undefined ? ',' : separator);
   }
@@ -15187,15 +15299,15 @@ $export($export.P + $export.F * (__webpack_require__(57) != Object || !__webpack
 
 
 /***/ }),
-/* 291 */
+/* 294 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 var $export = __webpack_require__(0);
 var html = __webpack_require__(86);
-var cof = __webpack_require__(27);
-var toAbsoluteIndex = __webpack_require__(45);
+var cof = __webpack_require__(25);
+var toAbsoluteIndex = __webpack_require__(44);
 var toLength = __webpack_require__(9);
 var arraySlice = [].slice;
 
@@ -15222,7 +15334,7 @@ $export($export.P + $export.F * __webpack_require__(4)(function () {
 
 
 /***/ }),
-/* 292 */
+/* 295 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15241,7 +15353,7 @@ $export($export.P + $export.F * (fails(function () {
   // V8 bug
   test.sort(null);
   // Old WebKit
-}) || !__webpack_require__(28)($sort)), 'Array', {
+}) || !__webpack_require__(26)($sort)), 'Array', {
   // 22.1.3.25 Array.prototype.sort(comparefn)
   sort: function sort(comparefn) {
     return comparefn === undefined
@@ -15252,14 +15364,14 @@ $export($export.P + $export.F * (fails(function () {
 
 
 /***/ }),
-/* 293 */
+/* 296 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 var $export = __webpack_require__(0);
-var $forEach = __webpack_require__(35)(0);
-var STRICT = __webpack_require__(28)([].forEach, true);
+var $forEach = __webpack_require__(33)(0);
+var STRICT = __webpack_require__(26)([].forEach, true);
 
 $export($export.P + $export.F * !STRICT, 'Array', {
   // 22.1.3.10 / 15.4.4.18 Array.prototype.forEach(callbackfn [, thisArg])
@@ -15270,7 +15382,7 @@ $export($export.P + $export.F * !STRICT, 'Array', {
 
 
 /***/ }),
-/* 294 */
+/* 297 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isObject = __webpack_require__(5);
@@ -15292,69 +15404,18 @@ module.exports = function (original) {
 
 
 /***/ }),
-/* 295 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var $export = __webpack_require__(0);
-var $map = __webpack_require__(35)(1);
-
-$export($export.P + $export.F * !__webpack_require__(28)([].map, true), 'Array', {
-  // 22.1.3.15 / 15.4.4.19 Array.prototype.map(callbackfn [, thisArg])
-  map: function map(callbackfn /* , thisArg */) {
-    return $map(this, callbackfn, arguments[1]);
-  }
-});
-
-
-/***/ }),
-/* 296 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var $export = __webpack_require__(0);
-var $filter = __webpack_require__(35)(2);
-
-$export($export.P + $export.F * !__webpack_require__(28)([].filter, true), 'Array', {
-  // 22.1.3.7 / 15.4.4.20 Array.prototype.filter(callbackfn [, thisArg])
-  filter: function filter(callbackfn /* , thisArg */) {
-    return $filter(this, callbackfn, arguments[1]);
-  }
-});
-
-
-/***/ }),
-/* 297 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var $export = __webpack_require__(0);
-var $some = __webpack_require__(35)(3);
-
-$export($export.P + $export.F * !__webpack_require__(28)([].some, true), 'Array', {
-  // 22.1.3.23 / 15.4.4.17 Array.prototype.some(callbackfn [, thisArg])
-  some: function some(callbackfn /* , thisArg */) {
-    return $some(this, callbackfn, arguments[1]);
-  }
-});
-
-
-/***/ }),
 /* 298 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 var $export = __webpack_require__(0);
-var $every = __webpack_require__(35)(4);
+var $map = __webpack_require__(33)(1);
 
-$export($export.P + $export.F * !__webpack_require__(28)([].every, true), 'Array', {
-  // 22.1.3.5 / 15.4.4.16 Array.prototype.every(callbackfn [, thisArg])
-  every: function every(callbackfn /* , thisArg */) {
-    return $every(this, callbackfn, arguments[1]);
+$export($export.P + $export.F * !__webpack_require__(26)([].map, true), 'Array', {
+  // 22.1.3.15 / 15.4.4.19 Array.prototype.map(callbackfn [, thisArg])
+  map: function map(callbackfn /* , thisArg */) {
+    return $map(this, callbackfn, arguments[1]);
   }
 });
 
@@ -15366,12 +15427,12 @@ $export($export.P + $export.F * !__webpack_require__(28)([].every, true), 'Array
 "use strict";
 
 var $export = __webpack_require__(0);
-var $reduce = __webpack_require__(131);
+var $filter = __webpack_require__(33)(2);
 
-$export($export.P + $export.F * !__webpack_require__(28)([].reduce, true), 'Array', {
-  // 22.1.3.18 / 15.4.4.21 Array.prototype.reduce(callbackfn [, initialValue])
-  reduce: function reduce(callbackfn /* , initialValue */) {
-    return $reduce(this, callbackfn, arguments.length, arguments[1], false);
+$export($export.P + $export.F * !__webpack_require__(26)([].filter, true), 'Array', {
+  // 22.1.3.7 / 15.4.4.20 Array.prototype.filter(callbackfn [, thisArg])
+  filter: function filter(callbackfn /* , thisArg */) {
+    return $filter(this, callbackfn, arguments[1]);
   }
 });
 
@@ -15383,12 +15444,12 @@ $export($export.P + $export.F * !__webpack_require__(28)([].reduce, true), 'Arra
 "use strict";
 
 var $export = __webpack_require__(0);
-var $reduce = __webpack_require__(131);
+var $some = __webpack_require__(33)(3);
 
-$export($export.P + $export.F * !__webpack_require__(28)([].reduceRight, true), 'Array', {
-  // 22.1.3.19 / 15.4.4.22 Array.prototype.reduceRight(callbackfn [, initialValue])
-  reduceRight: function reduceRight(callbackfn /* , initialValue */) {
-    return $reduce(this, callbackfn, arguments.length, arguments[1], true);
+$export($export.P + $export.F * !__webpack_require__(26)([].some, true), 'Array', {
+  // 22.1.3.23 / 15.4.4.17 Array.prototype.some(callbackfn [, thisArg])
+  some: function some(callbackfn /* , thisArg */) {
+    return $some(this, callbackfn, arguments[1]);
   }
 });
 
@@ -15400,17 +15461,12 @@ $export($export.P + $export.F * !__webpack_require__(28)([].reduceRight, true), 
 "use strict";
 
 var $export = __webpack_require__(0);
-var $indexOf = __webpack_require__(66)(false);
-var $native = [].indexOf;
-var NEGATIVE_ZERO = !!$native && 1 / [1].indexOf(1, -0) < 0;
+var $every = __webpack_require__(33)(4);
 
-$export($export.P + $export.F * (NEGATIVE_ZERO || !__webpack_require__(28)($native)), 'Array', {
-  // 22.1.3.11 / 15.4.4.14 Array.prototype.indexOf(searchElement [, fromIndex])
-  indexOf: function indexOf(searchElement /* , fromIndex = 0 */) {
-    return NEGATIVE_ZERO
-      // convert -0 to +0
-      ? $native.apply(this, arguments) || 0
-      : $indexOf(this, searchElement, arguments[1]);
+$export($export.P + $export.F * !__webpack_require__(26)([].every, true), 'Array', {
+  // 22.1.3.5 / 15.4.4.16 Array.prototype.every(callbackfn [, thisArg])
+  every: function every(callbackfn /* , thisArg */) {
+    return $every(this, callbackfn, arguments[1]);
   }
 });
 
@@ -15422,13 +15478,69 @@ $export($export.P + $export.F * (NEGATIVE_ZERO || !__webpack_require__(28)($nati
 "use strict";
 
 var $export = __webpack_require__(0);
+var $reduce = __webpack_require__(132);
+
+$export($export.P + $export.F * !__webpack_require__(26)([].reduce, true), 'Array', {
+  // 22.1.3.18 / 15.4.4.21 Array.prototype.reduce(callbackfn [, initialValue])
+  reduce: function reduce(callbackfn /* , initialValue */) {
+    return $reduce(this, callbackfn, arguments.length, arguments[1], false);
+  }
+});
+
+
+/***/ }),
+/* 303 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var $export = __webpack_require__(0);
+var $reduce = __webpack_require__(132);
+
+$export($export.P + $export.F * !__webpack_require__(26)([].reduceRight, true), 'Array', {
+  // 22.1.3.19 / 15.4.4.22 Array.prototype.reduceRight(callbackfn [, initialValue])
+  reduceRight: function reduceRight(callbackfn /* , initialValue */) {
+    return $reduce(this, callbackfn, arguments.length, arguments[1], true);
+  }
+});
+
+
+/***/ }),
+/* 304 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var $export = __webpack_require__(0);
+var $indexOf = __webpack_require__(66)(false);
+var $native = [].indexOf;
+var NEGATIVE_ZERO = !!$native && 1 / [1].indexOf(1, -0) < 0;
+
+$export($export.P + $export.F * (NEGATIVE_ZERO || !__webpack_require__(26)($native)), 'Array', {
+  // 22.1.3.11 / 15.4.4.14 Array.prototype.indexOf(searchElement [, fromIndex])
+  indexOf: function indexOf(searchElement /* , fromIndex = 0 */) {
+    return NEGATIVE_ZERO
+      // convert -0 to +0
+      ? $native.apply(this, arguments) || 0
+      : $indexOf(this, searchElement, arguments[1]);
+  }
+});
+
+
+/***/ }),
+/* 305 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var $export = __webpack_require__(0);
 var toIObject = __webpack_require__(19);
-var toInteger = __webpack_require__(33);
+var toInteger = __webpack_require__(31);
 var toLength = __webpack_require__(9);
 var $native = [].lastIndexOf;
 var NEGATIVE_ZERO = !!$native && 1 / [1].lastIndexOf(1, -0) < 0;
 
-$export($export.P + $export.F * (NEGATIVE_ZERO || !__webpack_require__(28)($native)), 'Array', {
+$export($export.P + $export.F * (NEGATIVE_ZERO || !__webpack_require__(26)($native)), 'Array', {
   // 22.1.3.14 / 15.4.4.15 Array.prototype.lastIndexOf(searchElement [, fromIndex])
   lastIndexOf: function lastIndexOf(searchElement /* , fromIndex = @[*-1] */) {
     // convert -0 to +0
@@ -15445,19 +15557,19 @@ $export($export.P + $export.F * (NEGATIVE_ZERO || !__webpack_require__(28)($nati
 
 
 /***/ }),
-/* 303 */
+/* 306 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 22.1.3.3 Array.prototype.copyWithin(target, start, end = this.length)
 var $export = __webpack_require__(0);
 
-$export($export.P, 'Array', { copyWithin: __webpack_require__(132) });
+$export($export.P, 'Array', { copyWithin: __webpack_require__(133) });
 
-__webpack_require__(40)('copyWithin');
+__webpack_require__(39)('copyWithin');
 
 
 /***/ }),
-/* 304 */
+/* 307 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 22.1.3.6 Array.prototype.fill(value, start = 0, end = this.length)
@@ -15465,18 +15577,18 @@ var $export = __webpack_require__(0);
 
 $export($export.P, 'Array', { fill: __webpack_require__(102) });
 
-__webpack_require__(40)('fill');
+__webpack_require__(39)('fill');
 
 
 /***/ }),
-/* 305 */
+/* 308 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 // 22.1.3.8 Array.prototype.find(predicate, thisArg = undefined)
 var $export = __webpack_require__(0);
-var $find = __webpack_require__(35)(5);
+var $find = __webpack_require__(33)(5);
 var KEY = 'find';
 var forced = true;
 // Shouldn't skip holes
@@ -15486,18 +15598,18 @@ $export($export.P + $export.F * forced, 'Array', {
     return $find(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
   }
 });
-__webpack_require__(40)(KEY);
+__webpack_require__(39)(KEY);
 
 
 /***/ }),
-/* 306 */
+/* 309 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 // 22.1.3.9 Array.prototype.findIndex(predicate, thisArg = undefined)
 var $export = __webpack_require__(0);
-var $find = __webpack_require__(35)(6);
+var $find = __webpack_require__(33)(6);
 var KEY = 'findIndex';
 var forced = true;
 // Shouldn't skip holes
@@ -15507,24 +15619,24 @@ $export($export.P + $export.F * forced, 'Array', {
     return $find(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
   }
 });
-__webpack_require__(40)(KEY);
+__webpack_require__(39)(KEY);
 
 
 /***/ }),
-/* 307 */
+/* 310 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(48)('Array');
+__webpack_require__(47)('Array');
 
 
 /***/ }),
-/* 308 */
+/* 311 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var global = __webpack_require__(3);
 var inheritIfRequired = __webpack_require__(89);
 var dP = __webpack_require__(8).f;
-var gOPN = __webpack_require__(47).f;
+var gOPN = __webpack_require__(46).f;
 var isRegExp = __webpack_require__(69);
 var $flags = __webpack_require__(71);
 var $RegExp = global.RegExp;
@@ -15563,16 +15675,16 @@ if (__webpack_require__(7) && (!CORRECT_NEW || __webpack_require__(4)(function (
   __webpack_require__(17)(global, 'RegExp', $RegExp);
 }
 
-__webpack_require__(48)('RegExp');
+__webpack_require__(47)('RegExp');
 
 
 /***/ }),
-/* 309 */
+/* 312 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-__webpack_require__(134);
+__webpack_require__(135);
 var anObject = __webpack_require__(2);
 var $flags = __webpack_require__(71);
 var DESCRIPTORS = __webpack_require__(7);
@@ -15599,7 +15711,7 @@ if (__webpack_require__(4)(function () { return $toString.call({ source: 'a', fl
 
 
 /***/ }),
-/* 310 */
+/* 313 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // @@match logic
@@ -15615,7 +15727,7 @@ __webpack_require__(72)('match', 1, function (defined, MATCH, $match) {
 
 
 /***/ }),
-/* 311 */
+/* 314 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // @@replace logic
@@ -15633,7 +15745,7 @@ __webpack_require__(72)('replace', 2, function (defined, REPLACE, $replace) {
 
 
 /***/ }),
-/* 312 */
+/* 315 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // @@search logic
@@ -15649,7 +15761,7 @@ __webpack_require__(72)('search', 1, function (defined, SEARCH, $search) {
 
 
 /***/ }),
-/* 313 */
+/* 316 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // @@split logic
@@ -15726,26 +15838,26 @@ __webpack_require__(72)('split', 2, function (defined, SPLIT, $split) {
 
 
 /***/ }),
-/* 314 */
+/* 317 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var LIBRARY = __webpack_require__(43);
+var LIBRARY = __webpack_require__(42);
 var global = __webpack_require__(3);
-var ctx = __webpack_require__(26);
+var ctx = __webpack_require__(24);
 var classof = __webpack_require__(59);
 var $export = __webpack_require__(0);
 var isObject = __webpack_require__(5);
 var aFunction = __webpack_require__(13);
-var anInstance = __webpack_require__(49);
-var forOf = __webpack_require__(50);
+var anInstance = __webpack_require__(48);
+var forOf = __webpack_require__(49);
 var speciesConstructor = __webpack_require__(73);
 var task = __webpack_require__(104).set;
 var microtask = __webpack_require__(105)();
 var newPromiseCapabilityModule = __webpack_require__(106);
-var perform = __webpack_require__(135);
-var promiseResolve = __webpack_require__(136);
+var perform = __webpack_require__(136);
+var promiseResolve = __webpack_require__(137);
 var PROMISE = 'Promise';
 var TypeError = global.TypeError;
 var process = global.process;
@@ -15915,7 +16027,7 @@ if (!USE_NATIVE) {
     this._h = 0;              // <- rejection state, 0 - default, 1 - handled, 2 - unhandled
     this._n = false;          // <- notify
   };
-  Internal.prototype = __webpack_require__(51)($Promise.prototype, {
+  Internal.prototype = __webpack_require__(50)($Promise.prototype, {
     // 25.4.5.3 Promise.prototype.then(onFulfilled, onRejected)
     then: function then(onFulfilled, onRejected) {
       var reaction = newPromiseCapability(speciesConstructor(this, $Promise));
@@ -15947,8 +16059,8 @@ if (!USE_NATIVE) {
 
 $export($export.G + $export.W + $export.F * !USE_NATIVE, { Promise: $Promise });
 __webpack_require__(52)($Promise, PROMISE);
-__webpack_require__(48)(PROMISE);
-Wrapper = __webpack_require__(30)[PROMISE];
+__webpack_require__(47)(PROMISE);
+Wrapper = __webpack_require__(28)[PROMISE];
 
 // statics
 $export($export.S + $export.F * !USE_NATIVE, PROMISE, {
@@ -16013,12 +16125,12 @@ $export($export.S + $export.F * !(USE_NATIVE && __webpack_require__(70)(function
 
 
 /***/ }),
-/* 315 */
+/* 318 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var weak = __webpack_require__(141);
+var weak = __webpack_require__(142);
 var validate = __webpack_require__(55);
 var WEAK_SET = 'WeakSet';
 
@@ -16034,7 +16146,7 @@ __webpack_require__(74)(WEAK_SET, function (get) {
 
 
 /***/ }),
-/* 316 */
+/* 319 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16043,7 +16155,7 @@ var $export = __webpack_require__(0);
 var $typed = __webpack_require__(75);
 var buffer = __webpack_require__(107);
 var anObject = __webpack_require__(2);
-var toAbsoluteIndex = __webpack_require__(45);
+var toAbsoluteIndex = __webpack_require__(44);
 var toLength = __webpack_require__(9);
 var isObject = __webpack_require__(5);
 var ArrayBuffer = __webpack_require__(3).ArrayBuffer;
@@ -16083,11 +16195,11 @@ $export($export.P + $export.U + $export.F * __webpack_require__(4)(function () {
   }
 });
 
-__webpack_require__(48)(ARRAY_BUFFER);
+__webpack_require__(47)(ARRAY_BUFFER);
 
 
 /***/ }),
-/* 317 */
+/* 320 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $export = __webpack_require__(0);
@@ -16097,7 +16209,7 @@ $export($export.G + $export.W + $export.F * !__webpack_require__(75).ABV, {
 
 
 /***/ }),
-/* 318 */
+/* 321 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(36)('Int8', 1, function (init) {
@@ -16108,7 +16220,7 @@ __webpack_require__(36)('Int8', 1, function (init) {
 
 
 /***/ }),
-/* 319 */
+/* 322 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(36)('Uint8', 1, function (init) {
@@ -16119,7 +16231,7 @@ __webpack_require__(36)('Uint8', 1, function (init) {
 
 
 /***/ }),
-/* 320 */
+/* 323 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(36)('Uint8', 1, function (init) {
@@ -16130,7 +16242,7 @@ __webpack_require__(36)('Uint8', 1, function (init) {
 
 
 /***/ }),
-/* 321 */
+/* 324 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(36)('Int16', 2, function (init) {
@@ -16141,7 +16253,7 @@ __webpack_require__(36)('Int16', 2, function (init) {
 
 
 /***/ }),
-/* 322 */
+/* 325 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(36)('Uint16', 2, function (init) {
@@ -16152,7 +16264,7 @@ __webpack_require__(36)('Uint16', 2, function (init) {
 
 
 /***/ }),
-/* 323 */
+/* 326 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(36)('Int32', 4, function (init) {
@@ -16163,7 +16275,7 @@ __webpack_require__(36)('Int32', 4, function (init) {
 
 
 /***/ }),
-/* 324 */
+/* 327 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(36)('Uint32', 4, function (init) {
@@ -16174,7 +16286,7 @@ __webpack_require__(36)('Uint32', 4, function (init) {
 
 
 /***/ }),
-/* 325 */
+/* 328 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(36)('Float32', 4, function (init) {
@@ -16185,7 +16297,7 @@ __webpack_require__(36)('Float32', 4, function (init) {
 
 
 /***/ }),
-/* 326 */
+/* 329 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(36)('Float64', 8, function (init) {
@@ -16196,7 +16308,7 @@ __webpack_require__(36)('Float64', 8, function (init) {
 
 
 /***/ }),
-/* 327 */
+/* 330 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 26.1.1 Reflect.apply(target, thisArgument, argumentsList)
@@ -16218,17 +16330,17 @@ $export($export.S + $export.F * !__webpack_require__(4)(function () {
 
 
 /***/ }),
-/* 328 */
+/* 331 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 26.1.2 Reflect.construct(target, argumentsList [, newTarget])
 var $export = __webpack_require__(0);
-var create = __webpack_require__(46);
+var create = __webpack_require__(45);
 var aFunction = __webpack_require__(13);
 var anObject = __webpack_require__(2);
 var isObject = __webpack_require__(5);
 var fails = __webpack_require__(4);
-var bind = __webpack_require__(122);
+var bind = __webpack_require__(123);
 var rConstruct = (__webpack_require__(3).Reflect || {}).construct;
 
 // MS Edge supports only 2 arguments and argumentsList argument is optional
@@ -16271,14 +16383,14 @@ $export($export.S + $export.F * (NEW_TARGET_BUG || ARGS_BUG), 'Reflect', {
 
 
 /***/ }),
-/* 329 */
+/* 332 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 26.1.3 Reflect.defineProperty(target, propertyKey, attributes)
 var dP = __webpack_require__(8);
 var $export = __webpack_require__(0);
 var anObject = __webpack_require__(2);
-var toPrimitive = __webpack_require__(31);
+var toPrimitive = __webpack_require__(29);
 
 // MS Edge has broken Reflect.defineProperty - throwing instead of returning false
 $export($export.S + $export.F * __webpack_require__(4)(function () {
@@ -16300,7 +16412,7 @@ $export($export.S + $export.F * __webpack_require__(4)(function () {
 
 
 /***/ }),
-/* 330 */
+/* 333 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 26.1.4 Reflect.deleteProperty(target, propertyKey)
@@ -16317,7 +16429,7 @@ $export($export.S, 'Reflect', {
 
 
 /***/ }),
-/* 331 */
+/* 334 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16350,7 +16462,7 @@ $export($export.S, 'Reflect', {
 
 
 /***/ }),
-/* 332 */
+/* 335 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 26.1.6 Reflect.get(target, propertyKey [, receiver])
@@ -16377,7 +16489,7 @@ $export($export.S, 'Reflect', { get: get });
 
 
 /***/ }),
-/* 333 */
+/* 336 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 26.1.7 Reflect.getOwnPropertyDescriptor(target, propertyKey)
@@ -16393,7 +16505,7 @@ $export($export.S, 'Reflect', {
 
 
 /***/ }),
-/* 334 */
+/* 337 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 26.1.8 Reflect.getPrototypeOf(target)
@@ -16409,7 +16521,7 @@ $export($export.S, 'Reflect', {
 
 
 /***/ }),
-/* 335 */
+/* 338 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 26.1.9 Reflect.has(target, propertyKey)
@@ -16423,7 +16535,7 @@ $export($export.S, 'Reflect', {
 
 
 /***/ }),
-/* 336 */
+/* 339 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 26.1.10 Reflect.isExtensible(target)
@@ -16440,17 +16552,17 @@ $export($export.S, 'Reflect', {
 
 
 /***/ }),
-/* 337 */
+/* 340 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 26.1.11 Reflect.ownKeys(target)
 var $export = __webpack_require__(0);
 
-$export($export.S, 'Reflect', { ownKeys: __webpack_require__(143) });
+$export($export.S, 'Reflect', { ownKeys: __webpack_require__(144) });
 
 
 /***/ }),
-/* 338 */
+/* 341 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 26.1.12 Reflect.preventExtensions(target)
@@ -16472,7 +16584,7 @@ $export($export.S, 'Reflect', {
 
 
 /***/ }),
-/* 339 */
+/* 342 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 26.1.13 Reflect.set(target, propertyKey, V [, receiver])
@@ -16481,7 +16593,7 @@ var gOPD = __webpack_require__(20);
 var getPrototypeOf = __webpack_require__(21);
 var has = __webpack_require__(15);
 var $export = __webpack_require__(0);
-var createDesc = __webpack_require__(41);
+var createDesc = __webpack_require__(40);
 var anObject = __webpack_require__(2);
 var isObject = __webpack_require__(5);
 
@@ -16509,7 +16621,7 @@ $export($export.S, 'Reflect', { set: set });
 
 
 /***/ }),
-/* 340 */
+/* 343 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 26.1.14 Reflect.setPrototypeOf(target, proto)
@@ -16530,7 +16642,7 @@ if (setProto) $export($export.S, 'Reflect', {
 
 
 /***/ }),
-/* 341 */
+/* 344 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16545,18 +16657,18 @@ $export($export.P, 'Array', {
   }
 });
 
-__webpack_require__(40)('includes');
+__webpack_require__(39)('includes');
 
 
 /***/ }),
-/* 342 */
+/* 345 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 // https://tc39.github.io/proposal-flatMap/#sec-Array.prototype.flatMap
 var $export = __webpack_require__(0);
-var flattenIntoArray = __webpack_require__(144);
+var flattenIntoArray = __webpack_require__(145);
 var toObject = __webpack_require__(11);
 var toLength = __webpack_require__(9);
 var aFunction = __webpack_require__(13);
@@ -16574,21 +16686,21 @@ $export($export.P, 'Array', {
   }
 });
 
-__webpack_require__(40)('flatMap');
+__webpack_require__(39)('flatMap');
 
 
 /***/ }),
-/* 343 */
+/* 346 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 // https://tc39.github.io/proposal-flatMap/#sec-Array.prototype.flatten
 var $export = __webpack_require__(0);
-var flattenIntoArray = __webpack_require__(144);
+var flattenIntoArray = __webpack_require__(145);
 var toObject = __webpack_require__(11);
 var toLength = __webpack_require__(9);
-var toInteger = __webpack_require__(33);
+var toInteger = __webpack_require__(31);
 var arraySpeciesCreate = __webpack_require__(101);
 
 $export($export.P, 'Array', {
@@ -16602,11 +16714,11 @@ $export($export.P, 'Array', {
   }
 });
 
-__webpack_require__(40)('flatten');
+__webpack_require__(39)('flatten');
 
 
 /***/ }),
-/* 344 */
+/* 347 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16623,14 +16735,14 @@ $export($export.P, 'String', {
 
 
 /***/ }),
-/* 345 */
+/* 348 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 // https://github.com/tc39/proposal-string-pad-start-end
 var $export = __webpack_require__(0);
-var $pad = __webpack_require__(145);
+var $pad = __webpack_require__(146);
 
 $export($export.P, 'String', {
   padStart: function padStart(maxLength /* , fillString = ' ' */) {
@@ -16640,14 +16752,14 @@ $export($export.P, 'String', {
 
 
 /***/ }),
-/* 346 */
+/* 349 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 // https://github.com/tc39/proposal-string-pad-start-end
 var $export = __webpack_require__(0);
-var $pad = __webpack_require__(145);
+var $pad = __webpack_require__(146);
 
 $export($export.P, 'String', {
   padEnd: function padEnd(maxLength /* , fillString = ' ' */) {
@@ -16657,7 +16769,7 @@ $export($export.P, 'String', {
 
 
 /***/ }),
-/* 347 */
+/* 350 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16671,7 +16783,7 @@ __webpack_require__(53)('trimLeft', function ($trim) {
 
 
 /***/ }),
-/* 348 */
+/* 351 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16685,14 +16797,14 @@ __webpack_require__(53)('trimRight', function ($trim) {
 
 
 /***/ }),
-/* 349 */
+/* 352 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 // https://tc39.github.io/String.prototype.matchAll/
 var $export = __webpack_require__(0);
-var defined = __webpack_require__(32);
+var defined = __webpack_require__(30);
 var toLength = __webpack_require__(9);
 var isRegExp = __webpack_require__(69);
 var getFlags = __webpack_require__(71);
@@ -16722,26 +16834,26 @@ $export($export.P, 'String', {
 
 
 /***/ }),
-/* 350 */
+/* 353 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(83)('asyncIterator');
 
 
 /***/ }),
-/* 351 */
+/* 354 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(83)('observable');
 
 
 /***/ }),
-/* 352 */
+/* 355 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://github.com/tc39/proposal-object-getownpropertydescriptors
 var $export = __webpack_require__(0);
-var ownKeys = __webpack_require__(143);
+var ownKeys = __webpack_require__(144);
 var toIObject = __webpack_require__(19);
 var gOPD = __webpack_require__(20);
 var createProperty = __webpack_require__(99);
@@ -16764,12 +16876,12 @@ $export($export.S, 'Object', {
 
 
 /***/ }),
-/* 353 */
+/* 356 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://github.com/tc39/proposal-object-values-entries
 var $export = __webpack_require__(0);
-var $values = __webpack_require__(146)(false);
+var $values = __webpack_require__(147)(false);
 
 $export($export.S, 'Object', {
   values: function values(it) {
@@ -16779,12 +16891,12 @@ $export($export.S, 'Object', {
 
 
 /***/ }),
-/* 354 */
+/* 357 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://github.com/tc39/proposal-object-values-entries
 var $export = __webpack_require__(0);
-var $entries = __webpack_require__(146)(true);
+var $entries = __webpack_require__(147)(true);
 
 $export($export.S, 'Object', {
   entries: function entries(it) {
@@ -16794,7 +16906,7 @@ $export($export.S, 'Object', {
 
 
 /***/ }),
-/* 355 */
+/* 358 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16813,7 +16925,7 @@ __webpack_require__(7) && $export($export.P + __webpack_require__(76), 'Object',
 
 
 /***/ }),
-/* 356 */
+/* 359 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16832,14 +16944,14 @@ __webpack_require__(7) && $export($export.P + __webpack_require__(76), 'Object',
 
 
 /***/ }),
-/* 357 */
+/* 360 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 var $export = __webpack_require__(0);
 var toObject = __webpack_require__(11);
-var toPrimitive = __webpack_require__(31);
+var toPrimitive = __webpack_require__(29);
 var getPrototypeOf = __webpack_require__(21);
 var getOwnPropertyDescriptor = __webpack_require__(20).f;
 
@@ -16857,14 +16969,14 @@ __webpack_require__(7) && $export($export.P + __webpack_require__(76), 'Object',
 
 
 /***/ }),
-/* 358 */
+/* 361 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 var $export = __webpack_require__(0);
 var toObject = __webpack_require__(11);
-var toPrimitive = __webpack_require__(31);
+var toPrimitive = __webpack_require__(29);
 var getPrototypeOf = __webpack_require__(21);
 var getOwnPropertyDescriptor = __webpack_require__(20).f;
 
@@ -16882,27 +16994,27 @@ __webpack_require__(7) && $export($export.P + __webpack_require__(76), 'Object',
 
 
 /***/ }),
-/* 359 */
+/* 362 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://github.com/DavidBruant/Map-Set.prototype.toJSON
 var $export = __webpack_require__(0);
 
-$export($export.P + $export.R, 'Map', { toJSON: __webpack_require__(147)('Map') });
+$export($export.P + $export.R, 'Map', { toJSON: __webpack_require__(148)('Map') });
 
 
 /***/ }),
-/* 360 */
+/* 363 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://github.com/DavidBruant/Map-Set.prototype.toJSON
 var $export = __webpack_require__(0);
 
-$export($export.P + $export.R, 'Set', { toJSON: __webpack_require__(147)('Set') });
+$export($export.P + $export.R, 'Set', { toJSON: __webpack_require__(148)('Set') });
 
 
 /***/ }),
-/* 361 */
+/* 364 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://tc39.github.io/proposal-setmap-offrom/#sec-map.of
@@ -16910,7 +17022,7 @@ __webpack_require__(77)('Map');
 
 
 /***/ }),
-/* 362 */
+/* 365 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://tc39.github.io/proposal-setmap-offrom/#sec-set.of
@@ -16918,7 +17030,7 @@ __webpack_require__(77)('Set');
 
 
 /***/ }),
-/* 363 */
+/* 366 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://tc39.github.io/proposal-setmap-offrom/#sec-weakmap.of
@@ -16926,7 +17038,7 @@ __webpack_require__(77)('WeakMap');
 
 
 /***/ }),
-/* 364 */
+/* 367 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://tc39.github.io/proposal-setmap-offrom/#sec-weakset.of
@@ -16934,7 +17046,7 @@ __webpack_require__(77)('WeakSet');
 
 
 /***/ }),
-/* 365 */
+/* 368 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://tc39.github.io/proposal-setmap-offrom/#sec-map.from
@@ -16942,7 +17054,7 @@ __webpack_require__(78)('Map');
 
 
 /***/ }),
-/* 366 */
+/* 369 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://tc39.github.io/proposal-setmap-offrom/#sec-set.from
@@ -16950,7 +17062,7 @@ __webpack_require__(78)('Set');
 
 
 /***/ }),
-/* 367 */
+/* 370 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://tc39.github.io/proposal-setmap-offrom/#sec-weakmap.from
@@ -16958,7 +17070,7 @@ __webpack_require__(78)('WeakMap');
 
 
 /***/ }),
-/* 368 */
+/* 371 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://tc39.github.io/proposal-setmap-offrom/#sec-weakset.from
@@ -16966,7 +17078,7 @@ __webpack_require__(78)('WeakSet');
 
 
 /***/ }),
-/* 369 */
+/* 372 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://github.com/tc39/proposal-global
@@ -16976,7 +17088,7 @@ $export($export.G, { global: __webpack_require__(3) });
 
 
 /***/ }),
-/* 370 */
+/* 373 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://github.com/tc39/proposal-global
@@ -16986,12 +17098,12 @@ $export($export.S, 'System', { global: __webpack_require__(3) });
 
 
 /***/ }),
-/* 371 */
+/* 374 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://github.com/ljharb/proposal-is-error
 var $export = __webpack_require__(0);
-var cof = __webpack_require__(27);
+var cof = __webpack_require__(25);
 
 $export($export.S, 'Error', {
   isError: function isError(it) {
@@ -17001,7 +17113,7 @@ $export($export.S, 'Error', {
 
 
 /***/ }),
-/* 372 */
+/* 375 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://rwaldron.github.io/proposal-math-extensions/
@@ -17015,7 +17127,7 @@ $export($export.S, 'Math', {
 
 
 /***/ }),
-/* 373 */
+/* 376 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://rwaldron.github.io/proposal-math-extensions/
@@ -17025,7 +17137,7 @@ $export($export.S, 'Math', { DEG_PER_RAD: Math.PI / 180 });
 
 
 /***/ }),
-/* 374 */
+/* 377 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://rwaldron.github.io/proposal-math-extensions/
@@ -17040,13 +17152,13 @@ $export($export.S, 'Math', {
 
 
 /***/ }),
-/* 375 */
+/* 378 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://rwaldron.github.io/proposal-math-extensions/
 var $export = __webpack_require__(0);
-var scale = __webpack_require__(149);
-var fround = __webpack_require__(129);
+var scale = __webpack_require__(150);
+var fround = __webpack_require__(130);
 
 $export($export.S, 'Math', {
   fscale: function fscale(x, inLow, inHigh, outLow, outHigh) {
@@ -17056,7 +17168,7 @@ $export($export.S, 'Math', {
 
 
 /***/ }),
-/* 376 */
+/* 379 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://gist.github.com/BrendanEich/4294d5c212a6d2254703
@@ -17073,7 +17185,7 @@ $export($export.S, 'Math', {
 
 
 /***/ }),
-/* 377 */
+/* 380 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://gist.github.com/BrendanEich/4294d5c212a6d2254703
@@ -17090,7 +17202,7 @@ $export($export.S, 'Math', {
 
 
 /***/ }),
-/* 378 */
+/* 381 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://gist.github.com/BrendanEich/4294d5c212a6d2254703
@@ -17112,7 +17224,7 @@ $export($export.S, 'Math', {
 
 
 /***/ }),
-/* 379 */
+/* 382 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://rwaldron.github.io/proposal-math-extensions/
@@ -17122,7 +17234,7 @@ $export($export.S, 'Math', { RAD_PER_DEG: 180 / Math.PI });
 
 
 /***/ }),
-/* 380 */
+/* 383 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://rwaldron.github.io/proposal-math-extensions/
@@ -17137,17 +17249,17 @@ $export($export.S, 'Math', {
 
 
 /***/ }),
-/* 381 */
+/* 384 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://rwaldron.github.io/proposal-math-extensions/
 var $export = __webpack_require__(0);
 
-$export($export.S, 'Math', { scale: __webpack_require__(149) });
+$export($export.S, 'Math', { scale: __webpack_require__(150) });
 
 
 /***/ }),
-/* 382 */
+/* 385 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://gist.github.com/BrendanEich/4294d5c212a6d2254703
@@ -17169,7 +17281,7 @@ $export($export.S, 'Math', {
 
 
 /***/ }),
-/* 383 */
+/* 386 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // http://jfbastien.github.io/papers/Math.signbit.html
@@ -17182,17 +17294,17 @@ $export($export.S, 'Math', { signbit: function signbit(x) {
 
 
 /***/ }),
-/* 384 */
+/* 387 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 // https://github.com/tc39/proposal-promise-finally
 
 var $export = __webpack_require__(0);
-var core = __webpack_require__(30);
+var core = __webpack_require__(28);
 var global = __webpack_require__(3);
 var speciesConstructor = __webpack_require__(73);
-var promiseResolve = __webpack_require__(136);
+var promiseResolve = __webpack_require__(137);
 
 $export($export.P + $export.R, 'Promise', { 'finally': function (onFinally) {
   var C = speciesConstructor(this, core.Promise || global.Promise);
@@ -17209,7 +17321,7 @@ $export($export.P + $export.R, 'Promise', { 'finally': function (onFinally) {
 
 
 /***/ }),
-/* 385 */
+/* 388 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17217,7 +17329,7 @@ $export($export.P + $export.R, 'Promise', { 'finally': function (onFinally) {
 // https://github.com/tc39/proposal-promise-try
 var $export = __webpack_require__(0);
 var newPromiseCapability = __webpack_require__(106);
-var perform = __webpack_require__(135);
+var perform = __webpack_require__(136);
 
 $export($export.S, 'Promise', { 'try': function (callbackfn) {
   var promiseCapability = newPromiseCapability.f(this);
@@ -17228,7 +17340,7 @@ $export($export.S, 'Promise', { 'try': function (callbackfn) {
 
 
 /***/ }),
-/* 386 */
+/* 389 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var metadata = __webpack_require__(37);
@@ -17242,7 +17354,7 @@ metadata.exp({ defineMetadata: function defineMetadata(metadataKey, metadataValu
 
 
 /***/ }),
-/* 387 */
+/* 390 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var metadata = __webpack_require__(37);
@@ -17263,7 +17375,7 @@ metadata.exp({ deleteMetadata: function deleteMetadata(metadataKey, target /* , 
 
 
 /***/ }),
-/* 388 */
+/* 391 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var metadata = __webpack_require__(37);
@@ -17286,11 +17398,11 @@ metadata.exp({ getMetadata: function getMetadata(metadataKey, target /* , target
 
 
 /***/ }),
-/* 389 */
+/* 392 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Set = __webpack_require__(139);
-var from = __webpack_require__(148);
+var Set = __webpack_require__(140);
+var from = __webpack_require__(149);
 var metadata = __webpack_require__(37);
 var anObject = __webpack_require__(2);
 var getPrototypeOf = __webpack_require__(21);
@@ -17311,7 +17423,7 @@ metadata.exp({ getMetadataKeys: function getMetadataKeys(target /* , targetKey *
 
 
 /***/ }),
-/* 390 */
+/* 393 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var metadata = __webpack_require__(37);
@@ -17326,7 +17438,7 @@ metadata.exp({ getOwnMetadata: function getOwnMetadata(metadataKey, target /* , 
 
 
 /***/ }),
-/* 391 */
+/* 394 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var metadata = __webpack_require__(37);
@@ -17340,7 +17452,7 @@ metadata.exp({ getOwnMetadataKeys: function getOwnMetadataKeys(target /* , targe
 
 
 /***/ }),
-/* 392 */
+/* 395 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var metadata = __webpack_require__(37);
@@ -17362,7 +17474,7 @@ metadata.exp({ hasMetadata: function hasMetadata(metadataKey, target /* , target
 
 
 /***/ }),
-/* 393 */
+/* 396 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var metadata = __webpack_require__(37);
@@ -17377,7 +17489,7 @@ metadata.exp({ hasOwnMetadata: function hasOwnMetadata(metadataKey, target /* , 
 
 
 /***/ }),
-/* 394 */
+/* 397 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $metadata = __webpack_require__(37);
@@ -17398,14 +17510,14 @@ $metadata.exp({ metadata: function metadata(metadataKey, metadataValue) {
 
 
 /***/ }),
-/* 395 */
+/* 398 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://github.com/rwaldron/tc39-notes/blob/master/es6/2014-09/sept-25.md#510-globalasap-for-enqueuing-a-microtask
 var $export = __webpack_require__(0);
 var microtask = __webpack_require__(105)();
 var process = __webpack_require__(3).process;
-var isNode = __webpack_require__(27)(process) == 'process';
+var isNode = __webpack_require__(25)(process) == 'process';
 
 $export($export.G, {
   asap: function asap(fn) {
@@ -17416,7 +17528,7 @@ $export($export.G, {
 
 
 /***/ }),
-/* 396 */
+/* 399 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17424,15 +17536,15 @@ $export($export.G, {
 // https://github.com/zenparsing/es-observable
 var $export = __webpack_require__(0);
 var global = __webpack_require__(3);
-var core = __webpack_require__(30);
+var core = __webpack_require__(28);
 var microtask = __webpack_require__(105)();
 var OBSERVABLE = __webpack_require__(6)('observable');
 var aFunction = __webpack_require__(13);
 var anObject = __webpack_require__(2);
-var anInstance = __webpack_require__(49);
-var redefineAll = __webpack_require__(51);
+var anInstance = __webpack_require__(48);
+var redefineAll = __webpack_require__(50);
 var hide = __webpack_require__(16);
-var forOf = __webpack_require__(50);
+var forOf = __webpack_require__(49);
 var RETURN = forOf.RETURN;
 
 var getMethod = function (fn) {
@@ -17618,11 +17730,11 @@ hide($Observable.prototype, OBSERVABLE, function () { return this; });
 
 $export($export.G, { Observable: $Observable });
 
-__webpack_require__(48)('Observable');
+__webpack_require__(47)('Observable');
 
 
 /***/ }),
-/* 397 */
+/* 400 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // ie9- setTimeout & setInterval additional parameters fix
@@ -17648,7 +17760,7 @@ $export($export.G + $export.B + $export.F * MSIE, {
 
 
 /***/ }),
-/* 398 */
+/* 401 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $export = __webpack_require__(0);
@@ -17660,11 +17772,11 @@ $export($export.G + $export.B, {
 
 
 /***/ }),
-/* 399 */
+/* 402 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $iterators = __webpack_require__(103);
-var getKeys = __webpack_require__(44);
+var getKeys = __webpack_require__(43);
 var redefine = __webpack_require__(17);
 var global = __webpack_require__(3);
 var hide = __webpack_require__(16);
@@ -17724,7 +17836,7 @@ for (var collections = getKeys(DOMIterables), i = 0; i < collections.length; i++
 
 
 /***/ }),
-/* 400 */
+/* 403 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
@@ -18464,29 +18576,29 @@ for (var collections = getKeys(DOMIterables), i = 0; i < collections.length; i++
   typeof self === "object" ? self : this
 );
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(115)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(116)))
 
 /***/ }),
-/* 401 */
+/* 404 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(402);
-module.exports = __webpack_require__(30).RegExp.escape;
+__webpack_require__(405);
+module.exports = __webpack_require__(28).RegExp.escape;
 
 
 /***/ }),
-/* 402 */
+/* 405 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // https://github.com/benjamingr/RexExp.escape
 var $export = __webpack_require__(0);
-var $re = __webpack_require__(403)(/[\\^$*+?.()|[\]{}]/g, '\\$&');
+var $re = __webpack_require__(406)(/[\\^$*+?.()|[\]{}]/g, '\\$&');
 
 $export($export.S, 'RegExp', { escape: function escape(it) { return $re(it); } });
 
 
 /***/ }),
-/* 403 */
+/* 406 */
 /***/ (function(module, exports) {
 
 module.exports = function (regExp, replace) {
@@ -18500,7 +18612,7 @@ module.exports = function (regExp, replace) {
 
 
 /***/ }),
-/* 404 */
+/* 407 */
 /***/ (function(module, exports) {
 
 // Copyright Joyent, Inc. and other Node contributors.
@@ -18808,158 +18920,6 @@ function isUndefined(arg) {
 
 
 /***/ }),
-/* 405 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _experienceScope = __webpack_require__(406);
-
-var _experienceScope2 = _interopRequireDefault(_experienceScope);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var _class = function _class(app, opts) {
-    _classCallCheck(this, _class);
-
-    new _experienceScope2.default(app, opts);
-};
-
-exports.default = _class;
-
-/***/ }),
-/* 406 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Service = exports.Service = function () {
-    function Service(iVXjs) {
-        _classCallCheck(this, Service);
-    }
-
-    _createClass(Service, [{
-        key: 'setScopeExperience',
-        value: function setScopeExperience(experience) {
-            var data = experience.data;
-
-
-            return {
-                data: data
-            };
-        }
-    }]);
-
-    return Service;
-}();
-
-Service.$inject = ['iVXjs'];
-
-var _class = function _class(app, opts) {
-    _classCallCheck(this, _class);
-
-    var factoryFunctionCreator = opts.factoryFunctionCreator;
-
-
-    app.service('ivxExperienceScope', factoryFunctionCreator(Service));
-};
-
-exports.default = _class;
-
-/***/ }),
-/* 407 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _createFactoryFunction = __webpack_require__(1);
-
-var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var iVXjsSetup = function () {
-    function iVXjsSetup() {
-        _classCallCheck(this, iVXjsSetup);
-    }
-
-    _createClass(iVXjsSetup, [{
-        key: '$get',
-        value: function $get() {}
-    }, {
-        key: 'setDefaultUrl',
-        value: function setDefaultUrl($urlRouterProvider, defaultState, iVXjs) {
-            var defaultStateID = iVXjs.rules(defaultState);
-
-            var _iVXjs$config$states$ = iVXjs.config.states.find(function (state) {
-                return state.id === defaultStateID;
-            }),
-                url = _iVXjs$config$states$.url;
-
-            $urlRouterProvider.otherwise(url);
-        }
-    }, {
-        key: 'createStates',
-        value: function createStates($stateProvider, states) {
-            states.forEach(function (state, index) {
-                var type = state.type,
-                    id = state.id,
-                    url = state.url,
-                    _state$onEnter = state.onEnter,
-                    onEnter = _state$onEnter === undefined ? [] : _state$onEnter,
-                    _state$onExit = state.onExit,
-                    onExit = _state$onExit === undefined ? [] : _state$onExit;
-
-
-                $stateProvider.state(id, {
-                    url: url,
-                    data: state,
-                    template: '<ivxjs-' + type + '-state></ivxjs-' + type + '-state>',
-                    onEnter: ['$rootScope', 'ivxjs.actions', 'ivxjs.bus', function ($rootScope, iVXjsActions, iVXjsBus) {
-                        iVXjsActions.resolveActions(onEnter, function () {});
-                    }],
-                    onExit: ['$rootScope', 'ivxjs.actions', 'ivxjs.bus', function ($rootScope, iVXjsActions, iVXjsBus) {
-                        iVXjsBus.emit('iVX:video:dispose');
-                        iVXjsActions.resolveActions(onExit, function () {});
-                    }]
-                });
-            });
-        }
-    }]);
-
-    return iVXjsSetup;
-}();
-
-iVXjsSetup.$inject = [];
-
-exports.default = (0, _createFactoryFunction2.default)(iVXjsSetup);
-
-/***/ }),
 /* 408 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -18970,17 +18930,171 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _registeredConstants = __webpack_require__(115);
+
+var _registeredConstants2 = _interopRequireDefault(_registeredConstants);
+
+var _createFactoryFunction = __webpack_require__(1);
+
+var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = angular.module('ivx-js.constants', []).constant('ivxjs.constants', new _registeredConstants2.default()).constant('factoryFunctionCreator', _createFactoryFunction2.default).name;
+
+/***/ }),
+/* 409 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _state = __webpack_require__(410);
+
+var _state2 = _interopRequireDefault(_state);
+
+var _state3 = __webpack_require__(413);
+
+var _state4 = _interopRequireDefault(_state3);
+
+var _state5 = __webpack_require__(415);
+
+var _state6 = _interopRequireDefault(_state5);
+
+var _state7 = __webpack_require__(416);
+
+var _state8 = _interopRequireDefault(_state7);
+
+var _input = __webpack_require__(417);
+
+var _input2 = _interopRequireDefault(_input);
+
+var _input3 = __webpack_require__(419);
+
+var _input4 = _interopRequireDefault(_input3);
+
+var _ui = __webpack_require__(421);
+
+var _ui2 = _interopRequireDefault(_ui);
+
+var _ui3 = __webpack_require__(423);
+
+var _ui4 = _interopRequireDefault(_ui3);
+
+var _input5 = __webpack_require__(425);
+
+var _input6 = _interopRequireDefault(_input5);
+
+var _input7 = __webpack_require__(427);
+
+var _input8 = _interopRequireDefault(_input7);
+
+var _input9 = __webpack_require__(429);
+
+var _input10 = _interopRequireDefault(_input9);
+
+var _input11 = __webpack_require__(431);
+
+var _input12 = _interopRequireDefault(_input11);
+
+var _input13 = __webpack_require__(433);
+
+var _input14 = _interopRequireDefault(_input13);
+
+var _input15 = __webpack_require__(435);
+
+var _input16 = _interopRequireDefault(_input15);
+
+var _input17 = __webpack_require__(436);
+
+var _input18 = _interopRequireDefault(_input17);
+
+var _input19 = __webpack_require__(438);
+
+var _input20 = _interopRequireDefault(_input19);
+
+var _input21 = __webpack_require__(439);
+
+var _input22 = _interopRequireDefault(_input21);
+
+var _input23 = __webpack_require__(441);
+
+var _input24 = _interopRequireDefault(_input23);
+
+var _video = __webpack_require__(443);
+
+var _video2 = _interopRequireDefault(_video);
+
+var _video3 = __webpack_require__(445);
+
+var _video4 = _interopRequireDefault(_video3);
+
+var _video5 = __webpack_require__(447);
+
+var _video6 = _interopRequireDefault(_video5);
+
+var _videoControls = __webpack_require__(449);
+
+var _videoControls2 = _interopRequireDefault(_videoControls);
+
+var _template = __webpack_require__(451);
+
+var _template2 = _interopRequireDefault(_template);
+
+var _template3 = __webpack_require__(452);
+
+var _template4 = _interopRequireDefault(_template3);
+
+var _template5 = __webpack_require__(453);
+
+var _template6 = _interopRequireDefault(_template5);
+
+var _template7 = __webpack_require__(454);
+
+var _template8 = _interopRequireDefault(_template7);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//Template Directives 
+
+
+// Video Players
+
+
+// Inputs
+// Directives
+
+// States
+exports.default = angular.module('ivx-js.directives', [_state2.default, _input6.default, _input20.default, _input12.default, _input14.default, _input8.default, _input2.default, _input22.default, _input16.default, _input18.default, _input4.default, _input24.default, _input10.default, _state6.default, _state2.default, _state8.default, _state4.default, _template4.default, _template6.default, _template8.default, _template2.default, _ui2.default, _ui4.default, _videoControls2.default, _video4.default, _video6.default, _video2.default]).name;
+
+// Video Controls
+
+/***/ }),
+/* 410 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _createFactoryFunction = __webpack_require__(1);
 
 var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
 
-var _stateInput = __webpack_require__(409);
+var _stateInput = __webpack_require__(411);
 
 var _stateInput2 = _interopRequireDefault(_stateInput);
 
-var _audioEvents = __webpack_require__(38);
+var _audioEvents = __webpack_require__(51);
 
 var _audioEvents2 = _interopRequireDefault(_audioEvents);
 
@@ -19015,7 +19129,7 @@ var InputState = function () {
                 audio = _data.audio;
 
             var audioEventNames = new _audioEvents2.default();
-            var formSection = '<ivxjs-form-input inputs=\'vm.inputs\' form-id=\'vm.id\' on-submit=\'vm.onSubmit\' form-settings="vm.formSettings"></ivxjs-form-input>';
+            var formSection = '<ivxjs-form-input class="ivx-state-input-form-container" inputs=\'vm.inputs\' form-id=\'vm.id\' on-submit=\'vm.onSubmit\' form-settings="vm.formSettings"></ivxjs-form-input>';
 
             data = pullInTemplate.convertHeaderFooter(header, footer, data, controller);
 
@@ -19046,6 +19160,8 @@ var InputState = function () {
                     });
                 }
 
+                controller.embedded = embedded;
+
                 iVXjs.log.debug('onInputReady Started', {}, { state: data, source: 'onInputReady', status: 'started', actions: onInputReady, timestamp: Date.now() });
 
                 iVXjsActions.resolveActions(onInputReady, function () {
@@ -19062,7 +19178,7 @@ var InputState = function () {
     _createClass(InputState, [{
         key: 'templateHTML',
         get: function get() {
-            return '<div class="input-state-container"></div>';
+            return '<div ng-class="{\'ivx-embedded-state\': vm.embedded}" class="ivx-state-container ivx-state-input-container input-state-container"></div>';
         }
     }]);
 
@@ -19071,10 +19187,10 @@ var InputState = function () {
 
 InputState.$inject = ['$state', '$compile', '$sce', 'iVXjs', 'ivxjs.actions', 'ivxjs.modules.ui', 'pullInTemplate', 'ivxjs.bus', "ivxExperienceScope"];
 
-exports.default = (0, _createFactoryFunction2.default)(InputState);
+exports.default = angular.module('ivx-js.directives.state.input', []).directive('ivxjsInputState', (0, _createFactoryFunction2.default)(InputState)).name;
 
 /***/ }),
-/* 409 */
+/* 411 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19088,11 +19204,11 @@ var _createFactoryFunction = __webpack_require__(1);
 
 var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
 
-var _stateData = __webpack_require__(410);
+var _stateData = __webpack_require__(412);
 
 var _stateData2 = _interopRequireDefault(_stateData);
 
-var _audioEvents = __webpack_require__(38);
+var _audioEvents = __webpack_require__(51);
 
 var _audioEvents2 = _interopRequireDefault(_audioEvents);
 
@@ -19138,7 +19254,7 @@ InputStateController.$inject = ['$state', '$scope', '$rootScope', '$timeout', 'i
 exports.default = (0, _createFactoryFunction2.default)(InputStateController);
 
 /***/ }),
-/* 410 */
+/* 412 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19160,7 +19276,7 @@ var _class = function _class($state) {
 exports.default = _class;
 
 /***/ }),
-/* 411 */
+/* 413 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19176,7 +19292,7 @@ var _createFactoryFunction = __webpack_require__(1);
 
 var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
 
-var _stateVideo = __webpack_require__(412);
+var _stateVideo = __webpack_require__(414);
 
 var _stateVideo2 = _interopRequireDefault(_stateVideo);
 
@@ -19261,6 +19377,8 @@ var VideoState = function () {
 
             iElm.html(videoFramework.html);
 
+            controller.embedded = embedded;
+
             $compile(iElm.contents())($scope, function (compiled) {
                 iElm.html(compiled);
 
@@ -19283,7 +19401,7 @@ var VideoState = function () {
     _createClass(VideoState, [{
         key: 'templateHTML',
         get: function get() {
-            return '<div class="video-state-container"></div>';
+            return '<div ng-class="{\'ivx-embedded-state\': vm.embedded}" class="ivx-state-container ivx-state-video-container video-state-container"></div>';
         }
     }]);
 
@@ -19292,10 +19410,10 @@ var VideoState = function () {
 
 VideoState.$inject = ['$compile', '$state', '$sce', '$timeout', 'iVXjs', 'ivxjs.bus', 'ivxjs.modules.ui', 'createInlineVideo', 'pullInTemplate', 'ivxExperienceScope'];
 
-exports.default = (0, _createFactoryFunction2.default)(VideoState);
+exports.default = angular.module('ivx-js.directives.state.video', []).directive('ivxjsVideoState', (0, _createFactoryFunction2.default)(VideoState)).name;
 
 /***/ }),
-/* 412 */
+/* 414 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19447,286 +19565,19 @@ VideoStateController.$inject = ['$rootScope', '$state', 'ivxjs.actions', 'ivxjs.
 exports.default = (0, _createFactoryFunction2.default)(VideoStateController);
 
 /***/ }),
-/* 413 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _createFactoryFunction = __webpack_require__(1);
-
-var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
-
-var _stateHtml = __webpack_require__(414);
-
-var _stateHtml2 = _interopRequireDefault(_stateHtml);
-
-var _audioEvents = __webpack_require__(38);
-
-var _audioEvents2 = _interopRequireDefault(_audioEvents);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var HtmlState = function () {
-    function HtmlState($state, $http, $compile, $sce, $timeout, iVXjs, iVXjsActions, iVXjsAudio, iVXjsBus, ivxExperienceScope) {
-        _classCallCheck(this, HtmlState);
-
-        this.template = this.templateHTML;
-        this.restrict = 'E';
-        this.replace = true;
-        this.scope = {};
-        this.controller = _stateHtml2.default;
-        this.controllerAs = 'vm';
-        this.link = function ($scope, iElm, iAttrs, controller) {
-            var _$state$current$data = $state.current.data,
-                id = _$state$current$data.id,
-                html = _$state$current$data.html,
-                templateUrl = _$state$current$data.templateUrl,
-                _$state$current$data$ = _$state$current$data.onCompile,
-                onCompile = _$state$current$data$ === undefined ? [] : _$state$current$data$,
-                audio = _$state$current$data.audio;
-
-            var audioEventNames = new _audioEvents2.default();
-
-            if (templateUrl) {
-                var safeTemplateUrl = $sce.getTrustedResourceUrl(templateUrl);
-
-                controller.safeTemplateUrl = safeTemplateUrl;
-
-                iElm.html('<div class="html-state-container" ng-include="vm.safeTemplateUrl"></div>');
-            } else {
-                iElm.html(html);
-            }
-
-            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
-
-            $timeout(function () {
-                var hasTransition = onCompile.find(function (event, index) {
-                    return event.eventName === "animateElement" && event.args.element === ".html-state-container";
-                });
-
-                if (!hasTransition) {
-                    onCompile.push({
-                        eventName: "animateElement",
-                        args: {
-                            element: ".html-state-container",
-                            animationClasses: "show"
-                        }
-                    });
-                }
-
-                iVXjs.log.debug('onCompile Started', {}, { state: $state.current.data, source: 'onCompile', status: 'started', actions: onCompile, timestamp: Date.now() });
-
-                iVXjsActions.resolveActions(onCompile, function () {
-                    iVXjs.log.debug('onCompile Completed', {}, { state: $state.current.data, source: 'onCompile', status: 'completed', actions: onCompile, timestamp: Date.now() });
-                    if (audio && audio.src) {
-                        iVXjsBus.emit(audioEventNames.PLAY);
-                    }
-                });
-            }, 1);
-            $compile(iElm.contents())($scope);
-        };
-    }
-
-    _createClass(HtmlState, [{
-        key: 'templateHTML',
-        get: function get() {
-            return '<div class="html-state-container" id="{{vm.id}}"></div>';
-        }
-    }]);
-
-    return HtmlState;
-}();
-
-HtmlState.$inject = ['$state', '$http', '$compile', '$sce', '$timeout', 'iVXjs', 'ivxjs.actions', 'ivxjs.modules.audio', 'ivxjs.bus', "ivxExperienceScope"];
-
-exports.default = (0, _createFactoryFunction2.default)(HtmlState);
-
-/***/ }),
-/* 414 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _createFactoryFunction = __webpack_require__(1);
-
-var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var HtmlStateController = function () {
-    function HtmlStateController($state, $scope, $rootScope, iVXjsActions, iVXjsBus, iVXjs) {
-        _classCallCheck(this, HtmlStateController);
-
-        var _$state$current$data = $state.current.data,
-            id = _$state$current$data.id,
-            timeoutInMs = _$state$current$data.timeoutInMs,
-            _$state$current$data$ = _$state$current$data.onTimeout,
-            onTimeout = _$state$current$data$ === undefined ? [] : _$state$current$data$,
-            _$state$current$data$2 = _$state$current$data.next,
-            next = _$state$current$data$2 === undefined ? [] : _$state$current$data$2;
-
-
-        this.id = id;
-        this.iVXjsActions = iVXjsActions;
-        this.iVXjsBus = iVXjsBus;
-
-        if (typeof timeoutInMs != "undefined" && timeoutInMs > 0) {
-
-            setTimeout(function () {
-                iVXjs.log.debug('onTimeout Actions', {}, { state: $state.current.data, source: 'onTimeout', status: 'completed', actions: onTimeout, timestamp: Date.now() });
-
-                iVXjsActions.resolveThenNavigate(onTimeout, next);
-            }, timeoutInMs);
-        }
-    }
-
-    _createClass(HtmlStateController, [{
-        key: 'performEvents',
-        value: function performEvents(events) {
-            var self = this;
-
-            self.iVXjsActions.resolveActions(events, function () {
-                events.forEach(function (event, index) {
-                    self.iVXjsBus.emit(event.eventName, event.args);
-                });
-            });
-        }
-    }]);
-
-    return HtmlStateController;
-}();
-
-HtmlStateController.$inject = ['$state', '$scope', '$rootScope', 'ivxjs.actions', 'ivxjs.bus', 'iVXjs'];
-
-exports.default = (0, _createFactoryFunction2.default)(HtmlStateController);
-
-/***/ }),
 /* 415 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _createFactoryFunction = __webpack_require__(1);
-
-var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
-
-var _audioEvents = __webpack_require__(38);
-
-var _audioEvents2 = _interopRequireDefault(_audioEvents);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var NavigationState = function () {
-	function NavigationState($state, $rootScope, $compile, $timeout, iVXjs, iVXjsModules, iVXjsBus, iVXjsAudio, iVXjsActions, pullInTemplate, ivxExperienceScope) {
-		_classCallCheck(this, NavigationState);
-
-		this.template = this.templateHTML;
-		this.restrict = 'E';
-		this.replace = true;
-		this.scope = {};
-		this.controller = ['$scope', function ($scope) {}];
-		this.controllerAs = 'vm';
-		this.link = function ($scope, iElm, iAttrs, controller) {
-			var data = $state.current.data;
-			var _data = data,
-			    _data$links = _data.links,
-			    links = _data$links === undefined ? [] : _data$links,
-			    _data$header = _data.header,
-			    header = _data$header === undefined ? {} : _data$header,
-			    _data$footer = _data.footer,
-			    footer = _data$footer === undefined ? {} : _data$footer,
-			    audio = _data.audio,
-			    _data$onLinksReady = _data.onLinksReady,
-			    onLinksReady = _data$onLinksReady === undefined ? [] : _data$onLinksReady;
-
-			var linkSection = links.reduce(function (html, link, index) {
-				var linkString = angular.toJson(link);
-				return html + '\n                    <ivxjs-anchor anchor-info=\'' + linkString + '\'></ivxjs-anchor>';
-			}, '');
-			var audioEventNames = new _audioEvents2.default();
-
-			data = pullInTemplate.convertHeaderFooter(header, footer, data, controller);
-
-			var thisNavigationState = new iVXjsModules.states.navigation(data, linkSection);
-
-			$scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
-
-			$timeout(function () {}, 1000);
-
-			iElm.html(thisNavigationState.html);
-			$compile(iElm.contents())($scope, function (compiled) {
-				iElm.html(compiled);
-
-				var transitionAnimation = onLinksReady.find(function (event, index) {
-					return event.eventName === "animateElement" && event.args.element === ".navigation-state-container";
-				});
-
-				if (!transitionAnimation) {
-					onLinksReady.push({
-						eventName: "animateElement",
-						args: {
-							element: ".navigation-state-container",
-							animationClasses: "show"
-						}
-					});
-				}
-
-				iVXjs.log.debug('onLinksReady Started', {}, { state: data, source: 'onLinksReady', status: 'started', actions: onLinksReady, timestamp: Date.now() });
-
-				iVXjsActions.resolveActions(onLinksReady, function () {
-					if (audio && audio.src) {
-						iVXjsBus.emit(audioEventNames.PLAY);
-					}
-
-					iVXjs.log.debug('onLinksReady Completed', {}, { state: data, source: 'onLinksReady', status: 'completed', actions: onLinksReady, timestamp: Date.now() });
-				});
-			});
-		};
-	}
-
-	_createClass(NavigationState, [{
-		key: 'templateHTML',
-		get: function get() {
-			return '<div  class="navigation-state-container"></div>';
-		}
-	}]);
-
-	return NavigationState;
-}();
-
-NavigationState.$inject = ['$state', '$rootScope', '$compile', '$timeout', 'iVXjs', 'ivxjs.modules.ui', 'ivxjs.bus', 'ivxjs.modules.audio', 'ivxjs.actions', 'pullInTemplate', "ivxExperienceScope"];
-
-exports.default = (0, _createFactoryFunction2.default)(NavigationState);
+throw new Error("Module build failed: SyntaxError: C:/Projects/GitHub/ivx-js/src/angular/directives/state.html.js: Unexpected token (27:0)\n\n\u001b[0m \u001b[90m 25 | \u001b[39m            }\n \u001b[90m 26 | \u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 27 | \u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<\u001b[39m \u001b[33mHEAD\u001b[39m\n \u001b[90m    | \u001b[39m\u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 28 | \u001b[39m            $scope\u001b[33m.\u001b[39m$on(\u001b[32m'$destroy'\u001b[39m\u001b[33m,\u001b[39m () \u001b[33m=>\u001b[39m {\n \u001b[90m 29 | \u001b[39m                \u001b[36mif\u001b[39m (controller\u001b[33m.\u001b[39mtimeOutId) {\n \u001b[90m 30 | \u001b[39m                    $timeout\u001b[33m.\u001b[39mcancel(controller\u001b[33m.\u001b[39mtimeOutId)\u001b[33m;\u001b[39m\u001b[0m\n");
 
 /***/ }),
 /* 416 */
+/***/ (function(module, exports) {
+
+throw new Error("Module build failed: SyntaxError: C:/Projects/GitHub/ivx-js/src/angular/directives/state.navigation.js: Unexpected token (36:2)\n\n\u001b[0m \u001b[90m 34 | \u001b[39m            }\u001b[33m,\u001b[39m \u001b[35m1000\u001b[39m)\n \u001b[90m 35 | \u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 36 | \u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<\u001b[39m \u001b[33mHEAD\u001b[39m\n \u001b[90m    | \u001b[39m  \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 37 | \u001b[39m            controller\u001b[33m.\u001b[39membedded \u001b[33m=\u001b[39m embedded\u001b[33m;\u001b[39m\n \u001b[90m 38 | \u001b[39m\n \u001b[90m 39 | \u001b[39m\u001b[33m===\u001b[39m\u001b[33m===\u001b[39m\u001b[33m=\u001b[39m\u001b[0m\n");
+
+/***/ }),
+/* 417 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19742,7 +19593,7 @@ var _createFactoryFunction = __webpack_require__(1);
 
 var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
 
-var _inputForm = __webpack_require__(417);
+var _inputForm = __webpack_require__(418);
 
 var _inputForm2 = _interopRequireDefault(_inputForm);
 
@@ -19751,7 +19602,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var FormInput = function () {
-    function FormInput($compile, $filter, iVXjsUIModule, pullInTemplate) {
+    function FormInput($compile, $filter, iVXjs, iVXjsUIModule, pullInTemplate, ivxExperienceScope) {
         _classCallCheck(this, FormInput);
 
         this.template = this.templateHTML;
@@ -19779,23 +19630,23 @@ var FormInput = function () {
                 formSettings = _$scope$formSettings === undefined ? {} : _$scope$formSettings,
                 formId = $scope.formId;
 
-            var formInputs = inputs.map(function (input) {
+            var formInputs = inputs.map(function (input, index) {
                 var type = input.type,
                     attributes = input.attributes,
                     _input$settings = input.settings,
                     settings = _input$settings === undefined ? {} : _input$settings,
                     id = input.id;
 
-                var inputString = JSON.stringify(input);
 
-                inputString = inputString.replace(/\'/g, '&#39;');
                 hideSubmit = shouldHideSubmit(inputs, type, attributes);
 
                 return {
-                    html: '<ivxjs-' + type + '-input class="ivxjs-grid-1-1" id="' + id + '" input-data=\'' + inputString + '\'></ivxjs-' + type + '-input>\n',
+                    html: '<ivxjs-' + type + '-input class="ivxjs-grid-1-1" id="' + id + '" input-data=\'inputs[' + index + ']\'></ivxjs-' + type + '-input>\n',
                     settings: settings
                 };
             });
+
+            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
 
             formSettings = pullInTemplate.convertLabel('', formSettings, $scope);
             formSettings.submit = pullInTemplate.convertLabel('Submit', formSettings.submit, $scope);
@@ -19821,12 +19672,12 @@ var FormInput = function () {
     return FormInput;
 }();
 
-FormInput.$inject = ['$compile', '$filter', 'ivxjs.modules.ui', 'pullInTemplate'];
+FormInput.$inject = ['$compile', '$filter', 'iVXjs', 'ivxjs.modules.ui', 'pullInTemplate', 'ivxExperienceScope'];
 
-exports.default = (0, _createFactoryFunction2.default)(FormInput);
+exports.default = angular.module('ivx-js.directives.input.form', []).directive('ivxjsFormInput', (0, _createFactoryFunction2.default)(FormInput)).name;
 
 /***/ }),
-/* 417 */
+/* 418 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19863,7 +19714,7 @@ FormInputController.$inject = ['$scope', '$filter'];
 exports.default = (0, _createFactoryFunction2.default)(FormInputController);
 
 /***/ }),
-/* 418 */
+/* 419 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19879,18 +19730,18 @@ var _createFactoryFunction = __webpack_require__(1);
 
 var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
 
-var _inputText = __webpack_require__(419);
+var _inputText = __webpack_require__(420);
 
 var _inputText2 = _interopRequireDefault(_inputText);
 
-var _messagesError = __webpack_require__(23);
+var _messagesError = __webpack_require__(35);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var TextInput = function () {
-    function TextInput($compile, $filter, iVXjs, iVXjsUIModule, pullInTemplate) {
+    function TextInput($compile, $filter, iVXjs, iVXjsUIModule, pullInTemplate, ivxExperienceScope) {
         _classCallCheck(this, TextInput);
 
         this.template = this.templateHTML;
@@ -19920,6 +19771,9 @@ var TextInput = function () {
                 settings = _input$settings === undefined ? {} : _input$settings;
 
             var errorMessages = new _messagesError.ErrorMessages(input, errors, attributes);
+
+            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
+
             var tagHTML = 'ng-blur="vm.onChange(inputValue)" ng-model="inputValue"';
 
             input.label = labelHTML ? labelHTML : label;
@@ -19949,12 +19803,12 @@ var TextInput = function () {
     return TextInput;
 }();
 
-TextInput.$inject = ['$compile', '$filter', 'iVXjs', 'ivxjs.modules.ui', 'pullInTemplate'];
+TextInput.$inject = ['$compile', '$filter', 'iVXjs', 'ivxjs.modules.ui', 'pullInTemplate', 'ivxExperienceScope'];
 
-exports.default = (0, _createFactoryFunction2.default)(TextInput);
+exports.default = angular.module('ivx-js.directives.input.text', []).directive('ivxjsTextInput', (0, _createFactoryFunction2.default)(TextInput)).name;
 
 /***/ }),
-/* 419 */
+/* 420 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19968,7 +19822,7 @@ var _createFactoryFunction = __webpack_require__(1);
 
 var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
 
-var _inputController = __webpack_require__(22);
+var _inputController = __webpack_require__(34);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -19995,14 +19849,14 @@ TextInputController.$inject = ['$scope', 'iVXjs', 'ivxjs.actions'];
 exports.default = (0, _createFactoryFunction2.default)(TextInputController);
 
 /***/ }),
-/* 420 */
+/* 421 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+    value: true
 });
 exports.Anchor = undefined;
 
@@ -20012,7 +19866,7 @@ var _createFactoryFunction = __webpack_require__(1);
 
 var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
 
-var _uiAnchor = __webpack_require__(421);
+var _uiAnchor = __webpack_require__(422);
 
 var _uiAnchor2 = _interopRequireDefault(_uiAnchor);
 
@@ -20021,132 +19875,61 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Anchor = exports.Anchor = function () {
-	function Anchor($compile, iVXjs, iVXjsUIModule, pullInTemplate, ivxExperienceScope) {
-		_classCallCheck(this, Anchor);
+    function Anchor($compile, iVXjs, iVXjsUIModule, pullInTemplate, ivxExperienceScope) {
+        _classCallCheck(this, Anchor);
 
-		this.template = this.templateHTML;
-		this.restrict = 'E';
-		this.scope = {
-			anchorInfo: "=anchorInfo"
-		};
-		this.controller = _uiAnchor2.default;
-		this.controllerAs = 'vm';
-		this.replace = true;
-		this.link = function ($scope, iElm, iAttrs, controller) {
-			var anchorInfo = $scope.anchorInfo;
-			var _anchorInfo = anchorInfo,
-			    _anchorInfo$attribute = _anchorInfo.attributes,
-			    attributes = _anchorInfo$attribute === undefined ? {} : _anchorInfo$attribute;
+        this.template = this.templateHTML;
+        this.restrict = 'E';
+        this.scope = {
+            anchorInfo: "=anchorInfo"
+        };
+        this.controller = _uiAnchor2.default;
+        this.controllerAs = 'vm';
+        this.replace = true;
+        this.link = function ($scope, iElm, iAttrs, controller) {
+            var anchorInfo = $scope.anchorInfo;
+            var _anchorInfo = anchorInfo,
+                _anchorInfo$attribute = _anchorInfo.attributes,
+                attributes = _anchorInfo$attribute === undefined ? {} : _anchorInfo$attribute;
 
 
-			attributes['ng-click'] = 'vm.onLinkClick($event)';
-			anchorInfo.attributes = attributes;
-			controller.anchorInfo = anchorInfo;
+            attributes['ng-click'] = 'vm.onLinkClick($event)';
+            anchorInfo.attributes = attributes;
+            controller.anchorInfo = anchorInfo;
 
-			anchorInfo = pullInTemplate.convertLabel(anchorInfo.href, anchorInfo, $scope);
+            anchorInfo = pullInTemplate.convertLabel(anchorInfo.href, anchorInfo, $scope);
 
-			var thisAnchor = new iVXjsUIModule.anchor(anchorInfo);
+            var thisAnchor = new iVXjsUIModule.anchor(anchorInfo);
 
-			$scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
+            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
 
-			iElm.html(thisAnchor.html);
-			$compile(iElm.contents())($scope);
-		};
-	}
+            iElm.html(thisAnchor.html);
+            $compile(iElm.contents())($scope);
+        };
+    }
 
-	_createClass(Anchor, [{
-		key: 'templateHTML',
-		get: function get() {
-			return "<div></div>";
-		}
-	}]);
+    _createClass(Anchor, [{
+        key: 'templateHTML',
+        get: function get() {
+            return "<div class='ivx-link-container'></div>";
+        }
+    }]);
 
-	return Anchor;
+    return Anchor;
 }();
 
 Anchor.$inject = ['$compile', 'iVXjs', 'ivxjs.modules.ui', 'pullInTemplate', "ivxExperienceScope"];
 
-exports.default = (0, _createFactoryFunction2.default)(Anchor);
-
-/***/ }),
-/* 421 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _createFactoryFunction = __webpack_require__(1);
-
-var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var AnchorController = function () {
-	function AnchorController($scope, $window, iVXjsActions, iVXjsAudio, iVXjs) {
-		_classCallCheck(this, AnchorController);
-
-		this.iVXjsActions = iVXjsActions;
-		this.$window = $window;
-		this.iVXjsAudio = iVXjsAudio;
-		this.iVXjs = iVXjs;
-	}
-
-	_createClass(AnchorController, [{
-		key: 'onLinkClick',
-		value: function onLinkClick($event) {
-			var _this = this;
-
-			var iVXjs = this.iVXjs;
-			var _anchorInfo = this.anchorInfo,
-			    _anchorInfo$onClick = _anchorInfo.onClick,
-			    onClickEvents = _anchorInfo$onClick === undefined ? [] : _anchorInfo$onClick,
-			    href = _anchorInfo.href,
-			    _anchorInfo$attribute = _anchorInfo.attributes,
-			    attributes = _anchorInfo$attribute === undefined ? {} : _anchorInfo$attribute;
-
-			var self = this;
-			var hasGoToNextState = onClickEvents.find(function (clickEvent, index) {
-				return clickEvent.eventName === 'goToNextState';
-			});
-
-			if (attributes.target !== '_blank') {
-				$event.preventDefault();
-			}
-
-			iVXjs.log.debug('Link with href ' + href + ' onLinkClick Start', {}, { anchor: this.anchorInfo, source: 'onClick', status: 'started', actions: onClickEvents, timestamp: Date.now() });
-
-			this.iVXjsActions.resolveActions(onClickEvents, function () {
-				if (hasGoToNextState) return;
-
-				iVXjs.log.debug('Link with href ' + href + ' onLinkClick Ended', {}, { anchor: _this.anchorInfo, source: 'onClick', status: 'completed', actions: onClickEvents, timestamp: Date.now() });
-
-				if (attributes.target !== '_blank') {
-					self.$window.location = href;
-				}
-			});
-
-			this.iVXjsAudio.audioElement.play();
-			this.iVXjsAudio.audioElement.pause();
-		}
-	}]);
-
-	return AnchorController;
-}();
-
-AnchorController.$inject = ['$scope', '$window', 'ivxjs.actions', 'ivxjs.modules.audio', 'iVXjs'];
-
-exports.default = (0, _createFactoryFunction2.default)(AnchorController);
+exports.default = angular.module('ivx-js.directives.ui.anchor', []).directive('ivxjsAnchor', (0, _createFactoryFunction2.default)(Anchor)).name;
 
 /***/ }),
 /* 422 */
+/***/ (function(module, exports) {
+
+throw new Error("Module build failed: SyntaxError: C:/Projects/GitHub/ivx-js/src/angular/controllers/ui.anchor.js: Unexpected token (4:0)\n\n\u001b[0m \u001b[90m 2 | \u001b[39m\n \u001b[90m 3 | \u001b[39m\u001b[36mclass\u001b[39m \u001b[33mAnchorController\u001b[39m {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 4 | \u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<\u001b[39m \u001b[33mHEAD\u001b[39m\n \u001b[90m   | \u001b[39m\u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 5 | \u001b[39m    constructor($scope\u001b[33m,\u001b[39m $window\u001b[33m,\u001b[39m $state\u001b[33m,\u001b[39m iVXjsActions\u001b[33m,\u001b[39m iVXjsAudio\u001b[33m,\u001b[39m iVXjs) {\n \u001b[90m 6 | \u001b[39m        \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39miVXjsActions \u001b[33m=\u001b[39m iVXjsActions\u001b[33m;\u001b[39m\n \u001b[90m 7 | \u001b[39m        \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39m$window \u001b[33m=\u001b[39m $window\u001b[33m;\u001b[39m\u001b[0m\n");
+
+/***/ }),
+/* 423 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20163,11 +19946,11 @@ var _createFactoryFunction = __webpack_require__(1);
 
 var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
 
-var _uiCascadingOptions = __webpack_require__(423);
+var _uiCascadingOptions = __webpack_require__(424);
 
 var _uiCascadingOptions2 = _interopRequireDefault(_uiCascadingOptions);
 
-var _messagesError = __webpack_require__(23);
+var _messagesError = __webpack_require__(35);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -20308,10 +20091,10 @@ var CascadingOptions = exports.CascadingOptions = function () {
 
 CascadingOptions.$inject = ['$compile', '$timeout', 'iVXjs', 'ivxjs.bus', 'ivxjs.modules.ui'];
 
-exports.default = (0, _createFactoryFunction2.default)(CascadingOptions);
+exports.default = angular.module('ivx-js.directives.ui.cascading-options', []).directive('ivxjsCascadingOptionsInput', (0, _createFactoryFunction2.default)(CascadingOptions)).name;
 
 /***/ }),
-/* 423 */
+/* 424 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20325,7 +20108,7 @@ var _createFactoryFunction = __webpack_require__(1);
 
 var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
 
-var _inputController = __webpack_require__(22);
+var _inputController = __webpack_require__(34);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -20545,7 +20328,7 @@ CascadingOptionsInputController.$inject = ['$scope', 'iVXjs', 'ivxjs.bus', 'ivxj
 exports.default = (0, _createFactoryFunction2.default)(CascadingOptionsInputController);
 
 /***/ }),
-/* 424 */
+/* 425 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20561,18 +20344,18 @@ var _createFactoryFunction = __webpack_require__(1);
 
 var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
 
-var _inputButtons = __webpack_require__(425);
+var _inputButtons = __webpack_require__(426);
 
 var _inputButtons2 = _interopRequireDefault(_inputButtons);
 
-var _messagesError = __webpack_require__(23);
+var _messagesError = __webpack_require__(35);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var ButtonsInput = function () {
-    function ButtonsInput($compile, $filter, iVXjs, iVXjsUIModule, pullInTemplate) {
+    function ButtonsInput($compile, $filter, iVXjs, iVXjsUIModule, pullInTemplate, ivxExperienceScope) {
         _classCallCheck(this, ButtonsInput);
 
         this.template = this.templateHTML;
@@ -20603,10 +20386,10 @@ var ButtonsInput = function () {
                 _input$settings = _input.settings,
                 settings = _input$settings === undefined ? {} : _input$settings;
 
+
             var inputButtonData = buttons.map(function (button, index) {
                 button = pullInTemplate.convertLabel(button.value, button, $scope);
 
-                var buttonString = angular.toJson(button);
                 var _button = button,
                     label = _button.label,
                     labelHTML = _button.labelHTML,
@@ -20619,11 +20402,13 @@ var ButtonsInput = function () {
 
                 return {
                     label: label,
-                    attrHTML: 'ng-click=\'vm.onClick($event, ' + buttonString + ')\'',
+                    attrHTML: 'ng-click=\'vm.onClick($event, vm.buttons[' + index + '])\'',
                     classes: classes
 
                 };
             });
+
+            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
 
             input = pullInTemplate.convertLabel($filter('stringParsers')('startCase', id), input, $scope);
 
@@ -20669,12 +20454,12 @@ var ButtonsInput = function () {
     return ButtonsInput;
 }();
 
-ButtonsInput.$inject = ['$compile', '$filter', 'iVXjs', 'ivxjs.modules.ui', 'pullInTemplate'];
+ButtonsInput.$inject = ['$compile', '$filter', 'iVXjs', 'ivxjs.modules.ui', 'pullInTemplate', 'ivxExperienceScope'];
 
-exports.default = (0, _createFactoryFunction2.default)(ButtonsInput);
+exports.default = angular.module('ivx-js.directives.input.button', []).directive('ivxjsButtonsInput', (0, _createFactoryFunction2.default)(ButtonsInput)).name;
 
 /***/ }),
-/* 425 */
+/* 426 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20688,7 +20473,7 @@ var _createFactoryFunction = __webpack_require__(1);
 
 var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
 
-var _inputController = __webpack_require__(22);
+var _inputController = __webpack_require__(34);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -20712,6 +20497,8 @@ var ButtonsInputController = function (_InputControllerHelpe) {
                             formInput = $parent.formInput,
                             parentController = $parent.vm;
 
+
+                        _this.buttons = input.buttons;
 
                         _this.onClick = function ($event, button) {
                                     $event.preventDefault();
@@ -20746,7 +20533,7 @@ ButtonsInputController.$inject = ['$scope', 'iVXjs', 'ivxjs.actions'];
 exports.default = (0, _createFactoryFunction2.default)(ButtonsInputController);
 
 /***/ }),
-/* 426 */
+/* 427 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20762,18 +20549,18 @@ var _createFactoryFunction = __webpack_require__(1);
 
 var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
 
-var _inputEmail = __webpack_require__(427);
+var _inputEmail = __webpack_require__(428);
 
 var _inputEmail2 = _interopRequireDefault(_inputEmail);
 
-var _messagesError = __webpack_require__(23);
+var _messagesError = __webpack_require__(35);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var EmailInput = function () {
-    function EmailInput($compile, $filter, iVXjsUIModule, pullInTemplate) {
+    function EmailInput($compile, $filter, iVXjs, iVXjsUIModule, pullInTemplate, ivxExperienceScope) {
         _classCallCheck(this, EmailInput);
 
         this.template = this.templateHTML;
@@ -20804,6 +20591,8 @@ var EmailInput = function () {
             var errorMessages = new _messagesError.ErrorMessages(input, errors, attributes);
             var tagHTML = 'ng-blur="vm.onChange(inputValue)" ng-model="inputValue"';
 
+            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
+
             input.label = label ? label : $filter('stringParsers')('startCase', id);
             input = pullInTemplate.convertLabel($filter('stringParsers')('startCase', id), input, $scope);
 
@@ -20830,12 +20619,12 @@ var EmailInput = function () {
     return EmailInput;
 }();
 
-EmailInput.$inject = ['$compile', '$filter', 'ivxjs.modules.ui', 'pullInTemplate'];
+EmailInput.$inject = ['$compile', '$filter', 'iVXjs', 'ivxjs.modules.ui', 'pullInTemplate', 'ivxExperienceScope'];
 
-exports.default = (0, _createFactoryFunction2.default)(EmailInput);
+exports.default = angular.module('ivx-js.directives.input.email', []).directive('ivxjsEmailInput', (0, _createFactoryFunction2.default)(EmailInput)).name;
 
 /***/ }),
-/* 427 */
+/* 428 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20849,7 +20638,7 @@ var _createFactoryFunction = __webpack_require__(1);
 
 var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
 
-var _inputController = __webpack_require__(22);
+var _inputController = __webpack_require__(34);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -20876,7 +20665,7 @@ EmailInputController.$inject = ['$scope', 'iVXjs', 'ivxjs.actions'];
 exports.default = (0, _createFactoryFunction2.default)(EmailInputController);
 
 /***/ }),
-/* 428 */
+/* 429 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20892,18 +20681,18 @@ var _createFactoryFunction = __webpack_require__(1);
 
 var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
 
-var _inputUrl = __webpack_require__(429);
+var _inputUrl = __webpack_require__(430);
 
 var _inputUrl2 = _interopRequireDefault(_inputUrl);
 
-var _messagesError = __webpack_require__(23);
+var _messagesError = __webpack_require__(35);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var UrlInput = function () {
-    function UrlInput($compile, $filter, iVXjsUIModule, pullInTemplate) {
+    function UrlInput($compile, $filter, iVXjs, iVXjsUIModule, pullInTemplate, ivxExperienceScope) {
         _classCallCheck(this, UrlInput);
 
         this.template = this.templateHTML;
@@ -20934,6 +20723,8 @@ var UrlInput = function () {
             var errorMessages = new _messagesError.ErrorMessages(input, errors, attributes);
             var tagHTML = 'ng-blur="vm.onChange(inputValue)" ng-model="inputValue"';
 
+            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
+
             input.label = label ? label : $filter('stringParsers')('startCase', id);
             input = pullInTemplate.convertLabel($filter('stringParsers')('startCase', id), input, $scope);
 
@@ -20960,12 +20751,12 @@ var UrlInput = function () {
     return UrlInput;
 }();
 
-UrlInput.$inject = ['$compile', '$filter', 'ivxjs.modules.ui', 'pullInTemplate'];
+UrlInput.$inject = ['$compile', '$filter', 'iVXjs', 'ivxjs.modules.ui', 'pullInTemplate', 'ivxExperienceScope'];
 
-exports.default = (0, _createFactoryFunction2.default)(UrlInput);
+exports.default = angular.module('ivx-js.directives.input.url', []).directive('ivxjsUrlInput', (0, _createFactoryFunction2.default)(UrlInput)).name;
 
 /***/ }),
-/* 429 */
+/* 430 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20979,7 +20770,7 @@ var _createFactoryFunction = __webpack_require__(1);
 
 var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
 
-var _inputController = __webpack_require__(22);
+var _inputController = __webpack_require__(34);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -21006,7 +20797,7 @@ URLInputController.$inject = ['$scope', 'iVXjs', 'ivxjs.actions'];
 exports.default = (0, _createFactoryFunction2.default)(URLInputController);
 
 /***/ }),
-/* 430 */
+/* 431 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21022,20 +20813,20 @@ var _createFactoryFunction = __webpack_require__(1);
 
 var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
 
-var _inputDate = __webpack_require__(431);
+var _inputDate = __webpack_require__(432);
 
 var _inputDate2 = _interopRequireDefault(_inputDate);
 
-var _messagesError = __webpack_require__(23);
+var _messagesError = __webpack_require__(35);
 
-var _dateParser = __webpack_require__(150);
+var _dateParser = __webpack_require__(151);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var DateInput = function () {
-    function DateInput($compile, $filter, iVXjs, iVXjsUIModule, pullInTemplate) {
+    function DateInput($compile, $filter, iVXjs, iVXjsUIModule, pullInTemplate, ivxExperienceScope) {
         _classCallCheck(this, DateInput);
 
         this.template = this.templateHTML;
@@ -21062,6 +20853,8 @@ var DateInput = function () {
                 _input$settings = _input.settings,
                 settings = _input$settings === undefined ? {} : _input$settings;
 
+
+            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
 
             if (attributes.min) {
                 var dateMin = new _dateParser.DateParser(attributes.min).formatForDateInput();
@@ -21107,12 +20900,12 @@ var DateInput = function () {
     return DateInput;
 }();
 
-DateInput.$inject = ['$compile', '$filter', 'iVXjs', 'ivxjs.modules.ui', 'pullInTemplate'];
+DateInput.$inject = ['$compile', '$filter', 'iVXjs', 'ivxjs.modules.ui', 'pullInTemplate', 'ivxExperienceScope'];
 
-exports.default = (0, _createFactoryFunction2.default)(DateInput);
+exports.default = angular.module('ivx-js.directives.input.date', []).directive('ivxjsDateInput', (0, _createFactoryFunction2.default)(DateInput)).name;
 
 /***/ }),
-/* 431 */
+/* 432 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21126,7 +20919,7 @@ var _createFactoryFunction = __webpack_require__(1);
 
 var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
 
-var _inputController = __webpack_require__(22);
+var _inputController = __webpack_require__(34);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -21153,7 +20946,7 @@ DateController.$inject = ['$scope', 'iVXjs', 'ivxjs.actions'];
 exports.default = (0, _createFactoryFunction2.default)(DateController);
 
 /***/ }),
-/* 432 */
+/* 433 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21169,20 +20962,20 @@ var _createFactoryFunction = __webpack_require__(1);
 
 var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
 
-var _inputDateTimeLocal = __webpack_require__(433);
+var _inputDateTimeLocal = __webpack_require__(434);
 
 var _inputDateTimeLocal2 = _interopRequireDefault(_inputDateTimeLocal);
 
-var _messagesError = __webpack_require__(23);
+var _messagesError = __webpack_require__(35);
 
-var _dateParser = __webpack_require__(150);
+var _dateParser = __webpack_require__(151);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var DateTimeLocalInput = function () {
-    function DateTimeLocalInput($compile, $filter, iVXjsUIModule, pullInTemplate) {
+    function DateTimeLocalInput($compile, $filter, iVXjs, iVXjsUIModule, pullInTemplate, ivxExperienceScope) {
         _classCallCheck(this, DateTimeLocalInput);
 
         this.template = this.templateHTML;
@@ -21209,6 +21002,8 @@ var DateTimeLocalInput = function () {
                 _input$settings = _input.settings,
                 settings = _input$settings === undefined ? {} : _input$settings;
 
+
+            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
 
             input.label = label ? label : $filter('stringParsers')('startCase', id);
 
@@ -21251,12 +21046,12 @@ var DateTimeLocalInput = function () {
     return DateTimeLocalInput;
 }();
 
-DateTimeLocalInput.$inject = ['$compile', '$filter', 'ivxjs.modules.ui', 'pullInTemplate'];
+DateTimeLocalInput.$inject = ['$compile', '$filter', 'iVXjs', 'ivxjs.modules.ui', 'pullInTemplate', 'ivxExperienceScope'];
 
-exports.default = (0, _createFactoryFunction2.default)(DateTimeLocalInput);
+exports.default = angular.module('ivx-js.directives.input.datetime-local', []).directive('ivxjsDatetimeLocalInput', (0, _createFactoryFunction2.default)(DateTimeLocalInput)).name;
 
 /***/ }),
-/* 433 */
+/* 434 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21270,7 +21065,7 @@ var _createFactoryFunction = __webpack_require__(1);
 
 var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
 
-var _inputController = __webpack_require__(22);
+var _inputController = __webpack_require__(34);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -21297,166 +21092,10 @@ DateTimeLocalController.$inject = ['$scope', 'iVXjs', 'ivxjs.actions'];
 exports.default = (0, _createFactoryFunction2.default)(DateTimeLocalController);
 
 /***/ }),
-/* 434 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _createFactoryFunction = __webpack_require__(1);
-
-var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
-
-var _inputOptions = __webpack_require__(435);
-
-var _inputOptions2 = _interopRequireDefault(_inputOptions);
-
-var _messagesError = __webpack_require__(23);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var OptionsInput = function () {
-    function OptionsInput($compile, $filter, iVXjsUIModule, iVXjsBus, pullInTemplate) {
-        _classCallCheck(this, OptionsInput);
-
-        this.template = this.templateHTML;
-        this.transclude = true;
-        this.restrict = 'E';
-        this.require = "^ivxjsFormInput";
-        this.scope = {
-            inputData: '=inputData'
-        };
-
-        this.controller = _inputOptions2.default;
-        this.controllerAs = 'vm';
-        this.replace = true;
-        this.link = function ($scope, iElm, iAttrs, controller) {
-            var input = $scope.inputData;
-            var _input = input,
-                id = _input.id,
-                _input$errors = _input.errors,
-                errors = _input$errors === undefined ? {} : _input$errors,
-                name = _input.name,
-                labelHTML = _input.labelHTML,
-                _input$attributes = _input.attributes,
-                attributes = _input$attributes === undefined ? {} : _input$attributes,
-                options = _input.options,
-                defaultDisplay = _input.defaultDisplay,
-                _input$settings = _input.settings,
-                settings = _input$settings === undefined ? {} : _input$settings;
-            var _settings$directives = settings.directives,
-                directives = _settings$directives === undefined ? '' : _settings$directives;
-
-            var errorMessages = new _messagesError.ErrorMessages(input, errors, attributes);
-            var defaultOptionTag = '<option value="">Select an option...</option>';
-            var tagHTML = directives + '\n                           ng-change=\'vm.onChange(vm.selected.value)\'\n                           ng-options="option.display for option in inputData.options track by option.value" \n                           ng-model=\'vm.selected\'';
-
-            input.label = input.label ? input.label : $filter('stringParsers')('startCase', id);
-            input = pullInTemplate.convertLabel($filter('stringParsers')('startCase', id), input, $scope);
-            input.options = [];
-
-            if (attributes.required || defaultDisplay) {
-                defaultOptionTag = defaultDisplay ? '<option value="">' + defaultDisplay + '</option>' : defaultOptionTag;
-            }
-
-            var uiOptionsObj = {
-                input: input,
-                defaultDisplay: defaultDisplay,
-                settings: settings,
-                tags: tagHTML,
-                errors: errorMessages
-
-            };
-            var optionsClass = new iVXjsUIModule.options(uiOptionsObj);
-
-            iElm.html(optionsClass.html);
-            $compile(iElm.contents())($scope);
-        };
-    }
-
-    _createClass(OptionsInput, [{
-        key: 'templateHTML',
-        get: function get() {
-            return '<div></div>';
-        }
-    }]);
-
-    return OptionsInput;
-}();
-
-OptionsInput.$inject = ['$compile', '$filter', 'ivxjs.modules.ui', 'ivxjs.bus', 'pullInTemplate'];
-
-exports.default = (0, _createFactoryFunction2.default)(OptionsInput);
-
-/***/ }),
 /* 435 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createFactoryFunction = __webpack_require__(1);
-
-var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
-
-var _inputController = __webpack_require__(22);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var OptionsInputController = function (_InputControllerHelpe) {
-    _inherits(OptionsInputController, _InputControllerHelpe);
-
-    function OptionsInputController($scope, $timeout, iVXjs, iVXjsActions) {
-        _classCallCheck(this, OptionsInputController);
-
-        var _this = _possibleConstructorReturn(this, (OptionsInputController.__proto__ || Object.getPrototypeOf(OptionsInputController)).call(this, $scope, iVXjs, iVXjsActions));
-
-        var _$scope$inputData = $scope.inputData,
-            defaultValue = _$scope$inputData.defaultValue,
-            options = _$scope$inputData.options,
-            name = _$scope$inputData.name,
-            _$scope$inputData$att = _$scope$inputData.attributes,
-            attributes = _$scope$inputData$att === undefined ? {} : _$scope$inputData$att;
-
-        var experienceValue = iVXjs.experience.data[name];
-
-        _this.selected = {
-            value: experienceValue ? experienceValue : ''
-        };
-
-        $timeout(function () {
-            if (attributes.required) {
-                $scope.$parent.formInput[name].$setValidity('required', experienceValue && experienceValue.length > 0);
-                $scope.$parent.formInput[name].$error.required = true;
-            }
-        }, 1);
-        return _this;
-    }
-
-    return OptionsInputController;
-}(_inputController.InputControllerHelper);
-
-OptionsInputController.$inject = ['$scope', '$timeout', 'iVXjs', 'ivxjs.actions'];
-
-exports.default = (0, _createFactoryFunction2.default)(OptionsInputController);
+throw new Error("Module build failed: SyntaxError: C:/Projects/GitHub/ivx-js/src/angular/directives/input.options.js: Unexpected token (33:0)\n\n\u001b[0m \u001b[90m 31 | \u001b[39m            input\u001b[33m.\u001b[39mlabel \u001b[33m=\u001b[39m input\u001b[33m.\u001b[39mlabel \u001b[33m?\u001b[39m input\u001b[33m.\u001b[39mlabel \u001b[33m:\u001b[39m $filter(\u001b[32m'stringParsers'\u001b[39m)(\u001b[32m'startCase'\u001b[39m\u001b[33m,\u001b[39m id)\u001b[33m;\u001b[39m\n \u001b[90m 32 | \u001b[39m            input \u001b[33m=\u001b[39m pullInTemplate\u001b[33m.\u001b[39mconvertLabel($filter(\u001b[32m'stringParsers'\u001b[39m)(\u001b[32m'startCase'\u001b[39m\u001b[33m,\u001b[39m id)\u001b[33m,\u001b[39m input\u001b[33m,\u001b[39m $scope)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 33 | \u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<\u001b[39m \u001b[33mHEAD\u001b[39m\n \u001b[90m    | \u001b[39m\u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 34 | \u001b[39m            input\u001b[33m.\u001b[39mbeforeHtml \u001b[33m=\u001b[39m pullInTemplate\u001b[33m.\u001b[39mconvertTemplateUrlToHtml(input\u001b[33m.\u001b[39mbeforeHtml\u001b[33m,\u001b[39m $scope)\u001b[33m;\u001b[39m\n \u001b[90m 35 | \u001b[39m            input\u001b[33m.\u001b[39mafterHtml \u001b[33m=\u001b[39m pullInTemplate\u001b[33m.\u001b[39mconvertTemplateUrlToHtml(input\u001b[33m.\u001b[39mafterHtml\u001b[33m,\u001b[39m $scope)\u001b[33m;\u001b[39m\n \u001b[90m 36 | \u001b[39m\u001b[0m\n");
 
 /***/ }),
 /* 436 */
@@ -21479,14 +21118,14 @@ var _inputRadio = __webpack_require__(437);
 
 var _inputRadio2 = _interopRequireDefault(_inputRadio);
 
-var _messagesError = __webpack_require__(23);
+var _messagesError = __webpack_require__(35);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var RadioInput = function () {
-    function RadioInput($compile, $filter, iVXjsUIModule, pullInTemplate) {
+    function RadioInput($compile, $filter, iVXjs, iVXjsUIModule, pullInTemplate, ivxExperienceScope) {
         _classCallCheck(this, RadioInput);
 
         this.template = this.templateHTML;
@@ -21516,6 +21155,8 @@ var RadioInput = function () {
                 settings = _input$settings === undefined ? {} : _input$settings;
 
             var radioErrorRequired = '';
+
+            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
 
             if (attributes.required) {
                 radioErrorRequired = 'required="!radioSelected"';
@@ -21569,9 +21210,9 @@ var RadioInput = function () {
     return RadioInput;
 }();
 
-RadioInput.$inject = ['$compile', '$filter', 'ivxjs.modules.ui', 'pullInTemplate'];
+RadioInput.$inject = ['$compile', '$filter', 'iVXjs', 'ivxjs.modules.ui', 'pullInTemplate', 'ivxExperienceScope'];
 
-exports.default = (0, _createFactoryFunction2.default)(RadioInput);
+exports.default = angular.module('ivx-js.directives.input.radio', []).directive('ivxjsRadioInput', (0, _createFactoryFunction2.default)(RadioInput)).name;
 
 /***/ }),
 /* 437 */
@@ -21588,7 +21229,7 @@ var _createFactoryFunction = __webpack_require__(1);
 
 var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
 
-var _inputController = __webpack_require__(22);
+var _inputController = __webpack_require__(34);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -21622,91 +21263,9 @@ exports.default = (0, _createFactoryFunction2.default)(RadioInputController);
 
 /***/ }),
 /* 438 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _createFactoryFunction = __webpack_require__(1);
-
-var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
-
-var _inputCheckbox = __webpack_require__(439);
-
-var _inputCheckbox2 = _interopRequireDefault(_inputCheckbox);
-
-var _messagesError = __webpack_require__(23);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var CheckboxInput = function () {
-    function CheckboxInput($compile, $filter, iVXjsUIModule, pullInTemplate) {
-        _classCallCheck(this, CheckboxInput);
-
-        this.template = this.templateHTML;
-        this.transclude = true;
-        this.restrict = 'E';
-        this.require = "^ivxjsFormInput";
-        this.replace = true;
-        this.scope = {
-            inputData: '=inputData'
-        };
-        this.controller = _inputCheckbox2.default;
-        this.controllerAs = 'vm';
-        this.link = function ($scope, iElm, iAttrs, controller) {
-            var input = $scope.inputData;
-            var _input = input,
-                id = _input.id,
-                name = _input.name,
-                _input$errors = _input.errors,
-                errors = _input$errors === undefined ? {} : _input$errors,
-                labelHTML = _input.labelHTML,
-                label = _input.label,
-                _input$attributes = _input.attributes,
-                attributes = _input$attributes === undefined ? {} : _input$attributes,
-                _input$settings = _input.settings,
-                settings = _input$settings === undefined ? {} : _input$settings;
-
-            var tagHTML = 'ng-blur="vm.onChange(inputValue)" ng-model="inputValue"';
-
-            input.label = label ? label : $filter('stringParsers')('startCase', id);
-            input = pullInTemplate.convertLabel($filter('stringParsers')('startCase', id), input, $scope);
-
-            var checkboxUIObj = {
-                input: input,
-                tags: tagHTML,
-                settings: settings,
-                errors: new _messagesError.ErrorMessages(input, errors, attributes)
-            };
-            var checkBox = new iVXjsUIModule.checkbox(checkboxUIObj);
-
-            iElm.html(checkBox.html);
-
-            $compile(iElm.contents())($scope);
-        };
-    }
-
-    _createClass(CheckboxInput, [{
-        key: 'templateHTML',
-        get: function get() {
-            return '<div></div>';
-        }
-    }]);
-
-    return CheckboxInput;
-}();
-
-CheckboxInput.$inject = ['$compile', '$filter', 'ivxjs.modules.ui', 'pullInTemplate'];
-
-exports.default = (0, _createFactoryFunction2.default)(CheckboxInput);
+throw new Error("Module build failed: SyntaxError: C:/Projects/GitHub/ivx-js/src/angular/directives/input.checkbox.js: Unexpected token (26:0)\n\n\u001b[0m \u001b[90m 24 | \u001b[39m            input\u001b[33m.\u001b[39mlabel \u001b[33m=\u001b[39m label \u001b[33m?\u001b[39m label \u001b[33m:\u001b[39m $filter(\u001b[32m'stringParsers'\u001b[39m)(\u001b[32m'startCase'\u001b[39m\u001b[33m,\u001b[39m id)\u001b[33m;\u001b[39m\n \u001b[90m 25 | \u001b[39m            input \u001b[33m=\u001b[39m pullInTemplate\u001b[33m.\u001b[39mconvertLabel($filter(\u001b[32m'stringParsers'\u001b[39m)(\u001b[32m'startCase'\u001b[39m\u001b[33m,\u001b[39m id)\u001b[33m,\u001b[39m input\u001b[33m,\u001b[39m $scope)\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 26 | \u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<\u001b[39m \u001b[33mHEAD\u001b[39m\n \u001b[90m    | \u001b[39m\u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 27 | \u001b[39m            input\u001b[33m.\u001b[39mbeforeHtml \u001b[33m=\u001b[39m pullInTemplate\u001b[33m.\u001b[39mconvertTemplateUrlToHtml(input\u001b[33m.\u001b[39mbeforeHtml\u001b[33m,\u001b[39m $scope)\u001b[33m;\u001b[39m\n \u001b[90m 28 | \u001b[39m            input\u001b[33m.\u001b[39mafterHtml \u001b[33m=\u001b[39m pullInTemplate\u001b[33m.\u001b[39mconvertTemplateUrlToHtml(input\u001b[33m.\u001b[39mafterHtml\u001b[33m,\u001b[39m $scope)\u001b[33m;\u001b[39m\n \u001b[90m 29 | \u001b[39m\u001b[33m===\u001b[39m\u001b[33m===\u001b[39m\u001b[33m=\u001b[39m\u001b[0m\n");
 
 /***/ }),
 /* 439 */
@@ -21716,47 +21275,6 @@ exports.default = (0, _createFactoryFunction2.default)(CheckboxInput);
 
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var _createFactoryFunction = __webpack_require__(1);
-
-var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
-
-var _inputController = __webpack_require__(22);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var CheckboxInputController = function (_InputControllerHelpe) {
-	_inherits(CheckboxInputController, _InputControllerHelpe);
-
-	function CheckboxInputController($scope, iVXjs, iVXjsActions) {
-		_classCallCheck(this, CheckboxInputController);
-
-		return _possibleConstructorReturn(this, (CheckboxInputController.__proto__ || Object.getPrototypeOf(CheckboxInputController)).call(this, $scope, iVXjs, iVXjsActions));
-	}
-
-	return CheckboxInputController;
-}(_inputController.InputControllerHelper);
-
-CheckboxInputController.$inject = ['$scope', 'iVXjs', 'ivxjs.actions'];
-
-exports.default = (0, _createFactoryFunction2.default)(CheckboxInputController);
-
-/***/ }),
-/* 440 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
@@ -21766,18 +21284,18 @@ var _createFactoryFunction = __webpack_require__(1);
 
 var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
 
-var _inputNumber = __webpack_require__(441);
+var _inputNumber = __webpack_require__(440);
 
 var _inputNumber2 = _interopRequireDefault(_inputNumber);
 
-var _messagesError = __webpack_require__(23);
+var _messagesError = __webpack_require__(35);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var NumberInput = function () {
-    function NumberInput($compile, $filter, iVXjsUIModule, pullInTemplate) {
+    function NumberInput($compile, $filter, iVXjs, iVXjsUIModule, pullInTemplate, ivxExperienceScope) {
         _classCallCheck(this, NumberInput);
 
         this.template = this.templateHTML;
@@ -21808,6 +21326,8 @@ var NumberInput = function () {
             var errorMessages = new _messagesError.ErrorMessages(input, errors, attributes);
             var tagHTML = 'ng-blur="vm.onChange(inputValue)" ng-model="inputValue"';
 
+            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
+
             input.label = label ? label : $filter('stringParsers')('startCase', id);
             input = pullInTemplate.convertLabel($filter('stringParsers')('startCase', id), input, $scope);
 
@@ -21834,12 +21354,12 @@ var NumberInput = function () {
     return NumberInput;
 }();
 
-NumberInput.$inject = ['$compile', '$filter', 'ivxjs.modules.ui', 'pullInTemplate'];
+NumberInput.$inject = ['$compile', '$filter', 'iVXjs', 'ivxjs.modules.ui', 'pullInTemplate', 'ivxExperienceScope'];
 
-exports.default = (0, _createFactoryFunction2.default)(NumberInput);
+exports.default = angular.module('ivx-js.directives.input.number', []).directive('ivxjsNumberInput', (0, _createFactoryFunction2.default)(NumberInput)).name;
 
 /***/ }),
-/* 441 */
+/* 440 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21853,7 +21373,7 @@ var _createFactoryFunction = __webpack_require__(1);
 
 var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
 
-var _inputController = __webpack_require__(22);
+var _inputController = __webpack_require__(34);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -21880,7 +21400,7 @@ NumberInputController.$inject = ['$scope', 'iVXjs', 'ivxjs.actions'];
 exports.default = (0, _createFactoryFunction2.default)(NumberInputController);
 
 /***/ }),
-/* 442 */
+/* 441 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21896,18 +21416,18 @@ var _createFactoryFunction = __webpack_require__(1);
 
 var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
 
-var _inputTextarea = __webpack_require__(443);
+var _inputTextarea = __webpack_require__(442);
 
 var _inputTextarea2 = _interopRequireDefault(_inputTextarea);
 
-var _messagesError = __webpack_require__(23);
+var _messagesError = __webpack_require__(35);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var TextAreaInput = function () {
-    function TextAreaInput($compile, $filter, iVXjsUIModule, pullInTemplate) {
+    function TextAreaInput($compile, $filter, iVXjs, iVXjsUIModule, pullInTemplate, ivxExperienceScope) {
         _classCallCheck(this, TextAreaInput);
 
         this.template = this.templateHTML;
@@ -21938,6 +21458,8 @@ var TextAreaInput = function () {
             var errorMessages = new _messagesError.ErrorMessages(input, errors, attributes);
             var tagHTML = 'ng-blur="vm.onChange(inputValue)" ng-model="inputValue"';
 
+            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
+
             input.label = label ? label : $filter('stringParsers')('startCase', id);
             input = pullInTemplate.convertLabel($filter('stringParsers')('startCase', id), input, $scope);
 
@@ -21964,12 +21486,12 @@ var TextAreaInput = function () {
     return TextAreaInput;
 }();
 
-TextAreaInput.$inject = ['$compile', '$filter', 'ivxjs.modules.ui', 'pullInTemplate'];
+TextAreaInput.$inject = ['$compile', '$filter', 'iVXjs', 'ivxjs.modules.ui', 'pullInTemplate', 'ivxExperienceScope'];
 
-exports.default = (0, _createFactoryFunction2.default)(TextAreaInput);
+exports.default = angular.module('ivx-js.directives.input.textarea', []).directive('ivxjsTextareaInput', (0, _createFactoryFunction2.default)(TextAreaInput)).name;
 
 /***/ }),
-/* 443 */
+/* 442 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21983,7 +21505,7 @@ var _createFactoryFunction = __webpack_require__(1);
 
 var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
 
-var _inputController = __webpack_require__(22);
+var _inputController = __webpack_require__(34);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -22010,7 +21532,7 @@ TextAreaInputController.$inject = ['$scope', 'iVXjs', 'ivxjs.actions'];
 exports.default = (0, _createFactoryFunction2.default)(TextAreaInputController);
 
 /***/ }),
-/* 444 */
+/* 443 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22026,7 +21548,7 @@ var _createFactoryFunction = __webpack_require__(1);
 
 var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
 
-var _videoYoutube = __webpack_require__(445);
+var _videoYoutube = __webpack_require__(444);
 
 var _videoYoutube2 = _interopRequireDefault(_videoYoutube);
 
@@ -22091,10 +21613,10 @@ var YoutubeVideoPlayer = function () {
 
 YoutubeVideoPlayer.$inject = ['$rootScope', '$compile', '$window', 'ivxjs.bus', 'ivxjs.log', 'ivxjs.modules.video'];
 
-exports.default = (0, _createFactoryFunction2.default)(YoutubeVideoPlayer);
+exports.default = angular.module('ivx-js.directives.video.youtube', []).directive('ivxjsYoutubeVideoPlayer', (0, _createFactoryFunction2.default)(YoutubeVideoPlayer)).name;
 
 /***/ }),
-/* 445 */
+/* 444 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22132,7 +21654,7 @@ YoutubeVideoPlayerController.$inject = ['$rootScope', '$scope', '$window', 'ivxj
 exports.default = (0, _createFactoryFunction2.default)(YoutubeVideoPlayerController);
 
 /***/ }),
-/* 446 */
+/* 445 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22148,7 +21670,7 @@ var _createFactoryFunction = __webpack_require__(1);
 
 var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
 
-var _videoHtml = __webpack_require__(447);
+var _videoHtml = __webpack_require__(446);
 
 var _videoHtml2 = _interopRequireDefault(_videoHtml);
 
@@ -22218,10 +21740,10 @@ var HTML5VideoPlayer = function () {
 
 HTML5VideoPlayer.$inject = ['$compile', '$timeout', 'ivxjs.modules.video', 'ivxjs.bus', 'ivxjs.log', 'createInlineVideo'];
 
-exports.default = (0, _createFactoryFunction2.default)(HTML5VideoPlayer);
+exports.default = angular.module('ivx-js.directives.video.html5', []).directive('ivxjsHtml5VideoPlayer', (0, _createFactoryFunction2.default)(HTML5VideoPlayer)).name;
 
 /***/ }),
-/* 447 */
+/* 446 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22259,7 +21781,7 @@ HTML5VideoPlayerController.$inject = ['$scope', 'ivxjs.bus'];
 exports.default = (0, _createFactoryFunction2.default)(HTML5VideoPlayerController);
 
 /***/ }),
-/* 448 */
+/* 447 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22275,7 +21797,7 @@ var _createFactoryFunction = __webpack_require__(1);
 
 var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
 
-var _videoVimeo = __webpack_require__(449);
+var _videoVimeo = __webpack_require__(448);
 
 var _videoVimeo2 = _interopRequireDefault(_videoVimeo);
 
@@ -22332,10 +21854,10 @@ var VimeoVideoPlayer = function () {
 
 VimeoVideoPlayer.$inject = ['$rootScope', '$compile', '$window', '$timeout', 'ivxjs.bus', 'ivxjs.log', 'ivxjs.modules.video', 'createInlineVideo'];
 
-exports.default = (0, _createFactoryFunction2.default)(VimeoVideoPlayer);
+exports.default = angular.module('ivx-js.directives.video.vimeo', []).directive('ivxjsVimeoVideoPlayer', (0, _createFactoryFunction2.default)(VimeoVideoPlayer)).name;
 
 /***/ }),
-/* 449 */
+/* 448 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22373,7 +21895,7 @@ VimeoVideoPlayerController.$inject = ['$scope', 'ivxjs.bus'];
 exports.default = (0, _createFactoryFunction2.default)(VimeoVideoPlayerController);
 
 /***/ }),
-/* 450 */
+/* 449 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22389,7 +21911,7 @@ var _createFactoryFunction = __webpack_require__(1);
 
 var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
 
-var _videoControlsStandard = __webpack_require__(451);
+var _videoControlsStandard = __webpack_require__(450);
 
 var _videoControlsStandard2 = _interopRequireDefault(_videoControlsStandard);
 
@@ -22433,10 +21955,10 @@ var StandardControls = function () {
 
 StandardControls.$inject = ['ivxjs.modules.ui', 'ivxjs.bus'];
 
-exports.default = (0, _createFactoryFunction2.default)(StandardControls);
+exports.default = angular.module('ivx-js.directives.video.standard-controls', []).directive('ivxjsStandardVideoControls', (0, _createFactoryFunction2.default)(StandardControls)).name;
 
 /***/ }),
-/* 451 */
+/* 450 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22474,7 +21996,7 @@ StandardControls.$inject = ['ivxjs.bus'];
 exports.default = (0, _createFactoryFunction2.default)(StandardControls);
 
 /***/ }),
-/* 452 */
+/* 451 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22483,13 +22005,6 @@ exports.default = (0, _createFactoryFunction2.default)(StandardControls);
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.Actions = undefined;
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _typeParsers = __webpack_require__(10);
-
-var _processor = __webpack_require__(114);
 
 var _createFactoryFunction = __webpack_require__(1);
 
@@ -22499,57 +22014,118 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+// CONTROLLER
+// import {[CTRLNAME]} from '[CTRLFILE]';
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var typeValidator = new _typeParsers.TypeValidator();
+var SetData = function SetData(iVXjs) {
+    _classCallCheck(this, SetData);
 
-var Actions = exports.Actions = function (_ActionProcessor) {
-    _inherits(Actions, _ActionProcessor);
+    this.restrict = 'A';
+    this.controller = ["iVXjs", function (iVXjs) {}];
+    this.link = function ($scope, iElm, iAttrs, controller) {
+        iElm[0].addEventListener('click', function (event) {
+            event.preventDefault();
+            var value = iAttrs.ivxSetData;
 
-    function Actions($rootScope, $state, $window, iVXjs, iVXjsBus) {
-        _classCallCheck(this, Actions);
+            var keyValue = extractKeyValue(value);
 
-        var _this = _possibleConstructorReturn(this, (Actions.__proto__ || Object.getPrototypeOf(Actions)).call(this, iVXjs));
-
-        _this.$rootScope = $rootScope;
-        _this.$state = $state;
-        _this.$window = $window;
-        _this.iVXjsBus = iVXjsBus;
-        _this.iVXjs = iVXjs;
-        return _this;
-    }
-
-    _createClass(Actions, [{
-        key: 'navigateToNextState',
-        value: function navigateToNextState(nextArray) {
-            if (typeValidator.isEmpty(nextArray)) return;
-
-            this.$state.go(this.iVXjs.rules(nextArray));
-        }
-    }, {
-        key: 'resolveThenNavigate',
-        value: function resolveThenNavigate(actionArray, nextArray) {
-            var self = this;
-
-            if (typeValidator.isEmpty(actionArray)) {
-                this.navigateToNextState(nextArray);
-                return;
+            if (iVXjs.actions && iVXjs.actions.setData) {
+                iVXjs.actions.setData(keyValue);
+            } else {
+                iVXjs.experience.setData(keyValue);
             }
+        }, false);
 
-            this.resolveActions(actionArray, function () {
-                self.navigateToNextState(nextArray);
+        function extractKeyValue(valueString) {
+            var updatedValue = valueString.trim();
+            var parts = updatedValue.split(',');
+
+            parts = parts.map(function (part, index) {
+                var newPart = part.trim();
+
+                newPart = newPart.replace(/[{}]/g, "");
+
+                if (index === 0) {
+                    newPart = newPart.replace(/[\'\"]/g, "");
+                }
+
+                return newPart;
             });
+
+            var key = parts[0];
+            var value = parts[1] === "true" || parts[1] === "false" ? parts[1] === "true" : parts[1];
+
+            return { key: key, value: value };
         }
-    }]);
+    };
+};
 
-    return Actions;
-}(_processor.ActionProcessor);
+SetData.$inject = ['iVXjs'];
 
-Actions.$inject = ['$rootScope', '$state', '$window', 'iVXjs', 'ivxjs.bus'];
+exports.default = angular.module('ivx-js.directives.template.set-data', []).directive('ivxSetData', (0, _createFactoryFunction2.default)(SetData)).name;
 
-exports.default = (0, _createFactoryFunction2.default)(Actions);
+/***/ }),
+/* 452 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createFactoryFunction = __webpack_require__(1);
+
+var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+// CONTROLLER
+// import {[CTRLNAME]} from '[CTRLFILE]';
+
+
+var AnimateElement = function AnimateElement(iVXjs) {
+    _classCallCheck(this, AnimateElement);
+
+    this.restrict = 'A';
+    this.controller = ["iVXjs", function (iVXjs) {}];
+    this.link = function ($scope, iElm, iAttrs, controller) {
+        iElm[0].addEventListener('click', function (event) {
+            event.preventDefault();
+            var value = iAttrs.ivxAnimate;
+
+            var keyValue = extractKeyValue(value);
+
+            iVXjs.experience.animateElement(keyValue);
+        }, false);
+
+        function extractKeyValue(valueString) {
+            var updatedValue = valueString.trim();
+            var parts = updatedValue.split(',');
+
+            parts = parts.map(function (part, index) {
+                var newPart = part.trim();
+
+                newPart = newPart.replace(/[{}\'\"]/g, "");
+
+                return newPart;
+            });
+
+            var element = parts[0];
+            var animationClasses = parts[1] === "true" || parts[1] === "false" ? parts[1] === "true" : parts[1];
+
+            return { element: element, animationClasses: animationClasses };
+        }
+    };
+};
+
+AnimateElement.$inject = ['iVXjs'];
+
+exports.default = angular.module('ivx-js.directives.template.animate-element', []).directive('ivxAnimate', (0, _createFactoryFunction2.default)(AnimateElement)).name;
 
 /***/ }),
 /* 453 */
@@ -22561,7 +22137,231 @@ exports.default = (0, _createFactoryFunction2.default)(Actions);
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.BusService = exports.Bus = undefined;
+
+var _createFactoryFunction = __webpack_require__(1);
+
+var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+// CONTROLLER
+// import {[CTRLNAME]} from '[CTRLFILE]';
+
+
+var GoToState = function GoToState(iVXjs, iVXjsBus) {
+    _classCallCheck(this, GoToState);
+
+    this.restrict = 'A';
+    this.controller = ["iVXjs", function (iVXjs) {}];
+    this.link = function ($scope, iElm, iAttrs, controller) {
+        iElm[0].addEventListener('click', function (event) {
+            event.preventDefault();
+
+            var stateId = iAttrs.ivxGoToState;
+
+
+            iVXjs.experience.goToState({ stateId: stateId }, iVXjsBus);
+        }, false);
+    };
+};
+
+GoToState.$inject = ['iVXjs', 'ivxjs.bus'];
+
+exports.default = angular.module('ivx-js.directives.template.go-to-state', []).directive('ivxGoToState', (0, _createFactoryFunction2.default)(GoToState)).name;
+
+/***/ }),
+/* 454 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createFactoryFunction = __webpack_require__(1);
+
+var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+// CONTROLLER
+// import {[CTRLNAME]} from '[CTRLFILE]';
+
+var RaiseiVXjsEvent = function RaiseiVXjsEvent(iVXjs, iVXjsBus) {
+    _classCallCheck(this, RaiseiVXjsEvent);
+
+    this.restrict = 'A';
+    this.scope = {
+        ivxEventArgs: "=ivxEventArgs",
+        ivxEvent: "@ivxEvent"
+    };
+    this.controller = ["iVXjs", function (iVXjs) {}];
+    this.link = function ($scope, iElm, iAttrs, controller) {
+        iElm[0].addEventListener('click', function (event) {
+            event.preventDefault();
+
+            var _$scope$ivxEventArgs = $scope.ivxEventArgs,
+                args = _$scope$ivxEventArgs === undefined ? {} : _$scope$ivxEventArgs,
+                eventName = $scope.ivxEvent;
+
+
+            iVXjsBus.emit(eventName, args);
+        }, false);
+    };
+};
+
+RaiseiVXjsEvent.$inject = ['iVXjs', 'ivxjs.bus'];
+
+exports.default = angular.module('ivx-js.directives.template.raise-ivx-event', []).directive('ivxEvent', (0, _createFactoryFunction2.default)(RaiseiVXjsEvent)).name;
+
+/***/ }),
+/* 455 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _ivxjs = __webpack_require__(456);
+
+var _ivxjs2 = _interopRequireDefault(_ivxjs);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = angular.module('ivx-js.providers', [_ivxjs2.default]).name;
+
+/***/ }),
+/* 456 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _createFactoryFunction = __webpack_require__(1);
+
+var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var iVXjsSetup = function () {
+    function iVXjsSetup() {
+        _classCallCheck(this, iVXjsSetup);
+    }
+
+    _createClass(iVXjsSetup, [{
+        key: '$get',
+        value: function $get() {}
+    }, {
+        key: 'setDefaultUrl',
+        value: function setDefaultUrl($urlRouterProvider, defaultState, iVXjs) {
+            var defaultStateID = iVXjs.rules(defaultState);
+
+            var _iVXjs$config$states$ = iVXjs.config.states.find(function (state) {
+                return state.id === defaultStateID;
+            }),
+                url = _iVXjs$config$states$.url;
+
+            $urlRouterProvider.otherwise(url);
+        }
+    }, {
+        key: 'createStates',
+        value: function createStates($stateProvider, states) {
+            states.forEach(function (state, index) {
+                var type = state.type,
+                    id = state.id,
+                    url = state.url,
+                    _state$onEnter = state.onEnter,
+                    onEnter = _state$onEnter === undefined ? [] : _state$onEnter,
+                    _state$onExit = state.onExit,
+                    onExit = _state$onExit === undefined ? [] : _state$onExit;
+
+
+                $stateProvider.state(id, {
+                    url: url,
+                    data: state,
+                    template: '<ivxjs-' + type + '-state></ivxjs-' + type + '-state>',
+                    onEnter: ['$rootScope', 'ivxjs.actions', 'ivxjs.bus', function ($rootScope, iVXjsActions, iVXjsBus) {
+                        iVXjsActions.resolveActions(onEnter, function () {});
+                    }],
+                    onExit: ['$rootScope', 'ivxjs.actions', 'ivxjs.bus', function ($rootScope, iVXjsActions, iVXjsBus) {
+                        iVXjsBus.emit('iVX:video:dispose');
+                        iVXjsActions.resolveActions(onExit, function () {});
+                    }]
+                });
+            });
+        }
+    }]);
+
+    return iVXjsSetup;
+}();
+
+iVXjsSetup.$inject = [];
+
+exports.default = angular.module('ivx-js.providers.set-up', []).provider('iVXjsSetup', (0, _createFactoryFunction2.default)(iVXjsSetup)).name;
+
+/***/ }),
+/* 457 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _bus = __webpack_require__(458);
+
+var _bus2 = _interopRequireDefault(_bus);
+
+var _actions = __webpack_require__(459);
+
+var _actions2 = _interopRequireDefault(_actions);
+
+var _iosInlineVideo = __webpack_require__(460);
+
+var _iosInlineVideo2 = _interopRequireDefault(_iosInlineVideo);
+
+var _templateRenderer = __webpack_require__(461);
+
+var _templateRenderer2 = _interopRequireDefault(_templateRenderer);
+
+var _experienceScope = __webpack_require__(462);
+
+var _experienceScope2 = _interopRequireDefault(_experienceScope);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = angular.module('ivx-js.services', [_bus2.default, _actions2.default, _iosInlineVideo2.default, _templateRenderer2.default, _experienceScope2.default]).name;
+
+/***/ }),
+/* 458 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.Bus = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -22646,19 +22446,95 @@ var Bus = exports.Bus = function () {
 
 Bus.$inject = ['$rootScope', 'iVXjs'];
 
-var BusService = (0, _createFactoryFunction2.default)(Bus);
-
-exports.BusService = BusService;
+exports.default = angular.module('ivx-js.services.bus', []).service('ivxjs.bus', (0, _createFactoryFunction2.default)(Bus)).name;
 
 /***/ }),
-/* 454 */
+/* 459 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+    value: true
+});
+exports.Actions = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _typeParsers = __webpack_require__(10);
+
+var _processor = __webpack_require__(114);
+
+var _createFactoryFunction = __webpack_require__(1);
+
+var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var typeValidator = new _typeParsers.TypeValidator();
+
+var Actions = exports.Actions = function (_ActionProcessor) {
+    _inherits(Actions, _ActionProcessor);
+
+    function Actions($rootScope, $state, $window, iVXjs, iVXjsBus) {
+        _classCallCheck(this, Actions);
+
+        var _this = _possibleConstructorReturn(this, (Actions.__proto__ || Object.getPrototypeOf(Actions)).call(this, iVXjs));
+
+        _this.$rootScope = $rootScope;
+        _this.$state = $state;
+        _this.$window = $window;
+        _this.iVXjsBus = iVXjsBus;
+        _this.iVXjs = iVXjs;
+        return _this;
+    }
+
+    _createClass(Actions, [{
+        key: 'navigateToNextState',
+        value: function navigateToNextState(nextArray) {
+            if (typeValidator.isEmpty(nextArray)) return;
+
+            this.$state.go(this.iVXjs.rules(nextArray));
+        }
+    }, {
+        key: 'resolveThenNavigate',
+        value: function resolveThenNavigate(actionArray, nextArray) {
+            var self = this;
+
+            if (typeValidator.isEmpty(actionArray)) {
+                this.navigateToNextState(nextArray);
+                return;
+            }
+
+            this.resolveActions(actionArray, function () {
+                self.navigateToNextState(nextArray);
+            });
+        }
+    }]);
+
+    return Actions;
+}(_processor.ActionProcessor);
+
+Actions.$inject = ['$rootScope', '$state', '$window', 'iVXjs', 'ivxjs.bus'];
+
+exports.default = angular.module('ivx-js.services.action', []).service('ivxjs.actions', (0, _createFactoryFunction2.default)(Actions)).name;
+
+/***/ }),
+/* 460 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -22678,105 +22554,105 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var videoEventNames = new _videoEvents2.default();
 
 var CreateInlineVideo = function () {
-	function CreateInlineVideo($window, $timeout, iVXjsBus) {
-		_classCallCheck(this, CreateInlineVideo);
+    function CreateInlineVideo($window, $timeout, iVXjsBus) {
+        _classCallCheck(this, CreateInlineVideo);
 
-		this.$window = $window;
-		this.$timeout = $timeout;
-		this.iVXjsBus = iVXjsBus;
-	}
+        this.$window = $window;
+        this.$timeout = $timeout;
+        this.iVXjsBus = iVXjsBus;
+    }
 
-	_createClass(CreateInlineVideo, [{
-		key: 'emitCanPlay',
-		value: function emitCanPlay(video) {
-			var self = this;
+    _createClass(CreateInlineVideo, [{
+        key: 'emitCanPlay',
+        value: function emitCanPlay(video) {
+            var self = this;
 
-			if (navigator.userAgent.match('CriOS')) {
+            if (navigator.userAgent.match('CriOS')) {
 
-				self.iVXjsBus.once(videoEventNames.PLAY, function () {
+                self.iVXjsBus.once(videoEventNames.PLAY, function () {
 
-					self.iVXjsBus.emit(videoEventNames.READY_PLAYER, video);
-				});
-				self.iVXjsBus.emit(videoEventNames.CAN_PLAY, video);
-				return;
-			}
+                    self.iVXjsBus.emit(videoEventNames.READY_PLAYER, video);
+                });
+                self.iVXjsBus.emit(videoEventNames.CAN_PLAY, video);
+                return;
+            }
 
-			this.$timeout(function () {
-				if (video.readyState < 1) {
-					self.emitCanPlay(video);
-					return;
-				}
-				self.iVXjsBus.emit(videoEventNames.CAN_PLAY, video);
-			}, 100);
-		}
-	}, {
-		key: 'makeInlineVideo',
-		value: function makeInlineVideo(video, container, $scope) {
-			if (typeof makeVideoPlayableInline === 'undefined') return;
+            this.$timeout(function () {
+                if (video.readyState < 1) {
+                    self.emitCanPlay(video);
+                    return;
+                }
+                self.iVXjsBus.emit(videoEventNames.CAN_PLAY, video);
+            }, 100);
+        }
+    }, {
+        key: 'makeInlineVideo',
+        value: function makeInlineVideo(video, container, $scope) {
+            if (typeof makeVideoPlayableInline === 'undefined') return;
 
-			var self = this;
-			var play = false;
+            var self = this;
+            var play = false;
 
-			video.setAttribute('webkit-playsinline', '');
-			makeVideoPlayableInline(video);
+            video.setAttribute('webkit-playsinline', '');
+            makeVideoPlayableInline(video);
 
-			this.iVXjsBus.on(videoEventNames.ADD_PLAYING_CLASS, function () {
-				container.className = video.className + ' is-playing';
-				play = !play;
-			});
+            this.iVXjsBus.on(videoEventNames.ADD_PLAYING_CLASS, function () {
+                container.className = video.className + ' is-playing';
+                play = !play;
+            });
 
-			video.addEventListener('touchstart', function () {
+            video.addEventListener('touchstart', function () {
 
-				if (!play) {
-					video.play();
-					container.className = video.className + ' is-playing';
-				} else {
-					video.pause();
-					$scope.isPlaying = false;
-					container.className = video.className.replace('is-playing', '');
-				}
+                if (!play) {
+                    video.play();
+                    container.className = video.className + ' is-playing';
+                } else {
+                    video.pause();
+                    $scope.isPlaying = false;
+                    container.className = video.className.replace('is-playing', '');
+                }
 
-				play = !play;
-				$scope.$apply();
-			});
+                play = !play;
+                $scope.$apply();
+            });
 
-			this.iVXjsBus.once(videoEventNames.DISPOSE, function () {
-				video.pause();
-			});
-		}
-	}, {
-		key: 'isiOS',
-		value: function isiOS() {
-			var userAgent = navigator.userAgent || navigator.vendor || window.opera;
-			return userAgent.match(/iPhone/i) || userAgent.match(/iPad/i);
-		}
-	}, {
-		key: 'isMobile',
-		value: function isMobile() {
-			var check = false;
-			(function (a) {
-				if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i.test(a) || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0, 4))) check = true;
-			})(navigator.userAgent || navigator.vendor || window.opera);
-			return check;
-		}
-	}]);
+            this.iVXjsBus.once(videoEventNames.DISPOSE, function () {
+                video.pause();
+            });
+        }
+    }, {
+        key: 'isiOS',
+        value: function isiOS() {
+            var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+            return userAgent.match(/iPhone/i) || userAgent.match(/iPad/i);
+        }
+    }, {
+        key: 'isMobile',
+        value: function isMobile() {
+            var check = false;
+            (function (a) {
+                if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i.test(a) || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0, 4))) check = true;
+            })(navigator.userAgent || navigator.vendor || window.opera);
+            return check;
+        }
+    }]);
 
-	return CreateInlineVideo;
+    return CreateInlineVideo;
 }();
 
 CreateInlineVideo.$inject = ['$window', '$timeout', 'ivxjs.bus'];
 
-exports.default = (0, _createFactoryFunction2.default)(CreateInlineVideo);
+exports.default = angular.module('ivx-js.services.create-inline-video', []).service('createInlineVideo', (0, _createFactoryFunction2.default)(CreateInlineVideo)).name;
 
 /***/ }),
-/* 455 */
+/* 461 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+    value: true
 });
 exports.PullInTemplate = undefined;
 
@@ -22791,530 +22667,100 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var PullInTemplate = exports.PullInTemplate = function () {
-	function PullInTemplate($sce) {
-		_classCallCheck(this, PullInTemplate);
+    function PullInTemplate($sce) {
+        _classCallCheck(this, PullInTemplate);
 
-		this.$sce = $sce;
-	}
+        this.$sce = $sce;
+    }
 
-	_createClass(PullInTemplate, [{
-		key: 'convertTemplateUrlToHtml',
-		value: function convertTemplateUrlToHtml(data, $scope) {
-			if (data.templateUrl) {
-				var templateUrl = data.templateUrl;
-				var safeTemplateUrl = this.$sce.getTrustedResourceUrl(templateUrl);
-				var templateKey = 'template' + Math.random().toString(36).substring(7);
+    _createClass(PullInTemplate, [{
+        key: 'convertTemplateUrlToHtml',
+        value: function convertTemplateUrlToHtml(data, $scope) {
+            if (data.templateUrl) {
+                var templateUrl = data.templateUrl;
+                var safeTemplateUrl = this.$sce.getTrustedResourceUrl(templateUrl);
+                var templateKey = 'template' + Math.random().toString(36).substring(7);
 
-				$scope[templateKey] = safeTemplateUrl;
-				data.html = '<div ng-include="' + templateKey + '"></div>';
-			}
+                $scope[templateKey] = safeTemplateUrl;
+                data.html = '<div ng-include="' + templateKey + '"></div>';
+            }
 
-			return data;
-		}
-	}, {
-		key: 'convertHeaderFooter',
-		value: function convertHeaderFooter(header, footer, data, controller) {
-			var headerTemplateUrl = header.templateUrl,
-			    html = header.html;
-			var footerTemplateUrl = footer.templateUrl;
-
-
-			if (headerTemplateUrl) {
-				var safeHeaderTemplateUrl = this.$sce.getTrustedResourceUrl(headerTemplateUrl);
-
-				controller.safeHeaderTemplateUrl = safeHeaderTemplateUrl;
-				header.html = '<div ng-include="vm.safeHeaderTemplateUrl"></div>';
-				data.header = header;
-			}
-
-			if (footerTemplateUrl) {
-				var safeFooterTemplateUrl = this.$sce.getTrustedResourceUrl(footerTemplateUrl);
-
-				controller.safeFooterTemplateUrl = safeFooterTemplateUrl;
-				footer.html = '<div ng-include="vm.safeFooterTemplateUrl"></div>';
-				data.footer = footer;
-			}
-
-			return data;
-		}
-	}, {
-		key: 'getTemplateKey',
-		value: function getTemplateKey(labelTemplateUrl) {
-			var newTemplateUrl = labelTemplateUrl.replace('/', '-').replace('.', '-').split('-');
-			var newKey = newTemplateUrl.reduce(function (key, word, index) {
-				if (index === 0) return word;
-
-				var capitalizeWord = word[0].toUpperCase();
-				capitalizeWord = capitalizeWord + word.substring(1);
-
-				return '' + key + capitalizeWord;
-			}, '');
-
-			return '' + newKey;
-		}
-	}, {
-		key: 'convertLabel',
-		value: function convertLabel() {
-			var defaultLabel = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-			var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-			var $scope = arguments[2];
-			var labelHTML = data.labelHTML,
-			    _data$label = data.label,
-			    label = _data$label === undefined ? defaultLabel : _data$label,
-			    labelTemplateUrl = data.labelTemplateUrl,
-			    id = data.id,
-			    _data$classes = data.classes,
-			    classes = _data$classes === undefined ? "" : _data$classes;
+            return data;
+        }
+    }, {
+        key: 'convertHeaderFooter',
+        value: function convertHeaderFooter(header, footer, data, controller) {
+            var headerTemplateUrl = header.templateUrl,
+                html = header.html;
+            var footerTemplateUrl = footer.templateUrl;
 
 
-			if (labelTemplateUrl) {
-				var safeLabelTemplateUrl = this.$sce.getTrustedResourceUrl(labelTemplateUrl);
-				var templateKey = 'label' + Math.random().toString(36).substring(2, 7).toUpperCase();
+            if (headerTemplateUrl) {
+                var safeHeaderTemplateUrl = this.$sce.getTrustedResourceUrl(headerTemplateUrl);
 
-				$scope[templateKey] = safeLabelTemplateUrl;
-				data.labelHTML = '<div ng-include="' + templateKey + '"></div>';
-			}
+                controller.safeHeaderTemplateUrl = safeHeaderTemplateUrl;
+                header.html = '<div ng-include="vm.safeHeaderTemplateUrl"></div>';
+                data.header = header;
+            }
 
-			return data;
-		}
-	}]);
+            if (footerTemplateUrl) {
+                var safeFooterTemplateUrl = this.$sce.getTrustedResourceUrl(footerTemplateUrl);
 
-	return PullInTemplate;
+                controller.safeFooterTemplateUrl = safeFooterTemplateUrl;
+                footer.html = '<div ng-include="vm.safeFooterTemplateUrl"></div>';
+                data.footer = footer;
+            }
+
+            return data;
+        }
+    }, {
+        key: 'getTemplateKey',
+        value: function getTemplateKey(labelTemplateUrl) {
+            var newTemplateUrl = labelTemplateUrl.replace('/', '-').replace('.', '-').split('-');
+            var newKey = newTemplateUrl.reduce(function (key, word, index) {
+                if (index === 0) return word;
+
+                var capitalizeWord = word[0].toUpperCase();
+                capitalizeWord = capitalizeWord + word.substring(1);
+
+                return '' + key + capitalizeWord;
+            }, '');
+
+            return '' + newKey;
+        }
+    }, {
+        key: 'convertLabel',
+        value: function convertLabel() {
+            var defaultLabel = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+            var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+            var $scope = arguments[2];
+            var labelHTML = data.labelHTML,
+                _data$label = data.label,
+                label = _data$label === undefined ? defaultLabel : _data$label,
+                labelTemplateUrl = data.labelTemplateUrl,
+                id = data.id,
+                _data$classes = data.classes,
+                classes = _data$classes === undefined ? "" : _data$classes;
+
+
+            if (labelTemplateUrl) {
+                var safeLabelTemplateUrl = this.$sce.getTrustedResourceUrl(labelTemplateUrl);
+                var templateKey = 'label' + Math.random().toString(36).substring(2, 7).toUpperCase();
+
+                $scope[templateKey] = safeLabelTemplateUrl;
+                data.labelHTML = '<div ng-include="' + templateKey + '"></div>';
+            }
+
+            return data;
+        }
+    }]);
+
+    return PullInTemplate;
 }();
 
 PullInTemplate.$inject = ['$sce'];
 
-exports.default = (0, _createFactoryFunction2.default)(PullInTemplate);
-
-/***/ }),
-/* 456 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createFactoryFunction = __webpack_require__(1);
-
-var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-// CONTROLLER
-// import {[CTRLNAME]} from '[CTRLFILE]';
-
-
-var SetData = function SetData(iVXjs) {
-    _classCallCheck(this, SetData);
-
-    this.restrict = 'A';
-    this.controller = ["iVXjs", function (iVXjs) {}];
-    this.link = function ($scope, iElm, iAttrs, controller) {
-        iElm[0].addEventListener('click', function (event) {
-            event.preventDefault();
-            var value = iAttrs.ivxSetData;
-
-            var keyValue = extractKeyValue(value);
-
-            if (iVXjs.actions && iVXjs.actions.setData) {
-                iVXjs.actions.setData(keyValue);
-            } else {
-                iVXjs.experience.setData(keyValue);
-            }
-        }, false);
-
-        function extractKeyValue(valueString) {
-            var updatedValue = valueString.trim();
-            var parts = updatedValue.split(',');
-
-            parts = parts.map(function (part, index) {
-                var newPart = part.trim();
-
-                newPart = newPart.replace(/[{}]/g, "");
-
-                if (index === 0) {
-                    newPart = newPart.replace(/[\'\"]/g, "");
-                }
-
-                return newPart;
-            });
-
-            var key = parts[0];
-            var value = parts[1] === "true" || parts[1] === "false" ? parts[1] === "true" : parts[1];
-
-            return { key: key, value: value };
-        }
-    };
-};
-
-SetData.$inject = ['iVXjs'];
-
-exports.default = (0, _createFactoryFunction2.default)(SetData);
-
-/***/ }),
-/* 457 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createFactoryFunction = __webpack_require__(1);
-
-var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-// CONTROLLER
-// import {[CTRLNAME]} from '[CTRLFILE]';
-
-
-var AnimateElement = function AnimateElement(iVXjs) {
-    _classCallCheck(this, AnimateElement);
-
-    this.restrict = 'A';
-    this.controller = ["iVXjs", function (iVXjs) {}];
-    this.link = function ($scope, iElm, iAttrs, controller) {
-        iElm[0].addEventListener('click', function (event) {
-            event.preventDefault();
-            var value = iAttrs.ivxAnimate;
-
-            var keyValue = extractKeyValue(value);
-
-            iVXjs.experience.animateElement(keyValue);
-        }, false);
-
-        function extractKeyValue(valueString) {
-            var updatedValue = valueString.trim();
-            var parts = updatedValue.split(',');
-
-            parts = parts.map(function (part, index) {
-                var newPart = part.trim();
-
-                newPart = newPart.replace(/[{}\'\"]/g, "");
-
-                return newPart;
-            });
-
-            var element = parts[0];
-            var animationClasses = parts[1] === "true" || parts[1] === "false" ? parts[1] === "true" : parts[1];
-
-            return { element: element, animationClasses: animationClasses };
-        }
-    };
-};
-
-AnimateElement.$inject = ['iVXjs'];
-
-exports.default = (0, _createFactoryFunction2.default)(AnimateElement);
-
-/***/ }),
-/* 458 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createFactoryFunction = __webpack_require__(1);
-
-var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-// CONTROLLER
-// import {[CTRLNAME]} from '[CTRLFILE]';
-
-
-var GoToState = function GoToState(iVXjs, iVXjsBus) {
-    _classCallCheck(this, GoToState);
-
-    this.restrict = 'A';
-    this.controller = ["iVXjs", function (iVXjs) {}];
-    this.link = function ($scope, iElm, iAttrs, controller) {
-        iElm[0].addEventListener('click', function (event) {
-            event.preventDefault();
-
-            var stateId = iAttrs.ivxGoToState;
-
-
-            iVXjs.experience.goToState({ stateId: stateId }, iVXjsBus);
-        }, false);
-    };
-};
-
-GoToState.$inject = ['iVXjs', 'ivxjs.bus'];
-
-exports.default = (0, _createFactoryFunction2.default)(GoToState);
-
-/***/ }),
-/* 459 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createFactoryFunction = __webpack_require__(1);
-
-var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-// CONTROLLER
-// import {[CTRLNAME]} from '[CTRLFILE]';
-
-var RaiseiVXjsEvent = function RaiseiVXjsEvent(iVXjs, iVXjsBus) {
-    _classCallCheck(this, RaiseiVXjsEvent);
-
-    this.restrict = 'A';
-    this.scope = {
-        ivxEventArgs: "=ivxEventArgs",
-        ivxEvent: "@ivxEvent"
-    };
-    this.controller = ["iVXjs", function (iVXjs) {}];
-    this.link = function ($scope, iElm, iAttrs, controller) {
-        iElm[0].addEventListener('click', function (event) {
-            event.preventDefault();
-
-            var _$scope$ivxEventArgs = $scope.ivxEventArgs,
-                args = _$scope$ivxEventArgs === undefined ? {} : _$scope$ivxEventArgs,
-                eventName = $scope.ivxEvent;
-
-
-            iVXjsBus.emit(eventName, args);
-        }, false);
-    };
-};
-
-RaiseiVXjsEvent.$inject = ['iVXjs', 'ivxjs.bus'];
-
-exports.default = (0, _createFactoryFunction2.default)(RaiseiVXjsEvent);
-
-/***/ }),
-/* 460 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _createFactoryFunction = __webpack_require__(1);
-
-var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
-
-var _httpInterceptors = __webpack_require__(461);
-
-var _httpInterceptors2 = _interopRequireDefault(_httpInterceptors);
-
-var _videoEvents = __webpack_require__(12);
-
-var _videoEvents2 = _interopRequireDefault(_videoEvents);
-
-var _stateEvents = __webpack_require__(62);
-
-var _stateEvents2 = _interopRequireDefault(_stateEvents);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var stateEvents = new _stateEvents2.default();
-
-var AppConfig = function () {
-    function AppConfig($stateProvider, $urlRouterProvider, $locationProvider, $compileProvider, $httpProvider, $sceDelegateProvider, $provide, iVXjs) {
-        _classCallCheck(this, AppConfig);
-
-        if (!iVXjs.config) return;
-
-        this.createStates($stateProvider, iVXjs.config.states);
-
-        var experience = iVXjs.experience;
-        var _iVXjs$config$templat = iVXjs.config.templates,
-            templates = _iVXjs$config$templat === undefined ? [] : _iVXjs$config$templat;
-
-        var defaultStateID = iVXjs.rules(iVXjs.config.defaultState);
-
-        var _iVXjs$config$states$ = iVXjs.config.states.find(function (state) {
-            return state.id === defaultStateID;
-        }),
-            url = _iVXjs$config$states$.url;
-
-        if (experience.whiteList) {
-            $sceDelegateProvider.resourceUrlWhitelist(experience.whiteList);
-        }
-
-        $urlRouterProvider.otherwise(function ($injector, $location) {
-            var currentUrl = $location.url();
-
-            if (!currentUrl || currentUrl.length <= 0) {
-                return url;
-            }
-
-            iVXjs.Bus.emit(stateEvents.NOT_FOUND, currentUrl);
-
-            var pageNotFoundStateId = iVXjs.rules(iVXjs.config.pageNotFoundState);
-            var pageNotFoundUrl = void 0;
-
-            var pageNotFoundState = iVXjs.config.states.find(function (state) {
-                return state.id === pageNotFoundStateId;
-            });
-
-            if (pageNotFoundState) {
-                pageNotFoundUrl = pageNotFoundState.url;
-            }
-
-            return pageNotFoundUrl ? pageNotFoundUrl : url;
-        });
-        this.create$httpInjectors($httpProvider, $provide);
-    }
-
-    _createClass(AppConfig, [{
-        key: 'create$httpInjectors',
-        value: function create$httpInjectors($httpProvider, $provide) {
-            $provide.factory("iVXjsHttpInterceptors", _httpInterceptors2.default);
-
-            $httpProvider.interceptors.push("iVXjsHttpInterceptors");
-        }
-    }, {
-        key: 'createStates',
-        value: function createStates($stateProvider) {
-            var states = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
-
-            states.forEach(function (state, index) {
-                var type = state.type,
-                    id = state.id,
-                    url = state.url,
-                    _state$onEnter = state.onEnter,
-                    onEnter = _state$onEnter === undefined ? [] : _state$onEnter,
-                    _state$onExit = state.onExit,
-                    onExit = _state$onExit === undefined ? [] : _state$onExit;
-
-                var videoEventNames = new _videoEvents2.default();
-
-                $stateProvider.state(id, {
-                    url: url,
-                    data: state,
-                    template: '<ivxjs-' + type + '-state class="hide"></ivxjs-' + type + '-state>',
-                    onEnter: ['$rootScope', '$state', 'iVXjs', 'ivxjs.actions', 'ivxjs.bus', 'ivxjs.modules.audio.experience', 'ivxjs.modules.audio', function ($rootScope, $state, iVXjs, iVXjsActions, iVXjsBus, iVXjsAudioExperience, iVXjsAudio) {
-                        if (!iVXjsAudioExperience.eventsAdded) {
-                            iVXjsAudioExperience.addEventListeners(iVXjsBus);
-                            iVXjsAudio.addEventListeners(iVXjsBus);
-                            iVXjs.experience.Bus = iVXjsBus;
-                            iVXjsAudioExperience.eventsAdded = true;
-                            iVXjsAudio.eventsAdded = true;
-                            iVXjs.experience.audio = iVXjsAudioExperience;
-                            iVXjs.experience.actions = iVXjsActions;
-                        }
-
-                        iVXjs.log.debug('On Enter Actions Start', {}, { source: 'onEnter', status: 'started', actions: onEnter, timestamp: Date.now() });
-
-                        $rootScope.stateID = id;
-
-                        iVXjsActions.resolveActions(onEnter, function () {
-                            iVXjs.log.debug('On Enter Actions Resolved', {}, { source: 'onEnter', actions: onEnter, status: 'completed', timestamp: Date.now() });
-                        });
-                    }],
-                    onExit: ['$rootScope', 'ivxjs.actions', 'iVXjs', 'ivxjs.bus', function ($rootScope, iVXjsActions, iVXjs, iVXjsBus) {
-                        iVXjsBus.emit(videoEventNames.DISPOSE);
-                        iVXjs.log.debug('On Exit Actions Start', {}, { source: 'onExit', status: 'started', actions: onEnter });
-                        iVXjsActions.resolveActions(onExit, function () {
-                            iVXjs.log.debug('On Exit Events Actions Resolved', {}, { source: 'onExit', actions: onExit, status: 'completed', timestamp: Date.now() });
-                        });
-                    }]
-                });
-            });
-        }
-    }]);
-
-    return AppConfig;
-}();
-
-AppConfig.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider', '$compileProvider', '$httpProvider', '$sceDelegateProvider', '$provide', 'iVXjs'];
-
-exports.default = (0, _createFactoryFunction2.default)(AppConfig);
-
-/***/ }),
-/* 461 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.HttpInterceptors = undefined;
-
-var _createFactoryFunction = __webpack_require__(1);
-
-var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
-
-var _httpEvents = __webpack_require__(111);
-
-var _httpEvents2 = _interopRequireDefault(_httpEvents);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var httpEventNames = new _httpEvents2.default();
-
-var HttpInterceptors = exports.HttpInterceptors = function HttpInterceptors($q, iVXjs, iVXjsLog) {
-    _classCallCheck(this, HttpInterceptors);
-
-    this.request = function (config) {
-        iVXjsLog.log('Requested Template: ' + config.url);
-        iVXjs.Bus.emit(httpEventNames.REQUEST_SUCCESS, config);
-        return config;
-    };
-    this.requestError = function (rejection) {
-        iVXjs.Bus.emit(httpEventNames.REQUEST_ERROR, rejection);
-        iVXjsLog.error({ message: rejection.data }, "HTTP");
-
-        return $q.reject(rejection);
-    };
-    this.response = function (response) {
-        iVXjsLog.log('Loaded Template: ' + response.config.url);
-        iVXjs.Bus.emit(httpEventNames.RESPONSE_SUCCESS, response);
-        return response;
-    };
-    this.responseError = function (rejection) {
-        iVXjsLog.error({ message: rejection.data, info: rejection }, "HTTP");
-        iVXjs.Bus.emit(httpEventNames.RESPONSE_ERROR, rejection);
-
-        return $q.reject(rejection);
-    };
-};
-
-HttpInterceptors.$inject = ["$q", "iVXjs", "ivxjs.log"];
-
-exports.default = (0, _createFactoryFunction2.default)(HttpInterceptors);
+exports.default = angular.module('ivx-js.services.template-renderer', []).service('pullInTemplate', (0, _createFactoryFunction2.default)(PullInTemplate)).name;
 
 /***/ }),
 /* 462 */
@@ -23326,123 +22772,120 @@ exports.default = (0, _createFactoryFunction2.default)(HttpInterceptors);
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.Service = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _createFactoryFunction = __webpack_require__(1);
 
 var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
 
-var _audioEvents = __webpack_require__(38);
-
-var _audioEvents2 = _interopRequireDefault(_audioEvents);
-
-var _stateEvents = __webpack_require__(62);
-
-var _stateEvents2 = _interopRequireDefault(_stateEvents);
-
-var _angularEvents = __webpack_require__(79);
-
-var _angularEvents2 = _interopRequireDefault(_angularEvents);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var AppRun = function AppRun($rootScope, $state, $window, $transitions, $http, iVXjs, iVXjsBus, iVXjsActions, iVXjsConstants) {
-    _classCallCheck(this, AppRun);
+var Service = exports.Service = function () {
+    function Service(iVXjs) {
+        _classCallCheck(this, Service);
+    }
 
-    if (!iVXjs || !iVXjs.config) return;
-
-    var _iVXjs$config = iVXjs.config,
-        _iVXjs$config$metadat = _iVXjs$config.metadata,
-        metadata = _iVXjs$config$metadat === undefined ? {} : _iVXjs$config$metadat,
-        templates = _iVXjs$config.templates;
-    var _metadata$title = metadata.title,
-        title = _metadata$title === undefined ? 'iVX Story Player' : _metadata$title,
-        description = metadata.description,
-        image = metadata.image;
-
-    var audioEventNames = new _audioEvents2.default();
-    var stateEventNames = new _stateEvents2.default();
-    var angularEventNames = new _angularEvents2.default();
-
-    $rootScope.pageTitle = title;
-    $rootScope.ogImage = image;
-    $rootScope.ogDescription = description;
-
-    iVXjs.Bus.on(stateEventNames.GO, function (state) {
-        var evalState = state;
-
-        if (Array.isArray(state)) {
-            evalState = state[0];
-        }
-
-        $state.go(evalState.stateId);
-    });
-
-    $rootScope.$on("$includeContentError", function (event, args) {
-        iVXjs.Bus.emit(angularEventNames.TEMPLATE_NOT_FOUND, event);
-    });
-
-    $transitions.onSuccess({ to: '*' }, ['$state', 'ivxjs.modules.audio', function ($state, iVXjsAudio) {
-        var data = $state.current.data;
+    _createClass(Service, [{
+        key: 'setScopeExperience',
+        value: function setScopeExperience(experience) {
+            var data = experience.data;
 
 
-        iVXjs.Bus.emit(stateEventNames.CHANGE, $state.current);
-
-        if (data.audio) {
-            data.audio.id = 'state-audio';
-
-            iVXjsBus.emit(audioEventNames.SET_UP, data.audio);
-        } else {
-            iVXjsAudio.pause();
-        }
-
-        if ($state.current.data.restricted) {
-
-            var navigateBackState = iVXjs.experience.config.pageNotFoundState ? iVXjs.experience.config.pageNotFoundState : iVXjs.experience.config.defaultState;
-            var restrictRedirect = iVXjs.experience.rules(navigateBackState);
-
-            if (iVXjs.experience.isRestricted) {
-                iVXjs.experience.isRestricted().then(function (restricted) {
-                    if (restricted) {
-                        $state.go(restrictRedirect);
-                    }
-                });
-            }
+            return {
+                data: data
+            };
         }
     }]);
 
-    iVXjsBus.on(audioEventNames.ENDED, function (currentAudio) {
-        if (currentAudio.id === 'state-audio') {
-            iVXjsActions.resolveActions(currentAudio.onEnd, function () {});
+    return Service;
+}();
+
+Service.$inject = ['iVXjs'];
+
+exports.default = angular.module('ivx-js.services.scope-experience', []).service('ivxExperienceScope', (0, _createFactoryFunction2.default)(Service)).name;
+
+/***/ }),
+/* 463 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _stringParsers = __webpack_require__(464);
+
+var _stringParsers2 = _interopRequireDefault(_stringParsers);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = angular.module('ivx-js.filters', [_stringParsers2.default]).name;
+
+/***/ }),
+/* 464 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var StringParsers = exports.StringParsers = function () {
+    function StringParsers(id) {
+        _classCallCheck(this, StringParsers);
+    }
+
+    _createClass(StringParsers, [{
+        key: 'camelCase',
+        value: function camelCase(id) {
+            var inputParts = id.split('-');
+            var self = this;
+            var inputName = inputParts && inputParts.length > 0 ? inputParts.reduce(function (inputName, inputPart) {
+                return '' + inputName + self.capitalize(inputPart);
+            }) : '' + inputParts[0];
+
+            return inputName;
         }
-    });
+    }, {
+        key: 'startCase',
+        value: function startCase(id) {
+            var inputParts = id.split('-');
+            var self = this;
+            var inputName = inputParts && inputParts.length > 0 ? inputParts.reduce(function (inputName, inputPart) {
+                return '' + inputName + self.capitalize(inputPart) + ' ';
+            }, '') : '' + inputParts[0];
 
-    iVXjsBus.on(stateEventNames.REQUEST_STATE, function () {
-        var currentState = $state.current;
-
-        if (!currentState.data) {
-            var defaultStateRules = iVXjs.experience.config.defaultState;
-            var defaultStateId = iVXjs.experience.rules(defaultStateRules);
-
-            currentState.data = iVXjs.config.states.find(function (state) {
-                return state.id === defaultStateId;
-            });
+            return inputName;
         }
-
-        iVXjsBus.emit(stateEventNames.GET_STATE, currentState);
-    });
-
-    iVXjsBus.on(audioEventNames.TIME_UPDATE, function (currentAudio) {
-        if (currentAudio.id === 'state-audio') {
-            currentAudio.runCuePoints(iVXjs.experience.processor);
+    }, {
+        key: 'capitalize',
+        value: function capitalize(tempString) {
+            return tempString[0].toUpperCase() + tempString.substring(1);
         }
-    });
-};
+    }]);
 
-AppRun.$inject = ['$rootScope', '$state', '$window', '$transitions', '$http', 'iVXjs', 'ivxjs.bus', 'ivxjs.actions', 'ivxjs.constants'];
+    return StringParsers;
+}();
 
-exports.default = (0, _createFactoryFunction2.default)(AppRun);
+var stringParser = new StringParsers();
+
+exports.default = angular.module('ivx-js.filters.string-parsers', []).filter('stringParsers', ['$rootScope', function ($rootScope) {
+    return function (name, text) {
+        return stringParser[name](text);
+    };
+}]).name;
 
 /***/ })
 /******/ ]);

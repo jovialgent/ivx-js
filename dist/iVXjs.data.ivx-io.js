@@ -440,7 +440,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-var _state = __webpack_require__(5);
+var _state = __webpack_require__(4);
 
 var _state2 = _interopRequireDefault(_state);
 
@@ -491,147 +491,6 @@ exports.default = _class;
 
 /***/ }),
 /* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _typeParsers = __webpack_require__(1);
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var typeValidator = new _typeParsers.TypeValidator();
-
-var _class = function () {
-    function _class(experience, customEvaluator) {
-        _classCallCheck(this, _class);
-
-        this.experience = experience;
-        this.customEvaluator = customEvaluator;
-    }
-
-    _createClass(_class, [{
-        key: "evaluate",
-        value: function evaluate(rule) {
-            var self = this;
-            var _rule$conditionOperat = rule.conditionOperator,
-                conditionOperator = _rule$conditionOperat === undefined ? "and" : _rule$conditionOperat,
-                conditions = rule.conditions;
-
-            var evaluateConditions = conditions.map(function (condition, index) {
-                var lhs = condition.key,
-                    is = condition.is,
-                    rhs = condition.value,
-                    _condition$type = condition.type,
-                    type = _condition$type === undefined ? "input" : _condition$type;
-
-
-                if (self.customEvaluator && typeValidator.isFunction(self.customEvaluator) && self.customEvaluator(condition)) {
-                    return self.customEvaluator(condition);
-                }
-
-                // Since older versions of the iVXjs JSON used 
-                // the key for "keyword" this will make it backwards
-                // compatable
-                if (self[lhs]) {
-                    return self[lhs](lhs, is, rhs);
-                }
-
-                return self[type](lhs, is, rhs);
-            });
-
-            return this[conditionOperator](evaluateConditions);
-        }
-    }, {
-        key: "input",
-        value: function input(lhs, is, rhs) {
-            var experience = this.experience;
-
-            var lhsValue = experience.data[lhs];
-
-            return this[is](lhsValue, rhs);
-        }
-    }, {
-        key: "and",
-        value: function and() {
-            var predicates = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-
-            return predicates.reduce(function (evaluate, predicate, index) {
-                return evaluate && predicate;
-            }, true);
-        }
-    }, {
-        key: "or",
-        value: function or() {
-            var predicates = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-
-            return predicates.reduce(function (evaluate, predicate, index) {
-                return evaluate || predicate;
-            }, false);
-        }
-    }, {
-        key: "not",
-        value: function not() {
-            var predicates = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-
-            return predicates.reduce(function (evaluate, predicate, index) {
-                return evaluate && !predicate;
-            }, true);
-        }
-    }, {
-        key: "lte",
-        value: function lte(lhs, rhs) {
-            if (isNaN(lhs) || isNaN(rhs)) return false;
-            return new Number(lhs) <= new Number(rhs);
-        }
-    }, {
-        key: "lt",
-        value: function lt(lhs, rhs) {
-            if (isNaN(lhs) || isNaN(rhs)) return false;
-            return new Number(lhs) < new Number(rhs);
-        }
-    }, {
-        key: "gte",
-        value: function gte(lhs, rhs) {
-            if (isNaN(lhs) || isNaN(rhs)) return false;
-            return new Number(lhs) >= new Number(rhs);
-        }
-    }, {
-        key: "gt",
-        value: function gt(lhs, rhs) {
-            if (isNaN(lhs) || isNaN(rhs)) return false;
-            return new Number(lhs) > new Number(rhs);
-        }
-    }, {
-        key: "equals",
-        value: function equals(lhs, rhs) {
-            return lhs === rhs;
-        }
-    }, {
-        key: "notEquals",
-        value: function notEquals(lhs, rhs) {
-            return lhs !== rhs;
-        }
-    }, {
-        key: "in",
-        value: function _in(lhs, rhs) {
-            return rhs.indexOf(lhs) >= 0;
-        }
-    }]);
-
-    return _class;
-}();
-
-exports.default = _class;
-
-/***/ }),
-/* 4 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -659,7 +518,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 5 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -714,7 +573,7 @@ var _class = function (_iVXjsConstants) {
 exports.default = _class;
 
 /***/ }),
-/* 6 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -727,7 +586,7 @@ exports.Actions = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _audioEvents = __webpack_require__(7);
+var _audioEvents = __webpack_require__(6);
 
 var _audioEvents2 = _interopRequireDefault(_audioEvents);
 
@@ -932,7 +791,7 @@ var Actions = exports.Actions = function () {
 ;
 
 /***/ }),
-/* 7 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -946,7 +805,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-var _audio = __webpack_require__(8);
+var _audio = __webpack_require__(7);
 
 var _audio2 = _interopRequireDefault(_audio);
 
@@ -1006,7 +865,7 @@ var _class = function (_AudioConstants) {
 exports.default = _class;
 
 /***/ }),
-/* 8 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1061,7 +920,7 @@ var _class = function (_iVXjsConstants) {
 exports.default = _class;
 
 /***/ }),
-/* 9 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1074,7 +933,7 @@ exports.Rules = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _evaluator = __webpack_require__(3);
+var _evaluator = __webpack_require__(9);
 
 var _evaluator2 = _interopRequireDefault(_evaluator);
 
@@ -1182,6 +1041,147 @@ var Rules = exports.Rules = function () {
 
     return Rules;
 }();
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _typeParsers = __webpack_require__(1);
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var typeValidator = new _typeParsers.TypeValidator();
+
+var _class = function () {
+    function _class(experience, customEvaluator) {
+        _classCallCheck(this, _class);
+
+        this.experience = experience;
+        this.customEvaluator = customEvaluator;
+    }
+
+    _createClass(_class, [{
+        key: "evaluate",
+        value: function evaluate(rule) {
+            var self = this;
+            var _rule$conditionOperat = rule.conditionOperator,
+                conditionOperator = _rule$conditionOperat === undefined ? "and" : _rule$conditionOperat,
+                conditions = rule.conditions;
+
+            var evaluateConditions = conditions.map(function (condition, index) {
+                var lhs = condition.key,
+                    is = condition.is,
+                    rhs = condition.value,
+                    _condition$type = condition.type,
+                    type = _condition$type === undefined ? "input" : _condition$type;
+
+
+                if (self.customEvaluator && typeValidator.isFunction(self.customEvaluator) && self.customEvaluator(condition)) {
+                    return self.customEvaluator(condition);
+                }
+
+                // Since older versions of the iVXjs JSON used 
+                // the key for "keyword" this will make it backwards
+                // compatable
+                if (self[lhs]) {
+                    return self[lhs](lhs, is, rhs);
+                }
+
+                return self[type](lhs, is, rhs);
+            });
+
+            return this[conditionOperator](evaluateConditions);
+        }
+    }, {
+        key: "input",
+        value: function input(lhs, is, rhs) {
+            var experience = this.experience;
+
+            var lhsValue = experience.data[lhs];
+
+            return this[is](lhsValue, rhs);
+        }
+    }, {
+        key: "and",
+        value: function and() {
+            var predicates = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+
+            return predicates.reduce(function (evaluate, predicate, index) {
+                return evaluate && predicate;
+            }, true);
+        }
+    }, {
+        key: "or",
+        value: function or() {
+            var predicates = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+
+            return predicates.reduce(function (evaluate, predicate, index) {
+                return evaluate || predicate;
+            }, false);
+        }
+    }, {
+        key: "not",
+        value: function not() {
+            var predicates = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+
+            return predicates.reduce(function (evaluate, predicate, index) {
+                return evaluate && !predicate;
+            }, true);
+        }
+    }, {
+        key: "lte",
+        value: function lte(lhs, rhs) {
+            if (isNaN(lhs) || isNaN(rhs)) return false;
+            return new Number(lhs) <= new Number(rhs);
+        }
+    }, {
+        key: "lt",
+        value: function lt(lhs, rhs) {
+            if (isNaN(lhs) || isNaN(rhs)) return false;
+            return new Number(lhs) < new Number(rhs);
+        }
+    }, {
+        key: "gte",
+        value: function gte(lhs, rhs) {
+            if (isNaN(lhs) || isNaN(rhs)) return false;
+            return new Number(lhs) >= new Number(rhs);
+        }
+    }, {
+        key: "gt",
+        value: function gt(lhs, rhs) {
+            if (isNaN(lhs) || isNaN(rhs)) return false;
+            return new Number(lhs) > new Number(rhs);
+        }
+    }, {
+        key: "equals",
+        value: function equals(lhs, rhs) {
+            return lhs === rhs;
+        }
+    }, {
+        key: "notEquals",
+        value: function notEquals(lhs, rhs) {
+            return lhs !== rhs;
+        }
+    }, {
+        key: "in",
+        value: function _in(lhs, rhs) {
+            return rhs.indexOf(lhs) >= 0;
+        }
+    }]);
+
+    return _class;
+}();
+
+exports.default = _class;
 
 /***/ }),
 /* 10 */
@@ -1410,7 +1410,7 @@ var _actions = __webpack_require__(23);
 
 var _rules = __webpack_require__(28);
 
-var _actions2 = __webpack_require__(6);
+var _actions2 = __webpack_require__(5);
 
 var _typeParsers = __webpack_require__(1);
 
@@ -1603,7 +1603,7 @@ function initializeiVXIO() {
 
   return settings;
 };
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)(module)))
 
 /***/ }),
 /* 23 */
@@ -2259,7 +2259,7 @@ var _evaluator = __webpack_require__(29);
 
 var _evaluator2 = _interopRequireDefault(_evaluator);
 
-var _rules = __webpack_require__(9);
+var _rules = __webpack_require__(8);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2297,117 +2297,9 @@ var iVXioRules = exports.iVXioRules = function (_Rules) {
 
 /***/ }),
 /* 29 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _evaluator = __webpack_require__(3);
-
-var _evaluator2 = _interopRequireDefault(_evaluator);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var _class = function (_Evaluator) {
-    _inherits(_class, _Evaluator);
-
-    function _class(experience, customEvaluator) {
-        _classCallCheck(this, _class);
-
-        return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, experience, customEvaluator));
-    }
-
-    _createClass(_class, [{
-        key: 'storyEvents',
-        value: function storyEvents(lhs, is, storyEvent) {
-            var experience = this.experience;
-            var events = experience.events;
-
-
-            if (storyEvent === 'none') {
-                return noEventFired(is, events, experience);
-            }
-
-            return this[is](storyEvent, events);
-
-            function noEventFired(is, events, experience) {
-                var isFired = is === 'fired';
-
-                return events.length <= 0 && isFired;
-            }
-        }
-    }, {
-        key: 'fired',
-        value: function fired(event, events) {
-            var firedEvent = events.find(function (eventFired, index) {
-                return eventFired === event;
-            });
-
-            return typeof firedEvent !== 'undefined';
-        }
-    }, {
-        key: 'notFired',
-        value: function notFired(event, events) {
-            var firedEvent = events.find(function (eventFired, index) {
-                return eventFired === event;
-            });
-
-            return typeof firedEvent === 'undefined';
-        }
-    }, {
-        key: 'progress',
-        value: function progress(lhs, is, _progress) {
-            var experience = this.experience;
-            var currentStoryProgress = experience.progress,
-                currentMilestone = experience.milestone,
-                story = experience.story;
-            var progressMap = story.progressMap;
-
-            var currentProgress = void 0;
-            var currentProgressValue = -1;
-            var currentMilestoneValue = -1;
-
-            if (currentMilestone && currentMilestone.length > 0) {
-                var currentMilestoneString = currentMilestone[0].toLowerCase() + currentMilestone.substring(1);
-
-                currentMilestoneValue = progressMap[currentMilestoneString] ? progressMap[currentMilestoneString] : -1;
-            }
-
-            if (isStoryProgress(currentStoryProgress)) {
-                var currentProgressString = currentStoryProgress[0].toLowerCase() + currentStoryProgress.substring(1);
-
-                currentProgressValue = progressMap[currentProgressString];
-            }
-
-            _progress = _progress[0].toLowerCase() + _progress.substring(1);
-
-            var progressValue = progressMap[_progress];
-            var evaluateProgress = currentProgressValue > currentMilestoneValue ? currentProgressValue : currentMilestoneValue;
-
-            return this[is](evaluateProgress, progressValue);
-
-            function isStoryProgress(progress) {
-                return progress === 'Started' || progress === 'Completed' || progress === 'Converted';
-            }
-        }
-    }]);
-
-    return _class;
-}(_evaluator2.default);
-
-exports.default = _class;
+throw new Error("Module build failed: SyntaxError: C:/Projects/GitHub/ivx-js/src/modules/data/ivx-io/evaluator.js: Unexpected token (9:0)\n\n\u001b[0m \u001b[90m  7 | \u001b[39m\n \u001b[90m  8 | \u001b[39m    storyEvents(lhs\u001b[33m,\u001b[39m is\u001b[33m,\u001b[39m storyEvent) {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m  9 | \u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<\u001b[39m \u001b[33mHEAD\u001b[39m\n \u001b[90m    | \u001b[39m\u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 10 | \u001b[39m        let { experience \u001b[33m=\u001b[39m {} } \u001b[33m=\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m;\u001b[39m\n \u001b[90m 11 | \u001b[39m        let { events \u001b[33m=\u001b[39m []} \u001b[33m=\u001b[39m experience\u001b[33m;\u001b[39m\n \u001b[90m 12 | \u001b[39m\u001b[33m===\u001b[39m\u001b[33m===\u001b[39m\u001b[33m=\u001b[39m\u001b[0m\n");
 
 /***/ }),
 /* 30 */
@@ -3364,7 +3256,7 @@ var _class = function () {
                 jsonMinLengthAttribute = _jsonInputAttributes$2 === undefined ? 0 : _jsonInputAttributes$2;
 
 
-            jsonInputData.type = "text";
+            jsonInputData.type = "textarea";
             jsonInputData.attributes = Object.assign({}, jsonInputData.attributes, {
                 maxlength: new Number(storyMaxLengthAttribute < maxCharacters ? storyMaxLengthAttribute : jsonMaxLengthAttribute).valueOf(),
                 minlength: new Number(typeof storyMinLengthAttribute !== 'undefined' ? storyMinLengthAttribute : jsonMinLengthAttribute).valueOf()
