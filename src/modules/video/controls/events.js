@@ -1,67 +1,44 @@
 import VideoSettings from '../settings.js';
 
 export default class {
-    contructor(playerId) {
-        Object.assign(this, {
-            volume: 0,
-            currenttime: 0,
-            playerId
-        });
+    contructor() {        
+        this.volume = 0;
+        this.currenttime = 0;
     }
 
     play() {
-        const { playerId } = this;
-        
-        this.iVXjsBus.emit(this.controlEventNames.PLAY, {
-            playerId
-        });
+        this.iVXjsBus.emit(this.controlEventNames.PLAY);
     }
 
     pause() {
-        const { playerId } = this;
-
-        this.iVXjsBus.emit(this.controlEventNames.PAUSE, {
-            playerId
-        });
+        this.iVXjsBus.emit(this.controlEventNames.PAUSE);
     }
 
     getDuration(cb) {
-        const { playerId } = this;
-
-        this.iVXjsBus.once(this.controlEventNames.SET_DURATION, (eventObj) => {
-            const { playerId: eventPlayerId, duration } = eventObj;
-
-            if (eventPlayerId === playerId) {
-                cb(duration);
-            }
+        this.iVXjsBus.once(this.controlEventNames.SET_DURATION, (duration) => {
+            cb(duration);
         });
-
-        this.iVXjsBus.emit(this.controlEventNames.GET_DURATION, {
-            playerId
-        });
+        this.iVXjsBus.emit(this.controlEventNames.GET_DURATION);
     }
 
     setVolume(volume) {
-        const { playerId } = this;
-
-        this.iVXjsBus.emit(this.controlEventNames.SET_VOLUME, {
-            volume,
-            playerId
-        });
+        this.iVXjsBus.emit(this.controlEventNames.SET_VOLUME, volume);
     }
 
     seek(seconds) {
-        const { playerId } = this;
-
-        this.iVXjsBus.emit(this.controlEventNames.SEEK, {
-            currentTime : seconds,
-            playerId
-        });
+        this.iVXjsBus.emit(this.controlEventNames.SEEK, seconds);
     }
 
-    changeCurrentTrack(trackId) {
-        const { playerId } = this;
+    changeCurrentTrack(trackId){
+        this.iVXjsBus.emit(this.trackEventNames.CHANGE_CURRENT_TRACK, {trackId});
+    }
 
-        this.iVXjsBus.emit(this.trackEventNames.CHANGE_CURRENT_TRACK, { trackId, playerId });
+    mute(){
+        this.iVXjsBus.emit(this.controlEventNames.MUTE);
+    }
+
+    
+    unmute(){
+        this.iVXjsBus.emit(this.controlEventNames.UNMUTE);
     }
 }

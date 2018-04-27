@@ -3,7 +3,7 @@ import TextInputController from '../controllers/input.text.js';
 import { ErrorMessages } from '../utilities/messages.error.js';
 
 class TextInput {
-    constructor($compile, $filter, iVXjs, iVXjsUIModule, pullInTemplate) {
+    constructor($compile, $filter, iVXjs, iVXjsUIModule, pullInTemplate, ivxExperienceScope) {
         this.template = this.templateHTML;
         this.transclude = true;
         this.restrict = 'E';
@@ -18,6 +18,9 @@ class TextInput {
             let { inputData: input } = $scope;
             let { id, name, errors = {}, labelHTML, label = $filter('stringParsers')('startCase', id), attributes = {}, type, settings = {} } = input;
             let errorMessages = new ErrorMessages(input, errors, attributes);
+
+            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
+            
             let tagHTML = `ng-blur="vm.onChange(inputValue)" ng-model="inputValue"`
 
             input.label = labelHTML ? labelHTML : label;
@@ -42,7 +45,7 @@ class TextInput {
     };
 }
 
-TextInput.$inject = ['$compile', '$filter', 'iVXjs', 'ivxjs.modules.ui', 'pullInTemplate'];
+TextInput.$inject = ['$compile', '$filter', 'iVXjs', 'ivxjs.modules.ui', 'pullInTemplate', 'ivxExperienceScope'];
 
 export default angular
     .module('ivx-js.directives.input.text', [])

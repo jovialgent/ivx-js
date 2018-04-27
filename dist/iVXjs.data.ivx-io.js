@@ -3364,7 +3364,7 @@ var _class = function () {
                 jsonMinLengthAttribute = _jsonInputAttributes$2 === undefined ? 0 : _jsonInputAttributes$2;
 
 
-            jsonInputData.type = "textarea";
+            jsonInputData.type = "text";
             jsonInputData.attributes = Object.assign({}, jsonInputData.attributes, {
                 maxlength: new Number(storyMaxLengthAttribute < maxCharacters ? storyMaxLengthAttribute : jsonMaxLengthAttribute).valueOf(),
                 minlength: new Number(typeof storyMinLengthAttribute !== 'undefined' ? storyMinLengthAttribute : jsonMinLengthAttribute).valueOf()
@@ -3908,7 +3908,9 @@ var Service = exports.Service = function () {
 
     _createClass(Service, [{
         key: 'setScopeExperience',
-        value: function setScopeExperience(experience) {}
+        value: function setScopeExperience(experience) {
+            console.log("GOT TO IVXIO SERVICE");
+        }
     }]);
 
     return Service;

@@ -2,7 +2,7 @@ import createFactoryFunction from '../utilities/create-factory-function.js';
 import FormInputController from '../controllers/input.form.js';
 
 class FormInput {
-    constructor($compile, $filter, iVXjsUIModule, pullInTemplate) {
+    constructor($compile, $filter, iVXjs, iVXjsUIModule, pullInTemplate, ivxExperienceScope) {
         this.template = this.templateHTML;
         this.restrict = 'E';
         this.scope = {
@@ -35,6 +35,8 @@ class FormInput {
                 }
             });
 
+            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
+            
             formSettings = pullInTemplate.convertLabel('', formSettings, $scope);
             formSettings.submit = pullInTemplate.convertLabel('Submit', formSettings.submit, $scope);
             formSettings.hideSubmit = hideSubmit;
@@ -59,7 +61,7 @@ class FormInput {
     };
 }
 
-FormInput.$inject = ['$compile', '$filter', 'ivxjs.modules.ui', 'pullInTemplate'];
+FormInput.$inject = ['$compile', '$filter', 'iVXjs', 'ivxjs.modules.ui', 'pullInTemplate', 'ivxExperienceScope'];
 
 export default angular
     .module('ivx-js.directives.input.form', [])

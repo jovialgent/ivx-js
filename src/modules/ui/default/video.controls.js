@@ -2,8 +2,8 @@ import { Controls } from '../../video/controls/index.js';
 import ElementUtilities from "../utilities/element";
 
 export default class extends Controls {
-    constructor(container, playerId) {
-        super(playerId);
+    constructor(container) {
+        super();
 
         if (container.html instanceof Function) {
             container.html(this.html);
@@ -24,12 +24,12 @@ export default class extends Controls {
         } = this;
 
         this.container = container;
-        this.playPauseControls = document.getElementById(`${playerId}-video-controls-play-pause`);
-        this.totalTimeInfo = document.getElementById(`${playerId}-video-controls-total-time`);
-        this.currentTimeInfo = document.getElementById(`${playerId}-video-controls-current-time`);
-        this.scrubBar = document.getElementById(`${playerId}-video-controls-scrub-bar`);
-        this.muteControls = document.getElementById(`${playerId}-video-controls-mute-controls`);
-        this.volumeBar = document.getElementById(`${playerId}-video-controls-volume-bar`);
+        this.playPauseControls = document.getElementById("video-controls-play-pause");
+        this.totalTimeInfo = document.getElementById("video-controls-total-time");
+        this.currentTimeInfo = document.getElementById("video-controls-current-time");
+        this.scrubBar = document.getElementById("video-controls-scrub-bar");
+        this.muteControls = document.getElementById("video-controls-mute-controls");
+        this.volumeBar = document.getElementById("video-controls-volume-bar");
     }
 
     get playPauseControlsClasses() {
@@ -101,44 +101,41 @@ export default class extends Controls {
     }
 
     get playPauseButtonHTML() {
-        let { playClasses: play, playerId } = this;
+        let { playClasses: play } = this;
         let { playPauseControlsClasses: playPauseControls } = this;
         return `
-        <button id="${playerId}-video-controls-play-pause" class="${playPauseControls}">
+        <button id="video-controls-play-pause" class="${playPauseControls}">
             <i class='${play}'></i>
         </button>`
     }
 
     get scrubBarHTML() {
-        const { playerId } = this;
         return `
-             <div id="${playerId}-video-controls-scrub-bar" class="${this.scrubBarClasses}">
+             <div id="video-controls-scrub-bar" class="${this.scrubBarClasses}">
                 <div class="${this.scrubBarTimeLapseClasses}"></div>
             </div>
         `
     }
 
     get timestampHTML() {
-        const { playerId } = this;
         return `
-        <span id="${playerId}-video-controls-current-time" class="${this.currentTimeInfoClasses}"></span>
-        <span id="${playerId}-video-controls-total-time" class="${this.totalTimeInfoClasses}"></span>
+        <span id="video-controls-current-time" class="${this.currentTimeInfoClasses}"></span>
+        <span id="video-controls-total-time" class="${this.totalTimeInfoClasses}"></span>
         `;
     }
 
     get muteButtonHTML() {
-        let { unmuteClasses: unmute, muteControlsClasses, playerId } = this;
+        let { unmuteClasses: unmute, muteControlsClasses } = this;
         return `
-            <button id="${playerId}-video-controls-mute-controls" class="${muteControlsClasses}">
+            <button id="video-controls-mute-controls" class="${muteControlsClasses}">
                 <i class="${unmute}"></i>
             </button>
         `
     }
 
     get volumeBarHTML() {
-        const { playerId } = this;
         return `
-            <div  id="${playerId}-video-controls-volume-bar" class="${this.volumeBarClasses}">
+            <div  id="video-controls-volume-bar" class="${this.volumeBarClasses}">
                 <div class="${this.volumeBarCurrentVolumeClasses}"></div>
             </div> 
         `
@@ -287,9 +284,6 @@ export default class extends Controls {
             let ccToggle = document.createElement('button');
             let ccToggleIcon = document.createElement('i');
 
-            trackListContainer.setAttribute('id', `${self.playerId}-track-list`);
-            ccToggle.setAttribute('id', `${self.playerId}-cc-toggle`);
-
             ElementUtilities.addClassesToElement(ccToggle, closeCaptionButtonClasses);
             ElementUtilities.addClassesToElement(ccToggleIcon, closeCaptionButtonIconClasses);
 
@@ -387,8 +381,10 @@ export default class extends Controls {
 
     }
 
+
+
     createChapterContainer(textTracks) {
-        let { chapterButtonClasses, chapterListClasses, chapterActiveClasses, chapterInActiveClasses, chapterListItemClasses, playerId } = this;
+        let { chapterButtonClasses, chapterListClasses, chapterActiveClasses, chapterInActiveClasses, chapterListItemClasses } = this;
         let chapterTrack = Array.from(textTracks).find(textTrack => {
             return textTrack.kind === 'chapters';
         });
@@ -396,9 +392,6 @@ export default class extends Controls {
 
         if (chapterTrack) {
             let chapterListEl = document.createElement('ol');
-
-            chapterListEl.setAttribute('id', `${this.playerId}-chapter-list`);
-
             let { cues = [] } = chapterTrack;
 
             Array.from(cues).forEach((cue, index) => {
@@ -412,7 +405,7 @@ export default class extends Controls {
 
                 ElementUtilities.append(chapterContainerEl, chapterButtonEl);
 
-                chapterContainerEl.id = `${id}-chapter-seclect-container`;
+                chapterContainerEl.id = id;
                 chapterContainerEl.className = `${chapterListItemClasses} ${index === 0 ? chapterActiveClasses : chapterInActiveClasses}`;
 
                 ElementUtilities.append(chapterListEl, chapterContainerEl);

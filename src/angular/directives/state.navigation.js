@@ -33,7 +33,12 @@ class NavigationState {
 
             }, 1000)
 
+<<<<<<< HEAD
+            controller.embedded = embedded;
+
+=======
             iElm.html(thisNavigationState.html);
+>>>>>>> 66edc35f03aabb01d344fb2918a33d29056022f9
             $compile(iElm.contents())($scope, (compiled) => {
                 iElm.html(compiled);
 
@@ -65,7 +70,7 @@ class NavigationState {
     }
 
     get templateHTML() {
-        return `<div  class="navigation-state-container"></div>`;
+        return `<div ng-class="{'ivx-embedded-state': vm.embedded}"  class="ivx-state-container ivx-state-navigation-container navigation-state-container"></div>`;
     };
 }
 

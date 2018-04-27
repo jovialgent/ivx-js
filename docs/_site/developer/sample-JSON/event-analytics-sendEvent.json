@@ -1,7 +1,7 @@
 {
     "eventName": "sendEvent",
     "args": {
-        "tracker" : "ivxjsTracker",
+        "tracker" : "ivxjsTracker"
         "hitType": "event",
         "eventCategory": "Video",
         "eventAction": "play",

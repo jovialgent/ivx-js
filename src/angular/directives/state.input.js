@@ -14,7 +14,7 @@ class InputState {
             let { data } = $state.current;
             let { headerHTML, footerHTML = '', onInputReady = [], form: formSettings = {}, header = {}, footer = {}, audio } = data;
             let audioEventNames = new AudioEventNames();
-            let formSection = `<ivxjs-form-input inputs='vm.inputs' form-id='vm.id' on-submit='vm.onSubmit' form-settings="vm.formSettings"></ivxjs-form-input>`;
+            let formSection = `<ivxjs-form-input class="ivx-state-input-form-container" inputs='vm.inputs' form-id='vm.id' on-submit='vm.onSubmit' form-settings="vm.formSettings"></ivxjs-form-input>`;
 
             data = pullInTemplate.convertHeaderFooter(header, footer, data, controller);
 
@@ -45,6 +45,8 @@ class InputState {
                     })
                 }
 
+                controller.embedded = embedded;
+
                 iVXjs.log.debug(`onInputReady Started`, {}, { state: data, source: 'onInputReady', status: 'started', actions: onInputReady, timestamp: Date.now() });
 
                 iVXjsActions.resolveActions(onInputReady, () => {
@@ -59,7 +61,7 @@ class InputState {
     }
 
     get templateHTML() {
-        return `<div class="input-state-container"></div>`;
+        return `<div ng-class="{'ivx-embedded-state': vm.embedded}" class="ivx-state-container ivx-state-input-container input-state-container"></div>`;
     };
 }
 

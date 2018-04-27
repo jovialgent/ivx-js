@@ -5,12 +5,9 @@ class HTML5VideoPlayerController {
     constructor($scope, iVXjsBus) {
         let self = this;
         let videoEventNames = new VideoEventNames();
-
-        const disposeListener = iVXjsBus.on(videoEventNames.DISPOSE, function disposeHTML5Player(player = {}) {
-            if (player.id === self.playerId) {
-                self.player.dispose(iVXjsBus);
-                iVXjsBus.removeListener(videoEventNames.DISPOSE, disposeListener);
-            }
+     
+        iVXjsBus.once(videoEventNames.DISPOSE, function disposeHTML5Player() {
+            self.player.dispose(iVXjsBus);
         })
     }
 }

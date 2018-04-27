@@ -6,12 +6,9 @@ class VimeoVideoPlayerController {
         let self = this;
         let videoEventNames = new VideoEventNames();
 
-        const disposeEvent = iVXjsBus.on(videoEventNames.DISPOSE, (player) => {
-            if (self.playerId === player.id) {
-                self.player.dispose(iVXjsBus);
-                iVXjsBus.removeListener(videoEventNames.DISPOSE, disposeEvent);
-            }
-        });
+        iVXjsBus.once(videoEventNames.DISPOSE, function disposeVimeoPlayer() {
+            self.player.dispose(iVXjsBus);
+        })
     }
 }
 

@@ -37,7 +37,14 @@
 <loc>https://influencetech.github.io/ivx-js/developer/tutorial.color-input/</loc>
 </url>
 <url>
+<<<<<<< HEAD
+<loc>http://localhost:4000/ivx-js/developer/tutorial.embedded-views/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/ivx-js/developer/tutorial.hello-world/</loc>
+=======
 <loc>https://influencetech.github.io/ivx-js/developer/tutorial.hello-world/</loc>
+>>>>>>> 66edc35f03aabb01d344fb2918a33d29056022f9
 </url>
 <url>
 <loc>https://influencetech.github.io/ivx-js/developer/tutorial.module-injection/</loc>
@@ -72,6 +79,10 @@
 <lastmod>2017-03-10T15:22:15-07:00</lastmod>
 </url>
 <url>
+<<<<<<< HEAD
+<loc>http://localhost:4000/ivx-js/tests/karma-tests/index.html</loc>
+<lastmod>2018-04-04T15:43:56-06:00</lastmod>
+=======
 <loc>https://influencetech.github.io/ivx-js/tests/coverage/PhantomJS%202.1.1%20(Mac%20OS%20X%200.0.0)/angular/app.run.js.html</loc>
 <lastmod>2017-03-10T15:22:15-07:00</lastmod>
 </url>
@@ -777,6 +788,7 @@
 </url>
 <url>
 <loc>https://influencetech.github.io/ivx-js/tests/karma-tests/index.html</loc>
-<lastmod>2018-01-11T13:12:34-07:00</lastmod>
+<lastmod>2017-12-13T15:40:32-07:00</lastmod>
+>>>>>>> 66edc35f03aabb01d344fb2918a33d29056022f9
 </url>
 </urlset>

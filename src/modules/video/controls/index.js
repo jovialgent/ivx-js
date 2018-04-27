@@ -4,27 +4,21 @@ import TrackEventNames from "../../../constants/tracks.events.js";
 import TrackCuesEventNames from "../../../constants/tracks.cues.events.js";
 
 export class Controls extends ControlEvents {
-    constructor(playerId) {
-        super(playerId);
-
-        Object.assign(this, {
-            playerId,
-            currentVolume: 0.5,
-            controlEventNames: new VideoEventNames(),
-            trackEventNames: new TrackEventNames(),
-            trackCuesEventName: new TrackCuesEventNames()
-        })
+    constructor() {
+        super();
+        this.currentVolume = 0.5;
+        this.controlEventNames = new VideoEventNames();
+        this.trackEventNames = new TrackEventNames();
+        this.trackCuesEventName = new TrackCuesEventNames();
     }
 
     dispose(iVXjsBus) {
         iVXjsBus.removeListener(this.controlEventNames.TIME_UPDATE, this.updateTime);
         iVXjsBus.removeListener(this.controlEventNames.PLAYING, this.whilePlaying);
         iVXjsBus.removeListener(this.controlEventNames.CAN_PLAY, this.canPlayCallback);
-        iVXjsBus.removeListener(this.controlEventNames.MUTE, this.whileMuted);
-        iVXjsBus.removeListener(this.controlEventNames.UNMUTE, this.whileUnmuted);
-        iVXjsBus.removeListener(this.controlEventNames.SET_VOLUME, this.whileSetVolume);
         iVXjsBus.removeListener(this.trackCuesEventName.ON_CHAPTER_START, this.chapterChange);
         iVXjsBus.removeListener(this.trackEventNames.CHANGE_CURRENT_TRACK, this.trackChange)
+
     }
 
     getAbsolutePosition(element) {
@@ -56,6 +50,7 @@ export class Controls extends ControlEvents {
         currentVolumeSpan.style.width = `${volumeLevel * 100}%`;
 
         this.currentVolume = volumeLevel;
+        this.unmute();
         this.setVolume(volumeLevel);
     }
 
@@ -78,43 +73,28 @@ export class Controls extends ControlEvents {
         this.seek(scrubToTime);
     }
 
-    togglePlayPause(event) {
+    setPlayPause(event) {
         let { playPauseControls, playClasses, pauseClasses } = this;
         let searchClasses = [playClasses, pauseClasses];
         let playPauseIcon = this.getElementByClasses(playPauseControls.children, searchClasses);
 
         switch (playPauseIcon.className) {
             case playClasses:
-                this.setPlay();
+                playPauseIcon.className = pauseClasses;
+
+                this.play();
                 break;
             case pauseClasses:
-                this.setPause();
+                playPauseIcon.className = playClasses;
+
+                this.pause();
                 break;
             default:
                 break;
         }
     }
 
-    setPlay() {
-        let { playPauseControls, playClasses, pauseClasses } = this;
-        let searchClasses = [playClasses, pauseClasses];
-        let playPauseIcon = this.getElementByClasses(playPauseControls.children, searchClasses);
-
-        playPauseIcon.className = pauseClasses;
-        this.play();
-    }
-
-    setPause() {
-        let { playPauseControls, playClasses, pauseClasses } = this;
-        let searchClasses = [playClasses, pauseClasses];
-        let playPauseIcon = this.getElementByClasses(playPauseControls.children, searchClasses);
-
-        playPauseIcon.className = playClasses;
-        this.pause();
-
-    }
-
-    toggleMute(event) {
+    setMute(event) {
         let { muteControls, muteClasses, unmuteClasses, volumeBar, volumeBarCurrentVolumeClasses } = this;
         let muteControlsClasses = [muteClasses, unmuteClasses];
         let muteIcon = this.getElementByClasses(muteControls.children, muteControlsClasses);
@@ -122,9 +102,15 @@ export class Controls extends ControlEvents {
 
         switch (muteIcon.className) {
             case unmuteClasses:
+                muteIcon.className = muteClasses;
+                currentVolumeSpan.style.width = `0%`;
+
                 this.mute();
                 break;
             case muteClasses:
+                muteIcon.className = unmuteClasses;
+                currentVolumeSpan.style.width = `${this.currentVolume * 100}%`;
+
                 this.unmute();
                 break;
             default:
@@ -132,49 +118,12 @@ export class Controls extends ControlEvents {
         }
     }
 
-    mute() {
-        let { muteControls, muteClasses, unmuteClasses, volumeBar, volumeBarCurrentVolumeClasses } = this;
-        let muteControlsClasses = [muteClasses, unmuteClasses];
-        let muteIcon = this.getElementByClasses(muteControls.children, muteControlsClasses);
-        let currentVolumeSpan = this.getElementByClasses(volumeBar.children, [volumeBarCurrentVolumeClasses]);
-
-        muteIcon.className = muteClasses;
-        currentVolumeSpan.style.width = `0%`;
-
-        this.setVolume(0);
-    }
-
-    unmute() {
-        let { muteControls, muteClasses, unmuteClasses, volumeBar, volumeBarCurrentVolumeClasses } = this;
-        let muteControlsClasses = [muteClasses, unmuteClasses];
-        let muteIcon = this.getElementByClasses(muteControls.children, muteControlsClasses);
-        let currentVolumeSpan = this.getElementByClasses(volumeBar.children, [volumeBarCurrentVolumeClasses]);
-
-        muteIcon.className = unmuteClasses;
-        currentVolumeSpan.style.width = `${this.currentVolume * 100}%`;
-
-        this.setVolume(this.currentVolume);
-    }
-
-    setVolumeBar(volume) {
-        let { muteControls, muteClasses, unmuteClasses, volumeBar, volumeBarCurrentVolumeClasses } = this;
-        let muteControlsClasses = [muteClasses, unmuteClasses];
-        let muteIcon = this.getElementByClasses(muteControls.children, muteControlsClasses);
-        let currentVolumeSpan = this.getElementByClasses(volumeBar.children, [volumeBarCurrentVolumeClasses]);
-
-        if (volume) this.currentVolume = volume;
-
-        currentVolumeSpan.style.width = `${volume * 100}%`;
-    }
-
-    onReadyToPlay(player) {
+    onReadyToPlay(player, stateData) {
         let { volumeBar, volumeBarCurrentVolumeClasses } = this;
         let self = this;
         let currentVolumeSpan = this.getElementByClasses(volumeBar.children, [volumeBarCurrentVolumeClasses]);
 
-        if (currentVolumeSpan) {
-            currentVolumeSpan.style.width = `${self.currentVolume * 100}%`;
-        }
+        currentVolumeSpan.style.width = `${self.currentVolume * 100}%`;
 
         this.setVolume(self.currentVolume);
         this.getDuration((duration) => {
@@ -220,6 +169,8 @@ export class Controls extends ControlEvents {
         );
 
         playPauseIcon.className = pauseClasses;
+
+        this.play();
     }
 
     onPaused() {
@@ -231,6 +182,8 @@ export class Controls extends ControlEvents {
         );
 
         playPauseIcon.className = playClasses;
+
+        this.pause();
     }
 
     addEventListeners(iVXjsBus) {
@@ -238,15 +191,10 @@ export class Controls extends ControlEvents {
         let { scrubBar, volumeBar, playPauseControls, muteControls, trackCuesEventName } = this;
 
         this.iVXjsBus = iVXjsBus;
-        this.updateTime = iVXjsBus.on(this.controlEventNames.TIME_UPDATE, player => {
-            updateTime(player);
-        });
+        this.updateTime = iVXjsBus.on(this.controlEventNames.TIME_UPDATE, updateTime);
         this.whilePaused = iVXjsBus.on(this.controlEventNames.PAUSED, whilePaused);
         this.whilePlaying = iVXjsBus.on(this.controlEventNames.PLAYING, whilePlaying);
         this.canPlayCallback = iVXjsBus.on(this.controlEventNames.CAN_PLAY, canPlayCallBack);
-        this.whileMuted = iVXjsBus.on(this.controlEventNames.MUTE, mute);
-        this.whileUnmuted = iVXjsBus.on(this.controlEventNames.UNMUTE, unmute);
-        this.whileSetVolume = iVXjsBus.on(this.controlEventNames.SET_VOLUME, setVolume);
         this.chapterChange = iVXjsBus.on(this.trackCuesEventName.ON_CHAPTER_START, chapterChange);
         this.trackChange = iVXjsBus.on(this.trackEventNames.CHANGE_CURRENT_TRACK, trackChange)
         this.updateTime = this.updateTime ? this.updateTime : updateTime;
@@ -258,99 +206,56 @@ export class Controls extends ControlEvents {
             self.scrub(event);
         });
         playPauseControls.addEventListener('mouseup', (event) => {
-            self.togglePlayPause(event);
+            self.setPlayPause(event);
         });
         muteControls.addEventListener('click', (event) => {
-            self.toggleMute(event);
+            self.setMute(event);
         });
 
-        const canPlayListener = this.iVXjsBus.on(this.controlEventNames.CAN_PLAY, (player) => {
-            if (player.id === self.playerId) {
-                self.createPlayerSpecificControls({ player })
-                self.player = player;
-                self.iVXjsBus.removeListener(this.controlEventNames.CAN_PLAY, canPlayListener);
-            }
-
+        this.iVXjsBus.once(this.controlEventNames.CAN_PLAY, (player) => {
+            self.createPlayerSpecificControls({ player })
+            self.player = player;
         });
 
-        function chapterChange(args = {}) {
-            const { cue, playerId } = args;
+        function chapterChange(cue) {
+            const { chapterActiveClasses, chapterListItemClasses, chapterInActiveClasses } = self;
+            const chapterList = Array.from(document.getElementsByClassName(chapterListItemClasses));
+            const { chapterId: currentChapterId } = cue;
 
-            if (!playerId || playerId === self.playerId) changeChapter();
-            if (playerId === self.playerId) changeChapter();
+            chapterList.forEach(chapterListItem => {
+                let { id: chapterId } = chapterListItem;
 
-            function changeChapter() {
-                const { chapterActiveClasses, chapterListItemClasses, chapterInActiveClasses } = self;
-                const chapterListContainer = document.getElementById(`${self.playerId}-chapter-list`);
-                const { chapterId: currentChapterId } = cue;
+                if (chapterId === currentChapterId) {
+                    chapterListItem.classList.remove(chapterInActiveClasses);
+                    chapterListItem.classList.add(chapterActiveClasses);
+                    return;
+                }
 
-                if (!chapterListContainer) return;
-
-                const chapterList = Array.from(chapterListContainer.children);
-
-                chapterList.forEach(chapterListItem => {
-                    let { id: chapterId } = chapterListItem;
-
-                    if (chapterId.indexOf(currentChapterId) >= 0) {
-                        chapterListItem.classList.remove(chapterInActiveClasses);
-                        chapterListItem.classList.add(chapterActiveClasses);
-                        return;
-                    }
-
-                    chapterListItem.classList.remove(chapterActiveClasses);
-                    chapterListItem.classList.add(chapterInActiveClasses);
-                });
-            }
+                chapterListItem.classList.remove(chapterActiveClasses);
+                chapterListItem.classList.add(chapterInActiveClasses);
+            });
         };
 
         function trackChange(opts) {
-            let { trackId = "", playerId } = opts;
+            let { trackId = "" } = opts;
 
-            if (playerId === self.playerId) {
-                self.updateTrackSelector(trackId)
-            }
+            self.updateTrackSelector(trackId)
         }
 
-        function canPlayCallBack(player) {
-            if (player.id === self.playerId) {
-                self.onReadyToPlay(player);
-            }
+        function canPlayCallBack(player, _stateData) {
+            self.onReadyToPlay(player, _stateData);
         }
 
         function updateTime(player) {
-            if (player.id === self.playerId) {
-                self.onTimeUpdate(player);
-            }
+            self.onTimeUpdate(player);
         }
 
         function whilePaused(player) {
-            if (player.id === self.playerId) {
-                self.onPaused(player);
-            }
+            self.onPaused(player);
         }
 
-        function whilePlaying(player) {
-            if (player.id === self.playerId) {
-                self.onPlaying();
-            }
-        }
-
-        function mute(args = {}) {
-            const { playerId } = args;
-
-            if (!playerId || playerId === self.playerId) self.mute();
-        }
-
-        function unmute(args) {
-            const { playerId } = args;
-
-            if (!playerId || playerId === self.playerId) self.unmute();
-        }
-
-        function setVolume(args) {
-            const { playerId, volume } = args;
-
-            if (!playerId || playerId === self.playerId) self.setVolumeBar(volume);
+        function whilePlaying() {
+            self.onPlaying();
         }
     }
 

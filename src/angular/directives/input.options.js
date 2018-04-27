@@ -3,7 +3,7 @@ import OptionsInputController from '../controllers/input.options.js';
 import { ErrorMessages } from '../utilities/messages.error.js';
 
 class OptionsInput {
-    constructor($compile, $filter, iVXjsUIModule, iVXjsBus, pullInTemplate) {
+    constructor($compile, $filter, iVXjs, iVXjsUIModule, iVXjsBus, pullInTemplate, ivxExperienceScope) {
         this.template = this.templateHTML;
         this.transclude = true;
         this.restrict = 'E';
@@ -26,9 +26,17 @@ class OptionsInput {
                            ng-options="option.display for option in inputData.options track by option.value" 
                            ng-model='vm.selected'`;
 
+            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
+
             input.label = input.label ? input.label : $filter('stringParsers')('startCase', id);
             input = pullInTemplate.convertLabel($filter('stringParsers')('startCase', id), input, $scope);
+<<<<<<< HEAD
+            input.beforeHtml = pullInTemplate.convertTemplateUrlToHtml(input.beforeHtml, $scope);
+            input.afterHtml = pullInTemplate.convertTemplateUrlToHtml(input.afterHtml, $scope);
+
+=======
    
+>>>>>>> 66edc35f03aabb01d344fb2918a33d29056022f9
 
             if (attributes.required || defaultDisplay) {
                 defaultOptionTag = defaultDisplay ?
@@ -56,7 +64,7 @@ class OptionsInput {
     };
 }
 
-OptionsInput.$inject = ['$compile', '$filter', 'ivxjs.modules.ui', 'ivxjs.bus', 'pullInTemplate'];
+OptionsInput.$inject = ['$compile', '$filter', 'iVXjs', 'ivxjs.modules.ui', 'ivxjs.bus', 'pullInTemplate', 'ivxExperienceScope'];
 
 export default angular
     .module('ivx-js.directives.input.options', [])

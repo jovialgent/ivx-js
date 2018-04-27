@@ -24,11 +24,25 @@ class HtmlState {
                 iElm.html(html);
             }
 
+<<<<<<< HEAD
+            $scope.$on('$destroy', () => {
+                if (controller.timeOutId) {
+                    $timeout.cancel(controller.timeOutId);
+                }
+            });
+=======
+>>>>>>> 66edc35f03aabb01d344fb2918a33d29056022f9
 
 
             $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
 
+<<<<<<< HEAD
+            controller.embedded = embedded;
+
+            function showState() {
+=======
             $timeout(() => {
+>>>>>>> 66edc35f03aabb01d344fb2918a33d29056022f9
                 let hasTransition = onCompile.find((event, index) => {
                     return event.eventName === "animateElement" && event.args.element === ".html-state-container";
                 });
@@ -43,7 +57,11 @@ class HtmlState {
                     })
                 }
 
+<<<<<<< HEAD
+                iVXjs.log.debug(`onCompile Started`, {}, { state: $scope.stateData, source: 'onCompile', status: 'started', actions: onCompile, timestamp: Date.now() });
+=======
                 iVXjs.log.debug(`onCompile Started`, {}, { state: $state.current.data, source: 'onCompile', status: 'started', actions: onCompile, timestamp: Date.now() });
+>>>>>>> 66edc35f03aabb01d344fb2918a33d29056022f9
 
                 iVXjsActions.resolveActions(onCompile, () => {
                     iVXjs.log.debug(`onCompile Completed`, {}, { state: $state.current.data, source: 'onCompile', status: 'completed', actions: onCompile, timestamp: Date.now() });
@@ -58,7 +76,7 @@ class HtmlState {
     }
 
     get templateHTML() {
-        return `<div class="html-state-container" id="{{vm.id}}"></div>`;
+        return `<div ng-class="{'ivx-embedded-state': vm.embedded}" class="ivx-state-container ivx-state-html-container html-state-container" id="{{vm.id}}"></div>`;
     };
 }
 

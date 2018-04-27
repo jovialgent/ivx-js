@@ -24,7 +24,7 @@ export class Anchor {
         } 
 
         return `
-             <a id='${id}' class="${classes} ${anchorClasses}"  href="${href}" ${attributeHTML} >${labelHTML ? labelHTML : label}</a>           
+             <a id='${id}' class="${classes} ${anchorClasses} ivx-link"  href="${href}" ${attributeHTML} >${labelHTML ? labelHTML : label}</a>           
         `
     }
 }

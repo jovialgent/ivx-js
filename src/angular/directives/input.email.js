@@ -3,7 +3,7 @@ import EmailInputController from '../controllers/input.email.js';
 import { ErrorMessages } from '../utilities/messages.error.js';
 
 class EmailInput {
-    constructor($compile, $filter, iVXjsUIModule, pullInTemplate) {
+    constructor($compile, $filter, iVXjs, iVXjsUIModule, pullInTemplate, ivxExperienceScope) {
         this.template = this.templateHTML;
         this.transclude = true;
         this.restrict = 'E';
@@ -18,8 +18,10 @@ class EmailInput {
             let { inputData: input } = $scope;
             let { id, name, errors = {}, labelHTML, label, attributes = {}, type, settings = {} } = input;
             let errorMessages = new ErrorMessages(input, errors, attributes);
-            let tagHTML = `ng-blur="vm.onChange(inputValue)" ng-model="inputValue"`
+            let tagHTML = `ng-blur="vm.onChange(inputValue)" ng-model="inputValue"`;
 
+            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
+            
             input.label = label ? label : $filter('stringParsers')('startCase', id);
             input = pullInTemplate.convertLabel($filter('stringParsers')('startCase', id), input, $scope);
 
@@ -42,7 +44,7 @@ class EmailInput {
     };
 }
 
-EmailInput.$inject = ['$compile', '$filter', 'ivxjs.modules.ui', 'pullInTemplate'];
+EmailInput.$inject = ['$compile', '$filter', 'iVXjs', 'ivxjs.modules.ui', 'pullInTemplate', 'ivxExperienceScope'];
 
 export default angular
     .module('ivx-js.directives.input.email', [])

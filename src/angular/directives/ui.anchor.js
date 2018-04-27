@@ -32,7 +32,7 @@ export class Anchor {
     }
 
     get templateHTML() {
-        return "<div></div>";
+        return "<div class='ivx-link-container'></div>";
     }
 }
 

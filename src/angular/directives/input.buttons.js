@@ -3,7 +3,7 @@ import ButtonInputController from '../controllers/input.buttons.js';
 import { ErrorMessages } from '../utilities/messages.error.js';
 
 class ButtonsInput {
-    constructor($compile, $filter, iVXjs, iVXjsUIModule, pullInTemplate) {
+    constructor($compile, $filter, iVXjs, iVXjsUIModule, pullInTemplate, ivxExperienceScope) {
         this.template = this.templateHTML;
         this.transclude = true;
         this.restrict = 'E';
@@ -32,6 +32,8 @@ class ButtonsInput {
 
                 }
             });
+
+            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);            
 
             input = pullInTemplate.convertLabel($filter('stringParsers')('startCase', id), input, $scope);
 
@@ -67,7 +69,7 @@ class ButtonsInput {
     }
 }
 
-ButtonsInput.$inject = ['$compile', '$filter', 'iVXjs', 'ivxjs.modules.ui', 'pullInTemplate'];
+ButtonsInput.$inject = ['$compile', '$filter', 'iVXjs', 'ivxjs.modules.ui', 'pullInTemplate', 'ivxExperienceScope'];
 
 export default angular
     .module('ivx-js.directives.input.button', [])

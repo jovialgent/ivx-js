@@ -240,33 +240,24 @@ var Google = exports.Google = function (_DefaultAnalytics) {
                 metadata = _config$metadata === undefined ? {} : _config$metadata;
             var trackingId = metadata.trackingId;
             var _settings$plugins = settings.plugins,
-                plugins = _settings$plugins === undefined ? [] : _settings$plugins,
-                _settings$name = settings.name,
-                name = _settings$name === undefined ? 'ivxjsTracker' : _settings$name;
+                plugins = _settings$plugins === undefined ? [] : _settings$plugins;
 
 
             settings.trackingId = trackingId ? trackingId : settings.trackingId;
 
             this.assertModule.assert(settings.trackingId, "Tracking Id", "make sure to add a tracking id");
 
-            this.experienceData.experience.analytics = {
-                name: name
-            };
-
-            settings.name = name;
-
             ga('create', settings);
-
             plugins.forEach(function (plugin, index) {
                 ga('require', plugin);
             });
-            ga(name + '.send', 'pageview');
+            ga('send', 'pageview');
 
             iVXjs.Bus.on(stateEventNames.CHANGE, function (state) {
                 var url = state.url;
 
 
-                ga(name + '.send', {
+                ga('send', {
                     hitType: 'pageview',
                     page: url
                 });
@@ -277,42 +268,19 @@ var Google = exports.Google = function (_DefaultAnalytics) {
         value: function sendEvent(args) {
             var _settings = this.settings,
                 settings = _settings === undefined ? {} : _settings,
-                log = this.log,
-                _analytics = this.analytics,
-                analytics = _analytics === undefined ? {} : _analytics;
-            var tracker = args.tracker;
-
+                log = this.log;
+            var tracker = settings.tracker;
 
             var sendEventPromise = new Promise(function (resolve, reject) {
-
                 args.hitCallback = function () {
                     resolve();
                 };
 
-                tracker = tracker ? tracker + '.' : analytics.name + '.';
-
-                delete args.tracker;
-
+                tracker = tracker ? tracker + '.' : "";
                 ga(tracker + 'send', args);
             });
 
             return sendEventPromise;
-        }
-    }, {
-        key: 'setAnalyticsData',
-        value: function setAnalyticsData(args) {
-            var _settings2 = this.settings,
-                settings = _settings2 === undefined ? {} : _settings2,
-                log = this.log,
-                _analytics2 = this.analytics,
-                analytics = _analytics2 === undefined ? {} : _analytics2;
-            var tracker = args.tracker,
-                key = args.key,
-                value = args.value;
-
-            var setActionName = tracker ? tracker + '.set' : analytics.name + '.set';
-
-            ga(setActionName, key, value);
         }
     }, {
         key: 'experience',
@@ -321,7 +289,6 @@ var Google = exports.Google = function (_DefaultAnalytics) {
 
 
             experienceData.experience.sendEvent = this.sendEvent;
-            experienceData.experience.setAnalyticsData = this.setAnalyticsData;
 
             return experienceData;
         }

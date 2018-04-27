@@ -54,7 +54,7 @@ export class Form {
      * @type {String}
      */
     get formClasses() {
-        return 'row'
+        return 'row ivx-grid-row'
     }
 
     /**

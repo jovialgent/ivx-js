@@ -6,8 +6,13 @@ export default class extends Evaluator {
     }
 
     storyEvents(lhs, is, storyEvent) {
+<<<<<<< HEAD
+        let { experience = {} } = this;
+        let { events = []} = experience;
+=======
         let {experience} = this;
         let {events} = experience;
+>>>>>>> 66edc35f03aabb01d344fb2918a33d29056022f9
 
         if (storyEvent === 'none') {
             return noEventFired(is, events, experience);
@@ -22,7 +27,7 @@ export default class extends Evaluator {
         }
     }
 
-    fired(event, events) {
+    fired(event, events = [])  {
         let firedEvent = events.find((eventFired, index) => {
             return eventFired === event;
         });
@@ -30,7 +35,7 @@ export default class extends Evaluator {
         return typeof firedEvent !== 'undefined';
     }
 
-    notFired(event, events) {
+    notFired(event, events = []) {
         let firedEvent = events.find((eventFired, index) => {
             return eventFired === event;
         });

@@ -1,13 +1,13 @@
 ---
 layout: single
 source : https://influencetech.github.io/ivx-js/
+<<<<<<< HEAD
+# source : http://127.0.0.1:4000/ivx-js/
+=======
+>>>>>>> 66edc35f03aabb01d344fb2918a33d29056022f9
 jsarr:
      - js/jsond-table.js
 ---
-
-
-<!-- source : https://influencetech.github.io/ivx-js/ -->
-<!-- source : http://127.0.0.1:4000/ivx-js/ -->
 
 <style>
          /* Tooltip container */

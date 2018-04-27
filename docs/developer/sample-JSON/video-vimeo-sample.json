@@ -15,7 +15,6 @@
         "next": [],
         "onVideoEnd": [],
         "playerSettings": {
-            "id" : "vimeo-video-player",
             "controls": "standard",
             "vimeoId"  : "2345579"
         },

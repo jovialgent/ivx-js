@@ -3,7 +3,7 @@ import RadioInputController from '../controllers/input.radio.js';
 import { ErrorMessages } from '../utilities/messages.error.js';
 
 class RadioInput {
-    constructor($compile, $filter, iVXjsUIModule, pullInTemplate) {
+    constructor($compile, $filter, iVXjs, iVXjsUIModule, pullInTemplate, ivxExperienceScope) {
         this.template = this.templateHTML;
         this.transclude = true;
         this.restrict = 'E';
@@ -19,6 +19,8 @@ class RadioInput {
             let { id, errors = {}, name, labelHTML, label, attributes = {}, radioButtons = [], settings = {} } = input;
             let radioErrorRequired = '';
 
+            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
+            
             if (attributes.required) {
                 radioErrorRequired = `required="!radioSelected"`;
             }
@@ -60,7 +62,7 @@ class RadioInput {
     };
 }
 
-RadioInput.$inject = ['$compile', '$filter', 'ivxjs.modules.ui', 'pullInTemplate'];
+RadioInput.$inject = ['$compile', '$filter',  'iVXjs', 'ivxjs.modules.ui', 'pullInTemplate', 'ivxExperienceScope'];
 
 
 export default angular
