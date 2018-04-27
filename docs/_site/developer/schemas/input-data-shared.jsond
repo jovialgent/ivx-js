@@ -32,6 +32,50 @@
         }
       }
     },
+    "beforeHtml": {
+        "type": "object",
+        "name": "Before HTML",
+        "description": "Contains all the settings for the content that will appear before an input.",
+        "properties": {
+          "templateUrl": {
+            "name": "Before Inputs's Template URL Path",
+            "type": "string",
+            "description": "Url path to an external .html file"
+          },
+          "html": {
+            "name": "Before Input's HTML",
+            "type": "string",
+            "description": "HTML to be inserted before the input's label."
+          },
+          "classes": {
+            "name": "Before Input's CSS Class Names",
+            "type": "string",
+            "description": "Classes to add to the container of this custom content."
+          }
+        }
+      },
+      "afterHtml": {
+        "type": "object",
+        "name": "After HTML",
+        "description": "Contains all the settings for the content that will appear after an input.",
+        "properties": {
+          "templateUrl": {
+            "name": "After Inputs's Template URL Path",
+            "type": "string",
+            "description": "Url path to an external .html file with html content that will be inserted after this input's error messages."
+          },
+          "html": {
+            "name": "After Input's HTML",
+            "type": "string",
+            "description": "HTML to be inserted after this input's error messages."
+          },
+          "classes": {
+            "name": "After Input's CSS Class Names",
+            "type": "string",
+            "description": "Classes to add to the container of this custom content."
+          }
+        }
+      },
     "settings": {
       "type": "object",
       "name": "Settings",

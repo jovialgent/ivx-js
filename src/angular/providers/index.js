@@ -1,5 +1,5 @@
-import iVXjsSetUp from "./ivxjs.setup";
+import iVXjsStateCreatorProvider from "./ivxjs.state-creator";
 
 export default angular.module('ivx-js.providers', [
-    iVXjsSetUp
+    iVXjsStateCreatorProvider
 ]).name

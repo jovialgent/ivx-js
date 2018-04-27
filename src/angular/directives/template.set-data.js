@@ -4,44 +4,42 @@ import createFactoryFunction from '../utilities/create-factory-function.js';
 
 
 class SetData {
-    constructor(iVXjs) {
+    constructor(iVXjs, iVXjsActionTemplateService) {
         this.restrict = 'A';
         this.controller = ["iVXjs", (iVXjs) => {
 
         }];
         this.link = ($scope, iElm, iAttrs, controller) => {
-            iElm[0].addEventListener('click', (event) => {
-                event.preventDefault();
-                let { ivxSetData: value } = iAttrs;
-                let keyValue = extractKeyValue(value);
+            iVXjsActionTemplateService.setup($scope, iElm, iAttrs, _getSetDataEventObj);
 
-                if (iVXjs.actions && iVXjs.actions.setData) {
-                    iVXjs.actions.setData(keyValue);
-                } else {
-                    iVXjs.experience.setData(keyValue);
+            function _getSetDataEventObj() {
+                const args = _extractKeyValue(iAttrs.ivxSetData);
+        
+                return {
+                    eventName: "setData",
+                    args
                 }
-            }, false);
-
-
-            function extractKeyValue(valueString) {
+            }
+        
+            function _extractKeyValue(valueString = "") {
                 let updatedValue = valueString.trim();
                 let parts = updatedValue.split(',');
-
+        
                 parts = parts.map((part, index) => {
                     let newPart = part.trim();
-
+        
                     newPart = newPart.replace(/[{}]/g, "");
-
+        
                     if (index === 0) {
                         newPart = newPart.replace(/[\'\"]/g, "");
                     }
-
+        
                     return newPart;
                 });
-
+        
                 let key = parts[0];
                 let value = parts[1] === "true" || parts[1] === "false" ? parts[1] === "true" : parts[1];
-
+        
                 return { key, value };
             }
         }
@@ -49,7 +47,7 @@ class SetData {
 
 }
 
-SetData.$inject = ['iVXjs'];
+SetData.$inject = ['iVXjs', 'iVXjsActionTemplateService'];
 
 export default angular
     .module('ivx-js.directives.template.set-data', [])

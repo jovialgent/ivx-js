@@ -3,12 +3,7 @@ import VideoEventNames from '../../constants/video.events.js';
 
 class VimeoVideoPlayerController {
     constructor($scope, iVXjsBus) {
-        let self = this;
-        let videoEventNames = new VideoEventNames();
-
-        iVXjsBus.once(videoEventNames.DISPOSE, function disposeVimeoPlayer() {
-            self.player.dispose(iVXjsBus);
-        })
+        
     }
 }
 

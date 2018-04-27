@@ -258,7 +258,7 @@ export default class {
                     var errorMessage = error.message;
                     // ...
 
-                    console.log(error.code);
+                    // console.log(error.code);
                 });
         }
 

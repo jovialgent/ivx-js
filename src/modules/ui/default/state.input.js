@@ -22,10 +22,10 @@ export class InputState {
         let {classes: footerClasses = '', html: footerHTML = ''} = footer;
 
         return `
-            <section class="${sectionClasses} ${defaultSectionClasses}" id="${data.id}">
-                 <header class="${headerClasses} ${defaultHeaderClasses}">${headerHTML}</header>
+            <section class="${sectionClasses} ${defaultSectionClasses} ivx-state-section ivx-state-input-section" id="${data.id}">
+                 <header class="${headerClasses} ${defaultHeaderClasses} ivx-header ivx-state-header ivx-state-input-header">${headerHTML}</header>
                 ${formSection}
-                <footer class="${footerClasses} ${defaultFooterClasses}">${footerHTML}</footer>
+                <footer class="${footerClasses} ${defaultFooterClasses} ivx-footer ivx-state-footer ivx-state-input-footer">${footerHTML}</footer>
             </section>`;
     }
 }

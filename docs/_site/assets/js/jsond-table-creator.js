@@ -6939,6 +6939,7 @@ var _class = function () {
     }, {
         key: "createTableFromData",
         value: function createTableFromData(tableData) {
+           
             if (!tableData.title && !tableData.description) return '';
             var rows = tableData.rows;
 
@@ -7089,13 +7090,13 @@ var _class = function () {
                 var keys = _.keys(tableToProcess.properties);
                 var tableBeingProcessed = tableToProcess.key;
 
-               
-
                 // Find any tables based on whether it is an
                 // object or array type
 
                 keys.forEach(function (key, index) {
                     var value = values[index];
+
+                   
                     if (value.properties) {
                         value.key = key;
                         tablesToProcess.push(value);
@@ -7103,6 +7104,7 @@ var _class = function () {
                     }
 
                     if (value.items && !_.find(tables, value.items)) {
+                        
                         value.items.key = value.items.name;
                         tablesToProcess.push(value.items);
                     }

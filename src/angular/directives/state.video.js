@@ -3,25 +3,24 @@ import VideoStateController from '../controllers/state.video.js';
 import VideoEventConstants from "../../constants/video.events.js";
 
 class VideoState {
-    constructor($compile, $state, $sce, $timeout, iVXjs, iVXjsBus, iVXjsUIModule, createInlineVideo, pullInTemplate, ivxExperienceScope) {
+    constructor($compile, $state, $sce, $timeout, iVXjs, iVXjsBus, iVXjsUIModule, createInlineVideo, pullInTemplate, ivxExperienceScope, iVXjsStateCreator, iVXjsVideoService) {
         this.template = this.templateHTML;
         this.restrict = 'E';
         this.replace = true;
-        this.scope = {}
+        this.scope = {
+            stateData: "="
+        }
         this.controller = VideoStateController
         this.controllerAs = 'vm';
         this.link = ($scope, iElm, iAttrs, controller) => {
-            let { data } = angular.copy($state.current);
+            let data = angular.copy($scope.stateData);
 
             controller.stateData = data;
 
-            let { id, playerType = "html5", playerSettings = {}, cuePoints = [], personalizations = [], header = {}, footer = {} } = data;
-            let { vimeoId, youtubeId, inlineSrc, iphoneInline = false } = playerSettings;
-            let controlsHTML = ``;
-
-            if (typeof playerSettings.controls === 'string') {
-                controlsHTML = `<ivxjs-${playerSettings.controls}-video-controls></ivxjs-${playerSettings.controls}-video-controls>`;
-            }
+            let { id, playerType = "html5", playerSettings = {}, embeddedViews = [], embedded, cuePoints = [], personalizations = [], header = {}, footer = {} } = data;
+            let { vimeoId, youtubeId, inlineSrc, iphoneInline = false, controls } = angular.copy(playerSettings);
+            const playerId = playerSettings.id ? playerSettings.id : `${id}-video-player`;
+            let controlsHTML = iVXjsVideoService.getControlHTML(playerId, controls);
 
             if (vimeoId) playerType = 'vimeo';
             if (youtubeId) playerType = 'youtube';
@@ -31,6 +30,8 @@ class VideoState {
                 data.isIphone = true;
             }
 
+            controller.controls = controls;
+
             let personalizationsHTML = personalizations.reduce((personalizationHTML, thisPersonalization, index) => {
                 thisPersonalization = pullInTemplate.convertTemplateUrlToHtml(thisPersonalization, $scope);
 
@@ -39,9 +40,10 @@ class VideoState {
                 return `${personalizationHTML} <div id="${id}" class="${defaultAnimationClass}">${html}</div> `
             }, "");
 
+            controller.playerId = playerId;
 
             let videoPlayerHTML = `
-               <ivxjs-${playerType}-video-player settings="vm.stateData.playerSettings" state-data="vm.stateData"></ivxjs-${playerType}-video-player>
+               <ivxjs-${playerType}-video-player class="ivx-state-video-player" player-id='${playerId}' settings="vm.stateData.playerSettings" state-data="vm.stateData"></ivxjs-${playerType}-video-player>
                ${controlsHTML}
                ${personalizationsHTML}`;
 
@@ -50,8 +52,12 @@ class VideoState {
             let videoFramework = new iVXjsUIModule.states.video(videoPlayerHTML, data);
 
             $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
-
+            
             iElm.html(videoFramework.html);
+
+            if (!embedded && embeddedViews.length > 0) {
+                iVXjsStateCreator.addViews(embeddedViews, iElm);
+            }
 
             controller.embedded = embedded;
 
@@ -72,6 +78,12 @@ class VideoState {
                 }
             });
 
+            $scope.$on('$destroy', () => {
+                let videoEventNames = new VideoEventConstants();
+
+                iVXjsBus.removeListener(videoEventNames.ENDED, controller.videoEnded);
+            })
+
 
         }
     }
@@ -81,7 +93,7 @@ class VideoState {
     }
 }
 
-VideoState.$inject = ['$compile', '$state', '$sce', '$timeout', 'iVXjs', 'ivxjs.bus', 'ivxjs.modules.ui', 'createInlineVideo', 'pullInTemplate', 'ivxExperienceScope'];
+VideoState.$inject = ['$compile', '$state', '$sce', '$timeout', 'iVXjs', 'ivxjs.bus', 'ivxjs.modules.ui', 'createInlineVideo', 'pullInTemplate', 'ivxExperienceScope', 'iVXjsStateCreator', 'iVXjsVideoService'];
 
 export default angular
     .module('ivx-js.directives.state.video', [])

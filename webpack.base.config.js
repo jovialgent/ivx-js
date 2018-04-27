@@ -66,7 +66,7 @@ class BaseWebpackConfig {
 
     get defaultConfig() {
         let defaultPlugins = [
-            
+
         ];
 
         if (this.minify) {
@@ -86,12 +86,17 @@ class BaseWebpackConfig {
                     {
                         test: /\.js$/,
                         exclude: /(node_modules|bower_components)/,
-                        use: {
+                        use: [{
+                            loader: 'ng-annotate-loader',
+                            options: { explicitOnly: false }
+                        },
+                        {
                             loader: 'babel-loader',
                             options: {
                                 presets: ['env']
+
                             }
-                        }
+                        }]
                     }
                 ]
             },

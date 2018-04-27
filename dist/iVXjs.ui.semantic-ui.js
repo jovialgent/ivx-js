@@ -229,11 +229,11 @@ var ErrorMessages = exports.ErrorMessages = function () {
                 containerClasses = this.containerClasses;
 
             var errorMessageHTML = errorMessages.reduce(function (errorMessageHTML, errorMessage, index) {
-                return errorMessageHTML + '<span class="' + messageClasses + '" ' + errorMessage.attrHTML + '>\n                    ' + errorMessage.message + '\n                </span>';
+                return errorMessageHTML + '<span class="' + messageClasses + ' ivx-input-error-message" ' + errorMessage.attrHTML + '>\n                    ' + errorMessage.message + '\n                </span>';
             }, '');
 
             if (errorMessageHTML.length > 0) {
-                return '<div class=\'' + containerClasses + '\'>\n                ' + errorMessageHTML + '\n            </div>';
+                return '<div class=\'' + containerClasses + ' ivx-input-error-container\'>\n                ' + errorMessageHTML + '\n            </div>';
             }
 
             return '';
@@ -245,9 +245,76 @@ var ErrorMessages = exports.ErrorMessages = function () {
 
 /***/ }),
 /* 2 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-throw new Error("Module build failed: SyntaxError: C:/Projects/GitHub/ivx-js/src/modules/ui/default/style.js: Unexpected token (5:0)\n\n\u001b[0m \u001b[90m 3 | \u001b[39m\n \u001b[90m 4 | \u001b[39m    getWidth(width) {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 5 | \u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<\u001b[39m \u001b[33mHEAD\u001b[39m\n \u001b[90m   | \u001b[39m\u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 6 | \u001b[39m        \u001b[36mif\u001b[39m (width \u001b[33m===\u001b[39m \u001b[32m'1'\u001b[39m) \u001b[36mreturn\u001b[39m \u001b[32m'ivx-grid-1-1 ivxjs-grid-1-1'\u001b[39m\u001b[33m;\u001b[39m\n \u001b[90m 7 | \u001b[39m\n \u001b[90m 8 | \u001b[39m\u001b[33m===\u001b[39m\u001b[33m===\u001b[39m\u001b[33m=\u001b[39m\u001b[0m\n");
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Style = exports.Style = function () {
+    function Style() {
+        _classCallCheck(this, Style);
+    }
+
+    _createClass(Style, [{
+        key: 'getWidth',
+        value: function getWidth(width) {
+            if (width === '1') return 'ivxjs-grid-1-1';
+
+            var gridString = width.replace('/', '-');
+
+            return 'ivxjs-grid-' + gridString;
+        }
+    }, {
+        key: 'addWidthClasses',
+        value: function addWidthClasses(inputsHTML) {
+            var self = this;
+            var _containerClasses = this.containerClasses,
+                containerClasses = _containerClasses === undefined ? '' : _containerClasses;
+
+            var contents = inputsHTML.reduce(function (currentHTML, inputHTML) {
+                var html = inputHTML.html,
+                    _inputHTML$settings = inputHTML.settings,
+                    settings = _inputHTML$settings === undefined ? {} : _inputHTML$settings,
+                    _inputHTML$input = inputHTML.input,
+                    input = _inputHTML$input === undefined ? {} : _inputHTML$input;
+                var _input$type = input.type,
+                    type = _input$type === undefined ? "" : _input$type;
+                var _settings$width = settings.width,
+                    width = _settings$width === undefined ? '1' : _settings$width,
+                    _settings$container = settings.container,
+                    container = _settings$container === undefined ? {} : _settings$container;
+                var _container$classes = container.classes,
+                    classes = _container$classes === undefined ? '' : _container$classes;
+
+
+                classes = classes + ' ' + containerClasses + ' ivx-input-container-' + type;
+
+                var thisWidth = self.getWidth(width);
+
+                html = html.replace("ivxjs-grid-1-1", thisWidth + ' ' + classes);
+
+                return currentHTML + ' ' + html;
+            }, '');
+
+            return contents;
+        }
+    }, {
+        key: 'containerClasses',
+        get: function get() {
+            return 'input-container ivx-input-container';
+        }
+    }]);
+
+    return Style;
+}();
 
 /***/ }),
 /* 3 */,
@@ -281,6 +348,8 @@ var TypeValidator = exports.TypeValidator = function () {
     }, {
         key: 'isUndefined',
         value: function isUndefined(obj) {
+            var undefined = void 0;
+
             return obj === undefined || obj === null;
         }
     }, {
@@ -849,6 +918,16 @@ var Text = exports.Text = function () {
             return '';
         }
     }, {
+        key: "beforeClasses",
+        get: function get() {
+            return 'ivx-input-before ivx-input-before-text';
+        }
+    }, {
+        key: "afterClasses",
+        get: function get() {
+            return 'ivx-input-after ivx-input-after-text';
+        }
+    }, {
         key: "html",
         get: function get() {
             var input = this.input,
@@ -856,20 +935,34 @@ var Text = exports.Text = function () {
                 tags = this.tags,
                 errors = this.errors,
                 uiClasses = this.uiClasses,
-                uiAttributes = this.uiAttributes;
+                uiAttributes = this.uiAttributes,
+                defaultBeforeClasses = this.beforeClasses,
+                defaultAfterClasses = this.afterClasses;
             var _input$label = input.label,
                 label = _input$label === undefined ? '' : _input$label,
                 labelHTML = input.labelHTML,
                 _input$name = input.name,
                 name = _input$name === undefined ? '' : _input$name,
                 _input$id = input.id,
-                id = _input$id === undefined ? '' : _input$id;
+                id = _input$id === undefined ? '' : _input$id,
+                _input$beforeHtml = input.beforeHtml,
+                beforeSettings = _input$beforeHtml === undefined ? {} : _input$beforeHtml,
+                _input$afterHtml = input.afterHtml,
+                afterSettings = _input$afterHtml === undefined ? {} : _input$afterHtml;
             var _settings$input = settings.input,
                 inputSettings = _settings$input === undefined ? {} : _settings$input,
                 _settings$showLabel = settings.showLabel,
                 showLabel = _settings$showLabel === undefined ? true : _settings$showLabel;
             var _inputSettings$classe = inputSettings.classes,
                 classes = _inputSettings$classe === undefined ? '' : _inputSettings$classe;
+            var _beforeSettings$html = beforeSettings.html,
+                beforeHtml = _beforeSettings$html === undefined ? "" : _beforeSettings$html,
+                _beforeSettings$class = beforeSettings.classes,
+                beforeClasses = _beforeSettings$class === undefined ? "" : _beforeSettings$class;
+            var _afterSettings$html = afterSettings.html,
+                afterHtml = _afterSettings$html === undefined ? "" : _afterSettings$html,
+                _afterSettings$classe = afterSettings.classes,
+                afterClasses = _afterSettings$classe === undefined ? "" : _afterSettings$classe;
 
 
             classes = classes + " " + uiClasses;
@@ -890,7 +983,7 @@ var Text = exports.Text = function () {
 
             if (labelHTML) label = labelHTML;
 
-            var inputHTML = " \n            <label for=\"" + id + "\"> " + label + " </label>\n            <input class=\"" + classes + "\"  id=\"" + id + "\" name=\"" + name + "\"  type=\"text\" " + nonValidateAttributesHTML + "   " + errorTags + " " + tags + ">\n            " + errorHTML + "\n       ";
+            var inputHTML = " \n            <div class=\"" + beforeClasses + " " + defaultBeforeClasses + "\">" + beforeHtml + "</div>\n                <label class=\"ivx-input-label ivx-input-label-text\" for=\"" + id + "\"> " + label + " </label>\n                <input class=\"" + classes + " ivx-input-text ivx-input\"  id=\"" + id + "\" name=\"" + name + "\"  type=\"text\" " + nonValidateAttributesHTML + "   " + errorTags + " " + tags + ">\n                " + errorHTML + "\n            <div class=\"" + afterClasses + " " + defaultAfterClasses + "\">" + afterHtml + "</div>\n       ";
 
             return "" + inputHTML;
         }
@@ -958,7 +1051,7 @@ var Anchor = exports.Anchor = function () {
                 label = href;
             }
 
-            return '\n             <a id=\'' + id + '\' class="' + classes + ' ' + anchorClasses + ' ivx-link"  href="' + href + '" ' + attributeHTML + ' >' + (labelHTML ? labelHTML : label) + '</a>           \n        ';
+            return '\n             <a id=\'' + id + '\' class="' + classes + ' ' + anchorClasses + '"  href="' + href + '" ' + attributeHTML + ' >' + (labelHTML ? labelHTML : label) + '</a>           \n        ';
         }
     }]);
 
@@ -1044,7 +1137,17 @@ var Form = exports.Form = function () {
     _createClass(Form, [{
         key: 'formClasses',
         get: function get() {
-            return 'row ivx-grid-row';
+            return 'row';
+        }
+    }, {
+        key: 'beforeClasses',
+        get: function get() {
+            return 'ivx-input-before ivx-input-before-submit-button';
+        }
+    }, {
+        key: 'afterClasses',
+        get: function get() {
+            return 'ivx-input-after ivx-input-after-submit-button';
         }
 
         /**
@@ -1077,7 +1180,9 @@ var Form = exports.Form = function () {
         key: 'submitButtonHTML',
         get: function get() {
             var _submit = this.submit,
-                submit = _submit === undefined ? {} : _submit;
+                submit = _submit === undefined ? {} : _submit,
+                defaultBeforeClasses = this.beforeClasses,
+                defaultAfterClasses = this.afterClasses;
             var _submit$label = submit.label,
                 submitLabel = _submit$label === undefined ? "Submit" : _submit$label,
                 submitLabelHTML = submit.labelHTML,
@@ -1086,16 +1191,28 @@ var Form = exports.Form = function () {
                 _submit$container = submit.container,
                 submitContainer = _submit$container === undefined ? {} : _submit$container,
                 _submit$attributes = submit.attributes,
-                attributes = _submit$attributes === undefined ? '' : _submit$attributes;
+                attributes = _submit$attributes === undefined ? '' : _submit$attributes,
+                _submit$beforeHtml = submit.beforeHtml,
+                beforeSettings = _submit$beforeHtml === undefined ? {} : _submit$beforeHtml,
+                _submit$afterHtml = submit.afterHtml,
+                afterSettings = _submit$afterHtml === undefined ? {} : _submit$afterHtml;
             var _submitInput$classes = submitInput.classes,
                 submitInputClasses = _submitInput$classes === undefined ? "" : _submitInput$classes;
             var _submitContainer$clas = submitContainer.classes,
                 submitContainerClasses = _submitContainer$clas === undefined ? "" : _submitContainer$clas;
+            var _beforeSettings$html = beforeSettings.html,
+                beforeHtml = _beforeSettings$html === undefined ? "" : _beforeSettings$html,
+                _beforeSettings$class = beforeSettings.classes,
+                beforeClasses = _beforeSettings$class === undefined ? "" : _beforeSettings$class;
+            var _afterSettings$html = afterSettings.html,
+                afterHtml = _afterSettings$html === undefined ? "" : _afterSettings$html,
+                _afterSettings$classe = afterSettings.classes,
+                afterClasses = _afterSettings$classe === undefined ? "" : _afterSettings$classe;
 
 
             submitLabel = submitLabelHTML ? submitLabelHTML : submitLabel;
 
-            var submitHTML = submitLabel.length >= 0 ? '\n            <div class="ivxjs-grid-1-1 ' + submitContainerClasses + '">\n            <button class="' + submitInputClasses + '" type=\'submit\' ' + attributes + '>\n                    ' + submitLabel + '\n                </button>\n                </div>\n                ' : '';
+            var submitHTML = submitLabel.length >= 0 ? '\n            <div class="ivxjs-grid-1-1 ' + submitContainerClasses + '">\n                <div class="' + beforeClasses + ' ' + defaultBeforeClasses + '">' + beforeHtml + '</div>\n                <button class="' + submitInputClasses + ' ivx-input ivx-input-submit-button" type=\'submit\' ' + attributes + '>\n                    ' + submitLabel + '\n                </button>\n                <div class="' + afterClasses + ' ' + defaultAfterClasses + '">' + afterHtml + '</div>\n            </div>\n                ' : '';
 
             return submitHTML;
         }
@@ -1129,13 +1246,16 @@ var Form = exports.Form = function () {
             if (!settings.hideSubmit) {
                 inputHTML.push({
                     settings: submit,
+                    input: {
+                        type: "submit-button"
+                    },
                     html: this.submitButtonHTML
                 });
             }
 
             var contents = this.style.addWidthClasses(inputHTML);
 
-            return '\n            ' + label + '\n            <form id="' + formId + '-form" class="' + formClasses + ' ' + configFormClasses + '" novalidate name="' + name + '" ' + additionalAttrHTML + '>                \n                ' + contents + '\n            </form>\n        ';
+            return '\n            ' + label + '\n            <form id="' + formId + '-form" class="' + formClasses + ' ' + configFormClasses + ' ivx-form" novalidate name="' + name + '" ' + additionalAttrHTML + '>                \n                ' + contents + '\n            </form>\n        ';
         }
     }]);
 
@@ -1233,7 +1353,17 @@ var Buttons = exports.Buttons = function () {
     _createClass(Buttons, [{
         key: "buttonClasses",
         get: function get() {
-            return '';
+            return 'ivx-input ivx-input-buttons';
+        }
+    }, {
+        key: "beforeClasses",
+        get: function get() {
+            return 'ivx-input-before ivx-input-before-buttons';
+        }
+    }, {
+        key: "afterClasses",
+        get: function get() {
+            return 'ivx-input-after ivx-input-after-buttons';
         }
 
         /**
@@ -1268,7 +1398,9 @@ var Buttons = exports.Buttons = function () {
                 buttons = _buttons === undefined ? [] : _buttons,
                 _input = this.input,
                 input = _input === undefined ? {} : _input,
-                buttonClasses = this.buttonClasses;
+                buttonClasses = this.buttonClasses,
+                defaultBeforeClasses = this.beforeClasses,
+                defaultAfterClasses = this.afterClasses;
             var _errorClass$attribute = errorClass.attributes,
                 attributes = _errorClass$attribute === undefined ? {} : _errorClass$attribute,
                 _errorClass$errors = errorClass.errors,
@@ -1289,7 +1421,11 @@ var Buttons = exports.Buttons = function () {
                 labelHTML = _input$labelHTML === undefined ? '' : _input$labelHTML,
                 _input$showLabel = input.showLabel,
                 showLabel = _input$showLabel === undefined ? false : _input$showLabel,
-                id = input.id;
+                id = input.id,
+                _input$beforeHtml = input.beforeHtml,
+                beforeSettings = _input$beforeHtml === undefined ? {} : _input$beforeHtml,
+                _input$afterHtml = input.afterHtml,
+                afterSettings = _input$afterHtml === undefined ? {} : _input$afterHtml;
 
             var buttonsHTML = buttons.reduce(function (html, button, index) {
                 var label = button.label,
@@ -1302,12 +1438,22 @@ var Buttons = exports.Buttons = function () {
                 return html + " \n                   <button " + attrHTML + " class=\"" + classes + " " + buttonClasses + "\">\n                       " + label + "\n                   </button>";
             }, '');
 
+            var _beforeSettings$html = beforeSettings.html,
+                beforeHtml = _beforeSettings$html === undefined ? "" : _beforeSettings$html,
+                _beforeSettings$class = beforeSettings.classes,
+                beforeClasses = _beforeSettings$class === undefined ? "" : _beforeSettings$class;
+            var _afterSettings$html = afterSettings.html,
+                afterHtml = _afterSettings$html === undefined ? "" : _afterSettings$html,
+                _afterSettings$classe = afterSettings.classes,
+                afterClasses = _afterSettings$classe === undefined ? "" : _afterSettings$classe;
+
+
             if ((labelHTML.length > 0 || label.length > 0) && showLabel) {
                 labelHTML = labelHTML ? labelHTML : label;
-                labelHTML = "<label for=\"" + id + "\">" + labelHTML + "</label>";
+                labelHTML = "<label class=\"ivx-input-label ivx-input-label-buttons\" for=\"" + id + "\">" + labelHTML + "</label>";
             }
 
-            return "\n             " + labelHTML + "\n             " + buttonsHTML + "\n             " + errorMessages + "             \n        ";
+            return "\n            <div class=\"" + beforeClasses + " " + defaultBeforeClasses + "\">" + beforeHtml + "</div>\n             " + labelHTML + "\n             " + buttonsHTML + "\n             " + errorMessages + " \n             <div class=\"" + afterClasses + " " + defaultAfterClasses + "\">" + afterHtml + "</div>            \n        ";
         }
     }]);
 
@@ -1441,15 +1587,8 @@ var Checkbox = exports.Checkbox = function () {
 
             if (labelHTML) label = labelHTML;
 
-            return "\n            <label for=\"" + id + "\" class=\"" + classes + "\">\n               <input " + attributes + ">\n               " + label + "\n            </label>\n        ";
+            return "\n            <label for=\"" + id + "\" class=\"" + classes + " ivx-input-label ivx-input-label-buttons\">\n               <input class=\"ivx-input ivx-input-checkbox\" " + attributes + ">\n               " + label + "\n            </label>\n        ";
         }
-
-        /**
-         * Sets up and renders all the HTML for this checkbox based on the settings.
-         * 
-         * @type {String}
-         */
-
     }, {
         key: "uiClasses",
         get: function get() {
@@ -1485,6 +1624,23 @@ var Checkbox = exports.Checkbox = function () {
             return "id=\"" + id + "\" name=\"" + name + "\" type=\"checkbox\"";
         }
     }, {
+        key: "beforeClasses",
+        get: function get() {
+            return 'ivx-input-before ivx-input-before-checkbox';
+        }
+    }, {
+        key: "afterClasses",
+        get: function get() {
+            return 'ivx-input-after ivx-input-after-checkbox';
+        }
+
+        /**
+         * Sets up and renders all the HTML for this checkbox based on the settings.
+         * 
+         * @type {String}
+         */
+
+    }, {
         key: "html",
         get: function get() {
             var tags = this.tags,
@@ -1494,7 +1650,9 @@ var Checkbox = exports.Checkbox = function () {
                 input = this.input,
                 uiClasses = this.uiClasses,
                 uiAttributes = this.uiAttributes,
-                requiredAttributes = this.requiredAttributes;
+                requiredAttributes = this.requiredAttributes,
+                defaultBeforeClasses = this.beforeClasses,
+                defaultAfterClasses = this.afterClasses;
             var _settings$input = settings.input,
                 inputSettings = _settings$input === undefined ? {} : _settings$input;
             var _inputSettings$classe = inputSettings.classes,
@@ -1502,7 +1660,11 @@ var Checkbox = exports.Checkbox = function () {
             var id = input.id,
                 name = input.name,
                 _input$label2 = input.label,
-                label = _input$label2 === undefined ? '' : _input$label2;
+                label = _input$label2 === undefined ? '' : _input$label2,
+                _input$beforeHtml = input.beforeHtml,
+                beforeSettings = _input$beforeHtml === undefined ? {} : _input$beforeHtml,
+                _input$afterHtml = input.afterHtml,
+                afterSettings = _input$afterHtml === undefined ? {} : _input$afterHtml;
             var _errors = this.errors,
                 _errors$messages = _errors.messages,
                 messages = _errors$messages === undefined ? [] : _errors$messages,
@@ -1516,7 +1678,16 @@ var Checkbox = exports.Checkbox = function () {
             var allClasses = classes + " " + uiClasses;
             var allAttributes = requiredAttributes + " " + uiAttributes + " " + tags + " " + errorTags;
             var checkboxHTML = this.renderCheckboxContainer(allClasses, allAttributes);
-            var inputHTML = " \n            " + checkboxHTML + "\n            " + errorHTML + "\n       ";
+            var _beforeSettings$html = beforeSettings.html,
+                beforeHtml = _beforeSettings$html === undefined ? "" : _beforeSettings$html,
+                _beforeSettings$class = beforeSettings.classes,
+                beforeClasses = _beforeSettings$class === undefined ? "" : _beforeSettings$class;
+            var _afterSettings$html = afterSettings.html,
+                afterHtml = _afterSettings$html === undefined ? "" : _afterSettings$html,
+                _afterSettings$classe = afterSettings.classes,
+                afterClasses = _afterSettings$classe === undefined ? "" : _afterSettings$classe;
+
+            var inputHTML = " \n            <div class=\"" + beforeClasses + " " + defaultBeforeClasses + "\">" + beforeHtml + "</div>\n            " + checkboxHTML + "\n            " + errorHTML + "\n            <div class=\"" + afterClasses + " " + defaultAfterClasses + "\">" + afterHtml + "</div>\n       ";
 
             return "" + inputHTML;
         }
@@ -1586,6 +1757,16 @@ var Options = exports.Options = function () {
             return '';
         }
     }, {
+        key: "beforeClasses",
+        get: function get() {
+            return 'ivx-input-before ivx-input-before-options';
+        }
+    }, {
+        key: "afterClasses",
+        get: function get() {
+            return 'ivx-input-after ivx-input-after-options';
+        }
+    }, {
         key: "html",
         get: function get() {
             var tags = this.tags,
@@ -1594,19 +1775,33 @@ var Options = exports.Options = function () {
                 errors = this.errors,
                 settings = this.settings,
                 uiClasses = this.uiClasses,
-                uiAttributes = this.uiAttributes;
+                uiAttributes = this.uiAttributes,
+                defaultBeforeClasses = this.beforeClasses,
+                defaultAfterClasses = this.afterClasses;
             var id = input.id,
                 name = input.name,
                 options = input.options,
                 _input$label = input.label,
                 label = _input$label === undefined ? '' : _input$label,
-                labelHTML = input.labelHTML;
+                labelHTML = input.labelHTML,
+                _input$beforeHtml = input.beforeHtml,
+                beforeSettings = _input$beforeHtml === undefined ? {} : _input$beforeHtml,
+                _input$afterHtml = input.afterHtml,
+                afterSettings = _input$afterHtml === undefined ? {} : _input$afterHtml;
             var _settings$input = settings.input,
                 inputSettings = _settings$input === undefined ? {} : _settings$input,
                 _settings$showLabel = settings.showLabel,
                 showLabel = _settings$showLabel === undefined ? true : _settings$showLabel;
             var _inputSettings$classe = inputSettings.classes,
                 classes = _inputSettings$classe === undefined ? '' : _inputSettings$classe;
+            var _beforeSettings$html = beforeSettings.html,
+                beforeHtml = _beforeSettings$html === undefined ? "" : _beforeSettings$html,
+                _beforeSettings$class = beforeSettings.classes,
+                beforeClasses = _beforeSettings$class === undefined ? "" : _beforeSettings$class;
+            var _afterSettings$html = afterSettings.html,
+                afterHtml = _afterSettings$html === undefined ? "" : _afterSettings$html,
+                _afterSettings$classe = afterSettings.classes,
+                afterClasses = _afterSettings$classe === undefined ? "" : _afterSettings$classe;
 
 
             classes = classes + " " + uiClasses;
@@ -1636,7 +1831,7 @@ var Options = exports.Options = function () {
                 return optionHTML + "\n            <option value=\"" + option.value + "\">" + option.display + "</option>";
             }, '');
 
-            var inputHTML = " \n             <label for=\"" + id + "\">" + label + "</label>             \n               <select class=\"" + classes + "\"  id=\"" + id + "\" name=\"" + name + "\"" + nonValidateAttributesHTML + " " + errorTags + " " + tags + ">\n                  " + defaultOptionTag + "\n                  " + optionsHTML + "\n               </select>\n               " + errorHTML;
+            var inputHTML = " \n             <div class=\"" + beforeClasses + " " + defaultBeforeClasses + "\">" + beforeHtml + "</div>\n             <label class=\"ivx-input-label ivx-input-label-options\" for=\"" + id + "\">" + label + "</label>             \n               <select class=\"" + classes + " ivx-input ivx-input-options\"  id=\"" + id + "\" name=\"" + name + "\"" + nonValidateAttributesHTML + " " + errorTags + " " + tags + ">\n                  " + defaultOptionTag + "\n                  " + optionsHTML + "\n               </select>\n               " + errorHTML + "\n               <div class=\"" + afterClasses + " " + defaultAfterClasses + "\">" + afterHtml + "</div>\n        ";
 
             return "" + inputHTML;
         }
@@ -1705,6 +1900,16 @@ var Textarea = exports.Textarea = function () {
             return '';
         }
     }, {
+        key: "beforeClasses",
+        get: function get() {
+            return 'ivx-input-before ivx-input-before-textarea';
+        }
+    }, {
+        key: "afterClasses",
+        get: function get() {
+            return 'ivx-input-after ivx-input-after-textarea';
+        }
+    }, {
         key: "html",
         get: function get() {
             var input = this.input,
@@ -1712,14 +1917,20 @@ var Textarea = exports.Textarea = function () {
                 tags = this.tags,
                 errors = this.errors,
                 uiClasses = this.uiClasses,
-                uiAttributes = this.uiAttributes;
+                uiAttributes = this.uiAttributes,
+                defaultBeforeClasses = this.beforeClasses,
+                defaultAfterClasses = this.afterClasses;
             var _input$label = input.label,
                 label = _input$label === undefined ? '' : _input$label,
                 labelHTML = input.labelHTML,
                 _input$name = input.name,
                 name = _input$name === undefined ? '' : _input$name,
                 _input$id = input.id,
-                id = _input$id === undefined ? '' : _input$id;
+                id = _input$id === undefined ? '' : _input$id,
+                _input$beforeHtml = input.beforeHtml,
+                beforeSettings = _input$beforeHtml === undefined ? {} : _input$beforeHtml,
+                _input$afterHtml = input.afterHtml,
+                afterSettings = _input$afterHtml === undefined ? {} : _input$afterHtml;
             var _settings$input = settings.input,
                 inputSettings = _settings$input === undefined ? {} : _settings$input,
                 _settings$showLabel = settings.showLabel,
@@ -1738,11 +1949,21 @@ var Textarea = exports.Textarea = function () {
             var errorHTML = new this.errorMessages(errorMessages).html;
             var nonValidateAttributesHTML = new this.attributeTags(errorAttributes, nonValidate).html;
 
+            var _beforeSettings$html = beforeSettings.html,
+                beforeHtml = _beforeSettings$html === undefined ? "" : _beforeSettings$html,
+                _beforeSettings$class = beforeSettings.classes,
+                beforeClasses = _beforeSettings$class === undefined ? "" : _beforeSettings$class;
+            var _afterSettings$html = afterSettings.html,
+                afterHtml = _afterSettings$html === undefined ? "" : _afterSettings$html,
+                _afterSettings$classe = afterSettings.classes,
+                afterClasses = _afterSettings$classe === undefined ? "" : _afterSettings$classe;
+
+
             if (labelHTML) label = labelHTML;
 
             label = showLabel ? label : '';
 
-            var inputHTML = " \n            <label for=\"" + id + "\"> " + label + " </label>\n            <textarea class=\"" + classes + " " + uiClasses + "\"  id=\"" + id + "\" name=\"" + name + "\" " + uiAttributes + "   " + nonValidateAttributesHTML + "   " + errorTags + " " + tags + ">\n            </textarea>\n            " + errorHTML + "\n       ";
+            var inputHTML = " \n        <div class=\"" + beforeClasses + " " + defaultBeforeClasses + "\">" + beforeHtml + "</div>\n            <label class=\"ivx-input-label ivx-input-label-textarea\" for=\"" + id + "\"> " + label + " </label>\n            <textarea class=\"" + classes + " " + uiClasses + " ivx-input ivx-input-textarea\"  id=\"" + id + "\" name=\"" + name + "\" " + uiAttributes + "   " + nonValidateAttributesHTML + "   " + errorTags + " " + tags + ">\n            </textarea>\n            " + errorHTML + "\n            <div class=\"" + afterClasses + " " + defaultAfterClasses + "\">" + afterHtml + "</div>\n       ";
 
             return "" + inputHTML;
         }
@@ -1808,7 +2029,7 @@ var Radio = exports.Radio = function () {
 
             var currentId = "" + id + (value.length > 0 ? '-' + value : '');
 
-            return " \n        <label for=\"" + currentId + "\" class=\"" + uiClasses + "\">\n        " + radioHTML + "\n        </label>";
+            return " \n        <label for=\"" + currentId + "\" class=\"" + uiClasses + " ivx-input-label ivx-input-label-radio\">\n        " + radioHTML + "\n        </label>";
         }
     }, {
         key: "renderRadioHTML",
@@ -1817,7 +2038,7 @@ var Radio = exports.Radio = function () {
 
             var currentId = "" + id + (value.length > 0 ? '-' + value : '');
 
-            return " \n            <input type=\"radio\" id=\"" + currentId + "\" " + attrHTML + ">\n            " + label;
+            return " \n            <input class=\"ivx-input ivx-input-radio\" type=\"radio\" id=\"" + currentId + "\" " + attrHTML + ">\n            " + label;
         }
     }, {
         key: "uiClasses",
@@ -1830,22 +2051,46 @@ var Radio = exports.Radio = function () {
             return '';
         }
     }, {
+        key: "beforeClasses",
+        get: function get() {
+            return 'ivx-input-before ivx-input-before-radio';
+        }
+    }, {
+        key: "afterClasses",
+        get: function get() {
+            return 'ivx-input-after ivx-input-after-radio';
+        }
+    }, {
         key: "html",
         get: function get() {
             var errors = this.errors,
                 radios = this.radios,
                 settings = this.settings,
                 input = this.input,
-                uiClasses = this.uiClasses;
+                uiClasses = this.uiClasses,
+                defaultBeforeClasses = this.beforeClasses,
+                defaultAfterClasses = this.afterClasses;
             var errorMessages = errors.messages,
                 _errors$tags = errors.tags,
                 errorTags = _errors$tags === undefined ? "" : _errors$tags;
 
             var self = this;
             var inputLabel = input.label,
-                inputLableHTML = input.labelHTML;
+                inputLableHTML = input.labelHTML,
+                _input$beforeHtml = input.beforeHtml,
+                beforeSettings = _input$beforeHtml === undefined ? {} : _input$beforeHtml,
+                _input$afterHtml = input.afterHtml,
+                afterSettings = _input$afterHtml === undefined ? {} : _input$afterHtml;
             var _settings$showLabel = settings.showLabel,
                 showLabel = _settings$showLabel === undefined ? true : _settings$showLabel;
+            var _beforeSettings$html = beforeSettings.html,
+                beforeHtml = _beforeSettings$html === undefined ? "" : _beforeSettings$html,
+                _beforeSettings$class = beforeSettings.classes,
+                beforeClasses = _beforeSettings$class === undefined ? "" : _beforeSettings$class;
+            var _afterSettings$html = afterSettings.html,
+                afterHtml = _afterSettings$html === undefined ? "" : _afterSettings$html,
+                _afterSettings$classe = afterSettings.classes,
+                afterClasses = _afterSettings$classe === undefined ? "" : _afterSettings$classe;
 
 
             if (inputLableHTML) inputLabel = inputLableHTML;
@@ -1866,7 +2111,7 @@ var Radio = exports.Radio = function () {
                 return html + "\n            " + self.uiRadioButtonContainer(radioHTML, uiClasses + " " + classes, input.radioButtons[index].value);
             }, inputLabel);
             var errorHTML = new this.errorMessages(errorMessages).html;
-            var allRadioButtonsHTML = "\n             " + radiosHTML + "\n             " + errorHTML;
+            var allRadioButtonsHTML = "\n        <div class=\"" + beforeClasses + " " + defaultBeforeClasses + "\">" + beforeHtml + "</div>\n             " + radiosHTML + "\n             " + errorHTML + "\n        <div class=\"" + afterClasses + " " + defaultAfterClasses + "\">" + afterHtml + "</div>\n             ";
 
             return this.uiRadioGroup(allRadioButtonsHTML);
         }
@@ -1883,7 +2128,7 @@ var Radio = exports.Radio = function () {
 
 
 Object.defineProperty(exports, "__esModule", {
-        value: true
+    value: true
 });
 exports.Number = undefined;
 
@@ -1901,167 +2146,191 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  */
 var Number = exports.Number = function () {
 
+    /**
+     * Accepts an input object with various input settings and UI specific error 
+     * messages
+     * @param {object} inputObj - various input settings to render this number input box
+     * @param {object} inputObj.input - input specific settings for this number input 
+     * @param {object} inputObj.settings - global settings for this number input 
+     * @param {string} inputObj.tags - input specific attribute tags 
+     * @param {class} inputObj.errors - errors from a rendering for validation and 
+     * error messaging appearance.
+     * @param {object} errorMessages - UI specific Error messages 
+     */
+    function Number() {
+        var inputObj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+        var errorMessages = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _messages.ErrorMessages;
+
+        _classCallCheck(this, Number);
+
+        var _inputObj$input = inputObj.input,
+            input = _inputObj$input === undefined ? {} : _inputObj$input,
+            _inputObj$settings = inputObj.settings,
+            settings = _inputObj$settings === undefined ? {} : _inputObj$settings,
+            _inputObj$tags = inputObj.tags,
+            tags = _inputObj$tags === undefined ? {} : _inputObj$tags,
+            _inputObj$errors = inputObj.errors,
+            errors = _inputObj$errors === undefined ? {} : _inputObj$errors;
+
         /**
-         * Accepts an input object with various input settings and UI specific error 
-         * messages
-         * @param {object} inputObj - various input settings to render this number input box
-         * @param {object} inputObj.input - input specific settings for this number input 
-         * @param {object} inputObj.settings - global settings for this number input 
-         * @param {string} inputObj.tags - input specific attribute tags 
-         * @param {class} inputObj.errors - errors from a rendering for validation and 
-         * error messaging appearance.
-         * @param {object} errorMessages - UI specific Error messages 
+         * Input specific settings for this number input
+         * @type {object}  
          */
-        function Number() {
-                var inputObj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-                var errorMessages = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _messages.ErrorMessages;
 
-                _classCallCheck(this, Number);
+        this.input = input;
 
-                var _inputObj$input = inputObj.input,
-                    input = _inputObj$input === undefined ? {} : _inputObj$input,
-                    _inputObj$settings = inputObj.settings,
-                    settings = _inputObj$settings === undefined ? {} : _inputObj$settings,
-                    _inputObj$tags = inputObj.tags,
-                    tags = _inputObj$tags === undefined ? {} : _inputObj$tags,
-                    _inputObj$errors = inputObj.errors,
-                    errors = _inputObj$errors === undefined ? {} : _inputObj$errors;
+        /**
+        * Input specific settings for this number input
+        * @type {object}  
+        */
+        this.settings = settings;
 
-                /**
-                 * Input specific settings for this number input
-                 * @type {object}  
-                 */
+        /**
+        * Tags to be added to this number input
+        * @type {String}
+        */
+        this.tags = tags;
 
-                this.input = input;
+        /**
+        * Holds all validation error correcting.
+        * @type {Class}
+        */
+        this.errors = errors;
 
-                /**
-                * Input specific settings for this number input
-                * @type {object}  
-                */
-                this.settings = settings;
+        /**
+        * Renders UI specific error messages by utilizing the 
+        * error class passed down to keep it consistent with the 
+        * current UI framework.
+        * @type {Class}
+        */
+        this.errorMessages = errorMessages;
 
-                /**
-                * Tags to be added to this number input
-                * @type {String}
-                */
-                this.tags = tags;
+        /**
+        * Converts attribute data into attribute HTML for 
+        * attributes not covered by the errors class.
+        * @type {Class}
+        */
+        this.attributeTags = _attributes.AttributeTags;
+    }
 
-                /**
-                * Holds all validation error correcting.
-                * @type {Class}
-                */
-                this.errors = errors;
+    /**
+     * Default ui classes to add to all number inputs 
+     * @type {String}
+     */
 
-                /**
-                * Renders UI specific error messages by utilizing the 
-                * error class passed down to keep it consistent with the 
-                * current UI framework.
-                * @type {Class}
-                */
-                this.errorMessages = errorMessages;
 
-                /**
-                * Converts attribute data into attribute HTML for 
-                * attributes not covered by the errors class.
-                * @type {Class}
-                */
-                this.attributeTags = _attributes.AttributeTags;
+    _createClass(Number, [{
+        key: "uiClasses",
+        get: function get() {
+            return '';
         }
 
         /**
-         * Default ui classes to add to all number inputs 
+        * Default ui attributes to add to this email input 
+        * that aren't covered by the tags or errors above.
+        * @type {String}
+        */
+
+    }, {
+        key: "uiAttributes",
+        get: function get() {
+            return '';
+        }
+    }, {
+        key: "beforeClasses",
+        get: function get() {
+            return 'ivx-input-before ivx-input-before-number';
+        }
+    }, {
+        key: "afterClasses",
+        get: function get() {
+            return 'ivx-input-after ivx-input-after-number';
+        }
+
+        /**
+         * The HTML to render a number input based on the settings from the 
+         * constructor. 
+         * 
+         * @example 
+         * //Data 
+         * input.label = "<h1>Label</h1>";
+         * settings.classes = "class-1";
+         * errors.tags = "required='true'";
+         * Number.uiClasses = 'ui-classes-1';
+         * input.attributes = {
+         *     "step" : "0.1"
+         * }
+         * // Renders 
+         * <label>
+         *      <h1>Label</h1>
+         * </label>
+         * <input step="0.1" class="class-1 ui-classes-1" type="number" required="true">
          * @type {String}
          */
 
-
-        _createClass(Number, [{
-                key: "uiClasses",
-                get: function get() {
-                        return '';
-                }
-
-                /**
-                * Default ui attributes to add to this email input 
-                * that aren't covered by the tags or errors above.
-                * @type {String}
-                */
-
-        }, {
-                key: "uiAttributes",
-                get: function get() {
-                        return '';
-                }
-
-                /**
-                 * The HTML to render a number input based on the settings from the 
-                 * constructor. 
-                 * 
-                 * @example 
-                 * //Data 
-                 * input.label = "<h1>Label</h1>";
-                 * settings.classes = "class-1";
-                 * errors.tags = "required='true'";
-                 * Number.uiClasses = 'ui-classes-1';
-                 * input.attributes = {
-                 *     "step" : "0.1"
-                 * }
-                 * // Renders 
-                 * <label>
-                 *      <h1>Label</h1>
-                 * </label>
-                 * <input step="0.1" class="class-1 ui-classes-1" type="number" required="true">
-                 * @type {String}
-                 */
-
-        }, {
-                key: "html",
-                get: function get() {
-                        var input = this.input,
-                            settings = this.settings,
-                            tags = this.tags,
-                            errors = this.errors,
-                            uiClasses = this.uiClasses,
-                            uiAttributes = this.uiAttributes;
-                        var _input$label = input.label,
-                            label = _input$label === undefined ? '' : _input$label,
-                            _input$name = input.name,
-                            name = _input$name === undefined ? '' : _input$name,
-                            _input$id = input.id,
-                            id = _input$id === undefined ? '' : _input$id,
-                            labelHTML = input.labelHTML;
-                        var _settings$input = settings.input,
-                            inputSettings = _settings$input === undefined ? {} : _settings$input,
-                            _settings$showLabel = settings.showLabel,
-                            showLabel = _settings$showLabel === undefined ? true : _settings$showLabel;
-                        var _inputSettings$classe = inputSettings.classes,
-                            classes = _inputSettings$classe === undefined ? '' : _inputSettings$classe;
+    }, {
+        key: "html",
+        get: function get() {
+            var input = this.input,
+                settings = this.settings,
+                tags = this.tags,
+                errors = this.errors,
+                uiClasses = this.uiClasses,
+                uiAttributes = this.uiAttributes,
+                defaultBeforeClasses = this.beforeClasses,
+                defaultAfterClasses = this.afterClasses;
+            var _input$label = input.label,
+                label = _input$label === undefined ? '' : _input$label,
+                _input$name = input.name,
+                name = _input$name === undefined ? '' : _input$name,
+                _input$id = input.id,
+                id = _input$id === undefined ? '' : _input$id,
+                labelHTML = input.labelHTML,
+                _input$beforeHtml = input.beforeHtml,
+                beforeSettings = _input$beforeHtml === undefined ? {} : _input$beforeHtml,
+                _input$afterHtml = input.afterHtml,
+                afterSettings = _input$afterHtml === undefined ? {} : _input$afterHtml;
+            var _settings$input = settings.input,
+                inputSettings = _settings$input === undefined ? {} : _settings$input,
+                _settings$showLabel = settings.showLabel,
+                showLabel = _settings$showLabel === undefined ? true : _settings$showLabel;
+            var _inputSettings$classe = inputSettings.classes,
+                classes = _inputSettings$classe === undefined ? '' : _inputSettings$classe;
 
 
-                        classes = classes + " " + uiClasses;
+            classes = classes + " " + uiClasses;
 
-                        var _errors$messages = errors.messages,
-                            errorMessages = _errors$messages === undefined ? [] : _errors$messages,
-                            _errors$attributes = errors.attributes,
-                            errorAttributes = _errors$attributes === undefined ? '' : _errors$attributes,
-                            _errors$nonValidate = errors.nonValidate,
-                            nonValidate = _errors$nonValidate === undefined ? [] : _errors$nonValidate,
-                            _errors$tags = errors.tags,
-                            errorTags = _errors$tags === undefined ? '' : _errors$tags;
+            var _beforeSettings$html = beforeSettings.html,
+                beforeHtml = _beforeSettings$html === undefined ? "" : _beforeSettings$html,
+                _beforeSettings$class = beforeSettings.classes,
+                beforeClasses = _beforeSettings$class === undefined ? "" : _beforeSettings$class;
+            var _afterSettings$html = afterSettings.html,
+                afterHtml = _afterSettings$html === undefined ? "" : _afterSettings$html,
+                _afterSettings$classe = afterSettings.classes,
+                afterClasses = _afterSettings$classe === undefined ? "" : _afterSettings$classe;
+            var _errors$messages = errors.messages,
+                errorMessages = _errors$messages === undefined ? [] : _errors$messages,
+                _errors$attributes = errors.attributes,
+                errorAttributes = _errors$attributes === undefined ? '' : _errors$attributes,
+                _errors$nonValidate = errors.nonValidate,
+                nonValidate = _errors$nonValidate === undefined ? [] : _errors$nonValidate,
+                _errors$tags = errors.tags,
+                errorTags = _errors$tags === undefined ? '' : _errors$tags;
 
-                        var errorHTML = new this.errorMessages(errorMessages).html;
-                        var nonValidateAttributesHTML = new this.attributeTags(errorAttributes, nonValidate).html;
+            var errorHTML = new this.errorMessages(errorMessages).html;
+            var nonValidateAttributesHTML = new this.attributeTags(errorAttributes, nonValidate).html;
 
-                        nonValidateAttributesHTML = nonValidateAttributesHTML + " " + uiAttributes;
+            nonValidateAttributesHTML = nonValidateAttributesHTML + " " + uiAttributes;
 
-                        if (labelHTML) label = labelHTML;
+            if (labelHTML) label = labelHTML;
 
-                        var inputHTML = " \n            <label for=\"" + id + "\"> " + label + " </label>\n            <input class=\"" + classes + "\"  name=\"" + name + "\"  type=\"number\" " + nonValidateAttributesHTML + "   " + errorTags + " " + tags + ">\n            " + errorHTML + "\n       ";
+            var inputHTML = " \n        <div class=\"" + beforeClasses + " " + defaultBeforeClasses + "\">" + beforeHtml + "</div>\n            <label class=\"ivx-input-label ivx-input-label-number\" for=\"" + id + "\"> " + label + " </label>\n            <input class=\"" + classes + " ivx-input ivx-input-number\"  name=\"" + name + "\"  type=\"number\" " + nonValidateAttributesHTML + "   " + errorTags + " " + tags + ">\n            " + errorHTML + "\n            <div class=\"" + afterClasses + " " + defaultAfterClasses + "\">" + afterHtml + "</div>\n       ";
 
-                        return "" + inputHTML;
-                }
-        }]);
+            return "" + inputHTML;
+        }
+    }]);
 
-        return Number;
+    return Number;
 }();
 
 /***/ }),
@@ -2072,7 +2341,7 @@ var Number = exports.Number = function () {
 
 
 Object.defineProperty(exports, "__esModule", {
-        value: true
+    value: true
 });
 exports.Email = undefined;
 
@@ -2095,164 +2364,188 @@ var style = new _style.Style();
 
 var Email = exports.Email = function () {
 
+    /**
+     * Accepts an input object with various input settings and UI specific error 
+     * messages
+     * @param {object} inputObj - various input settings to render this email input box
+     * @param {object} inputObj.input - input specific settings for this email input 
+     * @param {object} inputObj.settings - global settings for this email input 
+     * @param {string} inputObj.tags - input specific attribute tags 
+     * @param {class} inputObj.errors - errors from a rendering for validation and 
+     * error messaging appearance.
+     * @param {object} errorMessages - UI specific Error messages 
+     */
+    function Email() {
+        var inputObj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+        var errorMessages = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _messages.ErrorMessages;
+
+        _classCallCheck(this, Email);
+
+        var _inputObj$input = inputObj.input,
+            input = _inputObj$input === undefined ? {} : _inputObj$input,
+            _inputObj$settings = inputObj.settings,
+            settings = _inputObj$settings === undefined ? {} : _inputObj$settings,
+            _inputObj$tags = inputObj.tags,
+            tags = _inputObj$tags === undefined ? {} : _inputObj$tags,
+            _inputObj$errors = inputObj.errors,
+            errors = _inputObj$errors === undefined ? {} : _inputObj$errors;
+
         /**
-         * Accepts an input object with various input settings and UI specific error 
-         * messages
-         * @param {object} inputObj - various input settings to render this email input box
-         * @param {object} inputObj.input - input specific settings for this email input 
-         * @param {object} inputObj.settings - global settings for this email input 
-         * @param {string} inputObj.tags - input specific attribute tags 
-         * @param {class} inputObj.errors - errors from a rendering for validation and 
-         * error messaging appearance.
-         * @param {object} errorMessages - UI specific Error messages 
+         * Input specific settings for this email input
+         * @type {object}  
          */
-        function Email() {
-                var inputObj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-                var errorMessages = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _messages.ErrorMessages;
 
-                _classCallCheck(this, Email);
+        this.input = input;
 
-                var _inputObj$input = inputObj.input,
-                    input = _inputObj$input === undefined ? {} : _inputObj$input,
-                    _inputObj$settings = inputObj.settings,
-                    settings = _inputObj$settings === undefined ? {} : _inputObj$settings,
-                    _inputObj$tags = inputObj.tags,
-                    tags = _inputObj$tags === undefined ? {} : _inputObj$tags,
-                    _inputObj$errors = inputObj.errors,
-                    errors = _inputObj$errors === undefined ? {} : _inputObj$errors;
+        /**
+        * Input specific settings for this email input
+        * @type {object}  
+        */
+        this.settings = settings;
 
-                /**
-                 * Input specific settings for this email input
-                 * @type {object}  
-                 */
+        /**
+         * Tags to be added to this email input
+         * @type {String}
+         */
+        this.tags = tags;
 
-                this.input = input;
+        /**
+         * Holds all validation error correcting.
+         * @type {Class}
+         */
+        this.errors = errors;
 
-                /**
-                * Input specific settings for this email input
-                * @type {object}  
-                */
-                this.settings = settings;
+        /**
+         * Renders UI specific error messages by utilizing the 
+         * error class passed down to keep it consistent with the 
+         * current UI framework.
+         * @type {Class}
+         */
+        this.errorMessages = errorMessages;
 
-                /**
-                 * Tags to be added to this email input
-                 * @type {String}
-                 */
-                this.tags = tags;
+        /**
+         * Converts attribute data into attribute HTML for 
+         * attributes not covered by the errors class.
+         * @type {Class}
+         */
+        this.attributeTags = _attributes.AttributeTags;
+    }
 
-                /**
-                 * Holds all validation error correcting.
-                 * @type {Class}
-                 */
-                this.errors = errors;
+    /**
+    * Default ui classes to add to all email inputs 
+    * @type {String}
+    */
 
-                /**
-                 * Renders UI specific error messages by utilizing the 
-                 * error class passed down to keep it consistent with the 
-                 * current UI framework.
-                 * @type {Class}
-                 */
-                this.errorMessages = errorMessages;
 
-                /**
-                 * Converts attribute data into attribute HTML for 
-                 * attributes not covered by the errors class.
-                 * @type {Class}
-                 */
-                this.attributeTags = _attributes.AttributeTags;
+    _createClass(Email, [{
+        key: "uiClasses",
+        get: function get() {
+            return '';
         }
 
         /**
-        * Default ui classes to add to all email inputs 
+        * Default ui attributes to add to this email input 
+        * that aren't covered by the tags or errors above.
         * @type {String}
         */
 
+    }, {
+        key: "uiAttributes",
+        get: function get() {
+            return '';
+        }
+    }, {
+        key: "beforeClasses",
+        get: function get() {
+            return 'ivx-input-before ivx-input-before-email';
+        }
+    }, {
+        key: "afterClasses",
+        get: function get() {
+            return 'ivx-input-after ivx-input-after-email';
+        }
 
-        _createClass(Email, [{
-                key: "uiClasses",
-                get: function get() {
-                        return '';
-                }
+        /**
+         * The HTML to render an email input based on the settings from the 
+         * constructor. 
+         * 
+         * @example 
+         * //Data 
+         * input.label = "<h1>Label</h1>";
+         * settings.classes = "class-1";
+         * errors.tags = "required='true'";
+         * Email.uiClasses = 'ui-classes-1';
+         * // Renders 
+         * <label>
+         *      <h1>Label</h1>
+         * </label>
+         * <input class="class-1 ui-classes-1" type="email" required="true">
+         * @type {String}
+         */
 
-                /**
-                * Default ui attributes to add to this email input 
-                * that aren't covered by the tags or errors above.
-                * @type {String}
-                */
-
-        }, {
-                key: "uiAttributes",
-                get: function get() {
-                        return '';
-                }
-
-                /**
-                 * The HTML to render an email input based on the settings from the 
-                 * constructor. 
-                 * 
-                 * @example 
-                 * //Data 
-                 * input.label = "<h1>Label</h1>";
-                 * settings.classes = "class-1";
-                 * errors.tags = "required='true'";
-                 * Email.uiClasses = 'ui-classes-1';
-                 * // Renders 
-                 * <label>
-                 *      <h1>Label</h1>
-                 * </label>
-                 * <input class="class-1 ui-classes-1" type="email" required="true">
-                 * @type {String}
-                 */
-
-        }, {
-                key: "html",
-                get: function get() {
-                        var input = this.input,
-                            settings = this.settings,
-                            tags = this.tags,
-                            errors = this.errors,
-                            uiClasses = this.uiClasses,
-                            uiAttributes = this.uiAttributes;
-                        var _input$label = input.label,
-                            label = _input$label === undefined ? '' : _input$label,
-                            labelHTML = input.labelHTML,
-                            _input$name = input.name,
-                            name = _input$name === undefined ? '' : _input$name,
-                            _input$id = input.id,
-                            id = _input$id === undefined ? '' : _input$id;
-                        var _settings$input = settings.input,
-                            inputSettings = _settings$input === undefined ? {} : _settings$input,
-                            _settings$showLabel = settings.showLabel,
-                            showLabel = _settings$showLabel === undefined ? true : _settings$showLabel;
-                        var _inputSettings$classe = inputSettings.classes,
-                            classes = _inputSettings$classe === undefined ? '' : _inputSettings$classe;
+    }, {
+        key: "html",
+        get: function get() {
+            var input = this.input,
+                settings = this.settings,
+                tags = this.tags,
+                errors = this.errors,
+                uiClasses = this.uiClasses,
+                uiAttributes = this.uiAttributes,
+                defaultBeforeClasses = this.beforeClasses,
+                defaultAfterClasses = this.afterClasses;
+            var _input$label = input.label,
+                label = _input$label === undefined ? '' : _input$label,
+                labelHTML = input.labelHTML,
+                _input$name = input.name,
+                name = _input$name === undefined ? '' : _input$name,
+                _input$id = input.id,
+                id = _input$id === undefined ? '' : _input$id,
+                _input$beforeHtml = input.beforeHtml,
+                beforeSettings = _input$beforeHtml === undefined ? {} : _input$beforeHtml,
+                _input$afterHtml = input.afterHtml,
+                afterSettings = _input$afterHtml === undefined ? {} : _input$afterHtml;
+            var _settings$input = settings.input,
+                inputSettings = _settings$input === undefined ? {} : _settings$input,
+                _settings$showLabel = settings.showLabel,
+                showLabel = _settings$showLabel === undefined ? true : _settings$showLabel;
+            var _inputSettings$classe = inputSettings.classes,
+                classes = _inputSettings$classe === undefined ? '' : _inputSettings$classe;
+            var _beforeSettings$html = beforeSettings.html,
+                beforeHtml = _beforeSettings$html === undefined ? "" : _beforeSettings$html,
+                _beforeSettings$class = beforeSettings.classes,
+                beforeClasses = _beforeSettings$class === undefined ? "" : _beforeSettings$class;
+            var _afterSettings$html = afterSettings.html,
+                afterHtml = _afterSettings$html === undefined ? "" : _afterSettings$html,
+                _afterSettings$classe = afterSettings.classes,
+                afterClasses = _afterSettings$classe === undefined ? "" : _afterSettings$classe;
 
 
-                        classes = classes + " " + uiClasses;
+            classes = classes + " " + uiClasses;
 
-                        var _errors$messages = errors.messages,
-                            errorMessages = _errors$messages === undefined ? [] : _errors$messages,
-                            _errors$attributes = errors.attributes,
-                            errorAttributes = _errors$attributes === undefined ? '' : _errors$attributes,
-                            _errors$nonValidate = errors.nonValidate,
-                            nonValidate = _errors$nonValidate === undefined ? [] : _errors$nonValidate,
-                            _errors$tags = errors.tags,
-                            errorTags = _errors$tags === undefined ? '' : _errors$tags;
+            var _errors$messages = errors.messages,
+                errorMessages = _errors$messages === undefined ? [] : _errors$messages,
+                _errors$attributes = errors.attributes,
+                errorAttributes = _errors$attributes === undefined ? '' : _errors$attributes,
+                _errors$nonValidate = errors.nonValidate,
+                nonValidate = _errors$nonValidate === undefined ? [] : _errors$nonValidate,
+                _errors$tags = errors.tags,
+                errorTags = _errors$tags === undefined ? '' : _errors$tags;
 
-                        var errorHTML = new this.errorMessages(errorMessages).html;
-                        var nonValidateAttributesHTML = new this.attributeTags(errorAttributes, nonValidate).html;
+            var errorHTML = new this.errorMessages(errorMessages).html;
+            var nonValidateAttributesHTML = new this.attributeTags(errorAttributes, nonValidate).html;
 
-                        nonValidateAttributesHTML = nonValidateAttributesHTML + " " + uiAttributes;
+            nonValidateAttributesHTML = nonValidateAttributesHTML + " " + uiAttributes;
 
-                        if (labelHTML) label = labelHTML;
+            if (labelHTML) label = labelHTML;
 
-                        var inputHTML = " \n            <label for=\"" + id + "\"> " + label + " </label>\n            <input class=\"" + classes + "\"  id=\"" + id + "\" name=\"" + name + "\"  type=\"email\" " + nonValidateAttributesHTML + "   " + errorTags + " " + tags + ">\n            " + errorHTML + "\n       ";
+            var inputHTML = " \n            <div class=\"" + beforeClasses + " " + defaultBeforeClasses + "\">" + beforeHtml + "</div>\n            <label class=\"ivx-input-label ivx-input-label-email\" for=\"" + id + "\"> " + label + " </label>\n            <input class=\"" + classes + " ivx-input ivx-input-email\"  id=\"" + id + "\" name=\"" + name + "\"  type=\"email\" " + nonValidateAttributesHTML + "   " + errorTags + " " + tags + ">\n            " + errorHTML + "\n            <div class=\"" + afterClasses + " " + defaultAfterClasses + "\">" + afterHtml + "</div>\n       ";
 
-                        return "" + inputHTML;
-                }
-        }]);
+            return "" + inputHTML;
+        }
+    }]);
 
-        return Email;
+    return Email;
 }();
 
 /***/ }),
@@ -2263,7 +2556,7 @@ var Email = exports.Email = function () {
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 exports.Date = undefined;
 
@@ -2286,163 +2579,187 @@ var style = new _style.Style();
 
 var Date = exports.Date = function () {
 
-  /**
-   * Accepts an input object with various input settings and UI specific error 
-   * messages
-   * @param {object} inputObj - various input settings to render this date input box
-   * @param {object} inputObj.input - input specific settings for this date input 
-   * @param {object} inputObj.settings - global settings for this date input 
-   * @param {string} inputObj.tags - input specific attribute tags 
-   * @param {class} inputObj.errors - errors from a rendering for validation and 
-   * error messaging appearance.
-   * @param {object} errorMessages - UI specific Error messages 
-   */
-  function Date() {
-    var inputObj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-    var errorMessages = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _messages.ErrorMessages;
-
-    _classCallCheck(this, Date);
-
-    var _inputObj$input = inputObj.input,
-        input = _inputObj$input === undefined ? {} : _inputObj$input,
-        _inputObj$settings = inputObj.settings,
-        settings = _inputObj$settings === undefined ? {} : _inputObj$settings,
-        _inputObj$tags = inputObj.tags,
-        tags = _inputObj$tags === undefined ? {} : _inputObj$tags,
-        _inputObj$errors = inputObj.errors,
-        errors = _inputObj$errors === undefined ? {} : _inputObj$errors;
-
     /**
-     * Input specific settings for this date input
-     * @type {object}  
+     * Accepts an input object with various input settings and UI specific error 
+     * messages
+     * @param {object} inputObj - various input settings to render this date input box
+     * @param {object} inputObj.input - input specific settings for this date input 
+     * @param {object} inputObj.settings - global settings for this date input 
+     * @param {string} inputObj.tags - input specific attribute tags 
+     * @param {class} inputObj.errors - errors from a rendering for validation and 
+     * error messaging appearance.
+     * @param {object} errorMessages - UI specific Error messages 
      */
+    function Date() {
+        var inputObj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+        var errorMessages = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _messages.ErrorMessages;
 
-    this.input = input;
+        _classCallCheck(this, Date);
 
-    /**
-     * Global input settings for this date input 
-     * @type {object}
-     */
-    this.settings = settings;
+        var _inputObj$input = inputObj.input,
+            input = _inputObj$input === undefined ? {} : _inputObj$input,
+            _inputObj$settings = inputObj.settings,
+            settings = _inputObj$settings === undefined ? {} : _inputObj$settings,
+            _inputObj$tags = inputObj.tags,
+            tags = _inputObj$tags === undefined ? {} : _inputObj$tags,
+            _inputObj$errors = inputObj.errors,
+            errors = _inputObj$errors === undefined ? {} : _inputObj$errors;
 
-    /**
-     * Tags to be added to this date input
-     * @type {String}
-     */
-    this.tags = tags;
+        /**
+         * Input specific settings for this date input
+         * @type {object}  
+         */
 
-    /**
-     * Holds all validation error correcting.
-     * @type {Class}
-     */
-    this.errors = errors;
+        this.input = input;
 
-    /**
-     * Renders UI specific error messages by utilizing the 
-     * error class passed down to keep it consistent with the 
-     * current UI framework.
-     * @type {Class}
-     */
-    this.errorMessages = errorMessages;
+        /**
+         * Global input settings for this date input 
+         * @type {object}
+         */
+        this.settings = settings;
 
-    /**
-     * Converts attribute data into attribute HTML for 
-     * attributes not covered by the errors class.
-     * @type {Class}
-     */
-    this.attributeTags = _attributes.AttributeTags;
-  }
+        /**
+         * Tags to be added to this date input
+         * @type {String}
+         */
+        this.tags = tags;
 
-  /**
-   * Default ui classes to add to all date inputs 
-   * @type {String}
-   */
+        /**
+         * Holds all validation error correcting.
+         * @type {Class}
+         */
+        this.errors = errors;
 
+        /**
+         * Renders UI specific error messages by utilizing the 
+         * error class passed down to keep it consistent with the 
+         * current UI framework.
+         * @type {Class}
+         */
+        this.errorMessages = errorMessages;
 
-  _createClass(Date, [{
-    key: "uiClasses",
-    get: function get() {
-      return '';
+        /**
+         * Converts attribute data into attribute HTML for 
+         * attributes not covered by the errors class.
+         * @type {Class}
+         */
+        this.attributeTags = _attributes.AttributeTags;
     }
 
     /**
-     * Default ui attributes to add to this date input 
-     * that aren't covered by the tags or errors above.
+     * Default ui classes to add to all date inputs 
      * @type {String}
      */
 
-  }, {
-    key: "uiAttributes",
-    get: function get() {
-      return '';
-    }
 
-    /**
-     * The HTML to render a date input based on the settings from the 
-     * constructor. 
-     * 
-     * @example 
-     * //Data 
-     * input.label = "<h1>Label</h1>";
-     * settings.classes = "class-1";
-     * errors.tags = "required='true'";
-     * Date.uiClasses = 'ui-classes-1';
-     * // Renders 
-     * <label>
-     *      <h1>Label</h1>
-     * </label>
-     * <input class="class-1 ui-classes-1" type="date" required="true">
-     * @type {String}
-     */
+    _createClass(Date, [{
+        key: "uiClasses",
+        get: function get() {
+            return '';
+        }
 
-  }, {
-    key: "html",
-    get: function get() {
-      var input = this.input,
-          settings = this.settings,
-          tags = this.tags,
-          errors = this.errors,
-          uiClasses = this.uiClasses,
-          uiAttributes = this.uiAttributes;
-      var label = input.label,
-          labelHTML = input.labelHTML,
-          _input$name = input.name,
-          name = _input$name === undefined ? '' : _input$name,
-          _input$id = input.id,
-          id = _input$id === undefined ? '' : _input$id;
-      var _settings$input = settings.input,
-          inputSettings = _settings$input === undefined ? {} : _settings$input,
-          _settings$showLabel = settings.showLabel,
-          showLabel = _settings$showLabel === undefined ? true : _settings$showLabel;
-      var _inputSettings$classe = inputSettings.classes,
-          classes = _inputSettings$classe === undefined ? '' : _inputSettings$classe;
+        /**
+         * Default ui attributes to add to this date input 
+         * that aren't covered by the tags or errors above.
+         * @type {String}
+         */
+
+    }, {
+        key: "uiAttributes",
+        get: function get() {
+            return '';
+        }
+    }, {
+        key: "beforeClasses",
+        get: function get() {
+            return 'ivx-input-before ivx-input-before-date';
+        }
+    }, {
+        key: "afterClasses",
+        get: function get() {
+            return 'ivx-input-after ivx-input-after-date';
+        }
+
+        /**
+         * The HTML to render a date input based on the settings from the 
+         * constructor. 
+         * 
+         * @example 
+         * //Data 
+         * input.label = "<h1>Label</h1>";
+         * settings.classes = "class-1";
+         * errors.tags = "required='true'";
+         * Date.uiClasses = 'ui-classes-1';
+         * // Renders 
+         * <label>
+         *      <h1>Label</h1>
+         * </label>
+         * <input class="class-1 ui-classes-1" type="date" required="true">
+         * @type {String}
+         */
+
+    }, {
+        key: "html",
+        get: function get() {
+            var input = this.input,
+                settings = this.settings,
+                tags = this.tags,
+                errors = this.errors,
+                uiClasses = this.uiClasses,
+                uiAttributes = this.uiAttributes,
+                defaultBeforeClasses = this.beforeClasses,
+                defaultAfterClasses = this.afterClasses;
+            var label = input.label,
+                labelHTML = input.labelHTML,
+                _input$name = input.name,
+                name = _input$name === undefined ? '' : _input$name,
+                _input$id = input.id,
+                id = _input$id === undefined ? '' : _input$id,
+                _input$beforeHtml = input.beforeHtml,
+                beforeSettings = _input$beforeHtml === undefined ? {} : _input$beforeHtml,
+                _input$afterHtml = input.afterHtml,
+                afterSettings = _input$afterHtml === undefined ? {} : _input$afterHtml;
+            var _settings$input = settings.input,
+                inputSettings = _settings$input === undefined ? {} : _settings$input,
+                _settings$showLabel = settings.showLabel,
+                showLabel = _settings$showLabel === undefined ? true : _settings$showLabel;
+            var _inputSettings$classe = inputSettings.classes,
+                classes = _inputSettings$classe === undefined ? '' : _inputSettings$classe;
+            var _beforeSettings$html = beforeSettings.html,
+                beforeHtml = _beforeSettings$html === undefined ? "" : _beforeSettings$html,
+                _beforeSettings$class = beforeSettings.classes,
+                beforeClasses = _beforeSettings$class === undefined ? "" : _beforeSettings$class;
+            var _afterSettings$html = afterSettings.html,
+                afterHtml = _afterSettings$html === undefined ? "" : _afterSettings$html,
+                _afterSettings$classe = afterSettings.classes,
+                afterClasses = _afterSettings$classe === undefined ? "" : _afterSettings$classe;
 
 
-      classes = classes + " " + uiClasses;
+            classes = classes + " " + uiClasses;
 
-      var _errors$messages = errors.messages,
-          errorMessages = _errors$messages === undefined ? [] : _errors$messages,
-          _errors$attributes = errors.attributes,
-          errorAttributes = _errors$attributes === undefined ? '' : _errors$attributes,
-          _errors$nonValidate = errors.nonValidate,
-          nonValidate = _errors$nonValidate === undefined ? [] : _errors$nonValidate,
-          _errors$tags = errors.tags,
-          errorTags = _errors$tags === undefined ? '' : _errors$tags;
+            var _errors$messages = errors.messages,
+                errorMessages = _errors$messages === undefined ? [] : _errors$messages,
+                _errors$attributes = errors.attributes,
+                errorAttributes = _errors$attributes === undefined ? '' : _errors$attributes,
+                _errors$nonValidate = errors.nonValidate,
+                nonValidate = _errors$nonValidate === undefined ? [] : _errors$nonValidate,
+                _errors$tags = errors.tags,
+                errorTags = _errors$tags === undefined ? '' : _errors$tags;
 
-      var errorHTML = new this.errorMessages(errorMessages).html;
-      var nonValidateAttributesHTML = new _attributes.AttributeTags(errorAttributes, nonValidate).html;
+            var errorHTML = new this.errorMessages(errorMessages).html;
+            var nonValidateAttributesHTML = new _attributes.AttributeTags(errorAttributes, nonValidate).html;
 
-      nonValidateAttributesHTML = nonValidateAttributesHTML + " " + uiAttributes;
+            nonValidateAttributesHTML = nonValidateAttributesHTML + " " + uiAttributes;
 
-      var inputHTML = " \n            <label for=\"" + id + "\"> " + label + " </label>\n            <input class=\"" + classes + "\"  id=\"" + id + "\" name=\"" + name + "\"  type=\"date\" " + nonValidateAttributesHTML + "   " + errorTags + " " + tags + ">\n            " + errorHTML + "\n       ";
+            if (labelHTML) label = labelHTML;
 
-      if (labelHTML) label = labelHTML;
+            var inputHTML = " \n            <div class=\"" + beforeClasses + " " + defaultBeforeClasses + "\">" + beforeHtml + "</div>\n            <label class=\"ivx-input-label ivx-input-label-date\" for=\"" + id + "\"> " + label + " </label>\n            <input class=\"" + classes + " ivx-input ivx-input-date\"  id=\"" + id + "\" name=\"" + name + "\"  type=\"date\" " + nonValidateAttributesHTML + "   " + errorTags + " " + tags + ">\n            " + errorHTML + "\n            <div class=\"" + afterClasses + " " + defaultAfterClasses + "\">" + afterHtml + "</div>\n       ";
 
-      return "" + inputHTML;
-    }
-  }]);
+            return "" + inputHTML;
+        }
+    }]);
 
-  return Date;
+    return Date;
 }();
 
 /***/ }),
@@ -2505,6 +2822,16 @@ var Url = exports.Url = function () {
             return '';
         }
     }, {
+        key: "beforeClasses",
+        get: function get() {
+            return 'ivx-input-before ivx-input-before-url';
+        }
+    }, {
+        key: "afterClasses",
+        get: function get() {
+            return 'ivx-input-after ivx-input-after-url';
+        }
+    }, {
         key: "html",
         get: function get() {
             var input = this.input,
@@ -2512,14 +2839,20 @@ var Url = exports.Url = function () {
                 tags = this.tags,
                 errors = this.errors,
                 uiClasses = this.uiClasses,
-                uiAttributes = this.uiAttributes;
+                uiAttributes = this.uiAttributes,
+                defaultBeforeClasses = this.beforeClasses,
+                defaultAfterClasses = this.afterClasses;
             var _input$label = input.label,
                 label = _input$label === undefined ? '' : _input$label,
                 labelHTML = input.labelHTML,
                 _input$name = input.name,
                 name = _input$name === undefined ? '' : _input$name,
                 _input$id = input.id,
-                id = _input$id === undefined ? '' : _input$id;
+                id = _input$id === undefined ? '' : _input$id,
+                _input$beforeHtml = input.beforeHtml,
+                beforeSettings = _input$beforeHtml === undefined ? {} : _input$beforeHtml,
+                _input$afterHtml = input.afterHtml,
+                afterSettings = _input$afterHtml === undefined ? {} : _input$afterHtml;
             var _settings$input = settings.input,
                 inputSettings = _settings$input === undefined ? {} : _settings$input,
                 _settings$showLabel = settings.showLabel,
@@ -2538,9 +2871,19 @@ var Url = exports.Url = function () {
             var errorHTML = new this.errorMessages(errorMessages).html;
             var nonValidateAttributesHTML = new this.attributeTags(errorAttributes, nonValidate).html;
 
+            var _beforeSettings$html = beforeSettings.html,
+                beforeHtml = _beforeSettings$html === undefined ? "" : _beforeSettings$html,
+                _beforeSettings$class = beforeSettings.classes,
+                beforeClasses = _beforeSettings$class === undefined ? "" : _beforeSettings$class;
+            var _afterSettings$html = afterSettings.html,
+                afterHtml = _afterSettings$html === undefined ? "" : _afterSettings$html,
+                _afterSettings$classe = afterSettings.classes,
+                afterClasses = _afterSettings$classe === undefined ? "" : _afterSettings$classe;
+
+
             if (labelHTML) label = labelHTML;
 
-            var inputHTML = " \n            <label for=\"" + id + "\"> " + label + " </label>\n            <input class=\"" + classes + " " + uiClasses + "\" " + uiAttributes + "  id=\"" + id + "\" name=\"" + name + "\"  type=\"url\" " + nonValidateAttributesHTML + "   " + errorTags + " " + tags + ">\n            " + errorHTML + "\n       ";
+            var inputHTML = " \n        <div class=\"" + beforeClasses + " " + defaultBeforeClasses + "\">" + beforeHtml + "</div>\n            <label class=\"ivx-input-label ivx-input-label-url\" for=\"" + id + "\"> " + label + " </label>\n            <input class=\"ivx-input ivx-input-url\" class=\"" + classes + " " + uiClasses + "\" " + uiAttributes + "  id=\"" + id + "\" name=\"" + name + "\"  type=\"url\" " + nonValidateAttributesHTML + "   " + errorTags + " " + tags + ">\n            " + errorHTML + "\n        <div class=\"" + afterClasses + " " + defaultAfterClasses + "\">" + afterHtml + "</div>\n       ";
 
             return "" + inputHTML;
         }
@@ -2557,7 +2900,7 @@ var Url = exports.Url = function () {
 
 
 Object.defineProperty(exports, "__esModule", {
-        value: true
+    value: true
 });
 exports.DatetimeLocal = undefined;
 
@@ -2580,163 +2923,187 @@ var style = new _style.Style();
 
 var DatetimeLocal = exports.DatetimeLocal = function () {
 
+    /**
+    * Accepts an input object with various input settings and UI specific error 
+    * messages
+    * @param {object} inputObj - various input settings to render a datetime-local input box
+    * @param {object} inputObj.input - input specific settings for this datetime-local input 
+    * @param {object} inputObj.settings - global settings for this datetime-local input 
+    * @param {string} inputObj.tags - input specific attribute tags 
+    * @param {class} inputObj.errors - errors from a rendering for validation and 
+    * error messaging appearance.
+    * @param {object} errorMessages - UI specific Error messages
+    */
+    function DatetimeLocal() {
+        var inputObj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+        var errorMessages = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _messages.ErrorMessages;
+
+        _classCallCheck(this, DatetimeLocal);
+
+        var _inputObj$input = inputObj.input,
+            input = _inputObj$input === undefined ? {} : _inputObj$input,
+            _inputObj$settings = inputObj.settings,
+            settings = _inputObj$settings === undefined ? {} : _inputObj$settings,
+            _inputObj$tags = inputObj.tags,
+            tags = _inputObj$tags === undefined ? {} : _inputObj$tags,
+            _inputObj$errors = inputObj.errors,
+            errors = _inputObj$errors === undefined ? {} : _inputObj$errors;
+
         /**
-        * Accepts an input object with various input settings and UI specific error 
-        * messages
-        * @param {object} inputObj - various input settings to render a datetime-local input box
-        * @param {object} inputObj.input - input specific settings for this datetime-local input 
-        * @param {object} inputObj.settings - global settings for this datetime-local input 
-        * @param {string} inputObj.tags - input specific attribute tags 
-        * @param {class} inputObj.errors - errors from a rendering for validation and 
-        * error messaging appearance.
-        * @param {object} errorMessages - UI specific Error messages
+         * Input specific settings for this datetime-local input
+         * @type {object}  
+         */
+
+        this.input = input;
+
+        /**
+         * Global input settings for this datetime-local input 
+         * @type {object}
+         */
+        this.settings = settings;
+
+        /**
+         * Tags to be added to this datetime-local input
+         * @type {String}
+         */
+        this.tags = tags;
+
+        /**
+        * Holds all validation error correcting.
+        * @type {Class}
         */
-        function DatetimeLocal() {
-                var inputObj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-                var errorMessages = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _messages.ErrorMessages;
+        this.errors = errors;
 
-                _classCallCheck(this, DatetimeLocal);
+        /**
+         * Renders UI specific error messages by utilizing the 
+         * error class passed down to keep it consistent with the 
+         * current UI framework.
+         * @type {Class}
+         */
+        this.errorMessages = errorMessages;
 
-                var _inputObj$input = inputObj.input,
-                    input = _inputObj$input === undefined ? {} : _inputObj$input,
-                    _inputObj$settings = inputObj.settings,
-                    settings = _inputObj$settings === undefined ? {} : _inputObj$settings,
-                    _inputObj$tags = inputObj.tags,
-                    tags = _inputObj$tags === undefined ? {} : _inputObj$tags,
-                    _inputObj$errors = inputObj.errors,
-                    errors = _inputObj$errors === undefined ? {} : _inputObj$errors;
+        /**
+         * Converts attribute data into attribute HTML for 
+         * attributes not covered by the errors class.
+         * @type {Class}
+         */
+        this.attributeTags = _attributes.AttributeTags;
+    }
 
-                /**
-                 * Input specific settings for this datetime-local input
-                 * @type {object}  
-                 */
+    /**
+    * Default ui classes to add to all datetime-local inputs 
+    * @type {String}
+    */
 
-                this.input = input;
 
-                /**
-                 * Global input settings for this datetime-local input 
-                 * @type {object}
-                 */
-                this.settings = settings;
-
-                /**
-                 * Tags to be added to this datetime-local input
-                 * @type {String}
-                 */
-                this.tags = tags;
-
-                /**
-                * Holds all validation error correcting.
-                * @type {Class}
-                */
-                this.errors = errors;
-
-                /**
-                 * Renders UI specific error messages by utilizing the 
-                 * error class passed down to keep it consistent with the 
-                 * current UI framework.
-                 * @type {Class}
-                 */
-                this.errorMessages = errorMessages;
-
-                /**
-                 * Converts attribute data into attribute HTML for 
-                 * attributes not covered by the errors class.
-                 * @type {Class}
-                 */
-                this.attributeTags = _attributes.AttributeTags;
+    _createClass(DatetimeLocal, [{
+        key: "uiClasses",
+        get: function get() {
+            return "";
         }
 
         /**
-        * Default ui classes to add to all datetime-local inputs 
+         * Default ui attributes to add to this datetime-local input 
+         * that aren't covered by the tags or errors above.
+         * @type {String}
+         */
+
+    }, {
+        key: "uiAttributes",
+        get: function get() {
+            return "";
+        }
+    }, {
+        key: "beforeClasses",
+        get: function get() {
+            return 'ivx-input-before ivx-input-before-datetime-local';
+        }
+    }, {
+        key: "afterClasses",
+        get: function get() {
+            return 'ivx-input-after ivx-input-after-datetime-local';
+        }
+
+        /**
+        * The HTML to render a datetime-local input based on the settings from the 
+        * constructor. 
+        * 
+        * @example 
+        * //Data 
+        * input.label = "<h1>Label</h1>";
+        * settings.classes = "class-1";
+        * errors.tags = "required='true'";
+        * DatetimeLocal.uiClasses = 'ui-classes-1';
+        * // Renders 
+        * <label>
+        *      <h1>Label</h1>
+        * </label>
+        * <input class="class-1 ui-classes-1" type="datetime-local" required="true">
         * @type {String}
         */
 
-
-        _createClass(DatetimeLocal, [{
-                key: "uiClasses",
-                get: function get() {
-                        return "";
-                }
-
-                /**
-                 * Default ui attributes to add to this datetime-local input 
-                 * that aren't covered by the tags or errors above.
-                 * @type {String}
-                 */
-
-        }, {
-                key: "uiAttributes",
-                get: function get() {
-                        return "";
-                }
-
-                /**
-                * The HTML to render a datetime-local input based on the settings from the 
-                * constructor. 
-                * 
-                * @example 
-                * //Data 
-                * input.label = "<h1>Label</h1>";
-                * settings.classes = "class-1";
-                * errors.tags = "required='true'";
-                * DatetimeLocal.uiClasses = 'ui-classes-1';
-                * // Renders 
-                * <label>
-                *      <h1>Label</h1>
-                * </label>
-                * <input class="class-1 ui-classes-1" type="datetime-local" required="true">
-                * @type {String}
-                */
-
-        }, {
-                key: "html",
-                get: function get() {
-                        var input = this.input,
-                            settings = this.settings,
-                            tags = this.tags,
-                            errors = this.errors,
-                            uiClasses = this.uiClasses,
-                            uiAttributes = this.uiAttributes;
-                        var label = input.label,
-                            labelHTML = input.labelHTML,
-                            _input$name = input.name,
-                            name = _input$name === undefined ? '' : _input$name,
-                            _input$id = input.id,
-                            id = _input$id === undefined ? '' : _input$id;
-                        var _settings$input = settings.input,
-                            inputSettings = _settings$input === undefined ? {} : _settings$input,
-                            _settings$showLabel = settings.showLabel,
-                            showLabel = _settings$showLabel === undefined ? true : _settings$showLabel;
-                        var _inputSettings$classe = inputSettings.classes,
-                            classes = _inputSettings$classe === undefined ? '' : _inputSettings$classe;
+    }, {
+        key: "html",
+        get: function get() {
+            var input = this.input,
+                settings = this.settings,
+                tags = this.tags,
+                errors = this.errors,
+                uiClasses = this.uiClasses,
+                uiAttributes = this.uiAttributes,
+                defaultBeforeClasses = this.beforeClasses,
+                defaultAfterClasses = this.afterClasses;
+            var label = input.label,
+                labelHTML = input.labelHTML,
+                _input$name = input.name,
+                name = _input$name === undefined ? '' : _input$name,
+                _input$id = input.id,
+                id = _input$id === undefined ? '' : _input$id,
+                _input$beforeHtml = input.beforeHtml,
+                beforeSettings = _input$beforeHtml === undefined ? {} : _input$beforeHtml,
+                _input$afterHtml = input.afterHtml,
+                afterSettings = _input$afterHtml === undefined ? {} : _input$afterHtml;
+            var _settings$input = settings.input,
+                inputSettings = _settings$input === undefined ? {} : _settings$input,
+                _settings$showLabel = settings.showLabel,
+                showLabel = _settings$showLabel === undefined ? true : _settings$showLabel;
+            var _inputSettings$classe = inputSettings.classes,
+                classes = _inputSettings$classe === undefined ? '' : _inputSettings$classe;
+            var _beforeSettings$html = beforeSettings.html,
+                beforeHtml = _beforeSettings$html === undefined ? "" : _beforeSettings$html,
+                _beforeSettings$class = beforeSettings.classes,
+                beforeClasses = _beforeSettings$class === undefined ? "" : _beforeSettings$class;
+            var _afterSettings$html = afterSettings.html,
+                afterHtml = _afterSettings$html === undefined ? "" : _afterSettings$html,
+                _afterSettings$classe = afterSettings.classes,
+                afterClasses = _afterSettings$classe === undefined ? "" : _afterSettings$classe;
 
 
-                        classes = classes + " " + uiClasses;
+            classes = classes + " " + uiClasses;
 
-                        var _errors$messages = errors.messages,
-                            errorMessages = _errors$messages === undefined ? [] : _errors$messages,
-                            _errors$attributes = errors.attributes,
-                            errorAttributes = _errors$attributes === undefined ? '' : _errors$attributes,
-                            _errors$nonValidate = errors.nonValidate,
-                            nonValidate = _errors$nonValidate === undefined ? [] : _errors$nonValidate,
-                            _errors$tags = errors.tags,
-                            errorTags = _errors$tags === undefined ? '' : _errors$tags;
+            var _errors$messages = errors.messages,
+                errorMessages = _errors$messages === undefined ? [] : _errors$messages,
+                _errors$attributes = errors.attributes,
+                errorAttributes = _errors$attributes === undefined ? '' : _errors$attributes,
+                _errors$nonValidate = errors.nonValidate,
+                nonValidate = _errors$nonValidate === undefined ? [] : _errors$nonValidate,
+                _errors$tags = errors.tags,
+                errorTags = _errors$tags === undefined ? '' : _errors$tags;
 
-                        var errorHTML = new this.errorMessages(errorMessages).html;
-                        var nonValidateAttributesHTML = new this.attributeTags(errorAttributes, nonValidate).html;
+            var errorHTML = new this.errorMessages(errorMessages).html;
+            var nonValidateAttributesHTML = new this.attributeTags(errorAttributes, nonValidate).html;
 
-                        nonValidateAttributesHTML = nonValidateAttributesHTML + " " + uiAttributes;
+            nonValidateAttributesHTML = nonValidateAttributesHTML + " " + uiAttributes;
 
-                        if (labelHTML) label = labelHTML;
+            if (labelHTML) label = labelHTML;
 
-                        var inputHTML = " \n            <label for=\"" + id + "\"> " + label + " </label>\n            <input class=\"" + classes + "\"  id=\"" + id + "\" name=\"" + name + "\"  type=\"datetime-local\" " + nonValidateAttributesHTML + "   " + errorTags + " " + tags + ">\n            " + errorHTML + "\n       ";
+            var inputHTML = " \n            <div class=\"" + beforeClasses + " " + defaultBeforeClasses + "\">" + beforeHtml + "</div>\n            <label class=\"ivx-input-label ivx-input-label-datetime-local\" for=\"" + id + "\"> " + label + " </label>\n            <input class=\"" + classes + " ivx-input ivx-input-datetime-local\"  id=\"" + id + "\" name=\"" + name + "\"  type=\"datetime-local\" " + nonValidateAttributesHTML + "   " + errorTags + " " + tags + ">\n            " + errorHTML + "\n            <div class=\"" + afterClasses + " " + defaultAfterClasses + "\">" + afterHtml + "</div>\n       ";
 
-                        return "" + inputHTML;
-                }
-        }]);
+            return "" + inputHTML;
+        }
+    }]);
 
-        return DatetimeLocal;
+    return DatetimeLocal;
 }();
 
 /***/ }),
@@ -2803,7 +3170,7 @@ var InputState = exports.InputState = function () {
                 footerHTML = _footer$html === undefined ? '' : _footer$html;
 
 
-            return '\n            <section class="' + sectionClasses + ' ' + defaultSectionClasses + '" id="' + data.id + '">\n                 <header class="' + headerClasses + ' ' + defaultHeaderClasses + '">' + headerHTML + '</header>\n                ' + formSection + '\n                <footer class="' + footerClasses + ' ' + defaultFooterClasses + '">' + footerHTML + '</footer>\n            </section>';
+            return '\n            <section class="' + sectionClasses + ' ' + defaultSectionClasses + ' ivx-state-section ivx-state-input-section" id="' + data.id + '">\n                 <header class="' + headerClasses + ' ' + defaultHeaderClasses + ' ivx-header ivx-state-header ivx-state-input-header">' + headerHTML + '</header>\n                ' + formSection + '\n                <footer class="' + footerClasses + ' ' + defaultFooterClasses + ' ivx-footer ivx-state-footer ivx-state-input-footer">' + footerHTML + '</footer>\n            </section>';
         }
     }]);
 
@@ -2890,7 +3257,7 @@ var NavigationState = exports.NavigationState = function () {
 
             var linkContainerAttributeHTML = new _attributes.AttributeTags(linkContainerAttributes, Object.keys(linkContainerAttributes)).html;
 
-            return '\n            <section class="' + sectionClasses + ' ' + defaultSectionClasses + '" id="' + data.id + '">\n                 <header class="' + headerClasses + ' ' + defaultHeaderClasses + '">' + headerHTML + '</header>\n                 <div class=\'' + defaultLinkContainerClasses + ' ' + linkContainerClasses + '\' ' + linkContainerAttributeHTML + '>\n                    ' + linkSection + '\n                </div>\n                <footer class="' + footerClasses + ' ' + defaultFooterClasses + '">' + footerHTML + '</footer>\n            </section>';
+            return '\n            <section class="' + sectionClasses + ' ' + defaultSectionClasses + ' ivx-state-section ivx-state-navigation-section" id="' + data.id + '">\n                 <header class="' + headerClasses + ' ' + defaultHeaderClasses + ' ivx-state-header ivx-state-navigation-header">' + headerHTML + '</header>\n                 <div class=\'' + defaultLinkContainerClasses + ' ' + linkContainerClasses + '\' ' + linkContainerAttributeHTML + '>\n                    ' + linkSection + '\n                </div>\n                <footer class="' + footerClasses + ' ' + defaultFooterClasses + ' ivx-state-footer ivx-state-navigation-footer">' + footerHTML + '</footer>\n            </section>';
         }
     }]);
 
@@ -2927,10 +3294,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var _class = function (_Controls) {
     _inherits(_class, _Controls);
 
-    function _class(container) {
+    function _class(container, playerId) {
         _classCallCheck(this, _class);
 
-        var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
+        var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, playerId));
 
         if (container.html instanceof Function) {
             container.html(_this.html);
@@ -2950,12 +3317,12 @@ var _class = function (_Controls) {
 
 
         _this.container = container;
-        _this.playPauseControls = document.getElementById("video-controls-play-pause");
-        _this.totalTimeInfo = document.getElementById("video-controls-total-time");
-        _this.currentTimeInfo = document.getElementById("video-controls-current-time");
-        _this.scrubBar = document.getElementById("video-controls-scrub-bar");
-        _this.muteControls = document.getElementById("video-controls-mute-controls");
-        _this.volumeBar = document.getElementById("video-controls-volume-bar");
+        _this.playPauseControls = document.getElementById(playerId + '-video-controls-play-pause');
+        _this.totalTimeInfo = document.getElementById(playerId + '-video-controls-total-time');
+        _this.currentTimeInfo = document.getElementById(playerId + '-video-controls-current-time');
+        _this.scrubBar = document.getElementById(playerId + '-video-controls-scrub-bar');
+        _this.muteControls = document.getElementById(playerId + '-video-controls-mute-controls');
+        _this.volumeBar = document.getElementById(playerId + '-video-controls-volume-bar');
         return _this;
     }
 
@@ -3098,6 +3465,9 @@ var _class = function (_Controls) {
                 var ccToggle = document.createElement('button');
                 var ccToggleIcon = document.createElement('i');
 
+                trackListContainer.setAttribute('id', self.playerId + '-track-list');
+                ccToggle.setAttribute('id', self.playerId + '-cc-toggle');
+
                 _element2.default.addClassesToElement(ccToggle, closeCaptionButtonClasses);
                 _element2.default.addClassesToElement(ccToggleIcon, closeCaptionButtonIconClasses);
 
@@ -3216,7 +3586,8 @@ var _class = function (_Controls) {
                 chapterListClasses = this.chapterListClasses,
                 chapterActiveClasses = this.chapterActiveClasses,
                 chapterInActiveClasses = this.chapterInActiveClasses,
-                chapterListItemClasses = this.chapterListItemClasses;
+                chapterListItemClasses = this.chapterListItemClasses,
+                playerId = this.playerId;
 
             var chapterTrack = Array.from(textTracks).find(function (textTrack) {
                 return textTrack.kind === 'chapters';
@@ -3225,6 +3596,9 @@ var _class = function (_Controls) {
 
             if (chapterTrack) {
                 var chapterListEl = document.createElement('ol');
+
+                chapterListEl.setAttribute('id', this.playerId + '-chapter-list');
+
                 var _chapterTrack$cues = chapterTrack.cues,
                     cues = _chapterTrack$cues === undefined ? [] : _chapterTrack$cues;
 
@@ -3243,7 +3617,7 @@ var _class = function (_Controls) {
 
                     _element2.default.append(chapterContainerEl, chapterButtonEl);
 
-                    chapterContainerEl.id = id;
+                    chapterContainerEl.id = id + '-chapter-seclect-container';
                     chapterContainerEl.className = chapterListItemClasses + ' ' + (index === 0 ? chapterActiveClasses : chapterInActiveClasses);
 
                     _element2.default.append(chapterListEl, chapterContainerEl);
@@ -3349,33 +3723,41 @@ var _class = function (_Controls) {
     }, {
         key: 'playPauseButtonHTML',
         get: function get() {
-            var play = this.playClasses;
+            var play = this.playClasses,
+                playerId = this.playerId;
             var playPauseControls = this.playPauseControlsClasses;
 
-            return '\n        <button id="video-controls-play-pause" class="' + playPauseControls + '">\n            <i class=\'' + play + '\'></i>\n        </button>';
+            return '\n        <button id="' + playerId + '-video-controls-play-pause" class="' + playPauseControls + '">\n            <i class=\'' + play + '\'></i>\n        </button>';
         }
     }, {
         key: 'scrubBarHTML',
         get: function get() {
-            return '\n             <div id="video-controls-scrub-bar" class="' + this.scrubBarClasses + '">\n                <div class="' + this.scrubBarTimeLapseClasses + '"></div>\n            </div>\n        ';
+            var playerId = this.playerId;
+
+            return '\n             <div id="' + playerId + '-video-controls-scrub-bar" class="' + this.scrubBarClasses + '">\n                <div class="' + this.scrubBarTimeLapseClasses + '"></div>\n            </div>\n        ';
         }
     }, {
         key: 'timestampHTML',
         get: function get() {
-            return '\n        <span id="video-controls-current-time" class="' + this.currentTimeInfoClasses + '"></span>\n        <span id="video-controls-total-time" class="' + this.totalTimeInfoClasses + '"></span>\n        ';
+            var playerId = this.playerId;
+
+            return '\n        <span id="' + playerId + '-video-controls-current-time" class="' + this.currentTimeInfoClasses + '"></span>\n        <span id="' + playerId + '-video-controls-total-time" class="' + this.totalTimeInfoClasses + '"></span>\n        ';
         }
     }, {
         key: 'muteButtonHTML',
         get: function get() {
             var unmute = this.unmuteClasses,
-                muteControlsClasses = this.muteControlsClasses;
+                muteControlsClasses = this.muteControlsClasses,
+                playerId = this.playerId;
 
-            return '\n            <button id="video-controls-mute-controls" class="' + muteControlsClasses + '">\n                <i class="' + unmute + '"></i>\n            </button>\n        ';
+            return '\n            <button id="' + playerId + '-video-controls-mute-controls" class="' + muteControlsClasses + '">\n                <i class="' + unmute + '"></i>\n            </button>\n        ';
         }
     }, {
         key: 'volumeBarHTML',
         get: function get() {
-            return '\n            <div  id="video-controls-volume-bar" class="' + this.volumeBarClasses + '">\n                <div class="' + this.volumeBarCurrentVolumeClasses + '"></div>\n            </div> \n        ';
+            var playerId = this.playerId;
+
+            return '\n            <div  id="' + playerId + '-video-controls-volume-bar" class="' + this.volumeBarClasses + '">\n                <div class="' + this.volumeBarCurrentVolumeClasses + '"></div>\n            </div> \n        ';
         }
     }, {
         key: 'trackListSelectContainerClasses',
@@ -3481,15 +3863,18 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Controls = exports.Controls = function (_ControlEvents) {
     _inherits(Controls, _ControlEvents);
 
-    function Controls() {
+    function Controls(playerId) {
         _classCallCheck(this, Controls);
 
-        var _this = _possibleConstructorReturn(this, (Controls.__proto__ || Object.getPrototypeOf(Controls)).call(this));
+        var _this = _possibleConstructorReturn(this, (Controls.__proto__ || Object.getPrototypeOf(Controls)).call(this, playerId));
 
-        _this.currentVolume = 0.5;
-        _this.controlEventNames = new _videoEvents2.default();
-        _this.trackEventNames = new _tracksEvents2.default();
-        _this.trackCuesEventName = new _tracksCuesEvents2.default();
+        Object.assign(_this, {
+            playerId: playerId,
+            currentVolume: 0.5,
+            controlEventNames: new _videoEvents2.default(),
+            trackEventNames: new _tracksEvents2.default(),
+            trackCuesEventName: new _tracksCuesEvents2.default()
+        });
         return _this;
     }
 
@@ -3499,6 +3884,9 @@ var Controls = exports.Controls = function (_ControlEvents) {
             iVXjsBus.removeListener(this.controlEventNames.TIME_UPDATE, this.updateTime);
             iVXjsBus.removeListener(this.controlEventNames.PLAYING, this.whilePlaying);
             iVXjsBus.removeListener(this.controlEventNames.CAN_PLAY, this.canPlayCallback);
+            iVXjsBus.removeListener(this.controlEventNames.MUTE, this.whileMuted);
+            iVXjsBus.removeListener(this.controlEventNames.UNMUTE, this.whileUnmuted);
+            iVXjsBus.removeListener(this.controlEventNames.SET_VOLUME, this.whileSetVolume);
             iVXjsBus.removeListener(this.trackCuesEventName.ON_CHAPTER_START, this.chapterChange);
             iVXjsBus.removeListener(this.trackEventNames.CHANGE_CURRENT_TRACK, this.trackChange);
         }
@@ -3541,7 +3929,6 @@ var Controls = exports.Controls = function (_ControlEvents) {
             currentVolumeSpan.style.width = volumeLevel * 100 + "%";
 
             this.currentVolume = volumeLevel;
-            this.unmute();
             this.setVolume(volumeLevel);
         }
     }, {
@@ -3569,8 +3956,8 @@ var Controls = exports.Controls = function (_ControlEvents) {
             this.seek(scrubToTime);
         }
     }, {
-        key: "setPlayPause",
-        value: function setPlayPause(event) {
+        key: "togglePlayPause",
+        value: function togglePlayPause(event) {
             var playPauseControls = this.playPauseControls,
                 playClasses = this.playClasses,
                 pauseClasses = this.pauseClasses;
@@ -3580,22 +3967,44 @@ var Controls = exports.Controls = function (_ControlEvents) {
 
             switch (playPauseIcon.className) {
                 case playClasses:
-                    playPauseIcon.className = pauseClasses;
-
-                    this.play();
+                    this.setPlay();
                     break;
                 case pauseClasses:
-                    playPauseIcon.className = playClasses;
-
-                    this.pause();
+                    this.setPause();
                     break;
                 default:
                     break;
             }
         }
     }, {
-        key: "setMute",
-        value: function setMute(event) {
+        key: "setPlay",
+        value: function setPlay() {
+            var playPauseControls = this.playPauseControls,
+                playClasses = this.playClasses,
+                pauseClasses = this.pauseClasses;
+
+            var searchClasses = [playClasses, pauseClasses];
+            var playPauseIcon = this.getElementByClasses(playPauseControls.children, searchClasses);
+
+            playPauseIcon.className = pauseClasses;
+            this.play();
+        }
+    }, {
+        key: "setPause",
+        value: function setPause() {
+            var playPauseControls = this.playPauseControls,
+                playClasses = this.playClasses,
+                pauseClasses = this.pauseClasses;
+
+            var searchClasses = [playClasses, pauseClasses];
+            var playPauseIcon = this.getElementByClasses(playPauseControls.children, searchClasses);
+
+            playPauseIcon.className = playClasses;
+            this.pause();
+        }
+    }, {
+        key: "toggleMute",
+        value: function toggleMute(event) {
             var muteControls = this.muteControls,
                 muteClasses = this.muteClasses,
                 unmuteClasses = this.unmuteClasses,
@@ -3608,15 +4017,9 @@ var Controls = exports.Controls = function (_ControlEvents) {
 
             switch (muteIcon.className) {
                 case unmuteClasses:
-                    muteIcon.className = muteClasses;
-                    currentVolumeSpan.style.width = "0%";
-
                     this.mute();
                     break;
                 case muteClasses:
-                    muteIcon.className = unmuteClasses;
-                    currentVolumeSpan.style.width = this.currentVolume * 100 + "%";
-
                     this.unmute();
                     break;
                 default:
@@ -3624,15 +4027,70 @@ var Controls = exports.Controls = function (_ControlEvents) {
             }
         }
     }, {
+        key: "mute",
+        value: function mute() {
+            var muteControls = this.muteControls,
+                muteClasses = this.muteClasses,
+                unmuteClasses = this.unmuteClasses,
+                volumeBar = this.volumeBar,
+                volumeBarCurrentVolumeClasses = this.volumeBarCurrentVolumeClasses;
+
+            var muteControlsClasses = [muteClasses, unmuteClasses];
+            var muteIcon = this.getElementByClasses(muteControls.children, muteControlsClasses);
+            var currentVolumeSpan = this.getElementByClasses(volumeBar.children, [volumeBarCurrentVolumeClasses]);
+
+            muteIcon.className = muteClasses;
+            currentVolumeSpan.style.width = "0%";
+
+            this.setVolume(0);
+        }
+    }, {
+        key: "unmute",
+        value: function unmute() {
+            var muteControls = this.muteControls,
+                muteClasses = this.muteClasses,
+                unmuteClasses = this.unmuteClasses,
+                volumeBar = this.volumeBar,
+                volumeBarCurrentVolumeClasses = this.volumeBarCurrentVolumeClasses;
+
+            var muteControlsClasses = [muteClasses, unmuteClasses];
+            var muteIcon = this.getElementByClasses(muteControls.children, muteControlsClasses);
+            var currentVolumeSpan = this.getElementByClasses(volumeBar.children, [volumeBarCurrentVolumeClasses]);
+
+            muteIcon.className = unmuteClasses;
+            currentVolumeSpan.style.width = this.currentVolume * 100 + "%";
+
+            this.setVolume(this.currentVolume);
+        }
+    }, {
+        key: "setVolumeBar",
+        value: function setVolumeBar(volume) {
+            var muteControls = this.muteControls,
+                muteClasses = this.muteClasses,
+                unmuteClasses = this.unmuteClasses,
+                volumeBar = this.volumeBar,
+                volumeBarCurrentVolumeClasses = this.volumeBarCurrentVolumeClasses;
+
+            var muteControlsClasses = [muteClasses, unmuteClasses];
+            var muteIcon = this.getElementByClasses(muteControls.children, muteControlsClasses);
+            var currentVolumeSpan = this.getElementByClasses(volumeBar.children, [volumeBarCurrentVolumeClasses]);
+
+            if (volume) this.currentVolume = volume;
+
+            currentVolumeSpan.style.width = volume * 100 + "%";
+        }
+    }, {
         key: "onReadyToPlay",
-        value: function onReadyToPlay(player, stateData) {
+        value: function onReadyToPlay(player) {
             var volumeBar = this.volumeBar,
                 volumeBarCurrentVolumeClasses = this.volumeBarCurrentVolumeClasses;
 
             var self = this;
             var currentVolumeSpan = this.getElementByClasses(volumeBar.children, [volumeBarCurrentVolumeClasses]);
 
-            currentVolumeSpan.style.width = self.currentVolume * 100 + "%";
+            if (currentVolumeSpan) {
+                currentVolumeSpan.style.width = self.currentVolume * 100 + "%";
+            }
 
             this.setVolume(self.currentVolume);
             this.getDuration(function (duration) {
@@ -3686,8 +4144,6 @@ var Controls = exports.Controls = function (_ControlEvents) {
             var playPauseIcon = this.getElementByClasses(playPauseControls.children, searchClasses);
 
             playPauseIcon.className = pauseClasses;
-
-            this.play();
         }
     }, {
         key: "onPaused",
@@ -3700,12 +4156,12 @@ var Controls = exports.Controls = function (_ControlEvents) {
             var playPauseIcon = this.getElementByClasses(playPauseControls.children, searchClasses);
 
             playPauseIcon.className = playClasses;
-
-            this.pause();
         }
     }, {
         key: "addEventListeners",
         value: function addEventListeners(iVXjsBus) {
+            var _this2 = this;
+
             var self = this;
             var scrubBar = this.scrubBar,
                 volumeBar = this.volumeBar,
@@ -3715,10 +4171,15 @@ var Controls = exports.Controls = function (_ControlEvents) {
 
 
             this.iVXjsBus = iVXjsBus;
-            this.updateTime = iVXjsBus.on(this.controlEventNames.TIME_UPDATE, updateTime);
+            this.updateTime = iVXjsBus.on(this.controlEventNames.TIME_UPDATE, function (player) {
+                updateTime(player);
+            });
             this.whilePaused = iVXjsBus.on(this.controlEventNames.PAUSED, whilePaused);
             this.whilePlaying = iVXjsBus.on(this.controlEventNames.PLAYING, whilePlaying);
             this.canPlayCallback = iVXjsBus.on(this.controlEventNames.CAN_PLAY, canPlayCallBack);
+            this.whileMuted = iVXjsBus.on(this.controlEventNames.MUTE, mute);
+            this.whileUnmuted = iVXjsBus.on(this.controlEventNames.UNMUTE, unmute);
+            this.whileSetVolume = iVXjsBus.on(this.controlEventNames.SET_VOLUME, setVolume);
             this.chapterChange = iVXjsBus.on(this.trackCuesEventName.ON_CHAPTER_START, chapterChange);
             this.trackChange = iVXjsBus.on(this.trackEventNames.CHANGE_CURRENT_TRACK, trackChange);
             this.updateTime = this.updateTime ? this.updateTime : updateTime;
@@ -3730,63 +4191,114 @@ var Controls = exports.Controls = function (_ControlEvents) {
                 self.scrub(event);
             });
             playPauseControls.addEventListener('mouseup', function (event) {
-                self.setPlayPause(event);
+                self.togglePlayPause(event);
             });
             muteControls.addEventListener('click', function (event) {
-                self.setMute(event);
+                self.toggleMute(event);
             });
 
-            this.iVXjsBus.once(this.controlEventNames.CAN_PLAY, function (player) {
-                self.createPlayerSpecificControls({ player: player });
-                self.player = player;
+            var canPlayListener = this.iVXjsBus.on(this.controlEventNames.CAN_PLAY, function (player) {
+                if (player.id === self.playerId) {
+                    self.createPlayerSpecificControls({ player: player });
+                    self.player = player;
+                    self.iVXjsBus.removeListener(_this2.controlEventNames.CAN_PLAY, canPlayListener);
+                }
             });
 
-            function chapterChange(cue) {
-                var chapterActiveClasses = self.chapterActiveClasses,
-                    chapterListItemClasses = self.chapterListItemClasses,
-                    chapterInActiveClasses = self.chapterInActiveClasses;
-
-                var chapterList = Array.from(document.getElementsByClassName(chapterListItemClasses));
-                var currentChapterId = cue.chapterId;
+            function chapterChange() {
+                var args = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+                var cue = args.cue,
+                    playerId = args.playerId;
 
 
-                chapterList.forEach(function (chapterListItem) {
-                    var chapterId = chapterListItem.id;
+                if (!playerId || playerId === self.playerId) changeChapter();
+                if (playerId === self.playerId) changeChapter();
+
+                function changeChapter() {
+                    var chapterActiveClasses = self.chapterActiveClasses,
+                        chapterListItemClasses = self.chapterListItemClasses,
+                        chapterInActiveClasses = self.chapterInActiveClasses;
+
+                    var chapterListContainer = document.getElementById(self.playerId + "-chapter-list");
+                    var currentChapterId = cue.chapterId;
 
 
-                    if (chapterId === currentChapterId) {
-                        chapterListItem.classList.remove(chapterInActiveClasses);
-                        chapterListItem.classList.add(chapterActiveClasses);
-                        return;
-                    }
+                    if (!chapterListContainer) return;
 
-                    chapterListItem.classList.remove(chapterActiveClasses);
-                    chapterListItem.classList.add(chapterInActiveClasses);
-                });
+                    var chapterList = Array.from(chapterListContainer.children);
+
+                    chapterList.forEach(function (chapterListItem) {
+                        var chapterId = chapterListItem.id;
+
+
+                        if (chapterId.indexOf(currentChapterId) >= 0) {
+                            chapterListItem.classList.remove(chapterInActiveClasses);
+                            chapterListItem.classList.add(chapterActiveClasses);
+                            return;
+                        }
+
+                        chapterListItem.classList.remove(chapterActiveClasses);
+                        chapterListItem.classList.add(chapterInActiveClasses);
+                    });
+                }
             };
 
             function trackChange(opts) {
                 var _opts$trackId = opts.trackId,
-                    trackId = _opts$trackId === undefined ? "" : _opts$trackId;
+                    trackId = _opts$trackId === undefined ? "" : _opts$trackId,
+                    playerId = opts.playerId;
 
 
-                self.updateTrackSelector(trackId);
+                if (playerId === self.playerId) {
+                    self.updateTrackSelector(trackId);
+                }
             }
 
-            function canPlayCallBack(player, _stateData) {
-                self.onReadyToPlay(player, _stateData);
+            function canPlayCallBack(player) {
+                if (player.id === self.playerId) {
+                    self.onReadyToPlay(player);
+                }
             }
 
             function updateTime(player) {
-                self.onTimeUpdate(player);
+                if (player.id === self.playerId) {
+                    self.onTimeUpdate(player);
+                }
             }
 
             function whilePaused(player) {
-                self.onPaused(player);
+                if (player.id === self.playerId) {
+                    self.onPaused(player);
+                }
             }
 
-            function whilePlaying() {
-                self.onPlaying();
+            function whilePlaying(player) {
+                if (player.id === self.playerId) {
+                    self.onPlaying();
+                }
+            }
+
+            function mute() {
+                var args = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+                var playerId = args.playerId;
+
+
+                if (!playerId || playerId === self.playerId) self.mute();
+            }
+
+            function unmute(args) {
+                var playerId = args.playerId;
+
+
+                if (!playerId || playerId === self.playerId) self.unmute();
+            }
+
+            function setVolume(args) {
+                var playerId = args.playerId,
+                    volume = args.volume;
+
+
+                if (!playerId || playerId === self.playerId) self.setVolumeBar(volume);
             }
         }
     }, {
@@ -3872,52 +4384,82 @@ var _class = function () {
 
     _createClass(_class, [{
         key: 'contructor',
-        value: function contructor() {
-            this.volume = 0;
-            this.currenttime = 0;
+        value: function contructor(playerId) {
+            Object.assign(this, {
+                volume: 0,
+                currenttime: 0,
+                playerId: playerId
+            });
         }
     }, {
         key: 'play',
         value: function play() {
-            this.iVXjsBus.emit(this.controlEventNames.PLAY);
+            var playerId = this.playerId;
+
+
+            this.iVXjsBus.emit(this.controlEventNames.PLAY, {
+                playerId: playerId
+            });
         }
     }, {
         key: 'pause',
         value: function pause() {
-            this.iVXjsBus.emit(this.controlEventNames.PAUSE);
+            var playerId = this.playerId;
+
+
+            this.iVXjsBus.emit(this.controlEventNames.PAUSE, {
+                playerId: playerId
+            });
         }
     }, {
         key: 'getDuration',
         value: function getDuration(cb) {
-            this.iVXjsBus.once(this.controlEventNames.SET_DURATION, function (duration) {
-                cb(duration);
+            var playerId = this.playerId;
+
+
+            this.iVXjsBus.once(this.controlEventNames.SET_DURATION, function (eventObj) {
+                var eventPlayerId = eventObj.playerId,
+                    duration = eventObj.duration;
+
+
+                if (eventPlayerId === playerId) {
+                    cb(duration);
+                }
             });
-            this.iVXjsBus.emit(this.controlEventNames.GET_DURATION);
+
+            this.iVXjsBus.emit(this.controlEventNames.GET_DURATION, {
+                playerId: playerId
+            });
         }
     }, {
         key: 'setVolume',
         value: function setVolume(volume) {
-            this.iVXjsBus.emit(this.controlEventNames.SET_VOLUME, volume);
+            var playerId = this.playerId;
+
+
+            this.iVXjsBus.emit(this.controlEventNames.SET_VOLUME, {
+                volume: volume,
+                playerId: playerId
+            });
         }
     }, {
         key: 'seek',
         value: function seek(seconds) {
-            this.iVXjsBus.emit(this.controlEventNames.SEEK, seconds);
+            var playerId = this.playerId;
+
+
+            this.iVXjsBus.emit(this.controlEventNames.SEEK, {
+                currentTime: seconds,
+                playerId: playerId
+            });
         }
     }, {
         key: 'changeCurrentTrack',
         value: function changeCurrentTrack(trackId) {
-            this.iVXjsBus.emit(this.trackEventNames.CHANGE_CURRENT_TRACK, { trackId: trackId });
-        }
-    }, {
-        key: 'mute',
-        value: function mute() {
-            this.iVXjsBus.emit(this.controlEventNames.MUTE);
-        }
-    }, {
-        key: 'unmute',
-        value: function unmute() {
-            this.iVXjsBus.emit(this.controlEventNames.UNMUTE);
+            var playerId = this.playerId;
+
+
+            this.iVXjsBus.emit(this.trackEventNames.CHANGE_CURRENT_TRACK, { trackId: trackId, playerId: playerId });
         }
     }]);
 
@@ -4602,7 +5144,11 @@ var Style = exports.Style = function () {
             var columnNames = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen"];
             var contents = inputHTML.reduce(function (contentHTML, thisInput) {
                 var html = thisInput.html,
-                    settings = thisInput.settings;
+                    _thisInput$settings = thisInput.settings,
+                    settings = _thisInput$settings === undefined ? {} : _thisInput$settings,
+                    _thisInput$input = thisInput.input,
+                    input = _thisInput$input === undefined ? {} : _thisInput$input;
+                var type = input.type;
                 var _settings$width = settings.width,
                     width = _settings$width === undefined ? "1" : _settings$width,
                     _settings$container = settings.container,
@@ -4620,7 +5166,7 @@ var Style = exports.Style = function () {
 
                 var semanticUIwidth = columnNames[Math.round(numericWidth * columnNames.length) - 1];
 
-                html = html.replace('ivxjs-grid-1-1', semanticUIwidth + ' wide field ' + classes);
+                html = html.replace('ivxjs-grid-1-1', semanticUIwidth + ' wide field ' + classes + ' ivx-input-container ivx-input-container-' + type);
                 contentHTML = '' + contentHTML + html;
 
                 if (currentWidthTotal >= 1) {
@@ -4809,7 +5355,7 @@ var SemanticUI = exports.SemanticUI = function SemanticUI() {
 module.export = initializeSemanticUI;
 
 if (angular && angular.module('ivx-js')) {
-    angular.module('ivx-js').constant('iVXjs.ui.semantic-ui', initializeSemanticUI);
+    angular.module('ivx-js').constant('iVXjs.ui.semantic-ui', initializeSemanticUI).constant('iVXjsUiSemanticUi', initializeSemanticUI);
 }
 
 function initializeSemanticUI() {
@@ -4859,8 +5405,14 @@ var Form = exports.Form = function (_DefaultForm) {
         key: 'submitButtonHTML',
         get: function get() {
             var _submit = this.submit,
-                submit = _submit === undefined ? {} : _submit;
-            var _submit$label = submit.label,
+                submit = _submit === undefined ? {} : _submit,
+                defaultBeforeClasses = this.beforeClasses,
+                defaultAfterClasses = this.afterClasses;
+            var _submit$beforeHtml = submit.beforeHtml,
+                beforeSettings = _submit$beforeHtml === undefined ? {} : _submit$beforeHtml,
+                _submit$afterHtml = submit.afterHtml,
+                afterSettings = _submit$afterHtml === undefined ? {} : _submit$afterHtml,
+                _submit$label = submit.label,
                 submitLabel = _submit$label === undefined ? "Submit" : _submit$label,
                 submitLabelHTML = submit.labelHTML,
                 _submit$input = submit.input,
@@ -4873,11 +5425,19 @@ var Form = exports.Form = function (_DefaultForm) {
                 submitInputClasses = _submitInput$classes === undefined ? "" : _submitInput$classes;
             var _submitContainer$clas = submitContainer.classes,
                 submitContainerClasses = _submitContainer$clas === undefined ? "" : _submitContainer$clas;
+            var _beforeSettings$html = beforeSettings.html,
+                beforeHtml = _beforeSettings$html === undefined ? "" : _beforeSettings$html,
+                _beforeSettings$class = beforeSettings.classes,
+                beforeClasses = _beforeSettings$class === undefined ? "" : _beforeSettings$class;
+            var _afterSettings$html = afterSettings.html,
+                afterHtml = _afterSettings$html === undefined ? "" : _afterSettings$html,
+                _afterSettings$classe = afterSettings.classes,
+                afterClasses = _afterSettings$classe === undefined ? "" : _afterSettings$classe;
 
 
             submitLabel = submitLabelHTML ? submitLabelHTML : submitLabel;
 
-            var submitHTML = submitLabel.length >= 0 ? '<div class="sixteen field wide ' + submitContainerClasses + '">\n                    <button class="ui button ' + submitInputClasses + '" type=\'submit\'>\n                        ' + submitLabel + '\n                    </button>\n                </div>' : '';
+            var submitHTML = submitLabel.length >= 0 ? '<div class="sixteen field wide ' + submitContainerClasses + ' ivx-input-container ivx-input-container-submit-button">\n                <div class="' + beforeClasses + ' ' + defaultBeforeClasses + '">' + beforeHtml + '</div>\n                <button class="ui button ' + submitInputClasses + '" type=\'submit\'>\n                    ' + submitLabel + '\n                </button>\n                <div class="' + afterClasses + ' ' + defaultAfterClasses + '">' + afterHtml + '</div>\n            </div>' : '';
 
             return submitHTML;
         }
@@ -4956,7 +5516,7 @@ var Buttons = exports.Buttons = function (_DefaultButtons) {
     _createClass(Buttons, [{
         key: 'buttonClasses',
         get: function get() {
-            return 'ui button';
+            return 'ui button ivx-input-buttons ivx-input';
         }
     }]);
 
@@ -5007,7 +5567,7 @@ var Checkbox = exports.Checkbox = function (_DefaultCheckbox) {
                 labelHTML = input.labelHTML;
 
             if (labelHTML) label = labelHTML;
-            return '\n         <div class="' + classes + '">\n            <input ' + attributes + ' >\n             <label for="' + input.id + '">    \n                ' + label + '\n            </label>\n         </div>';
+            return '\n         <div class="' + classes + '">\n            <input ' + attributes + ' >\n             <label class="ivx-input-label ivx-input-label-checkbox" for="' + input.id + '">    \n                ' + label + '\n            </label>\n         </div>';
         }
     }, {
         key: 'uiClasses',
@@ -5374,7 +5934,7 @@ var Radio = exports.Radio = function (_DefaultRadio) {
 
             var currentId = "" + id + (value.length > 0 ? '-' + value : '');
 
-            return "\n          <input type=\"radio\" id=\"" + currentId + "\" " + attrHTML + ">\n            <label for=\"" + currentId + "\">   \n                     " + label + "\n          </label>\n          ";
+            return "\n          <input type=\"radio\" id=\"" + currentId + "\" " + attrHTML + ">\n            <label class=\"ivx-input-label ivx-input-label-radio\" for=\"" + currentId + "\">   \n                     " + label + "\n          </label>\n          ";
         }
     }, {
         key: "uiClasses",
@@ -6029,10 +6589,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var _class = function (_DefaultVideoControls) {
     _inherits(_class, _DefaultVideoControls);
 
-    function _class(container, iVXjsBus) {
+    function _class(container, playerId) {
         _classCallCheck(this, _class);
 
-        return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, container));
+        return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, container, playerId));
     }
 
     _createClass(_class, [{
@@ -6148,12 +6708,12 @@ var _class = function (_DefaultVideoControls) {
     }, {
         key: 'scrubBarHTML',
         get: function get() {
-            return '      \n          <div id="video-controls-scrub-bar" class="' + this.scrubBarClasses + '">\n                <div style="min-width:0" class="' + this.scrubBarTimeLapseClasses + '">\n                     \n                </div>\n                  <div class=\'label\'>\n                        ' + this.timestampHTML + '\n                </div>\n           \n            </div>';
+            return '      \n          <div id="' + this.playerId + '-video-controls-scrub-bar" class="' + this.scrubBarClasses + '">\n                <div style="min-width:0" class="' + this.scrubBarTimeLapseClasses + '">\n                     \n                </div>\n                  <div class=\'label\'>\n                        ' + this.timestampHTML + '\n                </div>\n           \n            </div>';
         }
     }, {
         key: 'volumeBarHTML',
         get: function get() {
-            return '\n            <div id="video-controls-volume-bar" class="progress ' + this.volumeBarClasses + '">\n                <div style="min-width:0" class="' + this.volumeBarCurrentVolumeClasses + '"></div>\n            </div>';
+            return '\n            <div id="' + this.playerId + '-video-controls-volume-bar" class="progress ' + this.volumeBarClasses + '">\n                <div style="min-width:0" class="' + this.volumeBarCurrentVolumeClasses + '"></div>\n            </div>';
         }
     }, {
         key: 'html',

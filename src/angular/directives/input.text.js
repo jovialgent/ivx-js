@@ -25,6 +25,8 @@ class TextInput {
 
             input.label = labelHTML ? labelHTML : label;
             input = pullInTemplate.convertLabel($filter('stringParsers')('startCase', id), input, $scope);
+            input.beforeHtml = pullInTemplate.convertTemplateUrlToHtml(input.beforeHtml, $scope);
+            input.afterHtml = pullInTemplate.convertTemplateUrlToHtml(input.afterHtml, $scope);
 
             let uiTextObj = {
                 input: input,
