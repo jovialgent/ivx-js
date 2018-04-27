@@ -31,7 +31,8 @@ class FormInput {
 
                 return {
                     html: `<ivxjs-${type}-input class="ivxjs-grid-1-1" id="${id}" input-data='inputs[${index}]'></ivxjs-${type}-input>\n`,
-                    settings: settings
+                    settings: settings,
+                    input
                 }
             });
 
@@ -39,6 +40,8 @@ class FormInput {
             
             formSettings = pullInTemplate.convertLabel('', formSettings, $scope);
             formSettings.submit = pullInTemplate.convertLabel('Submit', formSettings.submit, $scope);
+            formSettings.submit.beforeHtml = pullInTemplate.convertTemplateUrlToHtml(formSettings.submit.beforeHtml, $scope);
+            formSettings.submit.afterHtml = pullInTemplate.convertTemplateUrlToHtml(formSettings.submit.afterHtml, $scope);
             formSettings.hideSubmit = hideSubmit;
             formSettings.id = formId;
 

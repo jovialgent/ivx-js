@@ -5,7 +5,7 @@ export class PullInTemplate {
         this.$sce = $sce;
     }
 
-    convertTemplateUrlToHtml(data, $scope) {
+    convertTemplateUrlToHtml(data= {}, $scope) {
         if (data.templateUrl) {
             let templateUrl = data.templateUrl;
             let safeTemplateUrl = this.$sce.getTrustedResourceUrl(templateUrl);

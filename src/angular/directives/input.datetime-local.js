@@ -37,6 +37,9 @@ class DateTimeLocalInput {
             let tagHTML = `ng-blur="vm.onChange(inputValue)" ng-model="inputValue"`;
 
             input = pullInTemplate.convertLabel($filter('stringParsers')('startCase', id), input, $scope);
+            input.beforeHtml = pullInTemplate.convertTemplateUrlToHtml(input.beforeHtml, $scope);
+            input.afterHtml = pullInTemplate.convertTemplateUrlToHtml(input.afterHtml, $scope);
+
 
             let uiDatetimeLocalObj = {
                 input: input,

@@ -3,16 +3,18 @@ import AudioEventNames from "../../constants/audio.events.js";
 
 
 class NavigationState {
-    constructor($state, $rootScope, $compile, $timeout, iVXjs, iVXjsModules, iVXjsBus, iVXjsAudio, iVXjsActions, pullInTemplate, ivxExperienceScope) {
+    constructor($state, $rootScope, $compile, $timeout, iVXjs, iVXjsModules, iVXjsBus, iVXjsAudio, iVXjsActions, pullInTemplate, ivxExperienceScope, iVXjsStateCreator) {
         this.template = this.templateHTML;
         this.restrict = 'E';
         this.replace = true;
-        this.scope = {};
+        this.scope = {
+            stateData: "="
+        };
         this.controller = ['$scope', ($scope) => { }];
         this.controllerAs = 'vm';
         this.link = function ($scope, iElm, iAttrs, controller) {
-            let { data } = $state.current;
-            let { links = [], header = {}, footer = {}, audio, onLinksReady = [] } = data;
+            let data = angular.copy($scope.stateData);
+            let { links = [], header = {}, footer = {}, audio, onLinksReady = [], embedded = false, embeddedViews = [] } = data;
 
             $scope.links = links;
 
@@ -28,20 +30,20 @@ class NavigationState {
 
             $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
 
-            $timeout(() => {
+            iElm.html(thisNavigationState.html);
 
+            if(!embedded && embeddedViews.length > 0){
+                iVXjsStateCreator.addViews(embeddedViews, iElm);
+            }
 
-            }, 1000)
-
-<<<<<<< HEAD
             controller.embedded = embedded;
 
-=======
-            iElm.html(thisNavigationState.html);
->>>>>>> 66edc35f03aabb01d344fb2918a33d29056022f9
             $compile(iElm.contents())($scope, (compiled) => {
                 iElm.html(compiled);
+                showState();
+            });
 
+            function showState() {
                 let transitionAnimation = onLinksReady.find((event, index) => {
                     return event.eventName === "animateElement" && event.args.element === ".navigation-state-container";
                 });
@@ -65,7 +67,7 @@ class NavigationState {
 
                     iVXjs.log.debug(`onLinksReady Completed`, {}, { state: data, source: 'onLinksReady', status: 'completed', actions: onLinksReady, timestamp: Date.now() });
                 })
-            });
+            }
         }
     }
 
@@ -74,7 +76,7 @@ class NavigationState {
     };
 }
 
-NavigationState.$inject = ['$state', '$rootScope', '$compile', '$timeout', 'iVXjs', 'ivxjs.modules.ui', 'ivxjs.bus', 'ivxjs.modules.audio', 'ivxjs.actions', 'pullInTemplate', "ivxExperienceScope"];
+NavigationState.$inject = ['$state', '$rootScope', '$compile', '$timeout', 'iVXjs', 'ivxjs.modules.ui', 'ivxjs.bus', 'ivxjs.modules.audio', 'ivxjs.actions', 'pullInTemplate', "ivxExperienceScope", 'iVXjsStateCreator'];
 
 export default angular
     .module('ivx-js.directives.state.navigation', [])

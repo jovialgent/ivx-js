@@ -139,6 +139,8 @@ var TypeValidator = exports.TypeValidator = function () {
     }, {
         key: 'isUndefined',
         value: function isUndefined(obj) {
+            var undefined = void 0;
+
             return obj === undefined || obj === null;
         }
     }, {
@@ -440,7 +442,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-var _state = __webpack_require__(4);
+var _state = __webpack_require__(5);
 
 var _state2 = _interopRequireDefault(_state);
 
@@ -491,6 +493,155 @@ exports.default = _class;
 
 /***/ }),
 /* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _typeParsers = __webpack_require__(1);
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var typeValidator = new _typeParsers.TypeValidator();
+
+var _class = function () {
+    function _class(experience, customEvaluator) {
+        _classCallCheck(this, _class);
+
+        this.experience = experience;
+        this.customEvaluator = customEvaluator;
+    }
+
+    _createClass(_class, [{
+        key: "evaluate",
+        value: function evaluate(rule) {
+            var self = this;
+            var _rule$conditionOperat = rule.conditionOperator,
+                conditionOperator = _rule$conditionOperat === undefined ? "and" : _rule$conditionOperat,
+                conditions = rule.conditions;
+
+            var evaluateConditions = conditions.map(function (condition, index) {
+                var lhs = condition.key,
+                    is = condition.is,
+                    rhs = condition.value,
+                    _condition$type = condition.type,
+                    type = _condition$type === undefined ? "input" : _condition$type;
+
+
+                if (self.customEvaluator && typeValidator.isFunction(self.customEvaluator) && self.customEvaluator(condition)) {
+                    return self.customEvaluator(condition);
+                }
+
+                // Since older versions of the iVXjs JSON used 
+                // the key for "keyword" this will make it backwards
+                // compatable
+                if (self[lhs]) {
+                    return self[lhs](lhs, is, rhs);
+                }
+
+                if (self[type]) {
+                    return self[type](lhs, is, rhs);
+                }
+
+                return false;
+            });
+
+            return this[conditionOperator](evaluateConditions);
+        }
+    }, {
+        key: "input",
+        value: function input(lhs, is, rhs) {
+            var experience = this.experience;
+
+            var lhsValue = experience.data[lhs];
+
+            if (this[is]) {
+                return this[is](lhsValue, rhs);
+            }
+
+            return false;
+        }
+    }, {
+        key: "and",
+        value: function and() {
+            var predicates = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+
+            return predicates.reduce(function (evaluate, predicate, index) {
+                return evaluate && predicate;
+            }, true);
+        }
+    }, {
+        key: "or",
+        value: function or() {
+            var predicates = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+
+            return predicates.reduce(function (evaluate, predicate, index) {
+                return evaluate || predicate;
+            }, false);
+        }
+    }, {
+        key: "not",
+        value: function not() {
+            var predicates = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+
+            return predicates.reduce(function (evaluate, predicate, index) {
+                return evaluate && !predicate;
+            }, true);
+        }
+    }, {
+        key: "lte",
+        value: function lte(lhs, rhs) {
+            if (isNaN(lhs) || isNaN(rhs)) return false;
+            return new Number(lhs) <= new Number(rhs);
+        }
+    }, {
+        key: "lt",
+        value: function lt(lhs, rhs) {
+            if (isNaN(lhs) || isNaN(rhs)) return false;
+            return new Number(lhs) < new Number(rhs);
+        }
+    }, {
+        key: "gte",
+        value: function gte(lhs, rhs) {
+            if (isNaN(lhs) || isNaN(rhs)) return false;
+            return new Number(lhs) >= new Number(rhs);
+        }
+    }, {
+        key: "gt",
+        value: function gt(lhs, rhs) {
+            if (isNaN(lhs) || isNaN(rhs)) return false;
+            return new Number(lhs) > new Number(rhs);
+        }
+    }, {
+        key: "equals",
+        value: function equals(lhs, rhs) {
+            return lhs === rhs;
+        }
+    }, {
+        key: "notEquals",
+        value: function notEquals(lhs, rhs) {
+            return lhs !== rhs;
+        }
+    }, {
+        key: "in",
+        value: function _in(lhs, rhs) {
+            return rhs.indexOf(lhs) >= 0;
+        }
+    }]);
+
+    return _class;
+}();
+
+exports.default = _class;
+
+/***/ }),
+/* 4 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -518,7 +669,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -573,7 +724,7 @@ var _class = function (_iVXjsConstants) {
 exports.default = _class;
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -586,7 +737,7 @@ exports.Actions = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _audioEvents = __webpack_require__(6);
+var _audioEvents = __webpack_require__(7);
 
 var _audioEvents2 = _interopRequireDefault(_audioEvents);
 
@@ -635,26 +786,82 @@ var Actions = exports.Actions = function () {
         value: function setElementClasses(element, eventObj) {
             var _eventObj$animationCl = eventObj.animationClasses,
                 animationClasses = _eventObj$animationCl === undefined ? "" : _eventObj$animationCl;
-            var oldAnimationClass = element.animationClass;
+            var _element$animationCla = element.animationClass,
+                oldAnimationClass = _element$animationCla === undefined ? "" : _element$animationCla;
 
-
-            if (element.className.indexOf(animationClasses) >= 0) {
-                return;
-            }
+            var classesToAdd = animationClasses.split(" ");
+            var classesToRemove = oldAnimationClass.split(" ");
 
             if (element.className.indexOf('hide') >= 0) {
                 element.className = element.className.replace('hide', animationClasses);
                 return;
             }
 
-            if (oldAnimationClass) {
-                element.className = element.className.replace(oldAnimationClass, '');
-            }
+            classesToRemove.forEach(function (classToRemove) {
+                if (classToRemove.length > 0) {
+                    element.classList.remove(classesToRemove);
+                }
+            });
+
+            classesToAdd.forEach(function (classToAdd) {
+                if (classToAdd.length > 0) {
+                    element.classList.add(classToAdd);
+                }
+            });
 
             element.animationClass = animationClasses;
-            element.className = element.className + " " + animationClasses;
 
             return element;
+        }
+    }, {
+        key: "addClasses",
+        value: function addClasses(eventObj) {
+            var selector = eventObj.element,
+                _eventObj$classes = eventObj.classes,
+                classes = _eventObj$classes === undefined ? "" : _eventObj$classes;
+
+            var elements = this._getArrayFromAllSelector(selector);
+            var classNames = this._getClassNames(classes);
+
+            elements.forEach(function (element) {
+                classNames.forEach(function (className) {
+                    element.classList.add(className);
+                });
+            });
+        }
+    }, {
+        key: "removeClasses",
+        value: function removeClasses(eventObj) {
+            var selector = eventObj.element,
+                _eventObj$classes2 = eventObj.classes,
+                classes = _eventObj$classes2 === undefined ? "" : _eventObj$classes2;
+
+            var elements = this._getArrayFromAllSelector(selector);
+            var classNames = this._getClassNames(classes);
+
+            elements.forEach(function (element) {
+                classNames.forEach(function (className) {
+                    element.classList.remove(className);
+                });
+            });
+        }
+    }, {
+        key: "_getClassNames",
+        value: function _getClassNames() {
+            var classes = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
+
+            if (!classes || !classes.split) return;
+
+            return classes.split(' ');
+        }
+    }, {
+        key: "_getArrayFromAllSelector",
+        value: function _getArrayFromAllSelector(selector) {
+            var elements = document.querySelectorAll(selector);
+
+            if (!elements || elements.length <= 0) return [];
+
+            return Array.from(elements);
         }
     }, {
         key: "goToNextState",
@@ -791,7 +998,7 @@ var Actions = exports.Actions = function () {
 ;
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -805,7 +1012,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-var _audio = __webpack_require__(7);
+var _audio = __webpack_require__(8);
 
 var _audio2 = _interopRequireDefault(_audio);
 
@@ -865,7 +1072,7 @@ var _class = function (_AudioConstants) {
 exports.default = _class;
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -920,7 +1127,7 @@ var _class = function (_iVXjsConstants) {
 exports.default = _class;
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -933,7 +1140,7 @@ exports.Rules = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _evaluator = __webpack_require__(9);
+var _evaluator = __webpack_require__(3);
 
 var _evaluator2 = _interopRequireDefault(_evaluator);
 
@@ -1041,147 +1248,6 @@ var Rules = exports.Rules = function () {
 
     return Rules;
 }();
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _typeParsers = __webpack_require__(1);
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var typeValidator = new _typeParsers.TypeValidator();
-
-var _class = function () {
-    function _class(experience, customEvaluator) {
-        _classCallCheck(this, _class);
-
-        this.experience = experience;
-        this.customEvaluator = customEvaluator;
-    }
-
-    _createClass(_class, [{
-        key: "evaluate",
-        value: function evaluate(rule) {
-            var self = this;
-            var _rule$conditionOperat = rule.conditionOperator,
-                conditionOperator = _rule$conditionOperat === undefined ? "and" : _rule$conditionOperat,
-                conditions = rule.conditions;
-
-            var evaluateConditions = conditions.map(function (condition, index) {
-                var lhs = condition.key,
-                    is = condition.is,
-                    rhs = condition.value,
-                    _condition$type = condition.type,
-                    type = _condition$type === undefined ? "input" : _condition$type;
-
-
-                if (self.customEvaluator && typeValidator.isFunction(self.customEvaluator) && self.customEvaluator(condition)) {
-                    return self.customEvaluator(condition);
-                }
-
-                // Since older versions of the iVXjs JSON used 
-                // the key for "keyword" this will make it backwards
-                // compatable
-                if (self[lhs]) {
-                    return self[lhs](lhs, is, rhs);
-                }
-
-                return self[type](lhs, is, rhs);
-            });
-
-            return this[conditionOperator](evaluateConditions);
-        }
-    }, {
-        key: "input",
-        value: function input(lhs, is, rhs) {
-            var experience = this.experience;
-
-            var lhsValue = experience.data[lhs];
-
-            return this[is](lhsValue, rhs);
-        }
-    }, {
-        key: "and",
-        value: function and() {
-            var predicates = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-
-            return predicates.reduce(function (evaluate, predicate, index) {
-                return evaluate && predicate;
-            }, true);
-        }
-    }, {
-        key: "or",
-        value: function or() {
-            var predicates = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-
-            return predicates.reduce(function (evaluate, predicate, index) {
-                return evaluate || predicate;
-            }, false);
-        }
-    }, {
-        key: "not",
-        value: function not() {
-            var predicates = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-
-            return predicates.reduce(function (evaluate, predicate, index) {
-                return evaluate && !predicate;
-            }, true);
-        }
-    }, {
-        key: "lte",
-        value: function lte(lhs, rhs) {
-            if (isNaN(lhs) || isNaN(rhs)) return false;
-            return new Number(lhs) <= new Number(rhs);
-        }
-    }, {
-        key: "lt",
-        value: function lt(lhs, rhs) {
-            if (isNaN(lhs) || isNaN(rhs)) return false;
-            return new Number(lhs) < new Number(rhs);
-        }
-    }, {
-        key: "gte",
-        value: function gte(lhs, rhs) {
-            if (isNaN(lhs) || isNaN(rhs)) return false;
-            return new Number(lhs) >= new Number(rhs);
-        }
-    }, {
-        key: "gt",
-        value: function gt(lhs, rhs) {
-            if (isNaN(lhs) || isNaN(rhs)) return false;
-            return new Number(lhs) > new Number(rhs);
-        }
-    }, {
-        key: "equals",
-        value: function equals(lhs, rhs) {
-            return lhs === rhs;
-        }
-    }, {
-        key: "notEquals",
-        value: function notEquals(lhs, rhs) {
-            return lhs !== rhs;
-        }
-    }, {
-        key: "in",
-        value: function _in(lhs, rhs) {
-            return rhs.indexOf(lhs) >= 0;
-        }
-    }]);
-
-    return _class;
-}();
-
-exports.default = _class;
 
 /***/ }),
 /* 10 */,
@@ -1379,9 +1445,7 @@ var _class = function () {
                     newConfigData.templates = result;
 
                     $.support.cors = true;
-                    $.get(result[0]).then(function (html) {
-                        console.log(html);
-                    });
+                    $.get(result[0]).then(function (html) {});
 
                     resolve(newConfigData);
                 }, function (error) {
@@ -1517,7 +1581,7 @@ var _firebaseAuthentication = __webpack_require__(11);
 
 var _firebaseAuthentication2 = _interopRequireDefault(_firebaseAuthentication);
 
-var _actions = __webpack_require__(5);
+var _actions = __webpack_require__(6);
 
 var _rules = __webpack_require__(19);
 
@@ -1832,7 +1896,7 @@ var FirebaseData = exports.FirebaseData = function () {
 module.export = initializeFirebase;
 
 if (angular && angular.module('ivx-js')) {
-    angular.module('ivx-js').constant('iVXjs.data.firebase', initializeFirebase).provider('iVXjsFirebaseUtilities', function iVXjsFirebaseUtilitiesProvider() {
+    angular.module('ivx-js').constant('iVXjs.data.firebase', initializeFirebase).constant('iVXjsDataFirebase', initializeFirebase).provider('iVXjsFirebaseUtilities', function iVXjsFirebaseUtilitiesProvider() {
         this.utilities = new _utilities2.default();
         this.$get = function () {};
     });
@@ -1843,7 +1907,7 @@ function initializeFirebase(settings) {
 
     return settings;
 };
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)(module)))
 
 /***/ }),
 /* 17 */
@@ -1975,7 +2039,7 @@ exports.Rules = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _rules = __webpack_require__(8);
+var _rules = __webpack_require__(9);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -2329,7 +2393,7 @@ var _class = function () {
                     var errorMessage = error.message;
                     // ...
 
-                    console.log(error.code);
+                    // console.log(error.code);
                 });
             }
 

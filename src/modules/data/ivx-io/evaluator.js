@@ -6,19 +6,18 @@ export default class extends Evaluator {
     }
 
     storyEvents(lhs, is, storyEvent) {
-<<<<<<< HEAD
         let { experience = {} } = this;
         let { events = []} = experience;
-=======
-        let {experience} = this;
-        let {events} = experience;
->>>>>>> 66edc35f03aabb01d344fb2918a33d29056022f9
 
         if (storyEvent === 'none') {
             return noEventFired(is, events, experience);
         }
 
-        return this[is](storyEvent, events);
+        if (this[is]) {
+            return this[is](storyEvent, events);
+        }
+
+        return false;
 
         function noEventFired(is, events, experience) {
             let isFired = is === 'fired';
@@ -44,9 +43,9 @@ export default class extends Evaluator {
     }
 
     progress(lhs, is, progress) {
-        let {experience} = this;
-        let {progress: currentStoryProgress, milestone: currentMilestone, story} = experience;
-        let {progressMap} = story;
+        let { experience } = this;
+        let { progress: currentStoryProgress, milestone: currentMilestone, story } = experience;
+        let { progressMap } = story;
         let currentProgress;
         let currentProgressValue = -1;
         let currentMilestoneValue = -1;
@@ -68,7 +67,12 @@ export default class extends Evaluator {
         let progressValue = progressMap[progress];
         let evaluateProgress = currentProgressValue > currentMilestoneValue ? currentProgressValue : currentMilestoneValue;
 
-        return this[is](evaluateProgress, progressValue);
+        if (this[is]) {
+            return this[is](evaluateProgress, progressValue);
+        }
+
+        return false;
+
 
         function isStoryProgress(progress) {
             return progress === 'Started' || progress === 'Completed' || progress === 'Converted';

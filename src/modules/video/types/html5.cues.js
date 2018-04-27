@@ -40,32 +40,45 @@ export default {
 
     addEventListenersToCue(opts) {
         let { cue, video, iVXjsBus } = opts;
+        const { id: playerId } = video;
 
         cue.onenter = (evt) => {
             let { currentTarget: currentCue } = evt;
-            let { track = {} } = currentCue;
+            let { track = {} } = cue;
             let { kind, mode } = track;
 
             switch (kind) {
                 case "subtitles": {
                     if (mode === 'showing') {
-                        iVXjsBus.emit(trackCueEventNames.ON_ENTER, currentCue);
+                        iVXjsBus.emit(trackCueEventNames.ON_ENTER, {
+                            cue: currentCue,
+                            playerId
+                        });
                     }
                     break;
                 }
                 case "captions": {
                     if (mode === 'showing') {
-                        iVXjsBus.emit(trackCueEventNames.ON_ENTER, currentCue);
+                        iVXjsBus.emit(trackCueEventNames.ON_ENTER, {
+                            cue: currentCue,
+                            playerId
+                        });
                     }
                     break;
                 }
                 case "chapters": {
-                    iVXjsBus.emit(trackCueEventNames.ON_CHAPTER_START, currentCue);
+                    iVXjsBus.emit(trackCueEventNames.ON_CHAPTER_START, {
+                        cue: currentCue,
+                        playerId
+                    });
                     break;
                 }
 
                 default: {
-                    iVXjsBus.emit(trackCueEventNames.ON_ENTER, currentCue);
+                    iVXjsBus.emit(trackCueEventNames.ON_ENTER, {
+                        cue: currentCue,
+                        playerId
+                    });
                     break;
                 }
             }
@@ -79,22 +92,34 @@ export default {
             switch (kind) {
                 case "subtitles": {
                     if (mode === 'showing') {
-                        iVXjsBus.emit(trackCueEventNames.ON_EXIT, currentCue);
+                        iVXjsBus.emit(trackCueEventNames.ON_EXIT, {
+                            cue: currentCue,
+                            playerId
+                        });
                     }
                     break;
                 }
                 case "captions": {
                     if (mode === 'showing') {
-                        iVXjsBus.emit(trackCueEventNames.ON_EXIT, currentCue);
+                        iVXjsBus.emit(trackCueEventNames.ON_EXIT, {
+                            cue: currentCue,
+                            playerId
+                        });
                     }
                     break;
                 }
                 case "chapters": {
-                    iVXjsBus.emit(trackCueEventNames.ON_CHAPTER_END, currentCue);
+                    iVXjsBus.emit(trackCueEventNames.ON_CHAPTER_END, {
+                        cue: currentCue,
+                        playerId
+                    });
                     break;
                 }
                 default: {
-                    iVXjsBus.emit(trackCueEventNames.ON_EXIT, currentCue);
+                    iVXjsBus.emit(trackCueEventNames.ON_EXIT, {
+                        cue: currentCue,
+                        playerId
+                    });
                     break;
                 }
             }

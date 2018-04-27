@@ -24,21 +24,36 @@ export class Url {
         return ''
     }
 
+    get beforeClasses(){
+        return 'ivx-input-before ivx-input-before-url';
+    }
+
+    get afterClasses(){
+        return 'ivx-input-after ivx-input-after-url';
+    }
+
+
     get html() {
-        let {input, settings, tags, errors, uiClasses, uiAttributes} = this;
-        let {label = '', labelHTML, name = '', id = ''} = input;
+        let {input, settings, tags, errors, uiClasses, uiAttributes,  beforeClasses : defaultBeforeClasses, afterClasses : defaultAfterClasses } = this;
+        let {label = '', labelHTML, name = '', id = '', beforeHtml : beforeSettings = {}, afterHtml : afterSettings = {} } = input;
         let {input:inputSettings = {}, showLabel = true} = settings;
         let {classes = ''} = inputSettings;
         let {messages : errorMessages = [], attributes : errorAttributes = '', nonValidate = [], tags : errorTags = ''} = errors;
         let errorHTML = new this.errorMessages(errorMessages).html;
         let nonValidateAttributesHTML = new this.attributeTags(errorAttributes, nonValidate).html;
+
+        
+        const {html : beforeHtml = "", classes : beforeClasses = ""} = beforeSettings;
+        const {html : afterHtml = "", classes : afterClasses = ""} = afterSettings;
         
         if(labelHTML) label = labelHTML;
         
         let inputHTML = ` 
-            <label for="${id}"> ${label} </label>
-            <input class="${classes} ${uiClasses}" ${uiAttributes}  id="${id}" name="${name}"  type="url" ${nonValidateAttributesHTML}   ${errorTags} ${tags}>
+        <div class="${beforeClasses} ${defaultBeforeClasses}">${beforeHtml}</div>
+            <label class="ivx-input-label ivx-input-label-url" for="${id}"> ${label} </label>
+            <input class="ivx-input ivx-input-url" class="${classes} ${uiClasses}" ${uiAttributes}  id="${id}" name="${name}"  type="url" ${nonValidateAttributesHTML}   ${errorTags} ${tags}>
             ${errorHTML}
+        <div class="${afterClasses} ${defaultAfterClasses}">${afterHtml}</div>
        `;
 
         return `${inputHTML}`;

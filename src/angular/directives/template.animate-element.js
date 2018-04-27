@@ -4,22 +4,25 @@ import createFactoryFunction from '../utilities/create-factory-function.js';
 
 
 class AnimateElement {
-    constructor(iVXjs) {
+    constructor(iVXjs, iVXjsActionTemplateService) {
         this.restrict = 'A';
         this.controller = ["iVXjs", (iVXjs) => {
 
         }];
         this.link = ($scope, iElm, iAttrs, controller) => {
-            iElm[0].addEventListener('click', (event) => {
-                event.preventDefault();
-                let { ivxAnimate: value } = iAttrs;
-                let keyValue = extractKeyValue(value);
+            iVXjsActionTemplateService.setup($scope, iElm, iAttrs, _getAnimateElementEventObj);
 
-                iVXjs.experience.animateElement(keyValue);
-            }, false);
+            function _getAnimateElementEventObj() {
+                const { ivxAnimate: value } = iAttrs;
+                const args = extractAnimateArgs(value);
 
+                return {
+                    eventName: "animateElement",
+                    args
+                }
+            }
 
-            function extractKeyValue(valueString) {
+            function extractAnimateArgs(valueString = '') {
                 let updatedValue = valueString.trim();
                 let parts = updatedValue.split(',');
 
@@ -36,12 +39,13 @@ class AnimateElement {
 
                 return { element, animationClasses };
             }
+
         }
     }
 
 }
 
-AnimateElement.$inject = ['iVXjs'];
+AnimateElement.$inject = ['iVXjs', 'iVXjsActionTemplateService'];
 
 export default angular
     .module('ivx-js.directives.template.animate-element', [])

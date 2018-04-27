@@ -6,7 +6,7 @@ let style = new Style();
 
 export class Text {
     constructor(inputObj = {}, errorMessages = ErrorMessages) {
-        let {input = {}, settings = {}, tags = {}, errors = {}} = inputObj;
+        let { input = {}, settings = {}, tags = {}, errors = {} } = inputObj;
 
         this.input = input;
         this.settings = settings;
@@ -24,15 +24,26 @@ export class Text {
         return ''
     }
 
+    get beforeClasses(){
+        return 'ivx-input-before ivx-input-before-text';
+    }
+
+    get afterClasses(){
+        return 'ivx-input-after ivx-input-after-text';
+    }
+
     get html() {
-        let {input, settings, tags, errors, uiClasses, uiAttributes} = this;
-        let {label = '', labelHTML, name = '', id = ''} = input;
-        let {input: inputSettings = {}, showLabel = true} = settings;
-        let {classes = ''} = inputSettings;
+        let { input, settings, tags, errors, uiClasses, uiAttributes, beforeClasses : defaultBeforeClasses, afterClasses : defaultAfterClasses } = this;
+        let { label = '', labelHTML, name = '', id = '', beforeHtml : beforeSettings = {}, afterHtml : afterSettings = {} } = input;
+        let { input: inputSettings = {}, showLabel = true } = settings;
+        let { classes = '' } = inputSettings;
+
+        const {html : beforeHtml = "", classes : beforeClasses = ""} = beforeSettings;
+        const {html : afterHtml = "", classes : afterClasses = ""} = afterSettings;
 
         classes = `${classes} ${uiClasses}`;
 
-        let {messages: errorMessages = [], attributes: errorAttributes = '', nonValidate = [], tags: errorTags = ''} = errors;
+        let { messages: errorMessages = [], attributes: errorAttributes = '', nonValidate = [], tags: errorTags = '' } = errors;
         let errorHTML = new this.errorMessages(errorMessages).html;
         let nonValidateAttributesHTML = new this.attributeTags(errorAttributes, nonValidate).html;
 
@@ -41,9 +52,11 @@ export class Text {
         if (labelHTML) label = labelHTML;
 
         let inputHTML = ` 
-            <label for="${id}"> ${label} </label>
-            <input class="${classes}"  id="${id}" name="${name}"  type="text" ${nonValidateAttributesHTML}   ${errorTags} ${tags}>
-            ${errorHTML}
+            <div class="${beforeClasses} ${defaultBeforeClasses}">${beforeHtml}</div>
+                <label class="ivx-input-label ivx-input-label-text" for="${id}"> ${label} </label>
+                <input class="${classes} ivx-input-text ivx-input"  id="${id}" name="${name}"  type="text" ${nonValidateAttributesHTML}   ${errorTags} ${tags}>
+                ${errorHTML}
+            <div class="${afterClasses} ${defaultAfterClasses}">${afterHtml}</div>
        `;
 
         return `${inputHTML}`;

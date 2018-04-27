@@ -3,46 +3,54 @@ import HtmlStateController from '../controllers/state.html.js';
 import AudioEventNames from "../../constants/audio.events.js";
 
 class HtmlState {
-    constructor($state, $http, $compile, $sce, $timeout, iVXjs, iVXjsActions, iVXjsAudio, iVXjsBus, ivxExperienceScope) {
+    constructor($state, $http, $compile, $sce, $timeout, iVXjs, iVXjsActions, iVXjsAudio, iVXjsBus, ivxExperienceScope, iVXjsStateCreator) {
         this.template = this.templateHTML;
         this.restrict = 'E';
         this.replace = true;
-        this.scope = {};
+        this.scope = {
+            stateData: "="
+        };
         this.controller = HtmlStateController;
         this.controllerAs = 'vm';
         this.link = function ($scope, iElm, iAttrs, controller) {
-            let { id, html, templateUrl, onCompile = [], audio } = $state.current.data;
+            let data = angular.copy($scope.stateData);
+            let { id, html, templateUrl, onCompile = [], audio, embedded = false, embeddedViews = [] } = data;
             let audioEventNames = new AudioEventNames();
+
+            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
 
             if (templateUrl) {
                 let safeTemplateUrl = $sce.getTrustedResourceUrl(templateUrl);
 
-                controller.safeTemplateUrl = safeTemplateUrl
+                controller.safeTemplateUrl = safeTemplateUrl;
 
-                iElm.html(`<div class="html-state-container" ng-include="vm.safeTemplateUrl"></div>`);
+                addViews(`<div class="html-state-container" ng-include="vm.safeTemplateUrl"></div>`, true);
             } else {
-                iElm.html(html);
+                addViews(html, true);
             }
 
-<<<<<<< HEAD
             $scope.$on('$destroy', () => {
                 if (controller.timeOutId) {
                     $timeout.cancel(controller.timeOutId);
                 }
             });
-=======
->>>>>>> 66edc35f03aabb01d344fb2918a33d29056022f9
 
+            function addViews(html, shouldShowState) {
+                iElm.html(html);
 
-            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
+                if (!embedded && embeddedViews.length > 0) {
+                    iVXjsStateCreator.addViews(embeddedViews, iElm);
+                }
 
-<<<<<<< HEAD
+                $compile(iElm.contents())($scope, (compiled) => {
+                    iElm.html(compiled);
+                    if (shouldShowState) showState();
+                });
+            }
+
             controller.embedded = embedded;
 
             function showState() {
-=======
-            $timeout(() => {
->>>>>>> 66edc35f03aabb01d344fb2918a33d29056022f9
                 let hasTransition = onCompile.find((event, index) => {
                     return event.eventName === "animateElement" && event.args.element === ".html-state-container";
                 });
@@ -57,21 +65,16 @@ class HtmlState {
                     })
                 }
 
-<<<<<<< HEAD
                 iVXjs.log.debug(`onCompile Started`, {}, { state: $scope.stateData, source: 'onCompile', status: 'started', actions: onCompile, timestamp: Date.now() });
-=======
-                iVXjs.log.debug(`onCompile Started`, {}, { state: $state.current.data, source: 'onCompile', status: 'started', actions: onCompile, timestamp: Date.now() });
->>>>>>> 66edc35f03aabb01d344fb2918a33d29056022f9
 
                 iVXjsActions.resolveActions(onCompile, () => {
-                    iVXjs.log.debug(`onCompile Completed`, {}, { state: $state.current.data, source: 'onCompile', status: 'completed', actions: onCompile, timestamp: Date.now() });
+                    iVXjs.log.debug(`onCompile Completed`, {}, { state: $scope.stateData, source: 'onCompile', status: 'completed', actions: onCompile, timestamp: Date.now() });
                     if (audio && audio.src) {
                         iVXjsBus.emit(audioEventNames.PLAY);
                     }
 
                 })
-            }, 1);
-            $compile(iElm.contents())($scope);
+            }
         }
     }
 
@@ -80,7 +83,7 @@ class HtmlState {
     };
 }
 
-HtmlState.$inject = ['$state', '$http', '$compile', '$sce', '$timeout', 'iVXjs', 'ivxjs.actions', 'ivxjs.modules.audio', 'ivxjs.bus', "ivxExperienceScope"];
+HtmlState.$inject = ['$state', '$http', '$compile', '$sce', '$timeout', 'iVXjs', 'ivxjs.actions', 'ivxjs.modules.audio', 'ivxjs.bus', "ivxExperienceScope", "iVXjsStateCreator"];
 
 export default angular
     .module('ivx-js.directives.state.html', [])

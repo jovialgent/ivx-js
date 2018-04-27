@@ -9,6 +9,7 @@ export default class {
 
         if (element) {
             element.setAttribute('ui-view', '');
+            element.classList.add('ivx-experience-container')
             return;
         }
 

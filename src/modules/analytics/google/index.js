@@ -145,16 +145,9 @@ export class Google extends DefaultAnalytics {
     _getAllGoogleTrackers(trackers = []) {
         const self = this;
 
-<<<<<<< HEAD
         return trackers.filter(tracker => {
             return tracker.type === self.TYPE_NAME
         })
-=======
-        console.log(key, value);
-
-        ga(setActionName, key, value);
-
->>>>>>> 66edc35f03aabb01d344fb2918a33d29056022f9
     }
 }
 
@@ -163,7 +156,8 @@ module.export = initializeGoogle;
 if (angular && angular.module('ivx-js')) {
     angular
         .module('ivx-js')
-        .constant('iVXjs.analytics.google', initializeGoogle);
+        .constant('iVXjs.analytics.google', initializeGoogle)
+        .constant('iVXjsAnalyticsGoogle', initializeGoogle)
 }
 
 function initializeGoogle(settings = {}, iVXjs) {

@@ -1,5 +1,8 @@
 import createFactoryFunction from '../utilities/create-factory-function.js';
 import VideoEventConstants from "../../constants/video.events.js";
+import { TypeValidator } from "../../utilities/type-parsers";
+
+const typeValidator = new TypeValidator();
 
 function setUpCuePoints(cuePoints) {
     let cuePointsTemp = sortCuePoints(cuePoints);
@@ -28,78 +31,65 @@ function sortCuePoints(cuePoints) {
 }
 
 class VideoStateController {
-    constructor($rootScope, $state, iVXjsActions, iVXjsBus, iVXjs) {
-        let { playerSettings, onVideoEnd = [], onVideoReady = [], next, cuePoints = [] } = $state.current.data;
-        let { autoplay = false } = playerSettings;
+    constructor($rootScope, $state, iVXjsActions, iVXjsBus, iVXjs, iVXjsVideoService) {
         let self = this;
         let videoEventNames = new VideoEventConstants();
 
-        cuePoints = setUpCuePoints(cuePoints);
+        const playerCanPlay = iVXjsBus.on(videoEventNames.CAN_PLAY, function stateVideoCanPlay(player) {
+            let { stateData } = self;
+            let { playerSettings, onVideoEnd = [], onVideoReady = [], next, cuePoints = [] } = stateData;
+            let { autoplay = false } = playerSettings;
+            const { playerId } = self;
 
-        iVXjsBus.once(videoEventNames.CAN_PLAY, function stateVideoCanPlay(player) {
-            let transitionAnimation = onVideoReady.find((event, index) => {
-                return event.eventName === "animateElement" && event.args.element === ".video-state-container";
-            });
+            if (player.id === playerId) {
+                let transitionAnimation = onVideoReady.find((event, index) => {
+                    return event.eventName === "animateElement" && event.args.element === ".video-state-container";
+                });
 
-            if (!transitionAnimation) {
-                onVideoReady.push({
-                    eventName: "animateElement",
-                    args: {
-                        element: ".video-state-container",
-                        animationClasses: "show"
+                cuePoints = setUpCuePoints(cuePoints);
+
+                if (!transitionAnimation) {
+                    onVideoReady.push({
+                        eventName: "animateElement",
+                        args: {
+                            element: ".video-state-container",
+                            animationClasses: "show"
+                        }
+                    })
+                }
+
+                stateData.player = player;
+
+                iVXjs.log.debug(`onVideoReady Started`, {}, { state: self.stateData, source: 'onVideoReady', status: 'started', actions: onVideoReady, timestamp: Date.now() });
+
+                iVXjsActions.resolveActions(onVideoReady, () => {
+                    if (autoplay) {
+                        iVXjsBus.emit(videoEventNames.PLAY, {
+                            playerId
+                        });
+                        iVXjsBus.emit(videoEventNames.ADD_PLAYING_CLASS, {
+                            playerId
+                        });
                     }
-                })
+
+                    iVXjs.log.debug(`onVideoReady Completed`, {}, { state: self.stateData, source: 'onVideoReady', status: 'completed', actions: onVideoReady, timestamp: Date.now() });
+                    iVXjsBus.removeListener(videoEventNames.CAN_PLAY, playerCanPlay);
+                });
+
             }
-
-            iVXjs.log.debug(`onVideoReady Started`, {}, { state: $state.current.data, source: 'onVideoReady', status: 'started', actions: onVideoReady, timestamp: Date.now() });
-
-            iVXjsActions.resolveActions(onVideoReady, () => {
-                if (autoplay) {
-                    iVXjsBus.emit(videoEventNames.PLAY);
-                    iVXjsBus.emit(videoEventNames.ADD_PLAYING_CLASS);
-                }
-
-                iVXjs.log.debug(`onVideoReady Completed`, {}, { state: $state.current.data, source: 'onVideoReady', status: 'completed', actions: onVideoReady, timestamp: Date.now() });
-
-                self.getActiveCues(player)                
-            });
         });
-        iVXjsBus.once(videoEventNames.ENDED, function stateVideoEnded() {
-            iVXjsBus.emit(videoEventNames.DISPOSE);
-            
-            iVXjs.log.debug(`onVideoEnd Actions`, {}, { state: $state.current.data, source: 'onVideoEnd', status: 'completed', actions: onVideoEnd, timestamp: Date.now() });
 
-            iVXjsActions.resolveThenNavigate(onVideoEnd, next);
+        this.videoEnded = iVXjsBus.on(videoEventNames.ENDED, function stateVideoEnded(player) {
+            const { onVideoEnd = [], next = [] } = self.stateData;
+
+            if (player.id === self.playerId) {
+                iVXjs.log.debug(`onVideoEnd Actions`, {}, { state: self.stateData, source: 'onVideoEnd', status: 'completed', actions: onVideoEnd, timestamp: Date.now() });
+                iVXjsActions.resolveThenNavigate(onVideoEnd, next);
+            }
         });
-        iVXjsBus.on(videoEventNames.TIME_UPDATE, function cuePointsOnUpdate(player, stateData) {
-            let { currentTime } = player;
-
-            if (cuePoints.length <= 0) return;
-
-            cuePoints.forEach((cuePoint, index) => {
-                let { timeAt, fired = false, always = false } = cuePoint;
-                let timeUntil = Math.abs(cuePoint.timeAt - currentTime);
-
-                if (timeAt <= currentTime && (always || !fired)) {
-                    cuePoint.fired = true;
-                
-                    iVXjs.log.debug(`Cuepoint ${index} Started`, {}, { cuePoint, index, source: 'cuePoint', status: 'started', timestamp: Date.now() });
-                    
-                    iVXjsActions.resolveActions([cuePoint], () => {
-                        iVXjs.log.debug(`Cuepoint ${index} Completed`, {}, { cuePoint, index, source: 'cuePoint', status: 'completed', timestamp: Date.now() });
-                    });
-                }
-            });
-
-        });
-    }
-
-    getActiveCues(player){
-        let {textTracks = []} = player;
-        let activeCues = [];
     }
 }
 
-VideoStateController.$inject = ['$rootScope', '$state', 'ivxjs.actions', 'ivxjs.bus', 'iVXjs'];
+VideoStateController.$inject = ['$rootScope', '$state', 'ivxjs.actions', 'ivxjs.bus', 'iVXjs', 'iVXjsVideoService'];
 
 export default createFactoryFunction(VideoStateController)
