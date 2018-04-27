@@ -105,19 +105,11 @@ export class Checkbox {
         if (labelHTML) label = labelHTML;
 
         return `
-            <label for="${id}" class="${classes} ivx-input-label ivx-input-label-checkbox">
-               <input class="ivx-input ivx-input-checkbox" ${attributes}>
+            <label for="${id}" class="${classes}">
+               <input ${attributes}>
                ${label}
             </label>
         `;
-    }
-
-    get beforeClasses(){
-        return 'ivx-input-before ivx-input-before-checkbox';
-    }
-
-    get afterClasses(){
-        return 'ivx-input-after ivx-input-after-checkbox';
     }
 
     /**
@@ -126,23 +118,19 @@ export class Checkbox {
      * @type {String}
      */
     get html() {
-        let {tags, settings = {}, errors, input, uiClasses, uiAttributes, requiredAttributes, beforeClasses : defaultBeforeClasses, afterClasses : defaultAfterClasses } = this;
+        let {tags, settings = {}, errors, input, uiClasses, uiAttributes, requiredAttributes} = this;
         let {input: inputSettings = {}} = settings;
         let {classes = ''} = inputSettings;
-        let { id, name, label = '',  beforeHtml : beforeSettings = {}, afterHtml : afterSettings = {} } = input;
+        let { id, name, label = '' } = input;
         let { messages = [], attributes = {}, tags: errorTags = ''} = this.errors;
         let errorAttributes = attributes;
         let errorHTML = new this.errorMessages(messages).html;
         let allClasses = `${classes} ${uiClasses}`;
         let allAttributes = `${requiredAttributes} ${uiAttributes} ${tags} ${errorTags}`
         let checkboxHTML = this.renderCheckboxContainer(allClasses, allAttributes);
-        const {html : beforeHtml = "", classes : beforeClasses = ""} = beforeSettings;
-        const {html : afterHtml = "", classes : afterClasses = ""} = afterSettings;
         let inputHTML = ` 
-            <div class="${beforeClasses} ${defaultBeforeClasses}">${beforeHtml}</div>
             ${checkboxHTML}
             ${errorHTML}
-            <div class="${afterClasses} ${defaultAfterClasses}">${afterHtml}</div>
        `;
 
         return `${inputHTML}`;

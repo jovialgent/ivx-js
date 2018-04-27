@@ -3,34 +3,29 @@ import createFactoryFunction from '../utilities/create-factory-function.js';
 // import {[CTRLNAME]} from '[CTRLFILE]';
 
 class RaiseiVXjsEvent {
-    constructor(iVXjs, iVXjsActionTemplateService) {
+    constructor(iVXjs, iVXjsBus) {
         this.restrict = 'A';
+        this.scope = {
+            ivxEventArgs: "=ivxEventArgs",
+            ivxEvent: "@ivxEvent"
+        }
         this.controller = ["iVXjs", (iVXjs) => {
 
         }];
         this.link = ($scope, iElm, iAttrs, controller) => {
-            iVXjsActionTemplateService.setup($scope, iElm, iAttrs, _getRaiseEventEventObj);
+            iElm[0].addEventListener('click', (event) => {
+                event.preventDefault();
 
-            function _getRaiseEventEventObj() {
-                const { ivxEventArgs: value = {}, ivxEvent: eventName } = iAttrs;
+                let { ivxEventArgs: args = {}, ivxEvent: eventName } = $scope;
 
-                try {
-                    const args = $scope.$eval(value);
-
-                    return {
-                        eventName,
-                        args
-                    }
-                } catch (e) {
-                    iVXjs.log.error({ message: `Can't fire event due attribute not being a valid object. Please check your template definition for 'ivx-event-args'.` })
-                }
-            }
+                iVXjsBus.emit(eventName, args);
+            }, false);
         }
     }
 
 }
 
-RaiseiVXjsEvent.$inject = ['iVXjs', 'iVXjsActionTemplateService'];
+RaiseiVXjsEvent.$inject = ['iVXjs', 'ivxjs.bus'];
 
 export default angular
     .module('ivx-js.directives.template.raise-ivx-event', [])

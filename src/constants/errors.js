@@ -15,7 +15,6 @@ export default class extends iVXjsConstants {
             VALIDATION : "validation",
             SET_UP : "set-up",
             IVX_IO : new iVXioConstants().IVX_IO,
-            ACTION_PROCESSOR : "actions-processor",
             DEFAULT : "default",
             ASSERT : "assert",
             EXPERIENCE: "experience"

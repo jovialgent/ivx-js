@@ -1,94 +1,101 @@
 import DefaultVideoControls from '../default/video.controls.js';
 
 export default class extends DefaultVideoControls {
-    constructor(container, playerId) {
-        super(container, playerId);
+    constructor(container, iVXjsBus) {
+        super(container);
+    }
+
+    get totalTimeInfoClasses() {
+        return 'duration';
     }
 
     get playClasses() {
-        return 'play icon ivx-video-controls-play-icon ivx-icon';
+        return 'play icon';
     }
 
     get pauseClasses() {
-        return 'pause icon ivx-video-controls-pause-icon ivx-icon';
+        return 'pause icon';
     }
 
     get unmuteClasses() {
-        return 'unmute icon ivx-video-controls-unmute-icon ivx-icon';
+        return 'unmute icon';
     }
 
     get muteClasses() {
-        return 'mute icon ivx-video-controls-mute-icon ivx-icon';
+        return 'mute icon';
     }
 
     get playPauseControlsClasses() {
-        return 'ui icon button play-pause ivx-video-controls-play-pause';
+        return 'ui icon button play-pause';
     }
 
     get muteControlsClasses() {
-        return 'ui icon button mute ivx-video-controls-mute';
+        return 'ui icon button mute';
     }
 
     get scrubBarClasses() {
-        return 'ui small progress ivx-video-controls-scrub-bar';
+        return 'ui small progress';
     }
 
     get scrubBarTimeLapseClasses() {
-        return `bar ivx-video-controls-scrub-bar-timelapse`;
+        return `bar`;
     }
 
     get volumeBarClasses(){
-        return `ui small progress ivx-video-controls-volume-bar`;
+        return `ui small progress`;
     }
 
     get volumeBarCurrentVolumeClasses(){
-        return `bar ivx-video-controls-volume-bar-volume`;
+        return `bar`;
     }
 
     get chapterButtonClasses() {
-        return 'ui button chapter-button ivx-video-controls-chapters-item-control';
+        return 'ui button chapter-button';
     }
 
     get chapterListClasses() {
-        return "ui ordered list ivx-video-controls-chapters";
+        return "ui ordered list";
     }
 
     get chapterListItemClasses(){
-        return "item ivx-video-controls-chapters-item";
+        return "item";
     }
 
-   
+    get trackListSelectContainerClasses() {
+        return 'track-list-select-container'
+    }
+
     get trackListSelectClasses() {
-        return 'track-list-select ui dropdown ivx-video-controls-tracks-select';
+        return 'track-list-select ui dropdown';
     }
 
     get trackListSelectActiveClasses() {
-        return 'active ivx-video-controls-tracks-select-on';
+        return 'active';
     }
 
     get trackListSelectInactiveClasses() {
-        return 'inactive ivx-video-controls-tracks-select-off';
+        return 'inactive'
     }
 
     get closeCaptionButtonClasses() {
-        return 'close-caption-button ui icon button ivx-video-controls-tracks-toggle';
+        return 'close-caption-button ui icon button';
     }
 
     get closeCaptionButtonActiveClasses() {
-        return 'active ivx-video-controls-tracks-on';
+        return 'active';
     }
 
     get closeCaptionButtonInactiveClasses() {
-        return 'inactive ivx-video-controls-tracks-off';
+        return 'inactive';
     }
 
     get closeCaptionButtonIconClasses() {
-        return 'close-caption-button-icon closed captioning icon ivx-video-controls-tracks-toggle-icon ivx-icon'
+        return 'close-caption-button-icon closed captioning icon'
     }
 
     get scrubBarHTML() {
         return `      
-          <div id="${this.playerId}-video-controls-scrub-bar" class="${this.scrubBarClasses}">
+          <div id="video-controls-scrub-bar" class="${this.scrubBarClasses}">
                 <div style="min-width:0" class="${this.scrubBarTimeLapseClasses}">
                      
                 </div>
@@ -101,7 +108,7 @@ export default class extends DefaultVideoControls {
 
     get volumeBarHTML(){
         return `
-            <div id="${this.playerId}-video-controls-volume-bar" class="progress ${this.volumeBarClasses}">
+            <div id="video-controls-volume-bar" class="progress ${this.volumeBarClasses}">
                 <div style="min-width:0" class="${this.volumeBarCurrentVolumeClasses}"></div>
             </div>`;
     }

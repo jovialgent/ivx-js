@@ -1,85 +1,85 @@
 import DefaultVideoControls from '../default/video.controls.js';
 
 export default class extends DefaultVideoControls {
-    constructor(container, playerId) {
-        super(container, playerId);
+    constructor(container, iVXjsBus) {
+        super(container, iVXjsBus);
     }
 
     get totalTimeInfoClasses() {
-        return 'duration ivx-video-controls-timestamp-duration';
+        return 'duration';
     }
 
     get playClasses() {
-        return 'glyphicon glyphicon-play ivx-video-controls-play-icon ivx-icon';
+        return 'glyphicon glyphicon-play';
     }
 
     get pauseClasses() {
-        return 'glyphicon glyphicon-pause ivx-video-controls-pause-icon ivx-icon';
+        return 'glyphicon glyphicon-pause';
     }
 
     get unmuteClasses() {
-        return 'glyphicon glyphicon-volume-up ivx-video-controls-unmute-icon ivx-icon';
+        return 'glyphicon glyphicon-volume-up';
     }
 
     get muteClasses() {
-        return 'glyphicon glyphicon-volume-off ivx-video-controls-mute-icon ivx-icon';
+        return 'glyphicon glyphicon-volume-off';
     }
 
     get playPauseControlsClasses() {
-        return 'btn btn-default btn-xs ivx-video-controls-play-pause';
+        return 'btn btn-default btn-xs';
     }
 
     get muteControlsClasses() {
-        return 'btn btn-default btn-xs ivx-video-controls-mute';
+        return 'btn btn-default btn-xs';
     }
 
     get scrubBarClasses() {
-        return 'ivx-video-controls-scrub-bar';
+        return '';
     }
 
     get scrubBarTimeLapseClasses() {
-        return `bar ivx-video-controls-scrub-bar-timelapse`
+        return `bar`
     }
 
     get chapterButtonClasses() {
-        return 'btn chapter-button ivx-video-controls-chapters-item-control';
+        return 'btn chapter-button';
     }
 
     get trackListSelectContainerClasses() {
-        return 'track-list-select-container ivx-video-controls-tracks'
+        return 'track-list-select-container'
     }
 
     get trackListSelectClasses() {
-        return 'track-list-select form-control ivx-video-controls-tracks-select';
+        return 'track-list-select form-control';
     }
 
     get trackListSelectActiveClasses() {
-        return 'active ivx-video-controls-tracks-select-on';
+        return 'active';
     }
 
     get trackListSelectInactiveClasses() {
-        return 'inactive ivx-video-controls-tracks-select-off'
+        return 'inactive'
     }
 
     get closeCaptionButtonClasses() {
-        return 'close-caption-button btn btn-default ivx-video-controls-tracks-toggle';
+        return 'close-caption-button btn btn-default';
     }
 
     get closeCaptionButtonActiveClasses() {
-        return 'active ivx-video-controls-tracks-on';
+        return 'active';
     }
 
     get closeCaptionButtonInactiveClasses() {
-        return 'inactive ivx-video-controls-tracks-off';
+        return 'inactive';
     }
 
     get closeCaptionButtonIconClasses() {
-        return 'close-caption-button-icon glyphicon glyphicon-subtitles ivx-video-controls-tracks-toggle-icon ivx-icon'
+        return 'close-caption-button-icon glyphicon glyphicon-subtitles'
     }
 
     get scrubBarHTML() {
         return `
-            <div id="${this.playerId}-video-controls-scrub-bar" class="progress ${this.scrubBarClasses}">
+            <div id="video-controls-scrub-bar" class="progress ${this.scrubBarClasses}">
                 <div id="scrub-bar-progress-container" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="min-width: 0;">
                     <div id="scrub-bar-timestamp-label" class="label">${this.timestampHTML}</div>
                 </div>
@@ -97,7 +97,7 @@ export default class extends DefaultVideoControls {
     
     get volumeBarHTML(){
         return `
-            <div id="${this.playerId}-video-controls-volume-bar" class="progress ${this.volumeBarClasses}">
+            <div id="video-controls-volume-bar" class="progress ${this.volumeBarClasses}">
                 <div class="${this.volumeBarCurrentVolumeClasses}"></div>
             </div> 
         `
@@ -107,8 +107,8 @@ export default class extends DefaultVideoControls {
         let {playClasses : play} = this;
         let {playPauseControlsClasses : playPauseControls} = this;
         return `
-        <div id="${this.playerId}-play-button-container">
-            <button id="${this.playerId}-video-controls-play-pause" class="${playPauseControls}">
+        <div id="play-button-container">
+            <button id="video-controls-play-pause" class="${playPauseControls}">
                 <i class='${play}'></i>
             </button>
         <div>`
@@ -117,8 +117,8 @@ export default class extends DefaultVideoControls {
     get muteButtonHTML(){
         let {unmuteClasses : unmute, muteControlsClasses} = this;
         return `
-        <div id="${this.playerId}-mute-button-container">
-            <button id="${this.playerId}-video-controls-mute-controls" class="${muteControlsClasses}">
+        <div id="mute-button-container">
+            <button id="video-controls-mute-controls" class="${muteControlsClasses}">
                 <i class="${unmute}"></i>
             </button>
         </div>

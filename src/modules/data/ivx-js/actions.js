@@ -32,71 +32,26 @@ export class Actions {
      * @return {HTMLNode} the element with the classes replaced.  
      */
     setElementClasses(element, eventObj) {
-        const { animationClasses = "" } = eventObj;
-        const { animationClass: oldAnimationClass = "" } = element;
-        const classesToAdd = animationClasses.split(" ");
-        const classesToRemove = oldAnimationClass.split(" ");
+        let { animationClasses = "" } = eventObj;
+        let { animationClass: oldAnimationClass } = element;
+
+        if (element.className.indexOf(animationClasses) >= 0) {
+            return;
+        }
 
         if (element.className.indexOf('hide') >= 0) {
             element.className = element.className.replace('hide', animationClasses);
             return;
         }
 
-        classesToRemove.forEach(classToRemove => {
-            if (classToRemove.length > 0) {
-                element.classList.remove(classesToRemove);
-            }
-        });
-
-        classesToAdd.forEach(classToAdd => {
-            if (classToAdd.length > 0) {
-                element.classList.add(classToAdd);
-            }
-        });
+        if (oldAnimationClass) {
+            element.className = element.className.replace(oldAnimationClass, '');
+        }
 
         element.animationClass = animationClasses;
+        element.className = `${element.className} ${animationClasses}`;
 
         return element;
-    }
-
-    addClasses(eventObj) {
-        const { element: selector, classes = "" } = eventObj;
-        const elements = this._getArrayFromAllSelector(selector);
-        const classNames = this._getClassNames(classes);
-
-        elements.forEach(element => {
-            
-            classNames.forEach(className => {
-                element.classList.add(className);
-            });
-        });
-    }
-
-    removeClasses(eventObj) {
-        const { element: selector, classes = "" } = eventObj;
-        const elements = this._getArrayFromAllSelector(selector);
-        const classNames = this._getClassNames(classes);
-
-        elements.forEach(element => {
-            classNames.forEach(className => {
-                element.classList.remove(className);
-            });
-        });
-    }
-
-    _getClassNames(classes = "") {
-        if (!classes || !classes.split) return [];
-
-        return classes.split(' ');
-    }
-
-
-    _getArrayFromAllSelector(selector) {
-        const elements = document.querySelectorAll(selector);
-
-        if (!elements || elements.length <= 0) return [];
-
-        return Array.from(elements);
     }
 
     goToNextState(eventObj) {
@@ -112,8 +67,6 @@ export class Actions {
 
         return deferred;
     }
-
-
 
     /**
      * 

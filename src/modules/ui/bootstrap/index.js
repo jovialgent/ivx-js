@@ -42,7 +42,7 @@ export class BootstrapUI {
         this.states = {
             input: InputState,
             video: VideoState,
-            navigation: NavigationState
+            navigation : NavigationState
         }
     }
 }
@@ -52,10 +52,9 @@ module.export = initializeBootstrapUI;
 if (angular && angular.module('ivx-js')) {
     angular
         .module('ivx-js')
-        .constant('iVXjs.ui.bootstrap', initializeBootstrapUI)
-        .constant('iVXjsUiBootstrap', initializeBootstrapUI);
+        .constant('iVXjs.ui.bootstrap', initializeBootstrapUI);
 }
 
-function initializeBootstrapUI() {
+function initializeBootstrapUI(){
     return BootstrapUI;
 }

@@ -26,12 +26,8 @@
 					"href" : {
 						"name" : "Link Destination (href attribute)",
 						"type" : "string",
-						"description" : "The value to add to the href."
-                    },
-                    "route" : {
-						"name" : "Route Destination",
-						"type" : "string",
-						"description" : "State ID for this link to link to. This property also supports the token, '^', which links the state to a parent state for embedded flows."
+						"description" : "The value to add to the href.",
+						"required" : true
 					},
 					"attributes" : {
 						"name": "Link Attributes",

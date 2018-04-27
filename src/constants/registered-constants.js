@@ -4,13 +4,11 @@ import Errors from './errors.js';
 import HttpEvents from './http.events.js';
 import iVXioErrors from './iVXio.errors.js';
 import iVXjsConfigEvents from './iVXjs.config.events.js';
-import iVXioEvents from "./iVXio.events";
 import LoggingEventNames from './logging.js';
 import StateEvents from './state.events.js';
 import TracksEvents from './tracks.events.js';
 import TrackCuesEvents from './tracks.cues.events.js';
 import VideoEvents from "./video.events.js";
-import VideoClasses from "./video.classes.js";
 
 
 export default class {
@@ -42,8 +40,7 @@ export default class {
 
         // iVXio
         this.iVXio = {
-            ERRORS: new iVXioErrors(),
-            EVENTS: new iVXioEvents()
+            ERRORS: new iVXioErrors()
         };
 
         // Logging
@@ -51,9 +48,9 @@ export default class {
             EVENTS: new LoggingEventNames()
         };
 
-        this.TRACKS = {
-            EVENTS: new TracksEvents(),
-            CUES: new TrackCuesEvents()
+        this.TRACKS  = {
+            EVENTS : new TracksEvents(),
+            CUES : new TrackCuesEvents()
         }
 
         // State
@@ -63,8 +60,7 @@ export default class {
 
         // Video 
         this.VIDEO = {
-            EVENTS: new VideoEvents(),
-            CLASSES : new VideoClasses()
+            EVENTS: new VideoEvents()
         }
     }
 }

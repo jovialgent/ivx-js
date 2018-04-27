@@ -5,7 +5,8 @@ import AudioEventNames from "../../constants/audio.events.js";
 
 class InputStateController {
     constructor($state, $scope, $rootScope, $timeout, iVXjsActions, iVXjsBus, iVXjsUIModule, iVXjs) {
-        let { inputs, id, headerHTML, footerHTML, name, next = [], onSubmit = [], onInputReady = [], audio } = $scope.stateData;
+        let thisStateDataClass = new StateData($state);
+        let { inputs, id, headerHTML, footerHTML, name, next = [], onSubmit = [], onInputReady = [], audio } = thisStateDataClass.stateData;
         let audioEventNames = new AudioEventNames();
 
         this.inputs = inputs;
@@ -13,7 +14,7 @@ class InputStateController {
         this.stateID = id;
         this.onSubmit = (formInput) => {
             if (formInput && formInput.$valid) {
-                iVXjs.log.debug(`onSubmit Actions`, {}, { state: $scope.stateData, source: 'onSubmit', status: 'completed', actions: onSubmit, timestamp: Date.now() });
+                iVXjs.log.debug(`onSubmit Actions`, {}, { state: $state.current.data, source: 'onSubmit', status: 'completed', actions: onSubmit, timestamp: Date.now() });
                 iVXjsActions.resolveThenNavigate(onSubmit, next);
             }
         };

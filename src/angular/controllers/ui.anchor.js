@@ -1,6 +1,7 @@
 import createFactoryFunction from '../utilities/create-factory-function.js';
 
 class AnchorController {
+<<<<<<< HEAD
     constructor($scope, $window, $state, iVXjsActions, iVXjsAudio, iVXjs) {
         this.iVXjsActions = iVXjsActions;
         this.$window = $window;
@@ -21,8 +22,30 @@ class AnchorController {
 
         if (attributes.target !== '_blank') {
             $event.preventDefault();
-        }
+=======
+	constructor($scope, $window, iVXjsActions, iVXjsAudio, iVXjs) {
+		this.iVXjsActions = iVXjsActions;
+		this.$window = $window;
+		this.iVXjsAudio = iVXjsAudio
+		this.iVXjs = iVXjs;
+	}
 
+	onLinkClick($event) {
+		let {iVXjs} = this;
+		let { onClick: onClickEvents = [], href, attributes = {} } = this.anchorInfo;
+		let self = this;
+		let hasGoToNextState = onClickEvents.find((clickEvent, index) => {
+			return clickEvent.eventName === 'goToNextState';
+		});
+
+		if (attributes.target !== '_blank') {
+			$event.preventDefault();
+>>>>>>> 66edc35f03aabb01d344fb2918a33d29056022f9
+        }
+        
+		iVXjs.log.debug(`Link with href ${href} onLinkClick Start`, {}, { anchor: this.anchorInfo, source: 'onClick', status: 'started', actions: onClickEvents, timestamp: Date.now() });
+
+<<<<<<< HEAD
         const { currentTarget = {} } = $event;
         const { href : compiledHref } = currentTarget;
 
@@ -38,13 +61,16 @@ class AnchorController {
 
             if (route.length && route.length > 0) {
                 iVXjs.log.debug(`Link with route ${route} onLinkClick Ended`, {}, { anchor: this.anchorInfo, source: 'onClick', status: 'completed', actions: onClickEvents, timestamp: Date.now() });
+=======
+>>>>>>> 66edc35f03aabb01d344fb2918a33d29056022f9
 
-                $state.go(route);
+		this.iVXjsActions.resolveActions(onClickEvents, () => {
+			if (hasGoToNextState) return;
 
-                return;
-            }
+			iVXjs.log.debug(`Link with href ${href} onLinkClick Ended`, {}, { anchor: this.anchorInfo, source: 'onClick', status: 'completed', actions: onClickEvents, timestamp: Date.now() });
 
 
+<<<<<<< HEAD
             iVXjs.log.debug(`Link with href ${ compiledHref ? compiledHref : href} onLinkClick Ended`, {}, { anchor: this.anchorInfo, source: 'onClick', status: 'completed', actions: onClickEvents, timestamp: Date.now() });
 
 
@@ -52,13 +78,21 @@ class AnchorController {
                 self.$window.location = compiledHref ? compiledHref : href;
             }
         });
+=======
+			if (attributes.target !== '_blank') {
+				self.$window.location = href;
+			}
+		});
 
-        this.iVXjsAudio.audioElement.play();
-        this.iVXjsAudio.audioElement.pause();
 
-    }
+>>>>>>> 66edc35f03aabb01d344fb2918a33d29056022f9
+
+		this.iVXjsAudio.audioElement.play();
+		this.iVXjsAudio.audioElement.pause();
+
+	}
 }
 
-AnchorController.$inject = ['$scope', '$window', '$state', 'ivxjs.actions', 'ivxjs.modules.audio', 'iVXjs'];
+AnchorController.$inject = ['$scope', '$window', 'ivxjs.actions', 'ivxjs.modules.audio', 'iVXjs'];
 
 export default createFactoryFunction(AnchorController)

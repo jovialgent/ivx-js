@@ -167,8 +167,7 @@ module.export = initializeSchemaValidation;
 if (angular && angular.module('ivx-js')) {
     angular
         .module('ivx-js')
-        .constant('iVXjs.validation.schema', initializeSchemaValidation)
-        .constant('iVXjsValidationSchema', initializeSchemaValidation);
+        .constant('iVXjs.validation.schema', initializeSchemaValidation);
 }
 
 function initializeSchemaValidation(settings) {
