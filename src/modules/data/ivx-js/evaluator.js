@@ -97,7 +97,7 @@ export default class {
     }
 
     in(lhs, rhs) {
-        return rhs.indexOf(lhs) >= 0;
+        return lhs.indexOf(rhs) >= 0;
     }
 
     // Based on the isEmpty from lodash (https://github.com/lodash/lodash/blob/master/isEmpty.js)
