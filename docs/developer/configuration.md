@@ -51,7 +51,7 @@ guide to see how to configure and their usage
 Custom filters for rendering various experience data in templates.
 
 {: .btn .btn--inverse}
-[Action Templates](https://influencetech.github.io/ivx-js/developer/usage.filters)
+[Filters](https://influencetech.github.io/ivx-js/developer/usage.filters)
 
 ## Events
 
