@@ -1,11 +1,8 @@
 ---
 layout: single
 source : https://influencetech.github.io/ivx-js/
+# source : http://127.0.0.1:4000/ivx-js/
 ---
-
-
-
-<!-- source : http://127.0.0.1:4000/ivx-js/ -->
 
 <style>
          /* Tooltip container */
@@ -85,14 +82,14 @@ This will also allow you to send events anywhere in an iVXjs experience! This co
 is both showing you how to set it up for your experience and some common uses for getting the
 most out of this module.
 
-## Set Up
+## Page Set Up
 
 To use the Google Analytics module you will need to do the following.
 
 * Add the iVXjs Google Analytics file and a copy of the Google's analytics to your html:
 
 ```html
-<script src="https://060adad2995367c8e229-2340761377b5351a53198a462113b619.ssl.cf2.rackcdn.com/ivx-js/0.8.8/iVXjs.analytics.google.js"></script>
+<script src="https://060adad2995367c8e229-2340761377b5351a53198a462113b619.ssl.cf2.rackcdn.com/ivx-js/0.11.X/iVXjs.analytics.google.js"></script>
 <script>
     (function (b, o, i, l, e, r) {
         b.GoogleAnalyticsObject = l; b[l] || (b[l] =
@@ -103,6 +100,66 @@ To use the Google Analytics module you will need to do the following.
     }(window, document, 'script', 'ga'));
 </script>
 ```
+
+## Google Analytics Trackers
+
+To install any number of Google Analytics Trackers to an iVXjs experience, the set up is as follows:
+
+* Add a colleciton in the metadata called "trackers"
+
+```json
+{
+    "metadata" : {
+        "trackers" : []
+    },
+    "states" : [{
+
+    }],
+    "defaultState" : [{
+
+    }]
+}
+```
+
+* Add a tracker object with a name, id, trackingId, and type of "google-analytics"
+
+> Ids can't have spaces or special characters
+
+```json
+{
+    "metadata" : {
+        "trackers" : [{
+            "id" : "myTracker",
+            "name" : "My Google Analytics Tracker",
+            "trackingId" : "UA-XXXXXXXX-X",
+            "type" : "google-analytics"
+
+        }]
+    },
+    "states" : [{
+
+    }],
+    "defaultState" : [{
+
+    }]
+}
+```
+
+_Sample Data_
+
+[trakcers-google.json]({{page.source}}developer/sample-JSON/trackers-google.json)
+
+_Schema_
+
+[trackers-google.jsond]({{page.source}}developer/schemas/trackers-google.jsond)
+
+
+<div id="trackers-google-analytics-schema" class="json-schema-table-container" data-json-src="{{page.source}}developer/schemas/trackers-google.jsond"></div>
+
+## Tracker By Tracker Id (Depreciated)
+
+> This method is deprecited and should be avoided. Instead do the 
+> Trackers collection method detailed above.
 
 * Put your Google Tracking Id in your experience's JSON's metadata:
 
@@ -119,6 +176,8 @@ To use the Google Analytics module you will need to do the following.
     }]
 }
 ```
+
+## Adding it to your init function
 
 *  Where you set up your iVXjs you can inject the iVXjsGoogleAnalytics service in your config and put it in the init function.
 
@@ -144,17 +203,6 @@ That is it! The Analytics Module will set up.
 ### Default
 
 Out of the box, the Google Analytics Module will do the following:
-
-* Create a tracker named "ivxjsTracker"
-    * If you would like to change the name of the tracker you can do so in the iVXjsGoogleAnalytics: 
-
-```javascript
-...
-analytics: iVXjsGoogleAnalytics({
-    name : "myTracker"
-}, iVXjs)
-...
-```
 
 * Sends a pageview event to Google Analytics
 * On every state change, it will send a pageview for that particular state which includes that state's URL
@@ -185,7 +233,7 @@ with the tracker by the ga service:
 
 ```javascript
 var args = {
-    tracker : 'myTracker'
+    tracker : 'id'
     hitType: 'event',
     eventCategory: 'Video',
     eventAction: 'play',

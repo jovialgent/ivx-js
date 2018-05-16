@@ -153,9 +153,7 @@
       
 
       <section class="page__content" itemprop="text">
-        <!-- source : http://127.0.0.1:4000/ivx-js/ -->
-
-<style>
+        <style>
          /* Tooltip container */
 .tooltip {
     position: relative;
@@ -228,7 +226,10 @@
 <ul class="toc__menu" id="markdown-toc">
   <li><a href="#google-analytics" id="markdown-toc-google-analytics">Google Analytics</a>    <ul>
       <li><a href="#overview" id="markdown-toc-overview">Overview</a></li>
-      <li><a href="#set-up" id="markdown-toc-set-up">Set Up</a></li>
+      <li><a href="#page-set-up" id="markdown-toc-page-set-up">Page Set Up</a></li>
+      <li><a href="#google-analytics-trackers" id="markdown-toc-google-analytics-trackers">Google Analytics Trackers</a></li>
+      <li><a href="#tracker-by-tracker-id-depreciated" id="markdown-toc-tracker-by-tracker-id-depreciated">Tracker By Tracker Id (Depreciated)</a></li>
+      <li><a href="#adding-it-to-your-init-function" id="markdown-toc-adding-it-to-your-init-function">Adding it to your init function</a></li>
       <li><a href="#built-in-features" id="markdown-toc-built-in-features">Built-In Features</a>        <ul>
           <li><a href="#default" id="markdown-toc-default">Default</a></li>
         </ul>
@@ -257,7 +258,7 @@ This will also allow you to send events anywhere in an iVXjs experience! This co
 is both showing you how to set it up for your experience and some common uses for getting the
 most out of this module.</p>
 
-<h2 id="set-up">Set Up</h2>
+<h2 id="page-set-up">Page Set Up</h2>
 
 <p>To use the Google Analytics module you will need to do the following.</p>
 
@@ -265,7 +266,7 @@ most out of this module.</p>
   <li>Add the iVXjs Google Analytics file and a copy of the Google’s analytics to your html:</li>
 </ul>
 
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"https://060adad2995367c8e229-2340761377b5351a53198a462113b619.ssl.cf2.rackcdn.com/ivx-js/0.8.8/iVXjs.analytics.google.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"https://060adad2995367c8e229-2340761377b5351a53198a462113b619.ssl.cf2.rackcdn.com/ivx-js/0.11.X/iVXjs.analytics.google.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
 <span class="nt">&lt;script&gt;</span>
     <span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">b</span><span class="p">,</span> <span class="nx">o</span><span class="p">,</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">l</span><span class="p">,</span> <span class="nx">e</span><span class="p">,</span> <span class="nx">r</span><span class="p">)</span> <span class="p">{</span>
         <span class="nx">b</span><span class="p">.</span><span class="nx">GoogleAnalyticsObject</span> <span class="o">=</span> <span class="nx">l</span><span class="p">;</span> <span class="nx">b</span><span class="p">[</span><span class="nx">l</span><span class="p">]</span> <span class="o">||</span> <span class="p">(</span><span class="nx">b</span><span class="p">[</span><span class="nx">l</span><span class="p">]</span> <span class="o">=</span>
@@ -276,6 +277,71 @@ most out of this module.</p>
     <span class="p">}(</span><span class="nb">window</span><span class="p">,</span> <span class="nb">document</span><span class="p">,</span> <span class="s1">'script'</span><span class="p">,</span> <span class="s1">'ga'</span><span class="p">));</span>
 <span class="nt">&lt;/script&gt;</span>
 </code></pre></div></div>
+
+<h2 id="google-analytics-trackers">Google Analytics Trackers</h2>
+
+<p>To install any number of Google Analytics Trackers to an iVXjs experience, the set up is as follows:</p>
+
+<ul>
+  <li>Add a colleciton in the metadata called “trackers”</li>
+</ul>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"metadata"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"trackers"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"states"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+
+    </span><span class="p">}],</span><span class="w">
+    </span><span class="s2">"defaultState"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+
+    </span><span class="p">}]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<ul>
+  <li>Add a tracker object with a name, id, trackingId, and type of “google-analytics”</li>
+</ul>
+
+<blockquote>
+  <p>Ids can’t have spaces or special characters</p>
+</blockquote>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"metadata"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"trackers"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+            </span><span class="s2">"id"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"myTracker"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"name"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"My Google Analytics Tracker"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"trackingId"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"UA-XXXXXXXX-X"</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"google-analytics"</span><span class="w">
+
+        </span><span class="p">}]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"states"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+
+    </span><span class="p">}],</span><span class="w">
+    </span><span class="s2">"defaultState"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[{</span><span class="w">
+
+    </span><span class="p">}]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p><em>Sample Data</em></p>
+
+<p><a href="https://influencetech.github.io/ivx-js/developer/sample-JSON/trackers-google.json">trakcers-google.json</a></p>
+
+<p><em>Schema</em></p>
+
+<p><a href="https://influencetech.github.io/ivx-js/developer/schemas/trackers-google.jsond">trackers-google.jsond</a></p>
+
+<div id="trackers-google-analytics-schema" class="json-schema-table-container" data-json-src="https://influencetech.github.io/ivx-js/developer/schemas/trackers-google.jsond"></div>
+
+<h2 id="tracker-by-tracker-id-depreciated">Tracker By Tracker Id (Depreciated)</h2>
+
+<blockquote>
+  <p>This method is deprecited and should be avoided. Instead do the 
+Trackers collection method detailed above.</p>
+</blockquote>
 
 <ul>
   <li>Put your Google Tracking Id in your experience’s JSON’s metadata:</li>
@@ -293,6 +359,8 @@ most out of this module.</p>
     </span><span class="p">}]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div></div>
+
+<h2 id="adding-it-to-your-init-function">Adding it to your init function</h2>
 
 <ul>
   <li>Where you set up your iVXjs you can inject the iVXjsGoogleAnalytics service in your config and put it in the init function.</li>
@@ -319,21 +387,6 @@ most out of this module.</p>
 <h3 id="default">Default</h3>
 
 <p>Out of the box, the Google Analytics Module will do the following:</p>
-
-<ul>
-  <li>Create a tracker named “ivxjsTracker”
-    <ul>
-      <li>If you would like to change the name of the tracker you can do so in the iVXjsGoogleAnalytics:</li>
-    </ul>
-  </li>
-</ul>
-
-<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">...</span>
-<span class="nx">analytics</span><span class="p">:</span> <span class="nx">iVXjsGoogleAnalytics</span><span class="p">({</span>
-    <span class="na">name</span> <span class="p">:</span> <span class="s2">"myTracker"</span>
-<span class="p">},</span> <span class="nx">iVXjs</span><span class="p">)</span>
-<span class="p">...</span>
-</code></pre></div></div>
 
 <ul>
   <li>Sends a pageview event to Google Analytics</li>
@@ -364,7 +417,7 @@ most out of this module.</p>
 with the tracker by the ga service:</p>
 
 <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">args</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="na">tracker</span> <span class="p">:</span> <span class="s1">'myTracker'</span>
+    <span class="na">tracker</span> <span class="p">:</span> <span class="s1">'id'</span>
     <span class="na">hitType</span><span class="p">:</span> <span class="s1">'event'</span><span class="p">,</span>
     <span class="na">eventCategory</span><span class="p">:</span> <span class="s1">'Video'</span><span class="p">,</span>
     <span class="na">eventAction</span><span class="p">:</span> <span class="s1">'play'</span><span class="p">,</span>

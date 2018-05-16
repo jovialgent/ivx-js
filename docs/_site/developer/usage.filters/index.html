@@ -1,0 +1,357 @@
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+
+<meta charset="utf-8">
+
+
+
+<!-- begin SEO -->
+
+
+
+
+
+
+
+
+
+<title>Filter - iVXjs</title>
+
+
+
+
+
+
+
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="iVXjs">
+<meta property="og:title" content="Filter">
+
+
+  <link rel="canonical" href="http://localhost:4000/ivx-js/developer/usage.filters/">
+  <meta property="og:url" content="http://localhost:4000/ivx-js/developer/usage.filters/">
+
+
+
+
+
+
+
+  
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context" : "http://schema.org",
+      "@type" : "Person",
+      "name" : "Influence Technology",
+      "url" : "http://localhost:4000/ivx-js",
+      "sameAs" : null
+    }
+  </script>
+
+
+
+
+
+
+<!-- end SEO -->
+
+
+<link href="http://localhost:4000/ivx-js/feed.xml" type="application/atom+xml" rel="alternate" title="iVXjs Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="http://localhost:4000/ivx-js/assets/css/main.css">
+
+<meta http-equiv="cleartype" content="on">
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use http://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+  </head>
+
+  <body>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <button><div class="navicon"></div></button>
+        <ul class="visible-links">
+          <li class="masthead__menu-item masthead__menu-item--lg"><a href="http://localhost:4000/ivx-js/">iVXjs</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/ivx-js/developer/tutorial.hello-world">Getting Started</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/ivx-js/developer/tutorials">Tutorials</a></li>
+          
+            
+            <li class="masthead__menu-item"><a href="http://localhost:4000/ivx-js/developer/configuration">Configuration and Features</a></li>
+          
+        </ul>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    
+
+
+
+
+
+<div id="main" role="main">
+  
+
+
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Filter">
+    
+    
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 class="page__title" itemprop="headline">Filter
+</h1>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        <aside class="sidebar__right">
+<nav class="toc">
+    <header><h4 class="nav__title"><i class="fa fa-file-text"></i> On This Page</h4></header>
+<ul class="toc__menu" id="markdown-toc">
+  <li><a href="#overview" id="markdown-toc-overview">Overview</a></li>
+  <li><a href="#string-filters" id="markdown-toc-string-filters">String Filters</a>    <ul>
+      <li><a href="#capitalize" id="markdown-toc-capitalize">Capitalize</a></li>
+      <li><a href="#truncate" id="markdown-toc-truncate">Truncate</a></li>
+      <li><a href="#url-encode" id="markdown-toc-url-encode">URL Encode</a></li>
+      <li><a href="#url-decode" id="markdown-toc-url-decode">URL Decode</a></li>
+      <li><a href="#escape" id="markdown-toc-escape">Escape</a></li>
+      <li><a href="#unescape" id="markdown-toc-unescape">Unescape</a></li>
+    </ul>
+  </li>
+</ul>
+
+  </nav>
+</aside>
+
+<h2 id="overview">Overview</h2>
+
+<p>These filters are custom filters to help render experience data in various ways.</p>
+
+<blockquote>
+  <p>This only avaliable to versions 0.11.6 and up</p>
+</blockquote>
+
+<p>The typical set up is as follows</p>
+
+<div class="language-html highlighter-rouge">
+    <div class="highlight">
+        &#123;&#123;experience.data.myData|filterName&#125;&#125;
+    </div>
+</div>
+
+<h2 id="string-filters">String Filters</h2>
+
+<p>The following filters manipulate string type experience data.</p>
+
+<h3 id="capitalize">Capitalize</h3>
+
+<p><em>Description</em></p>
+
+<p>Capitalizes the first character of a string and lowercases any of the characters afterwards</p>
+
+<p><em>Filter Sample</em></p>
+
+<div class="language-html highlighter-rouge">
+    <div class="highlight">
+        &#123;&#123;experience.data.KEY|capitalize&#125;&#125;
+    </div>
+</div>
+
+<h3 id="truncate">Truncate</h3>
+
+<p><em>Description</em></p>
+
+<p>Truncates a string to a number of characters and appends a string at the end. By default, it truncates to 15 characters and appends an ellipse (…).</p>
+
+<p><em>Filter Samples</em></p>
+
+<p>Default Settings:</p>
+
+<div class="language-html highlighter-rouge">
+    <div class="highlight">
+        &#123;&#123;experience.data.KEY|truncate&#125;&#125;
+    </div>
+</div>
+
+<p>Custom Length:</p>
+
+<div class="language-html highlighter-rouge">
+    <div class="highlight">
+        &#123;&#123;experience.data.KEY|truncate:CUSTOM_LENGTH&#125;&#125;
+    </div>
+</div>
+
+<p>Custom Length and Suffix:</p>
+
+<div class="language-html highlighter-rouge">
+    <div class="highlight">
+        &#123;&#123;experience.data.KEY|truncate:CUSTOM_LENGTH:"CUSTOM_SUFFIX"&#125;&#125;
+    </div>
+</div>
+
+<h3 id="url-encode">URL Encode</h3>
+
+<p><em>Description</em></p>
+
+<p>Encodes a string to make it URL encoded. Helpful for making custom links using experience data.</p>
+
+<p><em>Filter Sample</em></p>
+
+<div class="language-html highlighter-rouge">
+    <div class="highlight">
+        &#123;&#123;experience.data.KEY|url_encode&#125;&#125;
+    </div>
+</div>
+
+<h3 id="url-decode">URL Decode</h3>
+
+<p><em>Description</em></p>
+
+<p>Decodes a string that has any encoded characters.</p>
+
+<p><em>Filter Sample</em></p>
+
+<div class="language-html highlighter-rouge">
+    <div class="highlight">
+        &#123;&#123;experience.data.KEY|url_decode&#125;&#125;
+    </div>
+</div>
+
+<h3 id="escape">Escape</h3>
+
+<p><em>Description</em></p>
+
+<p>Escapes common characters in an HTML string. Currently escapes: &amp;, &lt;, &gt;, “, ‘.</p>
+
+<p><em>Filter Sample</em></p>
+
+<div class="language-html highlighter-rouge">
+    <div class="highlight">
+        &#123;&#123;experience.data.KEY|escape&#125;&#125;
+    </div>
+</div>
+
+<h3 id="unescape">Unescape</h3>
+
+<p><em>Description</em></p>
+
+<p>Unescapes common html entities to their ascii characters.</p>
+
+<p><em>Filter Sample</em></p>
+
+<div class="language-html highlighter-rouge">
+    <div class="highlight">
+        &#123;&#123;experience.data.KEY|unescape&#125;&#125;
+    </div>
+</div>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+
+
+        
+      </footer>
+
+      
+
+      
+
+
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        
+
+<div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow:</strong></li>
+    
+    
+    
+    
+    
+    <li><a href="http://localhost:4000/ivx-js/feed.xml"><i class="fa fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2018 Influence Technology. Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+      </footer>
+    </div>
+
+    <script src="http://localhost:4000/ivx-js/assets/js/main.min.js"></script>
+
+
+
+
+
+  </body>
+</html>
+

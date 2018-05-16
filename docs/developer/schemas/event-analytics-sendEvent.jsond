@@ -1,6 +1,6 @@
 {
     "name": "Google Analytics Send Event",
-    "description": "Settings for how to send iVXjs ",
+    "description": "Settings for how to send Google events from an iVXjs Experience ",
     "type": "object",
     "properties": {
         "eventName": {
@@ -21,7 +21,7 @@
                 "tracker" : {
                     "name" : "Tracker",
                     "type" : "string",
-                    "description" : "Specifies which tracker to send this event to. This is useful if there are multiple trackers. If it is missing, it fires for the tracker attached to this iVXjs Google Analytics Module",
+                    "description" : "Specifies which tracker to send this event to. This is useful if there are multiple trackers. If it is missing, it fires to all Google analytics.",
                     "required" : false
                 },
                 "hitType": {
@@ -32,12 +32,6 @@
                     "enum": [
                         "event"
                     ]
-                },
-                "customEvent": {
-                    "name": "Custom Event",
-                    "type": "string",
-                    "description": "The event to raise in the platform",
-                    "required": true
                 },
                 "eventCategory": {
                     "name": "Event Category",
