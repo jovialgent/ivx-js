@@ -1,8 +1,8 @@
 ---
 layout: single
+title: Action Templates
 ---
 
-# Action Templates
 
 {% include toc %}
 
