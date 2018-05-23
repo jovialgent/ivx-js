@@ -16,6 +16,7 @@ export class Google extends DefaultAnalytics {
     }
 
     init(experienceData) {
+        const self = this;
         let { iVXjs, settings } = this;
         this.experienceData = experienceData;
         this.assertModule = new Assert(iVXjs.log);
@@ -44,13 +45,21 @@ export class Google extends DefaultAnalytics {
 
         this.assertModule.assert(googleTrackers.length >= 1, "Tracking Id", "make sure to add a tracking id");
 
-        if (!this.experienceData.experience.analytics) {
-            this.experienceData.experience.analytics = {
-                trackers: googleTrackers,
-                _getTrackersToProcess: this._getTrackersToProcess
-            }
+        const analytics = {
+            trackers: googleTrackers,
+            _getTrackersToProcess: this._getTrackersToProcess
         }
 
+        if (!this.experienceData.experience.analytics) {
+            this.experienceData.experience.analytics = analytics;
+        } else {
+            this.experienceData.experience.analytics = Object.assign(
+                this.experienceData.experience.analytics,
+                analytics
+            );
+        }
+
+        this.analytics = analytics;
 
         googleTrackers.forEach(googleTracker => {
             const { id: trackerName, trackingId } = googleTracker;
@@ -76,6 +85,10 @@ export class Google extends DefaultAnalytics {
                 });
             });
         });
+
+        iVXjs.Bus.on('sendAnalyticsEvent', (args) => {
+            self.sendAnalyticsEvent(args);
+        })
     }
 
     get experience() {
@@ -97,12 +110,10 @@ export class Google extends DefaultAnalytics {
 
         delete args.tracker;
 
-
         const trackerPromises = trackersToProcess.map(trackerToProcess => {
             return new Promise((resolve, reject) => {
                 const currentArgs = Object.assign({}, args);
                 const { id: trackerName } = trackerToProcess;
-
 
                 currentArgs.hitCallback = () => {
                     resolve();
@@ -113,6 +124,49 @@ export class Google extends DefaultAnalytics {
         });
 
         return Promise.all(trackerPromises);
+    }
+
+    sendAnalyticsEvent(args) {
+        const { iVXjs = {} } = this;
+        const { experience = {} } = iVXjs;
+        const { processor = {} } = experience;
+        const { tracker, rules = [] } = args;
+
+        let analyticEventSettings = args;
+
+        if (Array.isArray(rules) && rules.length > 0 && processor.processRules) {
+            analyticEventSettings = processor.processRules(rules);
+        }
+
+        this._processAnalyticEvents(analyticEventSettings);
+    }
+
+    _processAnalyticEvents(analyticEventSettings) {
+        if (!analyticEventSettings) return;
+
+        const { analytics, iVXjs } = this;
+        const { trackers: allTrackers = [] } = analytics;
+        const { event, eventLabel = event, eventCategory = 'ivx', eventAction = 'triggered-events', tracker: trackerId } = analyticEventSettings;
+        const trackers = analytics._getTrackersToProcess(allTrackers, trackerId);
+
+        if (trackers.length <= 0) return;
+
+        trackers.forEach(tracker => {
+            const { id: trackerName, name, trackingId } = tracker;
+
+            if (!eventLabel) {
+                iVXjs.log.warn(`Google Analytics Send Event Failed: Event failed to send to the Google Analytics Tracker, ${name} (id: ${trackerName}, trackingId ${trackingId}), because no event or event label was found. Make sure your "sendAnalyticsEvent" args collection has either an "eventLabel" or "event" property.`);
+                return;
+            }
+
+            ga(`${trackerName}.send`, {
+                hitType: "event",
+                eventLabel,
+                eventCategory,
+                eventAction
+            })
+        })
+
     }
 
     setAnalyticsData(args) {

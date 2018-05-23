@@ -246,8 +246,8 @@ describe('Evaluator', () => {
     });
     describe('#in', ()=>{
         it('should evaluate true if an element is in an array.', ()=>{
-             expect(evaluator.in(3,[1,2,3])).toEqual(true);
-             expect(evaluator.in(4,[1,2,3])).toEqual(false);
+             expect(evaluator.in([1,2,3], 3)).toEqual(true);
+             expect(evaluator.in([1,2,3], 4)).toEqual(false);
         })
        
     })
