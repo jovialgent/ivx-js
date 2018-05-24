@@ -2,11 +2,7 @@ import createFactoryFunction from '../utilities/create-factory-function.js';
 
 class HtmlStateController {
     constructor($state, $scope, $rootScope, $timeout, iVXjsActions, iVXjsBus, iVXjs) {
-        let { id, timeoutInMs, onTimeout = [], next = [] } = $scope.stateData;
-
-        this.id = id;
-        this.iVXjsActions = iVXjsActions;
-        this.iVXjsBus = iVXjsBus;
+        let { id, timeoutInMs, onTimeout = [], next = []} = $scope.stateData;
 
         if (typeof timeoutInMs != "undefined" && timeoutInMs > 0) {
 
@@ -16,6 +12,12 @@ class HtmlStateController {
                 iVXjsActions.resolveThenNavigate(onTimeout, next);
             }, timeoutInMs);
         }
+
+        Object.assign(this, {
+            id,
+            iVXjsActions,
+            iVXjsBus
+        })
     }
 
     performEvents(events) {

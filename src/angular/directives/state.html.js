@@ -14,9 +14,11 @@ class HtmlState {
         this.controllerAs = 'vm';
         this.link = function ($scope, iElm, iAttrs, controller) {
             let data = angular.copy($scope.stateData);
-            let { id, html, templateUrl, onCompile = [], audio, embedded = false, embeddedViews = [] } = data;
+            let { id, html, templateUrl, onCompile = [], audio, embedded = false, embeddedViews = [], section = {} } = data;
+            const { classes: sectionClasses } = section;
             let audioEventNames = new AudioEventNames();
 
+           
             $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
 
             if (templateUrl) {
@@ -36,6 +38,7 @@ class HtmlState {
             });
 
             function addViews(html, shouldShowState) {
+                iElm.addClass(sectionClasses);
                 iElm.html(html);
 
                 if (!embedded && embeddedViews.length > 0) {
