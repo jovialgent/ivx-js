@@ -40,7 +40,7 @@ class RadioInput {
 
                 return {
                     label: label,
-                    attrHTML: `ng-change='vm.onChange(radioSelected)' ng-model='radioSelected' value='${value}' ${radioErrorRequired}`,
+                    attrHTML: `ng-click='vm.onChange(radioSelected, $event)' ng-model='radioSelected' value='${value}' ${radioErrorRequired}`,
                     classes: classes
 
                 }

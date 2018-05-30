@@ -58,7 +58,8 @@ export class CascadingOptions {
                     let validClass = selectableOptions.length >= 1 ? 'cascade-dropdown-valid' : 'cascade-dropdown-invalid';
                     let OptionErrorMessages = new ErrorMessages(thisInput, errors, attributes);
                     let tagHTML = `
-                           ng-change='vm.modelUpdate(vm.currentSelection[${depth}])'
+                           ng-change='vm.modelUpdate(vm.currentSelection[${depth}], vm.event)'
+                           ng-click="vm.event = $event"
                            ng-options="option.name for option in vm.viewSettings.options[${depth}] track by option.key" 
                            ng-model='vm.currentSelection[${depth}]'`;
 

@@ -204,6 +204,7 @@ export class Actions {
         let setDataPromise = new Promise((resolve, reject) => {
             self.data[key] = value;
 
+
             self.Log.debug(`Current Experience Data`, {
                 group: true,
                 messages: Object.keys(self.data).map((dataKey, index) => {

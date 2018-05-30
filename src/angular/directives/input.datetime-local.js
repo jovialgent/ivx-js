@@ -34,7 +34,7 @@ class DateTimeLocalInput {
             }
 
             let errorMessages = new ErrorMessages(input, errors, attributes);
-            let tagHTML = `ng-blur="vm.onChange(inputValue)" ng-model="inputValue"`;
+            let tagHTML = `ng-blur="vm.onChange(inputValue, $event)" ng-model="inputValue"`;
 
             input = pullInTemplate.convertLabel($filter('stringParsers')('startCase', id), input, $scope);
             input.beforeHtml = pullInTemplate.convertTemplateUrlToHtml(input.beforeHtml, $scope);

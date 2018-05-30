@@ -21,7 +21,7 @@ class TextInput {
 
             $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
             
-            let tagHTML = `ng-blur="vm.onChange(inputValue)" ng-model="inputValue"`
+            let tagHTML = `ng-blur="vm.onChange(inputValue, $event)" ng-model="inputValue"`
 
             input.label = labelHTML ? labelHTML : label;
             input = pullInTemplate.convertLabel($filter('stringParsers')('startCase', id), input, $scope);

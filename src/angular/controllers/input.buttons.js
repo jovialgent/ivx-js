@@ -9,7 +9,6 @@ class ButtonsInputController extends InputControllerHelper {
         let { $parent } = $scope;
         let { inputs, formInput, vm: parentController } = $parent;
 
-
         this.buttons = input.buttons;
 
         this.onClick = ($event, button) => {
@@ -17,16 +16,31 @@ class ButtonsInputController extends InputControllerHelper {
 
             let { onClick = [] } = button;
 
-            onClick.unshift({ eventName: "setData", args: { key: input.name, value: button.value } });
+            const {currentTarget : element} = $event;
+
+            let actionArray = onClick.concat(...onClick, [
+                {
+                    eventName: "setData",
+                    args: {
+                        key: input.name,
+                        value: button.value
+                    }
+                }
+            ]);
 
             iVXjs.log.debug(`Button ${input.name} On Click Start`, {}, { input, source: 'onClick', status: 'started', actions: onClick, timestamp: Date.now() });
 
-            iVXjsActions.resolveActions(onClick, () => {
+            iVXjsActions.resolveActions(actionArray, () => {
                 if ($parent.hideSubmit) {
-                    parentController.onSubmit();
-                    iVXjs.log.debug(`Button ${input.name} On Click Actions Resolved`, {}, { input, source: 'onClick', status: 'completed', actions: onClick, timestamp: Date.now() });
+                    parentController.onSubmit($event);
+                    iVXjs.log.debug(`Button ${input.name} On Click Actions Resolved`, {}, { input, source: 'onClick', status: 'completed', actions: actionArray, timestamp: Date.now() });
                 }
-            });
+            }, {
+                    type: "click",
+                    element,
+                    event: $event,
+                    origin: "onClick"
+                });
 
             $parent.hideSubmit = inputs.length <= 1;
 

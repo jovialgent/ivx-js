@@ -22,7 +22,8 @@ class OptionsInput {
             let errorMessages = new ErrorMessages(input, errors, attributes);
             let defaultOptionTag = `<option value="">Select an option...</option>`;
             let tagHTML = `${directives}
-                           ng-change='vm.onChange(vm.selected.value)'
+                           ng-change='vm.onChange(vm.selected.value, event)'
+                           ng-click="event = $event"
                            ng-options="option.display for option in inputData.options track by option.value" 
                            ng-model='vm.selected'`;
 

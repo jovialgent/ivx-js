@@ -104,10 +104,12 @@ export class Buttons {
         let errorMessages = new this.errorMessages(buttonErrorMessages).html;
         let {label = '', labelHTML = '', showLabel = false, id, beforeHtml : beforeSettings = {}, afterHtml : afterSettings = {} } = input;
         let buttonsHTML = buttons.reduce((html, button, index) => {
-            let { label, attrHTML = '', classes = "" } = button;
+            let { label, attrHTML = '', classes = "", id : buttonId, value } = button;
+
+            const generatedId = buttonId ? buttonId : `${id}-${value}`;
 
             return `${html} 
-                   <button ${attrHTML} class="${classes} ${buttonClasses}">
+                   <button id="${generatedId}" ${attrHTML} class="${classes} ${buttonClasses}">
                        ${label}
                    </button>`;
         }, '');

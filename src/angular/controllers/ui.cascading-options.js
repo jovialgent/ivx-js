@@ -20,15 +20,20 @@ class CascadingOptionsInputController extends InputControllerHelper {
         };
 
         vm.currentSelection = [];
+        vm.events = [...new Array(labels.length)];
         vm.currentTree = currentTree;
 
-        
-        vm.modelUpdate = (selectedItem) => {
+
+        vm.modelUpdate = (selectedItem, event) => {
             let { isStatic, options } = vm.viewSettings;
             let mustBeAnswered = cascadeRequired || isStatic;
 
+            console.dir(vm.events);
+
             if (selectedItem) {
                 let hasItems = selectedItem && selectedItem.items && selectedItem.items.length && selectedItem.items.length > 0;
+
+                const additionalEvent = hasItems ? {} : event;
 
                 if (mustBeAnswered && !hasItems) {
                     let finalKeyParts = selectedItem.key.split('~');
@@ -62,12 +67,12 @@ class CascadingOptionsInputController extends InputControllerHelper {
                         options: newOptions
                     })
                     vm.currentSelection = editSelections;
-                    vm.onChange(selectedItem.key);
 
+                    vm.onChange(selectedItem.key, additionalEvent);
                     updateModel();
                     return;
                 } else if (!mustBeAnswered) {
-                    vm.onChange(selectedItem.key);
+                    vm.onChange(selectedItem.key, additionalEvent);
 
                 }
             }

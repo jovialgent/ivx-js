@@ -28,11 +28,11 @@ class ActionTemplateService {
                 event.preventDefault();
             }
 
-            self._runActionTemplates($scope, element, attributes);
+            self._runActionTemplates($scope, element, attributes, event);
         }, false);
     }
 
-    _runActionTemplates($scope, element, attributes) {
+    _runActionTemplates($scope, element, attributes, event) {
         const { iVXjsActions, iVXjs, $window } = this;
         const attributeKeys = Object.keys(attributes);
         const self = this;
@@ -47,14 +47,20 @@ class ActionTemplateService {
                 iVXjsActions.resolveActions(navigationEvents, () => {
 
                 });
-                
+
                 return;
             }
 
             if (href && target !== '_blank') {
                 $window.location = href;
             }
-        });
+        }, {
+                type: "oncLick",
+                event,
+                element: element[0],
+                actions: eventArray,
+                origin: "actionTemplate"
+            });
     }
 }
 

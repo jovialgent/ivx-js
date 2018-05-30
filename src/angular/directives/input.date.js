@@ -44,7 +44,7 @@ class DateInput {
             input.afterHtml = pullInTemplate.convertTemplateUrlToHtml(input.afterHtml, $scope);
 
 
-            let tagHTML = `ng-blur="vm.onChange(inputValue)" ng-model="inputValue"`;
+            let tagHTML = `ng-blur="vm.onChange(inputValue, $event)" ng-model="inputValue"`;
             let uiDateObj = {
                 input: input,
                 settings: settings,

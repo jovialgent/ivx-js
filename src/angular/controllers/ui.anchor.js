@@ -17,21 +17,24 @@ class AnchorController {
             return clickEvent.eventName === 'goToNextState';
         });
 
-
+        const { currentTarget = {} } = $event;
+        const { href: compiledHref } = currentTarget;
 
         if (attributes.target !== '_blank') {
             $event.preventDefault();
         }
 
-        const { currentTarget = {} } = $event;
-        const { href : compiledHref } = currentTarget;
+        let modifiedTarget = angular.copy(currentTarget)
 
         if (route.length && route.length > 0) {
             iVXjs.log.debug(`Link with route ${route} onLinkClick Started`, {}, { anchor: this.anchorInfo, source: 'onClick', status: 'completed', actions: onClickEvents, timestamp: Date.now() });
+
+            modifiedTarget = Object.assign(modifiedTarget, {
+                href: $state.href(route)
+            });
         } else {
             iVXjs.log.debug(`Link with href ${compiledHref ? compiledHref : href} onLinkClick Start`, {}, { anchor: this.anchorInfo, source: 'onClick', status: 'started', actions: onClickEvents, timestamp: Date.now() });
         }
-
 
         this.iVXjsActions.resolveActions(onClickEvents, () => {
             if (hasGoToNextState) return;
@@ -44,18 +47,21 @@ class AnchorController {
                 return;
             }
 
-
-            iVXjs.log.debug(`Link with href ${ compiledHref ? compiledHref : href} onLinkClick Ended`, {}, { anchor: this.anchorInfo, source: 'onClick', status: 'completed', actions: onClickEvents, timestamp: Date.now() });
+            iVXjs.log.debug(`Link with href ${compiledHref ? compiledHref : href} onLinkClick Ended`, {}, { anchor: this.anchorInfo, source: 'onClick', status: 'completed', actions: onClickEvents, timestamp: Date.now() });
 
 
             if (attributes.target !== '_blank') {
                 self.$window.location = compiledHref ? compiledHref : href;
             }
-        });
+        }, {
+                type: "click",
+                element: modifiedTarget,
+                event: $event,
+                origin: "onClick"
+            });
 
         this.iVXjsAudio.audioElement.play();
         this.iVXjsAudio.audioElement.pause();
-
     }
 }
 

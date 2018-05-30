@@ -20,19 +20,21 @@ class ButtonsInput {
             let inputButtonData = buttons.map((button, index) => {
                 button = pullInTemplate.convertLabel(button.value, button, $scope);
 
-                let { label, labelHTML, value, classes = '' } = button;
+                let { label, labelHTML, value, classes = '', id: buttonId } = button;
 
                 label = labelHTML ? labelHTML : label;
 
                 return {
+                    id: buttonId,
                     label: label,
                     attrHTML: `ng-click='vm.onClick($event, vm.buttons[${index}])'`,
-                    classes: classes
+                    classes: classes,
+                    value
 
                 }
             });
 
-            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);            
+            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
 
             input = pullInTemplate.convertLabel($filter('stringParsers')('startCase', id), input, $scope);
             input.beforeHtml = pullInTemplate.convertTemplateUrlToHtml(input.beforeHtml, $scope);

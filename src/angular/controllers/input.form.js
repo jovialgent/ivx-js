@@ -8,7 +8,7 @@ class FormInputController {
         this.onSubmit = ($event) => {
             let { formInput } = $scope;
 
-            $scope.onSubmit(formInput);
+            $scope.onSubmit(formInput, $event);
         }
     }
 }

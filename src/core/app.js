@@ -80,9 +80,9 @@ export class iVXjs {
         this.experience.Bus = this.Bus;
         this.experience.Log = this.log;
         this.experience.processor = new ActionProcessor(this);
-        this.experience.config = this.config;
-        this.experience.data = this._createExperienceDataObject();
-
+        this.experience.config = this.config;      
+        this.experience.data = Object.assign(this.experience.data || {}, this._createExperienceDataObject());
+       
         /**
          * Evaluates an array of expressions to allow stat navigation branching
          * 

@@ -129,7 +129,7 @@ export class Number {
         let inputHTML = ` 
         <div class="${beforeClasses} ${defaultBeforeClasses}">${beforeHtml}</div>
             <label class="ivx-input-label ivx-input-label-number" for="${id}"> ${label} </label>
-            <input class="${classes} ivx-input ivx-input-number"  name="${name}"  type="number" ${nonValidateAttributesHTML}   ${errorTags} ${tags}>
+            <input id="${id}" class="${classes} ivx-input ivx-input-number"  name="${name}"  type="number" ${nonValidateAttributesHTML}   ${errorTags} ${tags}>
             ${errorHTML}
             <div class="${afterClasses} ${defaultAfterClasses}">${afterHtml}</div>
        `;

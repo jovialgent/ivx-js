@@ -18,7 +18,7 @@ class NumberInput {
             let { inputData: input } = $scope;
             let { id, name, errors = {}, labelHTML, label, attributes = {}, type, settings = {} } = input;
             let errorMessages = new ErrorMessages(input, errors, attributes);
-            let tagHTML = `ng-blur="vm.onChange(inputValue)" ng-model="inputValue"`;
+            let tagHTML = `ng-blur="vm.onChange(inputValue, $event)" ng-model="inputValue"`;
 
             $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
             

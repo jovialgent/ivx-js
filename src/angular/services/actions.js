@@ -27,17 +27,12 @@ export class Actions extends ActionProcessor {
         }
     }
 
-    resolveThenNavigate(actionArray, nextArray) {
+    resolveThenNavigate(actionArray, nextArray, source = {}) {
         let self = this;
-
-        if (typeValidator.isEmpty(actionArray)) {
-            this.navigateToNextState(nextArray);
-            return;
-        }
 
         this.resolveActions(actionArray, () => {
             self.navigateToNextState(nextArray);
-        });
+        },source);
     }
 }
 

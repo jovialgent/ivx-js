@@ -8,7 +8,7 @@ export class InputControllerHelper {
 
         if (input.type === 'checkbox') {
             $scope.inputValue = currentExperienceValue;
-        } else if (currentExperienceValue) {
+        } if (currentExperienceValue) {
             $scope.inputValue = currentExperienceValue;
         }
 
@@ -16,7 +16,7 @@ export class InputControllerHelper {
             $scope.$apply();
         });
 
-        this.onChange = (value) => {
+        this.onChange = (value, $event = {}) => {
             if (input.type === 'checkbox') {
                 value = value ? 'true' : 'false';
             }
@@ -26,6 +26,9 @@ export class InputControllerHelper {
                 if (value === 'true' || value === 'false') {
                     value = value === 'true';
                 }
+
+                const { currentTarget: element } = $event;
+                let source = {};
 
                 let { name, onChange = [] } = input;
 
@@ -37,11 +40,20 @@ export class InputControllerHelper {
                     }
                 });
 
+                if (element) {
+                    source = Object.assign(source, {
+                        type: "onchange",
+                        event: $event,
+                        element,
+                        origin: "onChange"
+                    });
+                }
+
                 iVXjs.log.debug(`Input ${input.name} On Change Started`, {}, { input, source: 'onChange', status: 'started', actions: onChange, timestamp: Date.now() });
 
                 iVXjsActions.resolveActions(onChange, () => {
                     iVXjs.log.debug(`Input ${input.name} On Change Ended`, {}, { input, source: 'onChange', status: 'completed', actions: onChange, timestamp: Date.now() });
-                });
+                }, source);
             }
         }
     }

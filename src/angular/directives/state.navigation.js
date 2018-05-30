@@ -32,7 +32,7 @@ class NavigationState {
 
             iElm.html(thisNavigationState.html);
 
-            if(!embedded && embeddedViews.length > 0){
+            if (!embedded && embeddedViews.length > 0) {
                 iVXjsStateCreator.addViews(embeddedViews, iElm);
             }
 

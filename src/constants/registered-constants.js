@@ -11,6 +11,7 @@ import TracksEvents from './tracks.events.js';
 import TrackCuesEvents from './tracks.cues.events.js';
 import VideoEvents from "./video.events.js";
 import VideoClasses from "./video.classes.js";
+import GlobalEvents from "./global.events";
 
 
 export default class {
@@ -18,6 +19,11 @@ export default class {
         // Angular
         this.ANGULAR = {
             EVENTS: new AngularEvents()
+        }
+
+        //Global
+        this.GLOBAL = {
+            EVENTS: new GlobalEvents()
         }
 
         // Audio
