@@ -38,4 +38,4 @@ export default angular
     .constant('iVXjs', myIVXjs)
     .config(AppConfig)
     .run(AppRun)
-    .name;n
+    .name;
