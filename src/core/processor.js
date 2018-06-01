@@ -76,7 +76,7 @@ export class ActionProcessor {
         }
 
         let promises = actionArray.map((actionObj) => {
-            self.iVXjs.Bus.emit(actionObj.eventName, actionObj.args);
+            self.iVXjs.Bus.emit(actionObj.eventName, actionObj.args, source);
 
             if (!typeValidator.isEmpty(actionObj.args)) {
                 log.debug(`Event ${actionObj.eventName} was fired.`, {
@@ -95,13 +95,13 @@ export class ActionProcessor {
 
             if (self.iVXjs.actions && self.iVXjs.actions[actionObj.eventName]) {
 
-                return self.iVXjs.actions[actionObj.eventName](actionObj.args);
+                return self.iVXjs.actions[actionObj.eventName](actionObj.args, source);
 
             }
 
             if (self.iVXjs.experience[actionObj.eventName]) {
 
-                return self.iVXjs.experience[actionObj.eventName](actionObj.args);
+                return self.iVXjs.experience[actionObj.eventName](actionObj.args, source);
 
             }
         });
