@@ -55,7 +55,7 @@ class ActionTemplateService {
                 $window.location = href;
             }
         }, {
-                type: "oncLick",
+                type: "onclick",
                 event,
                 element: element[0],
                 actions: eventArray,
