@@ -22,6 +22,7 @@ export class Google extends DefaultAnalytics {
         this.assertModule = new Assert(iVXjs.log);
         this.log = iVXjs.log;
 
+
         let { config = {} } = experienceData;
         let { metadata = {} } = config;
         let { trackingId, trackers = [] } = metadata;
@@ -43,7 +44,11 @@ export class Google extends DefaultAnalytics {
             googleTrackers = settingTrackers;
         }
 
-        this.assertModule.assert(googleTrackers.length >= 1, "Tracking Id", "make sure to add a tracking id");
+        if (googleTrackers.length <= 0) {
+            iVXjs.log.warn(`The Google Analytics Module needs at least one Google Analytics Type tracker to work. Make sure you define one in the JSON's metadata's collection.`);
+           
+            return;
+        }
 
         const analytics = {
             trackers: googleTrackers,
@@ -73,22 +78,8 @@ export class Google extends DefaultAnalytics {
         plugins.forEach((plugin, index) => {
             ga('require', plugin);
         });
-        iVXjs.Bus.on(stateEventNames.CHANGE, (state) => {
-            let { url } = state;
 
-            googleTrackers.forEach(googleTracker => {
-                const { id: trackerName } = googleTracker;
-
-                ga(`${trackerName}.send`, {
-                    hitType: 'pageview',
-                    page: url
-                });
-            });
-        });
-
-        iVXjs.Bus.on('sendAnalyticsEvent', (args) => {
-            self.sendAnalyticsEvent(args);
-        })
+        this._setUpElementListeners();
     }
 
     get experience() {
@@ -126,7 +117,7 @@ export class Google extends DefaultAnalytics {
         return Promise.all(trackerPromises);
     }
 
-    sendAnalyticsEvent(args) {
+    sendAnalyticsEvent(args, source = {}) {
         const { iVXjs = {} } = this;
         const { experience = {} } = iVXjs;
         const { processor = {} } = experience;
@@ -179,6 +170,70 @@ export class Google extends DefaultAnalytics {
             const { id: name } = tracker;
 
             ga(`${name}.set`, key, value);
+        });
+    }
+
+    gaElementTransformer(source = {}) {
+        const { element = {}, type } = source;
+        const { id = "" } = element;
+
+        let event = type;
+
+        if (id && id.length && id.length > 0) {
+            event = `${id}:${event}`;
+        }
+
+        return {
+            event
+        }
+    }
+
+    gaElementEventListener(actions = [], source = {}) {
+        const hasSendAnalyticsEvent = actions.find(action => { return action.eventName === 'sendAnalyticsEvent' });
+
+        if (!hasSendAnalyticsEvent) {
+            const customArgs = this.gaElementTransformer(source);
+
+            this.sendAnalyticsEvent(customArgs, source);
+        }
+    }
+
+    gaPageViewEventListener(state) {
+        const { analytics = {} } = this;
+        const { trackers: allTrackers = [] } = analytics;
+        const trackersToProcess = analytics._getTrackersToProcess(allTrackers);
+        const { url } = state;
+
+        trackersToProcess.forEach(googleTracker => {
+            const { id: trackerName } = googleTracker;
+
+            ga(`${trackerName}.send`, {
+                hitType: 'pageview',
+                page: url
+            });
+        });
+    }
+
+    _setUpElementListeners() {
+        const self = this;
+        const { iVXjsBus, iVXjs } = this;
+        const { constants = {} } = iVXjs;
+        const { GLOBAL: GlobalConstants = {}, STATE: StateConstants } = constants;
+        const { EVENTS: GlobalEventsConstants = {} } = GlobalConstants;
+        const { EVENTS: StateEventNames } = StateConstants;
+
+        if (GlobalEventsConstants.ELEMENT_EVENT) {
+            iVXjs.Bus.on(GlobalEventsConstants.ELEMENT_EVENT, (actions = [], source = {}) => {
+                self.gaElementEventListener(actions, source);
+            });
+        }
+
+        iVXjs.Bus.on(StateEventNames.CHANGE, (state) => {
+            self.gaPageViewEventListener(state);
+        });
+
+        iVXjs.Bus.on('sendAnalyticsEvent', (args) => {
+            self.sendAnalyticsEvent(args);
         });
     }
 
