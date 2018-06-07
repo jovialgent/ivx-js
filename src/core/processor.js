@@ -63,6 +63,120 @@ export class ActionProcessor {
         return argsToProcess;
     }
 
+    /**
+     * Using the event and a value if available, it will automatically 
+     * create the source info for the event which includes the element,
+     * type, event and value if it exists.
+     * @param {EventObject} event 
+     * @param {*} value 
+     */
+    createSourceFromEvent(event = {}, value, actions) {
+        if (this.isButtonClickSource(event, value)) {
+            return this.createButtonClickSource(event, value);
+        }
+
+        if (this.isSubmitSource(event, value)) {
+            return this.createFormSubmitSource(event);
+        }
+
+        if (this.isInputSource(event, value)) {
+            return this.createInputSource(event, value);
+        }
+
+        if (this.isElementClickSource(event, value)) {
+            return this.createElementClickSource(event, value, actions);
+        }
+    }
+
+    isInputSource(event, value) {
+        const { target = {}, type } = event;
+        const { tagName: tag = "" } = target;
+        const isInputType = ((tag.toLowerCase() === 'input' || tag.toLowerCase() === 'textarea') && (type === 'blur' || type === 'click'));
+        const isOptionsType = (tag.toLowerCase() === 'select' && type === 'click');
+
+        return isInputType || isOptionsType;;
+    }
+
+    isSubmitSource(event, value) {
+        const { target = {}, type } = event;
+        const { tagName: tag = "" } = target;
+
+        return type === "submit";
+    }
+
+    isButtonClickSource(event, value) {
+        const { target = {}, type } = event;
+        const { tagName: tag = "" } = target;
+
+        return (tag.toLowerCase() === 'button' && type === 'click' && !typeValidator.isUndefined(value));
+    }
+
+    isElementClickSource(event, value) {
+        const { target = {}, type } = event;
+        const { tagName: tag = "" } = target;
+
+        return type === "click";
+    }
+
+    createButtonClickSource(event, value) {
+        const { target: element = {} } = event;
+
+        return {
+            type: "click",
+            element,
+            event,
+            origin: "onClick",
+            value
+        }
+    }
+
+    createFormSubmitSource(event) {
+        const { target: element = {} } = event;
+
+        return {
+            type: "onsubmit",
+            element,
+            event,
+            origin: "onSubmit"
+        }
+    }
+
+    createInputSource(event, value) {
+        const { target: element = {} } = event;
+
+        return {
+            type: "onchange",
+            event,
+            element,
+            origin: "onChange",
+            value
+        }
+    }
+
+    createElementClickSource(event, value, actions) {
+        const { target: element = {} } = event;
+
+
+        return {
+            type: "onclick",
+            event,
+            element,
+            actions,
+            origin: "element"
+        }
+
+    }
+    createAnchorClickSource(event) {
+        const { target: element = {} } = event;
+
+        return {
+            type: "onclick",
+            event,
+            element,
+            origin: "link"
+        }
+    }
+
     resolveActions(actionArray, callback, source = {}) {
         let self = this;
         const { globalEvents, iVXjs } = this;

@@ -40,20 +40,11 @@ export class InputControllerHelper {
                     }
                 });
 
-                if (element) {
-                    source = Object.assign(source, {
-                        type: "onchange",
-                        event: $event,
-                        element,
-                        origin: "onChange"
-                    });
-                }
-
                 iVXjs.log.debug(`Input ${input.name} On Change Started`, {}, { input, source: 'onChange', status: 'started', actions: onChange, timestamp: Date.now() });
 
                 iVXjsActions.resolveActions(onChange, () => {
                     iVXjs.log.debug(`Input ${input.name} On Change Ended`, {}, { input, source: 'onChange', status: 'completed', actions: onChange, timestamp: Date.now() });
-                }, source);
+                }, iVXjsActions.createInputSource($event, value));
             }
         }
     }

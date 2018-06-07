@@ -31,7 +31,7 @@ export default class GlobalEvents {
         const { GLOBAL: GlobalConstants = {} } = constants;
         const { type: actionSourceType, actions = [] } = source;
 
-        if (actionSourceType) {
+        if (source.element) {
             this.iVXjs.Bus.emit(GlobalConstants.EVENTS.ELEMENT_EVENT, actions.length > 0 ? actions : actionArray, source);
 
             log.debug(`${GlobalConstants.EVENTS.ELEMENT_EVENT} was fired with the following data`, {
@@ -51,6 +51,9 @@ export default class GlobalEvents {
                 }, {
                     title: "Event Data",
                     message: source.event
+                },{
+                    title: "Value",
+                    message: source.value
                 }]
 
             }, {});

@@ -16,12 +16,7 @@ class InputStateController {
 
             if (formInput && formInput.$valid) {
                 iVXjs.log.debug(`onSubmit Actions`, {}, { state: $scope.stateData, source: 'onSubmit', status: 'completed', actions: onSubmit, timestamp: Date.now() });
-                iVXjsActions.resolveThenNavigate(onSubmit, next, {
-                    type: "onsubmit",
-                    element,
-                    event: $event,
-                    origin: "onSubmit"
-                });
+                iVXjsActions.resolveThenNavigate(onSubmit, next, iVXjsActions.createFormSubmitSource($event));
             }
         };
 

@@ -54,13 +54,7 @@ class ActionTemplateService {
             if (href && target !== '_blank') {
                 $window.location = href;
             }
-        }, {
-                type: "onclick",
-                event,
-                element: element[0],
-                actions: eventArray,
-                origin: "actionTemplate"
-            });
+        }, iVXjsActions.createSourceFromEvent(event, null, eventArray));
     }
 }
 

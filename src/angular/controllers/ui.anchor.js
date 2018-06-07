@@ -53,12 +53,7 @@ class AnchorController {
             if (attributes.target !== '_blank') {
                 self.$window.location = compiledHref ? compiledHref : href;
             }
-        }, {
-                type: "click",
-                element: modifiedTarget,
-                event: $event,
-                origin: "onClick"
-            });
+        }, this.iVXjsActions.createAnchorClickSource(event));
 
         this.iVXjsAudio.audioElement.play();
         this.iVXjsAudio.audioElement.pause();

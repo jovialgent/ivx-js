@@ -16,7 +16,7 @@ class ButtonsInputController extends InputControllerHelper {
 
             let { onClick = [] } = button;
 
-            const {currentTarget : element} = $event;
+            const { currentTarget: element } = $event;
 
             let actionArray = onClick.concat(...onClick, [
                 {
@@ -35,12 +35,7 @@ class ButtonsInputController extends InputControllerHelper {
                     parentController.onSubmit($event);
                     iVXjs.log.debug(`Button ${input.name} On Click Actions Resolved`, {}, { input, source: 'onClick', status: 'completed', actions: actionArray, timestamp: Date.now() });
                 }
-            }, {
-                    type: "click",
-                    element,
-                    event: $event,
-                    origin: "onClick"
-                });
+            }, iVXjsActions.createButtonClickSource(event, button.value));
 
             $parent.hideSubmit = inputs.length <= 1;
 

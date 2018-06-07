@@ -28,8 +28,6 @@ class CascadingOptionsInputController extends InputControllerHelper {
             let { isStatic, options } = vm.viewSettings;
             let mustBeAnswered = cascadeRequired || isStatic;
 
-            console.dir(vm.events);
-
             if (selectedItem) {
                 let hasItems = selectedItem && selectedItem.items && selectedItem.items.length && selectedItem.items.length > 0;
 
