@@ -122,7 +122,7 @@ export class ActionProcessor {
         const { target: element = {} } = event;
 
         return {
-            type: "click",
+            type: "onclick",
             element,
             event,
             origin: "onClick",
