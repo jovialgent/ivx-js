@@ -35,7 +35,7 @@ class ButtonsInputController extends InputControllerHelper {
                     parentController.onSubmit($event);
                     iVXjs.log.debug(`Button ${input.name} On Click Actions Resolved`, {}, { input, source: 'onClick', status: 'completed', actions: actionArray, timestamp: Date.now() });
                 }
-            }, iVXjsActions.createButtonClickSource(event, button.value));
+            }, iVXjsActions.createButtonClickSource($event, button.value));
 
             $parent.hideSubmit = inputs.length <= 1;
 

@@ -53,7 +53,7 @@ class AnchorController {
             if (attributes.target !== '_blank') {
                 self.$window.location = compiledHref ? compiledHref : href;
             }
-        }, this.iVXjsActions.createAnchorClickSource(event));
+        }, this.iVXjsActions.createAnchorClickSource($event));
 
         this.iVXjsAudio.audioElement.play();
         this.iVXjsAudio.audioElement.pause();
