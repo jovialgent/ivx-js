@@ -33,9 +33,9 @@ export class Actions {
      */
     setElementClasses(element, eventObj) {
         const { animationClasses = "" } = eventObj;
-        const { animationClass: oldAnimationClass = "" } = element;
+        const { animationClasses: oldAnimationClasses = "" } = element;
         const classesToAdd = animationClasses.split(" ");
-        const classesToRemove = oldAnimationClass.split(" ");
+        const classesToRemove = oldAnimationClasses.split(" ");
 
         if (element.className.indexOf('hide') >= 0) {
             element.className = element.className.replace('hide', animationClasses);
@@ -44,7 +44,7 @@ export class Actions {
 
         classesToRemove.forEach(classToRemove => {
             if (classToRemove.length > 0) {
-                element.classList.remove(classesToRemove);
+                element.classList.remove(classToRemove);
             }
         });
 
@@ -54,7 +54,7 @@ export class Actions {
             }
         });
 
-        element.animationClass = animationClasses;
+        element.animationClasses = animationClasses;
 
         return element;
     }
@@ -65,7 +65,7 @@ export class Actions {
         const classNames = this._getClassNames(classes);
 
         elements.forEach(element => {
-            
+
             classNames.forEach(className => {
                 element.classList.add(className);
             });
@@ -89,7 +89,7 @@ export class Actions {
 
         return classes.split(' ');
     }
-
+  
 
     _getArrayFromAllSelector(selector) {
         const elements = document.querySelectorAll(selector);
@@ -149,7 +149,7 @@ export class Actions {
             function endAnimation(event) {
                 animationElements.forEach((animationElement, index) => {
                     animationEnds.forEach((animationEndName) => {
-                        animationElement.animationClass = eventObj.animationClasses;
+                        animationElement.animationClasses = eventObj.animationClasses;
                         animationElement.removeEventListener(animationEndName, endAnimation);
                     });
                 })
