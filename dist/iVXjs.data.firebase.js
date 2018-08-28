@@ -510,6 +510,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var typeValidator = new _typeParsers.TypeValidator();
 
+var hasOwnProperty = Object.prototype.hasOwnProperty;
+
 var _class = function () {
     function _class(experience, customEvaluator) {
         _classCallCheck(this, _class);
@@ -631,7 +633,29 @@ var _class = function () {
     }, {
         key: "in",
         value: function _in(lhs, rhs) {
-            return rhs.indexOf(lhs) >= 0;
+            return lhs && lhs.indexOf && lhs.indexOf(rhs) >= 0;
+        }
+
+        // Based on the isEmpty from lodash (https://github.com/lodash/lodash/blob/master/isEmpty.js)
+
+    }, {
+        key: "empty",
+        value: function empty(lhs, rhs) {
+            if (lhs === null) {
+                return true;
+            }
+
+            if (Array.isArray(lhs) || typeof value === 'string') {
+                return !lhs.length;
+            }
+
+            for (var key in lhs) {
+                if (hasOwnProperty.call(lhs, key)) {
+                    return false;
+                }
+            }
+
+            return true;
         }
     }]);
 
@@ -786,11 +810,11 @@ var Actions = exports.Actions = function () {
         value: function setElementClasses(element, eventObj) {
             var _eventObj$animationCl = eventObj.animationClasses,
                 animationClasses = _eventObj$animationCl === undefined ? "" : _eventObj$animationCl;
-            var _element$animationCla = element.animationClass,
-                oldAnimationClass = _element$animationCla === undefined ? "" : _element$animationCla;
+            var _element$animationCla = element.animationClasses,
+                oldAnimationClasses = _element$animationCla === undefined ? "" : _element$animationCla;
 
             var classesToAdd = animationClasses.split(" ");
-            var classesToRemove = oldAnimationClass.split(" ");
+            var classesToRemove = oldAnimationClasses.split(" ");
 
             if (element.className.indexOf('hide') >= 0) {
                 element.className = element.className.replace('hide', animationClasses);
@@ -799,7 +823,7 @@ var Actions = exports.Actions = function () {
 
             classesToRemove.forEach(function (classToRemove) {
                 if (classToRemove.length > 0) {
-                    element.classList.remove(classesToRemove);
+                    element.classList.remove(classToRemove);
                 }
             });
 
@@ -809,7 +833,7 @@ var Actions = exports.Actions = function () {
                 }
             });
 
-            element.animationClass = animationClasses;
+            element.animationClasses = animationClasses;
 
             return element;
         }
@@ -824,6 +848,7 @@ var Actions = exports.Actions = function () {
             var classNames = this._getClassNames(classes);
 
             elements.forEach(function (element) {
+
                 classNames.forEach(function (className) {
                     element.classList.add(className);
                 });
@@ -850,7 +875,7 @@ var Actions = exports.Actions = function () {
         value: function _getClassNames() {
             var classes = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
 
-            if (!classes || !classes.split) return;
+            if (!classes || !classes.split) return [];
 
             return classes.split(' ');
         }
@@ -915,7 +940,7 @@ var Actions = exports.Actions = function () {
                 function endAnimation(event) {
                     animationElements.forEach(function (animationElement, index) {
                         animationEnds.forEach(function (animationEndName) {
-                            animationElement.animationClass = eventObj.animationClasses;
+                            animationElement.animationClasses = eventObj.animationClasses;
                             animationElement.removeEventListener(animationEndName, endAnimation);
                         });
                     });
@@ -1048,6 +1073,7 @@ var _class = function (_AudioConstants) {
             SET_UP: "set-up",
             SET_DURATION: "set-duration",
             SET_VOLUME: "set-volume",
+            VOLUME: "set-volume",
             TIME_UPDATE: "time-update",
             UNMUTE: "unmute"
         };
@@ -1229,9 +1255,14 @@ var Rules = exports.Rules = function () {
                 }
 
                 return self.evaluator.evaluate(rule);
-            });
+            }) || {};
 
-            return stateSelect ? stateSelect.stateId : '';
+            var _stateSelect$stateId = stateSelect.stateId,
+                stateId = _stateSelect$stateId === undefined ? '' : _stateSelect$stateId,
+                route = stateSelect.route;
+
+
+            return route ? route : stateId;
         }
     }, {
         key: 'rules',
@@ -1251,7 +1282,9 @@ var Rules = exports.Rules = function () {
 
 /***/ }),
 /* 10 */,
-/* 11 */
+/* 11 */,
+/* 12 */,
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1265,7 +1298,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-var _firebase = __webpack_require__(12);
+var _firebase = __webpack_require__(14);
 
 var _firebase2 = _interopRequireDefault(_firebase);
 
@@ -1314,7 +1347,7 @@ var _class = function (_Firebase) {
 exports.default = _class;
 
 /***/ }),
-/* 12 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1369,7 +1402,7 @@ var _class = function (_iVXjsConstants) {
 exports.default = _class;
 
 /***/ }),
-/* 13 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1552,8 +1585,6 @@ var _class = function () {
 exports.default = _class;
 
 /***/ }),
-/* 14 */,
-/* 15 */,
 /* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1577,7 +1608,7 @@ var _stateEvents = __webpack_require__(2);
 
 var _stateEvents2 = _interopRequireDefault(_stateEvents);
 
-var _firebaseAuthentication = __webpack_require__(11);
+var _firebaseAuthentication = __webpack_require__(13);
 
 var _firebaseAuthentication2 = _interopRequireDefault(_firebaseAuthentication);
 
@@ -1585,7 +1616,7 @@ var _actions = __webpack_require__(6);
 
 var _rules = __webpack_require__(19);
 
-var _utilities = __webpack_require__(13);
+var _utilities = __webpack_require__(15);
 
 var _utilities2 = _interopRequireDefault(_utilities);
 
@@ -2122,7 +2153,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _firebaseAuthentication = __webpack_require__(11);
+var _firebaseAuthentication = __webpack_require__(13);
 
 var _firebaseAuthentication2 = _interopRequireDefault(_firebaseAuthentication);
 
@@ -2136,7 +2167,7 @@ var _stateEvents = __webpack_require__(2);
 
 var _stateEvents2 = _interopRequireDefault(_stateEvents);
 
-var _utilities = __webpack_require__(13);
+var _utilities = __webpack_require__(15);
 
 var _utilities2 = _interopRequireDefault(_utilities);
 
@@ -2567,7 +2598,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-var _firebase = __webpack_require__(12);
+var _firebase = __webpack_require__(14);
 
 var _firebase2 = _interopRequireDefault(_firebase);
 

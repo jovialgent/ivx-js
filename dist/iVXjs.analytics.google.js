@@ -221,12 +221,16 @@ var Google = exports.Google = function (_DefaultAnalytics) {
     function Google(settings, iVXjs) {
         _classCallCheck(this, Google);
 
-        return _possibleConstructorReturn(this, (Google.__proto__ || Object.getPrototypeOf(Google)).call(this, settings, iVXjs));
+        var _this = _possibleConstructorReturn(this, (Google.__proto__ || Object.getPrototypeOf(Google)).call(this, settings, iVXjs));
+
+        _this.TYPE_NAME = "google-analytics";
+        return _this;
     }
 
     _createClass(Google, [{
         key: 'init',
         value: function init(experienceData) {
+            var self = this;
             var iVXjs = this.iVXjs,
                 settings = this.settings;
 
@@ -238,43 +242,72 @@ var Google = exports.Google = function (_DefaultAnalytics) {
                 config = _experienceData$confi === undefined ? {} : _experienceData$confi;
             var _config$metadata = config.metadata,
                 metadata = _config$metadata === undefined ? {} : _config$metadata;
-            var trackingId = metadata.trackingId;
+            var trackingId = metadata.trackingId,
+                _metadata$trackers = metadata.trackers,
+                trackers = _metadata$trackers === undefined ? [] : _metadata$trackers;
             var _settings$plugins = settings.plugins,
                 plugins = _settings$plugins === undefined ? [] : _settings$plugins,
                 _settings$name = settings.name,
-                name = _settings$name === undefined ? 'ivxjsTracker' : _settings$name;
+                name = _settings$name === undefined ? 'ivxjsTracker' : _settings$name,
+                settingTrackers = settings.trackers;
 
+            var googleTrackers = this._getAllGoogleTrackers(trackers);
 
             settings.trackingId = trackingId ? trackingId : settings.trackingId;
-
-            this.assertModule.assert(settings.trackingId, "Tracking Id", "make sure to add a tracking id");
-
-            this.experienceData.experience.analytics = {
-                name: name
-            };
-
             settings.name = name;
 
-            ga('create', settings);
+            if (settings.trackingId) {
+                googleTrackers = [{
+                    type: this.TYPE_NAME,
+                    trackingId: settings.trackingId,
+                    id: name
+                }];
+            }
 
+            if (settingTrackers) {
+                googleTrackers = settingTrackers;
+            }
+
+            if (googleTrackers.length <= 0) {
+                iVXjs.log.warn('The Google Analytics Module needs at least one Google Analytics Type tracker to work. Make sure you define one in the JSON\'s metadata\'s collection.');
+
+                return;
+            }
+
+            var analytics = {
+                trackers: googleTrackers,
+                _getTrackersToProcess: this._getTrackersToProcess
+            };
+
+            if (!this.experienceData.experience.analytics) {
+                this.experienceData.experience.analytics = analytics;
+            } else {
+                this.experienceData.experience.analytics = Object.assign(this.experienceData.experience.analytics, analytics);
+            }
+
+            this.analytics = analytics;
+
+            googleTrackers.forEach(function (googleTracker) {
+                var trackerName = googleTracker.id,
+                    trackingId = googleTracker.trackingId;
+
+
+                ga('create', {
+                    trackingId: trackingId,
+                    name: trackerName
+                });
+                ga(trackerName + '.send', 'pageview');
+            });
             plugins.forEach(function (plugin, index) {
                 ga('require', plugin);
             });
-            ga(name + '.send', 'pageview');
 
-            iVXjs.Bus.on(stateEventNames.CHANGE, function (state) {
-                var url = state.url;
-
-
-                ga(name + '.send', {
-                    hitType: 'pageview',
-                    page: url
-                });
-            });
+            this._setUpElementListeners();
         }
     }, {
         key: 'sendEvent',
         value: function sendEvent(args) {
+            var self = this;
             var _settings = this.settings,
                 settings = _settings === undefined ? {} : _settings,
                 log = this.log,
@@ -282,21 +315,93 @@ var Google = exports.Google = function (_DefaultAnalytics) {
                 analytics = _analytics === undefined ? {} : _analytics;
             var tracker = args.tracker;
 
+            var promises = [];
+            var _analytics$trackers = analytics.trackers,
+                allTrackers = _analytics$trackers === undefined ? [] : _analytics$trackers;
 
-            var sendEventPromise = new Promise(function (resolve, reject) {
+            var trackersToProcess = analytics._getTrackersToProcess(allTrackers, tracker);
 
-                args.hitCallback = function () {
-                    resolve();
-                };
+            delete args.tracker;
 
-                tracker = tracker ? tracker + '.' : analytics.name + '.';
+            var trackerPromises = trackersToProcess.map(function (trackerToProcess) {
+                return new Promise(function (resolve, reject) {
+                    var currentArgs = Object.assign({}, args);
+                    var trackerName = trackerToProcess.id;
 
-                delete args.tracker;
 
-                ga(tracker + 'send', args);
+                    currentArgs.hitCallback = function () {
+                        resolve();
+                    };
+
+                    ga(trackerName + '.send', currentArgs);
+                });
             });
 
-            return sendEventPromise;
+            return Promise.all(trackerPromises);
+        }
+    }, {
+        key: 'sendAnalyticsEvent',
+        value: function sendAnalyticsEvent(args) {
+            var source = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+            var _iVXjs = this.iVXjs,
+                iVXjs = _iVXjs === undefined ? {} : _iVXjs;
+            var _iVXjs$experience = iVXjs.experience,
+                experience = _iVXjs$experience === undefined ? {} : _iVXjs$experience;
+            var _experience$processor = experience.processor,
+                processor = _experience$processor === undefined ? {} : _experience$processor;
+            var tracker = args.tracker,
+                _args$rules = args.rules,
+                rules = _args$rules === undefined ? [] : _args$rules;
+
+
+            var analyticEventSettings = args;
+
+            if (Array.isArray(rules) && rules.length > 0 && processor.processRules) {
+                analyticEventSettings = processor.processRules(rules);
+            }
+
+            this._processAnalyticEvents(analyticEventSettings);
+        }
+    }, {
+        key: '_processAnalyticEvents',
+        value: function _processAnalyticEvents(analyticEventSettings) {
+            if (!analyticEventSettings) return;
+
+            var analytics = this.analytics,
+                iVXjs = this.iVXjs;
+            var _analytics$trackers2 = analytics.trackers,
+                allTrackers = _analytics$trackers2 === undefined ? [] : _analytics$trackers2;
+            var event = analyticEventSettings.event,
+                _analyticEventSetting = analyticEventSettings.eventLabel,
+                eventLabel = _analyticEventSetting === undefined ? event : _analyticEventSetting,
+                _analyticEventSetting2 = analyticEventSettings.eventCategory,
+                eventCategory = _analyticEventSetting2 === undefined ? 'ivx' : _analyticEventSetting2,
+                _analyticEventSetting3 = analyticEventSettings.eventAction,
+                eventAction = _analyticEventSetting3 === undefined ? 'triggered-events' : _analyticEventSetting3,
+                trackerId = analyticEventSettings.tracker;
+
+            var trackers = analytics._getTrackersToProcess(allTrackers, trackerId);
+
+            if (trackers.length <= 0) return;
+
+            trackers.forEach(function (tracker) {
+                var trackerName = tracker.id,
+                    name = tracker.name,
+                    trackingId = tracker.trackingId;
+
+
+                if (!eventLabel) {
+                    iVXjs.log.warn('Google Analytics Send Event Failed: Event failed to send to the Google Analytics Tracker, ' + name + ' (id: ' + trackerName + ', trackingId ' + trackingId + '), because no event or event label was found. Make sure your "sendAnalyticsEvent" args collection has either an "eventLabel" or "event" property.');
+                    return;
+                }
+
+                ga(trackerName + '.send', {
+                    hitType: "event",
+                    eventLabel: eventLabel,
+                    eventCategory: eventCategory,
+                    eventAction: eventAction
+                });
+            });
         }
     }, {
         key: 'setAnalyticsData',
@@ -306,13 +411,138 @@ var Google = exports.Google = function (_DefaultAnalytics) {
                 log = this.log,
                 _analytics2 = this.analytics,
                 analytics = _analytics2 === undefined ? {} : _analytics2;
+            var _analytics$trackers3 = analytics.trackers,
+                allTrackers = _analytics$trackers3 === undefined ? [] : _analytics$trackers3;
             var tracker = args.tracker,
                 key = args.key,
                 value = args.value;
 
-            var setActionName = tracker ? tracker + '.set' : analytics.name + '.set';
+            var trackersToProcess = analytics._getTrackersToProcess(allTrackers, tracker);
 
-            ga(setActionName, key, value);
+            trackersToProcess.forEach(function (tracker) {
+                var name = tracker.id;
+
+
+                ga(name + '.set', key, value);
+            });
+        }
+    }, {
+        key: 'gaElementTransformer',
+        value: function gaElementTransformer() {
+            var source = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+            var _source$element = source.element,
+                element = _source$element === undefined ? {} : _source$element,
+                type = source.type;
+            var _element$id = element.id,
+                id = _element$id === undefined ? "" : _element$id;
+
+
+            var event = type;
+
+            if (id && id.length && id.length > 0) {
+                event = id + ':' + event;
+            }
+
+            return {
+                event: event
+            };
+        }
+    }, {
+        key: 'gaElementEventListener',
+        value: function gaElementEventListener() {
+            var actions = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+            var source = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+            var hasSendAnalyticsEvent = actions.find(function (action) {
+                return action.eventName === 'sendAnalyticsEvent';
+            });
+
+            if (!hasSendAnalyticsEvent) {
+                var customArgs = this.gaElementTransformer(source);
+
+                this.sendAnalyticsEvent(customArgs, source);
+            }
+        }
+    }, {
+        key: 'gaPageViewEventListener',
+        value: function gaPageViewEventListener(state) {
+            var _analytics3 = this.analytics,
+                analytics = _analytics3 === undefined ? {} : _analytics3;
+            var _analytics$trackers4 = analytics.trackers,
+                allTrackers = _analytics$trackers4 === undefined ? [] : _analytics$trackers4;
+
+            var trackersToProcess = analytics._getTrackersToProcess(allTrackers);
+            var url = state.url;
+
+
+            trackersToProcess.forEach(function (googleTracker) {
+                var trackerName = googleTracker.id;
+
+
+                ga(trackerName + '.send', {
+                    hitType: 'pageview',
+                    page: url
+                });
+            });
+        }
+    }, {
+        key: '_setUpElementListeners',
+        value: function _setUpElementListeners() {
+            var self = this;
+            var iVXjsBus = this.iVXjsBus,
+                iVXjs = this.iVXjs;
+            var _iVXjs$constants = iVXjs.constants,
+                constants = _iVXjs$constants === undefined ? {} : _iVXjs$constants;
+            var _constants$GLOBAL = constants.GLOBAL,
+                GlobalConstants = _constants$GLOBAL === undefined ? {} : _constants$GLOBAL,
+                StateConstants = constants.STATE;
+            var _GlobalConstants$EVEN = GlobalConstants.EVENTS,
+                GlobalEventsConstants = _GlobalConstants$EVEN === undefined ? {} : _GlobalConstants$EVEN;
+            var StateEventNames = StateConstants.EVENTS;
+
+
+            if (GlobalEventsConstants.ELEMENT_EVENT) {
+                iVXjs.Bus.on(GlobalEventsConstants.ELEMENT_EVENT, function () {
+                    var actions = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+                    var source = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+                    self.gaElementEventListener(actions, source);
+                });
+            }
+
+            iVXjs.Bus.on(StateEventNames.CHANGE, function (state) {
+                self.gaPageViewEventListener(state);
+            });
+
+            iVXjs.Bus.on('sendAnalyticsEvent', function (args) {
+                self.sendAnalyticsEvent(args);
+            });
+        }
+    }, {
+        key: '_getTrackersToProcess',
+        value: function _getTrackersToProcess(allTrackers, tracker) {
+            var trackersToProcess = [];
+
+            if (tracker) {
+                trackersToProcess = allTrackers.filter(function (thisTracker) {
+                    return thisTracker.id === tracker;
+                });
+            } else {
+                trackersToProcess = allTrackers;
+            }
+
+            return trackersToProcess;
+        }
+    }, {
+        key: '_getAllGoogleTrackers',
+        value: function _getAllGoogleTrackers() {
+            var trackers = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+
+            var self = this;
+
+            return trackers.filter(function (tracker) {
+                return tracker.type === self.TYPE_NAME;
+            });
         }
     }, {
         key: 'experience',

@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 43);
+/******/ 	return __webpack_require__(__webpack_require__.s = 45);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -266,11 +266,11 @@ var Style = exports.Style = function () {
     _createClass(Style, [{
         key: 'getWidth',
         value: function getWidth(width) {
-            if (width === '1') return 'ivxjs-grid-1-1';
+            if (width === '1') return 'ivx-grid-1-1 ivxjs-grid-1-1';
 
             var gridString = width.replace('/', '-');
 
-            return 'ivxjs-grid-' + gridString;
+            return 'ivx-grid-' + gridString + ' ivxjs-grid-' + gridString;
         }
     }, {
         key: 'addWidthClasses',
@@ -791,6 +791,33 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var _class = function _class() {
+    _classCallCheck(this, _class);
+
+    Object.assign(this, {
+        PLAYING: "ivx-video-playing",
+        MUTED: "ivx-video-muted",
+        UNMUTED: "ivx-video-unmuted",
+        PAUSED: "ivx-video-paused",
+        SEEKING: "ivx-video-seeking"
+    });
+};
+
+exports.default = _class;
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
@@ -836,7 +863,75 @@ var _class = function (_iVXjsConstants) {
 exports.default = _class;
 
 /***/ }),
-/* 11 */
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var ElementService = function () {
+    function ElementService(element) {
+        _classCallCheck(this, ElementService);
+
+        Object.assign(this, {
+            element: element
+        });
+    }
+
+    _createClass(ElementService, [{
+        key: 'addClass',
+        value: function addClass(cssClass) {
+            this._runFunctionOnCssClass(cssClass, 'add');
+        }
+    }, {
+        key: 'removeClass',
+        value: function removeClass(cssClass) {
+            this._runFunctionOnCssClass(cssClass, 'remove');
+        }
+    }, {
+        key: 'html',
+        value: function html(newHtml) {
+            if (!newHtml) {
+                return this.element.outerHTML;
+            } else {
+                this.element.innerHTML = newHtml;
+            }
+        }
+    }, {
+        key: 'getElementsByTagName',
+        value: function getElementsByTagName(tagName) {
+            return this.element.getElementsByTagName(tagName);
+        }
+    }, {
+        key: '_runFunctionOnCssClass',
+        value: function _runFunctionOnCssClass(cssClass, fn) {
+            var element = this.element;
+
+            var individualCssClasses = cssClass.split(" ");
+
+            individualCssClasses.forEach(function (currentCssClass) {
+                if (currentCssClass && currentCssClass.length && currentCssClass.length > 0) {
+                    element.classList[fn](currentCssClass);
+                }
+            });
+        }
+    }]);
+
+    return ElementService;
+}();
+
+exports.default = ElementService;
+
+/***/ }),
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -970,7 +1065,7 @@ var Text = exports.Text = function () {
 }();
 
 /***/ }),
-/* 12 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1028,7 +1123,7 @@ var Anchor = exports.Anchor = function () {
                 label = href;
             }
 
-            return '\n             <a id=\'' + id + '\' class="' + classes + ' ' + anchorClasses + '"  href="' + href + '" ' + attributeHTML + ' >' + (labelHTML ? labelHTML : label) + '</a>           \n        ';
+            return '\n             <a id=\'' + id + '\' class="' + classes + ' ' + anchorClasses + ' ivx-link"  href="' + href + '" ' + attributeHTML + ' >' + (labelHTML ? labelHTML : label) + '</a>           \n        ';
         }
     }]);
 
@@ -1036,7 +1131,7 @@ var Anchor = exports.Anchor = function () {
 }();
 
 /***/ }),
-/* 13 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1114,7 +1209,7 @@ var Form = exports.Form = function () {
     _createClass(Form, [{
         key: 'formClasses',
         get: function get() {
-            return 'row';
+            return 'row ivx-grid-row';
         }
     }, {
         key: 'beforeClasses',
@@ -1240,7 +1335,7 @@ var Form = exports.Form = function () {
 }();
 
 /***/ }),
-/* 14 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1409,10 +1504,14 @@ var Buttons = exports.Buttons = function () {
                     _button$attrHTML = button.attrHTML,
                     attrHTML = _button$attrHTML === undefined ? '' : _button$attrHTML,
                     _button$classes = button.classes,
-                    classes = _button$classes === undefined ? "" : _button$classes;
+                    classes = _button$classes === undefined ? "" : _button$classes,
+                    buttonId = button.id,
+                    value = button.value;
 
 
-                return html + " \n                   <button " + attrHTML + " class=\"" + classes + " " + buttonClasses + "\">\n                       " + label + "\n                   </button>";
+                var generatedId = buttonId ? buttonId : id + "-" + value;
+
+                return html + " \n                   <button id=\"" + generatedId + "\" " + attrHTML + " class=\"" + classes + " " + buttonClasses + "\">\n                       " + label + "\n                   </button>";
             }, '');
 
             var _beforeSettings$html = beforeSettings.html,
@@ -1438,7 +1537,7 @@ var Buttons = exports.Buttons = function () {
 }();
 
 /***/ }),
-/* 15 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1564,7 +1663,7 @@ var Checkbox = exports.Checkbox = function () {
 
             if (labelHTML) label = labelHTML;
 
-            return "\n            <label for=\"" + id + "\" class=\"" + classes + " ivx-input-label ivx-input-label-buttons\">\n               <input class=\"ivx-input ivx-input-checkbox\" " + attributes + ">\n               " + label + "\n            </label>\n        ";
+            return "\n            <label for=\"" + id + "\" class=\"" + classes + " ivx-input-label ivx-input-label-checkbox\">\n               <input class=\"ivx-input ivx-input-checkbox\" " + attributes + ">\n               " + label + "\n            </label>\n        ";
         }
     }, {
         key: "uiClasses",
@@ -1674,7 +1773,7 @@ var Checkbox = exports.Checkbox = function () {
 }();
 
 /***/ }),
-/* 16 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1818,7 +1917,7 @@ var Options = exports.Options = function () {
 }();
 
 /***/ }),
-/* 17 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1950,7 +2049,7 @@ var Textarea = exports.Textarea = function () {
 }();
 
 /***/ }),
-/* 18 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2098,7 +2197,7 @@ var Radio = exports.Radio = function () {
 }();
 
 /***/ }),
-/* 19 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2301,7 +2400,7 @@ var Number = exports.Number = function () {
 
             if (labelHTML) label = labelHTML;
 
-            var inputHTML = " \n        <div class=\"" + beforeClasses + " " + defaultBeforeClasses + "\">" + beforeHtml + "</div>\n            <label class=\"ivx-input-label ivx-input-label-number\" for=\"" + id + "\"> " + label + " </label>\n            <input class=\"" + classes + " ivx-input ivx-input-number\"  name=\"" + name + "\"  type=\"number\" " + nonValidateAttributesHTML + "   " + errorTags + " " + tags + ">\n            " + errorHTML + "\n            <div class=\"" + afterClasses + " " + defaultAfterClasses + "\">" + afterHtml + "</div>\n       ";
+            var inputHTML = " \n        <div class=\"" + beforeClasses + " " + defaultBeforeClasses + "\">" + beforeHtml + "</div>\n            <label class=\"ivx-input-label ivx-input-label-number\" for=\"" + id + "\"> " + label + " </label>\n            <input id=\"" + id + "\" class=\"" + classes + " ivx-input ivx-input-number\"  name=\"" + name + "\"  type=\"number\" " + nonValidateAttributesHTML + "   " + errorTags + " " + tags + ">\n            " + errorHTML + "\n            <div class=\"" + afterClasses + " " + defaultAfterClasses + "\">" + afterHtml + "</div>\n       ";
 
             return "" + inputHTML;
         }
@@ -2311,7 +2410,7 @@ var Number = exports.Number = function () {
 }();
 
 /***/ }),
-/* 20 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2526,7 +2625,7 @@ var Email = exports.Email = function () {
 }();
 
 /***/ }),
-/* 21 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2740,7 +2839,7 @@ var Date = exports.Date = function () {
 }();
 
 /***/ }),
-/* 22 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2870,7 +2969,7 @@ var Url = exports.Url = function () {
 }();
 
 /***/ }),
-/* 23 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3084,7 +3183,7 @@ var DatetimeLocal = exports.DatetimeLocal = function () {
 }();
 
 /***/ }),
-/* 24 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3155,7 +3254,7 @@ var InputState = exports.InputState = function () {
 }();
 
 /***/ }),
-/* 25 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3234,7 +3333,7 @@ var NavigationState = exports.NavigationState = function () {
 
             var linkContainerAttributeHTML = new _attributes.AttributeTags(linkContainerAttributes, Object.keys(linkContainerAttributes)).html;
 
-            return '\n            <section class="' + sectionClasses + ' ' + defaultSectionClasses + ' ivx-state-section ivx-state-navigation-section" id="' + data.id + '">\n                 <header class="' + headerClasses + ' ' + defaultHeaderClasses + ' ivx-state-header ivx-state-navigation-header">' + headerHTML + '</header>\n                 <div class=\'' + defaultLinkContainerClasses + ' ' + linkContainerClasses + '\' ' + linkContainerAttributeHTML + '>\n                    ' + linkSection + '\n                </div>\n                <footer class="' + footerClasses + ' ' + defaultFooterClasses + ' ivx-state-footer ivx-state-navigation-footer">' + footerHTML + '</footer>\n            </section>';
+            return '\n            <section class="' + sectionClasses + ' ' + defaultSectionClasses + ' ivx-state-section ivx-state-navigation-section" id="' + data.id + '">\n                 <header class="' + headerClasses + ' ' + defaultHeaderClasses + ' ivx-state-header ivx-state-navigation-header">' + headerHTML + '</header>\n                 <div class=\'' + defaultLinkContainerClasses + ' ' + linkContainerClasses + ' ivx-navigation-state-links-container\' ' + linkContainerAttributeHTML + '>\n                    ' + linkSection + '\n                </div>\n                <footer class="' + footerClasses + ' ' + defaultFooterClasses + ' ivx-state-footer ivx-state-navigation-footer">' + footerHTML + '</footer>\n            </section>';
         }
     }]);
 
@@ -3242,7 +3341,7 @@ var NavigationState = exports.NavigationState = function () {
 }();
 
 /***/ }),
-/* 26 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3254,11 +3353,15 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _index = __webpack_require__(27);
+var _index = __webpack_require__(29);
 
-var _element = __webpack_require__(35);
+var _element = __webpack_require__(37);
 
 var _element2 = _interopRequireDefault(_element);
+
+var _element3 = __webpack_require__(12);
+
+var _element4 = _interopRequireDefault(_element3);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3280,10 +3383,14 @@ var _class = function (_Controls) {
             container.html(_this.html);
         } else {
             var div = document.createElement('div');
+
             div.innerHTML = _this.html;
+            div.className = "ivx-video-controls-container-standard";
 
             container.appendChild(div);
         }
+
+        var modifiedContainer = new _element4.default(container);
 
         var playPauseControlsClasses = _this.playPauseControlsClasses,
             totalTimeInfoClasses = _this.totalTimeInfoClasses,
@@ -3293,24 +3400,25 @@ var _class = function (_Controls) {
             volumeBarClasses = _this.volumeBarClasses;
 
 
-        _this.container = container;
-        _this.playPauseControls = document.getElementById(playerId + '-video-controls-play-pause');
-        _this.totalTimeInfo = document.getElementById(playerId + '-video-controls-total-time');
-        _this.currentTimeInfo = document.getElementById(playerId + '-video-controls-current-time');
-        _this.scrubBar = document.getElementById(playerId + '-video-controls-scrub-bar');
-        _this.muteControls = document.getElementById(playerId + '-video-controls-mute-controls');
-        _this.volumeBar = document.getElementById(playerId + '-video-controls-volume-bar');
+        _this.container = modifiedContainer.element;
+        _this.containerEl = modifiedContainer;
+        _this.playPauseControls = document.getElementById(playerId + "-video-controls-play-pause");
+        _this.totalTimeInfo = document.getElementById(playerId + "-video-controls-total-time");
+        _this.currentTimeInfo = document.getElementById(playerId + "-video-controls-current-time");
+        _this.scrubBar = document.getElementById(playerId + "-video-controls-scrub-bar");
+        _this.muteControls = document.getElementById(playerId + "-video-controls-mute-controls");
+        _this.volumeBar = document.getElementById(playerId + "-video-controls-volume-bar");
         return _this;
     }
 
     _createClass(_class, [{
-        key: 'createPlayerSpecificControls',
+        key: "createPlayerSpecificControls",
         value: function createPlayerSpecificControls(opts) {
             var player = opts.player;
             var _player$textTracks = player.textTracks,
                 textTracks = _player$textTracks === undefined ? [] : _player$textTracks;
 
-            var html = '';
+            var html = "";
             var container = this.container,
                 chapterButtonClasses = this.chapterButtonClasses,
                 chapterListClasses = this.chapterListClasses;
@@ -3330,7 +3438,7 @@ var _class = function (_Controls) {
             }
         }
     }, {
-        key: 'getTrackArray',
+        key: "getTrackArray",
         value: function getTrackArray() {
             var player = this.player;
             var textTracks = player.textTracks;
@@ -3340,7 +3448,7 @@ var _class = function (_Controls) {
             return trackArray;
         }
     }, {
-        key: 'isLanguageTrack',
+        key: "isLanguageTrack",
         value: function isLanguageTrack(track, trackId) {
             var testTrackId = track.trackId,
                 kind = track.kind;
@@ -3349,7 +3457,7 @@ var _class = function (_Controls) {
             return testTrackId === trackId && (kind === 'captions' || kind === 'subtitles');
         }
     }, {
-        key: 'getTrack',
+        key: "getTrack",
         value: function getTrack(trackId, predicate) {
             var self = this;
             var trackArray = this.getTrackArray();
@@ -3362,7 +3470,7 @@ var _class = function (_Controls) {
             });
         }
     }, {
-        key: 'updateTrackSelector',
+        key: "updateTrackSelector",
         value: function updateTrackSelector(trackId) {
             var trackListSelectContainerClasses = this.trackListSelectContainerClasses,
                 trackListSelectClasses = this.trackListSelectClasses,
@@ -3414,7 +3522,7 @@ var _class = function (_Controls) {
             }
         }
     }, {
-        key: 'createTrackSelect',
+        key: "createTrackSelect",
         value: function createTrackSelect(textTracks) {
             var self = this;
             var trackListSelectContainerClasses = self.trackListSelectContainerClasses,
@@ -3442,8 +3550,8 @@ var _class = function (_Controls) {
                 var ccToggle = document.createElement('button');
                 var ccToggleIcon = document.createElement('i');
 
-                trackListContainer.setAttribute('id', self.playerId + '-track-list');
-                ccToggle.setAttribute('id', self.playerId + '-cc-toggle');
+                trackListContainer.setAttribute('id', self.playerId + "-track-list");
+                ccToggle.setAttribute('id', self.playerId + "-cc-toggle");
 
                 _element2.default.addClassesToElement(ccToggle, closeCaptionButtonClasses);
                 _element2.default.addClassesToElement(ccToggleIcon, closeCaptionButtonIconClasses);
@@ -3511,7 +3619,7 @@ var _class = function (_Controls) {
             return false;
         }
     }, {
-        key: 'toggleCC',
+        key: "toggleCC",
         value: function toggleCC() {
             var trackListSelectContainerClasses = this.trackListSelectContainerClasses,
                 trackListSelectClasses = this.trackListSelectClasses,
@@ -3557,7 +3665,7 @@ var _class = function (_Controls) {
             }
         }
     }, {
-        key: 'createChapterContainer',
+        key: "createChapterContainer",
         value: function createChapterContainer(textTracks) {
             var chapterButtonClasses = this.chapterButtonClasses,
                 chapterListClasses = this.chapterListClasses,
@@ -3574,7 +3682,7 @@ var _class = function (_Controls) {
             if (chapterTrack) {
                 var chapterListEl = document.createElement('ol');
 
-                chapterListEl.setAttribute('id', this.playerId + '-chapter-list');
+                chapterListEl.setAttribute('id', this.playerId + "-chapter-list");
 
                 var _chapterTrack$cues = chapterTrack.cues,
                     cues = _chapterTrack$cues === undefined ? [] : _chapterTrack$cues;
@@ -3588,14 +3696,14 @@ var _class = function (_Controls) {
                     var chapterContainerEl = document.createElement('li');
                     var chapterButtonEl = document.createElement('button');
 
-                    chapterButtonEl.id = id + '-select';
+                    chapterButtonEl.id = id + "-select";
                     chapterButtonEl.className = chapterButtonClasses;
                     chapterButtonEl.innerHTML = text;
 
                     _element2.default.append(chapterContainerEl, chapterButtonEl);
 
-                    chapterContainerEl.id = id + '-chapter-seclect-container';
-                    chapterContainerEl.className = chapterListItemClasses + ' ' + (index === 0 ? chapterActiveClasses : chapterInActiveClasses);
+                    chapterContainerEl.id = id + "-chapter-seclect-container";
+                    chapterContainerEl.className = chapterListItemClasses + " " + (index === 0 ? chapterActiveClasses : chapterInActiveClasses);
 
                     _element2.default.append(chapterListEl, chapterContainerEl);
 
@@ -3613,176 +3721,176 @@ var _class = function (_Controls) {
             return false;
         }
     }, {
-        key: 'playPauseControlsClasses',
+        key: "playPauseControlsClasses",
         get: function get() {
-            return 'play-pause';
+            return 'play-pause ivx-video-controls-play-pause';
         }
     }, {
-        key: 'totalTimeInfoClasses',
+        key: "totalTimeInfoClasses",
         get: function get() {
-            return 'duration';
+            return 'duration ivx-video-controls-timestamp-duration';
         }
     }, {
-        key: 'currentTimeInfoClasses',
+        key: "currentTimeInfoClasses",
         get: function get() {
-            return 'current-time';
+            return 'current-time ivx-video-controls-timestamp-current-time';
         }
     }, {
-        key: 'scrubBarClasses',
+        key: "scrubBarClasses",
         get: function get() {
-            return 'scrub-bar';
+            return 'scrub-bar ivx-video-controls-scrub-bar';
         }
     }, {
-        key: 'muteControlsClasses',
+        key: "muteControlsClasses",
         get: function get() {
-            return 'mute';
+            return 'mute ivx-video-controls-mute';
         }
     }, {
-        key: 'volumeBarClasses',
+        key: "volumeBarClasses",
         get: function get() {
-            return 'volume-bar';
+            return 'volume-bar ivx-video-controls-volume-bar';
         }
     }, {
-        key: 'playClasses',
+        key: "playClasses",
         get: function get() {
-            return 'fa fa-play';
+            return 'fa fa-play ivx-video-controls-play-icon ivx-icon';
         }
     }, {
-        key: 'pauseClasses',
+        key: "pauseClasses",
         get: function get() {
-            return 'fa fa-pause';
+            return 'fa fa-pause ivx-video-controls-pause-icon ivx-icon';
         }
     }, {
-        key: 'unmuteClasses',
+        key: "unmuteClasses",
         get: function get() {
-            return 'fa fa-volume-up';
+            return 'fa fa-volume-up ivx-video-controls-unmute-icon ivx-icon';
         }
     }, {
-        key: 'muteClasses',
+        key: "muteClasses",
         get: function get() {
-            return 'fa fa-volume-off';
+            return 'fa fa-volume-off ivx-video-controls-mute-icon ivx-icon';
         }
     }, {
-        key: 'scrubBarTimeLapseClasses',
+        key: "scrubBarTimeLapseClasses",
         get: function get() {
-            return 'time-lapsed';
+            return "time-lapsed ivx-video-controls-scrub-bar-timelapse";
         }
     }, {
-        key: 'volumeBarCurrentVolumeClasses',
+        key: "volumeBarCurrentVolumeClasses",
         get: function get() {
-            return 'current-volume';
+            return 'current-volume ivx-video-controls-volume-bar-volume';
         }
     }, {
-        key: 'chapterButtonClasses',
+        key: "chapterButtonClasses",
         get: function get() {
-            return 'chapter-button';
+            return 'chapter-button ivx-video-controls-chapters-item-control';
         }
     }, {
-        key: 'chapterListClasses',
+        key: "chapterListClasses",
         get: function get() {
-            return "chapter-list";
+            return "chapter-list ivx-video-controls-chapters";
         }
     }, {
-        key: 'chapterListItemClasses',
+        key: "chapterListItemClasses",
         get: function get() {
-            return "chapter-list-item";
+            return "chapter-list-item ivx-video-controls-chapters-item";
         }
     }, {
-        key: 'chapterActiveClasses',
+        key: "chapterActiveClasses",
         get: function get() {
-            return "active";
+            return "active ivx-video-controls-chapter-active";
         }
     }, {
-        key: 'chapterInActiveClasses',
+        key: "chapterInActiveClasses",
         get: function get() {
-            return "inactive";
+            return "inactive ivx-video-controls-chapter-inactive";
         }
     }, {
-        key: 'playPauseButtonHTML',
+        key: "playPauseButtonHTML",
         get: function get() {
             var play = this.playClasses,
                 playerId = this.playerId;
             var playPauseControls = this.playPauseControlsClasses;
 
-            return '\n        <button id="' + playerId + '-video-controls-play-pause" class="' + playPauseControls + '">\n            <i class=\'' + play + '\'></i>\n        </button>';
+            return "\n        <button id=\"" + playerId + "-video-controls-play-pause\" class=\"" + playPauseControls + "\">\n            <i class='" + play + "'></i>\n        </button>";
         }
     }, {
-        key: 'scrubBarHTML',
+        key: "scrubBarHTML",
         get: function get() {
             var playerId = this.playerId;
 
-            return '\n             <div id="' + playerId + '-video-controls-scrub-bar" class="' + this.scrubBarClasses + '">\n                <div class="' + this.scrubBarTimeLapseClasses + '"></div>\n            </div>\n        ';
+            return "\n             <div id=\"" + playerId + "-video-controls-scrub-bar\" class=\"" + this.scrubBarClasses + "\">\n                <div class=\"" + this.scrubBarTimeLapseClasses + "\"></div>\n            </div>\n        ";
         }
     }, {
-        key: 'timestampHTML',
+        key: "timestampHTML",
         get: function get() {
             var playerId = this.playerId;
 
-            return '\n        <span id="' + playerId + '-video-controls-current-time" class="' + this.currentTimeInfoClasses + '"></span>\n        <span id="' + playerId + '-video-controls-total-time" class="' + this.totalTimeInfoClasses + '"></span>\n        ';
+            return "\n        <span id=\"" + playerId + "-video-controls-current-time\" class=\"" + this.currentTimeInfoClasses + "\"></span>\n        <span id=\"" + playerId + "-video-controls-total-time\" class=\"" + this.totalTimeInfoClasses + "\"></span>\n        ";
         }
     }, {
-        key: 'muteButtonHTML',
+        key: "muteButtonHTML",
         get: function get() {
             var unmute = this.unmuteClasses,
                 muteControlsClasses = this.muteControlsClasses,
                 playerId = this.playerId;
 
-            return '\n            <button id="' + playerId + '-video-controls-mute-controls" class="' + muteControlsClasses + '">\n                <i class="' + unmute + '"></i>\n            </button>\n        ';
+            return "\n            <button id=\"" + playerId + "-video-controls-mute-controls\" class=\"" + muteControlsClasses + "\">\n                <i class=\"" + unmute + "\"></i>\n            </button>\n        ";
         }
     }, {
-        key: 'volumeBarHTML',
+        key: "volumeBarHTML",
         get: function get() {
             var playerId = this.playerId;
 
-            return '\n            <div  id="' + playerId + '-video-controls-volume-bar" class="' + this.volumeBarClasses + '">\n                <div class="' + this.volumeBarCurrentVolumeClasses + '"></div>\n            </div> \n        ';
+            return "\n            <div  id=\"" + playerId + "-video-controls-volume-bar\" class=\"" + this.volumeBarClasses + "\">\n                <div class=\"" + this.volumeBarCurrentVolumeClasses + "\"></div>\n            </div> \n        ";
         }
     }, {
-        key: 'trackListSelectContainerClasses',
+        key: "trackListSelectContainerClasses",
         get: function get() {
-            return 'track-list-select-container';
+            return 'track-list-select-container ivx-video-controls-tracks';
         }
     }, {
-        key: 'trackListSelectClasses',
+        key: "trackListSelectClasses",
         get: function get() {
-            return 'track-list-select';
+            return 'track-list-select ivx-video-controls-tracks-select';
         }
     }, {
-        key: 'trackListSelectActiveClasses',
+        key: "trackListSelectActiveClasses",
         get: function get() {
-            return 'active';
+            return 'active ivx-video-controls-tracks-select-on';
         }
     }, {
-        key: 'trackListSelectInactiveClasses',
+        key: "trackListSelectInactiveClasses",
         get: function get() {
-            return 'inactive';
+            return 'inactive ivx-video-controls-tracks-select-off';
         }
     }, {
-        key: 'closeCaptionButtonClasses',
+        key: "closeCaptionButtonClasses",
         get: function get() {
-            return 'close-caption-button';
+            return 'close-caption-button ivx-video-controls-tracks-toggle';
         }
     }, {
-        key: 'closeCaptionButtonActiveClasses',
+        key: "closeCaptionButtonActiveClasses",
         get: function get() {
-            return 'active';
+            return 'active ivx-video-controls-tracks-on';
         }
     }, {
-        key: 'closeCaptionButtonInactiveClasses',
+        key: "closeCaptionButtonInactiveClasses",
         get: function get() {
-            return 'inactive';
+            return 'inactive ivx-video-controls-tracks-off';
         }
     }, {
-        key: 'closeCaptionButtonIconClasses',
+        key: "closeCaptionButtonIconClasses",
         get: function get() {
-            return 'close-caption-button-icon fa fa-cc';
+            return 'close-caption-button-icon fa fa-cc ivx-video-controls-tracks-toggle-icon ivx-icon';
         }
     }, {
-        key: 'closeCaptionButtonIconContent',
+        key: "closeCaptionButtonIconContent",
         get: function get() {
             return "";
         }
     }, {
-        key: 'html',
+        key: "html",
         get: function get() {
             var playPauseButtonHTML = this.playPauseButtonHTML,
                 scrubBarHTML = this.scrubBarHTML,
@@ -3790,7 +3898,7 @@ var _class = function (_Controls) {
                 muteButtonHTML = this.muteButtonHTML,
                 volumeBarHTML = this.volumeBarHTML;
 
-            return '\n           ' + playPauseButtonHTML + '\n           ' + scrubBarHTML + '\n           ' + timestampHTML + '\n           ' + muteButtonHTML + '\n           ' + volumeBarHTML + '                        \n        ';
+            return "\n           " + playPauseButtonHTML + "\n           " + scrubBarHTML + "\n           " + timestampHTML + "\n           " + muteButtonHTML + "\n           " + volumeBarHTML + "                        \n        ";
         }
     }]);
 
@@ -3800,7 +3908,7 @@ var _class = function (_Controls) {
 exports.default = _class;
 
 /***/ }),
-/* 27 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3813,21 +3921,29 @@ exports.Controls = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _events = __webpack_require__(28);
+var _events = __webpack_require__(30);
 
 var _events2 = _interopRequireDefault(_events);
 
-var _videoEvents = __webpack_require__(30);
+var _videoEvents = __webpack_require__(32);
 
 var _videoEvents2 = _interopRequireDefault(_videoEvents);
 
-var _tracksEvents = __webpack_require__(32);
+var _videoClasses = __webpack_require__(10);
+
+var _videoClasses2 = _interopRequireDefault(_videoClasses);
+
+var _tracksEvents = __webpack_require__(34);
 
 var _tracksEvents2 = _interopRequireDefault(_tracksEvents);
 
-var _tracksCuesEvents = __webpack_require__(33);
+var _tracksCuesEvents = __webpack_require__(35);
 
 var _tracksCuesEvents2 = _interopRequireDefault(_tracksCuesEvents);
+
+var _element = __webpack_require__(12);
+
+var _element2 = _interopRequireDefault(_element);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3850,7 +3966,8 @@ var Controls = exports.Controls = function (_ControlEvents) {
             currentVolume: 0.5,
             controlEventNames: new _videoEvents2.default(),
             trackEventNames: new _tracksEvents2.default(),
-            trackCuesEventName: new _tracksCuesEvents2.default()
+            trackCuesEventName: new _tracksCuesEvents2.default(),
+            videoClassNames: new _videoClasses2.default()
         });
         return _this;
     }
@@ -3860,10 +3977,12 @@ var Controls = exports.Controls = function (_ControlEvents) {
         value: function dispose(iVXjsBus) {
             iVXjsBus.removeListener(this.controlEventNames.TIME_UPDATE, this.updateTime);
             iVXjsBus.removeListener(this.controlEventNames.PLAYING, this.whilePlaying);
+            iVXjsBus.removeListener(this.controlEventNames.PAUSED, this.whilePaused);
             iVXjsBus.removeListener(this.controlEventNames.CAN_PLAY, this.canPlayCallback);
             iVXjsBus.removeListener(this.controlEventNames.MUTE, this.whileMuted);
             iVXjsBus.removeListener(this.controlEventNames.UNMUTE, this.whileUnmuted);
             iVXjsBus.removeListener(this.controlEventNames.SET_VOLUME, this.whileSetVolume);
+            iVXjsBus.removeListener(this.controlEventNames.BUFFERING, this.seekingCallback);
             iVXjsBus.removeListener(this.trackCuesEventName.ON_CHAPTER_START, this.chapterChange);
             iVXjsBus.removeListener(this.trackEventNames.CHANGE_CURRENT_TRACK, this.trackChange);
         }
@@ -3906,6 +4025,7 @@ var Controls = exports.Controls = function (_ControlEvents) {
             currentVolumeSpan.style.width = volumeLevel * 100 + "%";
 
             this.currentVolume = volumeLevel;
+            this.sendUnmute();
             this.setVolume(volumeLevel);
         }
     }, {
@@ -3913,7 +4033,8 @@ var Controls = exports.Controls = function (_ControlEvents) {
         value: function scrub(event) {
             var currentTimeInfo = this.currentTimeInfo,
                 scrubBar = this.scrubBar,
-                scrubBarTimeLapseClasses = this.scrubBarTimeLapseClasses;
+                scrubBarTimeLapseClasses = this.scrubBarTimeLapseClasses,
+                videoClassNames = this.videoClassNames;
             var width = scrubBar.offsetWidth;
 
             var absolutePosition = this.getAbsolutePosition(scrubBar);
@@ -3958,12 +4079,16 @@ var Controls = exports.Controls = function (_ControlEvents) {
         value: function setPlay() {
             var playPauseControls = this.playPauseControls,
                 playClasses = this.playClasses,
-                pauseClasses = this.pauseClasses;
+                pauseClasses = this.pauseClasses,
+                videoClassNames = this.videoClassNames;
 
             var searchClasses = [playClasses, pauseClasses];
             var playPauseIcon = this.getElementByClasses(playPauseControls.children, searchClasses);
 
             playPauseIcon.className = pauseClasses;
+            this.containerEl.removeClass(videoClassNames.SEEKING);
+            this.containerEl.addClass(videoClassNames.PLAYING);
+            this.containerEl.removeClass(videoClassNames.PAUSED);
             this.play();
         }
     }, {
@@ -3971,12 +4096,17 @@ var Controls = exports.Controls = function (_ControlEvents) {
         value: function setPause() {
             var playPauseControls = this.playPauseControls,
                 playClasses = this.playClasses,
-                pauseClasses = this.pauseClasses;
+                pauseClasses = this.pauseClasses,
+                videoClassNames = this.videoClassNames;
 
             var searchClasses = [playClasses, pauseClasses];
             var playPauseIcon = this.getElementByClasses(playPauseControls.children, searchClasses);
 
             playPauseIcon.className = playClasses;
+
+            this.containerEl.removeClass(videoClassNames.SEEKING);
+            this.containerEl.removeClass(videoClassNames.PLAYING);
+            this.containerEl.addClass(videoClassNames.PAUSED);
             this.pause();
         }
     }, {
@@ -3994,10 +4124,10 @@ var Controls = exports.Controls = function (_ControlEvents) {
 
             switch (muteIcon.className) {
                 case unmuteClasses:
-                    this.mute();
+                    this.sendMute();
                     break;
                 case muteClasses:
-                    this.unmute();
+                    this.sendUnmute();
                     break;
                 default:
                     break;
@@ -4010,16 +4140,19 @@ var Controls = exports.Controls = function (_ControlEvents) {
                 muteClasses = this.muteClasses,
                 unmuteClasses = this.unmuteClasses,
                 volumeBar = this.volumeBar,
-                volumeBarCurrentVolumeClasses = this.volumeBarCurrentVolumeClasses;
+                volumeBarCurrentVolumeClasses = this.volumeBarCurrentVolumeClasses,
+                videoClassNames = this.videoClassNames;
 
             var muteControlsClasses = [muteClasses, unmuteClasses];
             var muteIcon = this.getElementByClasses(muteControls.children, muteControlsClasses);
             var currentVolumeSpan = this.getElementByClasses(volumeBar.children, [volumeBarCurrentVolumeClasses]);
 
+            this.containerEl.removeClass(videoClassNames.UNMUTED);
+            this.containerEl.addClass(videoClassNames.MUTED);
+
             muteIcon.className = muteClasses;
             currentVolumeSpan.style.width = "0%";
-
-            this.setVolume(0);
+            this.muted = true;
         }
     }, {
         key: "unmute",
@@ -4028,7 +4161,8 @@ var Controls = exports.Controls = function (_ControlEvents) {
                 muteClasses = this.muteClasses,
                 unmuteClasses = this.unmuteClasses,
                 volumeBar = this.volumeBar,
-                volumeBarCurrentVolumeClasses = this.volumeBarCurrentVolumeClasses;
+                volumeBarCurrentVolumeClasses = this.volumeBarCurrentVolumeClasses,
+                videoClassNames = this.videoClassNames;
 
             var muteControlsClasses = [muteClasses, unmuteClasses];
             var muteIcon = this.getElementByClasses(muteControls.children, muteControlsClasses);
@@ -4037,11 +4171,16 @@ var Controls = exports.Controls = function (_ControlEvents) {
             muteIcon.className = unmuteClasses;
             currentVolumeSpan.style.width = this.currentVolume * 100 + "%";
 
-            this.setVolume(this.currentVolume);
+            this.containerEl.removeClass(videoClassNames.MUTED);
+            this.containerEl.addClass(videoClassNames.UNMUTED);
+
+            this.muted = false;
         }
     }, {
         key: "setVolumeBar",
         value: function setVolumeBar(volume) {
+            if (this.muted) return;
+
             var muteControls = this.muteControls,
                 muteClasses = this.muteClasses,
                 unmuteClasses = this.unmuteClasses,
@@ -4065,7 +4204,7 @@ var Controls = exports.Controls = function (_ControlEvents) {
             var self = this;
             var currentVolumeSpan = this.getElementByClasses(volumeBar.children, [volumeBarCurrentVolumeClasses]);
 
-            if (currentVolumeSpan) {
+            if (currentVolumeSpan && !this.muted) {
                 currentVolumeSpan.style.width = self.currentVolume * 100 + "%";
             }
 
@@ -4115,10 +4254,15 @@ var Controls = exports.Controls = function (_ControlEvents) {
         value: function onPlaying() {
             var playPauseControls = this.playPauseControls,
                 playClasses = this.playClasses,
-                pauseClasses = this.pauseClasses;
+                pauseClasses = this.pauseClasses,
+                videoClassNames = this.videoClassNames;
 
             var searchClasses = [playClasses, pauseClasses];
             var playPauseIcon = this.getElementByClasses(playPauseControls.children, searchClasses);
+
+            this.containerEl.removeClass(videoClassNames.SEEKING);
+            this.containerEl.removeClass(videoClassNames.PAUSED);
+            this.containerEl.addClass(videoClassNames.PLAYING);
 
             playPauseIcon.className = pauseClasses;
         }
@@ -4127,10 +4271,15 @@ var Controls = exports.Controls = function (_ControlEvents) {
         value: function onPaused() {
             var playPauseControls = this.playPauseControls,
                 playClasses = this.playClasses,
-                pauseClasses = this.pauseClasses;
+                pauseClasses = this.pauseClasses,
+                videoClassNames = this.videoClassNames;
 
             var searchClasses = [playClasses, pauseClasses];
             var playPauseIcon = this.getElementByClasses(playPauseControls.children, searchClasses);
+
+            this.containerEl.removeClass(videoClassNames.SEEKING);
+            this.containerEl.removeClass(videoClassNames.PLAYING);
+            this.containerEl.addClass(videoClassNames.PAUSED);
 
             playPauseIcon.className = playClasses;
         }
@@ -4144,7 +4293,8 @@ var Controls = exports.Controls = function (_ControlEvents) {
                 volumeBar = this.volumeBar,
                 playPauseControls = this.playPauseControls,
                 muteControls = this.muteControls,
-                trackCuesEventName = this.trackCuesEventName;
+                trackCuesEventName = this.trackCuesEventName,
+                videoClassNames = this.videoClassNames;
 
 
             this.iVXjsBus = iVXjsBus;
@@ -4154,6 +4304,7 @@ var Controls = exports.Controls = function (_ControlEvents) {
             this.whilePaused = iVXjsBus.on(this.controlEventNames.PAUSED, whilePaused);
             this.whilePlaying = iVXjsBus.on(this.controlEventNames.PLAYING, whilePlaying);
             this.canPlayCallback = iVXjsBus.on(this.controlEventNames.CAN_PLAY, canPlayCallBack);
+            this.seekingCallback = iVXjsBus.on(this.controlEventNames.BUFFERING, seekingCallback);
             this.whileMuted = iVXjsBus.on(this.controlEventNames.MUTE, mute);
             this.whileUnmuted = iVXjsBus.on(this.controlEventNames.UNMUTE, unmute);
             this.whileSetVolume = iVXjsBus.on(this.controlEventNames.SET_VOLUME, setVolume);
@@ -4174,13 +4325,24 @@ var Controls = exports.Controls = function (_ControlEvents) {
                 self.toggleMute(event);
             });
 
+            self.containerEl.addClass(videoClassNames.SEEKING);
+
             var canPlayListener = this.iVXjsBus.on(this.controlEventNames.CAN_PLAY, function (player) {
                 if (player.id === self.playerId) {
                     self.createPlayerSpecificControls({ player: player });
                     self.player = player;
                     self.iVXjsBus.removeListener(_this2.controlEventNames.CAN_PLAY, canPlayListener);
+
+                    self.containerEl.removeClass(videoClassNames.SEEKING);
+                    self.containerEl.addClass(videoClassNames.PAUSED);
+                    self.containerEl.addClass(videoClassNames.UNMUTED);
                 }
             });
+
+            function seekingCallback() {
+
+                self.containerEl.addClass(videoClassNames.SEEKING);
+            }
 
             function chapterChange() {
                 var args = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
@@ -4207,15 +4369,16 @@ var Controls = exports.Controls = function (_ControlEvents) {
                     chapterList.forEach(function (chapterListItem) {
                         var chapterId = chapterListItem.id;
 
+                        var chapterListItemEl = new _element2.default(chapterListItem);
 
                         if (chapterId.indexOf(currentChapterId) >= 0) {
-                            chapterListItem.classList.remove(chapterInActiveClasses);
-                            chapterListItem.classList.add(chapterActiveClasses);
+                            chapterListItemEl.removeClass(chapterInActiveClasses);
+                            chapterListItemEl.addClass(chapterActiveClasses);
                             return;
                         }
 
-                        chapterListItem.classList.remove(chapterActiveClasses);
-                        chapterListItem.classList.add(chapterInActiveClasses);
+                        chapterListItemEl.removeClass(chapterActiveClasses);
+                        chapterListItemEl.addClass(chapterInActiveClasses);
                     });
                 }
             };
@@ -4334,7 +4497,7 @@ var Controls = exports.Controls = function (_ControlEvents) {
 ;
 
 /***/ }),
-/* 28 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4346,9 +4509,13 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _settings = __webpack_require__(29);
+var _settings = __webpack_require__(31);
 
 var _settings2 = _interopRequireDefault(_settings);
+
+var _videoClasses = __webpack_require__(10);
+
+var _videoClasses2 = _interopRequireDefault(_videoClasses);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -4360,7 +4527,7 @@ var _class = function () {
     }
 
     _createClass(_class, [{
-        key: 'contructor',
+        key: "contructor",
         value: function contructor(playerId) {
             Object.assign(this, {
                 volume: 0,
@@ -4369,7 +4536,7 @@ var _class = function () {
             });
         }
     }, {
-        key: 'play',
+        key: "play",
         value: function play() {
             var playerId = this.playerId;
 
@@ -4379,7 +4546,7 @@ var _class = function () {
             });
         }
     }, {
-        key: 'pause',
+        key: "pause",
         value: function pause() {
             var playerId = this.playerId;
 
@@ -4389,7 +4556,27 @@ var _class = function () {
             });
         }
     }, {
-        key: 'getDuration',
+        key: "sendMute",
+        value: function sendMute() {
+            var playerId = this.playerId;
+
+
+            this.iVXjsBus.emit(this.controlEventNames.MUTE, {
+                playerId: playerId
+            });
+        }
+    }, {
+        key: "sendUnmute",
+        value: function sendUnmute() {
+            var playerId = this.playerId;
+
+
+            this.iVXjsBus.emit(this.controlEventNames.UNMUTE, {
+                playerId: playerId
+            });
+        }
+    }, {
+        key: "getDuration",
         value: function getDuration(cb) {
             var playerId = this.playerId;
 
@@ -4409,7 +4596,7 @@ var _class = function () {
             });
         }
     }, {
-        key: 'setVolume',
+        key: "setVolume",
         value: function setVolume(volume) {
             var playerId = this.playerId;
 
@@ -4420,7 +4607,7 @@ var _class = function () {
             });
         }
     }, {
-        key: 'seek',
+        key: "seek",
         value: function seek(seconds) {
             var playerId = this.playerId;
 
@@ -4431,7 +4618,7 @@ var _class = function () {
             });
         }
     }, {
-        key: 'changeCurrentTrack',
+        key: "changeCurrentTrack",
         value: function changeCurrentTrack(trackId) {
             var playerId = this.playerId;
 
@@ -4446,7 +4633,7 @@ var _class = function () {
 exports.default = _class;
 
 /***/ }),
-/* 29 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4493,7 +4680,7 @@ exports.default = _class;
 ;
 
 /***/ }),
-/* 30 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4507,7 +4694,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-var _video = __webpack_require__(31);
+var _video = __webpack_require__(33);
 
 var _video2 = _interopRequireDefault(_video);
 
@@ -4567,7 +4754,7 @@ var _class = function (_VideoConstants) {
 exports.default = _class;
 
 /***/ }),
-/* 31 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4602,6 +4789,7 @@ var _class = function (_iVXjsConstants) {
         var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
 
         _this.VIDEO = "video";
+
         return _this;
     }
 
@@ -4622,7 +4810,7 @@ var _class = function (_iVXjsConstants) {
 exports.default = _class;
 
 /***/ }),
-/* 32 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4636,7 +4824,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-var _tracks = __webpack_require__(10);
+var _tracks = __webpack_require__(11);
 
 var _tracks2 = _interopRequireDefault(_tracks);
 
@@ -4681,7 +4869,7 @@ var _class = function (_TrackConstants) {
 exports.default = _class;
 
 /***/ }),
-/* 33 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4695,7 +4883,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-var _tracksCues = __webpack_require__(34);
+var _tracksCues = __webpack_require__(36);
 
 var _tracksCues2 = _interopRequireDefault(_tracksCues);
 
@@ -4743,7 +4931,7 @@ var _class = function (_TrackCuesConstants) {
 exports.default = _class;
 
 /***/ }),
-/* 34 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4757,7 +4945,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-var _tracks = __webpack_require__(10);
+var _tracks = __webpack_require__(11);
 
 var _tracks2 = _interopRequireDefault(_tracks);
 
@@ -4798,7 +4986,7 @@ var _class = function (_TracksConstants) {
 exports.default = _class;
 
 /***/ }),
-/* 35 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4852,8 +5040,8 @@ exports.default = {
 };
 
 /***/ }),
-/* 36 */,
-/* 37 */
+/* 38 */,
+/* 39 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -4881,9 +5069,9 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 38 */,
-/* 39 */,
-/* 40 */
+/* 40 */,
+/* 41 */,
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4959,9 +5147,9 @@ var Style = exports.Style = function () {
 }();
 
 /***/ }),
-/* 41 */,
-/* 42 */,
-/* 43 */
+/* 43 */,
+/* 44 */,
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4972,41 +5160,41 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.BootstrapUI = undefined;
 
-var _anchor = __webpack_require__(44);
+var _anchor = __webpack_require__(46);
 
-var _form = __webpack_require__(45);
+var _form = __webpack_require__(47);
 
-var _text = __webpack_require__(46);
+var _text = __webpack_require__(48);
 
-var _buttons = __webpack_require__(47);
+var _buttons = __webpack_require__(49);
 
-var _checkbox = __webpack_require__(48);
+var _checkbox = __webpack_require__(50);
 
-var _options = __webpack_require__(49);
+var _options = __webpack_require__(51);
 
-var _textarea = __webpack_require__(50);
+var _textarea = __webpack_require__(52);
 
-var _radio = __webpack_require__(51);
+var _radio = __webpack_require__(53);
 
-var _number = __webpack_require__(52);
+var _number = __webpack_require__(54);
 
-var _email = __webpack_require__(53);
+var _email = __webpack_require__(55);
 
-var _date = __webpack_require__(54);
+var _date = __webpack_require__(56);
 
-var _url = __webpack_require__(55);
+var _url = __webpack_require__(57);
 
-var _datetimeLocal = __webpack_require__(56);
+var _datetimeLocal = __webpack_require__(58);
 
-var _style = __webpack_require__(40);
+var _style = __webpack_require__(42);
 
-var _stateInput = __webpack_require__(57);
+var _stateInput = __webpack_require__(59);
 
-var _stateVideo = __webpack_require__(58);
+var _stateVideo = __webpack_require__(60);
 
-var _stateNavigation = __webpack_require__(59);
+var _stateNavigation = __webpack_require__(61);
 
-var _videoControls = __webpack_require__(60);
+var _videoControls = __webpack_require__(62);
 
 var _videoControls2 = _interopRequireDefault(_videoControls);
 
@@ -5055,10 +5243,10 @@ if (angular && angular.module('ivx-js')) {
 function initializeBootstrapUI() {
     return BootstrapUI;
 }
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(37)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(39)(module)))
 
 /***/ }),
-/* 44 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5069,7 +5257,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Anchor = undefined;
 
-var _anchor = __webpack_require__(12);
+var _anchor = __webpack_require__(14);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -5090,7 +5278,7 @@ var Anchor = exports.Anchor = function (_DefaultAnchor) {
 }(_anchor.Anchor);
 
 /***/ }),
-/* 45 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5103,9 +5291,9 @@ exports.Form = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _style = __webpack_require__(40);
+var _style = __webpack_require__(42);
 
-var _form = __webpack_require__(13);
+var _form = __webpack_require__(15);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -5180,7 +5368,7 @@ var Form = exports.Form = function (_DefaultForm) {
 }(_form.Form);
 
 /***/ }),
-/* 46 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5193,7 +5381,7 @@ exports.Text = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _text = __webpack_require__(11);
+var _text = __webpack_require__(13);
 
 var _messages = __webpack_require__(6);
 
@@ -5223,7 +5411,7 @@ var Text = exports.Text = function (_DefaultText) {
 }(_text.Text);
 
 /***/ }),
-/* 47 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5236,7 +5424,7 @@ exports.Buttons = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _buttons = __webpack_require__(14);
+var _buttons = __webpack_require__(16);
 
 var _messages = __webpack_require__(6);
 
@@ -5266,7 +5454,7 @@ var Buttons = exports.Buttons = function (_DefaultButtons) {
 }(_buttons.Buttons);
 
 /***/ }),
-/* 48 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5279,7 +5467,7 @@ exports.Checkbox = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _checkbox = __webpack_require__(15);
+var _checkbox = __webpack_require__(17);
 
 var _messages = __webpack_require__(6);
 
@@ -5324,7 +5512,7 @@ var Checkbox = exports.Checkbox = function (_DefaultCheckbox) {
 }(_checkbox.Checkbox);
 
 /***/ }),
-/* 49 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5337,7 +5525,7 @@ exports.Options = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _options = __webpack_require__(16);
+var _options = __webpack_require__(18);
 
 var _messages = __webpack_require__(6);
 
@@ -5367,7 +5555,7 @@ var Options = exports.Options = function (_DefaultOptions) {
 }(_options.Options);
 
 /***/ }),
-/* 50 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5380,7 +5568,7 @@ exports.Textarea = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _textarea = __webpack_require__(17);
+var _textarea = __webpack_require__(19);
 
 var _messages = __webpack_require__(6);
 
@@ -5410,7 +5598,7 @@ var Textarea = exports.Textarea = function (_DefaultTextarea) {
 }(_textarea.Textarea);
 
 /***/ }),
-/* 51 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5423,7 +5611,7 @@ exports.Radio = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _radio = __webpack_require__(18);
+var _radio = __webpack_require__(20);
 
 var _messages = __webpack_require__(6);
 
@@ -5469,7 +5657,7 @@ var Radio = exports.Radio = function (_DefaultRadio) {
 }(_radio.Radio);
 
 /***/ }),
-/* 52 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5482,7 +5670,7 @@ exports.Number = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _number = __webpack_require__(19);
+var _number = __webpack_require__(21);
 
 var _messages = __webpack_require__(6);
 
@@ -5512,7 +5700,7 @@ var Number = exports.Number = function (_DefaultNumber) {
 }(_number.Number);
 
 /***/ }),
-/* 53 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5525,7 +5713,7 @@ exports.Email = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _email = __webpack_require__(20);
+var _email = __webpack_require__(22);
 
 var _messages = __webpack_require__(6);
 
@@ -5555,7 +5743,7 @@ var Email = exports.Email = function (_DefaultEmail) {
 }(_email.Email);
 
 /***/ }),
-/* 54 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5568,7 +5756,7 @@ exports.Date = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _date = __webpack_require__(21);
+var _date = __webpack_require__(23);
 
 var _messages = __webpack_require__(6);
 
@@ -5598,7 +5786,7 @@ var Date = exports.Date = function (_DefaultDate) {
 }(_date.Date);
 
 /***/ }),
-/* 55 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5611,7 +5799,7 @@ exports.Url = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _url = __webpack_require__(22);
+var _url = __webpack_require__(24);
 
 var _messages = __webpack_require__(6);
 
@@ -5641,7 +5829,7 @@ var Url = exports.Url = function (_DefaultUrl) {
 }(_url.Url);
 
 /***/ }),
-/* 56 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5654,7 +5842,7 @@ exports.DatetimeLocal = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _datetimeLocal = __webpack_require__(23);
+var _datetimeLocal = __webpack_require__(25);
 
 var _messages = __webpack_require__(6);
 
@@ -5684,7 +5872,7 @@ var DatetimeLocal = exports.DatetimeLocal = function (_DefaultDatetimeLocal) {
 }(_datetimeLocal.DatetimeLocal);
 
 /***/ }),
-/* 57 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5697,7 +5885,7 @@ exports.InputState = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _stateInput = __webpack_require__(24);
+var _stateInput = __webpack_require__(26);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -5725,7 +5913,7 @@ var InputState = exports.InputState = function (_DefaultInputState) {
 }(_stateInput.InputState);
 
 /***/ }),
-/* 58 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5778,7 +5966,7 @@ var VideoState = exports.VideoState = function () {
 }();
 
 /***/ }),
-/* 59 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5791,7 +5979,7 @@ exports.NavigationState = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _stateNavigation = __webpack_require__(25);
+var _stateNavigation = __webpack_require__(27);
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -5819,7 +6007,7 @@ var NavigationState = exports.NavigationState = function (_DefaultNavigationSta)
 }(_stateNavigation.NavigationState);
 
 /***/ }),
-/* 60 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5831,7 +6019,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _videoControls = __webpack_require__(26);
+var _videoControls = __webpack_require__(28);
 
 var _videoControls2 = _interopRequireDefault(_videoControls);
 
@@ -5855,92 +6043,92 @@ var _class = function (_DefaultVideoControls) {
     _createClass(_class, [{
         key: 'totalTimeInfoClasses',
         get: function get() {
-            return 'duration';
+            return 'duration ivx-video-controls-timestamp-duration';
         }
     }, {
         key: 'playClasses',
         get: function get() {
-            return 'glyphicon glyphicon-play';
+            return 'glyphicon glyphicon-play ivx-video-controls-play-icon ivx-icon';
         }
     }, {
         key: 'pauseClasses',
         get: function get() {
-            return 'glyphicon glyphicon-pause';
+            return 'glyphicon glyphicon-pause ivx-video-controls-pause-icon ivx-icon';
         }
     }, {
         key: 'unmuteClasses',
         get: function get() {
-            return 'glyphicon glyphicon-volume-up';
+            return 'glyphicon glyphicon-volume-up ivx-video-controls-unmute-icon ivx-icon';
         }
     }, {
         key: 'muteClasses',
         get: function get() {
-            return 'glyphicon glyphicon-volume-off';
+            return 'glyphicon glyphicon-volume-off ivx-video-controls-mute-icon ivx-icon';
         }
     }, {
         key: 'playPauseControlsClasses',
         get: function get() {
-            return 'btn btn-default btn-xs';
+            return 'btn btn-default btn-xs ivx-video-controls-play-pause';
         }
     }, {
         key: 'muteControlsClasses',
         get: function get() {
-            return 'btn btn-default btn-xs';
+            return 'btn btn-default btn-xs ivx-video-controls-mute';
         }
     }, {
         key: 'scrubBarClasses',
         get: function get() {
-            return '';
+            return 'ivx-video-controls-scrub-bar';
         }
     }, {
         key: 'scrubBarTimeLapseClasses',
         get: function get() {
-            return 'bar';
+            return 'bar ivx-video-controls-scrub-bar-timelapse';
         }
     }, {
         key: 'chapterButtonClasses',
         get: function get() {
-            return 'btn chapter-button';
+            return 'btn chapter-button ivx-video-controls-chapters-item-control';
         }
     }, {
         key: 'trackListSelectContainerClasses',
         get: function get() {
-            return 'track-list-select-container';
+            return 'track-list-select-container ivx-video-controls-tracks';
         }
     }, {
         key: 'trackListSelectClasses',
         get: function get() {
-            return 'track-list-select form-control';
+            return 'track-list-select form-control ivx-video-controls-tracks-select';
         }
     }, {
         key: 'trackListSelectActiveClasses',
         get: function get() {
-            return 'active';
+            return 'active ivx-video-controls-tracks-select-on';
         }
     }, {
         key: 'trackListSelectInactiveClasses',
         get: function get() {
-            return 'inactive';
+            return 'inactive ivx-video-controls-tracks-select-off';
         }
     }, {
         key: 'closeCaptionButtonClasses',
         get: function get() {
-            return 'close-caption-button btn btn-default';
+            return 'close-caption-button btn btn-default ivx-video-controls-tracks-toggle';
         }
     }, {
         key: 'closeCaptionButtonActiveClasses',
         get: function get() {
-            return 'active';
+            return 'active ivx-video-controls-tracks-on';
         }
     }, {
         key: 'closeCaptionButtonInactiveClasses',
         get: function get() {
-            return 'inactive';
+            return 'inactive ivx-video-controls-tracks-off';
         }
     }, {
         key: 'closeCaptionButtonIconClasses',
         get: function get() {
-            return 'close-caption-button-icon glyphicon glyphicon-subtitles';
+            return 'close-caption-button-icon glyphicon glyphicon-subtitles ivx-video-controls-tracks-toggle-icon ivx-icon';
         }
     }, {
         key: 'scrubBarHTML',

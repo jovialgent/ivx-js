@@ -1,5 +1,8 @@
 import createFactoryFunction from '../utilities/create-factory-function.js';
 import { InputControllerHelper } from '../utilities/input-controller.js';
+import {TypeValidator} from "../../utilities/type-parsers.js";
+
+const validator = new TypeValidator();
 
 class OptionsInputController extends InputControllerHelper {
     constructor($scope, $timeout, iVXjs, iVXjsActions) {
@@ -14,7 +17,7 @@ class OptionsInputController extends InputControllerHelper {
        
         $timeout(() =>{
              if(attributes.required){
-                $scope.$parent.formInput[name].$setValidity('required', experienceValue && experienceValue.length > 0);
+                $scope.$parent.formInput[name].$setValidity('required', !validator.isEmpty(experienceValue));
                 $scope.$parent.formInput[name].$error.required = true;
              }
         }, 1);

@@ -510,6 +510,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var typeValidator = new _typeParsers.TypeValidator();
 
+var hasOwnProperty = Object.prototype.hasOwnProperty;
+
 var _class = function () {
     function _class(experience, customEvaluator) {
         _classCallCheck(this, _class);
@@ -631,7 +633,29 @@ var _class = function () {
     }, {
         key: "in",
         value: function _in(lhs, rhs) {
-            return rhs.indexOf(lhs) >= 0;
+            return lhs && lhs.indexOf && lhs.indexOf(rhs) >= 0;
+        }
+
+        // Based on the isEmpty from lodash (https://github.com/lodash/lodash/blob/master/isEmpty.js)
+
+    }, {
+        key: "empty",
+        value: function empty(lhs, rhs) {
+            if (lhs === null) {
+                return true;
+            }
+
+            if (Array.isArray(lhs) || typeof value === 'string') {
+                return !lhs.length;
+            }
+
+            for (var key in lhs) {
+                if (hasOwnProperty.call(lhs, key)) {
+                    return false;
+                }
+            }
+
+            return true;
         }
     }]);
 
@@ -786,11 +810,11 @@ var Actions = exports.Actions = function () {
         value: function setElementClasses(element, eventObj) {
             var _eventObj$animationCl = eventObj.animationClasses,
                 animationClasses = _eventObj$animationCl === undefined ? "" : _eventObj$animationCl;
-            var _element$animationCla = element.animationClass,
-                oldAnimationClass = _element$animationCla === undefined ? "" : _element$animationCla;
+            var _element$animationCla = element.animationClasses,
+                oldAnimationClasses = _element$animationCla === undefined ? "" : _element$animationCla;
 
             var classesToAdd = animationClasses.split(" ");
-            var classesToRemove = oldAnimationClass.split(" ");
+            var classesToRemove = oldAnimationClasses.split(" ");
 
             if (element.className.indexOf('hide') >= 0) {
                 element.className = element.className.replace('hide', animationClasses);
@@ -799,7 +823,7 @@ var Actions = exports.Actions = function () {
 
             classesToRemove.forEach(function (classToRemove) {
                 if (classToRemove.length > 0) {
-                    element.classList.remove(classesToRemove);
+                    element.classList.remove(classToRemove);
                 }
             });
 
@@ -809,7 +833,7 @@ var Actions = exports.Actions = function () {
                 }
             });
 
-            element.animationClass = animationClasses;
+            element.animationClasses = animationClasses;
 
             return element;
         }
@@ -824,6 +848,7 @@ var Actions = exports.Actions = function () {
             var classNames = this._getClassNames(classes);
 
             elements.forEach(function (element) {
+
                 classNames.forEach(function (className) {
                     element.classList.add(className);
                 });
@@ -850,7 +875,7 @@ var Actions = exports.Actions = function () {
         value: function _getClassNames() {
             var classes = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
 
-            if (!classes || !classes.split) return;
+            if (!classes || !classes.split) return [];
 
             return classes.split(' ');
         }
@@ -915,7 +940,7 @@ var Actions = exports.Actions = function () {
                 function endAnimation(event) {
                     animationElements.forEach(function (animationElement, index) {
                         animationEnds.forEach(function (animationEndName) {
-                            animationElement.animationClass = eventObj.animationClasses;
+                            animationElement.animationClasses = eventObj.animationClasses;
                             animationElement.removeEventListener(animationEndName, endAnimation);
                         });
                     });
@@ -1048,6 +1073,7 @@ var _class = function (_AudioConstants) {
             SET_UP: "set-up",
             SET_DURATION: "set-duration",
             SET_VOLUME: "set-volume",
+            VOLUME: "set-volume",
             TIME_UPDATE: "time-update",
             UNMUTE: "unmute"
         };
@@ -1229,9 +1255,14 @@ var Rules = exports.Rules = function () {
                 }
 
                 return self.evaluator.evaluate(rule);
-            });
+            }) || {};
 
-            return stateSelect ? stateSelect.stateId : '';
+            var _stateSelect$stateId = stateSelect.stateId,
+                stateId = _stateSelect$stateId === undefined ? '' : _stateSelect$stateId,
+                route = stateSelect.route;
+
+
+            return route ? route : stateId;
         }
     }, {
         key: 'rules',
@@ -1264,11 +1295,11 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-var _iVXio = __webpack_require__(14);
+var _iVXio = __webpack_require__(11);
 
 var _iVXio2 = _interopRequireDefault(_iVXio);
 
-var _errors = __webpack_require__(15);
+var _errors = __webpack_require__(12);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -1316,10 +1347,7 @@ var _class = function (_iVXioConstants) {
 exports.default = _class;
 
 /***/ }),
-/* 11 */,
-/* 12 */,
-/* 13 */,
-/* 14 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1374,7 +1402,7 @@ var _class = function (_iVXjsConstants) {
 exports.default = _class;
 
 /***/ }),
-/* 15 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1400,7 +1428,7 @@ var _http = __webpack_require__(25);
 
 var _http2 = _interopRequireDefault(_http);
 
-var _iVXio = __webpack_require__(14);
+var _iVXio = __webpack_require__(11);
 
 var _iVXio2 = _interopRequireDefault(_iVXio);
 
@@ -1428,6 +1456,7 @@ var _class = function (_iVXjsConstants) {
             VALIDATION: "validation",
             SET_UP: "set-up",
             IVX_IO: new _iVXio2.default().IVX_IO,
+            ACTION_PROCESSOR: "actions-processor",
             DEFAULT: "default",
             ASSERT: "assert",
             EXPERIENCE: "experience"
@@ -1453,6 +1482,9 @@ var _class = function (_iVXjsConstants) {
 exports.default = _class;
 
 /***/ }),
+/* 13 */,
+/* 14 */,
+/* 15 */,
 /* 16 */,
 /* 17 */,
 /* 18 */,
@@ -1466,7 +1498,7 @@ exports.default = _class;
 /* WEBPACK VAR INJECTION */(function(module) {
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 exports.iVXio = undefined;
 
@@ -1474,15 +1506,15 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _actions = __webpack_require__(23);
 
-var _rules = __webpack_require__(28);
+var _rules = __webpack_require__(29);
 
 var _actions2 = __webpack_require__(6);
 
 var _typeParsers = __webpack_require__(1);
 
-var _asserts = __webpack_require__(30);
+var _asserts = __webpack_require__(31);
 
-var _index = __webpack_require__(31);
+var _index = __webpack_require__(32);
 
 var _index2 = _interopRequireDefault(_index);
 
@@ -1490,15 +1522,15 @@ var _iVXioErrors = __webpack_require__(10);
 
 var _iVXioErrors2 = _interopRequireDefault(_iVXioErrors);
 
-var _factoryFunctionCreator = __webpack_require__(45);
+var _factoryFunctionCreator = __webpack_require__(46);
 
 var _factoryFunctionCreator2 = _interopRequireDefault(_factoryFunctionCreator);
 
-var _index3 = __webpack_require__(46);
+var _index3 = __webpack_require__(47);
 
 var _index4 = _interopRequireDefault(_index3);
 
-var _index5 = __webpack_require__(52);
+var _index5 = __webpack_require__(53);
 
 var _index6 = _interopRequireDefault(_index5);
 
@@ -1516,159 +1548,162 @@ var objectParser = new _typeParsers.ObjectParsers();
 
 var iVXio = exports.iVXio = function () {
 
-  /**
-   * Pulls in any module settings and the global settings
-   * for this iVXjs experience to set up this iVXio 
-   * enhance data object.
-   * 
-   * @param {object} moduleSettings - settings to be passed in to the 
-   * iVXio Expereince host.
-   * @param {object} iVXjsSettings - global settings for this iVXjs experience.
-   */
-  function iVXio(experienceHostSettings) {
-    var iVXjsSettings = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-    var Bus = arguments[2];
-    var iVXjsLog = arguments[3];
-
-    _classCallCheck(this, iVXio);
-
     /**
-     * Module settings for iVXio which will be all the settings
-     * used with the iVXio's experience host such as story keys and
-     * funnels.
+     * Pulls in any module settings and the global settings
+     * for this iVXjs experience to set up this iVXio 
+     * enhance data object.
      * 
-     * @type {object}
+     * @param {object} moduleSettings - settings to be passed in to the 
+     * iVXio Expereince host.
+     * @param {object} iVXjsSettings - global settings for this iVXjs experience.
      */
-    this.experienceHostSettings = experienceHostSettings;
+    function iVXio(experienceHostSettings) {
+        var iVXjsSettings = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+        var Bus = arguments[2];
+        var iVXjsLog = arguments[3];
 
-    /**
-     * Global settings for this iVXjs experience 
-     * 
-     * @type {object}
-     */
-    this.iVXjsSettings = iVXjsSettings;
-    this.Bus = Bus;
-    this.iVXjsLog = iVXjsLog;
-  }
+        _classCallCheck(this, iVXio);
 
-  /**
-   * Takes the current settings and then enhances the story data 
-   * pulled from the iVXio experience host and enhances them to 
-   * work with iVXjs.
-   * 
-   * @return {Promise} - a promise that evaluates whether this experience 
-   * was successfully enhanced.
-   */
+        /**
+         * Module settings for iVXio which will be all the settings
+         * used with the iVXio's experience host such as story keys and
+         * funnels.
+         * 
+         * @type {object}
+         */
+        this.experienceHostSettings = experienceHostSettings;
 
-
-  _createClass(iVXio, [{
-    key: 'enhance',
-    value: function enhance() {
-      var _this = this;
-
-      var _experienceHostSettin = this.experienceHostSettings,
-          experienceHostSettings = _experienceHostSettin === undefined ? {} : _experienceHostSettin,
-          _iVXjsSettings = this.iVXjsSettings,
-          iVXjsSettings = _iVXjsSettings === undefined ? {} : _iVXjsSettings;
-
-      var iVXioErrors = new _iVXioErrors2.default();
-      var self = this;
-      var enhancementPromise = new Promise(function (resolve, reject) {
-        if (typeof iVX === 'undefined') {
-          window.setTimeout(function () {
-            self.Bus.emit(iVXioErrors.PLATFORM_UNAVAILABLE, {});
-          }, 100);
-          reject();
-          return;
-        }
-
-        self.Bus.once(iVXioErrors.EXPERIENCE, function (error) {
-          reject(error);
-        });
-
-        iVX(experienceHostSettings).then(function (iVX) {
-          if (!iVX || !iVX.experience || !iVX.experience.story || !iVX.experience.story.data) {
-            window.setTimeout(function () {
-              self.Bus.emit(iVXioErrors.PLATFORM_UNAVAILABLE, {});
-            }, 100);
-            return;
-          }
-
-          var _iVXjsSettings$experi = iVXjsSettings.experience,
-              experienceSettings = _iVXjsSettings$experi === undefined ? {} : _iVXjsSettings$experi,
-              customRules = iVXjsSettings.rules;
-
-          var defaultActions = objectParser.merge(new _actions2.Actions(), experienceSettings);
-          var experience = objectParser.merge(defaultActions, iVX.experience);
-          var modifiedActions = new _actions.iVXioActions(experience, _this.iVXjsLog);
-          var _iVX$experience$story = iVX.experience.story.data,
-              storyUI = _iVX$experience$story.ui,
-              storyValidation = _iVX$experience$story.validation;
-
-
-          iVX.experience.story.data.metadata = iVX.experience.story.data.metadata ? iVX.experience.story.data.metadata : {};
-
-          var rules = new _rules.iVXioRules(experience, customRules).rules;
-          var states = new _index2.default(iVX.experience.story.data.states, iVX.experience.story.inputs, self, reject, experienceHostSettings.debug).states;
-
-          experience.debugHost = experienceHostSettings.debug;
-
-          experience.whiteList = ['self', 'http://ivx-xapi.*.inf-env.com/**', 'https://ivx-xapi.*.inf-env.com/**', 'https://xapi.ivx.io/**'];
-
-          iVX.experience.story.data.states = states;
-          iVX.experience.story.data.metadata.title = iVX.experience.story.data.metadata.title ? iVX.experience.story.data.metadata.title : "iVX Story Player";
-
-          var enhancediVXjsSettings = {
-            ui: iVXjsSettings.ui,
-            validation: iVXjsSettings.validation,
-            config: iVX.experience.story.data,
-            experience: experience,
-            rules: rules,
-            actions: modifiedActions
-          };
-
-          resolve(enhancediVXjsSettings);
-        }, function (error) {
-          self.Bus.emit(iVXioErrors.EXPERIENCE, error);
-          reject(error);
-        });
-      });
-
-      return enhancementPromise;
+        /**
+         * Global settings for this iVXjs experience 
+         * 
+         * @type {object}
+         */
+        this.iVXjsSettings = iVXjsSettings;
+        this.Bus = Bus;
+        this.iVXjsLog = iVXjsLog;
     }
-  }]);
 
-  return iVXio;
+    /**
+     * Takes the current settings and then enhances the story data 
+     * pulled from the iVXio experience host and enhances them to 
+     * work with iVXjs.
+     * 
+     * @return {Promise} - a promise that evaluates whether this experience 
+     * was successfully enhanced.
+     */
+
+
+    _createClass(iVXio, [{
+        key: 'enhance',
+        value: function enhance() {
+            var _this = this;
+
+            var _experienceHostSettin = this.experienceHostSettings,
+                experienceHostSettings = _experienceHostSettin === undefined ? {} : _experienceHostSettin,
+                _iVXjsSettings = this.iVXjsSettings,
+                iVXjsSettings = _iVXjsSettings === undefined ? {} : _iVXjsSettings;
+
+            var iVXioErrors = new _iVXioErrors2.default();
+            var self = this;
+            var enhancementPromise = new Promise(function (resolve, reject) {
+                if (typeof iVX === 'undefined') {
+                    window.setTimeout(function () {
+                        self.Bus.emit(iVXioErrors.PLATFORM_UNAVAILABLE, {});
+                    }, 100);
+                    reject();
+                    return;
+                }
+
+                self.Bus.once(iVXioErrors.EXPERIENCE, function (error) {
+                    reject(error);
+                });
+
+                iVX(experienceHostSettings).then(function (iVX) {
+                    if (!iVX || !iVX.experience || !iVX.experience.story || !iVX.experience.story.data) {
+                        window.setTimeout(function () {
+                            self.Bus.emit(iVXioErrors.PLATFORM_UNAVAILABLE, {});
+                        }, 100);
+                        return;
+                    }
+
+                    var _iVXjsSettings$experi = iVXjsSettings.experience,
+                        experienceSettings = _iVXjsSettings$experi === undefined ? {} : _iVXjsSettings$experi,
+                        customRules = iVXjsSettings.rules;
+                    var _experienceSettings$d = experienceSettings.data,
+                        configData = _experienceSettings$d === undefined ? {} : _experienceSettings$d;
+
+                    var defaultActions = objectParser.merge(new _actions2.Actions(), experienceSettings);
+                    var experience = objectParser.merge(defaultActions, iVX.experience);
+                    var modifiedActions = new _actions.iVXioActions(experience, _this.iVXjsLog);
+                    var _iVX$experience$story = iVX.experience.story.data,
+                        storyUI = _iVX$experience$story.ui,
+                        storyValidation = _iVX$experience$story.validation;
+
+
+                    iVX.experience.story.data.metadata = iVX.experience.story.data.metadata ? iVX.experience.story.data.metadata : {};
+
+                    var rules = new _rules.iVXioRules(experience, customRules).rules;
+                    var states = new _index2.default(iVX.experience.story.data.states, iVX.experience.story.inputs, self, reject, experienceHostSettings.debug).states;
+
+                    experience.debugHost = experienceHostSettings.debug;
+
+                    experience.whiteList = ['self', 'http://ivx-xapi.*.inf-env.com/**', 'https://ivx-xapi.*.inf-env.com/**', 'https://xapi.ivx.io/**'];
+
+                    iVX.experience.story.data.states = states;
+                    iVX.experience.story.data.metadata.title = iVX.experience.story.data.metadata.title ? iVX.experience.story.data.metadata.title : "iVX Story Player";
+
+                    var enhancediVXjsSettings = {
+                        ui: iVXjsSettings.ui,
+                        validation: iVXjsSettings.validation,
+                        config: iVX.experience.story.data,
+                        experience: experience,
+                        rules: rules,
+                        actions: modifiedActions
+                    };
+
+                    resolve(enhancediVXjsSettings);
+                }, function (error) {
+                    self.Bus.emit(iVXioErrors.EXPERIENCE, error);
+                    reject(error);
+                });
+            });
+
+            return enhancementPromise;
+        }
+    }]);
+
+    return iVXio;
 }();
 
 module.export = initializeiVXIO;
 
 if (angular) {
-  var app = angular.module('ivx-input-validator', []);
+    var app = angular.module('ivx-input-validator', []);
 
-  app.constant('validator', _index2.default);
+    app.constant('validator', _index2.default);
 
-  try {
-    var _app = angular.module('ivx-js');
+    try {
+        var _app = angular.module('ivx-js');
 
-    _app.constant('iVXjs.data.iVXio', initializeiVXIO);
-    _app.constant('validator', _index2.default);
-    _app.constant('iVXjsDataiVXio', _index2.default);
+        _app.constant('iVXjs.data.iVXio', initializeiVXIO);
+        _app.constant('iVXjsDataiVXio', initializeiVXIO);
+        _app.constant('validator', _index2.default);
+        _app.constant('iVXjsDataiVXio', _index2.default);
 
-    new _index4.default(_app, { factoryFunctionCreator: _factoryFunctionCreator2.default });
-    new _index6.default(_app, { factoryFunctionCreator: _factoryFunctionCreator2.default });
-  } catch (e) {
-    console.warn('The iVXio Data Module is not attached to the iVXjs module. If this is correct, ignore this warning.');
-    console.warn(e);
-  }
+        new _index4.default(_app, { factoryFunctionCreator: _factoryFunctionCreator2.default });
+        new _index6.default(_app, { factoryFunctionCreator: _factoryFunctionCreator2.default });
+    } catch (e) {
+        console.warn('The iVXio Data Module is not attached to the iVXjs module. If this is correct, ignore this warning.');
+        console.warn(e);
+    }
 }
 
 function initializeiVXIO() {
-  var settings = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    var settings = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
-  settings.module = iVXio;
+    settings.module = iVXio;
 
-  return settings;
+    return settings;
 };
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)(module)))
 
@@ -1692,7 +1727,11 @@ var _iVXioErrors = __webpack_require__(10);
 
 var _iVXioErrors2 = _interopRequireDefault(_iVXioErrors);
 
-var _logging = __webpack_require__(26);
+var _iVXioEvents = __webpack_require__(26);
+
+var _iVXioEvents2 = _interopRequireDefault(_iVXioEvents);
+
+var _logging = __webpack_require__(27);
 
 var _logging2 = _interopRequireDefault(_logging);
 
@@ -1729,6 +1768,7 @@ var iVXioActions = exports.iVXioActions = function () {
          */
         this.experience = experience;
         this.iVXjsLog = iVXjsLog;
+        this.eventNames = new _iVXioEvents2.default();
     }
 
     /**
@@ -1809,12 +1849,18 @@ var iVXioActions = exports.iVXioActions = function () {
     }, {
         key: "recordEvent",
         value: function recordEvent(eventArgs) {
+            var self = this;
             if ((typeof eventArgs === "undefined" ? "undefined" : _typeof(eventArgs)) === 'object') {
                 var customEvent = eventArgs.customEvent;
 
 
                 try {
-                    return this.experience.recordEvent(customEvent);
+                    return this.experience.recordEvent(customEvent).then(function () {
+                        self.experience.Bus.emit(self.eventNames.RECORD_EVENT, eventArgs);
+                    }, function () {
+                        self.experience.Bus.emit(iVXioErrors.EVENT_NOT_FIRED, eventArgs, e);
+                        self.iVXjsLog.error(e, "IVX_IO");
+                    });
                 } catch (e) {
                     this.experience.Bus.emit(iVXioErrors.EVENT_NOT_FIRED, eventArgs, e);
                     this.iVXjsLog.error(e, "IVX_IO");
@@ -1834,12 +1880,16 @@ var iVXioActions = exports.iVXioActions = function () {
     }, {
         key: "setConverted",
         value: function setConverted(eventArgs) {
+            var self = this;
+
             if ((typeof eventArgs === "undefined" ? "undefined" : _typeof(eventArgs)) === 'object') {
                 var label = eventArgs.label;
 
 
                 try {
-                    return this.experience.setConverted(label);
+                    return this.experience.setConverted(label).then(function () {
+                        self.experience.Bus.emit(self.eventNames.SET_CONVERTED, eventArgs);
+                    });
                 } catch (e) {
                     this.experience.Bus.emit(iVXioErrors.EVENT_NOT_FIRED, eventArgs, e);
                     this.iVXjsLog.error(e, "IVX_IO");
@@ -1859,9 +1909,13 @@ var iVXioActions = exports.iVXioActions = function () {
         value: function setComplete() {
             var eventArgs = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
+            var self = this;
+
             if ((typeof eventArgs === "undefined" ? "undefined" : _typeof(eventArgs)) === 'object') {
                 try {
-                    return this.experience.setComplete();
+                    return this.experience.setComplete().then(function () {
+                        self.experience.Bus.emit(self.eventNames.SET_COMPLETE, eventArgs);
+                    });
                 } catch (e) {
                     this.experience.Bus.emit(iVXioErrors.EVENT_NOT_FIRED, eventArgs, e);
                     this.iVXjsLog.error(e, "IVX_IO");
@@ -1922,6 +1976,8 @@ var iVXioActions = exports.iVXioActions = function () {
                                 };
                             })
                         }, data);
+
+                        self.experience.Bus.emit(self.eventNames.SET_DATA, eventArgs);
                     });
                 } catch (e) {
                     this.experience.Bus.emit(iVXioErrors.EVENT_NOT_FIRED, eventArgs, e);
@@ -1942,12 +1998,18 @@ var iVXioActions = exports.iVXioActions = function () {
     }, {
         key: "setMilestone",
         value: function setMilestone(eventArgs) {
+            var self = this;
             if ((typeof eventArgs === "undefined" ? "undefined" : _typeof(eventArgs)) === 'object') {
                 var milestone = eventArgs.milestone;
 
 
                 try {
-                    return this.experience.setMilestone(milestone);
+                    return this.experience.setMilestone(milestone).then(function () {
+                        self.experience.Bus.emit(self.eventNames.SET_MILESTONE, eventArgs);
+                    }, function () {
+                        self.experience.Bus.emit(iVXioErrors.EVENT_NOT_FIRED, eventArgs, e);
+                        self.iVXjsLog.error(e, "IVX_IO");
+                    });;
                 } catch (e) {
                     this.experience.Bus.emit(iVXioErrors.EVENT_NOT_FIRED, eventArgs, e);
                     this.iVXjsLog.error(e, "IVX_IO");
@@ -1995,6 +2057,7 @@ var _class = function (_iVXjsConstants) {
         var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
 
         _this.VIDEO = "video";
+
         return _this;
     }
 
@@ -2080,15 +2143,81 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _iVXio = __webpack_require__(11);
+
+var _iVXio2 = _interopRequireDefault(_iVXio);
+
+var _errors = __webpack_require__(12);
+
+var _errors2 = _interopRequireDefault(_errors);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _class = function (_iVXioConstants) {
+    _inherits(_class, _iVXioConstants);
+
+    function _class() {
+        _classCallCheck(this, _class);
+
+        var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
+
+        var eventNames = {
+            RECORD_EVENT: "record-event",
+            SET_COMPLETE: "set-complete",
+            SET_CONVERTED: "set-converted",
+            SET_MILESTONE: "set-milestone",
+            SET_DATA: "set-data"
+        };
+
+        _this.addNames(eventNames);
+        return _this;
+    }
+
+    _createClass(_class, [{
+        key: "convention",
+        value: function convention(errorName) {
+            var ERROR = this.ERROR,
+                DELIMETER = this.DELIMETER;
+
+            return "" + _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + errorName;
+        }
+    }]);
+
+    return _class;
+}(_iVXio2.default);
+
+exports.default = _class;
+
+/***/ }),
+/* 27 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _logging = __webpack_require__(27);
+var _logging = __webpack_require__(28);
 
 var _logging2 = _interopRequireDefault(_logging);
 
-var _errors = __webpack_require__(15);
+var _errors = __webpack_require__(12);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -2254,7 +2383,7 @@ var _class = function () {
 exports.default = _class;
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2322,7 +2451,7 @@ var _class = function (_iVXjsConstants) {
 exports.default = _class;
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2333,7 +2462,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.iVXioRules = undefined;
 
-var _evaluator = __webpack_require__(29);
+var _evaluator = __webpack_require__(30);
 
 var _evaluator2 = _interopRequireDefault(_evaluator);
 
@@ -2374,7 +2503,7 @@ var iVXioRules = exports.iVXioRules = function (_Rules) {
 }(_rules.Rules);
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2410,8 +2539,10 @@ var _class = function (_Evaluator) {
     _createClass(_class, [{
         key: 'storyEvents',
         value: function storyEvents(lhs, is, storyEvent) {
-            var experience = this.experience;
-            var events = experience.events;
+            var _experience = this.experience,
+                experience = _experience === undefined ? {} : _experience;
+            var _experience$events = experience.events,
+                events = _experience$events === undefined ? [] : _experience$events;
 
 
             if (storyEvent === 'none') {
@@ -2432,7 +2563,9 @@ var _class = function (_Evaluator) {
         }
     }, {
         key: 'fired',
-        value: function fired(event, events) {
+        value: function fired(event) {
+            var events = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+
             var firedEvent = events.find(function (eventFired, index) {
                 return eventFired === event;
             });
@@ -2441,7 +2574,9 @@ var _class = function (_Evaluator) {
         }
     }, {
         key: 'notFired',
-        value: function notFired(event, events) {
+        value: function notFired(event) {
+            var events = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+
             var firedEvent = events.find(function (eventFired, index) {
                 return eventFired === event;
             });
@@ -2496,7 +2631,7 @@ var _class = function (_Evaluator) {
 exports.default = _class;
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2545,7 +2680,7 @@ var _class = function () {
 exports.default = _class;
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2564,43 +2699,43 @@ var _iVXioErrors = __webpack_require__(10);
 
 var _iVXioErrors2 = _interopRequireDefault(_iVXioErrors);
 
-var _cascadingOptions = __webpack_require__(32);
+var _cascadingOptions = __webpack_require__(33);
 
 var _cascadingOptions2 = _interopRequireDefault(_cascadingOptions);
 
-var _checkbox = __webpack_require__(33);
+var _checkbox = __webpack_require__(34);
 
 var _checkbox2 = _interopRequireDefault(_checkbox);
 
-var _email = __webpack_require__(35);
+var _email = __webpack_require__(36);
 
 var _email2 = _interopRequireDefault(_email);
 
-var _number = __webpack_require__(36);
+var _number = __webpack_require__(37);
 
 var _number2 = _interopRequireDefault(_number);
 
-var _options = __webpack_require__(37);
+var _options = __webpack_require__(38);
 
 var _options2 = _interopRequireDefault(_options);
 
-var _textarea = __webpack_require__(40);
+var _textarea = __webpack_require__(41);
 
 var _textarea2 = _interopRequireDefault(_textarea);
 
-var _textLarge = __webpack_require__(41);
+var _textLarge = __webpack_require__(42);
 
 var _textLarge2 = _interopRequireDefault(_textLarge);
 
-var _textMedium = __webpack_require__(42);
+var _textMedium = __webpack_require__(43);
 
 var _textMedium2 = _interopRequireDefault(_textMedium);
 
-var _textShort = __webpack_require__(43);
+var _textShort = __webpack_require__(44);
 
 var _textShort2 = _interopRequireDefault(_textShort);
 
-var _url = __webpack_require__(44);
+var _url = __webpack_require__(45);
 
 var _url2 = _interopRequireDefault(_url);
 
@@ -2890,7 +3025,7 @@ var _class = function () {
 exports.default = _class;
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2938,7 +3073,7 @@ var _class = function () {
 exports.default = _class;
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2950,7 +3085,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _checkboxButtons = __webpack_require__(34);
+var _checkboxButtons = __webpack_require__(35);
 
 var _checkboxButtons2 = _interopRequireDefault(_checkboxButtons);
 
@@ -2992,7 +3127,7 @@ var _class = function () {
 exports.default = _class;
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3071,7 +3206,7 @@ var _class = function () {
 exports.default = _class;
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3114,7 +3249,7 @@ var _class = function () {
 exports.default = _class;
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3181,7 +3316,7 @@ var _class = function () {
 exports.default = _class;
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3193,11 +3328,11 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _optionsButtons = __webpack_require__(38);
+var _optionsButtons = __webpack_require__(39);
 
 var _optionsButtons2 = _interopRequireDefault(_optionsButtons);
 
-var _optionsRadio = __webpack_require__(39);
+var _optionsRadio = __webpack_require__(40);
 
 var _optionsRadio2 = _interopRequireDefault(_optionsRadio);
 
@@ -3250,7 +3385,7 @@ var _class = function () {
 exports.default = _class;
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3327,7 +3462,7 @@ var _class = function () {
 exports.default = _class;
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3406,7 +3541,7 @@ var _class = function () {
 exports.default = _class;
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3466,7 +3601,7 @@ var _class = function () {
 exports.default = _class;
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3526,7 +3661,7 @@ var _class = function () {
 exports.default = _class;
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3586,7 +3721,7 @@ var _class = function () {
 exports.default = _class;
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3646,7 +3781,7 @@ var _class = function () {
 exports.default = _class;
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3689,7 +3824,7 @@ var _class = function () {
 exports.default = _class;
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3716,7 +3851,7 @@ function createFactoryFunction(constructor) {
 }
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3726,7 +3861,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _index = __webpack_require__(47);
+var _index = __webpack_require__(48);
 
 var _index2 = _interopRequireDefault(_index);
 
@@ -3743,7 +3878,7 @@ var _class = function _class(app, opts) {
 exports.default = _class;
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3753,19 +3888,19 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _directive = __webpack_require__(48);
+var _directive = __webpack_require__(49);
 
 var _directive2 = _interopRequireDefault(_directive);
 
-var _directive3 = __webpack_require__(49);
+var _directive3 = __webpack_require__(50);
 
 var _directive4 = _interopRequireDefault(_directive3);
 
-var _directive5 = __webpack_require__(50);
+var _directive5 = __webpack_require__(51);
 
 var _directive6 = _interopRequireDefault(_directive5);
 
-var _directive7 = __webpack_require__(51);
+var _directive7 = __webpack_require__(52);
 
 var _directive8 = _interopRequireDefault(_directive7);
 
@@ -3785,47 +3920,6 @@ var _class = function _class(app, opts) {
 exports.default = _class;
 
 /***/ }),
-/* 48 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Directive = exports.Directive = function Directive(iVXjs) {
-    _classCallCheck(this, Directive);
-
-    this.link = function ($scope, iElm, iAttrs, controller) {
-        iElm[0].addEventListener('click', function (event) {
-            event.preventDefault();
-
-            var value = iAttrs.ivxRecordEvent;
-
-
-            iVXjs.experience.recordEvent(value);
-        }, false);
-    };
-};
-
-Directive.$inject = ["iVXjs"];
-
-var _class = function _class(app, opts) {
-    _classCallCheck(this, _class);
-
-    var factoryFunctionCreator = opts.factoryFunctionCreator;
-
-
-    app.directive('ivxRecordEvent', factoryFunctionCreator(Directive));
-};
-
-exports.default = _class;
-
-/***/ }),
 /* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3838,19 +3932,27 @@ Object.defineProperty(exports, "__esModule", {
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Directive = exports.Directive = function Directive(iVXjs) {
+var Directive = exports.Directive = function Directive(iVXjs, iVXjsActionTemplateService) {
     _classCallCheck(this, Directive);
 
     this.link = function ($scope, iElm, iAttrs, controller) {
-        iElm[0].addEventListener('click', function (event) {
-            event.preventDefault();
+        iVXjsActionTemplateService.setup($scope, iElm, iAttrs, _getRecordEventEventObj);
 
-            iVXjs.experience.setComplete();
-        }, false);
+        function _getRecordEventEventObj() {
+            var customEvent = iAttrs.ivxRecordEvent;
+
+
+            return {
+                eventName: "recordEvent",
+                args: {
+                    customEvent: customEvent
+                }
+            };
+        }
     };
 };
 
-Directive.$inject = ["iVXjs"];
+Directive.$inject = ["iVXjs", "iVXjsActionTemplateService"];
 
 var _class = function _class(app, opts) {
     _classCallCheck(this, _class);
@@ -3858,7 +3960,7 @@ var _class = function _class(app, opts) {
     var factoryFunctionCreator = opts.factoryFunctionCreator;
 
 
-    app.directive('ivxSetCompleted', factoryFunctionCreator(Directive));
+    app.directive('ivxRecordEvent', factoryFunctionCreator(Directive));
 };
 
 exports.default = _class;
@@ -3876,22 +3978,21 @@ Object.defineProperty(exports, "__esModule", {
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Directive = exports.Directive = function Directive(iVXjs) {
+var Directive = exports.Directive = function Directive(iVXjs, iVXjsActionTemplateService) {
     _classCallCheck(this, Directive);
 
     this.link = function ($scope, iElm, iAttrs, controller) {
-        iElm[0].addEventListener('click', function (event) {
-            event.preventDefault();
+        iVXjsActionTemplateService.setup($scope, iElm, iAttrs, _getSetCompletedEventObj);
 
-            var value = iAttrs.ivxSetConverted;
-
-
-            iVXjs.experience.setConverted(value);
-        }, false);
+        function _getSetCompletedEventObj() {
+            return {
+                eventName: "setComplete"
+            };
+        }
     };
 };
 
-Directive.$inject = ["iVXjs"];
+Directive.$inject = ["iVXjs", "iVXjsActionTemplateService"];
 
 var _class = function _class(app, opts) {
     _classCallCheck(this, _class);
@@ -3899,7 +4000,7 @@ var _class = function _class(app, opts) {
     var factoryFunctionCreator = opts.factoryFunctionCreator;
 
 
-    app.directive('ivxSetConverted', factoryFunctionCreator(Directive));
+    app.directive('ivxSetCompleted', factoryFunctionCreator(Directive));
 };
 
 exports.default = _class;
@@ -3917,22 +4018,27 @@ Object.defineProperty(exports, "__esModule", {
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Directive = exports.Directive = function Directive(iVXjs) {
+var Directive = exports.Directive = function Directive(iVXjs, iVXjsActionTemplateService) {
     _classCallCheck(this, Directive);
 
     this.link = function ($scope, iElm, iAttrs, controller) {
-        iElm[0].addEventListener('click', function (event) {
-            event.preventDefault();
+        iVXjsActionTemplateService.setup($scope, iElm, iAttrs, _getSetConvertedEventObj);
 
-            var value = iAttrs.ivxSetMilestone;
+        function _getSetConvertedEventObj() {
+            var label = iAttrs.ivxSetConverted;
 
 
-            iVXjs.experience.setMilestone(value);
-        }, false);
+            return {
+                eventName: "setConverted",
+                args: {
+                    label: label
+                }
+            };
+        }
     };
 };
 
-Directive.$inject = ["iVXjs"];
+Directive.$inject = ["iVXjs", "iVXjsActionTemplateService"];
 
 var _class = function _class(app, opts) {
     _classCallCheck(this, _class);
@@ -3940,7 +4046,7 @@ var _class = function _class(app, opts) {
     var factoryFunctionCreator = opts.factoryFunctionCreator;
 
 
-    app.directive('ivxSetMilestone', factoryFunctionCreator(Directive));
+    app.directive('ivxSetConverted', factoryFunctionCreator(Directive));
 };
 
 exports.default = _class;
@@ -3956,7 +4062,53 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _experienceScope = __webpack_require__(53);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Directive = exports.Directive = function Directive(iVXjs, iVXjsActionTemplateService) {
+    _classCallCheck(this, Directive);
+
+    this.link = function ($scope, iElm, iAttrs, controller) {
+        iVXjsActionTemplateService.setup($scope, iElm, iAttrs, _getSetMilestoneEventObj);
+
+        function _getSetMilestoneEventObj() {
+            var milestone = iAttrs.ivxSetMilestone;
+
+
+            return {
+                eventName: "setMilestone",
+                args: {
+                    milestone: milestone
+                }
+            };
+        };
+    };
+};
+
+Directive.$inject = ["iVXjs", "iVXjsActionTemplateService"];
+
+var _class = function _class(app, opts) {
+    _classCallCheck(this, _class);
+
+    var factoryFunctionCreator = opts.factoryFunctionCreator;
+
+
+    app.directive('ivxSetMilestone', factoryFunctionCreator(Directive));
+};
+
+exports.default = _class;
+
+/***/ }),
+/* 53 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _experienceScope = __webpack_require__(54);
 
 var _experienceScope2 = _interopRequireDefault(_experienceScope);
 
@@ -3973,7 +4125,7 @@ var _class = function _class(app, opts) {
 exports.default = _class;
 
 /***/ }),
-/* 53 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
