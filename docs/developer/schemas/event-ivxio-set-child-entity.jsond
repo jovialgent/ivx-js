@@ -1,0 +1,30 @@
+{
+  "name": "iVXio setChildEntity Action Settings",
+  "description": "Settings to run the setChildEntity action",
+  "type": "object",
+  "properties": {
+    "eventName": {
+      "type": "string",
+      "name": "Event Name",
+      "description": "Indicates to run the setChildEntity event",
+      "required": true,
+      "enum": [
+        "setChildEntity"
+      ]
+    },
+    "args": {
+      "type": "object",
+      "name": "setChildEntity Arguments",
+      "description": "The child entity to be set by this experience.",
+      "required": true,
+      "properties": {
+        "key": {
+          "name": "Child Entity Key",
+          "type": "string",
+          "description": "Child Key to set",
+          "required": true
+        }
+      }
+    }
+  }
+}

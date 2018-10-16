@@ -51,7 +51,7 @@ class VideoState {
 
             let videoFramework = new iVXjsUIModule.states.video(videoPlayerHTML, data);
 
-            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
+            $scope = ivxExperienceScope.setScopeExperience($scope);
             
             iElm.html(videoFramework.html);
 

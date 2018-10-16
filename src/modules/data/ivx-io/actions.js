@@ -127,7 +127,7 @@ export class iVXioActions {
      */
     setConverted(eventArgs) {
         const self = this;
-        
+
         if (typeof eventArgs === 'object') {
             let { label } = eventArgs;
 
@@ -164,6 +164,23 @@ export class iVXioActions {
             }
         }
     }
+
+    setChildEntity(eventArgs = {}) {
+        const self = this;
+
+        try {
+            const { key } = eventArgs;
+            return this.experience.setChildEntity(key)
+                .then(() => {
+                    self.experience.Bus.emit(self.eventNames.SET_CHILD_ENTITY, eventArgs);
+                });
+        } catch (e) {
+            this.experience.Bus.emit(iVXioErrors.EVENT_NOT_FIRED, eventArgs, e);
+            this.iVXjsLog.error(e, "IVX_IO");
+        }
+    }
+
+
 
     /**
      * Sends the setData event to the platform with the key and  

@@ -27,7 +27,7 @@ class OptionsInput {
                            ng-options="option.display for option in inputData.options track by option.value" 
                            ng-model='vm.selected'`;
 
-            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
+            $scope = ivxExperienceScope.setScopeExperience($scope);
 
             input.label = input.label ? input.label : $filter('stringParsers')('startCase', id);
             input = pullInTemplate.convertLabel($filter('stringParsers')('startCase', id), input, $scope);

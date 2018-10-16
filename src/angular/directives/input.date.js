@@ -19,7 +19,7 @@ class DateInput {
             let { inputData: input } = $scope;
             let { id, name, errors = {}, labelHTML, label, attributes = {}, settings = {} } = input;
 
-            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
+            $scope = ivxExperienceScope.setScopeExperience($scope);
             
             if (attributes.min) {
                 let dateMin = new DateParser(attributes.min).formatForDateInput();

@@ -28,7 +28,7 @@ class NavigationState {
 
             let thisNavigationState = new iVXjsModules.states.navigation(data, linkSection);
 
-            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
+            $scope = ivxExperienceScope.setScopeExperience($scope);
 
             iElm.html(thisNavigationState.html);
 

@@ -17,9 +17,8 @@ class HtmlState {
             let { id, html, templateUrl, onCompile = [], audio, embedded = false, embeddedViews = [], section = {} } = data;
             const { classes: sectionClasses } = section;
             let audioEventNames = new AudioEventNames();
-
            
-            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
+            $scope = ivxExperienceScope.setScopeExperience($scope);
 
             if (templateUrl) {
                 let safeTemplateUrl = $sce.getTrustedResourceUrl(templateUrl);

@@ -19,7 +19,7 @@ class DateTimeLocalInput {
             let { inputData: input } = $scope;
             let { id, name, errors = {}, labelHTML, label, attributes = {}, settings = {} } = input;
 
-            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
+            $scope = ivxExperienceScope.setScopeExperience($scope);
 
             input.label = label ? label : $filter('stringParsers')('startCase', id)
 

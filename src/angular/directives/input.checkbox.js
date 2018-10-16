@@ -19,7 +19,7 @@ class CheckboxInput {
             let { id, name, errors = {}, labelHTML, label, attributes = {}, settings = {} } = input;
             let tagHTML = `ng-click="vm.onChange(inputValue, $event)" ng-model="inputValue"`;
 
-            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
+            $scope = ivxExperienceScope.setScopeExperience($scope);
             
             input.label = label ? label : $filter('stringParsers')('startCase', id);
             input = pullInTemplate.convertLabel($filter('stringParsers')('startCase', id), input, $scope);

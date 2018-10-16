@@ -5,9 +5,24 @@ export default class extends Evaluator {
         super(experience, customEvaluator);
     }
 
+    entity(key, is, compareChildEntity) {
+        const { childEntityKey } = this.experience;
+
+        return this[is](childEntityKey, compareChildEntity);
+    }
+
+    organization(key, is, value) {
+        const { experience } = this;
+        const { organization = {} } = experience;
+        const { data = {} } = organization;
+        const currentOrganizationValue = data[key];
+
+        return this[is](currentOrganizationValue, value);
+    }
+
     storyEvents(lhs, is, storyEvent) {
         let { experience = {} } = this;
-        let { events = []} = experience;
+        let { events = [] } = experience;
 
         if (storyEvent === 'none') {
             return noEventFired(is, events, experience);
@@ -26,7 +41,7 @@ export default class extends Evaluator {
         }
     }
 
-    fired(event, events = [])  {
+    fired(event, events = []) {
         let firedEvent = events.find((eventFired, index) => {
             return eventFired === event;
         });

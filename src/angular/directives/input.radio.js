@@ -19,7 +19,7 @@ class RadioInput {
             let { id, errors = {}, name, labelHTML, label, attributes = {}, radioButtons = [], settings = {} } = input;
             let radioErrorRequired = '';
 
-            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
+            $scope = ivxExperienceScope.setScopeExperience($scope);
             
             if (attributes.required) {
                 radioErrorRequired = `required="!radioSelected"`;

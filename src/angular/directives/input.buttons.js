@@ -34,7 +34,7 @@ class ButtonsInput {
                 }
             });
 
-            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
+            $scope = ivxExperienceScope.setScopeExperience($scope);
 
             input = pullInTemplate.convertLabel($filter('stringParsers')('startCase', id), input, $scope);
             input.beforeHtml = pullInTemplate.convertTemplateUrlToHtml(input.beforeHtml, $scope);

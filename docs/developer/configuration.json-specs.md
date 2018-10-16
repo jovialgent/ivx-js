@@ -691,6 +691,24 @@ _recordEvent Event Properties_
 
 <div id="event-ivxio-recordEvent-schema" class="json-schema-table-container" data-json-src="{{page.source}}developer/schemas/event-ivxio-recordEvent.jsond"></div>
 
+## setChildEntity
+
+_Description_
+
+Sets an experience to a child entity of a given organization
+
+_Sample Data_
+
+[event-ivxio-set-child-entity.json]({{page.source}}developer/sample-JSON/event-ivxio-set-child-entity.json)
+
+_Schema_
+
+[event-ivxio-set-child-entity.jsond]({{page.source}}developer/schemas/event-ivxio-set-child-entity.jsond)
+
+_setChildEntity Event Properties_
+
+<div id="event-ivxio-set-child-entity-schema" class="json-schema-table-container" data-json-src="{{page.source}}developer/schemas/event-ivxio-set-child-entity.jsond"></div>
+
 ## setComplete
 
 _Description_

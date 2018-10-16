@@ -36,7 +36,7 @@ class FormInput {
                 }
             });
 
-            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
+            $scope = ivxExperienceScope.setScopeExperience($scope);
             
             formSettings = pullInTemplate.convertLabel('', formSettings, $scope);
             formSettings.submit = pullInTemplate.convertLabel('Submit', formSettings.submit, $scope);

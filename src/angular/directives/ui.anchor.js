@@ -23,7 +23,7 @@ export class Anchor {
 
             let thisAnchor = new iVXjsUIModule.anchor(anchorInfo);
 
-            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
+            $scope = ivxExperienceScope.setScopeExperience($scope);
 
 
             iElm.html(thisAnchor.html);

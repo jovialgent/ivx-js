@@ -1,0 +1,6 @@
+{
+    "eventName": "setChildEntity",
+    "args": {
+        "key": "KEY"
+    }
+}

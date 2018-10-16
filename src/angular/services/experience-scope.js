@@ -7,14 +7,16 @@ export class Service {
         });
     }
 
-    setScopeExperience(experience) {
+    setScopeExperience($scope) {
         if (!this.iVXjs) return;
 
         const { data = {} } = this.iVXjs.experience;
 
-        return {
-            data
-        }
+        return Object.assign($scope, {
+            experience: {
+                data
+            }
+        })
     }
 }
 

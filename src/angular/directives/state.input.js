@@ -22,7 +22,7 @@ class InputState {
 
             let inputStateFramework = new iVXjsUIModule.states.input(formSection, data);
 
-            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
+            $scope = ivxExperienceScope.setScopeExperience($scope);
             controller.formSettings = formSettings;
 
             iElm.html(inputStateFramework.html);

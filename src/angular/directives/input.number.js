@@ -20,7 +20,7 @@ class NumberInput {
             let errorMessages = new ErrorMessages(input, errors, attributes);
             let tagHTML = `ng-blur="vm.onChange(inputValue, $event)" ng-model="inputValue"`;
 
-            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
+            $scope = ivxExperienceScope.setScopeExperience($scope);
             
             input.label = label ? label : $filter('stringParsers')('startCase', id);
             input = pullInTemplate.convertLabel($filter('stringParsers')('startCase', id), input, $scope);

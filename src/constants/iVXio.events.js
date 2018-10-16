@@ -10,7 +10,8 @@ export default class extends iVXioConstants{
            SET_COMPLETE : "set-complete",
            SET_CONVERTED : "set-converted",
            SET_MILESTONE : "set-milestone",
-           SET_DATA : "set-data"
+           SET_DATA : "set-data",
+           SET_CHILD_ENTITY: "set-child-entity"
         }
 
         this.addNames(eventNames);
