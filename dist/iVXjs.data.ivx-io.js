@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 22);
+/******/ 	return __webpack_require__(__webpack_require__.s = 20);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -431,6 +431,49 @@ var ObjectParsers = exports.ObjectParsers = function () {
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
+var freeGlobal = __webpack_require__(25);
+
+/** Detect free variable `self`. */
+var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+
+/** Used as a reference to the global object. */
+var root = freeGlobal || freeSelf || Function('return this')();
+
+module.exports = root;
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports) {
+
+module.exports = function(module) {
+	if(!module.webpackPolyfill) {
+		module.deprecate = function() {};
+		module.paths = [];
+		// module.parent = undefined by default
+		if(!module.children) module.children = [];
+		Object.defineProperty(module, "loaded", {
+			enumerable: true,
+			get: function() {
+				return module.l;
+			}
+		});
+		Object.defineProperty(module, "id", {
+			enumerable: true,
+			get: function() {
+				return module.i;
+			}
+		});
+		module.webpackPolyfill = 1;
+	}
+	return module;
+};
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
 "use strict";
 
 
@@ -442,7 +485,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-var _state = __webpack_require__(5);
+var _state = __webpack_require__(8);
 
 var _state2 = _interopRequireDefault(_state);
 
@@ -492,7 +535,30 @@ var _class = function (_iVXjsStateConstants) {
 exports.default = _class;
 
 /***/ }),
-/* 3 */
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var baseIsNative = __webpack_require__(76),
+    getValue = __webpack_require__(82);
+
+/**
+ * Gets the native function at `key` of `object`.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @param {string} key The key of the method to get.
+ * @returns {*} Returns the function if it's native, else `undefined`.
+ */
+function getNative(object, key) {
+  var value = getValue(object, key);
+  return baseIsNative(value) ? value : undefined;
+}
+
+module.exports = getNative;
+
+
+/***/ }),
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -665,35 +731,41 @@ var _class = function () {
 exports.default = _class;
 
 /***/ }),
-/* 4 */
-/***/ (function(module, exports) {
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
 
-module.exports = function(module) {
-	if(!module.webpackPolyfill) {
-		module.deprecate = function() {};
-		module.paths = [];
-		// module.parent = undefined by default
-		if(!module.children) module.children = [];
-		Object.defineProperty(module, "loaded", {
-			enumerable: true,
-			get: function() {
-				return module.l;
-			}
-		});
-		Object.defineProperty(module, "id", {
-			enumerable: true,
-			get: function() {
-				return module.i;
-			}
-		});
-		module.webpackPolyfill = 1;
-	}
-	return module;
-};
+var Symbol = __webpack_require__(24),
+    getRawTag = __webpack_require__(78),
+    objectToString = __webpack_require__(79);
+
+/** `Object#toString` result references. */
+var nullTag = '[object Null]',
+    undefinedTag = '[object Undefined]';
+
+/** Built-in value references. */
+var symToStringTag = Symbol ? Symbol.toStringTag : undefined;
+
+/**
+ * The base implementation of `getTag` without fallbacks for buggy environments.
+ *
+ * @private
+ * @param {*} value The value to query.
+ * @returns {string} Returns the `toStringTag`.
+ */
+function baseGetTag(value) {
+  if (value == null) {
+    return value === undefined ? undefinedTag : nullTag;
+  }
+  return (symToStringTag && symToStringTag in Object(value))
+    ? getRawTag(value)
+    : objectToString(value);
+}
+
+module.exports = baseGetTag;
 
 
 /***/ }),
-/* 5 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -748,7 +820,7 @@ var _class = function (_iVXjsConstants) {
 exports.default = _class;
 
 /***/ }),
-/* 6 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -761,11 +833,11 @@ exports.Actions = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _audioEvents = __webpack_require__(7);
+var _audioEvents = __webpack_require__(10);
 
 var _audioEvents2 = _interopRequireDefault(_audioEvents);
 
-var _stateEvents = __webpack_require__(2);
+var _stateEvents = __webpack_require__(4);
 
 var _stateEvents2 = _interopRequireDefault(_stateEvents);
 
@@ -1023,7 +1095,7 @@ var Actions = exports.Actions = function () {
 ;
 
 /***/ }),
-/* 7 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1037,7 +1109,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-var _audio = __webpack_require__(8);
+var _audio = __webpack_require__(11);
 
 var _audio2 = _interopRequireDefault(_audio);
 
@@ -1098,7 +1170,7 @@ var _class = function (_AudioConstants) {
 exports.default = _class;
 
 /***/ }),
-/* 8 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1153,7 +1225,7 @@ var _class = function (_iVXjsConstants) {
 exports.default = _class;
 
 /***/ }),
-/* 9 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1166,7 +1238,7 @@ exports.Rules = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _evaluator = __webpack_require__(3);
+var _evaluator = __webpack_require__(6);
 
 var _evaluator2 = _interopRequireDefault(_evaluator);
 
@@ -1281,7 +1353,7 @@ var Rules = exports.Rules = function () {
 }();
 
 /***/ }),
-/* 10 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1295,11 +1367,11 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-var _iVXio = __webpack_require__(11);
+var _iVXio = __webpack_require__(14);
 
 var _iVXio2 = _interopRequireDefault(_iVXio);
 
-var _errors = __webpack_require__(12);
+var _errors = __webpack_require__(15);
 
 var _errors2 = _interopRequireDefault(_errors);
 
@@ -1347,7 +1419,7 @@ var _class = function (_iVXioConstants) {
 exports.default = _class;
 
 /***/ }),
-/* 11 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1402,7 +1474,7 @@ var _class = function (_iVXjsConstants) {
 exports.default = _class;
 
 /***/ }),
-/* 12 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1420,15 +1492,15 @@ var _index = __webpack_require__(0);
 
 var _index2 = _interopRequireDefault(_index);
 
-var _video = __webpack_require__(24);
+var _video = __webpack_require__(36);
 
 var _video2 = _interopRequireDefault(_video);
 
-var _http = __webpack_require__(25);
+var _http = __webpack_require__(37);
 
 var _http2 = _interopRequireDefault(_http);
 
-var _iVXio = __webpack_require__(11);
+var _iVXio = __webpack_require__(14);
 
 var _iVXio2 = _interopRequireDefault(_iVXio);
 
@@ -1482,16 +1554,45 @@ var _class = function (_iVXjsConstants) {
 exports.default = _class;
 
 /***/ }),
-/* 13 */,
-/* 14 */,
-/* 15 */,
-/* 16 */,
+/* 16 */
+/***/ (function(module, exports) {
+
+/**
+ * Checks if `value` is object-like. A value is object-like if it's not `null`
+ * and has a `typeof` result of "object".
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+ * @example
+ *
+ * _.isObjectLike({});
+ * // => true
+ *
+ * _.isObjectLike([1, 2, 3]);
+ * // => true
+ *
+ * _.isObjectLike(_.noop);
+ * // => false
+ *
+ * _.isObjectLike(null);
+ * // => false
+ */
+function isObjectLike(value) {
+  return value != null && typeof value == 'object';
+}
+
+module.exports = isObjectLike;
+
+
+/***/ }),
 /* 17 */,
 /* 18 */,
 /* 19 */,
-/* 20 */,
-/* 21 */,
-/* 22 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1504,35 +1605,27 @@ exports.iVXio = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _actions = __webpack_require__(23);
+var _actions = __webpack_require__(35);
 
-var _rules = __webpack_require__(29);
+var _rules = __webpack_require__(41);
 
-var _actions2 = __webpack_require__(6);
+var _actions2 = __webpack_require__(9);
 
 var _typeParsers = __webpack_require__(1);
 
-var _asserts = __webpack_require__(31);
+var _asserts = __webpack_require__(43);
 
-var _index = __webpack_require__(32);
+var _index = __webpack_require__(21);
 
 var _index2 = _interopRequireDefault(_index);
 
-var _iVXioErrors = __webpack_require__(10);
+var _iVXioErrors = __webpack_require__(13);
 
 var _iVXioErrors2 = _interopRequireDefault(_iVXioErrors);
 
-var _factoryFunctionCreator = __webpack_require__(46);
+var _angular = __webpack_require__(57);
 
-var _factoryFunctionCreator2 = _interopRequireDefault(_factoryFunctionCreator);
-
-var _index3 = __webpack_require__(47);
-
-var _index4 = _interopRequireDefault(_index3);
-
-var _index5 = __webpack_require__(53);
-
-var _index6 = _interopRequireDefault(_index5);
+var _angular2 = _interopRequireDefault(_angular);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1678,24 +1771,7 @@ var iVXio = exports.iVXio = function () {
 module.export = initializeiVXIO;
 
 if (angular) {
-    var app = angular.module('ivx-input-validator', []);
-
-    app.constant('validator', _index2.default);
-
-    try {
-        var _app = angular.module('ivx-js');
-
-        _app.constant('iVXjs.data.iVXio', initializeiVXIO);
-        _app.constant('iVXjsDataiVXio', initializeiVXIO);
-        _app.constant('validator', _index2.default);
-        _app.constant('iVXjsDataiVXio', _index2.default);
-
-        new _index4.default(_app, { factoryFunctionCreator: _factoryFunctionCreator2.default });
-        new _index6.default(_app, { factoryFunctionCreator: _factoryFunctionCreator2.default });
-    } catch (e) {
-        console.warn('The iVXio Data Module is not attached to the iVXjs module. If this is correct, ignore this warning.');
-        console.warn(e);
-    }
+    (0, _angular2.default)();
 }
 
 function initializeiVXIO() {
@@ -1705,982 +1781,10 @@ function initializeiVXIO() {
 
     return settings;
 };
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)(module)))
 
 /***/ }),
-/* 23 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.iVXioActions = undefined;
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _iVXioErrors = __webpack_require__(10);
-
-var _iVXioErrors2 = _interopRequireDefault(_iVXioErrors);
-
-var _iVXioEvents = __webpack_require__(26);
-
-var _iVXioEvents2 = _interopRequireDefault(_iVXioEvents);
-
-var _logging = __webpack_require__(27);
-
-var _logging2 = _interopRequireDefault(_logging);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var iVXioErrors = new _iVXioErrors2.default();
-
-/**
- * Adds a layer of transformation to iVXio's host functionality
- * to work with the Action system in iVXjs.
- */
-
-var iVXioActions = exports.iVXioActions = function () {
-
-    /**
-     * Pulls the iVXio's experience host that this class 
-     * will use to set various experience data.
-     * 
-     * @param {ExperienceHost} experience - current instance of iVXio's
-     * experience host.
-     */
-    function iVXioActions(experience) {
-        var iVXjsLog = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : new _logging2.default(false, experience.Bus);
-
-        _classCallCheck(this, iVXioActions);
-
-        /**
-         * The experience host that will perform the 
-         * actions to the platform
-         * 
-         * @type {ExperienceHost}
-         */
-        this.experience = experience;
-        this.iVXjsLog = iVXjsLog;
-        this.eventNames = new _iVXioEvents2.default();
-    }
-
-    /**
-     * Translates the "animatePageElement" from the platform to
-     * iVXjs's action "animateElement."
-     * 
-     * @param {object} eventArgs - animate page element's event object 
-     * with a target id.
-     * 
-     * @return {Promise} - indicates the animation to an element is finished.
-     */
-
-
-    _createClass(iVXioActions, [{
-        key: "animatePageElement",
-        value: function animatePageElement(eventArgs) {
-            var element = '';
-
-            if (eventArgs.targetID) {
-                element = '#' + eventArgs.targetID;
-            } else {
-                element = eventArgs.element;
-            }
-
-            return this.experience.animateElement({
-                element: element,
-                animationClass: eventArgs.animation
-            });
-        }
-
-        /**
-         * The platform utilizes .NET's time format and requires the date 
-         * value to be in a specific format for Date/Datetime inputs. 
-         * 
-         * @param {string} key - experience key to pull the input display.
-         * @param {Date} date - the date to transform into .NET safe string.
-         * @return {string} - correctly formatted date string for .NET.
-         * 
-         */
-
-    }, {
-        key: "formatDateForPlatform",
-        value: function formatDateForPlatform(key, date) {
-            var inputs = this.experience.story.inputs;
-
-            var input = inputs[key];
-            var display = input.display;
-
-
-            switch (display) {
-                case "Date":
-                    var dateString = date.getFullYear() + "-" + getMonth(date.getMonth()) + "-" + getDate(date.getDate());
-
-                    return dateString;
-            }
-
-            function getMonth(monthNum) {
-                var correctedMonthNum = (monthNum + 1) % 13;
-
-                return correctedMonthNum >= 10 ? correctedMonthNum : "0" + correctedMonthNum;
-            }
-
-            function getDate(dateNum) {
-                return dateNum >= 10 ? dateNum : "0" + dateNum;
-            }
-        }
-
-        /**
-         * Sends the custom event in the event args for the 
-         * platform to record.
-         * 
-         * @param {object} eventArgs - all event arguments
-         * @param {string} eventArgs.customEvent - event name to be recorded
-         * by the platform.
-         * @return {Promise} - will indicate if this event was successfully recorded by the platform.
-         */
-
-    }, {
-        key: "recordEvent",
-        value: function recordEvent(eventArgs) {
-            var self = this;
-            if ((typeof eventArgs === "undefined" ? "undefined" : _typeof(eventArgs)) === 'object') {
-                var customEvent = eventArgs.customEvent;
-
-
-                try {
-                    return this.experience.recordEvent(customEvent).then(function () {
-                        self.experience.Bus.emit(self.eventNames.RECORD_EVENT, eventArgs);
-                    }, function () {
-                        self.experience.Bus.emit(iVXioErrors.EVENT_NOT_FIRED, eventArgs, e);
-                        self.iVXjsLog.error(e, "IVX_IO");
-                    });
-                } catch (e) {
-                    this.experience.Bus.emit(iVXioErrors.EVENT_NOT_FIRED, eventArgs, e);
-                    this.iVXjsLog.error(e, "IVX_IO");
-                }
-            }
-        }
-
-        /**
-         * Sends the setConverted event with a label if one is provided.
-         * 
-         * @param {object} eventArgs - all event arguments
-         * @param {string} eventArgs.label - converted label that will be recorded
-         * by the platform.
-         * @return {Promise} - will indicate if this setConverted was successful by the platform.
-         */
-
-    }, {
-        key: "setConverted",
-        value: function setConverted(eventArgs) {
-            var self = this;
-
-            if ((typeof eventArgs === "undefined" ? "undefined" : _typeof(eventArgs)) === 'object') {
-                var label = eventArgs.label;
-
-
-                try {
-                    return this.experience.setConverted(label).then(function () {
-                        self.experience.Bus.emit(self.eventNames.SET_CONVERTED, eventArgs);
-                    });
-                } catch (e) {
-                    this.experience.Bus.emit(iVXioErrors.EVENT_NOT_FIRED, eventArgs, e);
-                    this.iVXjsLog.error(e, "IVX_IO");
-                }
-            }
-        }
-
-        /**
-         * Sends the setCompleted event.
-         * 
-         * @param {object} eventArgs - all event arguments
-         * @return {Promise} - will indicate if this setComplete was successful by the platform.
-         */
-
-    }, {
-        key: "setComplete",
-        value: function setComplete() {
-            var eventArgs = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-            var self = this;
-
-            if ((typeof eventArgs === "undefined" ? "undefined" : _typeof(eventArgs)) === 'object') {
-                try {
-                    return this.experience.setComplete().then(function () {
-                        self.experience.Bus.emit(self.eventNames.SET_COMPLETE, eventArgs);
-                    });
-                } catch (e) {
-                    this.experience.Bus.emit(iVXioErrors.EVENT_NOT_FIRED, eventArgs, e);
-                    this.iVXjsLog.error(e, "IVX_IO");
-                }
-            }
-        }
-
-        /**
-         * Sends the setData event to the platform with the key and  
-         * value in the eventArgs.
-         * 
-         * @param {object} eventArgs - all event arguments
-         * @param {string} eventArgs.key - experience data key to be set.
-         * @param {string} eventArgs.value - experience data value to be set to.  
-         * @return {Promise} - will indicate if this data was successfully updated to the platform.
-         */
-
-    }, {
-        key: "setData",
-        value: function setData(eventArgs) {
-            if ((typeof eventArgs === "undefined" ? "undefined" : _typeof(eventArgs)) === 'object') {
-                var key = eventArgs.key,
-                    value = eventArgs.value;
-
-                var self = this;
-                var _experience$debugHost = this.experience.debugHost,
-                    debugHost = _experience$debugHost === undefined ? false : _experience$debugHost;
-
-                var inputNotFound = typeof this.experience.data[key] === 'undefined' || this.experience.data[key] === null;
-
-                if (!debugHost && inputNotFound) {
-                    this.experience.Bus.emit('iVXjs:iVXio:error:event-not-fired', eventArgs, { message: "iVXjs Error Message: Input not found" });
-                    this.iVXjsLog.error({ message: 'iVXjs Error Message: Input not found' }, "IVX_IO");
-                    return;
-                }
-
-                if (value instanceof Date) {
-                    value = this.formatDateForPlatform(key, value);
-
-                    return this.experience.setData(key, value);
-                }
-
-                try {
-                    return this.experience.setData(key, value).then(function (test) {
-                        var data = self.experience.data;
-
-
-                        if (debugHost) {
-                            self.experience.data[key] = value;
-                        }
-
-                        self.experience.Log.debug("Current Experience Data", {
-                            group: true,
-                            messages: Object.keys(data).map(function (dataKey, index) {
-                                return {
-                                    message: dataKey + ":" + data[dataKey],
-                                    data: data[dataKey]
-                                };
-                            })
-                        }, data);
-
-                        self.experience.Bus.emit(self.eventNames.SET_DATA, eventArgs);
-                    });
-                } catch (e) {
-                    this.experience.Bus.emit(iVXioErrors.EVENT_NOT_FIRED, eventArgs, e);
-                    this.iVXjsLog.error(e);
-                }
-            }
-        }
-
-        /**
-         * Sends the setMilestone with the milestone defined in the 
-         * eventArgs object.
-         * 
-         * @param {object} eventArgs - holds the milestone to be send to the platform.
-         * @param {string} eventArgs.milestone - milestone to be set.
-         * @return {Promise} - indicates if this milestone was set on the platform.
-         */
-
-    }, {
-        key: "setMilestone",
-        value: function setMilestone(eventArgs) {
-            var self = this;
-            if ((typeof eventArgs === "undefined" ? "undefined" : _typeof(eventArgs)) === 'object') {
-                var milestone = eventArgs.milestone;
-
-
-                try {
-                    return this.experience.setMilestone(milestone).then(function () {
-                        self.experience.Bus.emit(self.eventNames.SET_MILESTONE, eventArgs);
-                    }, function () {
-                        self.experience.Bus.emit(iVXioErrors.EVENT_NOT_FIRED, eventArgs, e);
-                        self.iVXjsLog.error(e, "IVX_IO");
-                    });;
-                } catch (e) {
-                    this.experience.Bus.emit(iVXioErrors.EVENT_NOT_FIRED, eventArgs, e);
-                    this.iVXjsLog.error(e, "IVX_IO");
-                }
-            }
-        }
-    }]);
-
-    return iVXioActions;
-}();
-
-/***/ }),
-/* 24 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-
-var _index = __webpack_require__(0);
-
-var _index2 = _interopRequireDefault(_index);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var _class = function (_iVXjsConstants) {
-    _inherits(_class, _iVXjsConstants);
-
-    function _class() {
-        _classCallCheck(this, _class);
-
-        var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
-
-        _this.VIDEO = "video";
-
-        return _this;
-    }
-
-    _createClass(_class, [{
-        key: "convention",
-        value: function convention() {
-            var DELIMETER = this.DELIMETER,
-                VIDEO = this.VIDEO;
-
-
-            return "" + _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + VIDEO;
-        }
-    }]);
-
-    return _class;
-}(_index2.default);
-
-exports.default = _class;
-
-/***/ }),
-/* 25 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-
-var _index = __webpack_require__(0);
-
-var _index2 = _interopRequireDefault(_index);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var _class = function (_iVXjsConstants) {
-    _inherits(_class, _iVXjsConstants);
-
-    function _class() {
-        _classCallCheck(this, _class);
-
-        var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
-
-        _this.HTTP = "http";
-        return _this;
-    }
-
-    _createClass(_class, [{
-        key: "convention",
-        value: function convention() {
-            var DELIMETER = this.DELIMETER,
-                HTTP = this.HTTP;
-
-
-            return "" + _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + HTTP;
-        }
-    }]);
-
-    return _class;
-}(_index2.default);
-
-exports.default = _class;
-
-/***/ }),
-/* 26 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-
-var _iVXio = __webpack_require__(11);
-
-var _iVXio2 = _interopRequireDefault(_iVXio);
-
-var _errors = __webpack_require__(12);
-
-var _errors2 = _interopRequireDefault(_errors);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var _class = function (_iVXioConstants) {
-    _inherits(_class, _iVXioConstants);
-
-    function _class() {
-        _classCallCheck(this, _class);
-
-        var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
-
-        var eventNames = {
-            RECORD_EVENT: "record-event",
-            SET_COMPLETE: "set-complete",
-            SET_CONVERTED: "set-converted",
-            SET_MILESTONE: "set-milestone",
-            SET_DATA: "set-data"
-        };
-
-        _this.addNames(eventNames);
-        return _this;
-    }
-
-    _createClass(_class, [{
-        key: "convention",
-        value: function convention(errorName) {
-            var ERROR = this.ERROR,
-                DELIMETER = this.DELIMETER;
-
-            return "" + _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + errorName;
-        }
-    }]);
-
-    return _class;
-}(_iVXio2.default);
-
-exports.default = _class;
-
-/***/ }),
-/* 27 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _logging = __webpack_require__(28);
-
-var _logging2 = _interopRequireDefault(_logging);
-
-var _errors = __webpack_require__(12);
-
-var _errors2 = _interopRequireDefault(_errors);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var _class = function () {
-    function _class(show, Bus) {
-        _classCallCheck(this, _class);
-
-        this.show = show;
-        this.LoggingMessages = new _logging2.default();
-        this.ErrorMessages = new _errors2.default();
-        this.Bus = Bus;
-    }
-
-    _createClass(_class, [{
-        key: 'warn',
-        value: function warn(message) {
-            var show = this.show,
-                LoggingMessages = this.LoggingMessages,
-                Bus = this.Bus;
-
-            var warnMessage = LoggingMessages.WARN;
-            var warnPayload = {
-                message: message,
-                timestamp: new Date()
-            };
-
-            if (show) {
-                console.warn(warnMessage + ': ' + message);
-            }
-
-            Bus.emit(warnMessage, warnPayload);
-        }
-    }, {
-        key: 'error',
-        value: function error(_error) {
-            var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "DEFAULT";
-            var show = this.show,
-                ErrorMessages = this.ErrorMessages,
-                Bus = this.Bus;
-
-            var errorTypeMessage = ErrorMessages[type];
-            var message = _error.message,
-                messages = _error.messages;
-
-            var errorPayload = {
-                message: message,
-                type: errorTypeMessage,
-                error: _error,
-                timestamp: new Date()
-            };
-
-            console.error(errorTypeMessage + ': ' + message);
-
-            if (messages) {
-                this.debug("Errors caused by the following data", {
-                    group: true,
-                    messages: messages
-                });
-            }
-
-            Bus.emit(errorTypeMessage, _error);
-            Bus.emit(_logging2.default.ERROR, errorPayload);
-
-            // throw Error(message);
-        }
-    }, {
-        key: 'debug',
-        value: function debug(message) {
-            var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-            var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-            var show = this.show,
-                LoggingMessages = this.LoggingMessages,
-                Bus = this.Bus;
-
-            var logMessage = LoggingMessages.DEBUG;
-            var self = this;
-            var _options$group = options.group,
-                group = _options$group === undefined ? false : _options$group;
-
-
-            if (group && show) {
-                var messages = options.messages;
-
-
-                console.groupCollapsed(logMessage + ': ' + message);
-
-                messages.forEach(function (message) {
-                    var title = message.title,
-                        logMesage = message.message;
-
-
-                    if (title) {
-                        console.log(title);
-                        self.createMessage(logMesage);
-                    } else {
-                        self.createMessage(logMesage);
-                    }
-                });
-                console.groupEnd();
-
-                Bus.emit(logMessage, message, options, data);
-
-                return;
-            }
-
-            if (show) {
-                console.log(logMessage + ':' + message);
-                Bus.emit(logMessage, message, {}, data);
-            }
-        }
-    }, {
-        key: 'log',
-        value: function log(message) {
-            var show = this.show,
-                LoggingMessages = this.LoggingMessages,
-                Bus = this.Bus;
-
-            var logMessage = LoggingMessages.LOG;
-            var logPayload = {
-                message: message,
-                timestamp: new Date()
-            };
-
-            console.log(logMessage + ': ' + message);
-            Bus.emit(logMessage, logPayload);
-        }
-    }, {
-        key: 'createMessage',
-        value: function createMessage(message) {
-            if (message !== null && (typeof message === 'undefined' ? 'undefined' : _typeof(message)) === 'object' || Array.isArray(message)) {
-                console.dir(message);
-            } else {
-                console.log(message);
-            }
-        }
-    }, {
-        key: 'trace',
-        value: function trace(stack) {
-            var show = this.show,
-                LoggingMessages = this.LoggingMessages,
-                Bus = this.Bus;
-
-            var stackPayLoad = {
-                stack: stack,
-                timestamp: new Date()
-            };
-
-            if (show) {
-                console.trace(stack);
-            }
-
-            Bus.emit(LoggingMessages.TRACE, stackPayLoad);
-        }
-    }]);
-
-    return _class;
-}();
-
-exports.default = _class;
-
-/***/ }),
-/* 28 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
-
-var _index = __webpack_require__(0);
-
-var _index2 = _interopRequireDefault(_index);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var _class = function (_iVXjsConstants) {
-    _inherits(_class, _iVXjsConstants);
-
-    function _class() {
-        _classCallCheck(this, _class);
-
-        var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
-
-        _this.LOGGING = "log";
-
-        var logTypes = {
-            ERROR: "error",
-            WARN: "warn",
-            TRACE: "trace",
-            LOG: "",
-            DEBUG: "debug"
-        };
-
-        _this.addNames(logTypes);
-        return _this;
-    }
-
-    _createClass(_class, [{
-        key: "convention",
-        value: function convention(level) {
-            var DELIMETER = this.DELIMETER,
-                LOGGING = this.LOGGING;
-
-            if (level.length <= 0) {
-                return "" + _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + LOGGING;
-            }
-
-            return "" + _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + LOGGING + DELIMETER + level;
-        }
-    }]);
-
-    return _class;
-}(_index2.default);
-
-exports.default = _class;
-
-/***/ }),
-/* 29 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.iVXioRules = undefined;
-
-var _evaluator = __webpack_require__(30);
-
-var _evaluator2 = _interopRequireDefault(_evaluator);
-
-var _rules = __webpack_require__(9);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-/**
- * Generates an iVXio Rules function that allows navigation and 
- * rule evaluation based on both experience data and progress.
- */
-var iVXioRules = exports.iVXioRules = function (_Rules) {
-  _inherits(iVXioRules, _Rules);
-
-  /**
-   * Attaches the current experience to this class to help
-   * process both data and progress informaiton.
-   * 
-   * @param {iVXioExperiece} experience - iVXio Experience object
-   * containing all the information for these rules to evaluate on.
-   */
-  function iVXioRules(experience, customEvaluator) {
-    _classCallCheck(this, iVXioRules);
-
-    var _this = _possibleConstructorReturn(this, (iVXioRules.__proto__ || Object.getPrototypeOf(iVXioRules)).call(this, experience, customEvaluator));
-
-    _this.evaluator = new _evaluator2.default(experience, customEvaluator);
-    return _this;
-  }
-
-  return iVXioRules;
-}(_rules.Rules);
-
-/***/ }),
-/* 30 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _evaluator = __webpack_require__(3);
-
-var _evaluator2 = _interopRequireDefault(_evaluator);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var _class = function (_Evaluator) {
-    _inherits(_class, _Evaluator);
-
-    function _class(experience, customEvaluator) {
-        _classCallCheck(this, _class);
-
-        return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, experience, customEvaluator));
-    }
-
-    _createClass(_class, [{
-        key: 'storyEvents',
-        value: function storyEvents(lhs, is, storyEvent) {
-            var _experience = this.experience,
-                experience = _experience === undefined ? {} : _experience;
-            var _experience$events = experience.events,
-                events = _experience$events === undefined ? [] : _experience$events;
-
-
-            if (storyEvent === 'none') {
-                return noEventFired(is, events, experience);
-            }
-
-            if (this[is]) {
-                return this[is](storyEvent, events);
-            }
-
-            return false;
-
-            function noEventFired(is, events, experience) {
-                var isFired = is === 'fired';
-
-                return events.length <= 0 && isFired;
-            }
-        }
-    }, {
-        key: 'fired',
-        value: function fired(event) {
-            var events = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
-
-            var firedEvent = events.find(function (eventFired, index) {
-                return eventFired === event;
-            });
-
-            return typeof firedEvent !== 'undefined';
-        }
-    }, {
-        key: 'notFired',
-        value: function notFired(event) {
-            var events = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
-
-            var firedEvent = events.find(function (eventFired, index) {
-                return eventFired === event;
-            });
-
-            return typeof firedEvent === 'undefined';
-        }
-    }, {
-        key: 'progress',
-        value: function progress(lhs, is, _progress) {
-            var experience = this.experience;
-            var currentStoryProgress = experience.progress,
-                currentMilestone = experience.milestone,
-                story = experience.story;
-            var progressMap = story.progressMap;
-
-            var currentProgress = void 0;
-            var currentProgressValue = -1;
-            var currentMilestoneValue = -1;
-
-            if (currentMilestone && currentMilestone.length > 0) {
-                var currentMilestoneString = currentMilestone[0].toLowerCase() + currentMilestone.substring(1);
-
-                currentMilestoneValue = progressMap[currentMilestoneString] ? progressMap[currentMilestoneString] : -1;
-            }
-
-            if (isStoryProgress(currentStoryProgress)) {
-                var currentProgressString = currentStoryProgress[0].toLowerCase() + currentStoryProgress.substring(1);
-
-                currentProgressValue = progressMap[currentProgressString];
-            }
-
-            _progress = _progress[0].toLowerCase() + _progress.substring(1);
-
-            var progressValue = progressMap[_progress];
-            var evaluateProgress = currentProgressValue > currentMilestoneValue ? currentProgressValue : currentMilestoneValue;
-
-            if (this[is]) {
-                return this[is](evaluateProgress, progressValue);
-            }
-
-            return false;
-
-            function isStoryProgress(progress) {
-                return progress === 'Started' || progress === 'Completed' || progress === 'Converted';
-            }
-        }
-    }]);
-
-    return _class;
-}(_evaluator2.default);
-
-exports.default = _class;
-
-/***/ }),
-/* 31 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var _class = function () {
-	function _class(log) {
-		_classCallCheck(this, _class);
-
-		this.log = log;
-	}
-
-	_createClass(_class, [{
-		key: "assert",
-		value: function assert(test, name, message) {
-			var log = this.log;
-			var debug = log.show;
-
-
-			if (!test) {
-				var errorObj = {
-					message: name + " is invalid: " + message + "."
-				};
-
-				if (debug) {
-					this.log.error(errorObj, "ASSERT");
-					throw new Error(errorObj.message);
-				}
-			}
-
-			return test;
-		}
-	}]);
-
-	return _class;
-}();
-
-exports.default = _class;
-
-/***/ }),
-/* 32 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2695,47 +1799,47 @@ var _createClass = function () { function defineProperties(target, props) { for 
 //Validators 
 
 
-var _iVXioErrors = __webpack_require__(10);
+var _iVXioErrors = __webpack_require__(13);
 
 var _iVXioErrors2 = _interopRequireDefault(_iVXioErrors);
 
-var _cascadingOptions = __webpack_require__(33);
+var _cascadingOptions = __webpack_require__(44);
 
 var _cascadingOptions2 = _interopRequireDefault(_cascadingOptions);
 
-var _checkbox = __webpack_require__(34);
+var _checkbox = __webpack_require__(45);
 
 var _checkbox2 = _interopRequireDefault(_checkbox);
 
-var _email = __webpack_require__(36);
+var _email = __webpack_require__(47);
 
 var _email2 = _interopRequireDefault(_email);
 
-var _number = __webpack_require__(37);
+var _number = __webpack_require__(48);
 
 var _number2 = _interopRequireDefault(_number);
 
-var _options = __webpack_require__(38);
+var _options = __webpack_require__(49);
 
 var _options2 = _interopRequireDefault(_options);
 
-var _textarea = __webpack_require__(41);
+var _textarea = __webpack_require__(52);
 
 var _textarea2 = _interopRequireDefault(_textarea);
 
-var _textLarge = __webpack_require__(42);
+var _textLarge = __webpack_require__(53);
 
 var _textLarge2 = _interopRequireDefault(_textLarge);
 
-var _textMedium = __webpack_require__(43);
+var _textMedium = __webpack_require__(54);
 
 var _textMedium2 = _interopRequireDefault(_textMedium);
 
-var _textShort = __webpack_require__(44);
+var _textShort = __webpack_require__(55);
 
 var _textShort2 = _interopRequireDefault(_textShort);
 
-var _url = __webpack_require__(45);
+var _url = __webpack_require__(56);
 
 var _url2 = _interopRequireDefault(_url);
 
@@ -3025,7 +2129,1225 @@ var _class = function () {
 exports.default = _class;
 
 /***/ }),
-/* 33 */
+/* 22 */
+/***/ (function(module, exports) {
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/**
+ * Checks if `value` is likely a prototype object.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a prototype, else `false`.
+ */
+function isPrototype(value) {
+  var Ctor = value && value.constructor,
+      proto = (typeof Ctor == 'function' && Ctor.prototype) || objectProto;
+
+  return value === proto;
+}
+
+module.exports = isPrototype;
+
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var baseGetTag = __webpack_require__(7),
+    isObject = __webpack_require__(26);
+
+/** `Object#toString` result references. */
+var asyncTag = '[object AsyncFunction]',
+    funcTag = '[object Function]',
+    genTag = '[object GeneratorFunction]',
+    proxyTag = '[object Proxy]';
+
+/**
+ * Checks if `value` is classified as a `Function` object.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a function, else `false`.
+ * @example
+ *
+ * _.isFunction(_);
+ * // => true
+ *
+ * _.isFunction(/abc/);
+ * // => false
+ */
+function isFunction(value) {
+  if (!isObject(value)) {
+    return false;
+  }
+  // The use of `Object#toString` avoids issues with the `typeof` operator
+  // in Safari 9 which returns 'object' for typed arrays and other constructors.
+  var tag = baseGetTag(value);
+  return tag == funcTag || tag == genTag || tag == asyncTag || tag == proxyTag;
+}
+
+module.exports = isFunction;
+
+
+/***/ }),
+/* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var root = __webpack_require__(2);
+
+/** Built-in value references. */
+var Symbol = root.Symbol;
+
+module.exports = Symbol;
+
+
+/***/ }),
+/* 25 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global) {/** Detect free variable `global` from Node.js. */
+var freeGlobal = typeof global == 'object' && global && global.Object === Object && global;
+
+module.exports = freeGlobal;
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(77)))
+
+/***/ }),
+/* 26 */
+/***/ (function(module, exports) {
+
+/**
+ * Checks if `value` is the
+ * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
+ * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+ * @example
+ *
+ * _.isObject({});
+ * // => true
+ *
+ * _.isObject([1, 2, 3]);
+ * // => true
+ *
+ * _.isObject(_.noop);
+ * // => true
+ *
+ * _.isObject(null);
+ * // => false
+ */
+function isObject(value) {
+  var type = typeof value;
+  return value != null && (type == 'object' || type == 'function');
+}
+
+module.exports = isObject;
+
+
+/***/ }),
+/* 27 */
+/***/ (function(module, exports) {
+
+/** Used for built-in method references. */
+var funcProto = Function.prototype;
+
+/** Used to resolve the decompiled source of functions. */
+var funcToString = funcProto.toString;
+
+/**
+ * Converts `func` to its source code.
+ *
+ * @private
+ * @param {Function} func The function to convert.
+ * @returns {string} Returns the source code.
+ */
+function toSource(func) {
+  if (func != null) {
+    try {
+      return funcToString.call(func);
+    } catch (e) {}
+    try {
+      return (func + '');
+    } catch (e) {}
+  }
+  return '';
+}
+
+module.exports = toSource;
+
+
+/***/ }),
+/* 28 */
+/***/ (function(module, exports) {
+
+/** Used as references for various `Number` constants. */
+var MAX_SAFE_INTEGER = 9007199254740991;
+
+/**
+ * Checks if `value` is a valid array-like length.
+ *
+ * **Note:** This method is loosely based on
+ * [`ToLength`](http://ecma-international.org/ecma-262/7.0/#sec-tolength).
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a valid length, else `false`.
+ * @example
+ *
+ * _.isLength(3);
+ * // => true
+ *
+ * _.isLength(Number.MIN_VALUE);
+ * // => false
+ *
+ * _.isLength(Infinity);
+ * // => false
+ *
+ * _.isLength('3');
+ * // => false
+ */
+function isLength(value) {
+  return typeof value == 'number' &&
+    value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER;
+}
+
+module.exports = isLength;
+
+
+/***/ }),
+/* 29 */,
+/* 30 */,
+/* 31 */,
+/* 32 */,
+/* 33 */,
+/* 34 */,
+/* 35 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.iVXioActions = undefined;
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _iVXioErrors = __webpack_require__(13);
+
+var _iVXioErrors2 = _interopRequireDefault(_iVXioErrors);
+
+var _iVXioEvents = __webpack_require__(38);
+
+var _iVXioEvents2 = _interopRequireDefault(_iVXioEvents);
+
+var _logging = __webpack_require__(39);
+
+var _logging2 = _interopRequireDefault(_logging);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var iVXioErrors = new _iVXioErrors2.default();
+
+/**
+ * Adds a layer of transformation to iVXio's host functionality
+ * to work with the Action system in iVXjs.
+ */
+
+var iVXioActions = exports.iVXioActions = function () {
+
+    /**
+     * Pulls the iVXio's experience host that this class 
+     * will use to set various experience data.
+     * 
+     * @param {ExperienceHost} experience - current instance of iVXio's
+     * experience host.
+     */
+    function iVXioActions(experience) {
+        var iVXjsLog = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : new _logging2.default(false, experience.Bus);
+
+        _classCallCheck(this, iVXioActions);
+
+        /**
+         * The experience host that will perform the 
+         * actions to the platform
+         * 
+         * @type {ExperienceHost}
+         */
+        this.experience = experience;
+        this.iVXjsLog = iVXjsLog;
+        this.eventNames = new _iVXioEvents2.default();
+    }
+
+    /**
+     * Translates the "animatePageElement" from the platform to
+     * iVXjs's action "animateElement."
+     * 
+     * @param {object} eventArgs - animate page element's event object 
+     * with a target id.
+     * 
+     * @return {Promise} - indicates the animation to an element is finished.
+     */
+
+
+    _createClass(iVXioActions, [{
+        key: "animatePageElement",
+        value: function animatePageElement(eventArgs) {
+            var element = '';
+
+            if (eventArgs.targetID) {
+                element = '#' + eventArgs.targetID;
+            } else {
+                element = eventArgs.element;
+            }
+
+            return this.experience.animateElement({
+                element: element,
+                animationClass: eventArgs.animation
+            });
+        }
+
+        /**
+         * The platform utilizes .NET's time format and requires the date 
+         * value to be in a specific format for Date/Datetime inputs. 
+         * 
+         * @param {string} key - experience key to pull the input display.
+         * @param {Date} date - the date to transform into .NET safe string.
+         * @return {string} - correctly formatted date string for .NET.
+         * 
+         */
+
+    }, {
+        key: "formatDateForPlatform",
+        value: function formatDateForPlatform(key, date) {
+            var inputs = this.experience.story.inputs;
+
+            var input = inputs[key];
+            var display = input.display;
+
+
+            switch (display) {
+                case "Date":
+                    var dateString = date.getFullYear() + "-" + getMonth(date.getMonth()) + "-" + getDate(date.getDate());
+
+                    return dateString;
+            }
+
+            function getMonth(monthNum) {
+                var correctedMonthNum = (monthNum + 1) % 13;
+
+                return correctedMonthNum >= 10 ? correctedMonthNum : "0" + correctedMonthNum;
+            }
+
+            function getDate(dateNum) {
+                return dateNum >= 10 ? dateNum : "0" + dateNum;
+            }
+        }
+
+        /**
+         * Sends the custom event in the event args for the 
+         * platform to record.
+         * 
+         * @param {object} eventArgs - all event arguments
+         * @param {string} eventArgs.customEvent - event name to be recorded
+         * by the platform.
+         * @return {Promise} - will indicate if this event was successfully recorded by the platform.
+         */
+
+    }, {
+        key: "recordEvent",
+        value: function recordEvent(eventArgs) {
+            var self = this;
+            if ((typeof eventArgs === "undefined" ? "undefined" : _typeof(eventArgs)) === 'object') {
+                var customEvent = eventArgs.customEvent;
+
+
+                try {
+                    return this.experience.recordEvent(customEvent).then(function () {
+                        self.experience.Bus.emit(self.eventNames.RECORD_EVENT, eventArgs);
+                    }, function () {
+                        self.experience.Bus.emit(iVXioErrors.EVENT_NOT_FIRED, eventArgs, e);
+                        self.iVXjsLog.error(e, "IVX_IO");
+                    });
+                } catch (e) {
+                    this.experience.Bus.emit(iVXioErrors.EVENT_NOT_FIRED, eventArgs, e);
+                    this.iVXjsLog.error(e, "IVX_IO");
+                }
+            }
+        }
+
+        /**
+         * Sends the setConverted event with a label if one is provided.
+         * 
+         * @param {object} eventArgs - all event arguments
+         * @param {string} eventArgs.label - converted label that will be recorded
+         * by the platform.
+         * @return {Promise} - will indicate if this setConverted was successful by the platform.
+         */
+
+    }, {
+        key: "setConverted",
+        value: function setConverted(eventArgs) {
+            var self = this;
+
+            if ((typeof eventArgs === "undefined" ? "undefined" : _typeof(eventArgs)) === 'object') {
+                var label = eventArgs.label;
+
+
+                try {
+                    return this.experience.setConverted(label).then(function () {
+                        self.experience.Bus.emit(self.eventNames.SET_CONVERTED, eventArgs);
+                    });
+                } catch (e) {
+                    this.experience.Bus.emit(iVXioErrors.EVENT_NOT_FIRED, eventArgs, e);
+                    this.iVXjsLog.error(e, "IVX_IO");
+                }
+            }
+        }
+
+        /**
+         * Sends the setCompleted event.
+         * 
+         * @param {object} eventArgs - all event arguments
+         * @return {Promise} - will indicate if this setComplete was successful by the platform.
+         */
+
+    }, {
+        key: "setComplete",
+        value: function setComplete() {
+            var eventArgs = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+            var self = this;
+
+            if ((typeof eventArgs === "undefined" ? "undefined" : _typeof(eventArgs)) === 'object') {
+                try {
+                    return this.experience.setComplete().then(function () {
+                        self.experience.Bus.emit(self.eventNames.SET_COMPLETE, eventArgs);
+                    });
+                } catch (e) {
+                    this.experience.Bus.emit(iVXioErrors.EVENT_NOT_FIRED, eventArgs, e);
+                    this.iVXjsLog.error(e, "IVX_IO");
+                }
+            }
+        }
+    }, {
+        key: "setChildEntity",
+        value: function setChildEntity() {
+            var eventArgs = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+            var self = this;
+
+            try {
+                var key = eventArgs.key;
+
+                return this.experience.setChildEntity(key).then(function () {
+                    self.experience.Bus.emit(self.eventNames.SET_CHILD_ENTITY, eventArgs);
+                });
+            } catch (e) {
+                this.experience.Bus.emit(iVXioErrors.EVENT_NOT_FIRED, eventArgs, e);
+                this.iVXjsLog.error(e, "IVX_IO");
+            }
+        }
+
+        /**
+         * Sends the setData event to the platform with the key and  
+         * value in the eventArgs.
+         * 
+         * @param {object} eventArgs - all event arguments
+         * @param {string} eventArgs.key - experience data key to be set.
+         * @param {string} eventArgs.value - experience data value to be set to.  
+         * @return {Promise} - will indicate if this data was successfully updated to the platform.
+         */
+
+    }, {
+        key: "setData",
+        value: function setData(eventArgs) {
+            if ((typeof eventArgs === "undefined" ? "undefined" : _typeof(eventArgs)) === 'object') {
+                var key = eventArgs.key,
+                    value = eventArgs.value;
+
+                var self = this;
+                var _experience$debugHost = this.experience.debugHost,
+                    debugHost = _experience$debugHost === undefined ? false : _experience$debugHost;
+
+                var inputNotFound = typeof this.experience.data[key] === 'undefined' || this.experience.data[key] === null;
+
+                if (!debugHost && inputNotFound) {
+                    this.experience.Bus.emit('iVXjs:iVXio:error:event-not-fired', eventArgs, { message: "iVXjs Error Message: Input not found" });
+                    this.iVXjsLog.error({ message: 'iVXjs Error Message: Input not found' }, "IVX_IO");
+                    return;
+                }
+
+                if (value instanceof Date) {
+                    value = this.formatDateForPlatform(key, value);
+
+                    return this.experience.setData(key, value);
+                }
+
+                try {
+                    return this.experience.setData(key, value).then(function (test) {
+                        var data = self.experience.data;
+
+
+                        if (debugHost) {
+                            self.experience.data[key] = value;
+                        }
+
+                        self.experience.Log.debug("Current Experience Data", {
+                            group: true,
+                            messages: Object.keys(data).map(function (dataKey, index) {
+                                return {
+                                    message: dataKey + ":" + data[dataKey],
+                                    data: data[dataKey]
+                                };
+                            })
+                        }, data);
+
+                        self.experience.Bus.emit(self.eventNames.SET_DATA, eventArgs);
+                    });
+                } catch (e) {
+                    this.experience.Bus.emit(iVXioErrors.EVENT_NOT_FIRED, eventArgs, e);
+                    this.iVXjsLog.error(e);
+                }
+            }
+        }
+
+        /**
+         * Sends the setMilestone with the milestone defined in the 
+         * eventArgs object.
+         * 
+         * @param {object} eventArgs - holds the milestone to be send to the platform.
+         * @param {string} eventArgs.milestone - milestone to be set.
+         * @return {Promise} - indicates if this milestone was set on the platform.
+         */
+
+    }, {
+        key: "setMilestone",
+        value: function setMilestone(eventArgs) {
+            var self = this;
+            if ((typeof eventArgs === "undefined" ? "undefined" : _typeof(eventArgs)) === 'object') {
+                var milestone = eventArgs.milestone;
+
+
+                try {
+                    return this.experience.setMilestone(milestone).then(function () {
+                        self.experience.Bus.emit(self.eventNames.SET_MILESTONE, eventArgs);
+                    }, function () {
+                        self.experience.Bus.emit(iVXioErrors.EVENT_NOT_FIRED, eventArgs, e);
+                        self.iVXjsLog.error(e, "IVX_IO");
+                    });;
+                } catch (e) {
+                    this.experience.Bus.emit(iVXioErrors.EVENT_NOT_FIRED, eventArgs, e);
+                    this.iVXjsLog.error(e, "IVX_IO");
+                }
+            }
+        }
+    }]);
+
+    return iVXioActions;
+}();
+
+/***/ }),
+/* 36 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _index = __webpack_require__(0);
+
+var _index2 = _interopRequireDefault(_index);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _class = function (_iVXjsConstants) {
+    _inherits(_class, _iVXjsConstants);
+
+    function _class() {
+        _classCallCheck(this, _class);
+
+        var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
+
+        _this.VIDEO = "video";
+
+        return _this;
+    }
+
+    _createClass(_class, [{
+        key: "convention",
+        value: function convention() {
+            var DELIMETER = this.DELIMETER,
+                VIDEO = this.VIDEO;
+
+
+            return "" + _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + VIDEO;
+        }
+    }]);
+
+    return _class;
+}(_index2.default);
+
+exports.default = _class;
+
+/***/ }),
+/* 37 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _index = __webpack_require__(0);
+
+var _index2 = _interopRequireDefault(_index);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _class = function (_iVXjsConstants) {
+    _inherits(_class, _iVXjsConstants);
+
+    function _class() {
+        _classCallCheck(this, _class);
+
+        var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
+
+        _this.HTTP = "http";
+        return _this;
+    }
+
+    _createClass(_class, [{
+        key: "convention",
+        value: function convention() {
+            var DELIMETER = this.DELIMETER,
+                HTTP = this.HTTP;
+
+
+            return "" + _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + HTTP;
+        }
+    }]);
+
+    return _class;
+}(_index2.default);
+
+exports.default = _class;
+
+/***/ }),
+/* 38 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _iVXio = __webpack_require__(14);
+
+var _iVXio2 = _interopRequireDefault(_iVXio);
+
+var _errors = __webpack_require__(15);
+
+var _errors2 = _interopRequireDefault(_errors);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _class = function (_iVXioConstants) {
+    _inherits(_class, _iVXioConstants);
+
+    function _class() {
+        _classCallCheck(this, _class);
+
+        var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
+
+        var eventNames = {
+            RECORD_EVENT: "record-event",
+            SET_COMPLETE: "set-complete",
+            SET_CONVERTED: "set-converted",
+            SET_MILESTONE: "set-milestone",
+            SET_DATA: "set-data",
+            SET_CHILD_ENTITY: "set-child-entity"
+        };
+
+        _this.addNames(eventNames);
+        return _this;
+    }
+
+    _createClass(_class, [{
+        key: "convention",
+        value: function convention(errorName) {
+            var ERROR = this.ERROR,
+                DELIMETER = this.DELIMETER;
+
+            return "" + _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + errorName;
+        }
+    }]);
+
+    return _class;
+}(_iVXio2.default);
+
+exports.default = _class;
+
+/***/ }),
+/* 39 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _logging = __webpack_require__(40);
+
+var _logging2 = _interopRequireDefault(_logging);
+
+var _errors = __webpack_require__(15);
+
+var _errors2 = _interopRequireDefault(_errors);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var _class = function () {
+    function _class(show, Bus) {
+        _classCallCheck(this, _class);
+
+        this.show = show;
+        this.LoggingMessages = new _logging2.default();
+        this.ErrorMessages = new _errors2.default();
+        this.Bus = Bus;
+    }
+
+    _createClass(_class, [{
+        key: 'warn',
+        value: function warn(message) {
+            var show = this.show,
+                LoggingMessages = this.LoggingMessages,
+                Bus = this.Bus;
+
+            var warnMessage = LoggingMessages.WARN;
+            var warnPayload = {
+                message: message,
+                timestamp: new Date()
+            };
+
+            if (show) {
+                console.warn(warnMessage + ': ' + message);
+            }
+
+            Bus.emit(warnMessage, warnPayload);
+        }
+    }, {
+        key: 'error',
+        value: function error(_error) {
+            var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "DEFAULT";
+            var show = this.show,
+                ErrorMessages = this.ErrorMessages,
+                Bus = this.Bus;
+
+            var errorTypeMessage = ErrorMessages[type];
+            var message = _error.message,
+                messages = _error.messages;
+
+            var errorPayload = {
+                message: message,
+                type: errorTypeMessage,
+                error: _error,
+                timestamp: new Date()
+            };
+
+            console.error(errorTypeMessage + ': ' + message);
+
+            if (messages) {
+                this.debug("Errors caused by the following data", {
+                    group: true,
+                    messages: messages
+                });
+            }
+
+            Bus.emit(errorTypeMessage, _error);
+            Bus.emit(_logging2.default.ERROR, errorPayload);
+
+            // throw Error(message);
+        }
+    }, {
+        key: 'debug',
+        value: function debug(message) {
+            var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+            var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+            var show = this.show,
+                LoggingMessages = this.LoggingMessages,
+                Bus = this.Bus;
+
+            var logMessage = LoggingMessages.DEBUG;
+            var self = this;
+            var _options$group = options.group,
+                group = _options$group === undefined ? false : _options$group;
+
+
+            if (group && show) {
+                var messages = options.messages;
+
+
+                console.groupCollapsed(logMessage + ': ' + message);
+
+                messages.forEach(function (message) {
+                    var title = message.title,
+                        logMesage = message.message;
+
+
+                    if (title) {
+                        console.log(title);
+                        self.createMessage(logMesage);
+                    } else {
+                        self.createMessage(logMesage);
+                    }
+                });
+                console.groupEnd();
+
+                Bus.emit(logMessage, message, options, data);
+
+                return;
+            }
+
+            if (show) {
+                console.log(logMessage + ':' + message);
+                Bus.emit(logMessage, message, {}, data);
+            }
+        }
+    }, {
+        key: 'log',
+        value: function log(message) {
+            var show = this.show,
+                LoggingMessages = this.LoggingMessages,
+                Bus = this.Bus;
+
+            var logMessage = LoggingMessages.LOG;
+            var logPayload = {
+                message: message,
+                timestamp: new Date()
+            };
+
+            console.log(logMessage + ': ' + message);
+            Bus.emit(logMessage, logPayload);
+        }
+    }, {
+        key: 'createMessage',
+        value: function createMessage(message) {
+            if (message !== null && (typeof message === 'undefined' ? 'undefined' : _typeof(message)) === 'object' || Array.isArray(message)) {
+                console.dir(message);
+            } else {
+                console.log(message);
+            }
+        }
+    }, {
+        key: 'trace',
+        value: function trace(stack) {
+            var show = this.show,
+                LoggingMessages = this.LoggingMessages,
+                Bus = this.Bus;
+
+            var stackPayLoad = {
+                stack: stack,
+                timestamp: new Date()
+            };
+
+            if (show) {
+                console.trace(stack);
+            }
+
+            Bus.emit(LoggingMessages.TRACE, stackPayLoad);
+        }
+    }]);
+
+    return _class;
+}();
+
+exports.default = _class;
+
+/***/ }),
+/* 40 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
+
+var _index = __webpack_require__(0);
+
+var _index2 = _interopRequireDefault(_index);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _class = function (_iVXjsConstants) {
+    _inherits(_class, _iVXjsConstants);
+
+    function _class() {
+        _classCallCheck(this, _class);
+
+        var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this));
+
+        _this.LOGGING = "log";
+
+        var logTypes = {
+            ERROR: "error",
+            WARN: "warn",
+            TRACE: "trace",
+            LOG: "",
+            DEBUG: "debug"
+        };
+
+        _this.addNames(logTypes);
+        return _this;
+    }
+
+    _createClass(_class, [{
+        key: "convention",
+        value: function convention(level) {
+            var DELIMETER = this.DELIMETER,
+                LOGGING = this.LOGGING;
+
+            if (level.length <= 0) {
+                return "" + _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + LOGGING;
+            }
+
+            return "" + _get(_class.prototype.__proto__ || Object.getPrototypeOf(_class.prototype), "convention", this).call(this) + DELIMETER + LOGGING + DELIMETER + level;
+        }
+    }]);
+
+    return _class;
+}(_index2.default);
+
+exports.default = _class;
+
+/***/ }),
+/* 41 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.iVXioRules = undefined;
+
+var _evaluator = __webpack_require__(42);
+
+var _evaluator2 = _interopRequireDefault(_evaluator);
+
+var _rules = __webpack_require__(12);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+/**
+ * Generates an iVXio Rules function that allows navigation and 
+ * rule evaluation based on both experience data and progress.
+ */
+var iVXioRules = exports.iVXioRules = function (_Rules) {
+  _inherits(iVXioRules, _Rules);
+
+  /**
+   * Attaches the current experience to this class to help
+   * process both data and progress informaiton.
+   * 
+   * @param {iVXioExperiece} experience - iVXio Experience object
+   * containing all the information for these rules to evaluate on.
+   */
+  function iVXioRules(experience, customEvaluator) {
+    _classCallCheck(this, iVXioRules);
+
+    var _this = _possibleConstructorReturn(this, (iVXioRules.__proto__ || Object.getPrototypeOf(iVXioRules)).call(this, experience, customEvaluator));
+
+    _this.evaluator = new _evaluator2.default(experience, customEvaluator);
+    return _this;
+  }
+
+  return iVXioRules;
+}(_rules.Rules);
+
+/***/ }),
+/* 42 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _evaluator = __webpack_require__(6);
+
+var _evaluator2 = _interopRequireDefault(_evaluator);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _class = function (_Evaluator) {
+    _inherits(_class, _Evaluator);
+
+    function _class(experience, customEvaluator) {
+        _classCallCheck(this, _class);
+
+        return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, experience, customEvaluator));
+    }
+
+    _createClass(_class, [{
+        key: 'entity',
+        value: function entity(key, is, compareChildEntity) {
+            var childEntityKey = this.experience.childEntityKey;
+
+
+            return this[is](childEntityKey, compareChildEntity);
+        }
+    }, {
+        key: 'organization',
+        value: function organization(key, is, value) {
+            var experience = this.experience;
+            var _experience$organizat = experience.organization,
+                organization = _experience$organizat === undefined ? {} : _experience$organizat;
+            var _organization$data = organization.data,
+                data = _organization$data === undefined ? {} : _organization$data;
+
+            var currentOrganizationValue = data[key];
+
+            return this[is](currentOrganizationValue, value);
+        }
+    }, {
+        key: 'storyEvents',
+        value: function storyEvents(lhs, is, storyEvent) {
+            var _experience = this.experience,
+                experience = _experience === undefined ? {} : _experience;
+            var _experience$events = experience.events,
+                events = _experience$events === undefined ? [] : _experience$events;
+
+
+            if (storyEvent === 'none') {
+                return noEventFired(is, events, experience);
+            }
+
+            if (this[is]) {
+                return this[is](storyEvent, events);
+            }
+
+            return false;
+
+            function noEventFired(is, events, experience) {
+                var isFired = is === 'fired';
+
+                return events.length <= 0 && isFired;
+            }
+        }
+    }, {
+        key: 'fired',
+        value: function fired(event) {
+            var events = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+
+            var firedEvent = events.find(function (eventFired, index) {
+                return eventFired === event;
+            });
+
+            return typeof firedEvent !== 'undefined';
+        }
+    }, {
+        key: 'notFired',
+        value: function notFired(event) {
+            var events = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+
+            var firedEvent = events.find(function (eventFired, index) {
+                return eventFired === event;
+            });
+
+            return typeof firedEvent === 'undefined';
+        }
+    }, {
+        key: 'progress',
+        value: function progress(lhs, is, _progress) {
+            var experience = this.experience;
+            var currentStoryProgress = experience.progress,
+                currentMilestone = experience.milestone,
+                story = experience.story;
+            var progressMap = story.progressMap;
+
+            var currentProgress = void 0;
+            var currentProgressValue = -1;
+            var currentMilestoneValue = -1;
+
+            if (currentMilestone && currentMilestone.length > 0) {
+                var currentMilestoneString = currentMilestone[0].toLowerCase() + currentMilestone.substring(1);
+
+                currentMilestoneValue = progressMap[currentMilestoneString] ? progressMap[currentMilestoneString] : -1;
+            }
+
+            if (isStoryProgress(currentStoryProgress)) {
+                var currentProgressString = currentStoryProgress[0].toLowerCase() + currentStoryProgress.substring(1);
+
+                currentProgressValue = progressMap[currentProgressString];
+            }
+
+            _progress = _progress[0].toLowerCase() + _progress.substring(1);
+
+            var progressValue = progressMap[_progress];
+            var evaluateProgress = currentProgressValue > currentMilestoneValue ? currentProgressValue : currentMilestoneValue;
+
+            if (this[is]) {
+                return this[is](evaluateProgress, progressValue);
+            }
+
+            return false;
+
+            function isStoryProgress(progress) {
+                return progress === 'Started' || progress === 'Completed' || progress === 'Converted';
+            }
+        }
+    }]);
+
+    return _class;
+}(_evaluator2.default);
+
+exports.default = _class;
+
+/***/ }),
+/* 43 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var _class = function () {
+	function _class(log) {
+		_classCallCheck(this, _class);
+
+		this.log = log;
+	}
+
+	_createClass(_class, [{
+		key: "assert",
+		value: function assert(test, name, message) {
+			var log = this.log;
+			var debug = log.show;
+
+
+			if (!test) {
+				var errorObj = {
+					message: name + " is invalid: " + message + "."
+				};
+
+				if (debug) {
+					this.log.error(errorObj, "ASSERT");
+					throw new Error(errorObj.message);
+				}
+			}
+
+			return test;
+		}
+	}]);
+
+	return _class;
+}();
+
+exports.default = _class;
+
+/***/ }),
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3073,7 +3395,7 @@ var _class = function () {
 exports.default = _class;
 
 /***/ }),
-/* 34 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3085,7 +3407,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _checkboxButtons = __webpack_require__(35);
+var _checkboxButtons = __webpack_require__(46);
 
 var _checkboxButtons2 = _interopRequireDefault(_checkboxButtons);
 
@@ -3127,7 +3449,7 @@ var _class = function () {
 exports.default = _class;
 
 /***/ }),
-/* 35 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3206,7 +3528,7 @@ var _class = function () {
 exports.default = _class;
 
 /***/ }),
-/* 36 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3249,7 +3571,7 @@ var _class = function () {
 exports.default = _class;
 
 /***/ }),
-/* 37 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3316,7 +3638,7 @@ var _class = function () {
 exports.default = _class;
 
 /***/ }),
-/* 38 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3328,11 +3650,11 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _optionsButtons = __webpack_require__(39);
+var _optionsButtons = __webpack_require__(50);
 
 var _optionsButtons2 = _interopRequireDefault(_optionsButtons);
 
-var _optionsRadio = __webpack_require__(40);
+var _optionsRadio = __webpack_require__(51);
 
 var _optionsRadio2 = _interopRequireDefault(_optionsRadio);
 
@@ -3385,7 +3707,7 @@ var _class = function () {
 exports.default = _class;
 
 /***/ }),
-/* 39 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3462,7 +3784,7 @@ var _class = function () {
 exports.default = _class;
 
 /***/ }),
-/* 40 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3541,7 +3863,7 @@ var _class = function () {
 exports.default = _class;
 
 /***/ }),
-/* 41 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3601,7 +3923,7 @@ var _class = function () {
 exports.default = _class;
 
 /***/ }),
-/* 42 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3661,7 +3983,7 @@ var _class = function () {
 exports.default = _class;
 
 /***/ }),
-/* 43 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3721,7 +4043,7 @@ var _class = function () {
 exports.default = _class;
 
 /***/ }),
-/* 44 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3781,7 +4103,7 @@ var _class = function () {
 exports.default = _class;
 
 /***/ }),
-/* 45 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3824,7 +4146,69 @@ var _class = function () {
 exports.default = _class;
 
 /***/ }),
-/* 46 */
+/* 57 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _factoryFunctionCreator = __webpack_require__(58);
+
+var _factoryFunctionCreator2 = _interopRequireDefault(_factoryFunctionCreator);
+
+var _index = __webpack_require__(59);
+
+var _index2 = _interopRequireDefault(_index);
+
+var _index3 = __webpack_require__(65);
+
+var _index4 = _interopRequireDefault(_index3);
+
+var _index5 = __webpack_require__(21);
+
+var _index6 = _interopRequireDefault(_index5);
+
+var _index7 = __webpack_require__(20);
+
+__webpack_require__(67);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function () {
+    var app = angular.module('ivx-input-validator', []);
+
+    app.constant('validator', _index6.default);
+
+    try {
+        var _app = angular.module('ivx-js');
+
+        _app.constant('iVXjs.data.iVXio', initializeiVXIO);
+        _app.constant('iVXjsDataiVXio', initializeiVXIO);
+        _app.constant('validator', _index6.default);
+        _app.constant('iVXjsDataiVXio', _index6.default);
+
+        new _index2.default(_app, { factoryFunctionCreator: _factoryFunctionCreator2.default });
+        new _index4.default(_app, { factoryFunctionCreator: _factoryFunctionCreator2.default });
+    } catch (e) {
+        console.warn('The iVXio Data Module is not attached to the iVXjs module. If this is correct, ignore this warning.');
+        console.warn(e);
+    }
+
+    function initializeiVXIO() {
+        var settings = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+        settings.module = _index7.iVXio;
+
+        return settings;
+    };
+};
+
+/***/ }),
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3851,7 +4235,7 @@ function createFactoryFunction(constructor) {
 }
 
 /***/ }),
-/* 47 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3861,7 +4245,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _index = __webpack_require__(48);
+var _index = __webpack_require__(60);
 
 var _index2 = _interopRequireDefault(_index);
 
@@ -3878,7 +4262,7 @@ var _class = function _class(app, opts) {
 exports.default = _class;
 
 /***/ }),
-/* 48 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3888,19 +4272,19 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _directive = __webpack_require__(49);
+var _directive = __webpack_require__(61);
 
 var _directive2 = _interopRequireDefault(_directive);
 
-var _directive3 = __webpack_require__(50);
+var _directive3 = __webpack_require__(62);
 
 var _directive4 = _interopRequireDefault(_directive3);
 
-var _directive5 = __webpack_require__(51);
+var _directive5 = __webpack_require__(63);
 
 var _directive6 = _interopRequireDefault(_directive5);
 
-var _directive7 = __webpack_require__(52);
+var _directive7 = __webpack_require__(64);
 
 var _directive8 = _interopRequireDefault(_directive7);
 
@@ -3920,7 +4304,7 @@ var _class = function _class(app, opts) {
 exports.default = _class;
 
 /***/ }),
-/* 49 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3966,7 +4350,7 @@ var _class = function _class(app, opts) {
 exports.default = _class;
 
 /***/ }),
-/* 50 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4006,7 +4390,7 @@ var _class = function _class(app, opts) {
 exports.default = _class;
 
 /***/ }),
-/* 51 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4052,7 +4436,7 @@ var _class = function _class(app, opts) {
 exports.default = _class;
 
 /***/ }),
-/* 52 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4098,7 +4482,7 @@ var _class = function _class(app, opts) {
 exports.default = _class;
 
 /***/ }),
-/* 53 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4108,7 +4492,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _experienceScope = __webpack_require__(54);
+var _experienceScope = __webpack_require__(66);
 
 var _experienceScope2 = _interopRequireDefault(_experienceScope);
 
@@ -4125,7 +4509,7 @@ var _class = function _class(app, opts) {
 exports.default = _class;
 
 /***/ }),
-/* 54 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4164,6 +4548,963 @@ var _class = function _class(app, opts) {
 };
 
 exports.default = _class;
+
+/***/ }),
+/* 67 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+__webpack_require__(68);
+
+/***/ }),
+/* 68 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _experienceScope = __webpack_require__(69);
+
+var _experienceScope2 = _interopRequireDefault(_experienceScope);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+try {
+    angular.module('ivx-js').config(["$provide", function ($provide) {
+        "ngInject";
+
+        $provide.decorator("ivxExperienceScope", _experienceScope2.default);
+    }]);
+} catch (e) {
+    console.warn('The iVXio Data Module is not attached to the iVXjs module. If this is correct, ignore this warning.');
+    console.warn(e);
+}
+
+/***/ }),
+/* 69 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _isEmpty = __webpack_require__(70);
+
+var _isEmpty2 = _interopRequireDefault(_isEmpty);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = ["$delegate", "iVXjs", function ($delegate, iVXjs) {
+    "ngInject";
+
+    $delegate.setScopeExperience = function ($scope) {
+        if (!iVXjs) return;
+
+        var _iVXjs$experience = iVXjs.experience,
+            experience = _iVXjs$experience === undefined ? {} : _iVXjs$experience;
+
+        var entity = {};
+
+        var _experience$data = experience.data,
+            experienceData = _experience$data === undefined ? {} : _experience$data,
+            _experience$organizat = experience.organization,
+            organization = _experience$organizat === undefined ? {} : _experience$organizat,
+            _experience$childEnti = experience.childEntityKey,
+            childEntityKey = _experience$childEnti === undefined ? "" : _experience$childEnti;
+        var _organization$data = organization.data,
+            organizationData = _organization$data === undefined ? {} : _organization$data,
+            childEntityType = organization.childEntityType,
+            name = organization.name,
+            key = organization.key,
+            _organization$logo = organization.logo,
+            logo = _organization$logo === undefined ? {} : _organization$logo;
+
+
+        if (!(0, _isEmpty2.default)(childEntityKey)) {
+            var entities = organization.entities;
+
+            var foundEntity = entities.find(function (currentEntity) {
+                return currentEntity.key === childEntityKey;
+            }) || {};
+
+            entity = Object.assign({}, foundEntity, {
+                type: childEntityType
+            });
+        }
+
+        return Object.assign($scope, {
+            experience: {
+                data: experienceData
+            },
+            organization: {
+                data: organizationData,
+                entity: entity,
+                name: name,
+                key: key,
+                logo: logo
+            }
+        });
+    };
+
+    return $delegate;
+}];
+
+/***/ }),
+/* 70 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var baseKeys = __webpack_require__(71),
+    getTag = __webpack_require__(74),
+    isArguments = __webpack_require__(87),
+    isArray = __webpack_require__(89),
+    isArrayLike = __webpack_require__(90),
+    isBuffer = __webpack_require__(91),
+    isPrototype = __webpack_require__(22),
+    isTypedArray = __webpack_require__(93);
+
+/** `Object#toString` result references. */
+var mapTag = '[object Map]',
+    setTag = '[object Set]';
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/**
+ * Checks if `value` is an empty object, collection, map, or set.
+ *
+ * Objects are considered empty if they have no own enumerable string keyed
+ * properties.
+ *
+ * Array-like values such as `arguments` objects, arrays, buffers, strings, or
+ * jQuery-like collections are considered empty if they have a `length` of `0`.
+ * Similarly, maps and sets are considered empty if they have a `size` of `0`.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is empty, else `false`.
+ * @example
+ *
+ * _.isEmpty(null);
+ * // => true
+ *
+ * _.isEmpty(true);
+ * // => true
+ *
+ * _.isEmpty(1);
+ * // => true
+ *
+ * _.isEmpty([1, 2, 3]);
+ * // => false
+ *
+ * _.isEmpty({ 'a': 1 });
+ * // => false
+ */
+function isEmpty(value) {
+  if (value == null) {
+    return true;
+  }
+  if (isArrayLike(value) &&
+      (isArray(value) || typeof value == 'string' || typeof value.splice == 'function' ||
+        isBuffer(value) || isTypedArray(value) || isArguments(value))) {
+    return !value.length;
+  }
+  var tag = getTag(value);
+  if (tag == mapTag || tag == setTag) {
+    return !value.size;
+  }
+  if (isPrototype(value)) {
+    return !baseKeys(value).length;
+  }
+  for (var key in value) {
+    if (hasOwnProperty.call(value, key)) {
+      return false;
+    }
+  }
+  return true;
+}
+
+module.exports = isEmpty;
+
+
+/***/ }),
+/* 71 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var isPrototype = __webpack_require__(22),
+    nativeKeys = __webpack_require__(72);
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/**
+ * The base implementation of `_.keys` which doesn't treat sparse arrays as dense.
+ *
+ * @private
+ * @param {Object} object The object to query.
+ * @returns {Array} Returns the array of property names.
+ */
+function baseKeys(object) {
+  if (!isPrototype(object)) {
+    return nativeKeys(object);
+  }
+  var result = [];
+  for (var key in Object(object)) {
+    if (hasOwnProperty.call(object, key) && key != 'constructor') {
+      result.push(key);
+    }
+  }
+  return result;
+}
+
+module.exports = baseKeys;
+
+
+/***/ }),
+/* 72 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var overArg = __webpack_require__(73);
+
+/* Built-in method references for those with the same name as other `lodash` methods. */
+var nativeKeys = overArg(Object.keys, Object);
+
+module.exports = nativeKeys;
+
+
+/***/ }),
+/* 73 */
+/***/ (function(module, exports) {
+
+/**
+ * Creates a unary function that invokes `func` with its argument transformed.
+ *
+ * @private
+ * @param {Function} func The function to wrap.
+ * @param {Function} transform The argument transform.
+ * @returns {Function} Returns the new function.
+ */
+function overArg(func, transform) {
+  return function(arg) {
+    return func(transform(arg));
+  };
+}
+
+module.exports = overArg;
+
+
+/***/ }),
+/* 74 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var DataView = __webpack_require__(75),
+    Map = __webpack_require__(83),
+    Promise = __webpack_require__(84),
+    Set = __webpack_require__(85),
+    WeakMap = __webpack_require__(86),
+    baseGetTag = __webpack_require__(7),
+    toSource = __webpack_require__(27);
+
+/** `Object#toString` result references. */
+var mapTag = '[object Map]',
+    objectTag = '[object Object]',
+    promiseTag = '[object Promise]',
+    setTag = '[object Set]',
+    weakMapTag = '[object WeakMap]';
+
+var dataViewTag = '[object DataView]';
+
+/** Used to detect maps, sets, and weakmaps. */
+var dataViewCtorString = toSource(DataView),
+    mapCtorString = toSource(Map),
+    promiseCtorString = toSource(Promise),
+    setCtorString = toSource(Set),
+    weakMapCtorString = toSource(WeakMap);
+
+/**
+ * Gets the `toStringTag` of `value`.
+ *
+ * @private
+ * @param {*} value The value to query.
+ * @returns {string} Returns the `toStringTag`.
+ */
+var getTag = baseGetTag;
+
+// Fallback for data views, maps, sets, and weak maps in IE 11 and promises in Node.js < 6.
+if ((DataView && getTag(new DataView(new ArrayBuffer(1))) != dataViewTag) ||
+    (Map && getTag(new Map) != mapTag) ||
+    (Promise && getTag(Promise.resolve()) != promiseTag) ||
+    (Set && getTag(new Set) != setTag) ||
+    (WeakMap && getTag(new WeakMap) != weakMapTag)) {
+  getTag = function(value) {
+    var result = baseGetTag(value),
+        Ctor = result == objectTag ? value.constructor : undefined,
+        ctorString = Ctor ? toSource(Ctor) : '';
+
+    if (ctorString) {
+      switch (ctorString) {
+        case dataViewCtorString: return dataViewTag;
+        case mapCtorString: return mapTag;
+        case promiseCtorString: return promiseTag;
+        case setCtorString: return setTag;
+        case weakMapCtorString: return weakMapTag;
+      }
+    }
+    return result;
+  };
+}
+
+module.exports = getTag;
+
+
+/***/ }),
+/* 75 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var getNative = __webpack_require__(5),
+    root = __webpack_require__(2);
+
+/* Built-in method references that are verified to be native. */
+var DataView = getNative(root, 'DataView');
+
+module.exports = DataView;
+
+
+/***/ }),
+/* 76 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var isFunction = __webpack_require__(23),
+    isMasked = __webpack_require__(80),
+    isObject = __webpack_require__(26),
+    toSource = __webpack_require__(27);
+
+/**
+ * Used to match `RegExp`
+ * [syntax characters](http://ecma-international.org/ecma-262/7.0/#sec-patterns).
+ */
+var reRegExpChar = /[\\^$.*+?()[\]{}|]/g;
+
+/** Used to detect host constructors (Safari). */
+var reIsHostCtor = /^\[object .+?Constructor\]$/;
+
+/** Used for built-in method references. */
+var funcProto = Function.prototype,
+    objectProto = Object.prototype;
+
+/** Used to resolve the decompiled source of functions. */
+var funcToString = funcProto.toString;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/** Used to detect if a method is native. */
+var reIsNative = RegExp('^' +
+  funcToString.call(hasOwnProperty).replace(reRegExpChar, '\\$&')
+  .replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$'
+);
+
+/**
+ * The base implementation of `_.isNative` without bad shim checks.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a native function,
+ *  else `false`.
+ */
+function baseIsNative(value) {
+  if (!isObject(value) || isMasked(value)) {
+    return false;
+  }
+  var pattern = isFunction(value) ? reIsNative : reIsHostCtor;
+  return pattern.test(toSource(value));
+}
+
+module.exports = baseIsNative;
+
+
+/***/ }),
+/* 77 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+/* 78 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Symbol = __webpack_require__(24);
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/**
+ * Used to resolve the
+ * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+ * of values.
+ */
+var nativeObjectToString = objectProto.toString;
+
+/** Built-in value references. */
+var symToStringTag = Symbol ? Symbol.toStringTag : undefined;
+
+/**
+ * A specialized version of `baseGetTag` which ignores `Symbol.toStringTag` values.
+ *
+ * @private
+ * @param {*} value The value to query.
+ * @returns {string} Returns the raw `toStringTag`.
+ */
+function getRawTag(value) {
+  var isOwn = hasOwnProperty.call(value, symToStringTag),
+      tag = value[symToStringTag];
+
+  try {
+    value[symToStringTag] = undefined;
+    var unmasked = true;
+  } catch (e) {}
+
+  var result = nativeObjectToString.call(value);
+  if (unmasked) {
+    if (isOwn) {
+      value[symToStringTag] = tag;
+    } else {
+      delete value[symToStringTag];
+    }
+  }
+  return result;
+}
+
+module.exports = getRawTag;
+
+
+/***/ }),
+/* 79 */
+/***/ (function(module, exports) {
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/**
+ * Used to resolve the
+ * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+ * of values.
+ */
+var nativeObjectToString = objectProto.toString;
+
+/**
+ * Converts `value` to a string using `Object.prototype.toString`.
+ *
+ * @private
+ * @param {*} value The value to convert.
+ * @returns {string} Returns the converted string.
+ */
+function objectToString(value) {
+  return nativeObjectToString.call(value);
+}
+
+module.exports = objectToString;
+
+
+/***/ }),
+/* 80 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var coreJsData = __webpack_require__(81);
+
+/** Used to detect methods masquerading as native. */
+var maskSrcKey = (function() {
+  var uid = /[^.]+$/.exec(coreJsData && coreJsData.keys && coreJsData.keys.IE_PROTO || '');
+  return uid ? ('Symbol(src)_1.' + uid) : '';
+}());
+
+/**
+ * Checks if `func` has its source masked.
+ *
+ * @private
+ * @param {Function} func The function to check.
+ * @returns {boolean} Returns `true` if `func` is masked, else `false`.
+ */
+function isMasked(func) {
+  return !!maskSrcKey && (maskSrcKey in func);
+}
+
+module.exports = isMasked;
+
+
+/***/ }),
+/* 81 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var root = __webpack_require__(2);
+
+/** Used to detect overreaching core-js shims. */
+var coreJsData = root['__core-js_shared__'];
+
+module.exports = coreJsData;
+
+
+/***/ }),
+/* 82 */
+/***/ (function(module, exports) {
+
+/**
+ * Gets the value at `key` of `object`.
+ *
+ * @private
+ * @param {Object} [object] The object to query.
+ * @param {string} key The key of the property to get.
+ * @returns {*} Returns the property value.
+ */
+function getValue(object, key) {
+  return object == null ? undefined : object[key];
+}
+
+module.exports = getValue;
+
+
+/***/ }),
+/* 83 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var getNative = __webpack_require__(5),
+    root = __webpack_require__(2);
+
+/* Built-in method references that are verified to be native. */
+var Map = getNative(root, 'Map');
+
+module.exports = Map;
+
+
+/***/ }),
+/* 84 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var getNative = __webpack_require__(5),
+    root = __webpack_require__(2);
+
+/* Built-in method references that are verified to be native. */
+var Promise = getNative(root, 'Promise');
+
+module.exports = Promise;
+
+
+/***/ }),
+/* 85 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var getNative = __webpack_require__(5),
+    root = __webpack_require__(2);
+
+/* Built-in method references that are verified to be native. */
+var Set = getNative(root, 'Set');
+
+module.exports = Set;
+
+
+/***/ }),
+/* 86 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var getNative = __webpack_require__(5),
+    root = __webpack_require__(2);
+
+/* Built-in method references that are verified to be native. */
+var WeakMap = getNative(root, 'WeakMap');
+
+module.exports = WeakMap;
+
+
+/***/ }),
+/* 87 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var baseIsArguments = __webpack_require__(88),
+    isObjectLike = __webpack_require__(16);
+
+/** Used for built-in method references. */
+var objectProto = Object.prototype;
+
+/** Used to check objects for own properties. */
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+/** Built-in value references. */
+var propertyIsEnumerable = objectProto.propertyIsEnumerable;
+
+/**
+ * Checks if `value` is likely an `arguments` object.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an `arguments` object,
+ *  else `false`.
+ * @example
+ *
+ * _.isArguments(function() { return arguments; }());
+ * // => true
+ *
+ * _.isArguments([1, 2, 3]);
+ * // => false
+ */
+var isArguments = baseIsArguments(function() { return arguments; }()) ? baseIsArguments : function(value) {
+  return isObjectLike(value) && hasOwnProperty.call(value, 'callee') &&
+    !propertyIsEnumerable.call(value, 'callee');
+};
+
+module.exports = isArguments;
+
+
+/***/ }),
+/* 88 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var baseGetTag = __webpack_require__(7),
+    isObjectLike = __webpack_require__(16);
+
+/** `Object#toString` result references. */
+var argsTag = '[object Arguments]';
+
+/**
+ * The base implementation of `_.isArguments`.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an `arguments` object,
+ */
+function baseIsArguments(value) {
+  return isObjectLike(value) && baseGetTag(value) == argsTag;
+}
+
+module.exports = baseIsArguments;
+
+
+/***/ }),
+/* 89 */
+/***/ (function(module, exports) {
+
+/**
+ * Checks if `value` is classified as an `Array` object.
+ *
+ * @static
+ * @memberOf _
+ * @since 0.1.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is an array, else `false`.
+ * @example
+ *
+ * _.isArray([1, 2, 3]);
+ * // => true
+ *
+ * _.isArray(document.body.children);
+ * // => false
+ *
+ * _.isArray('abc');
+ * // => false
+ *
+ * _.isArray(_.noop);
+ * // => false
+ */
+var isArray = Array.isArray;
+
+module.exports = isArray;
+
+
+/***/ }),
+/* 90 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var isFunction = __webpack_require__(23),
+    isLength = __webpack_require__(28);
+
+/**
+ * Checks if `value` is array-like. A value is considered array-like if it's
+ * not a function and has a `value.length` that's an integer greater than or
+ * equal to `0` and less than or equal to `Number.MAX_SAFE_INTEGER`.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is array-like, else `false`.
+ * @example
+ *
+ * _.isArrayLike([1, 2, 3]);
+ * // => true
+ *
+ * _.isArrayLike(document.body.children);
+ * // => true
+ *
+ * _.isArrayLike('abc');
+ * // => true
+ *
+ * _.isArrayLike(_.noop);
+ * // => false
+ */
+function isArrayLike(value) {
+  return value != null && isLength(value.length) && !isFunction(value);
+}
+
+module.exports = isArrayLike;
+
+
+/***/ }),
+/* 91 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(module) {var root = __webpack_require__(2),
+    stubFalse = __webpack_require__(92);
+
+/** Detect free variable `exports`. */
+var freeExports = typeof exports == 'object' && exports && !exports.nodeType && exports;
+
+/** Detect free variable `module`. */
+var freeModule = freeExports && typeof module == 'object' && module && !module.nodeType && module;
+
+/** Detect the popular CommonJS extension `module.exports`. */
+var moduleExports = freeModule && freeModule.exports === freeExports;
+
+/** Built-in value references. */
+var Buffer = moduleExports ? root.Buffer : undefined;
+
+/* Built-in method references for those with the same name as other `lodash` methods. */
+var nativeIsBuffer = Buffer ? Buffer.isBuffer : undefined;
+
+/**
+ * Checks if `value` is a buffer.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.3.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a buffer, else `false`.
+ * @example
+ *
+ * _.isBuffer(new Buffer(2));
+ * // => true
+ *
+ * _.isBuffer(new Uint8Array(2));
+ * // => false
+ */
+var isBuffer = nativeIsBuffer || stubFalse;
+
+module.exports = isBuffer;
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)(module)))
+
+/***/ }),
+/* 92 */
+/***/ (function(module, exports) {
+
+/**
+ * This method returns `false`.
+ *
+ * @static
+ * @memberOf _
+ * @since 4.13.0
+ * @category Util
+ * @returns {boolean} Returns `false`.
+ * @example
+ *
+ * _.times(2, _.stubFalse);
+ * // => [false, false]
+ */
+function stubFalse() {
+  return false;
+}
+
+module.exports = stubFalse;
+
+
+/***/ }),
+/* 93 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var baseIsTypedArray = __webpack_require__(94),
+    baseUnary = __webpack_require__(95),
+    nodeUtil = __webpack_require__(96);
+
+/* Node.js helper references. */
+var nodeIsTypedArray = nodeUtil && nodeUtil.isTypedArray;
+
+/**
+ * Checks if `value` is classified as a typed array.
+ *
+ * @static
+ * @memberOf _
+ * @since 3.0.0
+ * @category Lang
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a typed array, else `false`.
+ * @example
+ *
+ * _.isTypedArray(new Uint8Array);
+ * // => true
+ *
+ * _.isTypedArray([]);
+ * // => false
+ */
+var isTypedArray = nodeIsTypedArray ? baseUnary(nodeIsTypedArray) : baseIsTypedArray;
+
+module.exports = isTypedArray;
+
+
+/***/ }),
+/* 94 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var baseGetTag = __webpack_require__(7),
+    isLength = __webpack_require__(28),
+    isObjectLike = __webpack_require__(16);
+
+/** `Object#toString` result references. */
+var argsTag = '[object Arguments]',
+    arrayTag = '[object Array]',
+    boolTag = '[object Boolean]',
+    dateTag = '[object Date]',
+    errorTag = '[object Error]',
+    funcTag = '[object Function]',
+    mapTag = '[object Map]',
+    numberTag = '[object Number]',
+    objectTag = '[object Object]',
+    regexpTag = '[object RegExp]',
+    setTag = '[object Set]',
+    stringTag = '[object String]',
+    weakMapTag = '[object WeakMap]';
+
+var arrayBufferTag = '[object ArrayBuffer]',
+    dataViewTag = '[object DataView]',
+    float32Tag = '[object Float32Array]',
+    float64Tag = '[object Float64Array]',
+    int8Tag = '[object Int8Array]',
+    int16Tag = '[object Int16Array]',
+    int32Tag = '[object Int32Array]',
+    uint8Tag = '[object Uint8Array]',
+    uint8ClampedTag = '[object Uint8ClampedArray]',
+    uint16Tag = '[object Uint16Array]',
+    uint32Tag = '[object Uint32Array]';
+
+/** Used to identify `toStringTag` values of typed arrays. */
+var typedArrayTags = {};
+typedArrayTags[float32Tag] = typedArrayTags[float64Tag] =
+typedArrayTags[int8Tag] = typedArrayTags[int16Tag] =
+typedArrayTags[int32Tag] = typedArrayTags[uint8Tag] =
+typedArrayTags[uint8ClampedTag] = typedArrayTags[uint16Tag] =
+typedArrayTags[uint32Tag] = true;
+typedArrayTags[argsTag] = typedArrayTags[arrayTag] =
+typedArrayTags[arrayBufferTag] = typedArrayTags[boolTag] =
+typedArrayTags[dataViewTag] = typedArrayTags[dateTag] =
+typedArrayTags[errorTag] = typedArrayTags[funcTag] =
+typedArrayTags[mapTag] = typedArrayTags[numberTag] =
+typedArrayTags[objectTag] = typedArrayTags[regexpTag] =
+typedArrayTags[setTag] = typedArrayTags[stringTag] =
+typedArrayTags[weakMapTag] = false;
+
+/**
+ * The base implementation of `_.isTypedArray` without Node.js optimizations.
+ *
+ * @private
+ * @param {*} value The value to check.
+ * @returns {boolean} Returns `true` if `value` is a typed array, else `false`.
+ */
+function baseIsTypedArray(value) {
+  return isObjectLike(value) &&
+    isLength(value.length) && !!typedArrayTags[baseGetTag(value)];
+}
+
+module.exports = baseIsTypedArray;
+
+
+/***/ }),
+/* 95 */
+/***/ (function(module, exports) {
+
+/**
+ * The base implementation of `_.unary` without support for storing metadata.
+ *
+ * @private
+ * @param {Function} func The function to cap arguments for.
+ * @returns {Function} Returns the new capped function.
+ */
+function baseUnary(func) {
+  return function(value) {
+    return func(value);
+  };
+}
+
+module.exports = baseUnary;
+
+
+/***/ }),
+/* 96 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(module) {var freeGlobal = __webpack_require__(25);
+
+/** Detect free variable `exports`. */
+var freeExports = typeof exports == 'object' && exports && !exports.nodeType && exports;
+
+/** Detect free variable `module`. */
+var freeModule = freeExports && typeof module == 'object' && module && !module.nodeType && module;
+
+/** Detect the popular CommonJS extension `module.exports`. */
+var moduleExports = freeModule && freeModule.exports === freeExports;
+
+/** Detect free variable `process` from Node.js. */
+var freeProcess = moduleExports && freeGlobal.process;
+
+/** Used to access faster Node.js helpers. */
+var nodeUtil = (function() {
+  try {
+    return freeProcess && freeProcess.binding && freeProcess.binding('util');
+  } catch (e) {}
+}());
+
+module.exports = nodeUtil;
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)(module)))
 
 /***/ })
 /******/ ]);

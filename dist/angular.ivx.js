@@ -14935,7 +14935,8 @@ var _class = function (_iVXioConstants) {
             SET_COMPLETE: "set-complete",
             SET_CONVERTED: "set-converted",
             SET_MILESTONE: "set-milestone",
-            SET_DATA: "set-data"
+            SET_DATA: "set-data",
+            SET_CHILD_ENTITY: "set-child-entity"
         };
 
         _this.addNames(eventNames);
@@ -20924,7 +20925,7 @@ var InputState = function () {
 
             var inputStateFramework = new iVXjsUIModule.states.input(formSection, data);
 
-            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
+            $scope = ivxExperienceScope.setScopeExperience($scope);
             controller.formSettings = formSettings;
 
             iElm.html(inputStateFramework.html);
@@ -21194,7 +21195,7 @@ var VideoState = function () {
 
             var videoFramework = new iVXjsUIModule.states.video(videoPlayerHTML, data);
 
-            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
+            $scope = ivxExperienceScope.setScopeExperience($scope);
 
             iElm.html(videoFramework.html);
 
@@ -21432,7 +21433,7 @@ var HtmlState = function () {
 
             var audioEventNames = new _audioEvents2.default();
 
-            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
+            $scope = ivxExperienceScope.setScopeExperience($scope);
 
             if (templateUrl) {
                 var safeTemplateUrl = $sce.getTrustedResourceUrl(templateUrl);
@@ -21643,7 +21644,7 @@ var NavigationState = function () {
 
             var thisNavigationState = new iVXjsModules.states.navigation(data, linkSection);
 
-            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
+            $scope = ivxExperienceScope.setScopeExperience($scope);
 
             iElm.html(thisNavigationState.html);
 
@@ -21749,10 +21750,11 @@ var FormInput = function () {
                 return hideSubmitOnType[type];
             };
             var hideSubmit = false;
-            var inputs = $scope.inputs,
-                _$scope$formSettings = $scope.formSettings,
+            var _$scope = $scope,
+                inputs = _$scope.inputs,
+                _$scope$formSettings = _$scope.formSettings,
                 formSettings = _$scope$formSettings === undefined ? {} : _$scope$formSettings,
-                formId = $scope.formId;
+                formId = _$scope.formId;
 
             var formInputs = inputs.map(function (input, index) {
                 var type = input.type,
@@ -21771,7 +21773,7 @@ var FormInput = function () {
                 };
             });
 
-            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
+            $scope = ivxExperienceScope.setScopeExperience($scope);
 
             formSettings = pullInTemplate.convertLabel('', formSettings, $scope);
             formSettings.submit = pullInTemplate.convertLabel('Submit', formSettings.submit, $scope);
@@ -21882,7 +21884,8 @@ var TextInput = function () {
         this.controller = _inputText2.default;
         this.controllerAs = 'vm';
         this.link = function ($scope, iElm, iAttrs, controller) {
-            var input = $scope.inputData;
+            var _$scope = $scope,
+                input = _$scope.inputData;
             var _input = input,
                 id = _input.id,
                 name = _input.name,
@@ -21899,7 +21902,7 @@ var TextInput = function () {
 
             var errorMessages = new _messagesError.ErrorMessages(input, errors, attributes);
 
-            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
+            $scope = ivxExperienceScope.setScopeExperience($scope);
 
             var tagHTML = 'ng-blur="vm.onChange(inputValue, $event)" ng-model="inputValue"';
 
@@ -22016,7 +22019,8 @@ var Anchor = exports.Anchor = function () {
         this.controllerAs = 'vm';
         this.replace = true;
         this.link = function ($scope, iElm, iAttrs, controller) {
-            var anchorInfo = $scope.anchorInfo;
+            var _$scope = $scope,
+                anchorInfo = _$scope.anchorInfo;
             var _anchorInfo = anchorInfo,
                 _anchorInfo$attribute = _anchorInfo.attributes,
                 attributes = _anchorInfo$attribute === undefined ? {} : _anchorInfo$attribute;
@@ -22030,7 +22034,7 @@ var Anchor = exports.Anchor = function () {
 
             var thisAnchor = new iVXjsUIModule.anchor(anchorInfo);
 
-            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
+            $scope = ivxExperienceScope.setScopeExperience($scope);
 
             iElm.html(thisAnchor.html);
             $compile(iElm.contents())($scope);
@@ -22602,7 +22606,8 @@ var ButtonsInput = function () {
         this.controller = _inputButtons2.default;
         this.controllerAs = 'vm';
         this.link = function ($scope, iElm, iAttrs, controller) {
-            var input = $scope.inputData;
+            var _$scope = $scope,
+                input = _$scope.inputData;
             var _input = input,
                 id = _input.id,
                 name = _input.name,
@@ -22643,7 +22648,7 @@ var ButtonsInput = function () {
                 };
             });
 
-            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
+            $scope = ivxExperienceScope.setScopeExperience($scope);
 
             input = pullInTemplate.convertLabel($filter('stringParsers')('startCase', id), input, $scope);
             input.beforeHtml = pullInTemplate.convertTemplateUrlToHtml(input.beforeHtml, $scope);
@@ -22822,7 +22827,8 @@ var EmailInput = function () {
         this.controller = _inputEmail2.default;
         this.controllerAs = 'vm';
         this.link = function ($scope, iElm, iAttrs, controller) {
-            var input = $scope.inputData;
+            var _$scope = $scope,
+                input = _$scope.inputData;
             var _input = input,
                 id = _input.id,
                 name = _input.name,
@@ -22839,7 +22845,7 @@ var EmailInput = function () {
             var errorMessages = new _messagesError.ErrorMessages(input, errors, attributes);
             var tagHTML = 'ng-blur="vm.onChange(inputValue, $event)" ng-model="inputValue"';
 
-            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
+            $scope = ivxExperienceScope.setScopeExperience($scope);
 
             input.label = label ? label : $filter('stringParsers')('startCase', id);
             input = pullInTemplate.convertLabel($filter('stringParsers')('startCase', id), input, $scope);
@@ -22956,7 +22962,8 @@ var UrlInput = function () {
         this.controller = _inputUrl2.default;
         this.controllerAs = 'vm';
         this.link = function ($scope, iElm, iAttrs, controller) {
-            var input = $scope.inputData;
+            var _$scope = $scope,
+                input = _$scope.inputData;
             var _input = input,
                 id = _input.id,
                 name = _input.name,
@@ -22973,7 +22980,7 @@ var UrlInput = function () {
             var errorMessages = new _messagesError.ErrorMessages(input, errors, attributes);
             var tagHTML = 'ng-blur="vm.onChange(inputValue, $event)" ng-model="inputValue"';
 
-            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
+            $scope = ivxExperienceScope.setScopeExperience($scope);
 
             input.label = label ? label : $filter('stringParsers')('startCase', id);
             input = pullInTemplate.convertLabel($filter('stringParsers')('startCase', id), input, $scope);
@@ -23092,7 +23099,8 @@ var DateInput = function () {
         this.controller = _inputDate2.default;
         this.controllerAs = 'vm';
         this.link = function ($scope, iElm, iAttrs, controller) {
-            var input = $scope.inputData;
+            var _$scope = $scope,
+                input = _$scope.inputData;
             var _input = input,
                 id = _input.id,
                 name = _input.name,
@@ -23106,7 +23114,7 @@ var DateInput = function () {
                 settings = _input$settings === undefined ? {} : _input$settings;
 
 
-            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
+            $scope = ivxExperienceScope.setScopeExperience($scope);
 
             if (attributes.min) {
                 var dateMin = new _dateParser.DateParser(attributes.min).formatForDateInput();
@@ -23243,7 +23251,8 @@ var DateTimeLocalInput = function () {
         this.controller = _inputDateTimeLocal2.default;
         this.controllerAs = 'vm';
         this.link = function ($scope, iElm, iAttrs, controller) {
-            var input = $scope.inputData;
+            var _$scope = $scope,
+                input = _$scope.inputData;
             var _input = input,
                 id = _input.id,
                 name = _input.name,
@@ -23257,7 +23266,7 @@ var DateTimeLocalInput = function () {
                 settings = _input$settings === undefined ? {} : _input$settings;
 
 
-            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
+            $scope = ivxExperienceScope.setScopeExperience($scope);
 
             input.label = label ? label : $filter('stringParsers')('startCase', id);
 
@@ -23390,7 +23399,8 @@ var OptionsInput = function () {
         this.controllerAs = 'vm';
         this.replace = true;
         this.link = function ($scope, iElm, iAttrs, controller) {
-            var input = $scope.inputData;
+            var _$scope = $scope,
+                input = _$scope.inputData;
             var _input = input,
                 id = _input.id,
                 _input$errors = _input.errors,
@@ -23410,7 +23420,7 @@ var OptionsInput = function () {
             var defaultOptionTag = '<option value="">Select an option...</option>';
             var tagHTML = directives + '\n                           ng-change=\'vm.onChange(vm.selected.value, event)\'\n                           ng-click="event = $event"\n                           ng-options="option.display for option in inputData.options track by option.value" \n                           ng-model=\'vm.selected\'';
 
-            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
+            $scope = ivxExperienceScope.setScopeExperience($scope);
 
             input.label = input.label ? input.label : $filter('stringParsers')('startCase', id);
             input = pullInTemplate.convertLabel($filter('stringParsers')('startCase', id), input, $scope);
@@ -23558,7 +23568,8 @@ var RadioInput = function () {
         this.controller = _inputRadio2.default;
         this.controllerAs = 'vm';
         this.link = function ($scope, iElm, iAttrs, controller) {
-            var input = $scope.inputData;
+            var _$scope = $scope,
+                input = _$scope.inputData;
             var _input = input,
                 id = _input.id,
                 _input$errors = _input.errors,
@@ -23575,7 +23586,7 @@ var RadioInput = function () {
 
             var radioErrorRequired = '';
 
-            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
+            $scope = ivxExperienceScope.setScopeExperience($scope);
 
             if (attributes.required) {
                 radioErrorRequired = 'required="!radioSelected"';
@@ -23724,7 +23735,8 @@ var CheckboxInput = function () {
         this.controller = _inputCheckbox2.default;
         this.controllerAs = 'vm';
         this.link = function ($scope, iElm, iAttrs, controller) {
-            var input = $scope.inputData;
+            var _$scope = $scope,
+                input = _$scope.inputData;
             var _input = input,
                 id = _input.id,
                 name = _input.name,
@@ -23739,7 +23751,7 @@ var CheckboxInput = function () {
 
             var tagHTML = 'ng-click="vm.onChange(inputValue, $event)" ng-model="inputValue"';
 
-            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
+            $scope = ivxExperienceScope.setScopeExperience($scope);
 
             input.label = label ? label : $filter('stringParsers')('startCase', id);
             input = pullInTemplate.convertLabel($filter('stringParsers')('startCase', id), input, $scope);
@@ -23857,7 +23869,8 @@ var NumberInput = function () {
         this.controller = _inputNumber2.default;
         this.controllerAs = 'vm';
         this.link = function ($scope, iElm, iAttrs, controller) {
-            var input = $scope.inputData;
+            var _$scope = $scope,
+                input = _$scope.inputData;
             var _input = input,
                 id = _input.id,
                 name = _input.name,
@@ -23874,7 +23887,7 @@ var NumberInput = function () {
             var errorMessages = new _messagesError.ErrorMessages(input, errors, attributes);
             var tagHTML = 'ng-blur="vm.onChange(inputValue, $event)" ng-model="inputValue"';
 
-            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
+            $scope = ivxExperienceScope.setScopeExperience($scope);
 
             input.label = label ? label : $filter('stringParsers')('startCase', id);
             input = pullInTemplate.convertLabel($filter('stringParsers')('startCase', id), input, $scope);
@@ -23991,7 +24004,8 @@ var TextAreaInput = function () {
         this.controller = _inputTextarea2.default;
         this.controllerAs = 'vm';
         this.link = function ($scope, iElm, iAttrs, controller) {
-            var input = $scope.inputData;
+            var _$scope = $scope,
+                input = _$scope.inputData;
             var _input = input,
                 id = _input.id,
                 name = _input.name,
@@ -24008,7 +24022,7 @@ var TextAreaInput = function () {
             var errorMessages = new _messagesError.ErrorMessages(input, errors, attributes);
             var tagHTML = 'ng-blur="vm.onChange(inputValue, $event)" ng-model="inputValue"';
 
-            $scope.experience = ivxExperienceScope.setScopeExperience(iVXjs.experience);
+            $scope = ivxExperienceScope.setScopeExperience($scope);
 
             input.label = label ? label : $filter('stringParsers')('startCase', id);
             input = pullInTemplate.convertLabel($filter('stringParsers')('startCase', id), input, $scope);
@@ -25821,16 +25835,18 @@ var Service = exports.Service = function () {
 
     _createClass(Service, [{
         key: 'setScopeExperience',
-        value: function setScopeExperience(experience) {
+        value: function setScopeExperience($scope) {
             if (!this.iVXjs) return;
 
             var _iVXjs$experience$dat = this.iVXjs.experience.data,
                 data = _iVXjs$experience$dat === undefined ? {} : _iVXjs$experience$dat;
 
 
-            return {
-                data: data
-            };
+            return Object.assign($scope, {
+                experience: {
+                    data: data
+                }
+            });
         }
     }]);
 
