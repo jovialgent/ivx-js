@@ -195,6 +195,7 @@ export class Controls extends ControlEvents {
             currentVolumeSpan.style.width = `${self.currentVolume * 100}%`;
         }
 
+
         this.setVolume(self.currentVolume);
         this.getDuration((duration) => {
             let { totalTimeInfo, currentTimeInfo, scrubBar } = self;
@@ -270,7 +271,6 @@ export class Controls extends ControlEvents {
         });
         this.whilePaused = iVXjsBus.on(this.controlEventNames.PAUSED, whilePaused);
         this.whilePlaying = iVXjsBus.on(this.controlEventNames.PLAYING, whilePlaying);
-        this.canPlayCallback = iVXjsBus.on(this.controlEventNames.CAN_PLAY, canPlayCallBack);
         this.seekingCallback = iVXjsBus.on(this.controlEventNames.BUFFERING, seekingCallback);
         this.whileMuted = iVXjsBus.on(this.controlEventNames.MUTE, mute);
         this.whileUnmuted = iVXjsBus.on(this.controlEventNames.UNMUTE, unmute);
@@ -296,6 +296,7 @@ export class Controls extends ControlEvents {
 
         const canPlayListener = this.iVXjsBus.on(this.controlEventNames.CAN_PLAY, (player) => {
             if (player.id === self.playerId) {
+                canPlayCallBack(player);
                 self.createPlayerSpecificControls({ player })
                 self.player = player;
                 self.iVXjsBus.removeListener(this.controlEventNames.CAN_PLAY, canPlayListener);

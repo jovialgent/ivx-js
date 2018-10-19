@@ -80,7 +80,7 @@ jsarr:
 The core of all iVXjs experiences is the configuration JSON you feed into its init function. Without a
 proper configuration, the experience won't load and you will not be able to use any of the features in
 iVXjs. This configuration document will help guide you in making the a correct JSON spec and be a reference
-to what is needed to implement the features you want.  {{page.source}}
+to what is needed to implement the features you want.
 
 ## About this documentation
 
