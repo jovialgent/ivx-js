@@ -1,0 +1,6 @@
+{
+    "type" : "input",
+    "key" : "[INPUT_KEY]",
+    "is" : "equals",
+    "value" : "[INPUT_VALUE]"
+}

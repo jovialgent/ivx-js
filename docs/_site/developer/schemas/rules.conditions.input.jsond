@@ -1,0 +1,43 @@
+{
+    "name": "iVXjs Input Condition",
+    "description": "Settings to set evaluate a property in the data against a known value.",
+    "type": "object",
+    "properties": {
+      "tyoe": {
+        "type": "string",
+        "name": "Type",
+        "description": "Type of condition.",
+        "required": true,
+        "enum": [
+          "input"
+        ]
+      },
+      "key": {
+        "type": "string",
+        "name": "Key",
+        "description": "Key of the input to evaluate",
+        "required" : true
+      },
+      "is": {
+        "type": "string",
+        "name": "Is",
+        "description": "Evaluate relation",
+        "required" : true,
+        "enum" : [
+            "gte",
+            "gt",
+            "lte",
+            "lt",
+            "equals",
+            "notEquals",
+            "empty",
+            "in"
+        ]
+      },
+      "value": {
+        "type": "string",
+        "name": "Value",
+        "description": "Value to be compared to."
+      }
+    }
+  }

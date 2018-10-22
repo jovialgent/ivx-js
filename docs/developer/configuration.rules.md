@@ -89,8 +89,21 @@ This page assumes you know how Rules and Conditions work within the config. If y
 you can use them, you can go to main JSON configuration. 
 
 
-## Condition Operators 
+## Condition Types
 
+### Input
+
+_Sample Data_
+
+[rules.condition.input.json]({{page.source}}developer/sample-JSON/rules.conditions.input.json.json)
+
+_Schema_
+
+[rules.condition.input.jsond]({{page.source}}developer/schemas/rules.conditions.input.jsond)
+
+_Base Properties_
+
+<div id="input-condition-schema" class="json-schema-table-container" data-json-src="{{page.source}}developer/schemas/rules.conditions.input.jsond"></div> 
 
 
 
