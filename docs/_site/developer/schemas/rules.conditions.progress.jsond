@@ -1,0 +1,56 @@
+{
+    "name": "iVXjs Progress Condition",
+    "description": "Settings to evaluate if an action should take place based on the user's location within the experience.",
+    "type": "object",
+    "properties": {
+      "type": {
+        "type": "string",
+        "name": "Type",
+        "description": "Type of condition.",
+        "required": true,
+        "enum": [
+          "progress"
+        ]
+      },
+      "key": {
+        "type": "string",
+        "name": "Key",
+        "description": "Key of the input to evaluate",
+        "required" : true
+      },
+      "is": {
+        "type": "string",
+        "name": "Is",
+        "description": "Evaluate relation",
+        "required" : true,
+        "enum" : [
+            "gte",
+            "gt",
+            "lte",
+            "lt",
+            "equals",
+            "notEquals"
+        ]
+      },
+      "value": {
+        "type": "string",
+        "name": "Value",
+        "description": "Value to be compared to.",
+        "required" : true,
+        "enum" : [
+            "Created",
+            "Sent",
+            "Opened",
+            "Started",
+            "Reached None",
+            "Reached Some",
+            "Reached All",
+            "Completed",
+            "Converted",
+            "[ANY_MILESTONE_NAME]"
+        ]
+      }
+   }
+}
+
+

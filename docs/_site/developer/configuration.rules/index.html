@@ -227,8 +227,17 @@
   <li><a href="#rules-configuration" id="markdown-toc-rules-configuration">Rules Configuration</a>    <ul>
       <li><a href="#overview" id="markdown-toc-overview">Overview</a></li>
       <li><a href="#note-about-this-documentation" id="markdown-toc-note-about-this-documentation">Note about this documentation</a></li>
-      <li><a href="#condition-types" id="markdown-toc-condition-types">Condition Types</a>        <ul>
+      <li><a href="#rule" id="markdown-toc-rule">Rule</a></li>
+      <li><a href="#condition-operator" id="markdown-toc-condition-operator">Condition Operator</a></li>
+      <li><a href="#base-conditions" id="markdown-toc-base-conditions">Base Conditions</a>        <ul>
           <li><a href="#input" id="markdown-toc-input">Input</a></li>
+        </ul>
+      </li>
+      <li><a href="#ivxio-conditions" id="markdown-toc-ivxio-conditions">iVXio Conditions</a>        <ul>
+          <li><a href="#organization" id="markdown-toc-organization">Organization</a></li>
+          <li><a href="#entity" id="markdown-toc-entity">Entity</a></li>
+          <li><a href="#story-events" id="markdown-toc-story-events">Story Events</a></li>
+          <li><a href="#progress" id="markdown-toc-progress">Progress</a></li>
         </ul>
       </li>
     </ul>
@@ -240,36 +249,136 @@
 
 <h2 id="overview">Overview</h2>
 
-<p>Rules are pieces in a JSON that determines whether an action is fired or a state is navigated to by a user.
+<p>Rules are objects in a JSON that determine whether an action is fired or a state is navigated to by a user.
 In the basic library, you will natively be able to navigate the user based on the questions and forms they answered.</p>
 
-<p>If you are using the iVX.io Data Module, you can use the Platform’s tracking of a user’s progress and their relationship to organizations and 
+<p>If you are using the iVX.io Data Module, you can use the Platform’s tracking of a user’s progress and their relationship to organizations and
 entities to run rules.</p>
 
 <h2 id="note-about-this-documentation">Note about this documentation</h2>
 
-<p>This page assumes you know how Rules and Conditions work within the config. If you would like to learn more about how Rules work and where 
-you can use them, you can go to main JSON configuration.</p>
+<p>This page assumes you know how Rules and Conditions work within the config. If you would like to learn more about how Rules work and where
+you can use them, you can go to the main JSON configuration.</p>
 
-<h2 id="condition-types">Condition Types</h2>
-
-<h3 id="input">Input</h3>
+<h2 id="rule">Rule</h2>
 
 <p><em>Sample Data</em></p>
 
-<p><a href="http://127.0.0.1:4000/ivx-js/developer/sample-JSON/rules.conditions.input.json.json">rules.condition.input.json</a></p>
+<p><a href="https://influencetech.github.io/ivx-js/developer/sample-JSON/rules.json">rules.json</a></p>
 
 <p><em>Schema</em></p>
 
-<p><a href="http://127.0.0.1:4000/ivx-js/developer/schemas/rules.conditions.input.jsond">rules.condition.input.jsond</a></p>
+<p><a href="https://influencetech.github.io/ivx-js/developer/schemas/rules.jsond">rules.jsond</a></p>
 
 <p><em>Base Properties</em></p>
 
-<div id="input-condition-schema" class="json-schema-table-container" data-json-src="http://127.0.0.1:4000/ivx-js/developer/schemas/rules.conditions.input.jsond"></div>
+<div id="rule-schema" class="json-schema-table-container" data-json-src="https://influencetech.github.io/ivx-js/developer/schemas/rules.jsond"></div>
+
+<h2 id="condition-operator">Condition Operator</h2>
+
+<p>Description: the condition operator determines which conditions within the rule must be true in order for the corresponding state associated with the rule to occur.</p>
+
+<p>Operator Types:</p>
+
+<ol>
+  <li>
+    <p>“and” (synonymous with &amp;&amp; - ALL conditions must be true)</p>
+  </li>
+  <li>
+    <p>“or”  (synonymous with || - One of the conditions must be true)</p>
+  </li>
+  <li>
+    <p>“not” (!cond1 &amp;&amp; !cond2 - ALL conditions must NOT be true)</p>
+  </li>
+</ol>
+
+<h2 id="base-conditions">Base Conditions</h2>
+
+<h3 id="input">Input</h3>
+
+<p>Description: Inputs gather information about the user so they can be directed towards a specific state, and customize the experience based on the information gathered.</p>
+
+<p><em>Sample Data</em></p>
+
+<p><a href="https://influencetech.github.io/ivx-js/developer/sample-JSON/rules.conditions.input.json">rules.conditions.inputs.json</a></p>
+
+<p><em>Schema</em></p>
+
+<p><a href="https://influencetech.github.io/ivx-js/developer/schemas/rules.conditions.input.jsond">rules.condition.inputs.jsond</a></p>
+
+<p><em>Base Properties</em></p>
+
+<div id="input-condition-schema" class="json-schema-table-container" data-json-src="https://influencetech.github.io/ivx-js/developer/schemas/rules.conditions.input.jsond"></div>
+
+<h2 id="ivxio-conditions">iVXio Conditions</h2>
+
+<h3 id="organization">Organization</h3>
+
+<p>Description: The organization condition is evaluated based on specific organization data set by the associated child entity this experience belongs to.</p>
+
+<p><em>Sample Data</em></p>
+
+<p><a href="https://influencetech.github.io/ivx-js/developer/sample-JSON/rules.conditions.organization.json">rules.conditions.organization.json</a></p>
+
+<p><em>Schema</em></p>
+
+<p><a href="https://influencetech.github.io/ivx-js/developer/schemas/rules.conditions.organization.jsond">rules.conditions.organization.jsond</a></p>
+
+<p><em>Base Properties</em></p>
+
+<div id="organization-condition-schema" class="json-schema-table-container" data-json-src="https://influencetech.github.io/ivx-js/developer/schemas/rules.conditions.organization.jsond"></div>
+
+<h3 id="entity">Entity</h3>
+
+<p>Description: The entity refers to any sub-organizations or partners affiliated with the parent organization.</p>
+
+<p><em>Sample Data</em></p>
+
+<p><a href="https://influencetech.github.io/ivx-js/developer/sample-JSON/rules.conditions.entity.json">rules.conditions.entity.json</a></p>
+
+<p><em>Schema</em></p>
+
+<p><a href="https://influencetech.github.io/ivx-js/developer/schemas/rules.conditions.entity.jsond">rules.conditions.entity.jsond</a></p>
+
+<p><em>Base Properties</em></p>
+
+<div id="entity-condition-schema" class="json-schema-table-container" data-json-src="https://influencetech.github.io/ivx-js/developer/schemas/rules.conditions.entity.jsond"></div>
+
+<h3 id="story-events">Story Events</h3>
+
+<p>Description: A story event occurs based on if the condition evaluates to fired or not fired, and is meant to guide the user to a specific state or place. The resulting action can be either within (story event) or outside (external event) of the experience.</p>
+
+<p><em>Sample Data</em></p>
+
+<p><a href="https://influencetech.github.io/ivx-js/developer/sample-JSON/rules.conditions.storyEvents.json">rules.conditions.storyEvents.json</a></p>
+
+<p><em>Schema</em></p>
+
+<p><a href="https://influencetech.github.io/ivx-js/developer/schemas/rules.conditions.storyEvents.jsond">rules.conditions.storyEvents.jsond</a></p>
+
+<p><em>Base Properties</em></p>
+
+<div id="storyEvents-condition-schema" class="json-schema-table-container" data-json-src="https://influencetech.github.io/ivx-js/developer/schemas/rules.conditions.storyEvents.jsond"></div>
+
+<h3 id="progress">Progress</h3>
+
+<p>Description: Progress refers to the user’s place in the experience and if something should be initiated once they have reached a point within the experience.</p>
+
+<p><em>Sample Data</em></p>
+
+<p><a href="https://influencetech.github.io/ivx-js/developer/sample-JSON/rules.conditions.progress.json">rules.conditions.progress.json</a></p>
+
+<p><em>Schema</em></p>
+
+<p><a href="https://influencetech.github.io/ivx-js/developer/schemas/rules.conditions.progress.jsond">rules.conditions.progress.jsond</a></p>
+
+<p><em>Base Properties</em></p>
+
+<div id="progress-condition-schema" class="json-schema-table-container" data-json-src="https://influencetech.github.io/ivx-js/developer/schemas/rules.conditions.progress.jsond"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.16.2/lodash.min.js"></script>
 
-<script src="http://127.0.0.1:4000/ivx-js/assets/js/jsond-table-creator.js"></script>
+<script src="https://influencetech.github.io/ivx-js/assets/js/jsond-table-creator.js"></script>
 
 
         

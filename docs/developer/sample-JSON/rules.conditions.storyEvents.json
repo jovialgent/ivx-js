@@ -1,0 +1,6 @@
+{
+    "type": "storyEvents",
+    "key": "[EVENT_KEY]",
+    "is": "[fired_OR_notfired]",
+    "value": true
+}
