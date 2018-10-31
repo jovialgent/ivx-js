@@ -1,8 +1,8 @@
 ---
 layout: single
 title: iVXjs Configuration and Features
-source : https://influencetech.github.io/ivx-js/
-# source : http://127.0.0.1:4000/ivx-js/
+# source : https://influencetech.github.io/ivx-js/
+source : http://127.0.0.1:4000/ivx-js/
 ---
 
 {% include toc %}

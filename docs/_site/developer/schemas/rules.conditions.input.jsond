@@ -1,9 +1,9 @@
 {
     "name": "iVXjs Input Condition",
-    "description": "Settings to evaluate a property in the data against a known value.",
+    "description": "Settings to set evaluate a property in the data against a known value.",
     "type": "object",
     "properties": {
-      "type": {
+      "tyoe": {
         "type": "string",
         "name": "Type",
         "description": "Type of condition.",
@@ -41,4 +41,3 @@
       }
     }
   }
-  
