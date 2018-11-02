@@ -1,6 +1,6 @@
 {
     "name": "ivx-js",
-    "version": "0.13.2",
+    "version": "0.14.1-prerelease",
     "description": "An interactive experience src. ",
     "main": "index.js",
     "scripts": {

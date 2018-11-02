@@ -1,0 +1,6 @@
+{
+    "type" : "organization",
+    "key" : "[ORGANIZATION_KEY]",
+    "is" : "equals",
+    "value" : "[ORGANIZATION_VALUE]"
+}

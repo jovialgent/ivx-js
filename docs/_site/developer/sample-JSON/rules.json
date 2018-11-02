@@ -1,0 +1,17 @@
+{
+    "conditionOperator": "[OPERATOR_TYPE]",
+    "conditions": [
+        {
+            "type": "[CONDITION_TYPE]",
+            "key": "[TYPE_KEY]",
+            "is": "[IS_VALUE]",
+            "value": "[CONDITION_VALUE]"
+        },
+        {
+            "type": "[CONDITION_TYPE]",
+            "key": "[TYPE_KEY]",
+            "is": "[IS_VALUE]",
+            "value": "[CONDITION_VALUE]"
+        }
+    ]
+}
