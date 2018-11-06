@@ -187,6 +187,7 @@ export class Controls extends ControlEvents {
     }
 
     onReadyToPlay(player) {
+        const { duration } = player;
         let { volumeBar, volumeBarCurrentVolumeClasses } = this;
         let self = this;
         let currentVolumeSpan = this.getElementByClasses(volumeBar.children, [volumeBarCurrentVolumeClasses]);
@@ -195,19 +196,17 @@ export class Controls extends ControlEvents {
             currentVolumeSpan.style.width = `${self.currentVolume * 100}%`;
         }
 
+        let { totalTimeInfo, currentTimeInfo, scrubBar } = self;
+        let durationTimeObject = this.convertSecondsToParts(duration);
+        let durationTimeStamp = this.createTimeStamp(durationTimeObject);
+
+        self.duration = duration;
+
+        if (totalTimeInfo) totalTimeInfo.innerHTML = `/${durationTimeStamp}`;
+        if (currentTimeInfo) currentTimeInfo.innerHTML = `00:00`;
+        if (scrubBar) scrubBar.children[0].style.width = `0%`;
 
         this.setVolume(self.currentVolume);
-        this.getDuration((duration) => {
-            let { totalTimeInfo, currentTimeInfo, scrubBar } = self;
-            let durationTimeObject = self.convertSecondsToParts(duration);
-            let durationTimeStamp = self.createTimeStamp(durationTimeObject);
-
-            self.duration = duration;
-
-            if (totalTimeInfo) totalTimeInfo.innerHTML = `/${durationTimeStamp}`;
-            if (currentTimeInfo) currentTimeInfo.innerHTML = `00:00`;
-            if (scrubBar) scrubBar.children[0].style.width = `0%`;
-        });
     }
 
     onTimeUpdate(player) {
