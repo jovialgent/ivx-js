@@ -92,7 +92,7 @@ export class Vimeo {
             xhr.send();
         });
 
-    
+
         self.durationOnEvent = iVXjsBus.on(videoEventNames.GET_DURATION, durationOnEvent);
         self.pauseOnEvent = iVXjsBus.on(videoEventNames.PAUSE, pauseOnEvent);
         self.playOnEvent = iVXjsBus.on(videoEventNames.PLAY, playOnEvent);
@@ -157,7 +157,13 @@ export class Vimeo {
                 iFrame.className = `${iFrame.className} ${classes}`;
             }
 
-            iVXjsBus.emit(videoEventNames.CAN_PLAY, self.player, self.stateData);
+            self.player
+                .getDuration()
+                .then((duration) => {
+                    self.player.duration = duration;
+
+                    iVXjsBus.emit(videoEventNames.CAN_PLAY, self.player, self.stateData);
+                });
         });
 
         function playOnEvent(args = {}) {

@@ -80,7 +80,7 @@ export class YouTube {
         let timeUpdateId;
         let numberofTimeupdates = 0;
 
-        
+
 
         player.addEventListener('onError', (event) => {
             let messages = {
@@ -143,7 +143,11 @@ export class YouTube {
                 self.pausedOnEvent = typeof self.pausedOnEvent === 'function' ? self.pausedOnEvent : pausedOnEvent;
                 self.endedOnEvent = typeof self.endedOnEvent === 'function' ? self.endedOnEvent : endedOnEvent;
                 self.playingOnEvent = typeof self.playingOnEvent === 'function' ? self.playingOnEvent : playingOnEvent;
+
+                // Sets the duration for the player
+                player.duration = player.getDuration();
                 iVXjsBus.emit(videoEventNames.CAN_PLAY, player, self.stateData);
+
                 self.container.addClass(videoClassNames.PAUSED);
                 self._setMuted();
             });
