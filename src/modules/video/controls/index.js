@@ -292,12 +292,12 @@ export class Controls extends ControlEvents {
 
         self.containerEl.addClass(videoClassNames.SEEKING);
 
-        const canPlayListener = this.iVXjsBus.on(this.controlEventNames.CAN_PLAY, (player) => {
+        const canPlayListener = this.iVXjsBus.on(this.controlEventNames.READY, (player) => {
             if (player.id === self.playerId) {
                 canPlayCallBack(player);
                 self.createPlayerSpecificControls({ player })
                 self.player = player;
-                self.iVXjsBus.removeListener(this.controlEventNames.CAN_PLAY, canPlayListener);
+                self.iVXjsBus.removeListener(this.controlEventNames.READY, canPlayListener);
 
                 self.containerEl.removeClass(videoClassNames.SEEKING);
                 self.containerEl.addClass(videoClassNames.PAUSED);

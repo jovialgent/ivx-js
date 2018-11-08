@@ -27,7 +27,7 @@ class CreateInlineVideo {
 
             })
 
-            self.iVXjsBus.emit(videoEventNames.CAN_PLAY, video)
+            self.iVXjsBus.emit(videoEventNames.READY, video)
             return;
         }
 
@@ -36,7 +36,7 @@ class CreateInlineVideo {
                 self.emitCanPlay(video);
                 return;
             }
-            self.iVXjsBus.emit(videoEventNames.CAN_PLAY, video)
+            self.iVXjsBus.emit(videoEventNames.READY, video)
         }, 100);
     }
 

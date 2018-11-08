@@ -126,8 +126,8 @@ export class Html5 {
         const { videoClassNames } = this;
         const self = this;
 
-        
-        
+
+
         this.player.addEventListener('pause', () => {
             self.container.removeClass(videoClassNames.PLAYING);
             self.container.addClass(videoClassNames.PAUSED);
@@ -137,6 +137,11 @@ export class Html5 {
             self.container.addClass(videoClassNames.PAUSED);
             self.container.addClass(videoClassNames.UNMUTED);
             self.iVXjsBus.emit(self.videoEventNames.CAN_PLAY, self.player, self.stateData);
+        });
+        this.player.addEventListener('loadedmetadata', () => {
+            self.container.addClass(videoClassNames.PAUSED);
+            self.container.addClass(videoClassNames.UNMUTED);
+            self.iVXjsBus.emit(self.videoEventNames.READY, self.player, self.stateData);
         });
         this.player.addEventListener('playing', () => {
             self.container.removeClass(videoClassNames.PAUSED);

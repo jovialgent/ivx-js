@@ -162,7 +162,7 @@ export class Vimeo {
                 .then((duration) => {
                     self.player.duration = duration;
 
-                    iVXjsBus.emit(videoEventNames.CAN_PLAY, self.player, self.stateData);
+                    iVXjsBus.emit(videoEventNames.READY, self.player, self.stateData);
                 });
         });
 

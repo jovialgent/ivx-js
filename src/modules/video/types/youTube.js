@@ -146,7 +146,7 @@ export class YouTube {
 
                 // Sets the duration for the player
                 player.duration = player.getDuration();
-                iVXjsBus.emit(videoEventNames.CAN_PLAY, player, self.stateData);
+                iVXjsBus.emit(videoEventNames.READY, player, self.stateData);
 
                 self.container.addClass(videoClassNames.PAUSED);
                 self._setMuted();
