@@ -63,19 +63,6 @@ class VideoState {
 
             $compile(iElm.contents())($scope, (compiled) => {
                 iElm.html(compiled);
-
-                if (createInlineVideo.isMobile() || createInlineVideo.isiOS()) {
-                    let videoEventNames = new VideoEventConstants();
-                    $timeout(() => {
-                        let player = {};
-
-                        if (playerType === 'html5') {
-                            player = iElm.find('video')[0];
-                        }
-
-                        iVXjsBus.emit(videoEventNames.CAN_PLAY, player);
-                    }, 500);
-                }
             });
 
             $scope.$on('$destroy', () => {

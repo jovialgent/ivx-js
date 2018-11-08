@@ -35,7 +35,7 @@ class VideoStateController {
         let self = this;
         let videoEventNames = new VideoEventConstants();
 
-        const playerCanPlay = iVXjsBus.on(videoEventNames.CAN_PLAY, function stateVideoCanPlay(player) {
+        const playerCanPlay = iVXjsBus.on(videoEventNames.READY, function stateVideoCanPlay(player) {
             let { stateData } = self;
             let { playerSettings, onVideoEnd = [], onVideoReady = [], next, cuePoints = [] } = stateData;
             let { autoplay = false } = playerSettings;
@@ -73,7 +73,7 @@ class VideoStateController {
                     }
 
                     iVXjs.log.debug(`onVideoReady Completed`, {}, { state: self.stateData, source: 'onVideoReady', status: 'completed', actions: onVideoReady, timestamp: Date.now() });
-                    iVXjsBus.removeListener(videoEventNames.CAN_PLAY, playerCanPlay);
+                    iVXjsBus.removeListener(videoEventNames.READY, playerCanPlay);
                 });
 
             }

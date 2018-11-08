@@ -23,7 +23,6 @@ export class Controls extends ControlEvents {
         iVXjsBus.removeListener(this.controlEventNames.TIME_UPDATE, this.updateTime);
         iVXjsBus.removeListener(this.controlEventNames.PLAYING, this.whilePlaying);
         iVXjsBus.removeListener(this.controlEventNames.PAUSED, this.whilePaused);
-        iVXjsBus.removeListener(this.controlEventNames.CAN_PLAY, this.canPlayCallback);
         iVXjsBus.removeListener(this.controlEventNames.MUTE, this.whileMuted);
         iVXjsBus.removeListener(this.controlEventNames.UNMUTE, this.whileUnmuted);
         iVXjsBus.removeListener(this.controlEventNames.SET_VOLUME, this.whileSetVolume);
@@ -293,12 +292,12 @@ export class Controls extends ControlEvents {
 
         self.containerEl.addClass(videoClassNames.SEEKING);
 
-        const canPlayListener = this.iVXjsBus.on(this.controlEventNames.CAN_PLAY, (player) => {
+        const canPlayListener = this.iVXjsBus.on(this.controlEventNames.READY, (player) => {
             if (player.id === self.playerId) {
                 canPlayCallBack(player);
                 self.createPlayerSpecificControls({ player })
                 self.player = player;
-                self.iVXjsBus.removeListener(this.controlEventNames.CAN_PLAY, canPlayListener);
+                self.iVXjsBus.removeListener(this.controlEventNames.READY, canPlayListener);
 
                 self.containerEl.removeClass(videoClassNames.SEEKING);
                 self.containerEl.addClass(videoClassNames.PAUSED);

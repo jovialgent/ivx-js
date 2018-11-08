@@ -16,7 +16,7 @@ export default class extends VideoConstants {
             PAUSED: "paused",
             PLAY: "play",
             PLAYING: "playing",
-            READY_PLAYER : "ready-player",
+            READY : "ready",
             SEEK: "seek",
             SET_DURATION: "set-duration",
             SET_VOLUME: "set-volume",
