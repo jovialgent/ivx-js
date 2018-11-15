@@ -13,6 +13,7 @@ class YoutubeVideoPlayer {
         this.controller = YoutubeVideoPlayerController
         this.controllerAs = 'vm';
         this.link = ($scope, iElm, iAttrs, controller) => {
+            console.log(iVXjsVideoModule)
             if (!iVXjsVideoModule.youtube) return;
 
             let { settings = {}, stateData: passedStateData = {}, playerId } = $scope;
@@ -36,6 +37,7 @@ class YoutubeVideoPlayer {
 
             controller.player = YouTubePlayer;
             controller.playerId = playerId;
+
 
             $compile(iElm.contents())($scope);
 

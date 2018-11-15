@@ -5,34 +5,24 @@ import createFactoryFunction from '../utilities/create-factory-function.js';
 let typeValidator = new TypeValidator();
 
 export class Actions extends ActionProcessor {
-    constructor($rootScope, $state, $window, iVXjs, iVXjsBus) {
+    constructor(iVXjs, iVXjsStateNavigation) {
         "ngInject";
 
         super(iVXjs);
 
-        this.$rootScope = $rootScope;
-        this.$state = $state;
-        this.$window = $window;
-        this.iVXjsBus = iVXjsBus;
-        this.iVXjs = iVXjs;
-    }
-
-    navigateToNextState(nextArray) {
-        if (typeValidator.isEmpty(nextArray)) return;
-
-        const route = this.iVXjs.rules(nextArray);
-
-        if(!typeValidator.isEmpty(route)){
-            this.$state.go(route);
-        }
+        Object.assign(this, {
+            iVXjsStateNavigation
+        })
     }
 
     resolveThenNavigate(actionArray, nextArray, source = {}) {
-        let self = this;
+        const { iVXjsStateNavigation } = this;
 
+        console.log(nextArray, actionArray);
+        
         this.resolveActions(actionArray, () => {
-            self.navigateToNextState(nextArray);
-        },source);
+            iVXjsStateNavigation.go(nextArray);
+        }, source);
     }
 }
 

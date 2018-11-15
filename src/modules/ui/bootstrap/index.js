@@ -52,8 +52,7 @@ module.export = initializeBootstrapUI;
 if (angular && angular.module('ivx-js')) {
     angular
         .module('ivx-js')
-        .constant('iVXjs.ui.bootstrap', initializeBootstrapUI)
-        .constant('iVXjsUiBootstrap', initializeBootstrapUI);
+        .constant('ivxjs.modules.ui', new BootstrapUI());
 }
 
 function initializeBootstrapUI() {

@@ -33,8 +33,6 @@ class VimeoVideoPlayer {
                 playerSettings.cuePoints = stateData.cuePoints;
             }
 
-            console.dir();
-
           
             let VimeoPlayer = new iVXjsVideoModule.vimeo(iElm.find('div')[0], playerSettings, stateData, iVXjsLog, {
                 vimeoPlayerContainer : iElm[0]

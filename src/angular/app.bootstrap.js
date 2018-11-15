@@ -7,20 +7,13 @@ const objectParsers = new ObjectParsers();
 const angularEventNames = new AngularEventNames();
 
 export default function (iVXjs) {
-    let stateAudio = new iVXjs.audio('body', 'state-audio');
-    let experienceAudio = new iVXjs.audio('body', 'experience-audio');
+    const { config = {} } = iVXjs;
+    const { metadata = {} } = config;
+    const { bootstrap = true } = metadata;
 
     angular
         .module('ivx-js')
-       
-        .constant('ivxjs.modules.ui', iVXjs.ui)
-        .constant('ivxjs.log', iVXjs.log)
-        .constant('iVXjsLog', iVXjs.log)
-        .constant('ivxjs.modules.video',iVXjs.video)
-        .constant('iVXjsModulesVideo',iVXjs.video)
-        .constant('ivxjs.modules.audio', stateAudio)
-        .constant('ivxjs.modules.audio.experience', experienceAudio)
-
+        
     objectParsers.mapKeys(iVXjs.ui.angular, (value, key) => {
         angular.module('ivx-js').directive(key, value);
     });
@@ -28,10 +21,10 @@ export default function (iVXjs) {
     if (iVXjs.experience.addEventListeners) {
         iVXjs.experience.addEventListeners(iVXjs.Bus, iVXjs.experience);
     }
-
-
-    var pageSetup = new iVXPageSetUp(iVXjs.config.selector, iVXjs.config.template);
-
-    angular.bootstrap(iVXjs.config.bootstrapSelector ? document.querySelector(iVXjs.config.bootstrapSelector) : document, ['ivx-js']);
-    iVXjs.Bus.emit(angularEventNames.BOOTSTRAPPED);
+    
+    if (bootstrap) {
+        var pageSetup = new iVXPageSetUp(iVXjs.config.selector, iVXjs.config.template);
+        angular.bootstrap(iVXjs.config.bootstrapSelector ? document.querySelector(iVXjs.config.bootstrapSelector) : document, ['ivx-js']);
+        iVXjs.Bus.emit(angularEventNames.BOOTSTRAPPED);
+    }
 }

@@ -9,6 +9,10 @@ export default class {
         this.Bus = Bus;
     }
 
+    setShow(show) {
+        this.show = show;
+    }
+
     warn(message) {
         let { show, LoggingMessages, Bus } = this;
         let warnMessage = LoggingMessages.WARN;

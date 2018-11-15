@@ -45,7 +45,7 @@ export class ConfigValidation extends Validation{
          let lastState = defaultState[finalIndex];
          
          return {
-             valid : lastState.stateId && lastState.stateId.length >= 0,
+             valid : (lastState.stateId && lastState.stateId.length >= 0) || (lastState.route && lastState.route.length >= 0) ,
              error : {
                  "type" : "missing",
                  "path" : `config.defaultState[${finalIndex}].stateId`
