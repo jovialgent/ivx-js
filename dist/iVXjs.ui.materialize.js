@@ -4224,6 +4224,7 @@ var Controls = exports.Controls = function (_ControlEvents) {
     }, {
         key: "onReadyToPlay",
         value: function onReadyToPlay(player) {
+            var duration = player.duration;
             var volumeBar = this.volumeBar,
                 volumeBarCurrentVolumeClasses = this.volumeBarCurrentVolumeClasses;
 
@@ -4234,21 +4235,20 @@ var Controls = exports.Controls = function (_ControlEvents) {
                 currentVolumeSpan.style.width = self.currentVolume * 100 + "%";
             }
 
+            var totalTimeInfo = self.totalTimeInfo,
+                currentTimeInfo = self.currentTimeInfo,
+                scrubBar = self.scrubBar;
+
+            var durationTimeObject = this.convertSecondsToParts(duration);
+            var durationTimeStamp = this.createTimeStamp(durationTimeObject);
+
+            self.duration = duration;
+
+            if (totalTimeInfo) totalTimeInfo.innerHTML = "/" + durationTimeStamp;
+            if (currentTimeInfo) currentTimeInfo.innerHTML = "00:00";
+            if (scrubBar) scrubBar.children[0].style.width = "0%";
+
             this.setVolume(self.currentVolume);
-            this.getDuration(function (duration) {
-                var totalTimeInfo = self.totalTimeInfo,
-                    currentTimeInfo = self.currentTimeInfo,
-                    scrubBar = self.scrubBar;
-
-                var durationTimeObject = self.convertSecondsToParts(duration);
-                var durationTimeStamp = self.createTimeStamp(durationTimeObject);
-
-                self.duration = duration;
-
-                if (totalTimeInfo) totalTimeInfo.innerHTML = "/" + durationTimeStamp;
-                if (currentTimeInfo) currentTimeInfo.innerHTML = "00:00";
-                if (scrubBar) scrubBar.children[0].style.width = "0%";
-            });
         }
     }, {
         key: "onTimeUpdate",
@@ -4329,7 +4329,6 @@ var Controls = exports.Controls = function (_ControlEvents) {
             });
             this.whilePaused = iVXjsBus.on(this.controlEventNames.PAUSED, whilePaused);
             this.whilePlaying = iVXjsBus.on(this.controlEventNames.PLAYING, whilePlaying);
-            this.canPlayCallback = iVXjsBus.on(this.controlEventNames.CAN_PLAY, canPlayCallBack);
             this.seekingCallback = iVXjsBus.on(this.controlEventNames.BUFFERING, seekingCallback);
             this.whileMuted = iVXjsBus.on(this.controlEventNames.MUTE, mute);
             this.whileUnmuted = iVXjsBus.on(this.controlEventNames.UNMUTE, unmute);
@@ -4353,11 +4352,12 @@ var Controls = exports.Controls = function (_ControlEvents) {
 
             self.containerEl.addClass(videoClassNames.SEEKING);
 
-            var canPlayListener = this.iVXjsBus.on(this.controlEventNames.CAN_PLAY, function (player) {
+            var canPlayListener = this.iVXjsBus.on(this.controlEventNames.READY, function (player) {
                 if (player.id === self.playerId) {
+                    canPlayCallBack(player);
                     self.createPlayerSpecificControls({ player: player });
                     self.player = player;
-                    self.iVXjsBus.removeListener(_this2.controlEventNames.CAN_PLAY, canPlayListener);
+                    self.iVXjsBus.removeListener(_this2.controlEventNames.READY, canPlayListener);
 
                     self.containerEl.removeClass(videoClassNames.SEEKING);
                     self.containerEl.addClass(videoClassNames.PAUSED);
@@ -4752,7 +4752,7 @@ var _class = function (_VideoConstants) {
             PAUSED: "paused",
             PLAY: "play",
             PLAYING: "playing",
-            READY_PLAYER: "ready-player",
+            READY: "ready",
             SEEK: "seek",
             SET_DURATION: "set-duration",
             SET_VOLUME: "set-volume",
@@ -5561,7 +5561,7 @@ var MaterializeUI = exports.MaterializeUI = function () {
 module.exports = initializeMaterializeUI;
 
 if (angular && angular.module('ivx-js')) {
-    angular.module('ivx-js').constant('iVXjs.ui.materialize', initializeMaterializeUI).constant('iVXjsUiMaterialize', initializeMaterializeUI);
+    angular.module('ivx-js').constant('ivxjs.modules.ui', new MaterializeUI());
 }
 
 function initializeMaterializeUI(settings) {

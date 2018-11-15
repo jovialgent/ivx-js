@@ -117,11 +117,14 @@ var Validation = exports.Validation = function () {
         key: 'valid',
         get: function get() {
             var self = this;
+
             return this.validationArray.reduce(function (isValid, isPartValid) {
                 if (!isPartValid) return isValid;
+
                 if (typeof isPartValid.valid === 'boolean' && !isPartValid.valid) {
                     self.errors.push(isPartValid);
                 }
+
                 return isValid && isPartValid.valid;
             }, true);
         }
@@ -1491,7 +1494,7 @@ var ConfigValidation = exports.ConfigValidation = function (_Validation) {
             var lastState = defaultState[finalIndex];
 
             return {
-                valid: lastState.stateId && lastState.stateId.length >= 0,
+                valid: lastState.stateId && lastState.stateId.length >= 0 || lastState.route && lastState.route.length >= 0,
                 error: {
                     "type": "missing",
                     "path": 'config.defaultState[' + finalIndex + '].stateId'
