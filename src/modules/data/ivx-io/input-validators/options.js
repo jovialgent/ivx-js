@@ -8,8 +8,8 @@ export default class {
     }
 
     get input() {
-        let {jsonInputData, storyInputData} = this;
-        let {type} = jsonInputData;
+        let { jsonInputData, storyInputData } = this;
+        let { type } = jsonInputData;
 
         if (type === "buttons") {
             return new Buttons(jsonInputData, storyInputData).input;
@@ -19,12 +19,24 @@ export default class {
             return new Radio(jsonInputData, storyInputData).input;
         }
 
-        let {options} = storyInputData;
+    
+        const { options: platformOptions = [] } = storyInputData;
+        const { options: iVXjsOptions = [] } = jsonInputData;
+        const updatedOptions = platformOptions.map((platformOption) => {
+            const { value: platformOptionValue } = platformOption;
+            const matchingOption = iVXjsOptions.find(iVXjsOption => iVXjsOption.value === platformOptionValue);
+            
+            let updatedOption = Object.assign({}, platformOption);
+
+            if (matchingOption && matchingOption.display) updatedOption.display = matchingOption.display;
+
+            return updatedOption;
+        });
 
         let newInputData = Object.assign({},
             jsonInputData,
             {
-                options,
+                options: updatedOptions,
                 type: "options"
             }
         );
