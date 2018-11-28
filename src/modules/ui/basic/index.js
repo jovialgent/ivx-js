@@ -26,7 +26,7 @@ import VideoControls from './video.controls.js';
  * Registers all the various default UI classes to 
  * this class to be used by various renders.
  */
-export class DefaultUI {
+export class BasicUI {
 
     /**
      * By default, this UI framework should support the following inputs:
@@ -62,16 +62,24 @@ export class DefaultUI {
         this.email = Email;
         this.number = Number;
         this.options = Options;
-        this.radio = Radio;    
+        this.radio = Radio;
         this.style = new Style();
         this.text = Text;
         this.textarea = Textarea;
         this.url = Url;
         this.videoControls = VideoControls;
         this.states = {
-            input : InputState,
-            video : VideoState,
+            input: InputState,
+            video: VideoState,
             navigation: NavigationState
         }
     }
+}
+
+
+
+if (angular && angular.module('ivx-js')) {
+    angular
+        .module('ivx-js')
+        .constant('ivxjs.modules.ui', new BasicUI());
 }

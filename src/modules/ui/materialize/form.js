@@ -1,7 +1,7 @@
 import { Style } from './style.js';
-import { Form as DefaultForm } from '../default/form.js';
+import { Form as BasicForm } from '../basic/form.js';
 
-export class Form extends DefaultForm {
+export class Form extends BasicForm {
     constructor(inputHTML, name, additionalAttrHTML, settings) {
         super(inputHTML, name, additionalAttrHTML, settings, Style);
     }

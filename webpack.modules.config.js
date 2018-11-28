@@ -18,7 +18,8 @@ const modules = {
         entry: {
             bootstrap: "./src/modules/ui/bootstrap/index.js",
             materialize: "./src/modules/ui/materialize/index.js",
-            "semantic-ui": "./src/modules/ui/semantic-ui/index.js"
+            "semantic-ui": "./src/modules/ui/semantic-ui/index.js",
+            basic: "./src/modules/ui/basic/index.js"
         }
     },
     validation: {

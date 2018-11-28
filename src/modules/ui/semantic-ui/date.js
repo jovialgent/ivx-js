@@ -1,7 +1,7 @@
-import { Date as DefaultDate } from '../default/date.js';
+import { Date as BasicDate  } from '../basic/date.js';
 import { ErrorMessages } from "./messages.js";
 
-export class Date extends DefaultDate{
+export class Date extends BasicDate{
     constructor(inputObj) {
         super(inputObj, ErrorMessages);  
     } 

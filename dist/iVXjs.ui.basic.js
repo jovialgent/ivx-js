@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 89);
+/******/ 	return __webpack_require__(__webpack_require__.s = 113);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -682,51 +682,7 @@ var _class = function () {
 exports.default = _class;
 
 /***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.ErrorMessages = undefined;
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _messages = __webpack_require__(1);
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var ErrorMessages = exports.ErrorMessages = function (_BasicErrorMessages) {
-    _inherits(ErrorMessages, _BasicErrorMessages);
-
-    function ErrorMessages() {
-        var errorMessages = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-
-        _classCallCheck(this, ErrorMessages);
-
-        return _possibleConstructorReturn(this, (ErrorMessages.__proto__ || Object.getPrototypeOf(ErrorMessages)).call(this, errorMessages));
-    }
-
-    _createClass(ErrorMessages, [{
-        key: "messageClasses",
-        get: function get() {
-            return 'ui error message';
-        }
-    }]);
-
-    return ErrorMessages;
-}(_messages.ErrorMessages);
-
-;
-
-/***/ }),
+/* 6 */,
 /* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -927,33 +883,7 @@ var ElementService = function () {
 exports.default = ElementService;
 
 /***/ }),
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-exports.default = createFactoryFunction;
-function createFactoryFunction(constructor) {
-	var constructorFn = constructor;
-	var args = constructorFn.$inject;
-	var factoryFunction = function factoryFunction() {
-		for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-			args[_key] = arguments[_key];
-		}
-
-		return new (Function.prototype.bind.apply(constructorFn, [null].concat(args)))();
-	};
-
-	args.push(factoryFunction);
-
-	return args;
-}
-
-/***/ }),
+/* 12 */,
 /* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -5063,336 +4993,10 @@ exports.default = {
 };
 
 /***/ }),
-/* 38 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.InputControllerHelper = undefined;
-
-var _typeParsers = __webpack_require__(3);
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var myTypeValidator = new _typeParsers.TypeValidator();
-
-var InputControllerHelper = exports.InputControllerHelper = function InputControllerHelper($scope, iVXjs, iVXjsActions) {
-    _classCallCheck(this, InputControllerHelper);
-
-    var input = $scope.inputData;
-
-    var currentExperienceValue = iVXjs.experience.data[input.name];
-
-    if (input.type === 'checkbox') {
-        $scope.inputValue = currentExperienceValue;
-    }if (currentExperienceValue) {
-        $scope.inputValue = currentExperienceValue;
-    }
-
-    $scope.$on('changed', function (input, value) {
-        $scope.$apply();
-    });
-
-    this.onChange = function (value) {
-        var $event = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-
-        if (input.type === 'checkbox') {
-            value = value ? 'true' : 'false';
-        }
-
-        if (!myTypeValidator.isEmpty(value) || value instanceof Date) {
-
-            if (value === 'true' || value === 'false') {
-                value = value === 'true';
-            }
-
-            var element = $event.currentTarget;
-
-            var source = {};
-
-            var name = input.name,
-                _input$onChange = input.onChange,
-                onChange = _input$onChange === undefined ? [] : _input$onChange;
-
-
-            onChange.unshift({
-                eventName: 'setData',
-                args: {
-                    key: name,
-                    value: value
-                }
-            });
-
-            iVXjs.log.debug('Input ' + input.name + ' On Change Started', {}, { input: input, source: 'onChange', status: 'started', actions: onChange, timestamp: Date.now() });
-
-            iVXjsActions.resolveActions(onChange, function () {
-                iVXjs.log.debug('Input ' + input.name + ' On Change Ended', {}, { input: input, source: 'onChange', status: 'completed', actions: onChange, timestamp: Date.now() });
-            }, iVXjsActions.createInputSource($event, value));
-        }
-    };
-};
-
-/***/ }),
-/* 39 */
-/***/ (function(module, exports) {
-
-module.exports = function(module) {
-	if(!module.webpackPolyfill) {
-		module.deprecate = function() {};
-		module.paths = [];
-		// module.parent = undefined by default
-		if(!module.children) module.children = [];
-		Object.defineProperty(module, "loaded", {
-			enumerable: true,
-			get: function() {
-				return module.l;
-			}
-		});
-		Object.defineProperty(module, "id", {
-			enumerable: true,
-			get: function() {
-				return module.i;
-			}
-		});
-		module.webpackPolyfill = 1;
-	}
-	return module;
-};
-
-
-/***/ }),
-/* 40 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.ErrorMessages = undefined;
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _typeParsers = __webpack_require__(3);
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var thisObjectParser = new _typeParsers.ObjectParsers();
-
-var ErrorMessages = exports.ErrorMessages = function () {
-    function ErrorMessages(input, errors) {
-        var attributes = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-
-        _classCallCheck(this, ErrorMessages);
-
-        var inputName = input.name,
-            inputType = input.type;
-
-        this.inputName = inputName;
-        this.inputType = inputType;
-        this.errors = errors;
-        this.attributes = attributes;
-    }
-
-    _createClass(ErrorMessages, [{
-        key: 'tags',
-        get: function get() {
-            var attributes = this.attributes;
-
-            var angularErrorMap = this.angularErrorMap;
-            var nonAngular = this.nonAngular;
-            var nonValidate = this.nonValidate;
-
-            return thisObjectParser.reduce(attributes, function (tags, attributeValue, attributeKey) {
-                if (nonValidate.indexOf(attributeKey) >= 0) return tags;
-                var tag = nonAngular.indexOf(attributeKey) >= 0 ? attributeKey + '="' + attributeValue + '"' : 'ng-' + angularErrorMap[attributeKey] + ' = "' + attributeValue + '" ';
-
-                return tags + ' ' + tag;
-            }, '');
-        }
-    }, {
-        key: 'messages',
-        get: function get() {
-            var inputName = this.inputName,
-                inputType = this.inputType,
-                errors = this.errors,
-                attributes = this.attributes;
-
-            var angularErrorMap = this.angularErrorMap;
-            var defaultMessages = this.defaultErrorMessages;
-            var errorMessages = Object.keys(attributes).map(function (attributeKey, index) {
-                var message = errors && errors[attributeKey] ? errors[attributeKey] : defaultMessages[attributeKey];
-                var attrHTML = 'ng-show="($parent.formInput[\'' + inputName + '\'].$dirty || $parent.formInput.$submitted) && $parent.formInput[\'' + inputName + '\'].$error.' + angularErrorMap[attributeKey] + '"';
-
-                if (inputType === 'radio') {
-                    attrHTML = 'ng-show="($parent.formInput.$submitted) && !radioSelected"';
-                }
-
-                return {
-                    message: message,
-                    attrHTML: attrHTML
-                };
-            });
-
-            if (inputType && inputType !== 'text' && inputType != "options") {
-                errorMessages.push(this.inputTypeError);
-            }
-
-            return errorMessages;
-        }
-    }, {
-        key: 'inputTypeError',
-        get: function get() {
-            var inputName = this.inputName,
-                inputType = this.inputType,
-                errors = this.errors;
-
-            var errorMessage = errors[inputType];
-
-            return {
-                message: errorMessage ? errorMessage : "Invalid " + inputType,
-                attrHTML: 'ng-show="($parent.formInput[\'' + inputName + '\'].$dirty || $parent.formInput.$submitted) && $parent.formInput[\'' + inputName + '\'].$error.' + inputType + '"'
-            };
-        }
-    }, {
-        key: 'nonAngular',
-        get: function get() {
-            return ['min', 'max', 'readonly', 'placeholder', 'step', 'readonly', 'style'];
-        }
-    }, {
-        key: 'nonValidate',
-        get: function get() {
-            return ['step', 'placeholder', 'readonly'];
-        }
-    }, {
-        key: 'angularErrorMap',
-        get: function get() {
-            return {
-                minlength: 'minlength',
-                min: "min",
-                max: "max",
-                required: 'required',
-                maxlength: 'maxlength'
-            };
-        }
-    }, {
-        key: 'defaultErrorMessages',
-        get: function get() {
-            return {
-                minlength: 'Too Short',
-                min: "Too Low",
-                max: "Too High",
-                required: 'Required',
-                maxlength: 'Too Long'
-            };
-        }
-    }]);
-
-    return ErrorMessages;
-}();
-
-/***/ }),
-/* 41 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Style = exports.Style = function () {
-    function Style() {
-        _classCallCheck(this, Style);
-    }
-
-    _createClass(Style, [{
-        key: 'getInputContainerClassNames',
-        value: function getInputContainerClassNames(settings) {
-            if (!settings) settings = {};
-
-            var _settings = settings,
-                _settings$containerCl = _settings.containerClass,
-                containerClass = _settings$containerCl === undefined ? 'field' : _settings$containerCl,
-                _settings$classes = _settings.classes,
-                classes = _settings$classes === undefined ? '' : _settings$classes;
-
-
-            return containerClass + ' ' + classes;
-        }
-    }, {
-        key: 'addWidthClasses',
-        value: function addWidthClasses(inputHTML) {
-            var currentWidthTotal = 0.0;
-            var columns = { string: "twelve", number: 12 };
-            var columnNames = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen"];
-            var contents = inputHTML.reduce(function (contentHTML, thisInput) {
-                var html = thisInput.html,
-                    _thisInput$settings = thisInput.settings,
-                    settings = _thisInput$settings === undefined ? {} : _thisInput$settings,
-                    _thisInput$input = thisInput.input,
-                    input = _thisInput$input === undefined ? {} : _thisInput$input;
-                var type = input.type;
-                var _settings$width = settings.width,
-                    width = _settings$width === undefined ? "1" : _settings$width,
-                    _settings$container = settings.container,
-                    container = _settings$container === undefined ? {} : _settings$container;
-                var _container$classes = container.classes,
-                    classes = _container$classes === undefined ? '' : _container$classes;
-
-                var numericWidth = getNumericWidth(width);
-
-                if (currentWidthTotal <= 0) {
-                    contentHTML = contentHTML + '<div class="stackable fields"> ';
-                }
-
-                currentWidthTotal += numericWidth;
-
-                var semanticUIwidth = columnNames[Math.round(numericWidth * columnNames.length) - 1];
-
-                html = html.replace('ivxjs-grid-1-1', semanticUIwidth + ' wide field ' + classes + ' ivx-input-container ivx-input-container-' + type);
-                contentHTML = '' + contentHTML + html;
-
-                if (currentWidthTotal >= 1) {
-                    contentHTML = contentHTML + '</div>';
-                    currentWidthTotal = 0;
-                }
-
-                return contentHTML;
-            }, '');
-
-            if (contents.substring(contents.length - 7) !== "</div>") {
-                contents = contents + '</div>';
-            }
-
-            return contents;
-
-            function getNumericWidth(widthString) {
-                if (widthString === '1') return 1;
-
-                var parsedWidthFormula = widthString.split('/');
-
-                return parseFloat(parsedWidthFormula[0]) / parseFloat(parsedWidthFormula[1]);
-            }
-        }
-    }]);
-
-    return Style;
-}();
-
-;
-
-/***/ }),
+/* 38 */,
+/* 39 */,
+/* 40 */,
+/* 41 */,
 /* 42 */,
 /* 43 */,
 /* 44 */,
@@ -5440,62 +5044,76 @@ var Style = exports.Style = function () {
 /* 86 */,
 /* 87 */,
 /* 88 */,
-/* 89 */
+/* 89 */,
+/* 90 */,
+/* 91 */,
+/* 92 */,
+/* 93 */,
+/* 94 */,
+/* 95 */,
+/* 96 */,
+/* 97 */,
+/* 98 */,
+/* 99 */,
+/* 100 */,
+/* 101 */,
+/* 102 */,
+/* 103 */,
+/* 104 */,
+/* 105 */,
+/* 106 */,
+/* 107 */,
+/* 108 */,
+/* 109 */,
+/* 110 */,
+/* 111 */,
+/* 112 */,
+/* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(module) {
+
 
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.SemanticUI = undefined;
+exports.BasicUI = undefined;
 
-var _form = __webpack_require__(90);
+var _form = __webpack_require__(15);
 
-var _anchor = __webpack_require__(91);
+var _anchor = __webpack_require__(14);
 
-var _buttons = __webpack_require__(92);
+var _buttons = __webpack_require__(16);
 
-var _checkbox = __webpack_require__(93);
+var _checkbox = __webpack_require__(17);
 
-var _date = __webpack_require__(94);
+var _date = __webpack_require__(23);
 
-var _datetimeLocal = __webpack_require__(95);
+var _datetimeLocal = __webpack_require__(25);
 
-var _dropdown = __webpack_require__(96);
+var _email = __webpack_require__(22);
 
-var _email = __webpack_require__(97);
+var _number = __webpack_require__(21);
 
-var _number = __webpack_require__(98);
+var _options = __webpack_require__(18);
 
-var _options = __webpack_require__(99);
+var _radio = __webpack_require__(20);
 
-var _radio = __webpack_require__(100);
+var _style = __webpack_require__(2);
 
-var _style = __webpack_require__(41);
+var _text = __webpack_require__(13);
 
-var _text = __webpack_require__(101);
+var _textarea = __webpack_require__(19);
 
-var _textarea = __webpack_require__(102);
+var _url = __webpack_require__(24);
 
-var _url = __webpack_require__(103);
+var _stateInput = __webpack_require__(26);
 
-var _inputDropdown = __webpack_require__(104);
+var _stateVideo = __webpack_require__(114);
 
-var _inputDropdown2 = _interopRequireDefault(_inputDropdown);
+var _stateNavigation = __webpack_require__(27);
 
-var _elementCard = __webpack_require__(106);
-
-var _elementCard2 = _interopRequireDefault(_elementCard);
-
-var _stateInput = __webpack_require__(109);
-
-var _stateVideo = __webpack_require__(110);
-
-var _stateNavigation = __webpack_require__(111);
-
-var _videoControls = __webpack_require__(112);
+var _videoControls = __webpack_require__(28);
 
 var _videoControls2 = _interopRequireDefault(_videoControls);
 
@@ -5504,17 +5122,44 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } } // Form/Input HTML
 
 
-//Angular
-
-
 //States
 
 
 //Controls 
 
 
-var SemanticUI = exports.SemanticUI = function SemanticUI() {
-    _classCallCheck(this, SemanticUI);
+/**
+ * Registers all the various default UI classes to 
+ * this class to be used by various renders.
+ */
+var BasicUI =
+
+/**
+ * By default, this UI framework should support the following inputs:
+ * 
+ * * form
+ * * button 
+ * * checkbox
+ * * date
+ * * datetime-local 
+ * * email 
+ * * number 
+ * * select/options 
+ * * radio buttons 
+ * * text 
+ * * textarea 
+ * * url 
+ * * video.controls
+ * 
+ * Provide the html for the following state types:
+ * 
+ * * input 
+ * * video
+ * 
+ * 
+ */
+exports.BasicUI = function BasicUI() {
+    _classCallCheck(this, BasicUI);
 
     this.form = _form.Form;
     this.anchor = _anchor.Anchor;
@@ -5530,1115 +5175,20 @@ var SemanticUI = exports.SemanticUI = function SemanticUI() {
     this.text = _text.Text;
     this.textarea = _textarea.Textarea;
     this.url = _url.Url;
-    this.dropdown = _dropdown.Dropdown;
     this.videoControls = _videoControls2.default;
     this.states = {
         input: _stateInput.InputState,
         video: _stateVideo.VideoState,
         navigation: _stateNavigation.NavigationState
     };
-    this.angular = {
-        ivxjsSemanticUiDropdownInput: _inputDropdown2.default,
-        ivxjsSemanticUiCard: _elementCard2.default
-
-    };
 };
-
-;
-
-module.export = initializeSemanticUI;
 
 if (angular && angular.module('ivx-js')) {
-    angular.module('ivx-js').constant('ivxjs.modules.ui', new SemanticUI());
+    angular.module('ivx-js').constant('ivxjs.modules.ui', new BasicUI());
 }
 
-function initializeSemanticUI() {
-    return SemanticUI;
-}
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(39)(module)))
-
 /***/ }),
-/* 90 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.Form = undefined;
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _style = __webpack_require__(41);
-
-var _form = __webpack_require__(15);
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Form = exports.Form = function (_BasicForm) {
-    _inherits(Form, _BasicForm);
-
-    function Form(inputHTML, name, additionalAttrHTML, settings) {
-        _classCallCheck(this, Form);
-
-        return _possibleConstructorReturn(this, (Form.__proto__ || Object.getPrototypeOf(Form)).call(this, inputHTML, name, additionalAttrHTML, settings, _style.Style));
-    }
-
-    _createClass(Form, [{
-        key: 'formClasses',
-        get: function get() {
-            return 'ui form error';
-        }
-    }, {
-        key: 'submitButtonHTML',
-        get: function get() {
-            var _submit = this.submit,
-                submit = _submit === undefined ? {} : _submit,
-                defaultBeforeClasses = this.beforeClasses,
-                defaultAfterClasses = this.afterClasses;
-            var _submit$beforeHtml = submit.beforeHtml,
-                beforeSettings = _submit$beforeHtml === undefined ? {} : _submit$beforeHtml,
-                _submit$afterHtml = submit.afterHtml,
-                afterSettings = _submit$afterHtml === undefined ? {} : _submit$afterHtml,
-                _submit$label = submit.label,
-                submitLabel = _submit$label === undefined ? "Submit" : _submit$label,
-                submitLabelHTML = submit.labelHTML,
-                _submit$input = submit.input,
-                submitInput = _submit$input === undefined ? {} : _submit$input,
-                _submit$container = submit.container,
-                submitContainer = _submit$container === undefined ? {} : _submit$container,
-                _submit$attributes = submit.attributes,
-                attributes = _submit$attributes === undefined ? '' : _submit$attributes;
-            var _submitInput$classes = submitInput.classes,
-                submitInputClasses = _submitInput$classes === undefined ? "" : _submitInput$classes;
-            var _submitContainer$clas = submitContainer.classes,
-                submitContainerClasses = _submitContainer$clas === undefined ? "" : _submitContainer$clas;
-            var _beforeSettings$html = beforeSettings.html,
-                beforeHtml = _beforeSettings$html === undefined ? "" : _beforeSettings$html,
-                _beforeSettings$class = beforeSettings.classes,
-                beforeClasses = _beforeSettings$class === undefined ? "" : _beforeSettings$class;
-            var _afterSettings$html = afterSettings.html,
-                afterHtml = _afterSettings$html === undefined ? "" : _afterSettings$html,
-                _afterSettings$classe = afterSettings.classes,
-                afterClasses = _afterSettings$classe === undefined ? "" : _afterSettings$classe;
-
-
-            submitLabel = submitLabelHTML ? submitLabelHTML : submitLabel;
-
-            var submitHTML = submitLabel.length >= 0 ? '<div class="sixteen field wide ' + submitContainerClasses + ' ivx-input-container ivx-input-container-submit-button">\n                <div class="' + beforeClasses + ' ' + defaultBeforeClasses + '">' + beforeHtml + '</div>\n                <button class="ui button ' + submitInputClasses + '" type=\'submit\'>\n                    ' + submitLabel + '\n                </button>\n                <div class="' + afterClasses + ' ' + defaultAfterClasses + '">' + afterHtml + '</div>\n            </div>' : '';
-
-            return submitHTML;
-        }
-    }]);
-
-    return Form;
-}(_form.Form);
-
-;
-
-/***/ }),
-/* 91 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-	value: true
-});
-exports.Anchor = undefined;
-
-var _anchor = __webpack_require__(14);
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Anchor = exports.Anchor = function (_BasicAnchor) {
-	_inherits(Anchor, _BasicAnchor);
-
-	function Anchor(anchorInfo) {
-		_classCallCheck(this, Anchor);
-
-		return _possibleConstructorReturn(this, (Anchor.__proto__ || Object.getPrototypeOf(Anchor)).call(this, anchorInfo));
-	}
-
-	return Anchor;
-}(_anchor.Anchor);
-
-/***/ }),
-/* 92 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.Buttons = undefined;
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _buttons = __webpack_require__(16);
-
-var _messages = __webpack_require__(6);
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Buttons = exports.Buttons = function (_BasicButtons) {
-    _inherits(Buttons, _BasicButtons);
-
-    function Buttons(buttons, inputData) {
-        _classCallCheck(this, Buttons);
-
-        return _possibleConstructorReturn(this, (Buttons.__proto__ || Object.getPrototypeOf(Buttons)).call(this, buttons, inputData, _messages.ErrorMessages));
-    }
-
-    _createClass(Buttons, [{
-        key: 'buttonClasses',
-        get: function get() {
-            return 'ui button ivx-input-buttons ivx-input';
-        }
-    }]);
-
-    return Buttons;
-}(_buttons.Buttons);
-
-;
-
-/***/ }),
-/* 93 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.Checkbox = undefined;
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _checkbox = __webpack_require__(17);
-
-var _messages = __webpack_require__(6);
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Checkbox = exports.Checkbox = function (_BasicCheckbox) {
-    _inherits(Checkbox, _BasicCheckbox);
-
-    function Checkbox(inputObj) {
-        _classCallCheck(this, Checkbox);
-
-        return _possibleConstructorReturn(this, (Checkbox.__proto__ || Object.getPrototypeOf(Checkbox)).call(this, inputObj, _messages.ErrorMessages));
-    }
-
-    _createClass(Checkbox, [{
-        key: 'renderCheckboxContainer',
-        value: function renderCheckboxContainer(classes, attributes) {
-            var input = this.input;
-            var _input$label = input.label,
-                label = _input$label === undefined ? '' : _input$label,
-                labelHTML = input.labelHTML;
-
-            if (labelHTML) label = labelHTML;
-            return '\n         <div class="' + classes + '">\n            <input ' + attributes + ' >\n             <label class="ivx-input-label ivx-input-label-checkbox" for="' + input.id + '">    \n                ' + label + '\n            </label>\n         </div>';
-        }
-    }, {
-        key: 'uiClasses',
-        get: function get() {
-            return 'ui checkbox';
-        }
-    }, {
-        key: 'uiAttributes',
-        get: function get() {
-            return '';
-        }
-    }]);
-
-    return Checkbox;
-}(_checkbox.Checkbox);
-
-/***/ }),
-/* 94 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.Date = undefined;
-
-var _date = __webpack_require__(23);
-
-var _messages = __webpack_require__(6);
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Date = exports.Date = function (_BasicDate) {
-    _inherits(Date, _BasicDate);
-
-    function Date(inputObj) {
-        _classCallCheck(this, Date);
-
-        return _possibleConstructorReturn(this, (Date.__proto__ || Object.getPrototypeOf(Date)).call(this, inputObj, _messages.ErrorMessages));
-    }
-
-    return Date;
-}(_date.Date);
-
-/***/ }),
-/* 95 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.DatetimeLocal = undefined;
-
-var _datetimeLocal = __webpack_require__(25);
-
-var _messages = __webpack_require__(6);
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var DatetimeLocal = exports.DatetimeLocal = function (_BasicDatetimeLocal) {
-    _inherits(DatetimeLocal, _BasicDatetimeLocal);
-
-    function DatetimeLocal(inputObj) {
-        _classCallCheck(this, DatetimeLocal);
-
-        return _possibleConstructorReturn(this, (DatetimeLocal.__proto__ || Object.getPrototypeOf(DatetimeLocal)).call(this, inputObj, _messages.ErrorMessages));
-    }
-
-    return DatetimeLocal;
-}(_datetimeLocal.DatetimeLocal);
-
-;
-
-/***/ }),
-/* 96 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.Dropdown = undefined;
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _style = __webpack_require__(41);
-
-var _messages = __webpack_require__(6);
-
-var _attributes = __webpack_require__(0);
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var style = new _style.Style();
-
-var Dropdown = exports.Dropdown = function () {
-    function Dropdown(id, name, label, defaultDisplay) {
-        var settings = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : {};
-        var tagHTML = arguments[5];
-        var errorMessages = arguments[6];
-
-        _classCallCheck(this, Dropdown);
-
-        this.errorMessages = errorMessages;
-        this.name = name;
-        this.label = label;
-        this.defaultDisplay = defaultDisplay;
-        this.tagHTML = tagHTML;
-        this.id = id;
-        this.settings = settings;
-    }
-
-    _createClass(Dropdown, [{
-        key: "uiClasses",
-        get: function get() {
-            return 'ui dropdown';
-        }
-    }, {
-        key: "html",
-        get: function get() {
-            var id = this.id,
-                name = this.name,
-                label = this.label,
-                defaultDisplay = this.defaultDisplay,
-                settings = this.settings,
-                uiClasses = this.uiClasses;
-            var _settings$dropdown = settings.dropdown,
-                dropdown = _settings$dropdown === undefined ? "" : _settings$dropdown;
-            var _dropdown$multiple = dropdown.multiple,
-                multiple = _dropdown$multiple === undefined ? false : _dropdown$multiple;
-            var _settings$input = settings.input,
-                inputSettings = _settings$input === undefined ? {} : _settings$input;
-            var _inputSettings$classe = inputSettings.classes,
-                classes = _inputSettings$classe === undefined ? '' : _inputSettings$classe;
-
-
-            classes = classes + " " + uiClasses;
-
-            var _errorMessages = this.errorMessages,
-                _errorMessages$messag = _errorMessages.messages,
-                errorMessages = _errorMessages$messag === undefined ? [] : _errorMessages$messag,
-                _errorMessages$attrib = _errorMessages.attributes,
-                errorAttributes = _errorMessages$attrib === undefined ? '' : _errorMessages$attrib,
-                _errorMessages$nonVal = _errorMessages.nonValidate,
-                nonValidate = _errorMessages$nonVal === undefined ? [] : _errorMessages$nonVal,
-                _errorMessages$tags = _errorMessages.tags,
-                errorTags = _errorMessages$tags === undefined ? '' : _errorMessages$tags;
-
-            var defaultOptionTag = "<option value=\"\">Select an option...</option>";
-            var errorHTML = new _messages.ErrorMessages(errorMessages).html;
-            var nonValidateAttributesHTML = new _attributes.AttributeTags(errorAttributes, nonValidate).html;
-
-            if (errorAttributes.required || defaultDisplay && defaultDisplay.length >= 0) {
-                defaultOptionTag = defaultDisplay ? "<option value=\"\">" + defaultDisplay + "</option>" : defaultOptionTag;
-            }
-
-            if (multiple) {
-                nonValidateAttributesHTML = nonValidateAttributesHTML + " multiple=\"\"";
-            }
-
-            var inputHTML = " \n             <label>" + label + "</label>           \n               <select class=\"" + classes + "\"  id=\"" + id + "\" name=\"" + name + "\"" + nonValidateAttributesHTML + " " + errorTags + " " + this.tagHTML + ">\n                    " + defaultOptionTag + "\n               </select>\n               " + errorHTML;
-
-            return "" + inputHTML;
-        }
-    }]);
-
-    return Dropdown;
-}();
-
-;
-
-/***/ }),
-/* 97 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.Email = undefined;
-
-var _email = __webpack_require__(22);
-
-var _messages = __webpack_require__(6);
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Email = exports.Email = function (_BasicEmail) {
-    _inherits(Email, _BasicEmail);
-
-    function Email(inputObj) {
-        _classCallCheck(this, Email);
-
-        return _possibleConstructorReturn(this, (Email.__proto__ || Object.getPrototypeOf(Email)).call(this, inputObj, _messages.ErrorMessages));
-    }
-
-    return Email;
-}(_email.Email);
-
-;
-
-/***/ }),
-/* 98 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.Number = undefined;
-
-var _number = __webpack_require__(21);
-
-var _messages = __webpack_require__(6);
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Number = exports.Number = function (_BasicNumber) {
-    _inherits(Number, _BasicNumber);
-
-    function Number(inputObj) {
-        _classCallCheck(this, Number);
-
-        return _possibleConstructorReturn(this, (Number.__proto__ || Object.getPrototypeOf(Number)).call(this, inputObj, _messages.ErrorMessages));
-    }
-
-    return Number;
-}(_number.Number);
-
-;
-
-/***/ }),
-/* 99 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.Options = undefined;
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _options = __webpack_require__(18);
-
-var _messages = __webpack_require__(6);
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Options = exports.Options = function (_BasicOptions) {
-    _inherits(Options, _BasicOptions);
-
-    function Options(inputObj) {
-        _classCallCheck(this, Options);
-
-        return _possibleConstructorReturn(this, (Options.__proto__ || Object.getPrototypeOf(Options)).call(this, inputObj, _messages.ErrorMessages));
-    }
-
-    _createClass(Options, [{
-        key: 'uiClasses',
-        get: function get() {
-            return 'ui dropdown';
-        }
-    }]);
-
-    return Options;
-}(_options.Options);
-
-;
-
-/***/ }),
-/* 100 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.Radio = undefined;
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _radio = __webpack_require__(20);
-
-var _messages = __webpack_require__(6);
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Radio = exports.Radio = function (_BasicRadio) {
-    _inherits(Radio, _BasicRadio);
-
-    function Radio(inputObj) {
-        _classCallCheck(this, Radio);
-
-        return _possibleConstructorReturn(this, (Radio.__proto__ || Object.getPrototypeOf(Radio)).call(this, inputObj, _messages.ErrorMessages));
-    }
-
-    _createClass(Radio, [{
-        key: "hasCorrectRadioClass",
-        value: function hasCorrectRadioClass(classes) {
-            var validRadioClasses = ["radio", "toggle", "slider"];
-            var hasValidClass = false;
-
-            validRadioClasses.forEach(function (validClass) {
-                if (hasValidClass) return;
-                hasValidClass = classes.indexOf(validClass) >= 0;
-            });
-
-            return hasValidClass;
-        }
-    }, {
-        key: "uiRadioButtonContainer",
-        value: function uiRadioButtonContainer(radioHTML, uiClasses) {
-            var isValidRadioClass = this.hasCorrectRadioClass(uiClasses);
-
-            if (!isValidRadioClass) uiClasses = uiClasses + " radio";
-
-            return " \n        <div class=\"field\">\n            <div class=\"ui " + uiClasses + " checkbox\">\n                " + radioHTML + "\n            </div>\n        </div>";
-        }
-    }, {
-        key: "renderRadioHTML",
-        value: function renderRadioHTML(attrHTML, label, value) {
-            var input = this.input;
-            var id = input.id;
-
-            var currentId = "" + id + (value.length > 0 ? '-' + value : '');
-
-            return "\n          <input type=\"radio\" id=\"" + currentId + "\" " + attrHTML + ">\n            <label class=\"ivx-input-label ivx-input-label-radio\" for=\"" + currentId + "\">   \n                     " + label + "\n          </label>\n          ";
-        }
-    }, {
-        key: "uiClasses",
-        get: function get() {
-            return '';
-        }
-    }]);
-
-    return Radio;
-}(_radio.Radio);
-
-/***/ }),
-/* 101 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.Text = undefined;
-
-var _text = __webpack_require__(13);
-
-var _messages = __webpack_require__(6);
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Text = exports.Text = function (_BasicText) {
-    _inherits(Text, _BasicText);
-
-    function Text(inputObj) {
-        _classCallCheck(this, Text);
-
-        return _possibleConstructorReturn(this, (Text.__proto__ || Object.getPrototypeOf(Text)).call(this, inputObj, _messages.ErrorMessages));
-    }
-
-    return Text;
-}(_text.Text);
-
-;
-
-/***/ }),
-/* 102 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.Textarea = undefined;
-
-var _textarea = __webpack_require__(19);
-
-var _messages = __webpack_require__(6);
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Textarea = exports.Textarea = function (_BasicTextarea) {
-    _inherits(Textarea, _BasicTextarea);
-
-    function Textarea(inputObj) {
-        _classCallCheck(this, Textarea);
-
-        return _possibleConstructorReturn(this, (Textarea.__proto__ || Object.getPrototypeOf(Textarea)).call(this, inputObj, _messages.ErrorMessages));
-    }
-
-    return Textarea;
-}(_textarea.Textarea);
-
-;
-
-/***/ }),
-/* 103 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.Url = undefined;
-
-var _url = __webpack_require__(24);
-
-var _messages = __webpack_require__(6);
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Url = exports.Url = function (_BasicUrl) {
-    _inherits(Url, _BasicUrl);
-
-    function Url(inputObj) {
-        _classCallCheck(this, Url);
-
-        return _possibleConstructorReturn(this, (Url.__proto__ || Object.getPrototypeOf(Url)).call(this, inputObj, _messages.ErrorMessages));
-    }
-
-    return Url;
-}(_url.Url);
-
-;
-
-/***/ }),
-/* 104 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _createFactoryFunction = __webpack_require__(12);
-
-var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
-
-var _inputDropdown = __webpack_require__(105);
-
-var _inputDropdown2 = _interopRequireDefault(_inputDropdown);
-
-var _messagesError = __webpack_require__(40);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var DropdownInput = function () {
-    function DropdownInput($rootScope, $compile, $filter, $timeout, iVXjs, iVXjsUIModule, iVXjsBus) {
-        _classCallCheck(this, DropdownInput);
-
-        this.template = this.templateHTML;
-        this.transclude = true;
-        this.restrict = 'E';
-        this.require = "^ivxjsFormInput";
-        this.scope = {
-            inputData: '=inputData'
-        };
-        this.controller = _inputDropdown2.default;
-        this.controllerAs = 'vm';
-        this.replace = true;
-        this.link = function ($scope, iElm, iAttrs, controller) {
-            var input = $scope.inputData;
-            var id = input.id,
-                _input$errors = input.errors,
-                errors = _input$errors === undefined ? {} : _input$errors,
-                name = input.name,
-                labelHTML = input.labelHTML,
-                _input$label = input.label,
-                label = _input$label === undefined ? $filter('stringParsers')('startCase', id) : _input$label,
-                _input$attributes = input.attributes,
-                attributes = _input$attributes === undefined ? {} : _input$attributes,
-                options = input.options,
-                defaultDisplay = input.defaultDisplay,
-                defaultValue = input.defaultValue,
-                _input$settings = input.settings,
-                settings = _input$settings === undefined ? {} : _input$settings;
-            var _settings$directives = settings.directives,
-                directives = _settings$directives === undefined ? '' : _settings$directives;
-
-            var errorMessages = new _messagesError.ErrorMessages(name, errors, attributes);
-            var defaultOptionTag = '<option value="">Select an option...</option>';
-            var tagHTML = directives + '\n                           ng-change=\'vm.onChange(vm.selected)\'\n                           ng-options="option.display for option in inputData.options track by option.value" \n                           ng-model=\'vm.selected\'';
-
-            if (attributes.required || defaultDisplay) {
-                defaultOptionTag = defaultDisplay ? '<option value="">' + defaultDisplay + '</option>' : defaultOptionTag;
-            }
-
-            var optionsClass = new iVXjsUIModule.dropdown(id, name, label = labelHTML ? labelHTML : label, defaultDisplay, settings, tagHTML, errorMessages);
-
-            iElm.html(optionsClass.html);
-
-            if (typeof $ !== 'undefined') {}
-
-            $compile(iElm.contents())($scope);
-            $(iElm.find('select')).dropdown();
-            $timeout(function () {
-                var experienceValue = iVXjs.experience.data[name];
-                $(iElm.find('select')).dropdown('set selected', experienceValue ? experienceValue : '');
-            }, 0);
-        };
-    }
-
-    _createClass(DropdownInput, [{
-        key: 'templateHTML',
-        get: function get() {
-            return '<div></div>';
-        }
-    }]);
-
-    return DropdownInput;
-}();
-
-DropdownInput.$inject = ['$rootScope', '$compile', '$filter', '$timeout', 'iVXjs', 'ivxjs.modules.ui', 'ivxjs.bus'];
-
-exports.default = (0, _createFactoryFunction2.default)(DropdownInput);
-
-/***/ }),
-/* 105 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createFactoryFunction = __webpack_require__(12);
-
-var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
-
-var _inputController = __webpack_require__(38);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var DropdownInputController = function (_InputControllerHelpe) {
-    _inherits(DropdownInputController, _InputControllerHelpe);
-
-    function DropdownInputController($scope, $element, iVXjs, iVXjsActions) {
-        _classCallCheck(this, DropdownInputController);
-
-        var _this = _possibleConstructorReturn(this, (DropdownInputController.__proto__ || Object.getPrototypeOf(DropdownInputController)).call(this, $scope, iVXjs, iVXjsActions));
-
-        var _$scope$inputData = $scope.inputData,
-            defaultValue = _$scope$inputData.defaultValue,
-            options = _$scope$inputData.options,
-            name = _$scope$inputData.name,
-            _$scope$inputData$set = _$scope$inputData.settings,
-            settings = _$scope$inputData$set === undefined ? {} : _$scope$inputData$set;
-        var _settings$dropdown = settings.dropdown,
-            dropdown = _settings$dropdown === undefined ? {} : _settings$dropdown;
-        var _dropdown$multiple = dropdown.multiple,
-            multiple = _dropdown$multiple === undefined ? false : _dropdown$multiple;
-
-        var self = _this;
-
-        _this.selected = !multiple ? {
-            value: iVXjs.experience.data[name] ? iVXjs.experience.data[name] : ''
-        } : [{
-            value: iVXjs.experience.data[name] ? iVXjs.experience.data[name] : ''
-        }];
-        _this.onChange = function (value) {
-            var _$scope$inputData2 = $scope.inputData,
-                name = _$scope$inputData2.name,
-                _$scope$inputData2$on = _$scope$inputData2.onChange,
-                onChange = _$scope$inputData2$on === undefined ? [] : _$scope$inputData2$on;
-
-
-            if (Array.isArray(value)) {
-                value = selected.reduce(function (selectedVals, currentVal) {
-                    if (selectedVals.length <= 0) return '' + currentVal.value;
-                    return selectedVals + ', ' + currentVal.value;
-                }, '');
-            }
-
-            onChange.unshift({ eventName: 'setData', args: { key: name, value: value.value } });
-            iVXjsActions.resolveActions(onChange, function () {});
-        };
-        return _this;
-    }
-
-    return DropdownInputController;
-}(_inputController.InputControllerHelper);
-
-DropdownInputController.$inject = ['$scope', '$element', 'iVXjs', 'ivxjs.actions'];
-
-exports.default = (0, _createFactoryFunction2.default)(DropdownInputController);
-
-/***/ }),
-/* 106 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _createFactoryFunction = __webpack_require__(12);
-
-var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
-
-var _elementCard = __webpack_require__(107);
-
-var _elementCard2 = _interopRequireDefault(_elementCard);
-
-var _card = __webpack_require__(108);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Card = function () {
-    function Card($compile, $timeout) {
-        _classCallCheck(this, Card);
-
-        this.template = this.templateHTML;
-        this.transclude = true;
-        this.restrict = 'E';
-        this.require = "^ivxjsFormInput";
-        this.scope = {
-            settings: '=settings'
-        };
-        this.controller = _elementCard2.default;
-        this.controllerAs = 'vm';
-        this.replace = true;
-        this.link = function ($scope, iElm, iAttrs, controller) {
-            var _$scope$settings = $scope.settings,
-                settings = _$scope$settings === undefined ? {} : _$scope$settings;
-            var cardType = settings.cardType,
-                _settings$classes = settings.classes,
-                classes = _settings$classes === undefined ? "" : _settings$classes;
-
-            var html = new _card.CardTemplates($scope.settings)[cardType + "CardHTML"];
-
-            $scope.classes = classes;
-
-            iElm.html(html);
-            $compile(iElm.contents())($scope);
-            $timeout(function () {
-                $('.special.cards .image').dimmer({
-                    on: 'hover'
-                });
-            }, 0);
-        };
-    }
-
-    _createClass(Card, [{
-        key: 'templateHTML',
-        get: function get() {
-            return '<div class="{{classes}}"></div>';
-        }
-    }]);
-
-    return Card;
-}();
-
-Card.$inject = ['$compile', '$timeout'];
-
-exports.default = (0, _createFactoryFunction2.default)(Card);
-
-/***/ }),
-/* 107 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createFactoryFunction = __webpack_require__(12);
-
-var _createFactoryFunction2 = _interopRequireDefault(_createFactoryFunction);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Card = function Card($scope, iVXjsActions) {
-    _classCallCheck(this, Card);
-
-    var _$scope$settings = $scope.settings,
-        settings = _$scope$settings === undefined ? {} : _$scope$settings;
-    var _settings$img = settings.img,
-        img = _settings$img === undefined ? '' : _settings$img,
-        _settings$title = settings.title,
-        title = _settings$title === undefined ? '' : _settings$title,
-        _settings$firstName = settings.firstName,
-        firstName = _settings$firstName === undefined ? '' : _settings$firstName,
-        _settings$description = settings.description,
-        description = _settings$description === undefined ? '' : _settings$description,
-        _settings$events = settings.events,
-        events = _settings$events === undefined ? [] : _settings$events;
-
-
-    this.img = img;
-    this.title = title;
-    this.firstName = firstName;
-    this.description = description;
-    this.buttonPressed = function () {
-        iVXjsActions.resolveActions(events, function () {});
-    };
-};
-
-Card.$inject = ['$scope', 'ivxjs.actions'];
-
-exports.default = (0, _createFactoryFunction2.default)(Card);
-
-/***/ }),
-/* 108 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var CardTemplates = exports.CardTemplates = function () {
-    function CardTemplates(settings) {
-        _classCallCheck(this, CardTemplates);
-
-        this.settings = settings;
-    }
-
-    _createClass(CardTemplates, [{
-        key: "miniCardHTML",
-        get: function get() {
-            return "\n        <div class=\"ui cards\">\n          <div class=\"card\">\n            <div class=\"content\">\n                <img class=\"right floated mini ui image\" src=\"{{vm.img}}\">\n                <div class=\"header\">\n                    {{vm.firstName}} {{vm.lastName}}\n                </div>\n                <div class=\"meta\">\n                        {{vm.title}}\n                </div>\n                <div class=\"description\">\n                    {{vm.description}}\n                 </div>\n            </div>\n            <div class=\"extra content\">\n                <div class=\"ui one buttons\">\n                    <div ng-click=\"vm.buttonPressed()\" class=\"ui button\">Buy it</div>\n                </div>\n            </div>\n          </div>\n          </div>";
-        }
-    }, {
-        key: "dimmerCardHTML",
-        get: function get() {
-            var classes = this.settings.classes;
-
-            return " \n        <div class=\"ui special cards\">  \n          <div class=\"card\">\n            <div class=\"blurring dimmable image\">\n                <div class=\"ui dimmer\">\n                    <div class=\"content\">\n                        <div class=\"center\">\n                            <button ng-click=\"vm.buttonPressed()\" class=\"ui inverted button\">Buy this!</button>\n                        </div>\n                    </div>\n                </div>\n                <img ng-src=\"{{vm.img}}\">\n            </div>\n            <div class=\"content\">\n                <a class=\"header\">{{vm.firstName}} {{vm.lastName}}</a>\n                <div class=\"meta\">\n                    <a>{{vm.title}}</a>\n                </div>\n                <div class=\"description\">\n                    {{vm.description}}\n                </div>\n            </div>\n            </div>\n            \n        </div>";
-        }
-    }]);
-
-    return CardTemplates;
-}();
-
-;
-
-/***/ }),
-/* 109 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.InputState = undefined;
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _stateInput = __webpack_require__(26);
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var InputState = exports.InputState = function (_BasicInputState) {
-    _inherits(InputState, _BasicInputState);
-
-    function InputState(header, formSection, footer, data) {
-        _classCallCheck(this, InputState);
-
-        return _possibleConstructorReturn(this, (InputState.__proto__ || Object.getPrototypeOf(InputState)).call(this, header, formSection, footer, data));
-    }
-
-    _createClass(InputState, [{
-        key: 'defaultSectionClasses',
-        get: function get() {
-            return 'ui container';
-        }
-    }, {
-        key: 'defaultHeaderClasses',
-        get: function get() {
-            return 'ui header';
-        }
-    }]);
-
-    return InputState;
-}(_stateInput.InputState);
-
-;
-
-/***/ }),
-/* 110 */
+/* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6670,254 +5220,36 @@ var VideoState = exports.VideoState = function () {
             return isIphone ? 'iphone-inline' : '';
         }
     }, {
-        key: 'defaultHeaderClasses',
-        get: function get() {
-            return 'ui header';
-        }
-    }, {
         key: 'html',
         get: function get() {
-            var playerSection = this.playerSection,
-                data = this.data,
-                iPhoneInlineClasses = this.iPhoneInlineClasses;
+            var _playerSection = this.playerSection,
+                playerSection = _playerSection === undefined ? '' : _playerSection,
+                _data = this.data,
+                data = _data === undefined ? { name: '' } : _data;
             var _data$header = data.header,
-                header = _data$header === undefined ? {} : _data$header,
+                headerSettings = _data$header === undefined ? {} : _data$header,
                 _data$footer = data.footer,
-                footer = _data$footer === undefined ? {} : _data$footer,
+                footerSettings = _data$footer === undefined ? {} : _data$footer,
                 _data$section = data.section,
-                section = _data$section === undefined ? {} : _data$section;
-            var _header$classes = header.classes,
-                headerClasses = _header$classes === undefined ? '' : _header$classes,
-                _header$html = header.html,
-                headerHTML = _header$html === undefined ? '' : _header$html;
-            var _section$classes = section.classes,
-                sectionClasses = _section$classes === undefined ? '' : _section$classes;
-            var _footer$classes = footer.classes,
-                footerClasses = _footer$classes === undefined ? '' : _footer$classes,
-                _footer$html = footer.html,
-                footerHTML = _footer$html === undefined ? '' : _footer$html;
+                sectionSettings = _data$section === undefined ? {} : _data$section;
+            var _headerSettings$class = headerSettings.classes,
+                headerClasses = _headerSettings$class === undefined ? '' : _headerSettings$class,
+                _headerSettings$html = headerSettings.html,
+                headerHTML = _headerSettings$html === undefined ? '' : _headerSettings$html;
+            var _sectionSettings$clas = sectionSettings.classes,
+                sectionClasses = _sectionSettings$clas === undefined ? '' : _sectionSettings$clas;
+            var _footerSettings$class = footerSettings.classes,
+                footerClasses = _footerSettings$class === undefined ? '' : _footerSettings$class,
+                _footerSettings$html = footerSettings.html,
+                footerHTML = _footerSettings$html === undefined ? '' : _footerSettings$html;
 
 
-            return '\n            <section class="ui container ' + sectionClasses + ' ' + iPhoneInlineClasses + '" id="' + data.id + '">\n                <header class="' + headerClasses + ' ' + this.defaultHeaderClasses + '">' + headerHTML + '</header>\n                ' + playerSection + '\n                <footer class="' + footerClasses + '">' + footerHTML + '</footer>\n            </section>';
+            return '\n            <section class="' + sectionClasses + ' ivx-state-section ivx-state-video-section" id="' + data.id + '">\n                <header class="' + headerClasses + ' ivx-state-header ivx-state-video-header">' + headerHTML + '</header>\n                ' + playerSection + '\n                <footer class="' + footerClasses + ' ivx-state-footer ivx-state-video-footer">' + footerHTML + '</footer>\n            </section>';
         }
     }]);
 
     return VideoState;
 }();
-
-;
-
-/***/ }),
-/* 111 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.NavigationState = undefined;
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _stateNavigation = __webpack_require__(27);
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var NavigationState = exports.NavigationState = function (_BasicNavigationState) {
-    _inherits(NavigationState, _BasicNavigationState);
-
-    function NavigationState(data, linkSection) {
-        _classCallCheck(this, NavigationState);
-
-        return _possibleConstructorReturn(this, (NavigationState.__proto__ || Object.getPrototypeOf(NavigationState)).call(this, data, linkSection));
-    }
-
-    _createClass(NavigationState, [{
-        key: 'defaultSectionClasses',
-        get: function get() {
-            return 'ui container';
-        }
-    }, {
-        key: 'defaultHeaderClasses',
-        get: function get() {
-            return 'ui header';
-        }
-    }]);
-
-    return NavigationState;
-}(_stateNavigation.NavigationState);
-
-;
-
-/***/ }),
-/* 112 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _videoControls = __webpack_require__(28);
-
-var _videoControls2 = _interopRequireDefault(_videoControls);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var _class = function (_BasicVideoControls) {
-    _inherits(_class, _BasicVideoControls);
-
-    function _class(container, playerId) {
-        _classCallCheck(this, _class);
-
-        return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, container, playerId));
-    }
-
-    _createClass(_class, [{
-        key: 'playClasses',
-        get: function get() {
-            return 'play icon ivx-video-controls-play-icon ivx-icon';
-        }
-    }, {
-        key: 'pauseClasses',
-        get: function get() {
-            return 'pause icon ivx-video-controls-pause-icon ivx-icon';
-        }
-    }, {
-        key: 'unmuteClasses',
-        get: function get() {
-            return 'unmute icon ivx-video-controls-unmute-icon ivx-icon';
-        }
-    }, {
-        key: 'muteClasses',
-        get: function get() {
-            return 'mute icon ivx-video-controls-mute-icon ivx-icon';
-        }
-    }, {
-        key: 'playPauseControlsClasses',
-        get: function get() {
-            return 'ui icon button play-pause ivx-video-controls-play-pause';
-        }
-    }, {
-        key: 'muteControlsClasses',
-        get: function get() {
-            return 'ui icon button mute ivx-video-controls-mute';
-        }
-    }, {
-        key: 'scrubBarClasses',
-        get: function get() {
-            return 'ui small progress ivx-video-controls-scrub-bar';
-        }
-    }, {
-        key: 'scrubBarTimeLapseClasses',
-        get: function get() {
-            return 'bar ivx-video-controls-scrub-bar-timelapse';
-        }
-    }, {
-        key: 'volumeBarClasses',
-        get: function get() {
-            return 'ui small progress ivx-video-controls-volume-bar';
-        }
-    }, {
-        key: 'volumeBarCurrentVolumeClasses',
-        get: function get() {
-            return 'bar ivx-video-controls-volume-bar-volume';
-        }
-    }, {
-        key: 'chapterButtonClasses',
-        get: function get() {
-            return 'ui button chapter-button ivx-video-controls-chapters-item-control';
-        }
-    }, {
-        key: 'chapterListClasses',
-        get: function get() {
-            return "ui ordered list ivx-video-controls-chapters";
-        }
-    }, {
-        key: 'chapterListItemClasses',
-        get: function get() {
-            return "item ivx-video-controls-chapters-item";
-        }
-    }, {
-        key: 'trackListSelectClasses',
-        get: function get() {
-            return 'track-list-select ui dropdown ivx-video-controls-tracks-select';
-        }
-    }, {
-        key: 'trackListSelectActiveClasses',
-        get: function get() {
-            return 'active ivx-video-controls-tracks-select-on';
-        }
-    }, {
-        key: 'trackListSelectInactiveClasses',
-        get: function get() {
-            return 'inactive ivx-video-controls-tracks-select-off';
-        }
-    }, {
-        key: 'closeCaptionButtonClasses',
-        get: function get() {
-            return 'close-caption-button ui icon button ivx-video-controls-tracks-toggle';
-        }
-    }, {
-        key: 'closeCaptionButtonActiveClasses',
-        get: function get() {
-            return 'active ivx-video-controls-tracks-on';
-        }
-    }, {
-        key: 'closeCaptionButtonInactiveClasses',
-        get: function get() {
-            return 'inactive ivx-video-controls-tracks-off';
-        }
-    }, {
-        key: 'closeCaptionButtonIconClasses',
-        get: function get() {
-            return 'close-caption-button-icon closed captioning icon ivx-video-controls-tracks-toggle-icon ivx-icon';
-        }
-    }, {
-        key: 'scrubBarHTML',
-        get: function get() {
-            return '      \n          <div id="' + this.playerId + '-video-controls-scrub-bar" class="' + this.scrubBarClasses + '">\n                <div style="min-width:0" class="' + this.scrubBarTimeLapseClasses + '">\n                     \n                </div>\n                  <div class=\'label\'>\n                        ' + this.timestampHTML + '\n                </div>\n           \n            </div>';
-        }
-    }, {
-        key: 'volumeBarHTML',
-        get: function get() {
-            return '\n            <div id="' + this.playerId + '-video-controls-volume-bar" class="progress ' + this.volumeBarClasses + '">\n                <div style="min-width:0" class="' + this.volumeBarCurrentVolumeClasses + '"></div>\n            </div>';
-        }
-    }, {
-        key: 'html',
-        get: function get() {
-            var playPauseButtonHTML = this.playPauseButtonHTML,
-                scrubBarHTML = this.scrubBarHTML,
-                timestampHTML = this.timestampHTML,
-                muteButtonHTML = this.muteButtonHTML,
-                volumeBarHTML = this.volumeBarHTML;
-
-
-            return '\n        ' + scrubBarHTML + '\n        ' + playPauseButtonHTML + '\n        ' + muteButtonHTML + '\n        ' + volumeBarHTML;
-        }
-    }]);
-
-    return _class;
-}(_videoControls2.default);
-
-exports.default = _class;
-;
 
 /***/ })
 /******/ ]);

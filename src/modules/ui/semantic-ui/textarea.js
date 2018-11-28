@@ -1,7 +1,7 @@
-import { Textarea as DefaultTextarea } from '../default/textarea.js';
+import { Textarea as BasicTextarea  } from '../basic/textarea.js';
 import { ErrorMessages } from "./messages.js";
 
-export class Textarea extends DefaultTextarea{
+export class Textarea extends BasicTextarea{
     constructor(inputObj) {
         super(inputObj, ErrorMessages);  
     } 

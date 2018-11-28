@@ -1,6 +1,6 @@
-import DefaultVideoControls from '../default/video.controls.js';
+import BasicVideoControls from '../basic/video.controls.js';
 
-export default class extends DefaultVideoControls {
+export default class extends BasicVideoControls {
     constructor(container, playerId) {
         super(container, playerId);
     }

@@ -1,7 +1,7 @@
-import { Checkbox as DefaultCheckbox } from '../default/checkbox.js';
+import { Checkbox as BasicCheckbox  } from '../basic/checkbox.js';
 import { ErrorMessages } from "./messages.js";
 
-export class Checkbox extends DefaultCheckbox {
+export class Checkbox extends BasicCheckbox {
     constructor(inputObj) {
         super(inputObj, ErrorMessages);
     }

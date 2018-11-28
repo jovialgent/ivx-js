@@ -1,7 +1,7 @@
-import { Email as DefaultEmail } from '../default/email.js';
+import { Email as BasicEmail  } from '../basic/email.js';
 import { ErrorMessages } from "./messages.js";
 
-export class Email extends DefaultEmail{
+export class Email extends BasicEmail{
     constructor(inputObj) {
         super(inputObj, ErrorMessages);  
     } 

@@ -1,7 +1,7 @@
-import { Options as DefaultOptions } from '../default/options.js';
+import { Options as BasicOptions  } from '../basic/options.js';
 import { ErrorMessages } from "./messages.js";
 
-export class Options extends DefaultOptions{
+export class Options extends BasicOptions{
     constructor(inputObj) {
         super(inputObj, ErrorMessages);  
     } 

@@ -396,11 +396,13 @@ export class Html5 {
     }
 
     get html() {
-        let { tracks = [], sources = [], controls = true, isiOS = false } = this.settings;
+        let { tracks = [], sources = [], controls = true, isiOS = false, personalizationsHTML } = this.settings;
+
         let tags = ['tracks', 'sources', 'isiOS', 'autoplay'];
         let justAttrs = ['controls'];
+        let omit = ['cuePoints', 'personalizationsHTML']
         let showControls = this.videoService.showControls(controls);
-
+       
         if (showControls) {
             this.settings.controls = true;
         } else {
@@ -411,6 +413,8 @@ export class Html5 {
             if (tags.indexOf(key) >= 0) return thisAttrHTML;
             if (justAttrs.indexOf(key) >= 0) return `${thisAttrHTML} ${key}`;
             if (key === 'classes') return `${thisAttrHTML} class="${value}"`;
+            if(omit.indexOf(key) >= 0) return thisAttrHTML;
+
 
             return `${thisAttrHTML} ${key}="${value}"`
         }, "");
@@ -441,6 +445,9 @@ export class Html5 {
             <video  width="100%" ${attrHTML} onclick="this.paused ? this.play() : this.pause();">
                 ${sourceTags}
                 ${trackTags}
-            </video>`;
+            </video>
+            <div class="ivx-video-personalization-section">
+                ${personalizationsHTML}
+            </div>`;
     }
 };

@@ -32,20 +32,11 @@ class VideoState {
 
             controller.controls = controls;
 
-            let personalizationsHTML = personalizations.reduce((personalizationHTML, thisPersonalization, index) => {
-                thisPersonalization = pullInTemplate.convertTemplateUrlToHtml(thisPersonalization, $scope);
-
-                let { defaultAnimationClass = 'hide', html, id } = thisPersonalization;
-
-                return `${personalizationHTML} <div id="${id}" class="${defaultAnimationClass}">${html}</div> `
-            }, "");
-
             controller.playerId = playerId;
 
             let videoPlayerHTML = `
                <ivxjs-${playerType}-video-player class="ivx-state-video-player" player-id='${playerId}' settings="vm.stateData.playerSettings" state-data="vm.stateData"></ivxjs-${playerType}-video-player>
-               ${controlsHTML}
-               ${personalizationsHTML}`;
+               ${controlsHTML}`;
 
             data = pullInTemplate.convertHeaderFooter(header, footer, data, controller);
 

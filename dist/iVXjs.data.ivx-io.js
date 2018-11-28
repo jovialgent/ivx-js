@@ -4599,11 +4599,27 @@ var _class = function () {
                 return new _optionsRadio2.default(jsonInputData, storyInputData).input;
             }
 
-            var options = storyInputData.options;
+            var _storyInputData$optio = storyInputData.options,
+                platformOptions = _storyInputData$optio === undefined ? [] : _storyInputData$optio;
+            var _jsonInputData$option = jsonInputData.options,
+                iVXjsOptions = _jsonInputData$option === undefined ? [] : _jsonInputData$option;
 
+            var updatedOptions = platformOptions.map(function (platformOption) {
+                var platformOptionValue = platformOption.value;
+
+                var matchingOption = iVXjsOptions.find(function (iVXjsOption) {
+                    return iVXjsOption.value === platformOptionValue;
+                });
+
+                var updatedOption = Object.assign({}, platformOption);
+
+                if (matchingOption && matchingOption.display) updatedOption.display = matchingOption.display;
+
+                return updatedOption;
+            });
 
             var newInputData = Object.assign({}, jsonInputData, {
-                options: options,
+                options: updatedOptions,
                 type: "options"
             });
 
