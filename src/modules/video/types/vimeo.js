@@ -231,6 +231,12 @@ export class Vimeo {
     }
 
     get html() {
-        return `<div id="${this.playerId}" class="player1 vimeo-player" data-vimeo-autoplay="false" data-vimeo-loop="false"></div>`;
+        const { classes = "", personalizationsHTML } = this._settings;
+
+        return `<div id="${this.playerId}" class="player1 vimeo-player ${classes}" data-vimeo-autoplay="false" data-vimeo-loop="false"></div>
+        <div class="ivx-video-personalization-section">
+            ${personalizationsHTML}
+        </div>
+        `;
     }
 }

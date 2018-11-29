@@ -272,8 +272,12 @@ export class YouTube {
     }
 
     get html() {
-        const { classes = "" } = this._settings;
+        const { classes = "", personalizationsHTML } = this._settings;
 
-        return `<div id="${this.playerId}" class='youtube-player ${classes}'></div>`;
+        return `<div id="${this.playerId}" class='youtube-player ${classes}'></div>
+        <div class="ivx-video-personalization-section">
+            ${personalizationsHTML}
+        </div>
+        `;
     }
 }
