@@ -22,6 +22,7 @@
         "example-multiple-action-templates": "node_modules/.bin/webpack-dev-server --open --content-base=multiple-action-templates",
         "example-basic-analytics-experience": "node_modules/.bin/webpack-dev-server --open --content-base=basic-analytics-experience",
         "example-add-class-property-to-video": "node_modules/.bin/webpack-dev-server --open --content-base=add-class-property-to-video",
+        "example-add-events-to-video": "node_modules/.bin/webpack-dev-server --open --content-base=add-events-to-video",
         "example-state-registration-service": "node_modules/.bin/webpack-dev-server --open --content-base=state-registration-service",
         "example-filters": "node_modules/.bin/webpack-dev-server --open --content-base=filters"
     },

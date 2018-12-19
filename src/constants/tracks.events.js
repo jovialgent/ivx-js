@@ -6,7 +6,8 @@ export default class extends TrackConstants {
 
         let eventNames = {
           ON_TRACK_CHANGE : "on-track-change",
-          CHANGE_CURRENT_TRACK : "change-current-track"
+          CHANGE_CURRENT_TRACK : "change-current-track",
+          HIDE_TRACKS :  "hide-tracks"
         };
 
         this.addNames(eventNames);
