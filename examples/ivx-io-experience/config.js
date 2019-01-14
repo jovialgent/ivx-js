@@ -3,20 +3,21 @@ import config from "./project.json";
 import "semantic-ui-css/semantic.min";
 import "semantic-ui-css/semantic.min.css";
 import "../../src/modules/ui/semantic-ui";
+import "../../src/modules/analytics/google";
 
-export default (iVXjs, iVXjsValidationSchema, iVXjsDataiVXio, iVXjsUiSemanticUi) => {
+export default (iVXjs, iVXjsValidationSchema, iVXjsAnalyticsGoogle, iVXjsDataiVXio) => {
     "ngInject";
     const debug = true;
-    const storyKey = "oc-test";
+    const storyKey = "sp-gtm-test";
 
     iVXjs.init({
         config,
+        analytics: iVXjsAnalyticsGoogle({}, iVXjs),
         debug: true,
         data: iVXjsDataiVXio({
-            // storyKey,
-            // funnel:true
+            storyKey,
+            funnel:true
         }),
-        ui: iVXjsUiSemanticUi(),
         experience: {
             data: {
                 configData: "CONFIG DATA!",

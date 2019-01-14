@@ -1,6 +1,8 @@
 import iVXioErrorNames from "../../../constants/iVXio.errors.js";
 import iVXioEventNames from "../../../constants/iVXio.events.js";
 import Logging from "../../../utilities/logging.js";
+import uniqBy from "lodash/uniqBy";
+import isUndefined from "lodash/isUndefined";
 
 let iVXioErrors = new iVXioErrorNames();
 
@@ -28,6 +30,8 @@ export class iVXioActions {
         this.experience = experience;
         this.iVXjsLog = iVXjsLog;
         this.eventNames = new iVXioEventNames();
+        this.uniqBy = uniqBy;
+        this.isUndefined = isUndefined;
     }
 
     /**
@@ -95,10 +99,13 @@ export class iVXioActions {
      * by the platform.
      * @return {Promise} - will indicate if this event was successfully recorded by the platform.
      */
-    recordEvent(eventArgs) {
+    recordEvent(eventArgs, source) {
         const self = this;
+
         if (typeof eventArgs === 'object') {
             let { customEvent } = eventArgs;
+
+            this._fireEventsToAnalytics(customEvent, source);
 
             try {
                 return this.experience.recordEvent(customEvent)
@@ -116,6 +123,44 @@ export class iVXioActions {
             }
         }
     }
+
+    _fireEventsToAnalytics(event, source) {
+        const self = this;
+        const { experience = {}, uniqBy, isUndefined } = this;
+        const { config = {} } = experience;
+        const { metadata = {} } = config;
+        const { trackers = [], sendIVXEventsToAnalytics = [] } = metadata;
+        const matchingTrackers = sendIVXEventsToAnalytics.reduce((currentMatchingTrackers, analyticMatching) => {
+            const { type, id, trackingId, name } = analyticMatching;
+            let matchedTrackersByProp = [];
+
+            if (!isUndefined(type)) matchedTrackersByProp = trackers.filter(tracker => tracker.type === type);
+            if (!isUndefined(id)) matchedTrackersByProp = trackers.filter(tracker => tracker.id === id);
+            if (!isUndefined(trackingId)) matchedTrackersByProp = trackers.filter(tracker => tracker.trackingId === trackingId);
+            if (!isUndefined(name)) matchedTrackersByProp = trackers.filter(tracker => tracker.name === name);
+
+            return [
+                ...matchedTrackersByProp,
+                ...currentMatchingTrackers
+            ]
+        }, []);
+        const runTrackers = uniqBy(matchingTrackers, 'id');
+        const actions = runTrackers.map(currentRunTracker => {
+            const { id: tracker } = currentRunTracker;
+            const args = {
+                tracker,
+                event
+            };
+
+            return {
+                eventName: "sendAnalyticsEvent",
+                args
+            }
+        });
+
+        return this.experience.processor.resolveActions(actions, () => { }, source);
+    }
+
 
     /**
      * Sends the setConverted event with a label if one is provided.

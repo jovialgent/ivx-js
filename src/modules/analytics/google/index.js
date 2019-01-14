@@ -46,7 +46,7 @@ export class Google extends DefaultAnalytics {
 
         if (googleTrackers.length <= 0) {
             iVXjs.log.warn(`The Google Analytics Module needs at least one Google Analytics Type tracker to work. Make sure you define one in the JSON's metadata's collection.`);
-           
+
             return;
         }
 
@@ -233,6 +233,7 @@ export class Google extends DefaultAnalytics {
         });
 
         iVXjs.Bus.on('sendAnalyticsEvent', (args) => {
+            if (Array.isArray(args)) return self.sendAnalyticsEvent(args[0]);
             self.sendAnalyticsEvent(args);
         });
     }

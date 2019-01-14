@@ -5,10 +5,10 @@ import createFactoryFunction from '../utilities/create-factory-function.js';
 let typeValidator = new TypeValidator();
 
 export class Actions extends ActionProcessor {
-    constructor(iVXjs, iVXjsStateNavigation) {
+    constructor(iVXjs, iVXjsBus, iVXjsStateNavigation) {
         "ngInject";
 
-        super(iVXjs);
+        super(iVXjs, iVXjsBus);
 
         Object.assign(this, {
             iVXjsStateNavigation
