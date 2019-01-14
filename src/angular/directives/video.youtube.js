@@ -2,7 +2,7 @@ import createFactoryFunction from '../utilities/create-factory-function.js';
 import YoutubeVideoPlayerController from '../controllers/video.youtube.js';
 
 class YoutubeVideoPlayer {
-    constructor($rootScope, $compile, $window, iVXjsBus, iVXjsLog, iVXjsVideoModule, iVXjsVideoService, iVXjs, ivxExperienceScope, pullInTemplate) {
+    constructor($rootScope, $compile, $window, iVXjsBus, iVXjsLog, iVXjsVideoModule, iVXjsVideoService, iVXjs, ivxExperienceScope, pullInTemplate, iVXjsActions) {
         this.template = this.templateHTML;
         this.restrict = 'E';
         this.scope = {
@@ -58,7 +58,7 @@ class YoutubeVideoPlayer {
 
             function init() {
                 YouTubePlayer.createPlayer();
-                YouTubePlayer.addEventListeners(iVXjsBus);
+                YouTubePlayer.addEventListeners(iVXjsBus, playerSettings, iVXjsActions);
                 cuepointFunction = iVXjsVideoService.createCuePointListener(playerId, playerSettings.cuePoints);
 
             }
@@ -78,7 +78,7 @@ class YoutubeVideoPlayer {
     }
 }
 
-YoutubeVideoPlayer.$inject = ['$rootScope', '$compile', '$window', 'ivxjs.bus', 'ivxjs.log', 'ivxjs.modules.video', "iVXjsVideoService", "iVXjs", "ivxExperienceScope", "pullInTemplate"];
+YoutubeVideoPlayer.$inject = ['$rootScope', '$compile', '$window', 'ivxjs.bus', 'ivxjs.log', 'ivxjs.modules.video', "iVXjsVideoService", "iVXjs", "ivxExperienceScope", "pullInTemplate", "iVXjsActions"];
 
 
 export default angular

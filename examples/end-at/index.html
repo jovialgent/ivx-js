@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible"
+        content="ie=edge">
+    <title ng-bind="pageTitle">Loading</title>
+    <style>
+        .show {
+            -webkit-animation: showState .1s;
+            -moz-animation: showState .1s;
+            -o-animation: showState .1s;
+            animation: showState .1s;
+            opacity: 1
+        }
+
+        .hide {
+            opacity: 0;
+            display: none;
+        }
+
+        @-webkit-keyframes hideState {
+            0% {
+                opacity: 1
+            }
+            100% {
+                opacity: 0;
+                display: none;
+                visibility: hidden
+            }
+        }
+
+        @-moz-keyframes hideState {
+            0% {
+                opacity: 1
+            }
+            100% {
+                opacity: 0;
+                display: none;
+                visibility: hidden
+            }
+        }
+
+        @-o-keyframes hideState {
+            0% {
+                opacity: 1
+            }
+            100% {
+                opacity: 0;
+                display: none;
+                visibility: hidden
+            }
+        }
+
+        @keyframes hideState {
+            0% {
+                opacity: 1
+            }
+            100% {
+                opacity: 0;
+                display: none;
+                visibility: hidden
+            }
+        }
+
+        lesshat-selector {
+            -lh-property: 0
+        }
+
+        @-webkit-keyframes showState {
+            0% {
+                opacity: 0
+            }
+            100% {
+                opacity: 1
+            }
+        }
+
+        @-moz-keyframes showState {
+            0% {
+                opacity: 0
+            }
+            100% {
+                opacity: 1
+            }
+        }
+
+        @-o-keyframes showState {
+            0% {
+                opacity: 0
+            }
+            100% {
+                opacity: 1
+            }
+        }
+
+        @keyframes showState {
+            0% {
+                opacity: 0
+            }
+            100% {
+                opacity: 1
+            }
+        }
+    </style>
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"
+        rel="stylesheet">
+
+</head>
+
+<body set-up
+    ng-app="app">
+    <div id="ivx"></div>
+
+    <!-- Angular iVXjs Dependencies -->
+
+    <!-- Optional jQuery dependency (Must come first) -->
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js'></script>
+
+    <!-- Angular -->
+    <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js'></script>
+
+    <!-- Angular UI Router -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.0-alpha.5/angular-ui-router.js'></script>
+
+    <!-- ngSanitize -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.5.6/angular-sanitize.min.js'></script>
+
+
+    <!-- Optional Video State Player Deps -->
+
+    <!-- Youtube iFrame API -->
+    <script src='https://www.youtube.com/iframe_api'></script>
+
+    <!-- Vimeo Player js -->
+    <script src="https://player.vimeo.com/api/player.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tv4/1.2.7/tv4.min.js"></script>
+
+    <!-- Angular iVXjs Library -->
+    <script src="dev.bundle.js"></script>
+
+    <script>(function () {
+            angular
+                .module('ivx-js')
+                .directive('endAtScenarioReadout', EndAtScenarioReadoutDirective);
+
+
+            EndAtScenarioReadoutDirective.$inject = ["ivxjs.bus"];
+
+            function EndAtScenarioReadoutDirective(iVXjsBus) {
+                return {
+                    scope: {
+
+                    },
+                    controller: EndAtScenarioReadoutDirectiveController,
+                    controllerAs: "vm",
+                    link: linkFunction,
+                    template: `<div id="{{scenario.args.id}}"
+        class="scenario scenario-{{$index}}"
+        ng-repeat="scenario in vm.scenarios">
+        <div ng-click="vm.showStatus[$index] = !vm.showStatus[$index]"
+            class="scenario-content">
+            <div class="scenario-title">
+                <span class='scenario-label'>Scenario:</span>
+                <span class='scenario-info'>{{scenario.args.scenario}}</span>
+            </div>
+            <div ng-class="{'animated fadeIn' : vm.showStatus[$index], 'hide' : !vm.showStatus[$index]}"
+                class="scenario-status">
+                <div ng-if="scenario.timeAt"
+                    class="time-at-readout">
+                    <span class='scenario-label'>Time At:</span>
+                    <span class='scenario-info'>{{scenario.timeAt}}</span>
+                </div>
+                <div ng-if="scenario.endAt"
+                    class="end-at-readout">
+                    <span class='scenario-label'>End At:</span>
+                    <span class='scenario-info'>{{scenario.endAt}}</span>
+                </div>
+                <div class="always-readout">
+                    <span class='scenario-label'>Fires:</span>
+                    <span class='scenario-info'>{{scenario.always ? 'Always' : 'Once'}}</span>
+                    <div class="number-of-fired"></div>
+                </div>
+            </div>
+        </div>
+    </div>`
+                }
+
+
+                function linkFunction($scope, iElm, iAttrs, controller) {
+
+                }
+            }
+
+            EndAtScenarioReadoutDirectiveController.$inject = ["$state", "ivxjs.bus", 'iVXjs'];
+
+            function EndAtScenarioReadoutDirectiveController($state, iVXjsBus, iVXjs) {
+                var stateData = $state.current.data;
+                var vm = this;
+                var numbersOfFire = 0;
+
+                iVXjsBus.on('fireActionsMultiple', () => {
+                    window.alert('Fired Time At With No End At Always!')
+                });
+
+
+                this.showStatus = [];
+                this.scenarios = stateData.cuePoints.reduce(function (currentScenarios, scenario, index) {
+                    var hasScenario = currentScenarios.find(function (currentScenario) {
+                        return scenario.args && scenario.args.scenario && currentScenario.args && scenario.args && currentScenario.args.scenario === scenario.args.scenario;
+                    })
+
+                    if (scenario.args && scenario.args.scenario) {
+                        currentScenarios = currentScenarios.concat([scenario]);
+                    }
+
+                    return currentScenarios;
+                }, []);
+
+                iVXjsBus.on(iVXjs.constants.VIDEO.EVENTS.TIME_UPDATE, function (video) {
+                    var currentTime = video.currentTime;
+
+                    vm.currentTime = currentTime;
+                });
+
+                iVXjsBus.on('testScrubPast', (args) => {
+                    var currentScenario = args.scenario;
+
+
+                });
+
+            }
+        })();
+
+    </script>
+
+
+
+
+
+
+
+</body>
+
+</html>

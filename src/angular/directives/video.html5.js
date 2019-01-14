@@ -3,7 +3,7 @@ import HTML5VideoController from '../controllers/video.html5.js';
 import VideoEventConstants from "../../constants/video.events.js";
 
 class HTML5VideoPlayer {
-    constructor($compile, $timeout, iVXjsVideoModule, iVXjsBus, iVXjsLog, createInlineVideo, iVXjsVideoService, iVXjs, pullInTemplate, ivxExperienceScope) {
+    constructor($compile, $timeout, iVXjsVideoModule, iVXjsBus, iVXjsLog, createInlineVideo, iVXjsVideoService, iVXjs, pullInTemplate, ivxExperienceScope, iVXjsActions) {
         this.template = this.templateHTML;
         this.restrict = 'E';
         this.scope = {
@@ -46,7 +46,7 @@ class HTML5VideoPlayer {
 
             let thisVideoPlayer = new iVXjsVideoModule.html5(iElm.find('div')[0], settings, stateData, iVXjsLog);
 
-            thisVideoPlayer.addEventListeners(iVXjsBus, settings);
+            thisVideoPlayer.addEventListeners(iVXjsBus, settings, iVXjsActions);
 
             $timeout(() => {
                 let { iphoneInline = false } = settings;
@@ -75,7 +75,7 @@ class HTML5VideoPlayer {
     }
 }
 
-HTML5VideoPlayer.$inject = ['$compile', '$timeout', 'ivxjs.modules.video', 'ivxjs.bus', 'ivxjs.log', 'createInlineVideo', 'iVXjsVideoService', 'iVXjs', 'pullInTemplate', 'ivxExperienceScope'];
+HTML5VideoPlayer.$inject = ['$compile', '$timeout', 'ivxjs.modules.video', 'ivxjs.bus', 'ivxjs.log', 'createInlineVideo', 'iVXjsVideoService', 'iVXjs', 'pullInTemplate', 'ivxExperienceScope', 'iVXjsActions'];
 
 export default angular
     .module('ivx-js.directives.video.html5', [])

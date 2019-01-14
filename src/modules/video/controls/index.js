@@ -23,7 +23,6 @@ export class Controls extends ControlEvents {
         iVXjsBus.removeListener(this.controlEventNames.TIME_UPDATE, this.updateTime);
         iVXjsBus.removeListener(this.controlEventNames.PLAYING, this.whilePlaying);
         iVXjsBus.removeListener(this.controlEventNames.PAUSED, this.whilePaused);
-        iVXjsBus.removeListener(this.controlEventNames.CAN_PLAY, this.canPlayCallback);
         iVXjsBus.removeListener(this.controlEventNames.MUTE, this.whileMuted);
         iVXjsBus.removeListener(this.controlEventNames.UNMUTE, this.whileUnmuted);
         iVXjsBus.removeListener(this.controlEventNames.SET_VOLUME, this.whileSetVolume);
@@ -275,7 +274,8 @@ export class Controls extends ControlEvents {
         this.whileUnmuted = iVXjsBus.on(this.controlEventNames.UNMUTE, unmute);
         this.whileSetVolume = iVXjsBus.on(this.controlEventNames.SET_VOLUME, setVolume);
         this.chapterChange = iVXjsBus.on(this.trackCuesEventName.ON_CHAPTER_START, chapterChange);
-        this.trackChange = iVXjsBus.on(this.trackEventNames.CHANGE_CURRENT_TRACK, trackChange)
+        this.trackChange = iVXjsBus.on(this.trackEventNames.CHANGE_CURRENT_TRACK, trackChange);
+        this.hideTracks = iVXjsBus.on(this.trackEventNames.HIDE_TRACKS, hideTracks);
         this.updateTime = this.updateTime ? this.updateTime : updateTime;
 
         volumeBar.addEventListener('mousedown', (event) => {
@@ -348,6 +348,13 @@ export class Controls extends ControlEvents {
 
             if (playerId === self.playerId) {
                 self.updateTrackSelector(trackId)
+            }
+        }
+
+        function hideTracks(opts) {
+            let { playerId } = opts;
+            if (playerId === self.playerId) {
+                self.updateTrackSelector();
             }
         }
 

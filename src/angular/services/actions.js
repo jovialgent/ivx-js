@@ -17,8 +17,6 @@ export class Actions extends ActionProcessor {
 
     resolveThenNavigate(actionArray, nextArray, source = {}) {
         const { iVXjsStateNavigation } = this;
-
-        console.log(nextArray, actionArray);
         
         this.resolveActions(actionArray, () => {
             iVXjsStateNavigation.go(nextArray);

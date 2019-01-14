@@ -1,0 +1,28 @@
+<div id="{{scenario.args.id}}"
+    class="scenario scenario-{{$index}}"
+    ng-repeat="scenario in vm.scenarios">
+    <div ng-click="vm.showStatus[$index] = !vm.showStatus[$index]"
+        class="scenario-content">
+        <div class="scenario-title">
+            <span class='scenario-label'>Scenario:</span>
+            <span class='scenario-info'>{{scenario.args.scenario}}</span>
+        </div>
+        <div ng-class="{'animated fadeIn' : vm.showStatus[$index], 'hide' : !vm.showStatus[$index]}"
+            class="scenario-status">
+            <div ng-if="scenario.timeAt"
+                class="time-at-readout">
+                <span class='scenario-label'>Time At:</span>
+                <span class='scenario-info'>{{scenario.timeAt}}</span>
+            </div>
+            <div ng-if="scenario.endAt"
+                class="end-at-readout">
+                <span class='scenario-label'>End At:</span>
+                <span class='scenario-info'>{{scenario.endAt}}</span>
+            </div>
+            <div class="always-readout">
+                <span class='scenario-label'>Fires:</span>
+                <span class='scenario-info'>{{scenario.always ? 'Always' : 'Once'}}</span>
+            </div>
+        </div>
+    </div>
+</div>

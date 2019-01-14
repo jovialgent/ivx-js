@@ -1,0 +1,251 @@
+{
+    "metadata": {
+        "title": "Testing Add/Remove Classes",
+        "framework": "semantic-ui",
+        "description": "Tests the new actions that can add and remove classes on any action trigger.",
+        "created": 1517336558884,
+        "updated": 1517336775144,
+        "version": "0.11.4-prerelease"
+    },
+    "defaultState": [
+        {
+            "stateId": "fire-engine-red-schema"
+        }
+    ],
+    "states": [
+        {
+            "section": {
+                "classes": "fire-engine-red-schema"
+            },
+            "footer" : {
+                "templateUrl" : "templates/progression.html"
+            },
+            "onEnter": [
+                {
+                    "eventName": "removeClasses",
+                    "args": {
+                        "element": "body",
+                        "classes": "orange secondary"
+                    }
+                },
+                {
+                    "eventName": "removeClasses",
+                    "args": {
+                        "element": "body",
+                        "classes": "yellow primary"
+                    }
+                },
+                {
+                    "eventName": "removeClasses",
+                    "args": {
+                        "element": "body",
+                        "classes": "green secondary"
+                    }
+                },
+                {
+                    "eventName": "removeClasses",
+                    "args": {
+                        "element": "body",
+                        "classes": "red primary"
+                    }
+                }
+            ],
+            "inputs": [
+                {
+                    "id": "form-input-fandango-root",
+                    "name": "firstname",
+                    "labelHTML": "First Name",
+                    "type": "text",
+                    "attributes": {
+                        "required": true
+                    },
+                    "settings": {
+                        "width": "1/2"
+                    },
+                    "onChange": [
+                        {
+                            "eventName": "removeClasses",
+                            "args": {
+                                "element": "body",
+                                "classes": "orange secondary"
+                            }
+                        },
+                        {
+                            "eventName": "removeClasses",
+                            "args": {
+                                "element": "body",
+                                "classes": "green primary"
+                            }
+                        },
+                        {
+                            "eventName": "removeClasses",
+                            "args": {
+                                "element": "body",
+                                "classes": "yellow primary"
+                            }
+                        },
+                        {
+                            "eventName": "addClasses",
+                            "args": {
+                                "element": "body",
+                                "classes": "red primary"
+                            }
+                        },
+                        {
+                            "eventName" : "addClasses",
+                            "args" : {
+                                "element" : ".progression-item.answered-first-name",
+                                "classes":  "red primary"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "id": "form-input-electric-crimson-root",
+                    "name": "lastname",
+                    "labelHTML": "Last Name",
+                    "type": "text",
+                    "attributes": {
+                        "required": true
+                    },
+                    "settings": {
+                        "width": "1/2"
+                    },
+                    "onChange": [
+                        {
+                            "eventName": "removeClasses",
+                            "args": {
+                                "element": "body",
+                                "classes": "red primary"
+                            }
+                        },
+                        {
+                            "eventName": "removeClasses",
+                            "args": {
+                                "element": "body",
+                                "classes": "yellow primary"
+                            }
+                        },
+                        {
+                            "eventName": "removeClasses",
+                            "args": {
+                                "element": "body",
+                                "classes": "green secondary"
+                            }
+                        },
+                        {
+                            "eventName": "addClasses",
+                            "args": {
+                                "element": "body",
+                                "classes": "orange secondary"
+                            }
+                        },
+                        {
+                            "eventName" : "addClasses",
+                            "args" : {
+                                "element" : ".progression-item.answered-last-name",
+                                "classes":  "orange secondary"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "id": "form-input-dark-blue-experience",
+                    "name": "email",
+                    "labelHTML": "Email",
+                    "type": "email",
+                    "attributes": {
+                        "required": true
+                    },
+                    "onChange": [
+                        {
+                            "eventName": "removeClasses",
+                            "args": {
+                                "element": "body",
+                                "classes": "red primary"
+                            }
+                        },
+                        {
+                            "eventName": "removeClasses",
+                            "args": {
+                                "element": "body",
+                                "classes": "green secondary"
+                            }
+                        },
+                        {
+                            "eventName": "removeClasses",
+                            "args": {
+                                "element": "body",
+                                "classes": "orange secondary"
+                            }
+                        },
+                        {
+                            "eventName": "addClasses",
+                            "args": {
+                                "element": "body",
+                                "classes": "yellow secondary"
+                            }
+                        },
+                        {
+                            "eventName" : "addClasses",
+                            "args" : {
+                                "element" : ".progression-item.answered-email",
+                                "classes":  "yellow secondary"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "name": "Set/Remove Action Form",
+            "url": "/",
+            "onSubmit": [
+                {
+                    "eventName": "removeClasses",
+                    "args": {
+                        "element": "body",
+                        "classes": "red primary"
+                    }
+                },
+                {
+                    "eventName": "removeClasses",
+                    "args": {
+                        "element": "body",
+                        "classes": "orange secondary"
+                    }
+                },
+                {
+                    "eventName": "removeClasses",
+                    "args": {
+                        "element": "body",
+                        "classes": "yellow primary"
+                    }
+                },
+                {
+                    "eventName": "addClasses",
+                    "args": {
+                        "element": "body",
+                        "classes": "green primary"
+                    }
+                },
+                {
+                    "eventName": "addClasses",
+                    "args": {
+                        "element" : ".progression-item.submitted",
+                        "classes": "green primary"
+                    }
+                }
+            ],
+            "onInputReady": [
+                {
+                    "eventName": "animateElement",
+                    "args": {
+                        "element": ".input-state-container",
+                        "animationClasses": "show"
+                    }
+                }
+            ],
+            "type": "input",
+            "id": "fire-engine-red-schema"
+        }
+    ]
+}

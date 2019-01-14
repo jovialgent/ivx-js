@@ -4,7 +4,7 @@ import VimeoVideoPlayerController from '../controllers/video.vimeo.js';
 
 
 class VimeoVideoPlayer {
-    constructor($rootScope, $compile, $window, $timeout, iVXjsBus, iVXjsLog, iVXjsVideoModule, createInlineVideo, iVXjsVideoService, ivxExperienceScope, pullInTemplate) {
+    constructor($rootScope, $compile, $window, $timeout, iVXjsBus, iVXjsLog, iVXjsVideoModule, createInlineVideo, iVXjsVideoService, ivxExperienceScope, pullInTemplate, iVXjsActions) {
         this.template = this.templateHTML;
         this.restrict = 'E';
         this.replace = true;
@@ -50,7 +50,7 @@ class VimeoVideoPlayer {
                 vimeoPlayerContainer: iElm[0]
             });
 
-            VimeoPlayer.addEventListeners(iVXjsBus);
+            VimeoPlayer.addEventListeners(iVXjsBus, playerSettings, iVXjsActions);
 
             controller.player = VimeoPlayer;
 
@@ -73,7 +73,7 @@ class VimeoVideoPlayer {
     }
 }
 
-VimeoVideoPlayer.$inject = ['$rootScope', '$compile', '$window', '$timeout', 'ivxjs.bus', 'ivxjs.log', 'ivxjs.modules.video', 'createInlineVideo', 'iVXjsVideoService', 'ivxExperienceScope', 'pullInTemplate'];
+VimeoVideoPlayer.$inject = ['$rootScope', '$compile', '$window', '$timeout', 'ivxjs.bus', 'ivxjs.log', 'ivxjs.modules.video', 'createInlineVideo', 'iVXjsVideoService', 'ivxExperienceScope', 'pullInTemplate', 'iVXjsActions'];
 
 export default angular
     .module('ivx-js.directives.video.vimeo', [])

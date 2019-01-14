@@ -1,0 +1,105 @@
+{
+    "metadata": {
+      "title": "Base Video Experience",
+      "framework": "basic",
+      "description": "Has all video player types",
+      "created": 1518471745000,
+      "updated": 1518472553113,
+      "version": "0.11.8-prerelease"
+    },
+    "defaultState": [
+      {
+        "stateId": "dark-pastel-green-experience"
+      }
+    ],
+    "states": [
+      {
+        "playerSettings": {
+          "src": "http://clips.vorwaerts-gmbh.de/VfE_html5.mp4",
+          "classes" : "custom-video-classes green",
+          "controls" : true
+        },
+        "section": {
+          "classes": "dark-pastel-green-experience"
+        },
+        "onVideoReady": [
+          {
+            "eventName": "animateElement",
+            "args": {
+              "element": ".video-state-container",
+              "animationClasses": "show"
+            }
+          }
+        ],
+        "name": "HTML 5 Video Test",
+        "header": {
+          "html": "HTML 5 Video Player"
+        },
+        "url": "/html5-video-test",
+        "next": [
+          {
+            "stateId": "dark-slate-gray-experience"
+          }
+        ],
+        "type": "video",
+        "id": "dark-pastel-green-experience"
+      },
+      {
+        "playerSettings": {
+          "youtubeId": "LDVlaYYjf-w",
+          "classes" : "custom-video-classes blue",
+          "controls" : true
+        },
+        "section": {
+          "classes": "dark-slate-gray-experience"
+        },
+        "onVideoReady": [
+          {
+            "eventName": "animateElement",
+            "args": {
+              "element": ".video-state-container",
+              "animationClasses": "show"
+            }
+          }
+        ],
+        "name": "YouTube Video Test",
+        "header": {
+          "html": "YouTube Video Player"
+        },
+        "url": "/youtube-video-test",
+        "next": [
+          {
+            "stateId": "dark-green-root"
+          }
+        ],
+        "type": "video",
+        "id": "dark-slate-gray-experience"
+      },
+      {
+        "playerSettings": {
+          "vimeoId": "254193306",
+          "classes" : "custom-video-classes yellow",
+          "controls" : true
+        },
+        "section": {
+          "classes": "dark-green-root"
+        },
+        "onVideoReady": [
+          {
+            "eventName": "animateElement",
+            "args": {
+              "element": ".video-state-container",
+              "animationClasses": "show"
+            }
+          }
+        ],
+        "name": "Vimeo Video Test",
+        "header": {
+          "html": "Vimeo Video Player"
+        },
+        "url": "/vimeo-video-test",
+        "type": "video",
+        "id": "dark-green-root"
+      }
+    ]
+  }
