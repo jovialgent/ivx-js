@@ -19,7 +19,7 @@ class VideoService {
 
     shouldFire(cuePoint, player) {
         const { currentTime, duration, paused } = player;
-        const { timeAt = 0, endAt, fired = false, always = false, percentStart, percentEnd } = cuePoint;
+        const { timeAt, endAt, fired = false, always = false, percentStart, percentEnd } = cuePoint;
         const canFire = (!fired || always) && !paused;
         const withinTime = this._evaluateTimeCuePoint(currentTime, timeAt, endAt) || this._evaluatePercentCuePoint(currentTime, duration, percentStart, percentEnd);
 
@@ -41,13 +41,15 @@ class VideoService {
 
         if (isUndefined(timeAt) && isUndefined(endAt)) return false;
 
+        const modifiedTimeAt = timeAt || 0;
+
         if (isUndefined(endAt)) {
-            const timeUntil = Math.abs(timeAt - currentTime);
+            const timeUntil = Math.abs(modifiedTimeAt - currentTime);
 
             return timeUntil <= 0.2;
         }
 
-        return timeAt <= currentTime && endAt >= currentTime;
+        return modifiedTimeAt <= currentTime && endAt >= currentTime;
     }
 
     removeCuePointListener(cuePointFunction) {
