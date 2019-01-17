@@ -4,6 +4,7 @@ import VideoClassNames from "../../../constants/video.classes.js";
 import TrackEventNames from "../../../constants/tracks.events.js";
 import TrackCuesEventNames from "../../../constants/tracks.cues.events.js";
 import Element from "../../../utilities/element";
+import isNaN from "lodash/isNaN";
 
 export class Controls extends ControlEvents {
     constructor(playerId) {
@@ -15,7 +16,8 @@ export class Controls extends ControlEvents {
             controlEventNames: new VideoEventNames(),
             trackEventNames: new TrackEventNames(),
             trackCuesEventName: new TrackCuesEventNames(),
-            videoClassNames: new VideoClassNames()
+            videoClassNames: new VideoClassNames(),
+            isNaN
         })
     }
 
@@ -294,7 +296,7 @@ export class Controls extends ControlEvents {
         self.containerEl.addClass(videoClassNames.SEEKING);
 
         const canPlayListener = this.iVXjsBus.on(this.controlEventNames.READY, (player) => {
-            if (player.id === self.playerId) {
+            if (player.id === self.playerId && !self.isNaN(player.duration)) {
                 canPlayCallBack(player);
                 self.createPlayerSpecificControls({ player })
                 self.player = player;

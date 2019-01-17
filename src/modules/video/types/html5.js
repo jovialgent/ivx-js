@@ -126,8 +126,7 @@ export class Html5 {
         const { videoClassNames } = this;
         const self = this;
 
-
-
+       
         this.player.addEventListener('pause', () => {
             const { onVideoPause = [] } = settings;
 
@@ -146,6 +145,7 @@ export class Html5 {
         this.player.addEventListener('loadedmetadata', () => {
             self.container.addClass(videoClassNames.PAUSED);
             self.container.addClass(videoClassNames.UNMUTED);
+           
             self.iVXjsBus.emit(self.videoEventNames.READY, self.player, self.stateData);
         });
         this.player.addEventListener('playing', () => {
