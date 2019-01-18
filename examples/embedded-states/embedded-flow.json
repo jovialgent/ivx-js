@@ -1,0 +1,1356 @@
+{
+    "metadata": {
+        "title": "iVXjs Embedded Views Test Experience",
+        "framework": "semantic-ui",
+        "description": "An simple experience showcasing different Embedded Flows/Views."
+    },
+    "defaultState": [
+        {
+            "stateId": "parent-navigation-state"
+        }
+    ],
+    "states": [
+        {
+            "playerSettings": {
+                "id": "parent-video-player",
+                "controls": "standard",
+                "src": "http://clips.vorwaerts-gmbh.de/VfE_html5.mp4"
+            },
+            "section": {
+                "classes": "parent-video-state"
+            },
+            "header": {
+                "html": "<h1 class=\"ui centered align header\"><div class=\"content\">Parent Video State<div class=\"sub header\">Play the video and various scenes will appear that you can interact with</div></div></h1>"
+            },
+            "cuePoints": [
+                {
+                    "timeAt": 5,
+                    "endAt": 7,
+                    "always": true,
+                    "eventName": "iVXjs:state:go",
+                    "args": {
+                        "route": "parent-video-state.video-in-video"
+                    }
+                },
+                {
+                    "timeAt": 10,
+                    "endAt": 12,
+                    "always": true,
+                    "eventName": "iVXjs:state:go",
+                    "args": {
+                        "route": "parent-video-state.quick-links-state"
+                    }
+                },
+                {
+                    "timeAt": 14,
+                    "endAt": 16,
+                    "always": true,
+                    "eventName": "iVXjs:state:go",
+                    "args": {
+                        "route": "parent-video-state.get-info"
+                    }
+                }
+            ],
+            "onVideoReady": [
+                {
+                    "eventName": "animateElement",
+                    "args": {
+                        "element": ".video-state-container",
+                        "animationClasses": "show"
+                    }
+                }
+            ],
+            "embeddedViews": [
+                {
+                    "id": "funnel-survey",
+                    "name": "Funnel Survey",
+                    "type": "custom",
+                    "classes": "basic",
+                    "appendTo": "#parent-video-state",
+                    "states": [
+                        {
+                            "stateId": "get-info",
+                            "next": [
+                                {
+                                    "route": "^.survey-thank-you"
+                                }
+                            ]
+                        },
+                        {
+                            "stateId": "survey-thank-you",
+                            "next": [
+                                {
+                                    "route": "^"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "video-in-video",
+                    "name": "Video on Video",
+                    "type": "custom",
+                    "classes": "basic",
+                    "appendTo": "#parent-video-state",
+                    "states": [
+                        {
+                            "stateId": "video-in-video",
+                            "next": [
+                                {
+                                    "route": "^"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "quick-links-view",
+                    "name": "Quick Links View",
+                    "type": "custom",
+                    "classes": "basic",
+                    "appendTo": "#parent-video-state",
+                    "states": [
+                        {
+                            "stateId": "quick-links-state"
+                        }
+                    ]
+                }
+            ],
+            "footer": {
+                "templateUrl": "templates/embedded-state-footer.html"
+            },
+            "name": "Parent Video",
+            "url": "/parent-video",
+            "next": [
+                {
+                    "stateId": "parent-input-state"
+                }
+            ],
+            "type": "video",
+            "id": "parent-video-state"
+        },
+        {
+            "id": "quick-links-state",
+            "embedded": true,
+            "name": "Extra Links",
+            "url": "/quick-links",
+            "type": "navigation",
+            "header": {
+                "html": "<h2 class=\"ui  header\">\n  Here are some awesome links!\n  <div class=\"sub header\">Click one to explore more!</div>\n</h2>\n"
+            },
+            "section": {
+                "classes": "quick-links-state"
+            },
+            "onEnter": [
+                {
+                    "eventName": "iVXjs:video:pause",
+                    "args": {
+                        "playerId": "parent-video-player"
+                    }
+                }
+            ],
+            "onExit": [
+                {
+                    "eventName": "removeClasses",
+                    "args": {
+                        "classes": "ui angle down icon",
+                        "element": "#navigation-accordion-icon"
+                    }
+                },
+                {
+                    "eventName": "addClasses",
+                    "args": {
+                        "classes": "ui angle up icon",
+                        "element": "#navigation-accordion-icon"
+                    }
+                }
+            ],
+            "onLinksReady": [
+                {
+                    "eventName": "animateElement",
+                    "args": {
+                        "element": ".navigation-state-container",
+                        "animationClasses": "show"
+                    }
+                },
+                {
+                    "eventName": "removeClasses",
+                    "args": {
+                        "classes": "ui angle up icon",
+                        "element": ".accordion-icon"
+                    }
+                },
+                {
+                    "eventName": "removeClasses",
+                    "args": {
+                        "classes": "ui angle down icon",
+                        "element": ".accordion-icon"
+                    }
+                },
+                {
+                    "eventName": "addClasses",
+                    "args": {
+                        "classes": "ui angle up icon",
+                        "element": ".accordion-icon"
+                    }
+                },
+                {
+                    "eventName": "addClasses",
+                    "args": {
+                        "classes": "ui angle down icon",
+                        "element": "#navigation-accordion-icon"
+                    }
+                }
+            ],
+            "links": [
+                {
+                    "href": "https://influencetech.github.io/ivx-js/",
+                    "labelHTML": "<i class='file text icon'></i>Go to documentation!",
+                    "classes": "ui blue labeled  icon button",
+                    "attributes": {
+                        "target": "_blank"
+                    },
+                    "id": "navigation-eggshell-key"
+                },
+                {
+                    "id": "navigation-copper-rose-key",
+                    "labelHTML": "<i class='video icon'></i>Show the other video",
+                    "classes": "ui  labeled icon pink button",
+                    "route": "^.video-in-video"
+                },
+                {
+                    "id": "navigation-electric-yellow-experience",
+                    "route": "^",
+                    "labelHTML": "<i class='close icon'></i>Take me back",
+                    "classes": "ui labeled  icon button",
+                    "onClick": [
+                        {
+                            "eventName": "iVXjs:video:seek",
+                            "args": {
+                                "playerId": "parent-video-player",
+                                "currentTime": 12.1
+                            }
+                        },
+                        {
+                            "eventName": "iVXjs:video:play",
+                            "args": {
+                                "playerId": "parent-video-player"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "embedded": true,
+            "playerSettings": {
+                "id": "video-in-video-player",
+                "src": "https://adfb69563bed4fa4348c-13d5a8e57d54cc230c5d16f74a8d7d0d.ssl.cf2.rackcdn.com/products/forge/video/ivx-intro.mp4",
+                "autoplay": true,
+                "controls": false
+            },
+            "section": {
+                "classes": "video-in-video"
+            },
+            "onVideoReady": [
+                {
+                    "eventName": "animateElement",
+                    "args": {
+                        "element": "#video-in-video .video-state-container",
+                        "animationClasses": "show"
+                    }
+                },
+                {
+                    "eventName": "iVXjs:video:pause",
+                    "args": {
+                        "playerId": "parent-video-player"
+                    }
+                },
+                {
+                    "eventName": "animateElement",
+                    "args": {
+                        "element": "#video-in-video-player",
+                        "animationClasses": "show content"
+                    }
+                },
+                {
+                    "eventName": "removeClasses",
+                    "args": {
+                        "classes": "ui angle up icon",
+                        "element": ".accordion-icon"
+                    }
+                },
+                {
+                    "eventName": "removeClasses",
+                    "args": {
+                        "classes": "ui angle down icon",
+                        "element": ".accordion-icon"
+                    }
+                },
+                {
+                    "eventName": "addClasses",
+                    "args": {
+                        "classes": "ui angle up icon",
+                        "element": ".accordion-icon"
+                    }
+                },
+                {
+                    "eventName": "addClasses",
+                    "args": {
+                        "classes": "ui angle down icon",
+                        "element": "#video-accordion-icon"
+                    }
+                }
+            ],
+            "name": "Video In Video",
+            "url": "/video-in-video",
+            "onVideoEnd": [],
+            "onExit": [
+                {
+                    "eventName": "iVXjs:video:seek",
+                    "args": {
+                        "currentTime": 7.1,
+                        "playerId": "parent-video-player"
+                    }
+                },
+                {
+                    "eventName": "iVXjs:video:play",
+                    "args": {
+                        "playerId": "parent-video-player"
+                    }
+                },
+                {
+                    "eventName": "removeClasses",
+                    "args": {
+                        "classes": "ui angle down icon",
+                        "element": "#video-accordion-icon"
+                    }
+                },
+                {
+                    "eventName": "addClasses",
+                    "args": {
+                        "classes": "ui angle up icon",
+                        "element": "#video-accordion-icon"
+                    }
+                }
+            ],
+            "type": "video",
+            "id": "video-in-video"
+        },
+        {
+            "form": {
+                "submit": {
+                    "input": {
+                        "classes": "green "
+                    },
+                    "labelHTML": "Thank you!"
+                },
+                "classes": ""
+            },
+            "section": {
+                "classes": "get-info"
+            },
+            "inputs": [
+                {
+                    "id": "form-input-deep-cerise-experience",
+                    "name": "firstname",
+                    "labelHTML": "First Name",
+                    "type": "text",
+                    "attributes": {
+                        "required": true,
+                        "placeholder": "First Name"
+                    },
+                    "settings": {
+                        "width": "1/2",
+                        "container": {
+                            "classes": "no-label "
+                        }
+                    }
+                },
+                {
+                    "id": "form-input-charcoal-schema",
+                    "name": "lastname",
+                    "labelHTML": "Last Name",
+                    "type": "text",
+                    "attributes": {
+                        "required": true,
+                        "placeholder": "Last Name"
+                    },
+                    "settings": {
+                        "width": "1/2",
+                        "container": {
+                            "classes": "no-label "
+                        }
+                    }
+                },
+                {
+                    "id": "form-input-electric-green-key",
+                    "name": "email",
+                    "labelHTML": "Email",
+                    "type": "email",
+                    "attributes": {
+                        "required": true,
+                        "placeholder": "Email"
+                    },
+                    "settings": {
+                        "width": "1",
+                        "container": {
+                            "classes": "no-label "
+                        }
+                    }
+                }
+            ],
+            "name": "Verify info",
+            "header": {
+                "html": "<h2 ng-if='!experience.data.filledOutOnce' class=\"ui  header\">\n  Let's get to know you!\n  <div class=\"sub header\">Please fill out the necessary info below</div>\n</h2>\n<h2 ng-if='experience.data.filledOutOnce' class=\"ui   header\">\nVerify your info!\n  <div class=\"sub header\">Make sure all info about you below is correct</div>\n</h2>\n"
+            },
+            "url": "/get-info",
+            "embedded": true,
+            "next": [
+                {
+                    "stateId": "parent-video-state.survey-thank-you"
+                }
+            ],
+            "onSubmit": [
+                {
+                    "eventName": "setData",
+                    "args": {
+                        "key": "filledOutOnce",
+                        "value": true
+                    }
+                }
+            ],
+            "onEnter": [
+                {
+                    "eventName": "iVXjs:video:pause",
+                    "args": {
+                        "playerId": "parent-video-player"
+                    }
+                }
+            ],
+            "onInputReady": [
+                {
+                    "eventName": "animateElement",
+                    "args": {
+                        "element": ".input-state-container",
+                        "animationClasses": "show"
+                    }
+                },
+                {
+                    "eventName": "removeClasses",
+                    "args": {
+                        "classes": "ui angle up icon",
+                        "element": ".accordion-icon"
+                    }
+                },
+                {
+                    "eventName": "removeClasses",
+                    "args": {
+                        "classes": "ui angle down icon",
+                        "element": ".accordion-icon"
+                    }
+                },
+                {
+                    "eventName": "addClasses",
+                    "args": {
+                        "classes": "ui angle up icon",
+                        "element": ".accordion-icon"
+                    }
+                },
+                {
+                    "eventName": "addClasses",
+                    "args": {
+                        "classes": "ui angle down icon",
+                        "element": "#form-accordion-icon"
+                    }
+                }
+            ],
+            "type": "input",
+            "id": "get-info"
+        },
+        {
+            "section": {
+                "classes": "survey-thank-you"
+            },
+            "embedded": true,
+            "name": "Thank you for taking the survey!",
+            "html": "<h1 class=\"ui  center aligned icon header\">\n  <i class=\"circle notched loading icon\"></i>\n  <div class=\"content\">\n    Thank you for answering!\n    <div class=\"sub header\">We will get to your video shortly!</div>\n  </div>\n</h1>",
+            "url": "/survey-thank-you",
+            "next": [
+                {
+                    "stateId": "parent-video-state"
+                }
+            ],
+            "onCompile": [
+                {
+                    "eventName": "animateElement",
+                    "args": {
+                        "element": ".html-state-container",
+                        "animationClasses": "show"
+                    }
+                },
+                {
+                    "eventName": "addClasses",
+                    "args": {
+                        "element": "#funnel-survey",
+                        "classes": "overlay"
+                    }
+                },
+                {
+                    "eventName": "removeClasses",
+                    "args": {
+                        "classes": "ui angle up icon",
+                        "element": ".accordion-icon"
+                    }
+                },
+                {
+                    "eventName": "addClasses",
+                    "args": {
+                        "classes": "ui angle up icon",
+                        "element": ".accordion-icon"
+                    }
+                },
+                {
+                    "eventName": "addClasses",
+                    "args": {
+                        "classes": "ui angle down icon",
+                        "element": "#form-accordion-icon"
+                    }
+                }
+            ],
+            "onTimeout": [
+                {
+                    "eventName": "removeClasses",
+                    "args": {
+                        "classes": "ui angle down icon",
+                        "element": "#form-accordion-icon"
+                    }
+                },
+                {
+                    "eventName": "addClasses",
+                    "args": {
+                        "classes": "ui angle up icon",
+                        "element": "#form-accordion-icon"
+                    }
+                },
+                {
+                    "eventName": "iVXjs:video:seek",
+                    "args": {
+                        "playerId": "parent-video-player",
+                        "currentTime": 16.1
+                    }
+                },
+                {
+                    "eventName": "iVXjs:video:play",
+                    "args": {
+                        "playerId": "parent-video-player"
+                    }
+                }
+            ],
+            "type": "html",
+            "id": "survey-thank-you"
+        },
+        {
+            "id": "parent-html-state",
+            "name": "Parent HTML State",
+            "url": "/parent-html-state",
+            "type": "html",
+            "section": {
+                "classes": "ui blue inverted container segment"
+            },
+            "html": "<div class=\"ivx-accordion ui container\">\n    <div class=\"ui segment\">\n        <h1 class=\"ui header\">HTML Embedded Flows<br><small>Open an accordion to view an embedded state</small></h1>\n    </div>\n    <div id=\"form-accordion\" class=\"ivx-accordion-container\">\n        <div ivx-go-to-state=\"parent-html-state.get-info\" id=\"form-accordion-title\" class=\"ui segment ivx-accordion-title\">\n             <h2 class=\"ui small header\"><i id=\"form-accordion-icon\" class=\"accordion-icon\"></i>Fill out a form</h2>\n        </div>\n        <div id=\"form-accordion-content\" class=\"ivx-accordion-content\"></div>\n    </div>\n     <div id=\"video-accordion\" class=\"ivx-accordion-container\">\n        <div  ivx-go-to-state=\"parent-html-state.video-in-video\" id=\"video-accordion-title\" class=\"ui segment ivx-accordion-title\">\n             <h2 class=\"ui small header\"><i id=\"video-accordion-icon\" class=\"accordion-icon\"></i>Watch A Video!</h2>\n        </div>\n        <div id=\"video-accordion-content\" class=\"ivx-accordion-content\"></div>\n    </div>\n    <div id=\"navigation-accordion\" class=\"ivx-accordion-container\">\n        <div  ivx-go-to-state=\"parent-html-state.quick-links-state\" id=\"navigation-accordion-title\" class=\"ui segment ivx-accordion-title\">\n             <h2 class=\"ui small header\"><i id=\"navigation-accordion-icon\" class=\"accordion-icon\"></i>Check out some links!</h2>\n        </div>\n        <div id=\"navigation-accordion-content\" class=\"ivx-accordion-content\"></div>\n    </div>\n</div>",
+            "onCompile": [
+                {
+                    "eventName": "animateElement",
+                    "args": {
+                        "element": ".html-state-container",
+                        "animationClasses": "show"
+                    }
+                },
+                {
+                    "eventName": "addClasses",
+                    "args": {
+                        "classes": "ui angle up icon",
+                        "element": ".accordion-icon"
+                    }
+                }
+            ],
+            "embeddedViews": [
+                {
+                    "id": "get-info-flow",
+                    "name": "Funnel Survey",
+                    "type": "custom",
+                    "classes": "basic",
+                    "appendTo": "#form-accordion-content",
+                    "states": [
+                        {
+                            "stateId": "get-info",
+                            "next": [
+                                {
+                                    "route": "^.survey-thank-you"
+                                }
+                            ]
+                        },
+                        {
+                            "stateId": "survey-thank-you",
+                            "next": [
+                                {
+                                    "route": "^"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "video-in-video",
+                    "name": "Video on Video",
+                    "type": "custom",
+                    "classes": "basic",
+                    "appendTo": "#video-accordion-content",
+                    "states": [
+                        {
+                            "stateId": "video-in-video",
+                            "next": [
+                                {
+                                    "route": "^"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": "quick-links-view",
+                    "name": "Quick Links View",
+                    "type": "custom",
+                    "classes": "basic",
+                    "appendTo": "#navigation-accordion-content",
+                    "states": [
+                        {
+                            "stateId": "quick-links-state"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "section": {
+                "classes": "blue-shades"
+            },
+            "inputs": [
+                {
+                    "id": "question-input-cosmic-latte-key",
+                    "settings": {
+                        "input": {
+                            "classes": "question-input-cosmic-latte-key"
+                        }
+                    },
+                    "name": "favoriteBlue",
+                    "type": "buttons",
+                    "buttons": [
+                        {
+                            "value": "sky",
+                            "label": "Sky"
+                        },
+                        {
+                            "value": "azure",
+                            "label": "Azure"
+                        },
+                        {
+                            "value": "navy",
+                            "label": "Navy"
+                        }
+                    ],
+                    "attributes": {
+                        "required": true
+                    }
+                }
+            ],
+            "name": "Favorite Blue Shade",
+            "header": {
+                "html": "<h2>\n    Select your favorite shade of blue <br>\n\n</h2>"
+            },
+            "url": "/blue-shades",
+            "onInputReady": [
+                {
+                    "eventName": "animateElement",
+                    "args": {
+                        "element": ".input-state-container",
+                        "animationClasses": "show"
+                    }
+                }
+            ],
+            "type": "input",
+            "id": "blue-shades",
+            "embedded": true
+        },
+        {
+            "section": {
+                "classes": "red-shades"
+            },
+            "inputs": [
+                {
+                    "id": "question-input-cosmic-latte-key",
+                    "settings": {
+                        "input": {
+                            "classes": "question-input-cosmic-latte-key"
+                        }
+                    },
+                    "name": "favoriteRed",
+                    "type": "buttons",
+                    "buttons": [
+                        {
+                            "value": "blush",
+                            "label": "Blush"
+                        },
+                        {
+                            "value": "cherry",
+                            "label": "Cherry"
+                        },
+                        {
+                            "value": "wine",
+                            "label": "Wine"
+                        }
+                    ],
+                    "attributes": {
+                        "required": true
+                    }
+                }
+            ],
+            "name": "Favorite Red Shade",
+            "header": {
+                "html": "<h2>\n    Select your favorite shade of red <br>\n\n</h2>"
+            },
+            "url": "/red-shades",
+            "onInputReady": [
+                {
+                    "eventName": "animateElement",
+                    "args": {
+                        "element": ".input-state-container",
+                        "animationClasses": "show"
+                    }
+                }
+            ],
+            "type": "input",
+            "id": "red-shades",
+            "embedded": true
+        },
+        {
+            "section": {
+                "classes": "green-shades"
+            },
+            "inputs": [
+                {
+                    "id": "question-input-cosmic-latte-key",
+                    "settings": {
+                        "input": {
+                            "classes": "question-input-cosmic-latte-key"
+                        }
+                    },
+                    "name": "favoriteGreen",
+                    "type": "buttons",
+                    "buttons": [
+                        {
+                            "value": "lime",
+                            "label": "Lime"
+                        },
+                        {
+                            "value": "basil",
+                            "label": "Basil"
+                        },
+                        {
+                            "value": "juniper",
+                            "label": "Juniper"
+                        }
+                    ],
+                    "attributes": {
+                        "required": true
+                    }
+                }
+            ],
+            "name": "Favorite Green Shade",
+            "header": {
+                "html": "<h2>\n    Select your favorite shade of green <br>\n\n</h2>"
+            },
+            "url": "/green-shades",
+            "onInputReady": [
+                {
+                    "eventName": "animateElement",
+                    "args": {
+                        "element": ".input-state-container",
+                        "animationClasses": "show"
+                    }
+                }
+            ],
+            "type": "input",
+            "embedded": true,
+            "id": "green-shades"
+        },
+        {
+            "form": {
+                "submit": {
+                    "input": {
+                        "classes": "green"
+                    },
+                    "labelHTML": "Submit"
+                },
+                "classes": ""
+            },
+            "section": {
+                "classes": "shade-reason"
+            },
+            "inputs": [
+                {
+                    "name": "reasoning",
+                    "id": "question-input-citrine-root",
+                    "label": "Put your explanation here:",
+                    "type": "textarea",
+                    "settings": {
+                        "input": {
+                            "classes": "question-input-citrine-root"
+                        }
+                    },
+                    "attributes": {
+                        "required": true
+                    }
+                }
+            ],
+            "name": "Follow Up Question",
+            "header": {
+                "html": "<h2>Tell us why, that is your favorite shade!</h2>"
+            },
+            "url": "/shade-reason",
+            "onInputReady": [
+                {
+                    "eventName": "animateElement",
+                    "args": {
+                        "element": ".input-state-container",
+                        "animationClasses": "show"
+                    }
+                }
+            ],
+            "type": "input",
+            "embedded": true,
+            "id": "shade-reason"
+        },
+        {
+            "section": {
+                "classes": "parent-input-state"
+            },
+            "embeddedViews": [
+                {
+                    "id": "select-shade",
+                    "name": "Select Shade",
+                    "type": "custom",
+                    "classes": "basic",
+                    "appendTo": ".parent-input-state",
+                    "states": [
+                        {
+                            "stateId": "blue-shades",
+                            "next": [
+                                {
+                                    "route": "^.shade-reason"
+                                }
+                            ]
+                        },
+                        {
+                            "stateId": "red-shades",
+                            "next": [
+                                {
+                                    "route": "^.shade-reason"
+                                }
+                            ]
+                        },
+                        {
+                            "stateId": "green-shades",
+                            "next": [
+                                {
+                                    "route": "^.shade-reason"
+                                }
+                            ]
+                        },
+                        {
+                            "stateId": "shade-reason",
+                            "next": [
+                                {
+                                    "route": "parent-html-state"
+                                }
+                            ]
+                        },
+                        {
+                            "stateId": "other-colors",
+                            "next": [
+                                {
+                                    "route": "parent-html-state"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "inputs": [
+                {
+                    "id": "favorite-color",
+                    "settings": {
+                        "input": {
+                            "classes": "question-input-cosmic-latte-key"
+                        }
+                    },
+                    "skip": {
+                        "label": "Other Color"
+                    },
+                    "name": "favoriteColor",
+                    "type": "buttons",
+                    "attributes": {
+                        "required": true
+                    },
+                    "buttons": [
+                        {
+                            "id" : "my-favorite-color-is-blue",
+                            "value": "blue",
+                            "label": "Blue"
+                        },
+                        {
+                            "value": "red",
+                            "label": "Red"
+                        },
+                        {
+                            "value": "green",
+                            "label": "Green"
+                        },
+                        {
+                            "value": "other",
+                            "label": "Other"
+                        }
+                    ]
+                }
+            ],
+            "name": "Progressive Form Scene",
+            "header": {
+                "html": "<h1>\n    Input State Embedded Flow <br>\n    <small>Answer a question to trigger a child state</small>\n</h1>"
+            },
+            "url": "/parent-input-state",
+            "next": [
+                {
+                    "route": "parent-input-state.red-shades",
+                    "rule": {
+                        "conditionOperator": "and",
+                        "conditions": [
+                            {
+                                "key": "favoriteColor",
+                                "is": "equals",
+                                "value": "red"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "route": "parent-input-state.blue-shades",
+                    "rule": {
+                        "conditionOperator": "and",
+                        "conditions": [
+                            {
+                                "key": "favoriteColor",
+                                "is": "equals",
+                                "value": "blue"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "route": "parent-input-state.green-shades",
+                    "rule": {
+                        "conditionOperator": "and",
+                        "conditions": [
+                            {
+                                "key": "favoriteColor",
+                                "is": "equals",
+                                "value": "green"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "route": "parent-input-state.other-colors",
+                    "rule": {
+                        "conditionOperator": "and",
+                        "conditions": [
+                            {
+                                "key": "favoriteColor",
+                                "is": "equals",
+                                "value": "other"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "onInputReady": [
+                {
+                    "eventName": "animateElement",
+                    "args": {
+                        "element": ".input-state-container",
+                        "animationClasses": "show"
+                    }
+                }
+            ],
+            "type": "input",
+            "id": "parent-input-state"
+        },
+        {
+            "form": {
+                "submit": {
+                    "input": {
+                        "classes": "green"
+                    },
+                    "labelHTML": "Submit"
+                },
+                "classes": ""
+            },
+            "section": {
+                "classes": "other-colors"
+            },
+            "inputs": [
+                {
+                    "id": "form-input-deep-cerise-experience",
+                    "name": "customColor",
+                    "labelHTML": "Color",
+                    "type": "text",
+                    "attributes": {
+                        "required": true,
+                        "placeholder": "What is your favorite color?"
+                    },
+                    "settings": {
+                        "width": "1/2",
+                        "container": {
+                            "classes": "no-label "
+                        }
+                    }
+                },
+                {
+                    "id": "form-input-charcoal-schema",
+                    "name": "customShade",
+                    "labelHTML": "Shade",
+                    "type": "text",
+                    "attributes": {
+                        "required": true,
+                        "placeholder": "What is your favorite shade of this color?"
+                    },
+                    "settings": {
+                        "width": "1/2",
+                        "container": {
+                            "classes": "no-label "
+                        }
+                    }
+                },
+                {
+                    "id": "form-input-charcoal-schema",
+                    "name": "reasoning",
+                    "labelHTML": "Why do you like this shade?",
+                    "type": "textarea",
+                    "attributes": {
+                        "required": true
+                    },
+                    "settings": {
+                        "width": "1"
+                    }
+                }
+            ],
+            "name": "Other Color",
+            "header": {
+                "html": "<h2>Sorry you can find your favorite color or shade!<br><small>Tell us your favorite color not listed&mdash;like  yellow, pink, grey&mdash;and a shade&mdash; like gold, rose, graphite. Then, tell us why you love it so we will know why you want to be able to select it.</h2>"
+            },
+            "url": "/other-colors",
+            "embedded": true,
+            "next": [
+                {
+                    "stateId": "parent-video-state.survey-thank-you"
+                }
+            ],
+            "onInputReady": [
+                {
+                    "eventName": "animateElement",
+                    "args": {
+                        "element": ".input-state-container",
+                        "animationClasses": "show"
+                    }
+                }
+            ],
+            "type": "input",
+            "id": "other-colors"
+        },
+        {
+            "id": "parent-navigation-state",
+            "name": "Parent Menu Scene",
+            "url": "/parent-navigation-state",
+            "type": "navigation",
+            "section": {
+                "classes": "parent-navigation-state"
+            },
+            "onEnter" : [ {
+                "eventName": "testingElementTargeting",
+                "args": {
+                    "actionSource": "Parent Menu Scene: On Enter"
+                }
+            }],
+            "onLinksReady": [
+                {
+                    "eventName": "animateElement",
+                    "args": {
+                        "element": ".navigation-state-container",
+                        "animationClasses": "show"
+                    }
+                }
+            ],
+            "header": {
+                "html": "<h1 class=\"ui centered align header\"><div class=\"content\">Select a state to test!<div class=\"sub header\">Select the one of the states to check embedding state types.</div></div></h1>"
+            },
+            "embeddedViews": [
+                {
+                    "id": "playlist-content",
+                    "name": "Playlist Content",
+                    "type": "custom",
+                    "classes": "basic",
+                    "appendTo": "footer",
+                    "states": [
+                        {
+                            "stateId": "get-info",
+                            "next": [
+                                {
+                                    "route": "^.survey-thank-you"
+                                }
+                            ]
+                        },
+                        {
+                            "stateId": "survey-thank-you",
+                            "next": [
+                                {
+                                    "route": "^.child-navigation-state"
+                                }
+                            ]
+                        },
+                        {
+                            "stateId": "child-navigation-state"
+                        },
+                        {
+                            "stateId": "child-video-state-1",
+                            "next": [
+                                {
+                                    "route": "^.child-video-state-2"
+                                }
+                            ]
+                        },
+                        {
+                            "stateId": "child-video-state-2",
+                            "next": [
+                                {
+                                    "route": "^.child-video-state-3"
+                                }
+                            ]
+                        },
+                        {
+                            "stateId": "child-video-state-3",
+                            "next": [
+                                {
+                                    "route": "^.get-info"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "links": [
+                {
+                    "id": "navigation-egyptian-blue-root",
+                    "route": "parent-navigation-state.child-video-state-1",
+                    "labelHTML": " <i class=\"ui video icon\"></i>Learn About Node!",
+                    "classes": "ui fluid labeled icon orange button",
+                    "onClick": [
+                        {
+                            "eventName": "testingElementTargeting",
+                            "args": {
+                                "source": "Parent Menu Scene: Link 1 Click"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "id": "navigation-dark-sea-green-input",
+                    "route": "parent-navigation-state.child-video-state-2",
+                    "labelHTML": "<i class=\"ui video icon\"></i>Get Help Choosing a Framework",
+                    "classes": "ui fluid labeled icon orange button",
+                    "onClick": [
+                        {
+                            "eventName": "testingElementTargeting",
+                            "args": {
+                                "source": "Parent Menu Scene: Link 2 Click"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "id": "navigation-columbia-blue-experience",
+                    "route": "parent-navigation-state.child-video-state-3",
+                    "label": "<i class=\"ui video icon\"></i>Some Advice about Junior Developers",
+                    "classes": "ui fluid labeled orange icon button",
+                    "onClick": [
+                        {
+                            "eventName": "testingElementTargeting",
+                            "args": {
+                                "source": "Parent Menu Scene: Link 3 Click"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "id": "navigation-columbia-blue-experience",
+                    "route": "parent-navigation-state.get-info",
+                    "label": "<i class=\"ui user icon\"></i>Let Us Know About You!",
+                    "classes": "ui fluid labeled icon purple button",
+                    "onClick": [
+                        {
+                            "eventName": "testingElementTargeting",
+                            "args": {
+                                "source": "Parent Menu Scene: Link 4 Click"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "id": "navigation-columbia-blue-experience",
+                    "route": "parent-navigation-state.child-navigation-state",
+                    "label": "<i class=\"ui external link icon\"></i>Helpful Links!",
+                    "classes": "ui fluid labeled icon blue button",
+                    "onClick": [
+                        {
+                            "eventName": "testingElementTargeting",
+                            "args": {
+                                "source": "Parent Menu Scene: Link 5 Click"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "child-navigation-state",
+            "name": "Child Navigation State",
+            "url": "/child-navigation-state",
+            "type": "navigation",
+            "embedded": true,
+            "section": {
+                "classes": "child-navigation-state"
+            },
+            "header": {
+                "html": "<h2 class=\"ui centered align header\"><div class=\"content\">Here are some helpful links!</div></h2>"
+            },
+            "onLinksReady": [
+                {
+                    "eventName": "animateElement",
+                    "args": {
+                        "element": ".navigation-state-container",
+                        "animationClasses": "show"
+                    }
+                }
+            ],
+            "links": [
+                {
+                    "href": "https://influencetech.github.io/ivx-js/",
+                    "classes": "navigation-dark-tangerine-key",
+                    "id": "navigation-dark-tangerine-key",
+                    "label": "iVXjs Documentation"
+                },
+                {
+                    "route": "parent-input-state",
+                    "label": "Parent Input State"
+                },
+                {
+                    "route": "parent-video-state",
+                    "label": "Parent Video State"
+                },
+                {
+                    "route": "parent-html-state",
+                    "label": "Parent HTML State"
+                }
+            ]
+        },
+        {
+            "playerSettings": {
+                "youtubeId": "pU9Q6oiQNd0",
+                "controls": {
+                    "type": "standard"
+                }
+            },
+            "embedded": true,
+            "section": {
+                "classes": "child-video-state-1"
+            },
+            "onVideoReady": [
+                {
+                    "eventName": "animateElement",
+                    "args": {
+                        "element": ".video-state-container",
+                        "animationClasses": "show"
+                    }
+                }
+            ],
+            "name": "Child Video Scene 1",
+            "url": "/child-video-state-1",
+            "type": "video",
+            "id": "child-video-state-1"
+        },
+        {
+            "playerSettings": {
+                "youtubeId": "KMX1mFEmM3E",
+                "controls": {
+                    "type": "standard"
+                }
+            },
+            "embedded": true,
+            "section": {
+                "classes": "child-video-state-2"
+            },
+            "onVideoReady": [
+                {
+                    "eventName": "animateElement",
+                    "args": {
+                        "element": ".video-state-container",
+                        "animationClasses": "show"
+                    }
+                }
+            ],
+            "name": "Child Video Scene 2",
+            "url": "/child-video-state-2",
+            "type": "video",
+            "id": "child-video-state-2"
+        },
+        {
+            "playerSettings": {
+                "youtubeId": "m6G8f9pZZRM",
+                "controls": {
+                    "type": "standard"
+                }
+            },
+            "embedded": true,
+            "section": {
+                "classes": "child-video-state-3"
+            },
+            "onVideoReady": [
+                {
+                    "eventName": "animateElement",
+                    "args": {
+                        "element": ".video-state-container",
+                        "animationClasses": "show"
+                    }
+                },{
+                    "eventName": "testingElementTargeting",
+                    "args" : {
+                        "sourceType" : "Child Video State 3: On Video Ready"
+                    }
+                }
+            ],
+            "name": "Child Video Scene 3",
+            "url": "/child-video-state-3",
+            "type": "video",
+            "id": "child-video-state-3"
+        }
+    ]
+}

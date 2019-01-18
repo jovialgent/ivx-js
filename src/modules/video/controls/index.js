@@ -4,6 +4,7 @@ import VideoClassNames from "../../../constants/video.classes.js";
 import TrackEventNames from "../../../constants/tracks.events.js";
 import TrackCuesEventNames from "../../../constants/tracks.cues.events.js";
 import Element from "../../../utilities/element";
+import isNaN from "lodash/isNaN";
 
 export class Controls extends ControlEvents {
     constructor(playerId) {
@@ -15,7 +16,8 @@ export class Controls extends ControlEvents {
             controlEventNames: new VideoEventNames(),
             trackEventNames: new TrackEventNames(),
             trackCuesEventName: new TrackCuesEventNames(),
-            videoClassNames: new VideoClassNames()
+            videoClassNames: new VideoClassNames(),
+            isNaN
         })
     }
 
@@ -274,7 +276,8 @@ export class Controls extends ControlEvents {
         this.whileUnmuted = iVXjsBus.on(this.controlEventNames.UNMUTE, unmute);
         this.whileSetVolume = iVXjsBus.on(this.controlEventNames.SET_VOLUME, setVolume);
         this.chapterChange = iVXjsBus.on(this.trackCuesEventName.ON_CHAPTER_START, chapterChange);
-        this.trackChange = iVXjsBus.on(this.trackEventNames.CHANGE_CURRENT_TRACK, trackChange)
+        this.trackChange = iVXjsBus.on(this.trackEventNames.CHANGE_CURRENT_TRACK, trackChange);
+        this.hideTracks = iVXjsBus.on(this.trackEventNames.HIDE_TRACKS, hideTracks);
         this.updateTime = this.updateTime ? this.updateTime : updateTime;
 
         volumeBar.addEventListener('mousedown', (event) => {
@@ -293,7 +296,7 @@ export class Controls extends ControlEvents {
         self.containerEl.addClass(videoClassNames.SEEKING);
 
         const canPlayListener = this.iVXjsBus.on(this.controlEventNames.READY, (player) => {
-            if (player.id === self.playerId) {
+            if (player.id === self.playerId && !self.isNaN(player.duration)) {
                 canPlayCallBack(player);
                 self.createPlayerSpecificControls({ player })
                 self.player = player;
@@ -347,6 +350,13 @@ export class Controls extends ControlEvents {
 
             if (playerId === self.playerId) {
                 self.updateTrackSelector(trackId)
+            }
+        }
+
+        function hideTracks(opts) {
+            let { playerId } = opts;
+            if (playerId === self.playerId) {
+                self.updateTrackSelector();
             }
         }
 

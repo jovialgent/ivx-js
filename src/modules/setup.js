@@ -5,7 +5,6 @@ import { assert } from '../utilities/asserts.js';
 import ErrorEventNames from '../constants/errors.js';
 import ConfigEventNames from '../constants/iVXjs.config.events.js';
 import { iVXjsData } from "./data/ivx-js/index.js";
-import { DefaultUI } from "./ui/default/index.js";
 import { iVXjsValidation } from "./validation/ivx-js-validation/index.js";
 
 let errorEvents = new ErrorEventNames();
@@ -129,10 +128,9 @@ export class Setup {
      */
     setupModules(experienceData) {
         let {settings} = this;
-        let {ui: UI = DefaultUI} = settings;
-
+      
         experienceData.video = new RegisteredVideoModules();
-        experienceData.ui = new UI();
+        experienceData.ui = {};
         experienceData.audio = new RegisteredAudioModules().html5;
 
         return experienceData;

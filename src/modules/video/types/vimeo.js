@@ -67,9 +67,10 @@ export class Vimeo {
         });
     }
 
-    addEventListeners(iVXjsBus) {
+    addEventListeners(iVXjsBus, settings = {}, iVXjsActions) {
         let { _stateData: stateData, videoEventNames, _settings, container, videoClassNames } = this;
         let { id } = _settings;
+        let muted = false;
         let self = this;
         let timeUpdateId;
         let url = `https://player.vimeo.com/video/${_settings.id}`
@@ -119,15 +120,23 @@ export class Vimeo {
         });
 
         self.player.on('pause', () => {
+            const { onVideoPause } = settings;
             self.container.addClass(videoClassNames.PAUSED);
             self.container.removeClass(videoClassNames.PLAYING);
             iVXjsBus.emit(videoEventNames.PAUSED, self.player);
+            iVXjsActions.resolveActions(onVideoPause, () => {
+
+            })
         })
 
         self.player.on('play', () => {
+            const { onVideoPlay } = settings;
             self.container.removeClass(videoClassNames.PAUSED);
             self.container.addClass(videoClassNames.PLAYING);
             iVXjsBus.emit(videoEventNames.PLAYING, self.player);
+            iVXjsActions.resolveActions(onVideoPlay, () => {
+
+            })
         })
 
         self.player.on('ended', () => {
@@ -136,13 +145,27 @@ export class Vimeo {
 
         self.player.on('volumechange', args => {
             const { volume } = args;
+            const { onVideoMute = [], onVideoUnmute = [] } = settings;
+            const isPlayerMuted = volume <= 0;
+            const changed = isPlayerMuted !== muted;
 
-            if (volume <= 0) {
+            if (changed && isPlayerMuted) {
                 container.removeClass(videoClassNames.UNMUTED);
                 container.addClass(videoClassNames.MUTED);
-            } else {
+                iVXjsActions.resolveActions(onVideoMute, () => {
+
+                })
+                muted = true;
+                return;
+            }
+            if (changed && !isPlayerMuted) {
                 container.removeClass(videoClassNames.MUTED);
                 container.addClass(videoClassNames.UNMUTED);
+                iVXjsActions.resolveActions(onVideoUnmute, () => {
+
+                })
+                muted = false;
+                return;
             }
         })
 
@@ -231,6 +254,12 @@ export class Vimeo {
     }
 
     get html() {
-        return `<div id="${this.playerId}" class="player1 vimeo-player" data-vimeo-autoplay="false" data-vimeo-loop="false"></div>`;
+        const { classes = "", personalizationsHTML } = this._settings;
+
+        return `<div id="${this.playerId}" class="player1 vimeo-player ${classes}" data-vimeo-autoplay="false" data-vimeo-loop="false"></div>
+        <div class="ivx-video-personalization-section">
+            ${personalizationsHTML}
+        </div>
+        `;
     }
 }

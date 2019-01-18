@@ -1,0 +1,16 @@
+{
+    "id": "youtube-test",
+    "controls": "standard",
+    "youtubeId": "Efhf-NYYpwU",
+    "cuePoints": [
+        {
+            "eventName": "cuePointFired",
+            "args": {
+                "playerId": "youtube-test"
+            },
+            "timeAt": 5,
+            "endAt": 10,
+            "always": true
+        }
+    ]
+}

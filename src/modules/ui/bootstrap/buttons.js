@@ -1,7 +1,7 @@
-import { Buttons as DefaultButtons } from '../default/buttons.js';
+import { Buttons as BasicButtons } from '../basic/buttons.js';
 import { ErrorMessages } from "./messages.js";
 
-export class Buttons extends DefaultButtons {
+export class Buttons extends BasicButtons {
     constructor(buttons, input) {
         super(buttons, input, ErrorMessages);
     }

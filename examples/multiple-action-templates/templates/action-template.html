@@ -1,0 +1,25 @@
+<div>
+    <div class="ivx-action-template-container">
+        <div class="ivx-action-template-link test-class">
+            <button ivx-add-classes="{element:'body', classes: 'ivx-change-color'}"
+                ivx-animate="{.html-state-container, animated fadeOut}"
+                ivx-set-data="{clickedInternalLink, true}"
+                ivx-remove-classes="{element:'.ivx-action-template-link', classes: 'test-class'}"
+                ivx-go-to-state="basic-menu-scene">Actions On A Button (Navigates to Basic Menu Scene)</button>
+        </div>
+        <div class="ivx-action-template-link test-class">
+            <div ivx-add-classes="{element:'body', classes: 'ivx-change-color'}"
+                ivx-animate="{.html-state-container, animated fadeOut}"
+                ivx-set-data="{clickedInternalLink, true}"
+                ivx-remove-classes="{element:'.ivx-action-template-link', classes: 'test-class'}"
+                ivx-go-to-state="basic-menu-scene">Actions On An Element (Navigates to Basic Menu Scene)</div>
+        </div>
+        <div class="ivx-action-template-link">
+            <a ivx-add-classes="{element:'body', classes: 'ivx-change-color'}"
+                ivx-animate="{.html-state-container, animated fadeOut}"
+                ivx-set-data="{clickedExternalLink, true}"
+                ivx-remove-classes="{element:'.ivx-action-template-link', classes: 'test-class'}"
+                href="https://influencetech.github.io/ivx-js/developer/usage.action-templates/">External Link</a>
+        </div>
+    </div>
+</div>

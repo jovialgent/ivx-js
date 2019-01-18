@@ -74,13 +74,11 @@ export class YouTube {
         });
     }
 
-    addEventListeners(iVXjsBus) {
+    addEventListeners(iVXjsBus, settings = {}, iVXjsActions) {
         let { _stateData: stateData, player, videoEventNames, playerId, videoClassNames } = this;
         let self = this;
         let timeUpdateId;
         let numberofTimeupdates = 0;
-
-
 
         player.addEventListener('onError', (event) => {
             let messages = {
@@ -99,12 +97,16 @@ export class YouTube {
 
         player.addEventListener('onStateChange',
             function onStateChange() {
+                const { onVideoPlay = [], onVideoPause = [] } = settings;
                 switch (player.getPlayerState()) {
                     case 0:
                         iVXjsBus.emit(videoEventNames.ENDED, player, stateData);
                         break;
                     case 1:
                         player.paused = false;
+                        iVXjsActions.resolveActions(onVideoPlay, () => {
+
+                        })
                         iVXjsBus.emit(videoEventNames.PLAYING, player, stateData);
                         self.container.removeClass(videoClassNames.PAUSED);
                         self.container.removeClass(videoClassNames.SEEKING);
@@ -112,6 +114,9 @@ export class YouTube {
                         break;
                     case 2:
                         player.paused = true;
+                        iVXjsActions.resolveActions(onVideoPause, () => {
+
+                        })
                         self.container.removeClass(videoClassNames.PLAYING);
                         self.container.addClass(videoClassNames.PAUSED);
                         iVXjsBus.emit(videoEventNames.PAUSED, player, stateData);
@@ -149,7 +154,7 @@ export class YouTube {
                 iVXjsBus.emit(videoEventNames.READY, player, self.stateData);
 
                 self.container.addClass(videoClassNames.PAUSED);
-                self._setMuted();
+                self._setMuted(iVXjsBus, settings, iVXjsActions);
             });
 
 
@@ -167,7 +172,7 @@ export class YouTube {
         function pauseOnEvent(args = {}) {
             const { playerId } = args;
 
-            if (!playerId || playerId === self.playerId) pauseVideo()
+            if (!playerId || playerId === self.playerId) pauseVideo();
 
             function pauseVideo() {
                 player.pauseVideo();
@@ -200,21 +205,23 @@ export class YouTube {
         }
 
         function muteOnEvent(args = {}) {
+            const { onVideoMute } = settings;
             const { playerId } = args;
 
-            if (!playerId || playerId === self.playerId) setVolume();
+            if (!playerId || playerId === self.playerId) setMute();
 
-            function setVolume() {
+            function setMute() {
                 player.mute();
             }
         }
 
         function unmuteOnEvent(args = {}) {
+            const { onVideoUnmute } = settings;
             const { playerId } = args;
 
-            if (!playerId || playerId === self.playerId) setVolume();
+            if (!playerId || playerId === self.playerId) setUnmute();
 
-            function setVolume() {
+            function setUnmute() {
                 player.unMute();
             }
         }
@@ -257,23 +264,41 @@ export class YouTube {
         }
     }
 
-    _setMuted() {
+    _setMuted(iVXjsBus, settings = {}, iVXjsActions) {
         const { player, container, videoClassNames } = this;
+        const { onVideoMute = [], onVideoUnmute = [] } = settings;
+        let muted = player.isMuted();
 
         this.mutedIntervalId = setInterval(() => {
-            if (player.isMuted()) {
+            const changed = muted !== player.isMuted()
+            if (changed && player.isMuted()) {
                 container.removeClass(videoClassNames.UNMUTED);
                 container.addClass(videoClassNames.MUTED);
-            } else {
+                iVXjsActions.resolveActions(onVideoMute, () => {
+
+                })
+                muted = true;
+                return;
+            }
+            if (changed && !player.isMuted()) {
                 container.removeClass(videoClassNames.MUTED);
                 container.addClass(videoClassNames.UNMUTED);
+                iVXjsActions.resolveActions(onVideoUnmute, () => {
+
+                })
+                muted = false;
+                return;
             }
         }, 50);
     }
 
     get html() {
-        const { classes = "" } = this._settings;
+        const { classes = "", personalizationsHTML } = this._settings;
 
-        return `<div id="${this.playerId}" class='youtube-player ${classes}'></div>`;
+        return `<div id="${this.playerId}" class='youtube-player ${classes}'></div>
+        <div class="ivx-video-personalization-section">
+            ${personalizationsHTML}
+        </div>
+        `;
     }
 }

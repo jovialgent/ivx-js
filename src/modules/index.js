@@ -35,7 +35,7 @@ export class Modules {
         }
     }
 
-    
+
 
     /**
      * Default data settings that will create 
@@ -70,8 +70,8 @@ export class Modules {
      * a valid iVXjs experience.
      */
     get modules() {
-        let {modules = {}} = this.settings;
-        let {defaultVideoTypes} = this;
+        let { modules = {} } = this.settings;
+        let { defaultVideoTypes } = this;
 
         let {
             data = this.defaultData,

@@ -18,11 +18,11 @@ export class iVXjsData {
         let experience = defaultActions;
         let {modules: configModules = {}} = configData;
         let {ui: configUI = ui, validation: configValidation = validation} = configModules;
-
+        
         if (modifiedExperience) {
             experience = myObjectParser.merge(experience, modifiedExperience);
         }
-
+        
         let enhanced = {
             experience: experience,
             validation,

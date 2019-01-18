@@ -1,7 +1,7 @@
-import { Url as DefaultUrl } from '../default/url.js';
+import { Url as BasicUrl  } from '../basic/url.js';
 import { ErrorMessages } from "./messages.js";
 
-export class Url extends DefaultUrl{
+export class Url extends BasicUrl{
     constructor(inputObj) {
         super(inputObj, ErrorMessages);  
     } 

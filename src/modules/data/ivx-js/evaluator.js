@@ -4,6 +4,7 @@ let typeValidator = new TypeValidator();
 
 const { hasOwnProperty } = Object.prototype;
 
+import isFunction from "lodash/isFunction";
 
 export default class {
     constructor(experience, customEvaluator) {
@@ -11,28 +12,35 @@ export default class {
         this.customEvaluator = customEvaluator;
     }
 
-    evaluate(rule) {
+    setCustomEvaluator(evaluatorFn) {
+        Object.assign(this, {
+            customEvaluator
+        })
+    }
+
+    evaluate(rule, tempEvaluator = () => { return false }) {
         let self = this;
         let { conditionOperator = "and", conditions } = rule;
         let evaluateConditions = conditions.map((condition, index) => {
             let { key: lhs, is, value: rhs, type = "input" } = condition;
+            let matchingCondition = tempEvaluator(condition);
 
-            if (self.customEvaluator && typeValidator.isFunction(self.customEvaluator) && self.customEvaluator(condition)) {
-                return self.customEvaluator(condition);
+            if (!matchingCondition && self.customEvaluator && isFunction(self.customEvaluator)) {
+                matchingCondition = self.customEvaluator(condition);
             }
 
             // Since older versions of the iVXjs JSON used 
             // the key for "keyword" this will make it backwards
             // compatable
-            if (self[lhs]) {
-                return self[lhs](lhs, is, rhs);
+            if (!matchingCondition && self[lhs]) {
+                matchingCondition = self[lhs](lhs, is, rhs);
             }
 
-            if (self[type]) {
-                return self[type](lhs, is, rhs);
+            if (!matchingCondition && self[type]) {
+                matchingCondition = self[type](lhs, is, rhs);
             }
 
-            return false;
+            return matchingCondition;
         });
 
         return this[conditionOperator](evaluateConditions);

@@ -81,4 +81,5 @@ export default class {
 
         this.iVXjsBus.emit(this.trackEventNames.CHANGE_CURRENT_TRACK, { trackId, playerId });
     }
+
 }

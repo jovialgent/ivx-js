@@ -97,6 +97,12 @@ class BaseWebpackConfig {
 
                             }
                         }]
+                    },
+                    {
+                        test: /\.html$/,
+                        use: [
+                            'raw-loader'
+                        ]
                     }
                 ]
             },

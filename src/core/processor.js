@@ -4,9 +4,14 @@ import GlobalEvents from "./global-events";
 let typeValidator = new TypeValidator();
 
 export class ActionProcessor {
-    constructor(iVXjs) {
+    constructor(iVXjs, iVXjsBus) {
 
         this.iVXjs = iVXjs;
+        this.iVXjsBus = iVXjsBus;
+
+        if(this.iVXjs.experience){
+            this.iVXjs.experience._bus = iVXjsBus;
+        }
 
         Object.assign(this, {
             globalEvents: new GlobalEvents(iVXjs)

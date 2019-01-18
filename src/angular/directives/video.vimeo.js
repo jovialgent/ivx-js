@@ -4,7 +4,7 @@ import VimeoVideoPlayerController from '../controllers/video.vimeo.js';
 
 
 class VimeoVideoPlayer {
-    constructor($rootScope, $compile, $window, $timeout, iVXjsBus, iVXjsLog, iVXjsVideoModule, createInlineVideo, iVXjsVideoService) {
+    constructor($rootScope, $compile, $window, $timeout, iVXjsBus, iVXjsLog, iVXjsVideoModule, createInlineVideo, iVXjsVideoService, ivxExperienceScope, pullInTemplate, iVXjsActions) {
         this.template = this.templateHTML;
         this.restrict = 'E';
         this.replace = true;
@@ -18,14 +18,26 @@ class VimeoVideoPlayer {
         this.link = ($scope, iElm, iAttrs, controller) => {
             if (!iVXjsVideoModule.vimeo) return;
 
-            let { settings = {}, stateData : passedStateData = {}, playerId } = $scope;
+            let { settings = {}, stateData: passedStateData = {}, playerId } = $scope;
 
             const stateData = Object.assign({}, passedStateData);
-            
-       
+            const { personalizations = [] } = stateData;
+
+            let personalizationsHTML = personalizations.reduce((personalizationHTML, thisPersonalization, index) => {
+                thisPersonalization = pullInTemplate.convertTemplateUrlToHtml(thisPersonalization, $scope);
+
+                let { defaultAnimationClass = 'hide', html, id } = thisPersonalization;
+
+                return `${personalizationHTML} <div id="${id}" class="${defaultAnimationClass} ivx-video-personalization-container ">${html}</div> `
+            }, "");
+
+            $scope = ivxExperienceScope.setScopeExperience($scope);
+
+
             const playerSettings = Object.assign({},
                 settings, {
                     playerId,
+                    personalizationsHTML,
                     id: settings.vimeoId
                 });
 
@@ -33,14 +45,12 @@ class VimeoVideoPlayer {
                 playerSettings.cuePoints = stateData.cuePoints;
             }
 
-            console.dir();
 
-          
             let VimeoPlayer = new iVXjsVideoModule.vimeo(iElm.find('div')[0], playerSettings, stateData, iVXjsLog, {
-                vimeoPlayerContainer : iElm[0]
+                vimeoPlayerContainer: iElm[0]
             });
 
-            VimeoPlayer.addEventListeners(iVXjsBus);
+            VimeoPlayer.addEventListeners(iVXjsBus, playerSettings, iVXjsActions);
 
             controller.player = VimeoPlayer;
 
@@ -63,7 +73,7 @@ class VimeoVideoPlayer {
     }
 }
 
-VimeoVideoPlayer.$inject = ['$rootScope', '$compile', '$window', '$timeout', 'ivxjs.bus', 'ivxjs.log', 'ivxjs.modules.video', 'createInlineVideo', 'iVXjsVideoService'];
+VimeoVideoPlayer.$inject = ['$rootScope', '$compile', '$window', '$timeout', 'ivxjs.bus', 'ivxjs.log', 'ivxjs.modules.video', 'createInlineVideo', 'iVXjsVideoService', 'ivxExperienceScope', 'pullInTemplate', 'iVXjsActions'];
 
 export default angular
     .module('ivx-js.directives.video.vimeo', [])

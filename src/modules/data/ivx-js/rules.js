@@ -1,8 +1,6 @@
 import Evaluator from './evaluator.js';
-import { TypeValidator, ObjectParsers } from '../../../utilities/type-parsers.js';
-
-
-let typeValidator = new TypeValidator();
+import isEmpty from "lodash/isEmpty";
+import isFunction from "lodash/isEmpty";
 
 /**
  * A default rule system in which iVXjs chooses which state 
@@ -18,14 +16,10 @@ export class Rules {
      * object in which data will be used to evaluate various rules.
      */
     constructor(experience = { data: {} }, customEvaluator) {
-
-        /**
-         * Current iVXjs Expereince 
-         * 
-         * @type {object}
-         */
-        this.experience = experience;
-        this.evaluator = new Evaluator(experience, customEvaluator);
+        Object.assign(this, {
+            experience,
+            evaluator: new Evaluator(experience, customEvaluator)
+        });
     }
 
     /**
@@ -38,8 +32,8 @@ export class Rules {
     get rules() {
         let self = this;
 
-        return (navArray = []) => {
-            return self.processRules(navArray);
+        return (navArray = [], legacy = true, customEvaluator = () => { return false }) => {
+            return self.processRules(navArray, legacy, customEvaluator);
         }
     }
 
@@ -52,30 +46,49 @@ export class Rules {
      * @return {string} - the stateId of the rule that was evaluated 
      * true first. If no state is return, returns an empty string.
      */
-    processRules(navArray = []) {
+    processRules(rules = [], legacy = true, customEvaluator = () => { return false }) {
+        if (legacy) return this.processStateRules(rules);
 
-        if (!Array.isArray(navArray)) {
-            navArray = [];
+        return this.findMatchngRule(rules, customEvaluator);
+    }
+
+    processStateRules(next) {
+        if (!Array.isArray(next)) {
+            next = [];
         }
 
-        let self = this;
-        let stateSelect = navArray.find((navObj) => {
-            let { rule } = navObj;
-
-            if (typeValidator.isEmpty(rule)) return true;
-
-            let { conditions, conditionOperator = "and" } = rule;
-
-            if (!conditions) {
-                rule.conditionOperator = conditionOperator;
-                rule.conditions = [rule];
-            }
-
-            return self.evaluator.evaluate(rule);
-        }) || {};
-
+        const stateSelect = this.findMatchngRule(next);
         const { stateId = '', route } = stateSelect;
 
         return route ? route : stateId;
+    }
+
+    findMatchngRule(rules, customEvaluator = () => { return false }) {
+        const self = this;
+
+        return rules.find(ruleObj => {
+            let { rule: ruleDefinition } = ruleObj;
+
+            return self.getMatchingRule(ruleDefinition, customEvaluator);
+        }) || {};
+    }
+
+    getMatchingRule(rule, customEvaluator = () => { return false }) {
+        const { evaluator } = this;
+
+        if (isEmpty(rule)) return true;
+
+        const { conditions, conditionOperator = "and" } = rule;
+
+        if (!conditions) {
+            rule.conditionOperator = conditionOperator;
+            rule.conditions = [rule];
+        }
+
+        return evaluator.evaluate(rule, customEvaluator);
+    }
+
+    addEvaluator(evaluatorName, evaluatorFn) {
+        this.evaluator[evaluatorName] = evaluatorFn;
     }
 }

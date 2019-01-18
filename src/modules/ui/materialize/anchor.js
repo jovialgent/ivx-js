@@ -1,6 +1,6 @@
-import { Anchor as DefaultAnchor } from '../default/anchor.js';
+import { Anchor as BasicAnchor } from '../basic/anchor.js';
 
-export class Anchor extends DefaultAnchor{
+export class Anchor extends BasicAnchor{
 	constructor(anchorInfo){
 		super(anchorInfo);
 	}

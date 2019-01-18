@@ -3,7 +3,7 @@ import HTML5VideoController from '../controllers/video.html5.js';
 import VideoEventConstants from "../../constants/video.events.js";
 
 class HTML5VideoPlayer {
-    constructor($compile, $timeout, iVXjsVideoModule, iVXjsBus, iVXjsLog, createInlineVideo, iVXjsVideoService, iVXjs) {
+    constructor($compile, $timeout, iVXjsVideoModule, iVXjsBus, iVXjsLog, createInlineVideo, iVXjsVideoService, iVXjs, pullInTemplate, ivxExperienceScope, iVXjsActions) {
         this.template = this.templateHTML;
         this.restrict = 'E';
         this.scope = {
@@ -15,7 +15,7 @@ class HTML5VideoPlayer {
         this.controllerAs = 'vm';
         this.link = ($scope, iElm, iAttrs, controller) => {
             let { settings: playerSettings, stateData = {}, playerId } = $scope;
-            let { playerSettings: statePlayerSettings } = stateData;
+            let { playerSettings: statePlayerSettings, personalizations = [] } = stateData;
             let videoEventNames = new VideoEventConstants();
             let settings = {};
 
@@ -26,16 +26,27 @@ class HTML5VideoPlayer {
                 settings = playerSettings;
             }
 
+            let personalizationsHTML = personalizations.reduce((personalizationHTML, thisPersonalization, index) => {
+                thisPersonalization = pullInTemplate.convertTemplateUrlToHtml(thisPersonalization, $scope);
+
+                let { defaultAnimationClass = 'hide', html, id } = thisPersonalization;
+
+                return `${personalizationHTML} <div id="${id}" class="${defaultAnimationClass} ivx-video-personalization-container ">${html}</div> `
+            }, "");
+
+            $scope = ivxExperienceScope.setScopeExperience($scope);
+
             settings = Object.assign(settings, {
                 isiOS: createInlineVideo.isiOS(),
-                id: playerId
+                id: playerId,
+                personalizationsHTML
             });
 
             controller.playerId = playerId;
 
             let thisVideoPlayer = new iVXjsVideoModule.html5(iElm.find('div')[0], settings, stateData, iVXjsLog);
 
-            thisVideoPlayer.addEventListeners(iVXjsBus, settings);
+            thisVideoPlayer.addEventListeners(iVXjsBus, settings, iVXjsActions);
 
             $timeout(() => {
                 let { iphoneInline = false } = settings;
@@ -60,11 +71,11 @@ class HTML5VideoPlayer {
     }
 
     get templateHTML() {
-        return `<div class="video-player-container"></div>`;
+        return `<div class="video-player-container ivx-video-player ivx-video-player-html5"></div>`;
     }
 }
 
-HTML5VideoPlayer.$inject = ['$compile', '$timeout', 'ivxjs.modules.video', 'ivxjs.bus', 'ivxjs.log', 'createInlineVideo', 'iVXjsVideoService', 'iVXjs'];
+HTML5VideoPlayer.$inject = ['$compile', '$timeout', 'ivxjs.modules.video', 'ivxjs.bus', 'ivxjs.log', 'createInlineVideo', 'iVXjsVideoService', 'iVXjs', 'pullInTemplate', 'ivxExperienceScope', 'iVXjsActions'];
 
 export default angular
     .module('ivx-js.directives.video.html5', [])

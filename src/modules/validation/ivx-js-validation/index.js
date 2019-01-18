@@ -11,7 +11,7 @@ export class iVXjsValidation extends Validation {
 
   constructor(data) {
     super()
-    this.data = data
+    this.data = data;
 
     if (!this.valid) {
       this.error = {

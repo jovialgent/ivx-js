@@ -122,14 +122,18 @@ export class Html5 {
         }
     }
 
-    setOnReady() {
+    setOnReady(iVXjsBus, settings = {}, iVXjsActions) {
         const { videoClassNames } = this;
         const self = this;
 
-
-
+       
         this.player.addEventListener('pause', () => {
+            const { onVideoPause = [] } = settings;
+
             self.container.removeClass(videoClassNames.PLAYING);
+            iVXjsActions.resolveActions(onVideoPause, () => {
+
+            });
             self.container.addClass(videoClassNames.PAUSED);
             self.iVXjsBus.emit(self.videoEventNames.PAUSED, self.player);
         })
@@ -141,10 +145,16 @@ export class Html5 {
         this.player.addEventListener('loadedmetadata', () => {
             self.container.addClass(videoClassNames.PAUSED);
             self.container.addClass(videoClassNames.UNMUTED);
+           
             self.iVXjsBus.emit(self.videoEventNames.READY, self.player, self.stateData);
         });
         this.player.addEventListener('playing', () => {
+            const { onVideoPlay = [] } = settings;
+
             self.container.removeClass(videoClassNames.PAUSED);
+            iVXjsActions.resolveActions(onVideoPlay, () => {
+
+            });
             self.container.addClass(videoClassNames.PLAYING);
             self.iVXjsBus.emit(self.videoEventNames.PLAYING, self.player, self.stateData);
         });
@@ -156,12 +166,20 @@ export class Html5 {
         });
         this.player.addEventListener('volumechange', () => {
             const { muted = false } = self.player;
+            const { onVideoMute = [], onVideoUnmute = [] } = settings;
 
             if (muted) {
                 self.container.removeClass(videoClassNames.UNMUTED);
                 self.container.addClass(videoClassNames.MUTED);
+                iVXjsActions.resolveActions(onVideoMute, () => {
+
+                });
             } else {
                 self.container.removeClass(videoClassNames.MUTED);
+
+                iVXjsActions.resolveActions(onVideoUnmute, () => {
+
+                });
                 self.container.addClass(videoClassNames.UNMUTED);
             }
         })
@@ -183,10 +201,11 @@ export class Html5 {
         })
     }
 
-    addEventListeners(iVXjsBus, settings = {}) {
+    addEventListeners(iVXjsBus, settings = {}, iVXjsActions) {
         let { videoEventNames, trackEventNames, trackCuesEventNames, iVXjsLog } = this;
         let { tracks } = settings;
         let self = this;
+        const { onVideoPlay } = settings;
 
         this.iVXjsBus = iVXjsBus;
         this.currentVolume = this.player.volume;
@@ -226,6 +245,7 @@ export class Html5 {
         this.seekOnEvent = iVXjsBus.on(videoEventNames.SEEK, seekOnEvent);
 
         //Track Events
+        this.hideTracksOnEvent = iVXjsBus.on(trackEventNames.HIDE_TRACKS, hideTracks);
         this.changeCurrentTrackOnEvent = iVXjsBus.on(trackEventNames.CHANGE_CURRENT_TRACK, changeCurrentTrack);
         this.changeChapterOnEvent = iVXjsBus.on(trackCuesEventNames.CHANGE_CHAPTER, changeChapter);
 
@@ -239,7 +259,7 @@ export class Html5 {
         this.changeChapterOnEvent = this.changeChapterOnEvent ? this.changeChapterOnEvent : changeChapter;
 
 
-        this.setOnReady();
+        this.setOnReady(iVXjsBus, settings, iVXjsActions);
         this.setTimeUpdate();
         this.setOnEnd();
 
@@ -270,13 +290,20 @@ export class Html5 {
         }, true);
 
         function playOnEvent(args = {}) {
-            self.play(args);
+            const { playerId } = args;
+
+            if (!playerId || playerId === self.player.id) {
+                self.play(args);
+            }
         }
 
         function pauseOnEvent(args = {}) {
-            self.pause(args);
-        }
+            const { playerId } = args;
 
+            if (!playerId || playerId === self.player.id) {
+                self.pause(args);
+            }
+        }
 
         function seekOnEvent(currentTime) {
             self.seek(currentTime);
@@ -291,11 +318,27 @@ export class Html5 {
         }
 
         function muteOnEvent(args = {}) {
-            self.mute(args);
+            const { playerId } = args;
+            const { onVideoMute } = settings;
+
+            if (!playerId || playerId === self.player.id) {
+                self.mute(args);
+                iVXjsActions.resolveActions(onVideoMute, () => {
+
+                })
+            }
         }
 
         function unmuteOnEvent(args = {}) {
-            self.unmute(args);
+            const { playerId } = args;
+            const { onVideoUnmute } = settings;
+
+            if (!playerId || playerId === self.player.id) {
+                self.unmute(args);
+                iVXjsActions.resolveActions(onVideoUnmute, () => {
+
+                })
+            }
         }
 
         function changeChapter(opts) {
@@ -370,6 +413,21 @@ export class Html5 {
                 }
             }
         }
+
+        function hideTracks(opts) {
+            let { playerId } = opts;
+            let { textTracks } = self.player;
+            let trackArray = Array.from(textTracks);
+
+            if (!playerId || playerId === self.player.id) runHideTracks();
+
+            function runHideTracks() {
+                trackArray.forEach(track => {
+                    track.mode = "hidden";
+                })
+            }
+        }
+
     }
 
     dispose(iVXjsBus) {
@@ -384,6 +442,7 @@ export class Html5 {
             mute: videoEventNames.MUTE,
             unmute: videoEventNames.UNMUTE,
             changeCurrentTrack: trackEventNames.CHANGE_CURRENT_TRACK,
+            hideTracks: trackEventNames.HIDE_TRACKS,
             changeChapter: trackCuesEventNames.CHANGE_CHAPTER
         };
         let eventsToDispose = Object.keys(eventNameMap);
@@ -396,9 +455,11 @@ export class Html5 {
     }
 
     get html() {
-        let { tracks = [], sources = [], controls = true, isiOS = false } = this.settings;
+        let { tracks = [], sources = [], controls = true, isiOS = false, personalizationsHTML } = this.settings;
+
         let tags = ['tracks', 'sources', 'isiOS', 'autoplay'];
         let justAttrs = ['controls'];
+        let omit = ['cuePoints', 'personalizationsHTML']
         let showControls = this.videoService.showControls(controls);
 
         if (showControls) {
@@ -411,6 +472,8 @@ export class Html5 {
             if (tags.indexOf(key) >= 0) return thisAttrHTML;
             if (justAttrs.indexOf(key) >= 0) return `${thisAttrHTML} ${key}`;
             if (key === 'classes') return `${thisAttrHTML} class="${value}"`;
+            if (omit.indexOf(key) >= 0) return thisAttrHTML;
+
 
             return `${thisAttrHTML} ${key}="${value}"`
         }, "");
@@ -441,6 +504,9 @@ export class Html5 {
             <video  width="100%" ${attrHTML} onclick="this.paused ? this.play() : this.pause();">
                 ${sourceTags}
                 ${trackTags}
-            </video>`;
+            </video>
+            <div class="ivx-video-personalization-section">
+                ${personalizationsHTML}
+            </div>`;
     }
 };

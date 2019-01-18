@@ -1,7 +1,7 @@
-import { Number as DefaultNumber } from '../default/number.js';
+import { Number as BasicNumber  } from '../basic/number.js';
 import { ErrorMessages } from "./messages.js";
 
-export class Number extends DefaultNumber{
+export class Number extends BasicNumber{
     constructor(inputObj) {
         super(inputObj, ErrorMessages);  
     } 

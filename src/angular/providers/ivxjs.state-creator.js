@@ -23,6 +23,9 @@ class stateGenerator {
 
                     uiContainer.append(view);
                 });
+            },
+            create: ($state, iVXjs)=>{
+                self.create($state,iVXjs);
             }
         }
     }

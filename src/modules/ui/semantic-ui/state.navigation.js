@@ -1,6 +1,6 @@
-import {NavigationState as DefaultNavigationState} from '../default/state.navigation.js';
+import {NavigationState as BasicNavigationState} from '../basic/state.navigation.js';
 
-export class NavigationState extends DefaultNavigationState {     
+export class NavigationState extends BasicNavigationState {     
     constructor(data, linkSection){
         super(data, linkSection);
     }

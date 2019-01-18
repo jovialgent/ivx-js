@@ -1,6 +1,6 @@
-import { TypeValidator } from "../../utilities/type-parsers";
-
-const typeValidator = new TypeValidator();
+import isUndefined from "lodash/isUndefined";
+import isObject from "lodash/isObject";
+import isString from "lodash/isString";
 
 class VideoService {
     constructor(iVXjs, iVXjsBus, iVXjsActions) {
@@ -10,22 +10,46 @@ class VideoService {
             iVXjs,
             iVXjsBus,
             iVXjsActions,
+            isUndefined,
+            isString,
+            isObject,
             videoEventNames: iVXjs.constants.VIDEO.EVENTS
         })
     }
 
     shouldFire(cuePoint, player) {
-        const { currentTime, paused } = player;
-        const { timeAt = 0, endAt, fired = false, always = false } = cuePoint;
+        const { currentTime, duration, paused } = player;
+        const { timeAt, endAt, fired = false, always = false, percentStart, percentEnd } = cuePoint;
         const canFire = (!fired || always) && !paused;
+        const withinTime = this._evaluateTimeCuePoint(currentTime, timeAt, endAt) || this._evaluatePercentCuePoint(currentTime, duration, percentStart, percentEnd);
 
-        if (typeValidator.isUndefined(endAt)) {
-            const timeUntil = Math.abs(timeAt - currentTime);
+        return withinTime && canFire;
+    }
 
-            return timeUntil <= 0.2 && canFire;
+    _evaluatePercentCuePoint(currentTime, duration, percentStart, percentEnd) {
+        const { isUndefined } = this;
+
+        if (isUndefined(percentStart) && isUndefined(percentEnd)) return false;
+
+        const currentProgressPercent = (currentTime / duration).toFixed(4);
+
+        return percentStart <= currentProgressPercent && percentEnd >= currentProgressPercent;
+    }
+
+    _evaluateTimeCuePoint(currentTime, timeAt, endAt) {
+        const { isUndefined } = this;
+
+        if (isUndefined(timeAt) && isUndefined(endAt)) return false;
+
+        const modifiedTimeAt = timeAt || 0;
+
+        if (isUndefined(endAt)) {
+            const timeUntil = Math.abs(modifiedTimeAt - currentTime);
+
+            return timeUntil <= 0.2;
         }
 
-        return (timeAt <= currentTime && endAt >= currentTime) && canFire;
+        return modifiedTimeAt <= currentTime && endAt >= currentTime;
     }
 
     removeCuePointListener(cuePointFunction) {
@@ -35,18 +59,20 @@ class VideoService {
     }
 
     getControlHTML(playerId, controls) {
+        const { isObject, isString } = this;
         let controlType = controls;
         let controlsHTML = '';
-        let isControlObject = typeValidator.isObject(controls);
-        let hasStandardControl = typeValidator.isString(controls);
+        let isControlObject = isObject(controls);
+        let hasStandardControl = isString(controls);
+
 
         if (isControlObject) {
             const { type } = controls;
 
-            controlType = type;
+            controlsHTML = `<ivxjs-${type}-video-controls class="ivx-video-controls" control-settings="vm.controls" player-id='${playerId}'></ivxjs-${type}-video-controls>`;
         }
 
-        if (typeValidator.isString(controlType)) {
+        if (hasStandardControl) {
             controlsHTML = `<ivxjs-${controlType}-video-controls class="ivx-video-controls" control-settings="vm.controls" player-id='${playerId}'></ivxjs-${controlType}-video-controls>`;
         }
 

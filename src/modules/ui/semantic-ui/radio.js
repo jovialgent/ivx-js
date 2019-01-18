@@ -1,7 +1,7 @@
-import {Radio as DefaultRadio} from '../default/radio.js';
+import {Radio as BasicRadio} from '../basic/radio.js';
 import {ErrorMessages} from "./messages.js";
 
-export class Radio extends DefaultRadio {
+export class Radio extends BasicRadio {
     constructor(inputObj) {
         super(inputObj, ErrorMessages);
     }

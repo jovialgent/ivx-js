@@ -1,0 +1,290 @@
+{
+    "metadata": {
+      "title": "Blank",
+      "framework": "basic",
+      "description": "An empty experience.",
+      "created": 1517515190036,
+      "updated": 1517515997055,
+      "version": "0.11.6-prerelease",
+      "schemaVersion": "v4"
+    },
+    "defaultState": [
+      {
+        "stateId": "crimson-glory-schema"
+      }
+    ],
+    "states": [
+      {
+        "section": {
+          "classes": "crimson-glory-schema"
+        },
+        "inputs": [
+          {
+            "id": "question-input-coquelicot-root",
+            "settings": {
+              "input": {
+                "classes": "question-input-coquelicot-root"
+              }
+            },
+            "name": "favoriteColor",
+            "type": "buttons",
+            "buttons": [
+              {
+                "value": "blue",
+                "labelHTML": "Blue"
+              },
+              {
+                "value": "red",
+                "labelHTML": "Red"
+              },
+              {
+                "value": "green",
+                "labelHTML": "Green"
+              }
+            ]
+          }
+        ],
+        "name": "New Question Scene: 99",
+        "header": {
+          "html": "<h1>Tell us your favorite color!</h1>"
+        },
+        "url": "/crimson-glory-schema",
+        "next": [
+          {
+            "stateId": "eggplant-experience",
+            "rule": {
+              "conditionOperator": "and",
+              "conditions": [
+                {
+                  "type": "input"
+                }
+              ]
+            }
+          },
+          {
+            "stateId": "eggplant-experience",
+            "rule": {
+              "conditionOperator": "and",
+              "conditions": [
+                {
+                  "type": "input"
+                }
+              ]
+            }
+          },
+          {
+            "rule": {
+              "conditionOperator": "and",
+              "conditions": [
+                {
+                  "type": "input"
+                }
+              ]
+            },
+            "stateId": "eggplant-experience"
+          },
+          {
+            "rule": {
+              "conditionOperator": "and",
+              "conditions": [
+                {
+                  "type": "input",
+                  "key": "Test",
+                  "is": "equals",
+                  "value": "test"
+                }
+              ]
+            }
+          },
+          {
+            "stateId": "fern-green-root"
+          }
+        ],
+        "onInputReady": [
+          {
+            "eventName": "animateElement",
+            "args": {
+              "element": ".input-state-container",
+              "animationClasses": "show"
+            }
+          }
+        ],
+        "type": "input",
+        "id": "crimson-glory-schema"
+      },
+      {
+        "id": "fern-green-root",
+        "name": "New Html Scene: 103",
+        "url": "/fern-green-root",
+        "type": "html",
+        "section": {
+          "classes": "fern-green-root"
+        },
+        "html": "<div>Insert a message here!</div>",
+        "onCompile": [
+          {
+            "eventName": "animateElement",
+            "args": {
+              "element": ".html-state-container",
+              "animationClasses": "show"
+            }
+          }
+        ]
+      },
+      {
+        "id": "eggplant-experience",
+        "name": "New Form Scene: 106",
+        "url": "/eggplant-experience",
+        "type": "input",
+        "section": {
+          "classes": "eggplant-experience"
+        },
+        "inputs": [
+          {
+            "id": "form-input-deep-carrot-orange-schema",
+            "name": "firstname",
+            "labelHTML": "First Name",
+            "type": "text",
+            "attributes": {
+              "required": true
+            },
+            "settings": {
+              "width": "1/2"
+            }
+          },
+          {
+            "id": "form-input-fluorescent-pink-key",
+            "name": "lastname",
+            "labelHTML": "Last Name",
+            "type": "text",
+            "attributes": {
+              "required": true
+            },
+            "settings": {
+              "width": "1/2"
+            }
+          },
+          {
+            "id": "form-input-cherry-blossom-pink-experience",
+            "name": "email",
+            "labelHTML": "Email",
+            "type": "email",
+            "attributes": {
+              "required": true
+            },
+            "settings": {
+              "width": "1/2"
+            }
+          },
+          {
+            "id": "form-input-dark-midnight-blue-key",
+            "name": "phone",
+            "labelHTML": "Phone",
+            "type": "text",
+            "settings": {
+              "width": "1/2"
+            }
+          },
+          {
+            "id": "options-input",
+            "name": "preferredContact",
+            "type": "options",
+            "labelHTML": "Preferred Contact",
+            "attributes": {
+              "required": true
+            },
+            "defaultDisplay": "Pick your preferred contact method...",
+            "options": [
+              {
+                "value": "email",
+                "display": "Email"
+              },
+              {
+                "value": "phone",
+                "display": "Phone"
+              }
+            ]
+          },
+          {
+            "id": "form-input-cocoa-brown-input",
+            "name": "day",
+            "type": "date",
+            "labelHTML": "What is the most recent day we can contact you?",
+            "settings": {
+              "width": "1/2"
+            }
+          },
+          {
+            "id": "form-input-cordovan-key",
+            "name": "timeOfDay",
+            "type": "radio",
+            "labelHTML": "When can we contact you?",
+            "radioButtons": [
+              {
+                "value": "morning",
+                "labelHTML": "Morning"
+              },
+              {
+                "value": "afternoon",
+                "labelHTML": "Afternoon"
+              },
+              {
+                "value": "evening",
+                "labelHTML": "Evening"
+              }
+            ]
+          },
+          {
+            "id": "form-input-cornsilk-schema",
+            "name": "satisfaction",
+            "labelHTML": "On a scale from 0 to 10, how satisfied are you?",
+            "type": "number",
+            "attributes": {
+              "min": 0,
+              "max": 10,
+              "step": 1
+            },
+            "settings": {
+              "width": "1/3"
+            }
+          },
+          {
+            "id": "form-input-dandelion-key",
+            "name": "Source URL",
+            "labelHTML": "Where did you hear about us?",
+            "type": "url",
+            "settings": {
+              "width": "2/3"
+            },
+            "attributes": {
+              "placeholder": "Paste a source url..."
+            }
+          },
+          {
+            "id": "form-input-field-drab-input",
+            "name": "comments",
+            "labelHTML": "Comments",
+            "type": "textarea"
+          },
+          {
+            "id": "form-input-egyptian-blue-root",
+            "name": "verified",
+            "labelHTML": "All good?",
+            "type": "checkbox",
+            "attributes": {
+              "required": true
+            }
+          }
+        ],
+        "onInputReady": [
+          {
+            "eventName": "animateElement",
+            "args": {
+              "element": ".input-state-container",
+              "animationClasses": "show"
+            }
+          }
+        ]
+      }
+    ]
+  }

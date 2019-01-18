@@ -5,17 +5,17 @@ const { argv } = require('yargs');
 const { $0, local, setup, contentBase: example } = argv;
 let configs = [];
 
-const publicPath = `public/examples/${example}`;
+const examplePath = `examples/${example}`;
 
 
 module.exports = {
     entry: {
-        dev: `./${publicPath}/index.js`
+        dev: `./${examplePath}/index.js`
     },
     devtool: 'inline-source-map',
     devServer: {
         disableHostCheck: true, 
-        contentBase: `./${publicPath}`,
+        contentBase: `./${examplePath}`,
         hot: true
     },
     module: {
@@ -29,7 +29,8 @@ module.exports = {
                 {
                     loader: 'babel-loader',
                     options: {
-                        presets: ['env']
+                        presets: ['env'],
+                        plugins: ['transform-object-rest-spread']
 
                     }
                 }],
@@ -90,13 +91,13 @@ module.exports = {
 
     plugins: [
         new HtmlWebpackPlugin({
-            filename: `${publicPath}/index.html`
+            filename: `${examplePath}/index.html`
         }),
         new webpack.NamedModulesPlugin(),
         new webpack.HotModuleReplacementPlugin()
     ],
     output: {
         filename: '[name].bundle.js',
-        path: path.resolve(__dirname, `${publicPath}`)
+        path: path.resolve(__dirname, `${examplePath}`)
     }
 };

@@ -29,6 +29,7 @@ export class iVXjs {
         this.Bus = new EventEmitter();
         this.constants = new Constants();
         this.settings = {};
+        this.log = new Logging(false, this.Bus);
 
     }
 
@@ -80,9 +81,9 @@ export class iVXjs {
         this.experience.Bus = this.Bus;
         this.experience.Log = this.log;
         this.experience.processor = new ActionProcessor(this);
-        this.experience.config = this.config;      
+        this.experience.config = this.config;
         this.experience.data = Object.assign(this.experience.data || {}, this._createExperienceDataObject());
-       
+
         /**
          * Evaluates an array of expressions to allow stat navigation branching
          * 
@@ -143,7 +144,7 @@ export class iVXjs {
             this.routeFunction = settings.routeFunction;
         }
 
-        this.log = new Logging(debug, this.Bus);
+        this.log.setShow(debug);
 
         let thisSetup = new Setup(settings, this.Bus, this.log);
         let initPromise = new Promise((resolve, reject) => {
@@ -152,6 +153,9 @@ export class iVXjs {
                 .then((experience) => {
                     self.setUpiVXjs(experience)
                     resolve(self);
+                })
+                .catch(err => {
+                    console.dir(err);
                 });
         });
 
