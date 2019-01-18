@@ -107,7 +107,7 @@
             },
             "timeAt": 5,
             "endAt": 10,
-            "always" : true
+            "always": true
         }
     ]
 }

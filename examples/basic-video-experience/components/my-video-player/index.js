@@ -21,7 +21,6 @@ import vimeoSettings from "./vimeo.json";
             template
         }
 
-
         function linkFunction($scope, iElm, iAttrs, controller) {
 
         }

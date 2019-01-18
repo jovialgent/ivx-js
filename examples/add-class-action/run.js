@@ -1,10 +1,10 @@
+import defaultConfig from "./config/default";
 
+export default ($rootScope, iVXjs, iVXjsValidationSchema) => {
+    "ngInject";
 
-appRun.$inject = ['$rootScope'];
-
-
-function appRun($rootScope, iVXjs) {
-    
+    iVXjs.init({
+        validation: iVXjsValidationSchema(),
+        config: defaultConfig()
+    });
 }
-
-export default appRun;

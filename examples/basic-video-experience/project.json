@@ -58,7 +58,9 @@
                                 "payload": "Test 123"
                             }
                         ],
+                        "id": "metadata-track",
                         "label": "Metadata",
+                        "srclang": "en",
                         "kind": "metadata"
                     },
                     {

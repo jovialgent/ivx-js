@@ -1,4 +1,7 @@
+@import "../../node_modules/lesshat/lesshat.less";
+@import "../../node_modules/ivx-story-player-static-assets/assets/base/index.less";
 @import url('https://fonts.googleapis.com/css?family=Playfair+Display|Roboto');
+
 @red : #da3d20;
 @orange: #DF662B;
 @grey: #d6d6d2;
@@ -13,39 +16,30 @@
 .header-font {
     font-family: @headerFont;
 }
-
 .body-font {
     font-family: @bodyFont;
 }
-
 .red {
     .setThemeColor(@red);
 }
-
 .orange {
     .setThemeColor(@orange);
 }
-
 .yellow {
     .setThemeColor(@yellow);
 }
-
 .green {
     .setThemeColor(@green);
 }
-
 .blue {
     .setThemeColor(@blue);
 }
-
 .primary {
     .setThemeTextColor(@primary);
 }
-
 .secondary {
     .setThemeTextColor(@secondary);
 }
-
 .setThemeColor(@color) {
     background: @color;
     .ivx-input-container {
@@ -69,7 +63,6 @@
         }
     }
 }
-
 .setThemeTextColor(@color) {
     color: @color;
     .ivx-input-label {
@@ -99,12 +92,10 @@
         }
     }
 }
-
 .border {
     border-radius: 10px;
     border: 1px solid;
 }
-
 body {
     -webkit-transition: all 600ms cubic-bezier(0.39, 0.575, 0.565, 1);
     transition:         all 600ms cubic-bezier(0.39, 0.575, 0.565, 1); 
@@ -172,7 +163,6 @@ body {
     .progression-list {
         padding: 10px 0px;
         .progression-item {
-          
             display: inline-block;
             padding: 10px 5px;
             .border
@@ -184,7 +174,6 @@ body {
     .action-button {
         margin: 10px 0px;
         .border;
-       
         cursor: pointer;
         padding: 10px 5px;
         width: auto;

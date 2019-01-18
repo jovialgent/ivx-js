@@ -1,12 +1,10 @@
-import config from "./project.json";
+import defaultConfig from "./config/default";
 
 export default (iVXjs) => {
     "ngInject";
 
-
     iVXjs.init({
-        config,
-       
+        config: defaultConfig(),
         // ui: iVXjsUiBootstrap(),
         // validation: iVXjsValidationSchema(),
         experience: {
