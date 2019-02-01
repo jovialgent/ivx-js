@@ -64,7 +64,8 @@ module.export = initializeSemanticUI;
 if (angular && angular.module('ivx-js')) {
     angular
         .module('ivx-js')
-        .constant('ivxjs.modules.ui', new SemanticUI());
+        .constant('ivxjs.modules.ui', new SemanticUI())
+        .constant('iVXjsUIModule', new SemanticUI());
 }
 
 

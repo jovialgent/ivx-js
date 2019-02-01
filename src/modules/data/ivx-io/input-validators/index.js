@@ -16,7 +16,7 @@ const errorNames = new iVXioErrorNames();
 
 
 export default class {
-    constructor(states, storyInputs, experience, reject, debug = false, debugCallBack = ()=>{}) {
+    constructor(states, storyInputs, experience, reject, debug = false, debugCallBack = () => { }) {
         this.rawStates = [].concat(states);
         this.storyInputs = Object.assign({}, storyInputs);
         this.experience = experience;
@@ -46,6 +46,7 @@ export default class {
 
     validateInputStates(states) {
         let self = this;
+
         return states.map((state, index) => {
             if (state.type === "input") {
                 let { inputs = [] } = state;
@@ -58,8 +59,8 @@ export default class {
     }
 
     createRecommendedSettings(input) {
-        let recommendedObject = this.createRecommendObject(input);
-        let { types, options, attributes } = input;
+        let recommendedObject = this.createRecommendObject(input) || {};
+        let { types = "", options = [], attributes = {} } = input;
         let message = `To support this input, it is recommend to create an input on the platform using these settings: 
 ${this.createRecommendedReadout(recommendedObject)}
         `;
@@ -71,7 +72,7 @@ ${this.createRecommendedReadout(recommendedObject)}
     }
 
     createRecommendedReadout(recommendedObject) {
-        let { key, options, types, attributes } = recommendedObject;
+        let { key = "", options = [], types = [], attributes = {} } = recommendedObject;
         let self = this;
         let readout = `Input Key: ${key}`;
         let typesReadout = `\nRecommended Input Type${types.length > 1 ? "s" : ""}: ${types.join(', ')}`;
@@ -94,7 +95,7 @@ ${this.createRecommendedReadout(recommendedObject)}
     }
 
     createRecommendObject(input) {
-        let { attributes } = input;
+        let { attributes = {} } = input;
         let types = this.getRecommendedInputTypes(input.type);
         let options = this.getOptions(input);
 
@@ -155,8 +156,10 @@ ${this.createRecommendedReadout(recommendedObject)}
         let self = this;
 
         return inputs.map((input, index) => {
-            let { name } = input;
+            let { name = "", type = "" } = input;
             let storyInput = storyInputs[name];
+
+            if (!self.getRecommendedInputTypes(type)) return input;
 
             if (!storyInput) {
                 let { name: stateName, id } = state;
@@ -200,7 +203,7 @@ Input Index: ${index}
                     });
                 }
 
-                if(debug && debugCallBack){
+                if (debug && debugCallBack) {
                     debugCallBack({
                         message: errorMessage,
                         info: {

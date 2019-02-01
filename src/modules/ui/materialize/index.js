@@ -77,7 +77,8 @@ module.exports = initializeMaterializeUI;
 if (angular && angular.module('ivx-js')) {
     angular
         .module('ivx-js')
-        .constant('ivxjs.modules.ui', new MaterializeUI());
+        .constant('ivxjs.modules.ui', new MaterializeUI())
+        .constant('iVXjsUIModule', new MaterializeUI());
 }
 
 function initializeMaterializeUI(settings) {
