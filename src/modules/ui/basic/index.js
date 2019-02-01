@@ -81,5 +81,6 @@ export class BasicUI {
 if (angular && angular.module('ivx-js')) {
     angular
         .module('ivx-js')
-        .constant('ivxjs.modules.ui', new BasicUI());
+        .constant('ivxjs.modules.ui', new BasicUI())
+        .constant('iVXjsUIModule', new BasicUI());
 }

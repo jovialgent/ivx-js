@@ -8,7 +8,7 @@ import "../../src/modules/analytics/google";
 export default (iVXjs, iVXjsValidationSchema, iVXjsAnalyticsGoogle, iVXjsDataiVXio) => {
     "ngInject";
     const debug = true;
-    const storyKey = "sp-gtm-test";
+    const storyKey = "sp-nitro-pocs";
 
     iVXjs.init({
         config,
