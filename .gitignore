@@ -58,5 +58,5 @@ build
 .hgtags
 
 test.js
-
 .flow
+.legacy
