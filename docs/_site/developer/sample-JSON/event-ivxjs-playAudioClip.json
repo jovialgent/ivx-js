@@ -1,9 +1,0 @@
-{
-    "eventName": "playAudioClip",
-    "args": {
-        "id": "state-audio",
-        "src": "",
-        "cuePoints": [],
-        "onEnd": []
-    }
-}

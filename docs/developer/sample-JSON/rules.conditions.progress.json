@@ -1,6 +1,0 @@
-{
-    "type" : "progress",
-    "key" : "progress",
-    "is" : "[IS_VALUE]",
-    "value" : "[PROGRESS_VALUE]"
-}

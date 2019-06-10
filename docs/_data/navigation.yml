@@ -1,8 +1,0 @@
-# main links links
-main:
-  - title: "Getting Started"
-    url: "/developer/tutorial.hello-world"
-  - title: "Tutorials"
-    url: "/developer/tutorials"
-  - title: "Configuration and Features"
-    url: "/developer/configuration"

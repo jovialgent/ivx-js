@@ -59,4 +59,4 @@ build
 
 test.js
 .flow
-.legacy
+_legacy

@@ -1,7 +1,0 @@
-{
-    "eventName": "animateElement",
-    "args": {
-        "element": "",
-        "animationClasses": ""
-    }
-}

@@ -1,6 +1,0 @@
-{
-    "eventName": "goToState",
-    "args": {
-        "stateId": ""
-    }
-}

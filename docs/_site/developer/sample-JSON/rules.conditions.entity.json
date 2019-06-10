@@ -1,6 +1,0 @@
-{
-    "type" : "entity",
-    "key" : "[ENTITY_KEY]",
-    "is" : "equals",
-    "value" : "[ENTITY_VALUE]"
-}
