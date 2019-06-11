@@ -1,0 +1,21 @@
+{
+  "npmScope": "ivx-js",
+  "implicitDependencies": {
+    "angular.json": "*",
+    "package.json": "*",
+    "tsconfig.json": "*",
+    "tslint.json": "*",
+    "nx.json": "*"
+  },
+  "projects": {
+    "test-test-web": {
+      "tags": []
+    },
+    "test-test-web-e2e": {
+      "tags": []
+    },
+    "test-test-node": {
+      "tags": []
+    }
+  }
+}
